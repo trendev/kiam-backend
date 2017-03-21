@@ -16,6 +16,9 @@
     <class>fr.trendev.comptandye.entity.UserAccount</class>
     <class>fr.trendev.comptandye.entity.UserGroup</class>
     <class>fr.trendev.comptandye.entity.SocialNetwork</class>
+    <class>fr.trendev.comptandye.entity.SocialNetworkAccount</class>
+    <class>fr.trendev.comptandye.entity.Service</class>
+    <class>fr.trendev.comptandye.entity.ServiceSet</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
