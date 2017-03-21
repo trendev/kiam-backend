@@ -7,8 +7,8 @@ package fr.trendev.comptandye.entity;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.DiscriminatorColumn;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -21,22 +21,25 @@ import javax.persistence.Table;
 @DiscriminatorColumn(length=31,name="ACCOUNT_TYPE")
 public abstract class UserAccount { 
 
-    @EmbeddedId
-    private UserAccountPK userAccountEmbeddedId;
+    @Id
+    private String email;
 
     @Basic
     private String password;
+
+    @Basic
+    private String uuid;
 
     @ManyToMany(targetEntity = UserGroup.class)
     private List<UserGroup> userGroups;
 
 
-    public UserAccountPK getUserAccountEmbeddedId() {
-        return this.userAccountEmbeddedId;
+    public String getEmail() {
+        return this.email;
     }
 
-    public void setUserAccountEmbeddedId(UserAccountPK userAccountEmbeddedId) {
-        this.userAccountEmbeddedId = userAccountEmbeddedId;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -45,6 +48,14 @@ public abstract class UserAccount {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUuid() {
+        return this.uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public List<UserGroup> getUserGroups() {

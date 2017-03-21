@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jpa:entity-mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" pkg="fr.trendev.comptandye.entity" v="3.6" rws="_14901008082912" Pws="_14901008082912" cws="_14901008082912" sm="false" xs="false" id="_14901008082901" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd">
-    <jpa:entity lbl-ref="_14901008440196" xre="false" compositePrimaryKeyType="EMBEDDEDID" compositePrimaryKeyClass="UserAccountPK" abs="true" class="UserAccount" v="true" m="false" rootElement="_14901008082901" id="_1490100823157">
+    <jpa:entity lbl-ref="_14901008440196" xre="false" compositePrimaryKeyClass="UserAccountPK" abs="true" class="UserAccount" v="true" m="false" rootElement="_14901008082901" id="_1490100823157">
         <jpa:ts e="true"/>
         <jpa:hc e="true"/>
         <jpa:eq e="true"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" name="password" id="_14901008440196">
+                <jpa:bv/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" name="uuid" id="_149011954705724">
                 <jpa:bv/>
             </jpa:basic>
             <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490100852900" connected-attribute-id="_14901160469883436" v="true" name="userGroups" id="_14901160469863435">
@@ -16,13 +19,6 @@
                 <jpa:bv/>
                 <jpa:generated-value/>
             </jpa:id>
-            <jpa:id attribute-type="String" v="true" name="uuid" id="_14901165760593613">
-                <jpa:bv/>
-                <jpa:generated-value strategy="AUTO"/>
-            </jpa:id>
-            <jpa:embedded-id v="true" name="userAccountEmbeddedId" id="_14901166025373614">
-                <jpa:bv/>
-            </jpa:embedded-id>
         </jpa:attributes>
         <jpa:nq e="false" name="UserAccount.findAll">
             <jpa:query>Select e from UserAccount e</jpa:query>
@@ -35,6 +31,9 @@
         </jpa:nq>
         <jpa:nq e="false" name="UserAccount.findByEmail">
             <jpa:query>Select u from UserAccount u where u.email=:email</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="UserAccount.findByUuid">
+            <jpa:query>Select u from UserAccount u where u.uuid=:uuid</jpa:query>
         </jpa:nq>
         <jpa:nq e="false" name="UserAccount.findByUuid">
             <jpa:query>Select u from UserAccount u where u.uuid=:uuid</jpa:query>
