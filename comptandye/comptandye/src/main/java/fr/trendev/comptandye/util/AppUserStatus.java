@@ -10,6 +10,6 @@ package fr.trendev.comptandye.util;
  * @author jsie
  */
 public enum AppUserStatus {
-    LOGGED_OUT, LOGGED_IN, BLOCKED, DISABLED, ACTIVE;
+    LOGGED_OUT, LOGGED_IN, BLOCKED, DISABLED;
 
 }

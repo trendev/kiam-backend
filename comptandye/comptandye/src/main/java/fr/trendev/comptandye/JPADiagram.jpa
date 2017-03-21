@@ -9,12 +9,12 @@
             <jpa:basic attribute-type="String" v="true" name="username" id="_149003805309139">
                 <jpa:bv/>
             </jpa:basic>
+            <jpa:many-to-one primaryKey="true" connected-entity-id="_1490037096589" connected-attribute-id="_1490094981356145" v="true" name="address" id="_1490094981354144">
+                <jpa:bv/>
+            </jpa:many-to-one>
             <jpa:one-to-one orp="false" optional="true" primaryKey="false" connected-entity-id="_1490026643263" connected-attribute-id="_149002665989013" v="true" name="customerDetails" id="_149002665989314">
                 <jpa:bv/>
             </jpa:one-to-one>
-            <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490037085199" connected-attribute-id="_149003727860329" v="true" name="french_Addresses" id="_149003727860630">
-                <jpa:bv/>
-            </jpa:many-to-many>
         </jpa:attributes>
         <jpa:nq e="false" name="Customer.findAll">
             <jpa:query>Select e from Customer e</jpa:query>
@@ -137,27 +137,7 @@
         </jpa:nq>
         <jpa:el/>
     </jpa:entity>
-    <jpa:entity xre="false" compositePrimaryKeyClass="AddressPK" abs="true" class="Address" v="true" m="false" rootElement="_14900264407531" id="_1490037085199">
-        <jpa:ts e="true"/>
-        <jpa:hc e="true"/>
-        <jpa:eq e="true"/>
-        <jpa:ath>jsie</jpa:ath>
-        <jpa:attributes>
-            <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490026470447" connected-attribute-id="_149003727860630" v="true" name="customers" id="_149003727860329">
-                <jpa:bv/>
-            </jpa:many-to-many>
-            <jpa:id attribute-type="Long" v="true" name="id" id="_149003708520119">
-                <jpa:bv/>
-                <jpa:generated-value strategy="AUTO"/>
-            </jpa:id>
-        </jpa:attributes>
-        <jpa:nq e="false" name="Address.findAll">
-            <jpa:query>Select e from Address e</jpa:query>
-        </jpa:nq>
-        <jpa:el/>
-        <jpa:discriminator-column/>
-    </jpa:entity>
-    <jpa:entity lbl-ref="_149003708520119" xre="false" compositePrimaryKeyClass="French_AddressPK" abs="false" class="French_Address" superclassId="_1490037085199" v="true" m="false" rootElement="_14900264407531" id="_1490037096589">
+    <jpa:entity lbl-ref="_149003708520119" xre="false" compositePrimaryKeyClass="AddressPK" abs="false" class="Address" v="true" m="false" rootElement="_14900264407531" id="_1490037096589">
         <jpa:ts e="true"/>
         <jpa:hc e="true"/>
         <jpa:eq e="true"/>
@@ -175,21 +155,28 @@
             <jpa:basic attribute-type="String" v="true" name="country" id="_149003742524033">
                 <jpa:bv/>
             </jpa:basic>
+            <jpa:one-to-many collection-type="java.util.List" connected-entity-id="_1490026470447" connected-attribute-id="_1490094981354144" v="true" name="customers" id="_1490094981356145">
+                <jpa:bv/>
+            </jpa:one-to-many>
+            <jpa:id attribute-type="Long" v="true" name="id" id="_1490094905818143">
+                <jpa:bv/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
         </jpa:attributes>
-        <jpa:nq e="false" name="French_Address.findAll">
-            <jpa:query>Select e from French_Address e</jpa:query>
+        <jpa:nq e="false" name="Address.findAll">
+            <jpa:query>Select e from Address e</jpa:query>
         </jpa:nq>
-        <jpa:nq e="false" name="French_Address.findByStreet">
-            <jpa:query>Select f from French_Address f where f.street=:street</jpa:query>
+        <jpa:nq e="false" name="Address.findByStreet">
+            <jpa:query>Select f from Address f where f.street=:street</jpa:query>
         </jpa:nq>
-        <jpa:nq e="false" name="French_Address.findByPostalCode">
-            <jpa:query>Select f from French_Address f where f.postalCode=:postalCode</jpa:query>
+        <jpa:nq e="false" name="Address.findByPostalCode">
+            <jpa:query>Select f from Address f where f.postalCode=:postalCode</jpa:query>
         </jpa:nq>
-        <jpa:nq e="false" name="French_Address.findByCity">
-            <jpa:query>Select f from French_Address f where f.city=:city</jpa:query>
+        <jpa:nq e="false" name="Address.findByCity">
+            <jpa:query>Select f from Address f where f.city=:city</jpa:query>
         </jpa:nq>
-        <jpa:nq e="false" name="French_Address.findByCountry">
-            <jpa:query>Select f from French_Address f where f.country=:country</jpa:query>
+        <jpa:nq e="false" name="Address.findByCountry">
+            <jpa:query>Select f from Address f where f.country=:country</jpa:query>
         </jpa:nq>
         <jpa:el/>
     </jpa:entity>
@@ -233,23 +220,6 @@
         <jpa:inheritance strategy="SINGLE_TABLE"/>
         <jpa:discriminator-column name="APPGROUP" discriminator-type="STRING" column-definition="" length="30"/>
     </jpa:entity>
-    <jpa:entity lbl-ref="_1490085331991132" xre="false" compositePrimaryKeyClass="AdminPK" abs="false" class="Admin" superclassId="_1490081334987" v="true" m="false" rootElement="_14900264407531" id="_1490081433737">
-        <jpa:ts e="true"/>
-        <jpa:hc e="true"/>
-        <jpa:eq e="true"/>
-        <jpa:ath>jsie</jpa:ath>
-        <jpa:attributes/>
-        <jpa:nq e="false" name="Admin.findAll">
-            <jpa:query>Select e from Admin e</jpa:query>
-        </jpa:nq>
-        <jpa:nq e="false" name="Admin.findByUsername">
-            <jpa:query>Select a from Admin a where a.username=:username</jpa:query>
-        </jpa:nq>
-        <jpa:nq e="false" name="Admin.findByPassword">
-            <jpa:query>Select a from Admin a where a.password=:password</jpa:query>
-        </jpa:nq>
-        <jpa:el/>
-    </jpa:entity>
     <jpa:entity xre="false" compositePrimaryKeyClass="ClientPK" abs="false" class="Client" v="true" m="false" rootElement="_14900264407531" id="_1490084863539">
         <jpa:ts e="true"/>
         <jpa:hc e="true"/>
@@ -266,20 +236,6 @@
         </jpa:nq>
         <jpa:el/>
     </jpa:entity>
-    <jpa:entity xre="false" compositePrimaryKeyClass="WebMarketPK" abs="false" class="WebMarket" superclassId="_1490081334987" v="true" m="false" rootElement="_14900264407531" id="_1490087923935">
-        <jpa:ts e="true"/>
-        <jpa:hc e="true"/>
-        <jpa:eq e="true"/>
-        <jpa:ath>jsie</jpa:ath>
-        <jpa:attributes/>
-        <jpa:nq e="false" name="WebMarket.findAll">
-            <jpa:query>Select e from WebMarket e</jpa:query>
-        </jpa:nq>
-        <jpa:el/>
-    </jpa:entity>
-    <jpa:snp loc="BEFORE_PACKAGE" e="true">/**
- * This file was generated by the JPA Modeler
- */</jpa:snp>
     <jpa:c>
         <ct>java.util.List</ct>
         <ct>java.util.Set</ct>
@@ -288,13 +244,10 @@
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14900264407532">
-            <i ref="_1490037096589" x="49" y="259"/>
-            <i ref="_1490037085199" x="73" y="118"/>
+            <i ref="_1490037096589" x="44" y="88"/>
             <i ref="_1490026488778" x="355" y="446"/>
-            <i ref="_1490087923935" x="629" y="-22"/>
             <i ref="_1490026483427" x="150" y="446"/>
-            <i ref="_1490081334987" x="313" y="-231"/>
-            <i ref="_1490081433737" x="462" y="-22"/>
+            <i ref="_1490081334987" x="265" y="-194"/>
             <i ref="_1490026470447" x="261" y="-22"/>
             <i ref="_1490026643263" x="500" y="52"/>
             <i ref="_1490084863539" x="534" y="447"/>
