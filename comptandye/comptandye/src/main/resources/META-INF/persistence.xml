@@ -13,6 +13,9 @@
     <class>fr.trendev.comptandye.entity.Address</class>
     <class>fr.trendev.comptandye.entity.AppUser</class>
     <class>fr.trendev.comptandye.entity.Client</class>
+    <class>fr.trendev.comptandye.entity.UserAccount</class>
+    <class>fr.trendev.comptandye.entity.UserGroup</class>
+    <class>fr.trendev.comptandye.entity.SocialNetwork</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
