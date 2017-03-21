@@ -6,6 +6,13 @@
     <class>fr.trendev.comptandye.entities.Client</class>
     <class>fr.trendev.comptandye.entities.UserDetails</class>
     <class>fr.trendev.comptandye.entities.Person</class>
+    <class>fr.trendev.comptandye.entity.Customer</class>
+    <class>fr.trendev.comptandye.entity.Professional</class>
+    <class>fr.trendev.comptandye.entity.Individual</class>
+    <class>fr.trendev.comptandye.entity.CustomerDetails</class>
+    <class>fr.trendev.comptandye.entity.Address</class>
+    <class>fr.trendev.comptandye.entity.AppUser</class>
+    <class>fr.trendev.comptandye.entity.Client</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
