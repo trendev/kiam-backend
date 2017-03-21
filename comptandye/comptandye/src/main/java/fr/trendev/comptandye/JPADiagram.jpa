@@ -85,14 +85,15 @@
             <jpa:basic attribute-type="String" v="true" name="website" id="_1490104021917395">
                 <jpa:bv/>
             </jpa:basic>
-            <jpa:one-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490101555530" v="true" name="clients" id="_1490105852695625">
+            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1490101555530" v="true" name="clients" id="_1490105852695625">
                 <jpa:bv/>
             </jpa:one-to-many>
-            <jpa:one-to-one own="true" primaryKey="true" connected-entity-id="_1490104062170" v="true" name="socialNetwork" id="_1490104936074488">
+            <jpa:one-to-one own="true" primaryKey="false" connected-entity-id="_1490104062170" connected-attribute-id="_14901074973721133" v="true" name="socialNetworkAccount" id="_14901074973711132">
                 <jpa:bv/>
             </jpa:one-to-one>
             <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490101520286" connected-attribute-id="_1490103223976351" v="true" name="individuals" id="_1490103223974350">
                 <jpa:bv/>
+                <jpa:join-table name="PROFESSIONAL_INDIVIDUAL"/>
             </jpa:many-to-many>
         </jpa:attributes>
         <jpa:nq e="false" name="Professional.findAll">
@@ -136,7 +137,7 @@
         <jpa:eq e="true"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
-            <jpa:one-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490101737208" v="true" name="addresses" id="_1490105648495562">
+            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1490101737208" v="true" name="addresses" id="_1490105648495562">
                 <jpa:bv/>
             </jpa:one-to-many>
             <jpa:one-to-one own="true" primaryKey="false" connected-entity-id="_1490101578444" v="true" name="customerDetails" id="_1490105698949563">
@@ -257,7 +258,7 @@
         </jpa:nq>
         <jpa:el/>
     </jpa:entity>
-    <jpa:entity xre="false" compositePrimaryKeyClass="SocialNetworkPK" abs="false" class="SocialNetwork" v="true" m="false" rootElement="_14901008082901" id="_1490104062170">
+    <jpa:entity xre="false" compositePrimaryKeyClass="SocialNetworkAccountPK" abs="false" class="SocialNetworkAccount" v="true" m="false" rootElement="_14901008082901" id="_1490104062170">
         <jpa:ts e="true"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -273,25 +274,28 @@
             <jpa:basic attribute-type="String" v="true" name="pinterest" id="_1490104881966487">
                 <jpa:bv/>
             </jpa:basic>
+            <jpa:one-to-one primaryKey="false" connected-entity-id="_1490101456632" connected-attribute-id="_14901074973711132" v="true" name="professional" id="_14901074973721133">
+                <jpa:bv/>
+            </jpa:one-to-one>
             <jpa:id attribute-type="Long" v="true" name="id" id="_1490104062174399">
                 <jpa:bv/>
                 <jpa:generated-value strategy="AUTO"/>
             </jpa:id>
         </jpa:attributes>
-        <jpa:nq e="false" name="SocialNetwork.findAll">
-            <jpa:query>Select e from SocialNetwork e</jpa:query>
+        <jpa:nq e="false" name="SocialNetworkAccount.findAll">
+            <jpa:query>Select e from SocialNetworkAccount e</jpa:query>
         </jpa:nq>
-        <jpa:nq e="false" name="SocialNetwork.findByFacebook">
-            <jpa:query>Select s from SocialNetwork s where s.facebook=:facebook</jpa:query>
+        <jpa:nq e="false" name="SocialNetworkAccount.findByFacebook">
+            <jpa:query>Select s from SocialNetworkAccount s where s.facebook=:facebook</jpa:query>
         </jpa:nq>
-        <jpa:nq e="false" name="SocialNetwork.findByTwitter">
-            <jpa:query>Select s from SocialNetwork s where s.twitter=:twitter</jpa:query>
+        <jpa:nq e="false" name="SocialNetworkAccount.findByTwitter">
+            <jpa:query>Select s from SocialNetworkAccount s where s.twitter=:twitter</jpa:query>
         </jpa:nq>
-        <jpa:nq e="false" name="SocialNetwork.findByInstagram">
-            <jpa:query>Select s from SocialNetwork s where s.instagram=:instagram</jpa:query>
+        <jpa:nq e="false" name="SocialNetworkAccount.findByInstagram">
+            <jpa:query>Select s from SocialNetworkAccount s where s.instagram=:instagram</jpa:query>
         </jpa:nq>
-        <jpa:nq e="false" name="SocialNetwork.findByPinterest">
-            <jpa:query>Select s from SocialNetwork s where s.pinterest=:pinterest</jpa:query>
+        <jpa:nq e="false" name="SocialNetworkAccount.findByPinterest">
+            <jpa:query>Select s from SocialNetworkAccount s where s.pinterest=:pinterest</jpa:query>
         </jpa:nq>
         <jpa:el/>
     </jpa:entity>
@@ -307,13 +311,13 @@
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
             <i ref="_1490101737208" x="-26" y="304"/>
-            <i ref="_1490101456632" x="167" y="462"/>
+            <i ref="_1490101456632" x="193" y="462"/>
             <i ref="_1490101578444" x="577" y="289"/>
             <i ref="_1490100823157" x="259" y="85"/>
             <i ref="_1490100852900" x="577" y="85"/>
             <i ref="_1490101555530" x="259" y="826"/>
             <i ref="_1490101520286" x="433" y="535"/>
-            <i ref="_1490104062170" x="-26" y="571"/>
+            <i ref="_1490104062170" x="-102" y="617"/>
             <i ref="_1490101376664" x="268" y="289"/>
         </jpa:ws>
     </jpa:wsl>
