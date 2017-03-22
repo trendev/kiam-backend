@@ -116,6 +116,9 @@
             <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490101520286" connected-attribute-id="_1490180547173493" v="true" name="individuals" id="_1490180547178494">
                 <jpa:bv/>
             </jpa:many-to-many>
+            <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490184243036" v="true" name="paymentModes" id="_149020649962680">
+                <jpa:bv/>
+            </jpa:many-to-many>
         </jpa:attributes>
         <jpa:nq e="false" name="Professional.findAll">
             <jpa:query>Select e from Professional e</jpa:query>
@@ -432,9 +435,15 @@
             <jpa:basic attribute-type="int" v="true" name="discount" id="_149017912276532">
                 <jpa:bv/>
             </jpa:basic>
+            <jpa:basic attribute-type="boolean" v="true" name="paidoff" id="_149018414188437">
+                <jpa:bv/>
+            </jpa:basic>
             <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_1490179812678394" v="true" name="professional" id="_1490179812677393">
                 <jpa:bv/>
             </jpa:many-to-one>
+            <jpa:one-to-many collection-type="java.util.List" connected-entity-id="_1490206901623" connected-attribute-id="_149020760041791" v="true" name="payments" id="_149020760041892">
+                <jpa:bv/>
+            </jpa:one-to-many>
             <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490172966686" v="true" name="offerings" id="_1490179520493122">
                 <jpa:bv/>
             </jpa:many-to-many>
@@ -459,6 +468,9 @@
         </jpa:nq>
         <jpa:nq e="false" name="Bill.findByDiscount">
             <jpa:query>Select b from Bill b where b.discount=:discount</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Bill.findByPaidoff">
+            <jpa:query>Select b from Bill b where b.paidoff=:paidoff</jpa:query>
         </jpa:nq>
         <jpa:el/>
         <jpa:discriminator-column/>
@@ -493,6 +505,61 @@
         </jpa:nq>
         <jpa:el/>
     </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyClass="PaymentModePK" abs="false" class="PaymentMode" v="true" m="false" rootElement="_14901008082901" id="_1490184243036">
+        <jpa:ts e="true"/>
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" name="name" id="_149020688438782">
+                <jpa:bv/>
+            </jpa:basic>
+            <jpa:id attribute-type="Long" v="true" name="id" id="_149020688052381">
+                <jpa:bv/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:nq e="false" name="PaymentMode.findAll">
+            <jpa:query>Select e from PaymentMode e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="PaymentMode.findByMethod">
+            <jpa:query>Select p from PaymentMode p where p.method=:method</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="PaymentMode.findByName">
+            <jpa:query>Select p from PaymentMode p where p.name=:name</jpa:query>
+        </jpa:nq>
+        <jpa:el/>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyType="D" compositePrimaryKeyClass="PaymentPK" abs="false" class="Payment" v="true" m="false" rootElement="_14901008082901" id="_1490206901623">
+        <jpa:ts e="true"/>
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" name="amount" id="_149020701195485">
+                <jpa:bv/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" name="currency" id="_149020716672986">
+                <jpa:bv/>
+            </jpa:basic>
+            <jpa:many-to-one primaryKey="false" connected-entity-id="_1490184243036" v="true" name="paymentMode" id="_149020723198887">
+                <jpa:bv/>
+            </jpa:many-to-one>
+            <jpa:many-to-one primaryKey="true" connected-entity-id="_1490178979567" connected-attribute-id="_149020760041892" v="true" name="bill" id="_149020760041791">
+                <jpa:bv/>
+            </jpa:many-to-one>
+            <jpa:id attribute-type="Long" v="true" name="id" id="_149020690169583">
+                <jpa:bv/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:nq e="false" name="Payment.findAll">
+            <jpa:query>Select e from Payment e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Payment.findByAmount">
+            <jpa:query>Select p from Payment p where p.amount=:amount</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Payment.findByCurrency">
+            <jpa:query>Select p from Payment p where p.currency=:currency</jpa:query>
+        </jpa:nq>
+        <jpa:el/>
+    </jpa:entity>
     <jpa:snp loc="BEFORE_PACKAGE" e="true">/**
  * This file was generated by the JPA Modeler
  */</jpa:snp>
@@ -510,12 +577,14 @@
             <i ref="_1490100852900" x="577" y="85"/>
             <i ref="_1490101520286" x="433" y="515"/>
             <i ref="_1490104062170" x="-102" y="617"/>
-            <i ref="_1490113906035" x="132" y="1104"/>
+            <i ref="_1490113906035" x="132" y="1178"/>
             <i ref="_1490101376664" x="268" y="289"/>
-            <i ref="_1490113751330" x="-85" y="1104"/>
+            <i ref="_1490113751330" x="-70" y="1178"/>
+            <i ref="_1490206901623" x="399" y="1289"/>
             <i ref="_1490178979567" x="816" y="1089"/>
             <i ref="_1490101737208" x="-26" y="304"/>
             <i ref="_1490101456632" x="193" y="462"/>
+            <i ref="_1490184243036" x="399" y="1090"/>
             <i ref="_1490100823157" x="259" y="63"/>
             <i ref="_1490180682743" x="712" y="798"/>
             <i ref="_1490101555530" x="433" y="798"/>
