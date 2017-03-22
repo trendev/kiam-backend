@@ -4,12 +4,14 @@
 
 package fr.trendev.comptandye.entity;
 
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -32,8 +34,8 @@ public class Client {
     @ManyToOne(targetEntity = Address.class)
     private Address address;
 
-    @ManyToOne(targetEntity = Professional.class)
-    private Professional professional;
+    @OneToMany(targetEntity = ClientBill.class,mappedBy = "client")
+    private List<ClientBill> clientBills;
 
 
     public Long getId() {
@@ -68,12 +70,12 @@ public class Client {
         this.address = address;
     }
 
-    public Professional getProfessional() {
-        return this.professional;
+    public List<ClientBill> getClientBills() {
+        return this.clientBills;
     }
 
-    public void setProfessional(Professional professional) {
-        this.professional = professional;
+    public void setClientBills(List<ClientBill> clientBills) {
+        this.clientBills = clientBills;
     }
 
 

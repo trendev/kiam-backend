@@ -7,7 +7,6 @@ package fr.trendev.comptandye.entity;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -28,11 +27,13 @@ public class Professional extends Customer {
     @OneToMany(targetEntity = Offering.class,mappedBy = "professional")
     private List<Offering> offerings;
 
-    @OneToMany(targetEntity = Client.class,mappedBy = "professional")
+    @OneToMany(targetEntity = Bill.class,mappedBy = "professional")
+    private List<Bill> bills;
+
+    @OneToMany(targetEntity = Client.class)
     private List<Client> clients;
 
-    @ManyToMany(targetEntity = Individual.class)
-    @JoinTable(name="CLIENT_RELATIONSHIP")
+    @ManyToMany(targetEntity = Individual.class,mappedBy = "professionals")
     private List<Individual> individuals;
 
 
@@ -58,6 +59,14 @@ public class Professional extends Customer {
 
     public void setOfferings(List<Offering> offerings) {
         this.offerings = offerings;
+    }
+
+    public List<Bill> getBills() {
+        return this.bills;
+    }
+
+    public void setBills(List<Bill> bills) {
+        this.bills = bills;
     }
 
     public List<Client> getClients() {

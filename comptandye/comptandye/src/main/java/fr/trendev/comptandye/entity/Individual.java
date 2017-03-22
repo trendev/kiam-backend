@@ -7,6 +7,7 @@ package fr.trendev.comptandye.entity;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 /**
  * @author jsie
@@ -15,9 +16,20 @@ import javax.persistence.ManyToMany;
 @Entity
 public class Individual extends Customer { 
 
-    @ManyToMany(targetEntity = Professional.class,mappedBy = "individuals")
+    @OneToMany(targetEntity = InvidualBill.class,mappedBy = "individual")
+    private List<InvidualBill> invidualBills;
+
+    @ManyToMany(targetEntity = Professional.class)
     private List<Professional> professionals;
 
+
+    public List<InvidualBill> getInvidualBills() {
+        return this.invidualBills;
+    }
+
+    public void setInvidualBills(List<InvidualBill> invidualBills) {
+        this.invidualBills = invidualBills;
+    }
 
     public List<Professional> getProfessionals() {
         return this.professionals;

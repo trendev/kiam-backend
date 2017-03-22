@@ -21,6 +21,9 @@
     <class>fr.trendev.comptandye.entity.ServiceSet</class>
     <class>fr.trendev.comptandye.entity.Package</class>
     <class>fr.trendev.comptandye.entity.Offering</class>
+    <class>fr.trendev.comptandye.entity.Bill</class>
+    <class>fr.trendev.comptandye.entity.InvidualBill</class>
+    <class>fr.trendev.comptandye.entity.ClientBill</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
