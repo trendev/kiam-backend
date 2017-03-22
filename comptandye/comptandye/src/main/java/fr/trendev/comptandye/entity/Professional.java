@@ -25,8 +25,10 @@ public class Professional extends Customer {
     @OneToOne(targetEntity = SocialNetworkAccount.class)
     private SocialNetworkAccount socialNetworkAccount;
 
-    @OneToMany(targetEntity = Client.class)
-    @JoinTable(name="PRO_CLIENT")
+    @OneToMany(targetEntity = Offering.class,mappedBy = "professional")
+    private List<Offering> offerings;
+
+    @OneToMany(targetEntity = Client.class,mappedBy = "professional")
     private List<Client> clients;
 
     @ManyToMany(targetEntity = Individual.class)
@@ -48,6 +50,14 @@ public class Professional extends Customer {
 
     public void setSocialNetworkAccount(SocialNetworkAccount socialNetworkAccount) {
         this.socialNetworkAccount = socialNetworkAccount;
+    }
+
+    public List<Offering> getOfferings() {
+        return this.offerings;
+    }
+
+    public void setOfferings(List<Offering> offerings) {
+        this.offerings = offerings;
     }
 
     public List<Client> getClients() {

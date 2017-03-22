@@ -5,32 +5,33 @@
 package fr.trendev.comptandye.entity;
 
 import javax.persistence.Basic;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 /**
  * @author jsie
  */
 
 @Entity
-public class Client { 
+@DiscriminatorColumn(length=31)
+public abstract class Offering { 
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
     @Basic
-    private String email;
+    private String name;
 
-    @OneToOne(targetEntity = CustomerDetails.class)
-    private CustomerDetails customerDetails;
+    @Basic
+    private long price;
 
-    @ManyToOne(targetEntity = Address.class)
-    private Address address;
+    @Basic
+    private int duration;
 
     @ManyToOne(targetEntity = Professional.class)
     private Professional professional;
@@ -44,28 +45,28 @@ public class Client {
         this.id = id;
     }
 
-    public String getEmail() {
-        return this.email;
+    public String getName() {
+        return this.name;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public CustomerDetails getCustomerDetails() {
-        return this.customerDetails;
+    public long getPrice() {
+        return this.price;
     }
 
-    public void setCustomerDetails(CustomerDetails customerDetails) {
-        this.customerDetails = customerDetails;
+    public void setPrice(long price) {
+        this.price = price;
     }
 
-    public Address getAddress() {
-        return this.address;
+    public int getDuration() {
+        return this.duration;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     public Professional getProfessional() {

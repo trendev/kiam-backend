@@ -101,9 +101,11 @@
             <jpa:basic attribute-type="String" v="true" name="website" id="_1490104021917395">
                 <jpa:bv/>
             </jpa:basic>
-            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1490101555530" v="true" name="clients" id="_14901098838551918">
+            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490172966686" connected-attribute-id="_149017620658456" v="true" name="offerings" id="_149017620658557">
                 <jpa:bv/>
-                <jpa:join-table name="PRO_CLIENT"/>
+            </jpa:one-to-many>
+            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490101555530" connected-attribute-id="_149017624286258" v="true" name="clients" id="_149017624286359">
+                <jpa:bv/>
             </jpa:one-to-many>
             <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490104062170" connected-attribute-id="_14901074973721133" v="true" name="socialNetworkAccount" id="_14901074973711132">
                 <jpa:bv/>
@@ -158,6 +160,9 @@
                 <jpa:bv/>
             </jpa:basic>
             <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490101737208" v="true" name="address" id="_14901104337732074">
+                <jpa:bv/>
+            </jpa:many-to-one>
+            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490101456632" connected-attribute-id="_149017624286359" v="true" name="professional" id="_149017624286258">
                 <jpa:bv/>
             </jpa:many-to-one>
             <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490101578444" v="true" name="customerDetails" id="_1490105698949563">
@@ -330,29 +335,12 @@
         <jpa:el/>
         <jpa:table name="SOCIAL_NETWORK_ACCOUNT"/>
     </jpa:entity>
-    <jpa:entity xre="false" compositePrimaryKeyClass="ServicePK" abs="false" class="Service" v="true" m="false" rootElement="_14901008082901" id="_1490113751330">
+    <jpa:entity xre="false" compositePrimaryKeyClass="ServicePK" abs="false" class="Service" superclassId="_1490172966686" v="true" m="false" rootElement="_14901008082901" id="_1490113751330">
         <jpa:ts e="true"/>
         <jpa:hc e="true"/>
         <jpa:eq e="true"/>
         <jpa:ath>jsie</jpa:ath>
-        <jpa:attributes>
-            <jpa:basic attribute-type="String" v="true" name="name" id="_14901137582022694">
-                <jpa:bv/>
-            </jpa:basic>
-            <jpa:basic attribute-type="long" v="true" name="price" id="_14901138272402697">
-                <jpa:bv/>
-            </jpa:basic>
-            <jpa:basic attribute-type="int" v="true" name="duration" id="_14901138709032698">
-                <jpa:bv/>
-            </jpa:basic>
-            <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490113906035" connected-attribute-id="_14901139535302702" v="true" name="serviceSets" id="_14901139535312703">
-                <jpa:bv/>
-            </jpa:many-to-many>
-            <jpa:id attribute-type="Long" v="true" name="id" id="_14901137513442692">
-                <jpa:bv/>
-                <jpa:generated-value strategy="AUTO"/>
-            </jpa:id>
-        </jpa:attributes>
+        <jpa:attributes/>
         <jpa:nq e="false" name="Service.findAll">
             <jpa:query>Select e from Service e</jpa:query>
         </jpa:nq>
@@ -367,36 +355,65 @@
         </jpa:nq>
         <jpa:el/>
     </jpa:entity>
-    <jpa:entity xre="false" compositePrimaryKeyClass="ServiceSetPK" abs="false" class="ServiceSet" v="true" m="false" rootElement="_14901008082901" id="_1490113906035">
+    <jpa:entity xre="false" compositePrimaryKeyClass="PackagePK" abs="false" class="Package" superclassId="_1490172966686" v="true" m="false" rootElement="_14901008082901" id="_1490113906035">
         <jpa:ts e="true"/>
         <jpa:hc e="true"/>
         <jpa:eq e="true"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
-            <jpa:basic attribute-type="String" v="true" name="name" id="_14901139149692701">
+            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1490172966686" v="true" name="offerings" id="_149017313754828">
+                <jpa:bv/>
+                <jpa:join-table name="PACKAGE_SERVICES"/>
+            </jpa:one-to-many>
+        </jpa:attributes>
+        <jpa:nq e="false" name="Package.findAll">
+            <jpa:query>Select e from Package e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Package.findByName">
+            <jpa:query>Select s from Package s where s.name=:name</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Package.findByTotalPrice">
+            <jpa:query>Select s from Package s where s.totalPrice=:totalPrice</jpa:query>
+        </jpa:nq>
+        <jpa:el/>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyClass="OfferingPK" abs="true" class="Offering" v="true" m="false" rootElement="_14901008082901" id="_1490172966686">
+        <jpa:ts e="true"/>
+        <jpa:hc e="true"/>
+        <jpa:eq e="true"/>
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" name="name" id="_1490176760174139">
                 <jpa:bv/>
             </jpa:basic>
-            <jpa:basic attribute-type="long" v="true" name="totalPrice" id="_14901139921892704">
+            <jpa:basic attribute-type="long" v="true" name="price" id="_1490176780392140">
                 <jpa:bv/>
             </jpa:basic>
-            <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490113751330" connected-attribute-id="_14901139535312703" v="true" name="services" id="_14901139535302702">
+            <jpa:basic attribute-type="int" v="true" name="duration" id="_1490176787202141">
                 <jpa:bv/>
-            </jpa:many-to-many>
-            <jpa:id attribute-type="Long" v="true" name="id" id="_14901139060432699">
+            </jpa:basic>
+            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490101456632" connected-attribute-id="_149017620658557" v="true" name="professional" id="_149017620658456">
+                <jpa:bv/>
+            </jpa:many-to-one>
+            <jpa:id attribute-type="Long" v="true" name="id" id="_149017296671124">
                 <jpa:bv/>
                 <jpa:generated-value strategy="AUTO"/>
             </jpa:id>
         </jpa:attributes>
-        <jpa:nq e="false" name="ServiceSet.findAll">
-            <jpa:query>Select e from ServiceSet e</jpa:query>
+        <jpa:nq e="false" name="Offering.findAll">
+            <jpa:query>Select e from Offering e</jpa:query>
         </jpa:nq>
-        <jpa:nq e="false" name="ServiceSet.findByName">
-            <jpa:query>Select s from ServiceSet s where s.name=:name</jpa:query>
+        <jpa:nq e="false" name="Offering.findByName">
+            <jpa:query>Select o from Offering o where o.name=:name</jpa:query>
         </jpa:nq>
-        <jpa:nq e="false" name="ServiceSet.findByTotalPrice">
-            <jpa:query>Select s from ServiceSet s where s.totalPrice=:totalPrice</jpa:query>
+        <jpa:nq e="false" name="Offering.findByPrice">
+            <jpa:query>Select o from Offering o where o.price=:price</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Offering.findByDuration">
+            <jpa:query>Select o from Offering o where o.duration=:duration</jpa:query>
         </jpa:nq>
         <jpa:el/>
+        <jpa:discriminator-column/>
     </jpa:entity>
     <jpa:snp loc="BEFORE_PACKAGE" e="true">/**
  * This file was generated by the JPA Modeler
@@ -409,6 +426,7 @@
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
+            <i ref="_1490172966686" x="-16" y="901"/>
             <i ref="_1490101737208" x="-26" y="304"/>
             <i ref="_1490101456632" x="193" y="462"/>
             <i ref="_1490101578444" x="577" y="289"/>
@@ -417,9 +435,9 @@
             <i ref="_1490101555530" x="433" y="637"/>
             <i ref="_1490101520286" x="433" y="535"/>
             <i ref="_1490104062170" x="-102" y="617"/>
-            <i ref="_1490113906035" x="375" y="798"/>
+            <i ref="_1490113906035" x="132" y="1104"/>
             <i ref="_1490101376664" x="268" y="289"/>
-            <i ref="_1490113751330" x="193" y="798"/>
+            <i ref="_1490113751330" x="-85" y="1104"/>
         </jpa:ws>
     </jpa:wsl>
 </jpa:entity-mappings>
