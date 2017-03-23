@@ -453,6 +453,9 @@
             <jpa:basic attribute-type="boolean" v="true" name="paidoff" id="_149018414188437">
                 <jpa:bv/>
             </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" name="comment" id="_1490288120263797">
+                <jpa:bv/>
+            </jpa:basic>
             <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_1490179812678394" v="true" name="professional" id="_1490179812677393">
                 <jpa:bv/>
             </jpa:many-to-one>
@@ -487,6 +490,9 @@
         <jpa:nq e="false" name="Bill.findByPaidoff">
             <jpa:query>Select b from Bill b where b.paidoff=:paidoff</jpa:query>
         </jpa:nq>
+        <jpa:nq e="false" name="Bill.findByComment">
+            <jpa:query>Select b from Bill b where b.comment=:comment</jpa:query>
+        </jpa:nq>
         <jpa:el/>
         <jpa:discriminator-column/>
     </jpa:entity>
@@ -511,9 +517,12 @@
         <jpa:eq e="true"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
-            <jpa:many-to-one primaryKey="false" connected-entity-id="_1490101555530" connected-attribute-id="_1490181195213607" v="true" name="client" id="_1490181195212606">
+            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490101555530" connected-attribute-id="_1490181195213607" v="true" name="client" id="_1490181195212606">
                 <jpa:bv/>
             </jpa:many-to-one>
+            <jpa:one-to-one own="true" primaryKey="false" connected-entity-id="_1490281931338" v="true" name="collectiveGroup" id="_1490288049311796">
+                <jpa:bv/>
+            </jpa:one-to-one>
         </jpa:attributes>
         <jpa:nq e="false" name="ClientBill.findAll">
             <jpa:query>Select e from ClientBill e</jpa:query>
@@ -655,7 +664,7 @@
             <i ref="_1490101456632" x="193" y="462"/>
             <i ref="_1490184243036" x="216" y="1459"/>
             <i ref="_1490100823157" x="259" y="63"/>
-            <i ref="_1490180682743" x="712" y="798"/>
+            <i ref="_1490180682743" x="727" y="798"/>
             <i ref="_1490101555530" x="433" y="798"/>
         </jpa:ws>
     </jpa:wsl>
