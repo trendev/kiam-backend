@@ -179,7 +179,7 @@
             <jpa:one-to-one own="true" primaryKey="false" connected-entity-id="_1490101578444" v="true" name="customerDetails" id="_1490283406937193">
                 <jpa:bv/>
             </jpa:one-to-one>
-            <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490281931338" connected-attribute-id="_1490283569372198" v="true" name="groupings" id="_1490283569412199">
+            <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490281931338" connected-attribute-id="_1490283569372198" v="true" name="collectiveGroups" id="_1490283569412199">
                 <jpa:bv/>
             </jpa:many-to-many>
             <jpa:id attribute-type="Long" v="true" name="id" id="_149010155553255">
@@ -233,9 +233,9 @@
                 <jpa:bv/>
                 <jpa:lob/>
             </jpa:basic>
-            <jpa:basic attribute-type="String" v="true" name="comments" id="_1490283996756202">
+            <jpa:one-to-many collection-type="java.util.List" connected-entity-id="_1490286275796" connected-attribute-id="_1490286401191282" v="true" name="comments" id="_1490286401191283">
                 <jpa:bv/>
-            </jpa:basic>
+            </jpa:one-to-many>
             <jpa:id attribute-type="Long" v="true" name="id" id="_149010157844757">
                 <jpa:bv/>
                 <jpa:generated-value strategy="AUTO"/>
@@ -575,7 +575,7 @@
         </jpa:nq>
         <jpa:el/>
     </jpa:entity>
-    <jpa:entity xre="false" compositePrimaryKeyClass="GroupingPK" abs="false" class="Grouping" v="true" m="false" rootElement="_14901008082901" id="_1490281931338">
+    <jpa:entity xre="false" compositePrimaryKeyClass="CollectiveGroupPK" abs="false" class="CollectiveGroup" v="true" m="false" rootElement="_14901008082901" id="_1490281931338">
         <jpa:ts e="true"/>
         <jpa:hc e="true"/>
         <jpa:eq e="true"/>
@@ -595,11 +595,35 @@
                 <jpa:generated-value strategy="AUTO"/>
             </jpa:id>
         </jpa:attributes>
-        <jpa:nq e="false" name="Grouping.findAll">
-            <jpa:query>Select e from Grouping e</jpa:query>
+        <jpa:nq e="false" name="CollectiveGroup.findAll">
+            <jpa:query>Select e from CollectiveGroup e</jpa:query>
         </jpa:nq>
-        <jpa:nq e="false" name="Grouping.findByGroupName">
-            <jpa:query>Select c from Grouping c where c.groupName=:groupName</jpa:query>
+        <jpa:nq e="false" name="CollectiveGroup.findByGroupName">
+            <jpa:query>Select c from CollectiveGroup c where c.groupName=:groupName</jpa:query>
+        </jpa:nq>
+        <jpa:el/>
+        <jpa:table name="COLLECTIVE_GROUP"/>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyType="D" compositePrimaryKeyClass="CommentPK" abs="false" class="Comment" v="true" m="false" rootElement="_14901008082901" id="_1490286275796">
+        <jpa:ts e="true"/>
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" name="description" id="_1490286319964280">
+                <jpa:bv/>
+            </jpa:basic>
+            <jpa:many-to-one primaryKey="true" connected-entity-id="_1490101578444" connected-attribute-id="_1490286401191283" v="true" name="customerDetails" id="_1490286401191282">
+                <jpa:bv/>
+            </jpa:many-to-one>
+            <jpa:id attribute-type="Long" v="true" name="id" id="_1490286276048277">
+                <jpa:bv/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:nq e="false" name="Comment.findAll">
+            <jpa:query>Select e from Comment e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Comment.findByDescription">
+            <jpa:query>Select c from Comment c where c.description=:description</jpa:query>
         </jpa:nq>
         <jpa:el/>
     </jpa:entity>
@@ -614,21 +638,22 @@
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1490172966686" x="-231" y="913"/>
-            <i ref="_1490180671085" x="778" y="515"/>
+            <i ref="_1490172966686" x="-231" y="882"/>
+            <i ref="_1490180671085" x="778" y="561"/>
             <i ref="_1490101578444" x="577" y="289"/>
             <i ref="_1490100852900" x="577" y="85"/>
-            <i ref="_1490101520286" x="433" y="515"/>
-            <i ref="_1490104062170" x="-143" y="617"/>
-            <i ref="_1490113906035" x="-83" y="1195"/>
+            <i ref="_1490101520286" x="463" y="561"/>
+            <i ref="_1490104062170" x="-178" y="617"/>
+            <i ref="_1490113906035" x="-83" y="1208"/>
             <i ref="_1490101376664" x="268" y="289"/>
-            <i ref="_1490113751330" x="-327" y="1195"/>
-            <i ref="_1490206901623" x="399" y="1647"/>
+            <i ref="_1490113751330" x="-351" y="1195"/>
+            <i ref="_1490206901623" x="399" y="1634"/>
             <i ref="_1490178979567" x="880" y="1372"/>
-            <i ref="_1490101737208" x="-26" y="304"/>
+            <i ref="_1490286275796" x="835" y="289"/>
+            <i ref="_1490101737208" x="-49" y="253"/>
             <i ref="_1490281931338" x="577" y="1057"/>
             <i ref="_1490101456632" x="193" y="462"/>
-            <i ref="_1490184243036" x="227" y="1504"/>
+            <i ref="_1490184243036" x="216" y="1459"/>
             <i ref="_1490100823157" x="259" y="63"/>
             <i ref="_1490180682743" x="712" y="798"/>
             <i ref="_1490101555530" x="433" y="798"/>
