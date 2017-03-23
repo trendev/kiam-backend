@@ -110,7 +110,10 @@
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490178979567" connected-attribute-id="_1490179812677393" v="true" name="bills" id="_1490179812678394">
                 <jpa:bv/>
             </jpa:one-to-many>
-            <jpa:one-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490101555530" v="true" name="clients" id="_1490180633652495">
+            <jpa:one-to-many collection-type="java.util.List" connected-entity-id="_1490101555530" connected-attribute-id="_14902921628221105" v="true" name="clients" id="_14902921628221106">
+                <jpa:bv/>
+            </jpa:one-to-many>
+            <jpa:one-to-many collection-type="java.util.List" connected-entity-id="_1490281931338" connected-attribute-id="_14902925544431116" v="true" name="collectiveGroups" id="_14902925544441117">
                 <jpa:bv/>
             </jpa:one-to-many>
             <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490101520286" connected-attribute-id="_1490180547173493" v="true" name="individuals" id="_1490180547178494">
@@ -168,6 +171,9 @@
                 <jpa:bv/>
             </jpa:basic>
             <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490101737208" v="true" name="address" id="_14901104337732074">
+                <jpa:bv/>
+            </jpa:many-to-one>
+            <jpa:many-to-one primaryKey="false" connected-entity-id="_1490101456632" connected-attribute-id="_14902921628221106" v="true" name="professional" id="_14902921628221105">
                 <jpa:bv/>
             </jpa:many-to-one>
             <jpa:one-to-many collection-type="java.util.List" connected-entity-id="_1490180682743" connected-attribute-id="_1490181195212606" v="true" name="clientBills" id="_1490181195213607">
@@ -505,6 +511,9 @@
             <jpa:many-to-one primaryKey="false" connected-entity-id="_1490101520286" connected-attribute-id="_1490181206898609" v="true" name="individual" id="_1490181206897608">
                 <jpa:bv/>
             </jpa:many-to-one>
+            <jpa:one-to-one own="true" primaryKey="false" connected-entity-id="_1490281931338" v="true" name="collectiveGroup" id="_14902926907031124">
+                <jpa:bv/>
+            </jpa:one-to-one>
         </jpa:attributes>
         <jpa:nq e="false" name="InvidualBill.findAll">
             <jpa:query>Select e from InvidualBill e</jpa:query>
@@ -593,6 +602,9 @@
             <jpa:basic attribute-type="String" v="true" name="groupName" id="_1490282399999187">
                 <jpa:bv/>
             </jpa:basic>
+            <jpa:many-to-one primaryKey="false" connected-entity-id="_1490101456632" connected-attribute-id="_14902925544441117" v="true" name="professional" id="_14902925544431116">
+                <jpa:bv/>
+            </jpa:many-to-one>
             <jpa:one-to-one own="true" primaryKey="false" connected-entity-id="_1490101737208" v="true" name="address" id="_1490283543806197">
                 <jpa:bv/>
             </jpa:one-to-one>
@@ -648,7 +660,7 @@
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
             <i ref="_1490172966686" x="-231" y="882"/>
-            <i ref="_1490180671085" x="778" y="561"/>
+            <i ref="_1490180671085" x="826" y="594"/>
             <i ref="_1490101578444" x="577" y="289"/>
             <i ref="_1490100852900" x="577" y="85"/>
             <i ref="_1490101520286" x="463" y="561"/>
@@ -656,7 +668,7 @@
             <i ref="_1490113906035" x="-83" y="1208"/>
             <i ref="_1490101376664" x="268" y="289"/>
             <i ref="_1490113751330" x="-351" y="1195"/>
-            <i ref="_1490206901623" x="399" y="1634"/>
+            <i ref="_1490206901623" x="515" y="1534"/>
             <i ref="_1490178979567" x="880" y="1372"/>
             <i ref="_1490286275796" x="835" y="289"/>
             <i ref="_1490101737208" x="-49" y="253"/>
@@ -664,7 +676,7 @@
             <i ref="_1490101456632" x="193" y="462"/>
             <i ref="_1490184243036" x="216" y="1459"/>
             <i ref="_1490100823157" x="259" y="63"/>
-            <i ref="_1490180682743" x="727" y="798"/>
+            <i ref="_1490180682743" x="739" y="747"/>
             <i ref="_1490101555530" x="433" y="798"/>
         </jpa:ws>
     </jpa:wsl>
