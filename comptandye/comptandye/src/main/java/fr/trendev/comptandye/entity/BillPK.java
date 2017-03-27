@@ -13,16 +13,16 @@ public class BillPK implements Serializable {
 
     private Long reference;
 
-    private Date deliveyDate;
+    private Date deliveryDate;
 
     private String professional;
 
     public BillPK(){
     }
 
-    public BillPK(Long reference,Date deliveyDate,String professional){
+    public BillPK(Long reference,Date deliveryDate,String professional){
         this.reference=reference;
-        this.deliveyDate=deliveyDate;
+        this.deliveryDate=deliveryDate;
         this.professional=professional;
     }
 
@@ -35,12 +35,12 @@ public class BillPK implements Serializable {
         this.reference = reference;
     }
 
-   public Date getDeliveyDate() {
-        return this.deliveyDate;
+   public Date getDeliveryDate() {
+        return this.deliveryDate;
     }
 
-    public void setDeliveyDate (Date deliveyDate) {
-        this.deliveyDate = deliveyDate;
+    public void setDeliveryDate (Date deliveryDate) {
+        this.deliveryDate = deliveryDate;
     }
 
    public String getProfessional() {
@@ -57,23 +57,23 @@ public class BillPK implements Serializable {
         if (!java.util.Objects.equals(getClass(), obj.getClass())) {return false;}
         final BillPK other = (BillPK) obj;
         if (!java.util.Objects.equals(this.getReference(), other.getReference())) {        return false;        }
-        if (!java.util.Objects.equals(this.getDeliveyDate(), other.getDeliveyDate())) {        return false;        }
+        if (!java.util.Objects.equals(this.getDeliveryDate(), other.getDeliveryDate())) {        return false;        }
         if (!java.util.Objects.equals(this.getProfessional(), other.getProfessional())) {        return false;        }
         return true;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 89 * hash + (this.getReference() != null ? this.getReference().hashCode() : 0);
-        hash = 89 * hash + (this.getDeliveyDate() != null ? this.getDeliveyDate().hashCode() : 0);
-        hash = 89 * hash + (this.getProfessional() != null ? this.getProfessional().hashCode() : 0);
+        int hash = 7;
+        hash = 61 * hash + (this.getReference() != null ? this.getReference().hashCode() : 0);
+        hash = 61 * hash + (this.getDeliveryDate() != null ? this.getDeliveryDate().hashCode() : 0);
+        hash = 61 * hash + (this.getProfessional() != null ? this.getProfessional().hashCode() : 0);
         return hash;
     }
 
     @Override
     public String toString() {
-        return "BillPK{" + " reference=" + reference + ", deliveyDate=" + deliveyDate + ", professional=" + professional + '}';
+        return "BillPK{" + " reference=" + reference + ", deliveryDate=" + deliveryDate + ", professional=" + professional + '}';
     }
 
 }

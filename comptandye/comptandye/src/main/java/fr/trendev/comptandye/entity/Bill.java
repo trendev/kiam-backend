@@ -34,7 +34,7 @@ public abstract class Bill {
 
     @Id
     @Temporal(TemporalType.DATE)
-    private Date deliveyDate;
+    private Date deliveryDate;
 
     @Basic
     private long amount;
@@ -66,12 +66,12 @@ public abstract class Bill {
         this.reference = reference;
     }
 
-    public Date getDeliveyDate() {
-        return this.deliveyDate;
+    public Date getDeliveryDate() {
+        return this.deliveryDate;
     }
 
-    public void setDeliveyDate(Date deliveyDate) {
-        this.deliveyDate = deliveyDate;
+    public void setDeliveryDate(Date deliveryDate) {
+        this.deliveryDate = deliveryDate;
     }
 
     public long getAmount() {

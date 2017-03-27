@@ -43,7 +43,7 @@ public class CustomerDetails {
 
     @Basic
     @Temporal(TemporalType.DATE)
-    private Date birthday;
+    private Date birthdate;
 
     @Basic
     private char sex;
@@ -96,12 +96,12 @@ public class CustomerDetails {
         this.phone = phone;
     }
 
-    public Date getBirthday() {
-        return this.birthday;
+    public Date getBirthdate() {
+        return this.birthdate;
     }
 
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
     }
 
     public char getSex() {
