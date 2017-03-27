@@ -24,6 +24,11 @@
     <class>fr.trendev.comptandye.entity.Bill</class>
     <class>fr.trendev.comptandye.entity.InvidualBill</class>
     <class>fr.trendev.comptandye.entity.ClientBill</class>
+    <class>fr.trendev.comptandye.entity.SocialNetworkAccounts</class>
+    <class>fr.trendev.comptandye.entity.PaymentMode</class>
+    <class>fr.trendev.comptandye.entity.Payment</class>
+    <class>fr.trendev.comptandye.entity.CollectiveGroup</class>
+    <class>fr.trendev.comptandye.entity.Comment</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>

@@ -22,6 +22,9 @@ public abstract class Customer extends UserAccount {
     @OneToOne(targetEntity = CustomerDetails.class)
     private CustomerDetails customerDetails;
 
+    @OneToOne(targetEntity = SocialNetworkAccounts.class)
+    private SocialNetworkAccounts socialNetworkAccounts;
+
     @ManyToOne(targetEntity = Address.class)
     private Address address;
 
@@ -40,6 +43,14 @@ public abstract class Customer extends UserAccount {
 
     public void setCustomerDetails(CustomerDetails customerDetails) {
         this.customerDetails = customerDetails;
+    }
+
+    public SocialNetworkAccounts getSocialNetworkAccounts() {
+        return this.socialNetworkAccounts;
+    }
+
+    public void setSocialNetworkAccounts(SocialNetworkAccounts socialNetworkAccounts) {
+        this.socialNetworkAccounts = socialNetworkAccounts;
     }
 
     public Address getAddress() {

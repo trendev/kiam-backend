@@ -6,6 +6,7 @@ package fr.trendev.comptandye.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  * @author jsie
@@ -14,9 +15,20 @@ import javax.persistence.ManyToOne;
 @Entity
 public class InvidualBill extends Bill { 
 
+    @OneToOne(targetEntity = CollectiveGroup.class)
+    private CollectiveGroup collectiveGroup;
+
     @ManyToOne(targetEntity = Individual.class)
     private Individual individual;
 
+
+    public CollectiveGroup getCollectiveGroup() {
+        return this.collectiveGroup;
+    }
+
+    public void setCollectiveGroup(CollectiveGroup collectiveGroup) {
+        this.collectiveGroup = collectiveGroup;
+    }
 
     public Individual getIndividual() {
         return this.individual;

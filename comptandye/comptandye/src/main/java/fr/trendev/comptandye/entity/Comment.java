@@ -4,40 +4,39 @@
 
 package fr.trendev.comptandye.entity;
 
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.IdClass;
+import javax.persistence.ManyToOne;
 
 /**
  * @author jsie
  */
 
 @Entity
-@Table(name="USER_GROUP")
-public class UserGroup { 
+@IdClass(CommentPK.class)
+public class Comment { 
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private String name;
+    private Long id;
 
     @Basic
     private String description;
 
-    @ManyToMany(targetEntity = UserAccount.class,mappedBy = "userGroups")
-    private List<UserAccount> userAccounts;
+    @Id@ManyToOne(targetEntity = CustomerDetails.class)
+    private CustomerDetails customerDetails;
 
 
-    public String getName() {
-        return this.name;
+    public Long getId() {
+        return this.id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getDescription() {
@@ -48,12 +47,12 @@ public class UserGroup {
         this.description = description;
     }
 
-    public List<UserAccount> getUserAccounts() {
-        return this.userAccounts;
+    public CustomerDetails getCustomerDetails() {
+        return this.customerDetails;
     }
 
-    public void setUserAccounts(List<UserAccount> userAccounts) {
-        this.userAccounts = userAccounts;
+    public void setCustomerDetails(CustomerDetails customerDetails) {
+        this.customerDetails = customerDetails;
     }
 
 

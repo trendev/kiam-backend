@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -41,8 +42,17 @@ public abstract class Bill {
     @Basic
     private int discount;
 
+    @Basic
+    private boolean paidoff;
+
+    @Basic
+    private String comment;
+
     @Id@ManyToOne(targetEntity = Professional.class)
     private Professional professional;
+
+    @OneToMany(targetEntity = Payment.class,mappedBy = "bill")
+    private List<Payment> payments;
 
     @ManyToMany(targetEntity = Offering.class)
     private List<Offering> offerings;
@@ -80,12 +90,36 @@ public abstract class Bill {
         this.discount = discount;
     }
 
+    public boolean isPaidoff() {
+        return this.paidoff;
+    }
+
+    public void setPaidoff(boolean paidoff) {
+        this.paidoff = paidoff;
+    }
+
+    public String getComment() {
+        return this.comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
     public Professional getProfessional() {
         return this.professional;
     }
 
     public void setProfessional(Professional professional) {
         this.professional = professional;
+    }
+
+    public List<Payment> getPayments() {
+        return this.payments;
+    }
+
+    public void setPayments(List<Payment> payments) {
+        this.payments = payments;
     }
 
     public List<Offering> getOfferings() {
