@@ -6,7 +6,6 @@ package fr.trendev.comptandye.entity;
 
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -21,7 +20,7 @@ public class Professional extends Customer {
     @Basic
     private String website;
 
-    @OneToMany(cascade={CascadeType.ALL},targetEntity = Offering.class,mappedBy = "professional")
+    @OneToMany(targetEntity = Offering.class,mappedBy = "professional")
     private List<Offering> offerings;
 
     @OneToMany(targetEntity = Bill.class,mappedBy = "professional")
