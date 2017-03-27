@@ -51,6 +51,9 @@
         <jpa:eq e="true"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" name="description" id="_149062419655951">
+                <jpa:bv/>
+            </jpa:basic>
             <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490100823157" connected-attribute-id="_14901160469863435" v="true" name="userAccounts" id="_14901160469883436">
                 <jpa:bv/>
             </jpa:many-to-many>
@@ -64,6 +67,9 @@
         </jpa:nq>
         <jpa:nq e="false" name="UserGroup.findByName">
             <jpa:query>Select u from UserGroup u where u.name=:name</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="UserGroup.findByDescription">
+            <jpa:query>Select u from UserGroup u where u.description=:description</jpa:query>
         </jpa:nq>
         <jpa:el/>
         <jpa:table name="USER_GROUP"/>
@@ -662,7 +668,7 @@
             <i ref="_1490172966686" x="-231" y="882"/>
             <i ref="_1490180671085" x="826" y="594"/>
             <i ref="_1490101578444" x="577" y="289"/>
-            <i ref="_1490100852900" x="577" y="85"/>
+            <i ref="_1490100852900" x="577" y="63"/>
             <i ref="_1490101520286" x="463" y="561"/>
             <i ref="_1490104062170" x="-178" y="617"/>
             <i ref="_1490113906035" x="-83" y="1208"/>
