@@ -7,6 +7,7 @@ package fr.trendev.comptandye.beans;
 
 import fr.trendev.comptandye.ejbsessions.UserGroupFacade;
 import fr.trendev.comptandye.entities.Administrator;
+import fr.trendev.comptandye.entities.Individual;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.util.PasswordGenerator;
@@ -72,7 +73,7 @@ public class ConfigureBean implements Serializable {
         juju.setPassword(PasswordGenerator.autoGenerate());
         juju.setUserGroups(new LinkedList<>());
 
-        Professional sylvioc = new Professional();
+        Individual sylvioc = new Individual();
         sylvioc.setEmail("sylvie.gay.suard@gmail.com");
         sylvioc.setUserGroups(new LinkedList<>());
 
@@ -80,6 +81,11 @@ public class ConfigureBean implements Serializable {
         pro.setName("Professional");
         pro.setDescription("This is the Professional User Group");
         pro.setUserAccounts(new LinkedList<>());
+
+        UserGroup ind = new UserGroup();
+        ind.setName("Individual");
+        ind.setDescription("This is the Individual User Group");
+        ind.setUserAccounts(new LinkedList<>());
 
         vgay.getUserGroups().add(pro);
         skonx.getUserGroups().add(pro);
@@ -97,10 +103,12 @@ public class ConfigureBean implements Serializable {
         em.persist(juju);
         em.persist(pro);
 
-        sylvioc.getUserGroups().add(pro);
-        pro.getUserAccounts().add(sylvioc);
+        sylvioc.getUserGroups().add(ind);
+        ind.getUserAccounts().add(sylvioc);
 
         em.persist(sylvioc);
+        em.persist(ind);
+
         sylvioc.setPassword(PasswordGenerator.encrypt_SHA256("password"));
         em.merge(sylvioc);
     }
