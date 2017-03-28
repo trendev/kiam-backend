@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<jpa:entity-mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" pkg="fr.trendev.comptandye.entity" v="3.6" rws="_14901008082912" Pws="_14901008082912" cws="_14901008082912" thm="PNBColorScheme" dbthm="PLightColorScheme" sm="false" xs="false" id="_14901008082901" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd">
+<jpa:entity-mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" pkg="fr.trendev.comptandye.entities" v="3.6" rws="_14901008082912" Pws="_14901008082912" cws="_14901008082912" thm="PNBColorScheme" dbthm="PLightColorScheme" sm="false" xs="false" id="_14901008082901" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd">
     <jpa:entity lbl-ref="_14901008440196" xre="false" compositePrimaryKeyClass="UserAccountPK" abs="true" class="UserAccount" v="true" m="false" rootElement="_14901008082901" id="_1490100823157">
         <jpa:ts e="true"/>
         <jpa:hc e="true"/>
@@ -122,6 +122,9 @@
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490281931338" connected-attribute-id="_14902925544431116" v="true" name="collectiveGroups" id="_14902925544441117">
                 <jpa:bv/>
             </jpa:one-to-many>
+            <jpa:one-to-many collection-type="java.util.List" connected-entity-id="_1490704206844" connected-attribute-id="_1490704545007122" v="true" name="categories" id="_1490704545008123">
+                <jpa:bv/>
+            </jpa:one-to-many>
             <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490101520286" connected-attribute-id="_1490180547173493" v="true" name="individuals" id="_1490180547178494">
                 <jpa:bv/>
             </jpa:many-to-many>
@@ -180,6 +183,9 @@
                 <jpa:bv/>
             </jpa:many-to-one>
             <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490101456632" connected-attribute-id="_14902921628221106" v="true" name="professional" id="_14902921628221105">
+                <jpa:bv/>
+            </jpa:many-to-one>
+            <jpa:many-to-one primaryKey="false" connected-entity-id="_1490704206844" connected-attribute-id="_1490704637505126" v="true" name="category" id="_1490704637505125">
                 <jpa:bv/>
             </jpa:many-to-one>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490180682743" connected-attribute-id="_1490181195212606" v="true" name="clientBills" id="_1490181195213607">
@@ -660,6 +666,49 @@
         </jpa:nq>
         <jpa:el/>
     </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyClass="AdministratorPK" abs="false" class="Administrator" superclassId="_1490100823157" v="true" m="false" rootElement="_14901008082901" id="_1490704123469">
+        <jpa:ts e="true"/>
+        <jpa:hc e="true"/>
+        <jpa:eq e="true"/>
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes/>
+        <jpa:nq e="false" name="Administrator.findAll">
+            <jpa:query>Select e from Administrator e</jpa:query>
+        </jpa:nq>
+        <jpa:el/>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyClass="CategoryPK" abs="false" class="Category" v="true" m="false" rootElement="_14901008082901" id="_1490704206844">
+        <jpa:ts e="true"/>
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" name="description" id="_1490704221835111">
+                <jpa:bv/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" name="name" id="_1490704473418120">
+                <jpa:bv/>
+            </jpa:basic>
+            <jpa:many-to-one primaryKey="false" connected-entity-id="_1490101456632" connected-attribute-id="_1490704545008123" v="true" name="professional" id="_1490704545007122">
+                <jpa:bv/>
+            </jpa:many-to-one>
+            <jpa:one-to-many collection-type="java.util.List" connected-entity-id="_1490101555530" connected-attribute-id="_1490704637505125" v="true" name="clients" id="_1490704637505126">
+                <jpa:bv/>
+            </jpa:one-to-many>
+            <jpa:id attribute-type="Long" v="true" name="id" id="_1490704207066109">
+                <jpa:bv/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:nq e="false" name="Category.findAll">
+            <jpa:query>Select e from Category e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Category.findByDescription">
+            <jpa:query>Select c from Category c where c.description=:description</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Category.findByName">
+            <jpa:query>Select c from Category c where c.name=:name</jpa:query>
+        </jpa:nq>
+        <jpa:el/>
+    </jpa:entity>
     <jpa:snp loc="BEFORE_PACKAGE" e="true">/**
  * This file was generated by the JPA Modeler
  */</jpa:snp>
@@ -671,25 +720,27 @@
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1490172966686" x="-235" y="878"/>
-            <i ref="_1490180671085" x="822" y="590"/>
-            <i ref="_1490101578444" x="573" y="285"/>
-            <i ref="_1490100852900" x="573" y="59"/>
-            <i ref="_1490101520286" x="459" y="557"/>
-            <i ref="_1490104062170" x="-182" y="613"/>
-            <i ref="_1490113906035" x="-87" y="1204"/>
-            <i ref="_1490101376664" x="264" y="285"/>
-            <i ref="_1490113751330" x="-355" y="1191"/>
-            <i ref="_1490206901623" x="511" y="1530"/>
-            <i ref="_1490178979567" x="876" y="1368"/>
-            <i ref="_1490286275796" x="831" y="285"/>
-            <i ref="_1490101737208" x="-53" y="249"/>
-            <i ref="_1490281931338" x="573" y="1053"/>
-            <i ref="_1490101456632" x="189" y="458"/>
-            <i ref="_1490184243036" x="212" y="1455"/>
-            <i ref="_1490100823157" x="255" y="59"/>
-            <i ref="_1490180682743" x="735" y="743"/>
-            <i ref="_1490101555530" x="429" y="794"/>
+            <i ref="_1490172966686" x="-239" y="874"/>
+            <i ref="_1490180671085" x="818" y="586"/>
+            <i ref="_1490704123469" x="45" y="265"/>
+            <i ref="_1490101578444" x="569" y="265"/>
+            <i ref="_1490100852900" x="567" y="29"/>
+            <i ref="_1490101520286" x="455" y="553"/>
+            <i ref="_1490104062170" x="-186" y="609"/>
+            <i ref="_1490113906035" x="-91" y="1200"/>
+            <i ref="_1490704206844" x="155" y="1013"/>
+            <i ref="_1490101376664" x="265" y="265"/>
+            <i ref="_1490113751330" x="-359" y="1187"/>
+            <i ref="_1490206901623" x="507" y="1526"/>
+            <i ref="_1490178979567" x="872" y="1364"/>
+            <i ref="_1490286275796" x="827" y="281"/>
+            <i ref="_1490101737208" x="-186" y="251"/>
+            <i ref="_1490281931338" x="569" y="1049"/>
+            <i ref="_1490101456632" x="185" y="454"/>
+            <i ref="_1490184243036" x="208" y="1451"/>
+            <i ref="_1490100823157" x="249" y="9"/>
+            <i ref="_1490180682743" x="731" y="739"/>
+            <i ref="_1490101555530" x="425" y="790"/>
         </jpa:ws>
     </jpa:wsl>
 </jpa:entity-mappings>
