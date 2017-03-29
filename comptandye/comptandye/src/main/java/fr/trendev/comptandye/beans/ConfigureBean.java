@@ -60,17 +60,20 @@ public class ConfigureBean implements Serializable {
 
         Professional vgay = new Professional();
         vgay.setEmail("vanessa.gay@gmail.com");
-        vgay.setPassword(PasswordGenerator.autoGenerate());
+        vgay.setPassword(PasswordGenerator.encrypt_SHA256(PasswordGenerator.
+                autoGenerate()));
         vgay.setUserGroups(new LinkedList<>());
 
         Professional skonx = new Professional();
         skonx.setEmail("skonx2006@hotmail.com");
-        skonx.setPassword(PasswordGenerator.autoGenerate());
+        skonx.setPassword(PasswordGenerator.encrypt_SHA256(PasswordGenerator.
+                autoGenerate()));
         skonx.setUserGroups(new LinkedList<>());
 
         Professional juju = new Professional();
         juju.setEmail("julien.sie@icloud.com");
-        juju.setPassword(PasswordGenerator.autoGenerate());
+        juju.setPassword(PasswordGenerator.encrypt_SHA256(PasswordGenerator.
+                autoGenerate()));
         juju.setUserGroups(new LinkedList<>());
 
         Individual sylvioc = new Individual();

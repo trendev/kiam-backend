@@ -47,17 +47,23 @@ public class PasswordGeneratorTest {
         System.out.println("autoGenerate");
 
         int n = 10000;
-
+        int size = 10;
         Set<String> spwd = new HashSet<>(n);
 
         assert spwd.isEmpty();
 
         IntStream.range(0, n).forEach(i -> spwd.add(PasswordGenerator.
-                autoGenerate()));
+                encrypt_SHA256(PasswordGenerator.
+                        autoGenerate(size))));
 
-        assert spwd.size() == n && !spwd.isEmpty();
+        assert !spwd.isEmpty();
 
         System.out.println(n + " secured passwords generated");
+        if (spwd.size() != n) {
+            System.out.println(spwd.size() * 100 / n + "% are different");
+        } else {
+            System.out.println("They are all different");
+        }
 
     }
 

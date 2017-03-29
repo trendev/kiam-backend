@@ -7,6 +7,7 @@ package fr.trendev.comptandye.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,8 +17,22 @@ import java.util.logging.Logger;
  */
 public class PasswordGenerator {
 
+    private final static String sequence = "azertyuiopmlkjhgfdsqwxcvbn0123456789._-!?@AZERTYUIOPMLKJHGFDSQWXCVBN";
+    private final static Random rand = new Random();
+    private final static int default_size = 10;
+
+    public static String autoGenerate(int s) {
+        String pwd = "";
+        int size = (s < default_size) ? default_size : s;
+
+        for (int i = 0; i < size; i++) {
+            pwd += sequence.charAt(rand.nextInt(sequence.length()));
+        }
+        return pwd;
+    }
+
     public static String autoGenerate() {
-        return encrypt_SHA256(UUIDGenerator.generate(true));
+        return autoGenerate(default_size);
     }
 
     public static String encrypt_SHA256(String pwd) {
@@ -36,7 +51,6 @@ public class PasswordGenerator {
             Logger.getLogger(PasswordGenerator.class.getName()).
                     log(Level.SEVERE, "SHA-256 is not a supported algorithm");
         }
-
         return spwd;
 
     }
