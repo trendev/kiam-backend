@@ -114,6 +114,12 @@ public class ConfigureBean implements Serializable {
 
         sylvioc.setPassword(PasswordGenerator.encrypt_SHA256("password"));
         em.merge(sylvioc);
+
+        sylvioc.getUserGroups().remove(ind);
+        ind.getUserAccounts().remove(sylvioc);
+        em.merge(sylvioc);
+        em.remove(sylvioc);
+
     }
 
     private void testDisplayUserGroupDetails() {
