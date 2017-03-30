@@ -50,9 +50,9 @@ public class CommentPK implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 41 * hash + (this.getId() != null ? this.getId().hashCode() : 0);
-        hash = 41 * hash + (this.getCustomerDetails() != null ? this.getCustomerDetails().hashCode() : 0);
+        int hash = 5;
+        hash = 83 * hash + (this.getId() != null ? this.getId().hashCode() : 0);
+        hash = 83 * hash + (this.getCustomerDetails() != null ? this.getCustomerDetails().hashCode() : 0);
         return hash;
     }
 

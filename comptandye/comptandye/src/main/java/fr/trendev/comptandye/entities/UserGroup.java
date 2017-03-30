@@ -6,7 +6,9 @@ package fr.trendev.comptandye.entities;
 
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,7 +30,7 @@ public class UserGroup {
     @Basic
     private String description;
 
-    @ManyToMany(targetEntity = UserAccount.class,mappedBy = "userGroups")
+    @ManyToMany(cascade={CascadeType.ALL},fetch = FetchType.LAZY,targetEntity = UserAccount.class,mappedBy = "userGroups")
     private List<UserAccount> userAccounts;
 
 

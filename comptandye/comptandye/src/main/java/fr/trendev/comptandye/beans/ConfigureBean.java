@@ -11,9 +11,12 @@ import fr.trendev.comptandye.entities.Individual;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.util.PasswordGenerator;
+import fr.trendev.comptandye.util.UUIDGenerator;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
@@ -29,6 +32,9 @@ import javax.persistence.PersistenceContext;
 @Startup
 public class ConfigureBean implements Serializable {
 
+    private static final Logger LOG = Logger.getLogger(ConfigureBean.class.
+            getName());
+
     @PersistenceContext(unitName = "DEFAULT_PU")
     private EntityManager em;
 
@@ -38,8 +44,8 @@ public class ConfigureBean implements Serializable {
     @PostConstruct
     public void init() {
 
+        clean();
         testCreateUsersAndGroups();
-
         testDisplayUserGroupDetails();
     }
 
@@ -48,6 +54,15 @@ public class ConfigureBean implements Serializable {
         admin.setEmail("julien.sie@gmail.com");
         admin.setPassword(PasswordGenerator.encrypt_SHA256("password"));
         admin.setUserGroups(new LinkedList<>());
+        admin.setUuid(UUIDGenerator.generate(true));
+        admin.setUsername("admin");
+        admin.setRegistrationDate(new Date());
+
+        Administrator csie = new Administrator();
+        csie.setEmail("csie63@gmail.com");
+        csie.setPassword(PasswordGenerator.encrypt_SHA256("qsec0fr"));
+        csie.setUserGroups(new LinkedList<>());
+        csie.setUuid(UUIDGenerator.generate(true));
 
         UserGroup adminGroup = new UserGroup();
         adminGroup.setName("Administrator");
@@ -55,8 +70,9 @@ public class ConfigureBean implements Serializable {
         adminGroup.setUserAccounts(new LinkedList<>());
 
         admin.getUserGroups().add(adminGroup);
-
         adminGroup.getUserAccounts().add(admin);
+        csie.getUserGroups().add(adminGroup);
+        adminGroup.getUserAccounts().add(csie);
 
         Professional vgay = new Professional();
         vgay.setEmail("vanessa.gay@gmail.com");
@@ -98,44 +114,58 @@ public class ConfigureBean implements Serializable {
         pro.getUserAccounts().add(skonx);
         pro.getUserAccounts().add(juju);
 
-        em.persist(admin);
         em.persist(adminGroup);
 
-        em.persist(vgay);
-        em.persist(skonx);
-        em.persist(juju);
         em.persist(pro);
 
         sylvioc.getUserGroups().add(ind);
         ind.getUserAccounts().add(sylvioc);
 
-        em.persist(sylvioc);
         em.persist(ind);
 
         sylvioc.setPassword(PasswordGenerator.encrypt_SHA256("password"));
+        sylvioc.setUsername("Mamie Sylvioc");
+
         em.merge(sylvioc);
 
-        sylvioc.getUserGroups().remove(ind);
+        /*sylvioc.getUserGroups().remove(ind);
         ind.getUserAccounts().remove(sylvioc);
-        em.merge(sylvioc);
         em.remove(sylvioc);
-
+        admin.getUserGroups().remove(adminGroup);
+        adminGroup.getUserAccounts().remove(admin);
+        em.remove(admin);*/
     }
 
     private void testDisplayUserGroupDetails() {
         List<UserGroup> userGroup = userGroupFacade.findAll();
-
         userGroup.forEach(group -> {
-            System.out.println("## GROUP ##");
-            System.out.println("Name = " + group.getName());
-            System.out.println("Description = " + group.getDescription());
+            LOG.info("## GROUP ##");
+            LOG.info("Name = " + group.getName());
+
+            LOG.info("Description = " + group.getDescription());
+
             int n = group.getUserAccounts().size();
-            System.out.println(n + " User" + (n > 1 ? "s" : ""));
-            System.out.println("Users id: ");
-            group.getUserAccounts().forEach(u -> System.out.println("- " + u.
-                    getEmail()));
-            System.out.println("###########");
+            LOG.info(n + " User" + (n > 1 ? "s" : ""));
+
+            if (n > 0) {
+                LOG.info("Users id: ");
+            }
+            group.getUserAccounts().forEach(u -> LOG.info("- "
+                    + u.
+                            getEmail()));
+
+            LOG.info("###########");
         });
+    }
+
+    private void clean() {
+        userGroupFacade.findAll().forEach(g -> em.remove(g));
+        LOG.info("clean() : OK");
+        LOG.info("EntityManager is"
+                + (em.isJoinedToTransaction() ? "" : " not")
+                + " joined to transaction");
+        LOG.info("EntityManager is"
+                + (em.isOpen() ? "" : " not") + " opened");
     }
 
 }

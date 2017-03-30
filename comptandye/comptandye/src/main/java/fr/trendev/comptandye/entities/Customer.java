@@ -4,7 +4,6 @@
 
 package fr.trendev.comptandye.entities;
 
-import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -16,9 +15,6 @@ import javax.persistence.OneToOne;
 @Entity
 public abstract class Customer extends UserAccount { 
 
-    @Basic
-    private String username;
-
     @OneToOne(targetEntity = CustomerDetails.class)
     private CustomerDetails customerDetails;
 
@@ -28,14 +24,6 @@ public abstract class Customer extends UserAccount {
     @ManyToOne(targetEntity = Address.class)
     private Address address;
 
-
-    public String getUsername() {
-        return this.username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public CustomerDetails getCustomerDetails() {
         return this.customerDetails;

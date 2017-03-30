@@ -4,13 +4,18 @@
 
 package fr.trendev.comptandye.entities;
 
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * @author jsie
@@ -30,7 +35,14 @@ public abstract class UserAccount {
     @Basic
     private String uuid;
 
-    @ManyToMany(targetEntity = UserGroup.class)
+    @Basic
+    @Temporal(TemporalType.DATE)
+    private Date registrationDate;
+
+    @Basic
+    private String username;
+
+    @ManyToMany(cascade={CascadeType.ALL},fetch = FetchType.LAZY,targetEntity = UserGroup.class)
     private List<UserGroup> userGroups;
 
 
@@ -56,6 +68,22 @@ public abstract class UserAccount {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public Date getRegistrationDate() {
+        return this.registrationDate;
+    }
+
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public List<UserGroup> getUserGroups() {
