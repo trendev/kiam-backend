@@ -7,12 +7,12 @@ package fr.trendev.comptandye.entities;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -52,8 +52,8 @@ public class CustomerDetails {
     @Basic
     private String picture;
 
-    @OneToMany(targetEntity = Comment.class,mappedBy = "customerDetails")
-    private List<Comment> comments;
+    @ElementCollection
+    private List<String> comments;
 
 
     public Long getId() {
@@ -120,11 +120,11 @@ public class CustomerDetails {
         this.picture = picture;
     }
 
-    public List<Comment> getComments() {
+    public List<String> getComments() {
         return this.comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(List<String> comments) {
         this.comments = comments;
     }
 

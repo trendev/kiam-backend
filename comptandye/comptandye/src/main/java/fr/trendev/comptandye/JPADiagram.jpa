@@ -276,9 +276,9 @@
                 <jpa:bv/>
                 <jpa:lob/>
             </jpa:basic>
-            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490286275796" connected-attribute-id="_1490952703139598" v="true" name="comments" id="_1490952703140599">
+            <jpa:element-collection target-class="java.lang.String" collection-type="java.util.List" v="true" name="comments" id="_149098087463456">
                 <jpa:bv/>
-            </jpa:one-to-many>
+            </jpa:element-collection>
             <jpa:id attribute-type="Long" v="true" name="id" id="_149010157844757">
                 <jpa:bv/>
                 <jpa:generated-value strategy="AUTO"/>
@@ -672,31 +672,6 @@
         <jpa:el/>
         <jpa:table name="COLLECTIVE_GROUP"/>
     </jpa:entity>
-    <jpa:entity xre="false" compositePrimaryKeyClass="CommentPK" abs="false" class="Comment" v="true" m="false" rootElement="_14901008082901" id="_1490286275796">
-        <jpa:ts e="true"/>
-        <jpa:hc e="true"/>
-        <jpa:eq e="true"/>
-        <jpa:ath>jsie</jpa:ath>
-        <jpa:attributes>
-            <jpa:basic attribute-type="String" v="true" name="description" id="_1490286319964280">
-                <jpa:bv/>
-            </jpa:basic>
-            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490101578444" connected-attribute-id="_1490952703140599" v="true" name="customerDetails" id="_1490952703139598">
-                <jpa:bv/>
-            </jpa:many-to-one>
-            <jpa:id attribute-type="Long" v="true" name="id" id="_1490952441016413">
-                <jpa:bv/>
-                <jpa:generated-value strategy="AUTO"/>
-            </jpa:id>
-        </jpa:attributes>
-        <jpa:nq e="false" name="Comment.findAll">
-            <jpa:query>Select e from Comment e</jpa:query>
-        </jpa:nq>
-        <jpa:nq e="false" name="Comment.findByDescription">
-            <jpa:query>Select c from Comment c where c.description=:description</jpa:query>
-        </jpa:nq>
-        <jpa:el/>
-    </jpa:entity>
     <jpa:entity xre="false" compositePrimaryKeyClass="AdministratorPK" abs="false" class="Administrator" superclassId="_1490100823157" v="true" m="false" rootElement="_14901008082901" id="_1490704123469">
         <jpa:ts e="true"/>
         <jpa:hc e="true"/>
@@ -747,33 +722,33 @@
  */</jpa:snp>
     <jpa:c>
         <ct>java.util.List</ct>
+        <ct>java.util.ArrayList</ct>
         <ct>java.util.Map</ct>
         <ct>java.util.Set</ct>
         <ct>java.util.Collection</ct>
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1490172966686" x="-245" y="868"/>
-            <i ref="_1490180671085" x="812" y="580"/>
-            <i ref="_1490704123469" x="39" y="259"/>
-            <i ref="_1490101578444" x="563" y="259"/>
-            <i ref="_1490100852900" x="561" y="23"/>
-            <i ref="_1490101520286" x="449" y="547"/>
-            <i ref="_1490104062170" x="-192" y="603"/>
-            <i ref="_1490113906035" x="-97" y="1194"/>
-            <i ref="_1490704206844" x="149" y="1007"/>
-            <i ref="_1490101376664" x="259" y="259"/>
-            <i ref="_1490113751330" x="-365" y="1181"/>
-            <i ref="_1490206901623" x="501" y="1520"/>
-            <i ref="_1490178979567" x="866" y="1358"/>
-            <i ref="_1490286275796" x="821" y="275"/>
-            <i ref="_1490101737208" x="-192" y="245"/>
-            <i ref="_1490281931338" x="563" y="1043"/>
-            <i ref="_1490101456632" x="179" y="448"/>
-            <i ref="_1490184243036" x="202" y="1445"/>
-            <i ref="_1490100823157" x="243" y="3"/>
-            <i ref="_1490180682743" x="725" y="733"/>
-            <i ref="_1490101555530" x="419" y="784"/>
+            <i ref="_1490172966686" x="-247" y="866"/>
+            <i ref="_1490180671085" x="810" y="578"/>
+            <i ref="_1490704123469" x="37" y="257"/>
+            <i ref="_1490101578444" x="561" y="257"/>
+            <i ref="_1490100852900" x="559" y="21"/>
+            <i ref="_1490101520286" x="447" y="545"/>
+            <i ref="_1490104062170" x="-194" y="601"/>
+            <i ref="_1490113906035" x="-99" y="1192"/>
+            <i ref="_1490704206844" x="147" y="1005"/>
+            <i ref="_1490101376664" x="257" y="257"/>
+            <i ref="_1490113751330" x="-367" y="1179"/>
+            <i ref="_1490206901623" x="499" y="1518"/>
+            <i ref="_1490178979567" x="864" y="1356"/>
+            <i ref="_1490101737208" x="-194" y="243"/>
+            <i ref="_1490281931338" x="561" y="1041"/>
+            <i ref="_1490101456632" x="177" y="446"/>
+            <i ref="_1490184243036" x="200" y="1443"/>
+            <i ref="_1490100823157" x="241" y="1"/>
+            <i ref="_1490180682743" x="723" y="731"/>
+            <i ref="_1490101555530" x="417" y="782"/>
         </jpa:ws>
     </jpa:wsl>
 </jpa:entity-mappings>
