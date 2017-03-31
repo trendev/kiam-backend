@@ -5,6 +5,7 @@
 package fr.trendev.comptandye.entities;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,7 +37,7 @@ public class SocialNetworkAccounts {
     @Basic
     private String pinterest;
 
-    @OneToOne(targetEntity = Customer.class,mappedBy = "socialNetworkAccounts")
+    @OneToOne(cascade={CascadeType.ALL},targetEntity = Customer.class,mappedBy = "socialNetworkAccounts")
     private Customer customer;
 
 

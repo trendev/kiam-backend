@@ -6,6 +6,7 @@ package fr.trendev.comptandye.entities;
 
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -33,9 +34,9 @@ public class Address {
     private String city;
 
     @Basic
-    private String country;
+    private String country = "FRANCE";
 
-    @OneToMany(targetEntity = Customer.class,mappedBy = "address")
+    @OneToMany(cascade={CascadeType.ALL},targetEntity = Customer.class,mappedBy = "address")
     private List<Customer> customers;
 
 

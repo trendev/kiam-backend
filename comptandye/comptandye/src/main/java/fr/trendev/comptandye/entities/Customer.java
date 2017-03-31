@@ -4,6 +4,7 @@
 
 package fr.trendev.comptandye.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -18,10 +19,10 @@ public abstract class Customer extends UserAccount {
     @OneToOne(targetEntity = CustomerDetails.class)
     private CustomerDetails customerDetails;
 
-    @OneToOne(targetEntity = SocialNetworkAccounts.class)
+    @OneToOne(cascade={CascadeType.ALL},targetEntity = SocialNetworkAccounts.class)
     private SocialNetworkAccounts socialNetworkAccounts;
 
-    @ManyToOne(targetEntity = Address.class)
+    @ManyToOne(cascade={CascadeType.ALL},targetEntity = Address.class)
     private Address address;
 
 

@@ -10,7 +10,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
@@ -42,7 +41,7 @@ public abstract class UserAccount {
     @Basic
     private String username;
 
-    @ManyToMany(cascade={CascadeType.ALL},fetch = FetchType.LAZY,targetEntity = UserGroup.class)
+    @ManyToMany(cascade={CascadeType.ALL},targetEntity = UserGroup.class)
     private List<UserGroup> userGroups;
 
 

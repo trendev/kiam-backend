@@ -28,7 +28,7 @@ public class Payment {
     private String amount;
 
     @Basic
-    private String currency;
+    private String currency = "€";
 
     @ManyToOne(targetEntity = PaymentMode.class)
     private PaymentMode paymentMode;

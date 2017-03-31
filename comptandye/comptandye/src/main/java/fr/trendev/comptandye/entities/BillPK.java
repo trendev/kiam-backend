@@ -64,10 +64,10 @@ public class BillPK implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 71 * hash + (this.getReference() != null ? this.getReference().hashCode() : 0);
-        hash = 71 * hash + (this.getDeliveryDate() != null ? this.getDeliveryDate().hashCode() : 0);
-        hash = 71 * hash + (this.getProfessional() != null ? this.getProfessional().hashCode() : 0);
+        int hash = 3;
+        hash = 67 * hash + (this.getReference() != null ? this.getReference().hashCode() : 0);
+        hash = 67 * hash + (this.getDeliveryDate() != null ? this.getDeliveryDate().hashCode() : 0);
+        hash = 67 * hash + (this.getProfessional() != null ? this.getProfessional().hashCode() : 0);
         return hash;
     }
 

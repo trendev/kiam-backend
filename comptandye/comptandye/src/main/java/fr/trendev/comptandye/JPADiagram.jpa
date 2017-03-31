@@ -19,7 +19,7 @@
             <jpa:basic attribute-type="String" v="true" name="username" id="_149087938362378">
                 <jpa:bv/>
             </jpa:basic>
-            <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490100852900" connected-attribute-id="_14901160469883436" fetch="LAZY" v="true" name="userGroups" id="_14901160469863435">
+            <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490100852900" connected-attribute-id="_14901160469883436" v="true" name="userGroups" id="_14901160469863435">
                 <jpa:bv/>
                 <jpa:cascade>
                     <jpa:cascade-all/>
@@ -73,7 +73,7 @@
             <jpa:basic attribute-type="String" v="true" name="description" id="_149062419655951">
                 <jpa:bv/>
             </jpa:basic>
-            <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490100823157" connected-attribute-id="_14901160469863435" fetch="LAZY" v="true" name="userAccounts" id="_14901160469883436">
+            <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490100823157" connected-attribute-id="_14901160469863435" v="true" name="userAccounts" id="_14901160469883436">
                 <jpa:bv/>
                 <jpa:cascade>
                     <jpa:cascade-all/>
@@ -104,12 +104,18 @@
         <jpa:attributes>
             <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490101737208" connected-attribute-id="_14901088600451378" v="true" name="address" id="_14901088600451377">
                 <jpa:bv/>
+                <jpa:cascade>
+                    <jpa:cascade-all/>
+                </jpa:cascade>
             </jpa:many-to-one>
             <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490101578444" v="true" name="customerDetails" id="_14901093969381510">
                 <jpa:bv/>
             </jpa:one-to-one>
             <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490104062170" connected-attribute-id="_149028162264043" v="true" name="socialNetworkAccounts" id="_149028162263742">
                 <jpa:bv/>
+                <jpa:cascade>
+                    <jpa:cascade-all/>
+                </jpa:cascade>
             </jpa:one-to-one>
         </jpa:attributes>
         <jpa:nq e="false" name="Customer.findAll">
@@ -270,7 +276,7 @@
                 <jpa:bv/>
                 <jpa:lob/>
             </jpa:basic>
-            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490286275796" connected-attribute-id="_1490286401191282" v="true" name="comments" id="_1490286401191283">
+            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490286275796" connected-attribute-id="_1490952703139598" v="true" name="comments" id="_1490952703140599">
                 <jpa:bv/>
             </jpa:one-to-many>
             <jpa:id attribute-type="Long" v="true" name="id" id="_149010157844757">
@@ -323,11 +329,14 @@
             <jpa:basic attribute-type="String" v="true" name="city" id="_149010176456971">
                 <jpa:bv/>
             </jpa:basic>
-            <jpa:basic attribute-type="String" v="true" name="country" id="_149010176933672">
+            <jpa:basic attribute-type="String" v="true" name="country" dv="&quot;FRANCE&quot;" id="_149010176933672">
                 <jpa:bv/>
             </jpa:basic>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490101376664" connected-attribute-id="_14901088600451377" v="true" name="customers" id="_14901088600451378">
                 <jpa:bv/>
+                <jpa:cascade>
+                    <jpa:cascade-all/>
+                </jpa:cascade>
             </jpa:one-to-many>
             <jpa:id attribute-type="Long" v="true" name="id" id="_149010173721267">
                 <jpa:bv/>
@@ -371,6 +380,9 @@
             </jpa:basic>
             <jpa:one-to-one orp="false" optional="true" primaryKey="false" connected-entity-id="_1490101376664" connected-attribute-id="_149028162263742" v="true" name="customer" id="_149028162264043">
                 <jpa:bv/>
+                <jpa:cascade>
+                    <jpa:cascade-all/>
+                </jpa:cascade>
             </jpa:one-to-one>
             <jpa:id attribute-type="Long" v="true" name="id" id="_1490104062174399">
                 <jpa:bv/>
@@ -603,7 +615,7 @@
             <jpa:basic attribute-type="String" v="true" name="amount" id="_149020701195485">
                 <jpa:bv/>
             </jpa:basic>
-            <jpa:basic attribute-type="String" v="true" name="currency" id="_149020716672986">
+            <jpa:basic attribute-type="String" v="true" name="currency" dv="&quot;€&quot;" id="_149020716672986">
                 <jpa:bv/>
             </jpa:basic>
             <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490184243036" v="true" name="paymentMode" id="_149020723198887">
@@ -660,7 +672,7 @@
         <jpa:el/>
         <jpa:table name="COLLECTIVE_GROUP"/>
     </jpa:entity>
-    <jpa:entity xre="false" compositePrimaryKeyType="D" compositePrimaryKeyClass="CommentPK" abs="false" class="Comment" v="true" m="false" rootElement="_14901008082901" id="_1490286275796">
+    <jpa:entity xre="false" compositePrimaryKeyClass="CommentPK" abs="false" class="Comment" v="true" m="false" rootElement="_14901008082901" id="_1490286275796">
         <jpa:ts e="true"/>
         <jpa:hc e="true"/>
         <jpa:eq e="true"/>
@@ -669,10 +681,10 @@
             <jpa:basic attribute-type="String" v="true" name="description" id="_1490286319964280">
                 <jpa:bv/>
             </jpa:basic>
-            <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101578444" connected-attribute-id="_1490286401191283" v="true" name="customerDetails" id="_1490286401191282">
+            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490101578444" connected-attribute-id="_1490952703140599" v="true" name="customerDetails" id="_1490952703139598">
                 <jpa:bv/>
             </jpa:many-to-one>
-            <jpa:id attribute-type="Long" v="true" name="id" id="_1490286276048277">
+            <jpa:id attribute-type="Long" v="true" name="id" id="_1490952441016413">
                 <jpa:bv/>
                 <jpa:generated-value strategy="AUTO"/>
             </jpa:id>
@@ -741,27 +753,27 @@
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1490172966686" x="-241" y="872"/>
-            <i ref="_1490180671085" x="816" y="584"/>
-            <i ref="_1490704123469" x="43" y="263"/>
-            <i ref="_1490101578444" x="567" y="263"/>
-            <i ref="_1490100852900" x="565" y="27"/>
-            <i ref="_1490101520286" x="453" y="551"/>
-            <i ref="_1490104062170" x="-188" y="607"/>
-            <i ref="_1490113906035" x="-93" y="1198"/>
-            <i ref="_1490704206844" x="153" y="1011"/>
-            <i ref="_1490101376664" x="263" y="263"/>
-            <i ref="_1490113751330" x="-361" y="1185"/>
-            <i ref="_1490206901623" x="505" y="1524"/>
-            <i ref="_1490178979567" x="870" y="1362"/>
-            <i ref="_1490286275796" x="825" y="279"/>
-            <i ref="_1490101737208" x="-188" y="249"/>
-            <i ref="_1490281931338" x="567" y="1047"/>
-            <i ref="_1490101456632" x="183" y="452"/>
-            <i ref="_1490184243036" x="206" y="1449"/>
-            <i ref="_1490100823157" x="247" y="7"/>
-            <i ref="_1490180682743" x="729" y="737"/>
-            <i ref="_1490101555530" x="423" y="788"/>
+            <i ref="_1490172966686" x="-243" y="870"/>
+            <i ref="_1490180671085" x="814" y="582"/>
+            <i ref="_1490704123469" x="41" y="261"/>
+            <i ref="_1490101578444" x="565" y="261"/>
+            <i ref="_1490100852900" x="563" y="25"/>
+            <i ref="_1490101520286" x="451" y="549"/>
+            <i ref="_1490104062170" x="-190" y="605"/>
+            <i ref="_1490113906035" x="-95" y="1196"/>
+            <i ref="_1490704206844" x="151" y="1009"/>
+            <i ref="_1490101376664" x="261" y="261"/>
+            <i ref="_1490113751330" x="-363" y="1183"/>
+            <i ref="_1490206901623" x="503" y="1522"/>
+            <i ref="_1490178979567" x="868" y="1360"/>
+            <i ref="_1490286275796" x="823" y="277"/>
+            <i ref="_1490101737208" x="-190" y="247"/>
+            <i ref="_1490281931338" x="565" y="1045"/>
+            <i ref="_1490101456632" x="181" y="450"/>
+            <i ref="_1490184243036" x="204" y="1447"/>
+            <i ref="_1490100823157" x="245" y="5"/>
+            <i ref="_1490180682743" x="727" y="735"/>
+            <i ref="_1490101555530" x="421" y="786"/>
         </jpa:ws>
     </jpa:wsl>
 </jpa:entity-mappings>
