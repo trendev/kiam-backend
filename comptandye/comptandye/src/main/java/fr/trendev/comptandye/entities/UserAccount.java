@@ -35,7 +35,7 @@ public abstract class UserAccount {
     private String uuid;
 
     @Basic
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date registrationDate;
 
     @Basic

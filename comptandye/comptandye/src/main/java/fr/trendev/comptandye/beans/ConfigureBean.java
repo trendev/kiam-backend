@@ -8,12 +8,14 @@ package fr.trendev.comptandye.beans;
 import fr.trendev.comptandye.ejbsessions.UserGroupFacade;
 import fr.trendev.comptandye.entities.Administrator;
 import fr.trendev.comptandye.entities.Individual;
+import fr.trendev.comptandye.entities.PaymentMode;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.util.PasswordGenerator;
 import fr.trendev.comptandye.util.UUIDGenerator;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -43,20 +45,23 @@ public class ConfigureBean implements Serializable {
 
     @PostConstruct
     public void init() {
-
         clean();
-        testCreateUsersAndGroups();
-        testDisplayUserGroupDetails();
+        initUsersAndGroups();
+        displayUserGroupDetails();
     }
 
-    private void testCreateUsersAndGroups() {
+    private void initUsersAndGroups() {
+
         Administrator admin = new Administrator();
         admin.setEmail("julien.sie@gmail.com");
         admin.setPassword(PasswordGenerator.encrypt_SHA256("password"));
         admin.setUserGroups(new LinkedList<>());
         admin.setUuid(UUIDGenerator.generate(true));
         admin.setUsername("admin");
-        admin.setRegistrationDate(new Date());
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.YEAR, -2);
+        admin.setRegistrationDate(cal.getTime());
 
         Administrator csie = new Administrator();
         csie.setEmail("csie63@gmail.com");
@@ -92,9 +97,9 @@ public class ConfigureBean implements Serializable {
                 autoGenerate()));
         juju.setUserGroups(new LinkedList<>());
 
-        Individual sylvioc = new Individual();
-        sylvioc.setEmail("sylvie.gay.suard@gmail.com");
-        sylvioc.setUserGroups(new LinkedList<>());
+        Individual sgaysuard = new Individual();
+        sgaysuard.setEmail("sylvie.gay.suard@gmail.com");
+        sgaysuard.setUserGroups(new LinkedList<>());
 
         UserGroup pro = new UserGroup();
         pro.setName("Professional");
@@ -118,15 +123,15 @@ public class ConfigureBean implements Serializable {
 
         em.persist(pro);
 
-        sylvioc.getUserGroups().add(ind);
-        ind.getUserAccounts().add(sylvioc);
+        sgaysuard.getUserGroups().add(ind);
+        ind.getUserAccounts().add(sgaysuard);
 
         em.persist(ind);
 
-        sylvioc.setPassword(PasswordGenerator.encrypt_SHA256("password"));
-        sylvioc.setUsername("Mamie Sylvioc");
+        sgaysuard.setPassword(PasswordGenerator.encrypt_SHA256("password"));
+        sgaysuard.setUsername("Sylvioc");
 
-        em.merge(sylvioc);
+        em.merge(sgaysuard);
 
         /*sylvioc.getUserGroups().remove(ind);
         ind.getUserAccounts().remove(sylvioc);
@@ -134,9 +139,10 @@ public class ConfigureBean implements Serializable {
         admin.getUserGroups().remove(adminGroup);
         adminGroup.getUserAccounts().remove(admin);
         em.remove(admin);*/
+        initPaymentModes();
     }
 
-    private void testDisplayUserGroupDetails() {
+    private void displayUserGroupDetails() {
         List<UserGroup> userGroup = userGroupFacade.findAll();
         userGroup.forEach(group -> {
             LOG.info("## GROUP ##");
@@ -166,6 +172,16 @@ public class ConfigureBean implements Serializable {
                 + " joined to transaction");
         LOG.info("EntityManager is"
                 + (em.isOpen() ? "" : " not") + " opened");
+    }
+
+    private void initPaymentModes() {
+        Arrays.
+                asList("CreditCard", "Cheque", "Paylib", "Paypal",
+                        "Cash").stream().forEach(s -> {
+                    PaymentMode pm = new PaymentMode();
+                    pm.setName(s);
+                    em.persist(pm);
+                });
     }
 
 }
