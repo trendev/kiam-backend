@@ -32,14 +32,17 @@ public abstract class UserAccount {
     private String password;
 
     @Basic
+    private String username;
+
+    @Basic
     private String uuid;
+
+    @Basic
+    private String token;
 
     @Basic
     @Temporal(TemporalType.TIMESTAMP)
     private Date registrationDate;
-
-    @Basic
-    private String username;
 
     @ManyToMany(cascade={CascadeType.ALL},targetEntity = UserGroup.class)
     private List<UserGroup> userGroups;
@@ -61,6 +64,14 @@ public abstract class UserAccount {
         this.password = password;
     }
 
+    public String getUsername() {
+        return this.username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getUuid() {
         return this.uuid;
     }
@@ -69,20 +80,20 @@ public abstract class UserAccount {
         this.uuid = uuid;
     }
 
+    public String getToken() {
+        return this.token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     public Date getRegistrationDate() {
         return this.registrationDate;
     }
 
     public void setRegistrationDate(Date registrationDate) {
         this.registrationDate = registrationDate;
-    }
-
-    public String getUsername() {
-        return this.username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public List<UserGroup> getUserGroups() {

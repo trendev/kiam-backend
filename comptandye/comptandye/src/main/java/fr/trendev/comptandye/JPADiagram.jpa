@@ -9,15 +9,18 @@
             <jpa:basic attribute-type="String" v="true" name="password" id="_14901008440196">
                 <jpa:bv/>
             </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" name="username" id="_149087938362378">
+                <jpa:bv/>
+            </jpa:basic>
             <jpa:basic attribute-type="String" v="true" name="uuid" id="_149011954705724">
+                <jpa:bv/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" name="token" id="_149234006653555">
                 <jpa:bv/>
             </jpa:basic>
             <jpa:basic attribute-type="java.util.Date" v="true" name="registrationDate" id="_149086726806159">
                 <jpa:bv/>
                 <jpa:temporal>TIMESTAMP</jpa:temporal>
-            </jpa:basic>
-            <jpa:basic attribute-type="String" v="true" name="username" id="_149087938362378">
-                <jpa:bv/>
             </jpa:basic>
             <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490100852900" connected-attribute-id="_14901160469883436" v="true" name="userGroups" id="_14901160469863435">
                 <jpa:bv/>
@@ -59,6 +62,9 @@
         </jpa:nq>
         <jpa:nq e="false" name="UserAccount.findByUsername">
             <jpa:query>Select u from UserAccount u where u.username=:username</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="UserAccount.findByToken">
+            <jpa:query>Select u from UserAccount u where u.token=:token</jpa:query>
         </jpa:nq>
         <jpa:el/>
         <jpa:table name="USER_ACCOUNT"/>
@@ -135,6 +141,9 @@
             <jpa:basic attribute-type="String" v="true" name="website" id="_1490104021917395">
                 <jpa:bv/>
             </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" name="business" id="_149234004194954">
+                <jpa:bv/>
+            </jpa:basic>
             <jpa:one-to-many orp="false" collection-type="java.util.List" mkt="NEW" connected-entity-id="_1490172966686" connected-attribute-id="_149017620658456" v="true" name="offerings" id="_149017620658557">
                 <jpa:bv/>
             </jpa:one-to-many>
@@ -174,6 +183,9 @@
         </jpa:nq>
         <jpa:nq e="false" name="Professional.findByPinterest">
             <jpa:query>Select p from Professional p where p.pinterest=:pinterest</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Professional.findByBusiness">
+            <jpa:query>Select p from Professional p where p.business=:business</jpa:query>
         </jpa:nq>
         <jpa:el/>
     </jpa:entity>
@@ -729,26 +741,26 @@
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1490172966686" x="-247" y="866"/>
-            <i ref="_1490180671085" x="810" y="578"/>
-            <i ref="_1490704123469" x="37" y="257"/>
-            <i ref="_1490101578444" x="561" y="257"/>
-            <i ref="_1490100852900" x="559" y="21"/>
-            <i ref="_1490101520286" x="447" y="545"/>
-            <i ref="_1490104062170" x="-194" y="601"/>
-            <i ref="_1490113906035" x="-99" y="1192"/>
-            <i ref="_1490704206844" x="147" y="1005"/>
-            <i ref="_1490101376664" x="257" y="257"/>
-            <i ref="_1490113751330" x="-367" y="1179"/>
-            <i ref="_1490206901623" x="499" y="1518"/>
-            <i ref="_1490178979567" x="864" y="1356"/>
-            <i ref="_1490101737208" x="-194" y="243"/>
-            <i ref="_1490281931338" x="561" y="1041"/>
-            <i ref="_1490101456632" x="177" y="446"/>
-            <i ref="_1490184243036" x="200" y="1443"/>
-            <i ref="_1490100823157" x="241" y="1"/>
-            <i ref="_1490180682743" x="723" y="731"/>
-            <i ref="_1490101555530" x="417" y="782"/>
+            <i ref="_1490172966686" x="-249" y="864"/>
+            <i ref="_1490180671085" x="808" y="576"/>
+            <i ref="_1490704123469" x="35" y="255"/>
+            <i ref="_1490101578444" x="559" y="255"/>
+            <i ref="_1490100852900" x="557" y="19"/>
+            <i ref="_1490101520286" x="445" y="543"/>
+            <i ref="_1490104062170" x="-196" y="599"/>
+            <i ref="_1490113906035" x="-101" y="1190"/>
+            <i ref="_1490704206844" x="145" y="1003"/>
+            <i ref="_1490101376664" x="255" y="255"/>
+            <i ref="_1490113751330" x="-369" y="1177"/>
+            <i ref="_1490206901623" x="497" y="1516"/>
+            <i ref="_1490178979567" x="862" y="1354"/>
+            <i ref="_1490101737208" x="-196" y="241"/>
+            <i ref="_1490281931338" x="559" y="1039"/>
+            <i ref="_1490101456632" x="175" y="444"/>
+            <i ref="_1490184243036" x="198" y="1441"/>
+            <i ref="_1490100823157" x="239" y="-1"/>
+            <i ref="_1490180682743" x="721" y="729"/>
+            <i ref="_1490101555530" x="415" y="780"/>
         </jpa:ws>
     </jpa:wsl>
 </jpa:entity-mappings>
