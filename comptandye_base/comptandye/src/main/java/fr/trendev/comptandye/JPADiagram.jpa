@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jpa:entity-mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" pkg="fr.trendev.comptandye.entity" v="3.6" rws="_14900264407532" Pws="_14900264407532" cws="_14900264407532" dbthm="DBColorScheme" sm="false" xs="false" id="_14900264407531" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd">
+    <jpa:entity xre="false" compositePrimaryKeyClass="CustomerPK" abs="true" class="Customer" superclassId="_1490081334987" v="true" m="false" rootElement="_14900264407531" id="_1490026470447">
+        <jpa:ts e="true"/>
+        <jpa:hc e="true"/>
+        <jpa:eq e="true"/>
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" name="username" id="_149003805309139">
+                <jpa:bv/>
+            </jpa:basic>
+            <jpa:one-to-one orp="false" optional="true" primaryKey="false" connected-entity-id="_1490026643263" connected-attribute-id="_149002665989013" v="true" name="customerDetails" id="_149002665989314">
+                <jpa:bv/>
+            </jpa:one-to-one>
+            <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490037085199" connected-attribute-id="_149003727860329" v="true" name="french_Addresses" id="_149003727860630">
+                <jpa:bv/>
+            </jpa:many-to-many>
+        </jpa:attributes>
+        <jpa:nq e="false" name="Customer.findAll">
+            <jpa:query>Select e from Customer e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Customer.findByFirstname">
+            <jpa:query>Select p from Customer p where p.firstname=:firstname</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Customer.findByLastname">
+            <jpa:query>Select p from Customer p where p.lastname=:lastname</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Customer.findByNickname">
+            <jpa:query>Select p from Customer p where p.nickname=:nickname</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Customer.findByBirthday">
+            <jpa:query>Select p from Customer p where p.birthday=:birthday</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Customer.findByUsername">
+            <jpa:query>Select p from Customer p where p.username=:username</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Customer.findByPassword">
+            <jpa:query>Select p from Customer p where p.password=:password</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Customer.findByUsername">
+            <jpa:query>Select p from Customer p where p.username=:username</jpa:query>
+        </jpa:nq>
+        <jpa:el/>
+        <jpa:inheritance strategy="SINGLE_TABLE"/>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyClass="ProfessionalPK" abs="false" class="Professional" superclassId="_1490026470447" v="true" m="false" rootElement="_14900264407531" id="_1490026483427">
+        <jpa:ts e="true"/>
+        <jpa:hc e="true"/>
+        <jpa:eq e="true"/>
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes>
+            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1490026488778" v="true" name="clients" id="_149002655110010">
+                <jpa:bv/>
+                <jpa:join-table name="APPUSER_APPUSER"/>
+            </jpa:one-to-many>
+        </jpa:attributes>
+        <jpa:nq e="false" name="Professional.findAll">
+            <jpa:query>Select e from Professional e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Professional.findByUuid">
+            <jpa:query>Select p from Professional p where p.uuid=:uuid</jpa:query>
+        </jpa:nq>
+        <jpa:el/>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyClass="IndividualPK" abs="false" class="Individual" superclassId="_1490026470447" v="true" m="false" rootElement="_14900264407531" id="_1490026488778">
+        <jpa:ts e="true"/>
+        <jpa:hc e="true"/>
+        <jpa:eq e="true"/>
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes/>
+        <jpa:nq e="false" name="Individual.findAll">
+            <jpa:query>Select e from Individual e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Individual.findByUuid">
+            <jpa:query>Select i from Individual i where i.uuid=:uuid</jpa:query>
+        </jpa:nq>
+        <jpa:el/>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyType="D" compositePrimaryKeyClass="CustomerDetailsPK" abs="false" class="CustomerDetails" v="true" m="false" rootElement="_14900264407531" id="_1490026643263">
+        <jpa:ts e="true"/>
+        <jpa:hc e="true"/>
+        <jpa:eq e="true"/>
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" name="firstname" id="_149003739152531">
+                <jpa:bv/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" name="lastname" id="_149003754970134">
+                <jpa:bv/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" name="phone" id="_149003757934435">
+                <jpa:bv/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" name="birthday" id="_149003766584537">
+                <jpa:bv/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" name="sex" id="_149003767164238">
+                <jpa:bv/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" name="picture" id="_149002672318916">
+                <jpa:bv/>
+            </jpa:basic>
+            <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="true" connected-entity-id="_1490026470447" connected-attribute-id="_149002665989314" v="true" name="customer" id="_149002665989013">
+                <jpa:bv/>
+            </jpa:one-to-one>
+            <jpa:id attribute-type="Long" v="true" name="id" id="_149002664326511">
+                <jpa:bv/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:nq e="false" name="CustomerDetails.findAll">
+            <jpa:query>Select e from CustomerDetails e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="CustomerDetails.findByPicture">
+            <jpa:query>Select u from CustomerDetails u where u.picture=:picture</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="CustomerDetails.findByBirthday">
+            <jpa:query>Select u from CustomerDetails u where u.birthday=:birthday</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="CustomerDetails.findByFirstname">
+            <jpa:query>Select p from CustomerDetails p where p.firstname=:firstname</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="CustomerDetails.findByLastname">
+            <jpa:query>Select p from CustomerDetails p where p.lastname=:lastname</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="CustomerDetails.findByPhone">
+            <jpa:query>Select p from CustomerDetails p where p.phone=:phone</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="CustomerDetails.findByEmail">
+            <jpa:query>Select p from CustomerDetails p where p.email=:email</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="CustomerDetails.findByBirthday">
+            <jpa:query>Select p from CustomerDetails p where p.birthday=:birthday</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="CustomerDetails.findBySex">
+            <jpa:query>Select p from CustomerDetails p where p.sex=:sex</jpa:query>
+        </jpa:nq>
+        <jpa:el/>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyClass="AddressPK" abs="true" class="Address" v="true" m="false" rootElement="_14900264407531" id="_1490037085199">
+        <jpa:ts e="true"/>
+        <jpa:hc e="true"/>
+        <jpa:eq e="true"/>
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes>
+            <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490026470447" connected-attribute-id="_149003727860630" v="true" name="customers" id="_149003727860329">
+                <jpa:bv/>
+            </jpa:many-to-many>
+            <jpa:id attribute-type="Long" v="true" name="id" id="_149003708520119">
+                <jpa:bv/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:nq e="false" name="Address.findAll">
+            <jpa:query>Select e from Address e</jpa:query>
+        </jpa:nq>
+        <jpa:el/>
+        <jpa:discriminator-column/>
+    </jpa:entity>
+    <jpa:entity lbl-ref="_149003708520119" xre="false" compositePrimaryKeyClass="French_AddressPK" abs="false" class="French_Address" superclassId="_1490037085199" v="true" m="false" rootElement="_14900264407531" id="_1490037096589">
+        <jpa:ts e="true"/>
+        <jpa:hc e="true"/>
+        <jpa:eq e="true"/>
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" name="street" id="_149003713770523">
+                <jpa:bv/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" name="postalCode" id="_149003714498824">
+                <jpa:bv/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" name="city" id="_149003741983932">
+                <jpa:bv/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" name="country" id="_149003742524033">
+                <jpa:bv/>
+            </jpa:basic>
+        </jpa:attributes>
+        <jpa:nq e="false" name="French_Address.findAll">
+            <jpa:query>Select e from French_Address e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="French_Address.findByStreet">
+            <jpa:query>Select f from French_Address f where f.street=:street</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="French_Address.findByPostalCode">
+            <jpa:query>Select f from French_Address f where f.postalCode=:postalCode</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="French_Address.findByCity">
+            <jpa:query>Select f from French_Address f where f.city=:city</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="French_Address.findByCountry">
+            <jpa:query>Select f from French_Address f where f.country=:country</jpa:query>
+        </jpa:nq>
+        <jpa:el/>
+    </jpa:entity>
+    <jpa:entity lbl-ref="_149008474907975" xre="false" compositePrimaryKeyClass="AppUserPK" abs="true" class="AppUser" v="true" m="false" rootElement="_14900264407531" id="_1490081334987">
+        <jpa:ts e="true"/>
+        <jpa:hc e="true"/>
+        <jpa:eq e="true"/>
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" name="email" id="_1490085331991132">
+                <jpa:bv/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" name="password" id="_149008474907975">
+                <jpa:bv/>
+            </jpa:basic>
+            <jpa:basic attribute-type="fr.trendev.comptandye.util.AppUserStatus" v="true" name="status" id="_1490091989921640">
+                <jpa:bv/>
+                <jpa:enumerated>ORDINAL</jpa:enumerated>
+            </jpa:basic>
+            <jpa:id attribute-type="Long" v="true" name="id" id="_1490085277595131">
+                <jpa:bv/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:nq e="false" name="AppUser.findAll">
+            <jpa:query>Select e from AppUser e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="AppUser.findByPassword">
+            <jpa:query>Select a from AppUser a where a.password=:password</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="AppUser.findByToken">
+            <jpa:query>Select a from AppUser a where a.token=:token</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="AppUser.findByEmail">
+            <jpa:query>Select a from AppUser a where a.email=:email</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="AppUser.findByStatus">
+            <jpa:query>Select a from AppUser a where a.status=:status</jpa:query>
+        </jpa:nq>
+        <jpa:el/>
+        <jpa:inheritance strategy="SINGLE_TABLE"/>
+        <jpa:discriminator-column name="APPGROUP" discriminator-type="STRING" column-definition="" length="30"/>
+    </jpa:entity>
+    <jpa:entity lbl-ref="_1490085331991132" xre="false" compositePrimaryKeyClass="AdminPK" abs="false" class="Admin" superclassId="_1490081334987" v="true" m="false" rootElement="_14900264407531" id="_1490081433737">
+        <jpa:ts e="true"/>
+        <jpa:hc e="true"/>
+        <jpa:eq e="true"/>
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes/>
+        <jpa:nq e="false" name="Admin.findAll">
+            <jpa:query>Select e from Admin e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Admin.findByUsername">
+            <jpa:query>Select a from Admin a where a.username=:username</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Admin.findByPassword">
+            <jpa:query>Select a from Admin a where a.password=:password</jpa:query>
+        </jpa:nq>
+        <jpa:el/>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyClass="ClientPK" abs="false" class="Client" v="true" m="false" rootElement="_14900264407531" id="_1490084863539">
+        <jpa:ts e="true"/>
+        <jpa:hc e="true"/>
+        <jpa:eq e="true"/>
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes>
+            <jpa:id attribute-type="Long" v="true" name="id" id="_149008486354477">
+                <jpa:bv/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:nq e="false" name="Client.findAll">
+            <jpa:query>Select e from Client e</jpa:query>
+        </jpa:nq>
+        <jpa:el/>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyClass="WebMarketPK" abs="false" class="WebMarket" superclassId="_1490081334987" v="true" m="false" rootElement="_14900264407531" id="_1490087923935">
+        <jpa:ts e="true"/>
+        <jpa:hc e="true"/>
+        <jpa:eq e="true"/>
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes/>
+        <jpa:nq e="false" name="WebMarket.findAll">
+            <jpa:query>Select e from WebMarket e</jpa:query>
+        </jpa:nq>
+        <jpa:el/>
+    </jpa:entity>
+    <jpa:snp loc="BEFORE_PACKAGE" e="true">/**
+ * This file was generated by the JPA Modeler
+ */</jpa:snp>
+    <jpa:c>
+        <ct>java.util.List</ct>
+        <ct>java.util.Set</ct>
+        <ct>java.util.Map</ct>
+        <ct>java.util.Collection</ct>
+    </jpa:c>
+    <jpa:wsl>
+        <jpa:ws n="Main" id="_14900264407532">
+            <i ref="_1490037096589" x="49" y="259"/>
+            <i ref="_1490037085199" x="73" y="118"/>
+            <i ref="_1490026488778" x="355" y="446"/>
+            <i ref="_1490087923935" x="629" y="-22"/>
+            <i ref="_1490026483427" x="150" y="446"/>
+            <i ref="_1490081334987" x="313" y="-231"/>
+            <i ref="_1490081433737" x="462" y="-22"/>
+            <i ref="_1490026470447" x="261" y="-22"/>
+            <i ref="_1490026643263" x="500" y="52"/>
+            <i ref="_1490084863539" x="534" y="447"/>
+        </jpa:ws>
+    </jpa:wsl>
+</jpa:entity-mappings>
