@@ -28,6 +28,7 @@ public class PasswordGenerator {
         for (int i = 0; i < size; i++) {
             pwd += sequence.charAt(rand.nextInt(sequence.length()));
         }
+        System.out.println("pwd =" + pwd);
         return pwd;
     }
 
