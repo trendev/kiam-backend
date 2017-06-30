@@ -7,7 +7,13 @@
         <title>comptandye</title>
     </h:head>
     <h:body>
-        <h1>Un peu de patience... <h:outputText value="#{request.localName}"/></h1>
+        <h1>Un peu de patience... l'application n'est pas encore en production.</h1>
+        <p>
+            <span>Vous vous connectez actuellement sur un serveur d'application </span> 
+            <h:outputText style="font-weight: bold" value="#{application.serverInfo}"/>
+            <span> depuis l'adresse IP : </span>
+            <h:outputText style="font-weight: bold"  value="#{request.remoteAddr}"/>
+        </p>
     </h:body>
 </html>
 
