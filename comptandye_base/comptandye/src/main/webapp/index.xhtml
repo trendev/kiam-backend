@@ -6,17 +6,30 @@
     <h:head>
         <title>comptandye</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <style>
+            html{
+                background: linear-gradient(lightgray,gray);
+                height: 100%;
+                width: 100%;
+                margin: 10;
+            }
+        </style>
     </h:head>
-    <h:body>
-        <h1>Un peu de patience... l'application n'est pas encore en production.</h1>
+    <h:body style="">
+        <h2>Un peu de patience... l'application n'est pas encore en production.</h2>
+        <!-- 
+        <p>Vous vous connectez actuellement sur un serveur d'application <h:outputText style="font-weight: bold" value="#{application.serverInfo}"/><h:outputText style="font-weight: bold"  value="#{request.getHeader('X-FORWARDED-FOR')?'depuis l\'adresse IP '+request.getHeader('X-FORWARDED-FOR'):'.'}"/>
+        </p> 
+        -->
+        <p>Afin de pouvoir vous pré-inscrire,<br/>
+            nous mettrons prochainement à votre disposition un formulaire Google en ligne.</p>
+        <p>En attendant, suivez nous sur twitter.</p>
         <p>
-            <span>Vous vous connectez actuellement sur un serveur d'application </span> 
-            <h:outputText style="font-weight: bold" value="#{application.serverInfo}"/>
-            <span> depuis l'adresse IP : </span>
-            <h:outputText style="font-weight: bold"  value="#{request.remoteAddr}"/>
-        </p>
-        <p>Afin de pouvoir vous pré-inscrire, nous mettrons très prochainement à votre disposition un formulaire Google en ligne.</p>
-        <p>A bientôt :)</p>
+            <a href="https://twitter.com/comptandye?lang=fr" class="twitter-follow-button" data-show-count="false">Suivre @@comptandye</a>
+            <br/>
+            <a href="https://twitter.com/intent/tweet?lang=fr&amp;screen_name=comptandye" class="twitter-mention-button" data-show-count="false">Tweet @comptandye</a>
+            <script async="async" src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+        <h3>A très bientôt :)</h3>
     </h:body>
 </html>
 
