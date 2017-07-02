@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -146,18 +147,20 @@ public class ConfigureBean implements Serializable {
         List<UserGroup> userGroup = userGroupFacade.findAll();
         userGroup.forEach(group -> {
             LOG.info("## GROUP ##");
-            LOG.info("Name = " + group.getName());
+            LOG.log(Level.INFO, "Name = {0}", group.getName());
 
-            LOG.info("Description = " + group.getDescription());
+            LOG.log(Level.INFO, "Description = {0}", group.getDescription());
 
             int n = group.getUserAccounts().size();
-            LOG.info(n + " User" + (n > 1 ? "s" : ""));
+            LOG.
+                    log(Level.INFO, "{0} User{1}", new Object[]{n,
+                n > 1 ? "s" : ""});
 
             if (n > 0) {
                 LOG.info("Users id: ");
             }
-            group.getUserAccounts().forEach(u -> LOG.info("- "
-                    + u.
+            group.getUserAccounts().forEach(u -> LOG.log(Level.INFO, "- {0}",
+                    u.
                             getEmail()));
 
             LOG.info("###########");
@@ -166,12 +169,12 @@ public class ConfigureBean implements Serializable {
 
     private void clean() {
         userGroupFacade.findAll().forEach(g -> em.remove(g));
-        LOG.info("clean() : OK");
-        LOG.info("EntityManager is"
-                + (em.isJoinedToTransaction() ? "" : " not")
-                + " joined to transaction");
-        LOG.info("EntityManager is"
-                + (em.isOpen() ? "" : " not") + " opened");
+        LOG.log(Level.INFO, "clean() : {0}",
+                userGroupFacade.findAll().isEmpty() ? "OK" : "NOT OK");
+        LOG.log(Level.INFO, "EntityManager is{0} joined to transaction", em.
+                isJoinedToTransaction() ? "" : " not");
+        LOG.log(Level.INFO, "EntityManager is{0} opened",
+                em.isOpen() ? "" : " not");
     }
 
     private void initPaymentModes() {
