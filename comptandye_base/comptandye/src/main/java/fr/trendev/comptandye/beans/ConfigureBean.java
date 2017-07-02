@@ -47,7 +47,10 @@ public class ConfigureBean implements Serializable {
     @PostConstruct
     public void init() {
         clean();
-        initUsersAndGroups();
+        //check that the User Group table is empty
+        if (userGroupFacade.findAll().isEmpty()) {
+            initUsersAndGroups();
+        }
         displayUserGroupDetails();
     }
 
@@ -169,8 +172,19 @@ public class ConfigureBean implements Serializable {
 
     private void clean() {
         userGroupFacade.findAll().forEach(g -> em.remove(g));
-        LOG.log(Level.INFO, "clean() : {0}",
-                userGroupFacade.findAll().isEmpty() ? "OK" : "NOT OK");
+        /**
+         * Should be smart to flush and close the transaction before writing new
+         * users if there are still in the persistent context...
+         */
+        if (em.isJoinedToTransaction()) {
+            try {
+                em.flush();
+                LOG.log(Level.INFO, "clean() : OK");
+            } catch (Exception e) {
+                LOG.log(Level.WARNING, "clean() : FAILED ==> {0}", e.
+                        getMessage());
+            }
+        }
         LOG.log(Level.INFO, "EntityManager is{0} joined to transaction", em.
                 isJoinedToTransaction() ? "" : " not");
         LOG.log(Level.INFO, "EntityManager is{0} opened",
