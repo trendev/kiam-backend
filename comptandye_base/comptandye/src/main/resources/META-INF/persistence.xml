@@ -23,6 +23,7 @@
         <class>fr.trendev.comptandye.entities.Comment</class>
         <class>fr.trendev.comptandye.entities.Administrator</class>
         <class>fr.trendev.comptandye.entities.Category</class>
+        <class>fr.trendev.comptandye.entities.Expense</class>
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
         </properties>
