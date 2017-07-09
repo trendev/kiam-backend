@@ -1,5 +1,6 @@
 package fr.trendev.comptandye.ejbsessions.producer;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -8,6 +9,7 @@ import javax.persistence.PersistenceContext;
  * Producer for injectable EntityManager
  *
  */
+@ApplicationScoped
 public class EntityManagerProducer {
 
     @Produces
