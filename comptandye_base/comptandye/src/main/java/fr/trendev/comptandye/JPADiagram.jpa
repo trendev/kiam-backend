@@ -185,10 +185,10 @@
             <jpa:basic attribute-type="String" v="true" name="nickname" id="_1490105587212561"/>
             <jpa:basic attribute-type="String" v="true" name="phone" id="_149010163278061"/>
             <jpa:basic attribute-type="java.util.Date" v="true" name="birthdate" id="_149010163896262">
-                <jpa:temporal>DATE</jpa:temporal>
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
             </jpa:basic>
             <jpa:basic attribute-type="char" v="true" name="sex" id="_149010166120363"/>
-            <jpa:basic attribute-type="String" v="true" name="picture" id="_149010168028264">
+            <jpa:basic attribute-type="String" v="true" name="picturePath" id="_149010168028264">
                 <jpa:lob/>
             </jpa:basic>
             <jpa:element-collection target-class="java.lang.String" collection-type="java.util.List" v="true" name="comments" id="_149098087463456"/>
@@ -214,8 +214,8 @@
         <jpa:nq e="false" name="CustomerDetails.findBySex">
             <jpa:query>Select c from CustomerDetails c where c.sex=:sex</jpa:query>
         </jpa:nq>
-        <jpa:nq e="false" name="CustomerDetails.findByPicture">
-            <jpa:query>Select c from CustomerDetails c where c.picture=:picture</jpa:query>
+        <jpa:nq e="false" name="CustomerDetails.findByPicturePath">
+            <jpa:query>Select c from CustomerDetails c where c.picturePath=:picturePath</jpa:query>
         </jpa:nq>
         <jpa:nq e="false" name="CustomerDetails.findByNickname">
             <jpa:query>Select c from CustomerDetails c where c.nickname=:nickname</jpa:query>
@@ -331,7 +331,7 @@
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" name="name" id="_1490176760174139"/>
-            <jpa:basic attribute-type="long" v="true" name="price" id="_1490176780392140"/>
+            <jpa:basic attribute-type="float" v="true" name="price" id="_1490176780392140"/>
             <jpa:basic attribute-type="int" v="true" name="duration" id="_1490176787202141"/>
             <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490101456632" connected-attribute-id="_149017620658557" v="true" name="professional" id="_149017620658456"/>
             <jpa:id attribute-type="Long" v="true" name="id" id="_149017296671124">
@@ -355,9 +355,11 @@
     <jpa:entity lbl-ref="_149017899245630" compositePrimaryKeyType="D" compositePrimaryKeyClass="BillPK" abs="true" class="Bill" v="true" xre="false" m="false" rootElement="_14901008082901" id="_1490178979567">
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
-            <jpa:basic attribute-type="double" v="true" name="amount" id="_149017899245630"/>
-            <jpa:basic attribute-type="int" v="true" name="discount" id="_149017912276532"/>
-            <jpa:basic attribute-type="boolean" v="true" name="paidoff" id="_149018414188437"/>
+            <jpa:basic attribute-type="float" v="true" name="amount" id="_149017899245630"/>
+            <jpa:basic attribute-type="float" v="true" name="discount" id="_149017912276532"/>
+            <jpa:basic attribute-type="java.util.Date" v="true" name="paymentDate" id="_149018414188437">
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+            </jpa:basic>
             <jpa:basic attribute-type="String" v="true" name="comment" id="_1490288120263797"/>
             <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_1490179812678394" v="true" name="professional" id="_1490179812677393"/>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490206901623" connected-attribute-id="_149020760041791" v="true" name="payments" id="_149020760041892"/>
@@ -366,7 +368,7 @@
                 <jpa:generated-value strategy="AUTO"/>
             </jpa:id>
             <jpa:id attribute-type="java.util.Date" v="true" name="deliveryDate" id="_1490181108037605">
-                <jpa:temporal>DATE</jpa:temporal>
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
                 <jpa:generated-value/>
             </jpa:id>
         </jpa:attributes>
@@ -382,8 +384,8 @@
         <jpa:nq e="false" name="Bill.findByDiscount">
             <jpa:query>Select b from Bill b where b.discount=:discount</jpa:query>
         </jpa:nq>
-        <jpa:nq e="false" name="Bill.findByPaidoff">
-            <jpa:query>Select b from Bill b where b.paidoff=:paidoff</jpa:query>
+        <jpa:nq e="false" name="Bill.findByPaymentDate">
+            <jpa:query>Select b from Bill b where b.paymentDate=:paymentDate</jpa:query>
         </jpa:nq>
         <jpa:nq e="false" name="Bill.findByComment">
             <jpa:query>Select b from Bill b where b.comment=:comment</jpa:query>
@@ -431,8 +433,8 @@
     <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="PaymentPK" abs="false" class="Payment" v="true" xre="false" m="false" rootElement="_14901008082901" id="_1490206901623">
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
-            <jpa:basic attribute-type="double" v="true" name="amount" id="_149020701195485"/>
-            <jpa:basic attribute-type="String" v="true" name="currency" dv="&quot;€&quot;" id="_149020716672986"/>
+            <jpa:basic attribute-type="float" v="true" name="amount" id="_149020701195485"/>
+            <jpa:basic attribute-type="String" v="true" name="currency" dv="&quot;EUR&quot;" id="_149020716672986"/>
             <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490184243036" v="true" name="paymentMode" id="_149020723198887"/>
             <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490178979567" connected-attribute-id="_149020760041892" v="true" name="bill" id="_149020760041791"/>
             <jpa:id attribute-type="Long" v="true" name="id" id="_149020690169583">
@@ -500,9 +502,9 @@
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" name="name" id="_149951257358656"/>
-            <jpa:basic attribute-type="double" v="true" name="amount" id="_149951257579557"/>
+            <jpa:basic attribute-type="float" v="true" name="amount" id="_149951257579557"/>
             <jpa:basic attribute-type="java.util.Date" v="true" name="paymentDate" id="_149951257869758">
-                <jpa:temporal>DATE</jpa:temporal>
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
             </jpa:basic>
             <jpa:basic attribute-type="String" v="true" name="invoiceRef" id="_1499513890817845"/>
             <jpa:many-to-one primaryKey="false" connected-entity-id="_1490101456632" connected-attribute-id="_1499513227018247" v="true" name="professional" id="_1499513227017246"/>
@@ -543,27 +545,27 @@
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1490172966686" x="-257" y="856"/>
-            <i ref="_1490180671085" x="800" y="568"/>
-            <i ref="_1490704123469" x="27" y="247"/>
-            <i ref="_1490101578444" x="551" y="247"/>
-            <i ref="_1490100852900" x="549" y="11"/>
-            <i ref="_1490101520286" x="437" y="535"/>
-            <i ref="_1490104062170" x="-204" y="591"/>
-            <i ref="_1490113906035" x="-109" y="1182"/>
-            <i ref="_1490704206844" x="137" y="995"/>
-            <i ref="_1490101376664" x="247" y="247"/>
-            <i ref="_1490113751330" x="-377" y="1169"/>
-            <i ref="_1490206901623" x="489" y="1508"/>
-            <i ref="_1490178979567" x="854" y="1346"/>
-            <i ref="_1499512549878" x="-59" y="1299"/>
-            <i ref="_1490101737208" x="-236" y="220"/>
-            <i ref="_1490281931338" x="551" y="1031"/>
-            <i ref="_1490101456632" x="167" y="436"/>
-            <i ref="_1490184243036" x="190" y="1433"/>
-            <i ref="_1490100823157" x="231" y="-9"/>
-            <i ref="_1490180682743" x="713" y="721"/>
-            <i ref="_1490101555530" x="407" y="772"/>
+            <i ref="_1490172966686" x="-261" y="852"/>
+            <i ref="_1490180671085" x="796" y="564"/>
+            <i ref="_1490704123469" x="23" y="243"/>
+            <i ref="_1490101578444" x="547" y="243"/>
+            <i ref="_1490100852900" x="545" y="7"/>
+            <i ref="_1490101520286" x="433" y="531"/>
+            <i ref="_1490104062170" x="-208" y="587"/>
+            <i ref="_1490113906035" x="-113" y="1178"/>
+            <i ref="_1490704206844" x="133" y="991"/>
+            <i ref="_1490101376664" x="243" y="243"/>
+            <i ref="_1490113751330" x="-381" y="1165"/>
+            <i ref="_1490206901623" x="485" y="1504"/>
+            <i ref="_1490178979567" x="850" y="1342"/>
+            <i ref="_1499512549878" x="-63" y="1295"/>
+            <i ref="_1490101737208" x="-240" y="216"/>
+            <i ref="_1490281931338" x="547" y="1027"/>
+            <i ref="_1490101456632" x="163" y="432"/>
+            <i ref="_1490184243036" x="186" y="1429"/>
+            <i ref="_1490100823157" x="227" y="-13"/>
+            <i ref="_1490180682743" x="709" y="717"/>
+            <i ref="_1490101555530" x="403" y="768"/>
         </jpa:ws>
     </jpa:wsl>
 </jpa:entity-mappings>
