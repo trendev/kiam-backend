@@ -21,6 +21,9 @@ public class Professional extends Customer {
     @Basic
     private String business;
 
+    @Basic
+    private String companyID;
+
     @OneToMany(targetEntity = Offering.class, mappedBy = "professional")
     private List<Offering> offerings;
 
@@ -59,6 +62,14 @@ public class Professional extends Customer {
 
     public void setBusiness(String business) {
         this.business = business;
+    }
+
+    public String getCompanyID() {
+        return this.companyID;
+    }
+
+    public void setCompanyID(String companyID) {
+        this.companyID = companyID;
     }
 
     public List<Offering> getOfferings() {

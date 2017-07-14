@@ -105,6 +105,7 @@
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" name="website" id="_1490104021917395"/>
             <jpa:basic attribute-type="String" v="true" name="business" id="_149234004194954"/>
+            <jpa:basic attribute-type="String" v="true" name="companyID" id="_150001807687657"/>
             <jpa:one-to-many orp="false" collection-type="java.util.List" mkt="NEW" connected-entity-id="_1490172966686" connected-attribute-id="_149017620658456" v="true" name="offerings" id="_149017620658557"/>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490178979567" connected-attribute-id="_1490179812677393" v="true" name="bills" id="_1490179812678394"/>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490101555530" connected-attribute-id="_14902921628221105" v="true" name="clients" id="_14902921628221106"/>
@@ -134,6 +135,9 @@
         </jpa:nq>
         <jpa:nq e="false" name="Professional.findByBusiness">
             <jpa:query>Select p from Professional p where p.business=:business</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Professional.findByCompanyID">
+            <jpa:query>Select p from Professional p where p.companyID=:companyID</jpa:query>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="IndividualPK" abs="false" class="Individual" superclassId="_1490101376664" v="true" xre="false" m="false" rootElement="_14901008082901" id="_1490101520286">
@@ -545,27 +549,27 @@
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1490172966686" x="-261" y="852"/>
-            <i ref="_1490180671085" x="796" y="564"/>
-            <i ref="_1490704123469" x="23" y="243"/>
-            <i ref="_1490101578444" x="547" y="243"/>
-            <i ref="_1490100852900" x="545" y="7"/>
-            <i ref="_1490101520286" x="433" y="531"/>
-            <i ref="_1490104062170" x="-208" y="587"/>
-            <i ref="_1490113906035" x="-113" y="1178"/>
-            <i ref="_1490704206844" x="133" y="991"/>
-            <i ref="_1490101376664" x="243" y="243"/>
-            <i ref="_1490113751330" x="-381" y="1165"/>
-            <i ref="_1490206901623" x="485" y="1504"/>
-            <i ref="_1490178979567" x="850" y="1342"/>
-            <i ref="_1499512549878" x="-63" y="1295"/>
-            <i ref="_1490101737208" x="-240" y="216"/>
-            <i ref="_1490281931338" x="547" y="1027"/>
-            <i ref="_1490101456632" x="163" y="432"/>
-            <i ref="_1490184243036" x="186" y="1429"/>
-            <i ref="_1490100823157" x="227" y="-13"/>
-            <i ref="_1490180682743" x="709" y="717"/>
-            <i ref="_1490101555530" x="403" y="768"/>
+            <i ref="_1490172966686" x="-263" y="850"/>
+            <i ref="_1490180671085" x="794" y="562"/>
+            <i ref="_1490704123469" x="21" y="241"/>
+            <i ref="_1490101578444" x="545" y="241"/>
+            <i ref="_1490100852900" x="543" y="5"/>
+            <i ref="_1490101520286" x="431" y="529"/>
+            <i ref="_1490104062170" x="-210" y="585"/>
+            <i ref="_1490113906035" x="-115" y="1176"/>
+            <i ref="_1490704206844" x="131" y="989"/>
+            <i ref="_1490101376664" x="241" y="241"/>
+            <i ref="_1490113751330" x="-383" y="1163"/>
+            <i ref="_1490206901623" x="483" y="1502"/>
+            <i ref="_1490178979567" x="848" y="1340"/>
+            <i ref="_1499512549878" x="-65" y="1293"/>
+            <i ref="_1490101737208" x="-242" y="214"/>
+            <i ref="_1490281931338" x="545" y="1025"/>
+            <i ref="_1490101456632" x="161" y="430"/>
+            <i ref="_1490184243036" x="184" y="1427"/>
+            <i ref="_1490100823157" x="225" y="-15"/>
+            <i ref="_1490180682743" x="707" y="715"/>
+            <i ref="_1490101555530" x="401" y="766"/>
         </jpa:ws>
     </jpa:wsl>
 </jpa:entity-mappings>
