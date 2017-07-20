@@ -9,7 +9,6 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Test;
 
 /**
  *
@@ -39,7 +38,7 @@ public class UUIDGeneratorTest {
     /**
      * Test of generate method, of class UUIDGenerator.
      */
-    @Test
+    //@Test
     public void testGenerate() {
         System.out.println("testGenerate()");
 
@@ -54,7 +53,7 @@ public class UUIDGeneratorTest {
     /**
      * Test of generate method, of class UUIDGenerator.
      */
-    @Test
+    //@Test
     public void testGenerate_boolean() {
         System.out.println("testGenerate_boolean()");
         boolean compact = true;
@@ -69,7 +68,7 @@ public class UUIDGeneratorTest {
     /**
      * Test of generate method, of class UUIDGenerator.
      */
-    @Test
+    //@Test
     public void testGenerate_String_boolean() {
         System.out.println("testGenerate_String_boolean()");
         String header = null;

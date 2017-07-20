@@ -7,17 +7,17 @@ package fr.trendev.comptandye.beans;
 
 import fr.trendev.comptandye.ejbsessions.UserGroupFacade;
 import fr.trendev.comptandye.entities.Administrator;
-import fr.trendev.comptandye.entities.Individual;
 import fr.trendev.comptandye.entities.PaymentMode;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.UserGroup;
-import fr.trendev.comptandye.util.PasswordGenerator;
 import fr.trendev.comptandye.util.UUIDGenerator;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -45,119 +45,129 @@ public class ConfigureBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        clean();
-        initUsersAndGroups();
-        displayUserGroupDetails();
+        this.clean();
+        //check that the User Group table is empty
+        if (userGroupFacade.findAll().isEmpty()) {
+            this.initUsersAndGroups();
+        }
+        this.displayUserGroupDetails();
     }
 
     private void initUsersAndGroups() {
 
-        Administrator admin = new Administrator();
-        admin.setEmail("julien.sie@gmail.com");
-        admin.setPassword(PasswordGenerator.encrypt_SHA256("password"));
-        admin.setUserGroups(new LinkedList<>());
-        admin.setUuid(UUIDGenerator.generate(true));
-        admin.setUsername("admin");
+        /**
+         * Creates 3 administrators with different passwords
+         */
+        Administrator trendevfr = new Administrator();
+        trendevfr.setEmail("trendevfr@gmail.com");
+        trendevfr.setPassword(
+                "b6cd79aa40668a176dbe690a5cf81599b3c67b2414e9a29de5735de47c0eceed");
+        trendevfr.setUserGroups(new LinkedList<>());
+        trendevfr.setUsername("trendevfr_admin");
 
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.YEAR, -2);
-        admin.setRegistrationDate(cal.getTime());
+        //cal.add(Calendar.YEAR, -2);
+        trendevfr.setRegistrationDate(cal.getTime());
 
-        Administrator csie = new Administrator();
-        csie.setEmail("csie63@gmail.com");
-        csie.setPassword(PasswordGenerator.encrypt_SHA256("qsec0fr"));
-        csie.setUserGroups(new LinkedList<>());
-        csie.setUuid(UUIDGenerator.generate(true));
+        Administrator comptandye = new Administrator();
+        comptandye.setEmail("comptandye@gmail.com");
+        comptandye.setPassword(
+                "999591e11d1ba7910fb3dc5f3b050fbb79ffd3a2ce2fec072ba06e501b078103");
+        comptandye.setUserGroups(new LinkedList<>());
+        comptandye.setUsername("comptandye_admin");
 
+        comptandye.setRegistrationDate(cal.getTime());
+
+        Administrator jsie = new Administrator();
+        jsie.setEmail("julien.sie@gmail.com");
+        jsie.setPassword(
+                "46b609b15f3157b7ec264ce0ac5a86c22673bc818415a9fa7b400d60f70986b2");
+        jsie.setUserGroups(new LinkedList<>());
+        jsie.setUsername("jsie");
+
+        jsie.setRegistrationDate(cal.getTime());
+
+        /**
+         * Creates the Administrator Group
+         */
         UserGroup adminGroup = new UserGroup();
         adminGroup.setName("Administrator");
         adminGroup.setDescription("This is the Administrator Group");
         adminGroup.setUserAccounts(new LinkedList<>());
 
-        admin.getUserGroups().add(adminGroup);
-        adminGroup.getUserAccounts().add(admin);
-        csie.getUserGroups().add(adminGroup);
-        adminGroup.getUserAccounts().add(csie);
+        /**
+         * Adds the administrators to the group and the group to the
+         * administrators
+         */
+        Collections.addAll(adminGroup.getUserAccounts(), trendevfr, comptandye,
+                jsie);
+        trendevfr.getUserGroups().add(adminGroup);
+        comptandye.getUserGroups().add(adminGroup);
+        jsie.getUserGroups().add(adminGroup);
 
+        /**
+         * Creates the first professional
+         */
         Professional vgay = new Professional();
         vgay.setEmail("vanessa.gay@gmail.com");
-        vgay.setPassword(PasswordGenerator.encrypt_SHA256(PasswordGenerator.
-                autoGenerate()));
+        vgay.setPassword(
+                "114ad5ad7e277e6618171a4cc915fddce964271359bfd9a43067e2ad929b8562");
         vgay.setUserGroups(new LinkedList<>());
+        vgay.setUsername("Vaness");
+        vgay.setUuid(UUIDGenerator.generate("PRO_", true));
 
-        Professional skonx = new Professional();
-        skonx.setEmail("skonx2006@hotmail.com");
-        skonx.setPassword(PasswordGenerator.encrypt_SHA256(PasswordGenerator.
-                autoGenerate()));
-        skonx.setUserGroups(new LinkedList<>());
-
-        Professional juju = new Professional();
-        juju.setEmail("julien.sie@icloud.com");
-        juju.setPassword(PasswordGenerator.encrypt_SHA256(PasswordGenerator.
-                autoGenerate()));
-        juju.setUserGroups(new LinkedList<>());
-
-        Individual sgaysuard = new Individual();
-        sgaysuard.setEmail("sylvie.gay.suard@gmail.com");
-        sgaysuard.setUserGroups(new LinkedList<>());
-
+        /**
+         * Creates the Professional user group
+         */
         UserGroup pro = new UserGroup();
         pro.setName("Professional");
         pro.setDescription("This is the Professional User Group");
         pro.setUserAccounts(new LinkedList<>());
 
+        /**
+         * Adds the first user to the professional group and vice versa
+         */
+        vgay.getUserGroups().add(pro);
+        pro.getUserAccounts().add(vgay);
+
+        /**
+         * Creates the Individual group, empty on the current version of the
+         * application
+         *
+         */
         UserGroup ind = new UserGroup();
         ind.setName("Individual");
         ind.setDescription("This is the Individual User Group");
-        ind.setUserAccounts(new LinkedList<>());
+        ind.setUserAccounts(Collections.EMPTY_LIST);
 
-        vgay.getUserGroups().add(pro);
-        skonx.getUserGroups().add(pro);
-        juju.getUserGroups().add(pro);
-
-        pro.getUserAccounts().add(vgay);
-        pro.getUserAccounts().add(skonx);
-        pro.getUserAccounts().add(juju);
-
+        /**
+         * Store the groups and their contents
+         */
         em.persist(adminGroup);
-
         em.persist(pro);
-
-        sgaysuard.getUserGroups().add(ind);
-        ind.getUserAccounts().add(sgaysuard);
-
         em.persist(ind);
 
-        sgaysuard.setPassword(PasswordGenerator.encrypt_SHA256("password"));
-        sgaysuard.setUsername("Sylvioc");
-
-        em.merge(sgaysuard);
-
-        /*sylvioc.getUserGroups().remove(ind);
-        ind.getUserAccounts().remove(sylvioc);
-        em.remove(sylvioc);
-        admin.getUserGroups().remove(adminGroup);
-        adminGroup.getUserAccounts().remove(admin);
-        em.remove(admin);*/
-        initPaymentModes();
+        this.initPaymentModes();
     }
 
     private void displayUserGroupDetails() {
         List<UserGroup> userGroup = userGroupFacade.findAll();
         userGroup.forEach(group -> {
             LOG.info("## GROUP ##");
-            LOG.info("Name = " + group.getName());
+            LOG.log(Level.INFO, "Name = {0}", group.getName());
 
-            LOG.info("Description = " + group.getDescription());
+            LOG.log(Level.INFO, "Description = {0}", group.getDescription());
 
             int n = group.getUserAccounts().size();
-            LOG.info(n + " User" + (n > 1 ? "s" : ""));
+            LOG.
+                    log(Level.INFO, "{0} User{1}", new Object[]{n,
+                n > 1 ? "s" : ""});
 
             if (n > 0) {
                 LOG.info("Users id: ");
             }
-            group.getUserAccounts().forEach(u -> LOG.info("- "
-                    + u.
+            group.getUserAccounts().forEach(u -> LOG.log(Level.INFO, "- {0}",
+                    u.
                             getEmail()));
 
             LOG.info("###########");
@@ -166,12 +176,20 @@ public class ConfigureBean implements Serializable {
 
     private void clean() {
         userGroupFacade.findAll().forEach(g -> em.remove(g));
-        LOG.info("clean() : OK");
-        LOG.info("EntityManager is"
-                + (em.isJoinedToTransaction() ? "" : " not")
-                + " joined to transaction");
-        LOG.info("EntityManager is"
-                + (em.isOpen() ? "" : " not") + " opened");
+
+        if (em.isJoinedToTransaction()) {
+            try {
+                em.flush();
+                LOG.log(Level.INFO, "clean() : OK");
+            } catch (Exception e) {
+                LOG.log(Level.WARNING, "clean() : FAILED ==> {0}", e.
+                        getMessage());
+            }
+        }
+        LOG.log(Level.INFO, "EntityManager is{0} joined to transaction", em.
+                isJoinedToTransaction() ? "" : " not");
+        LOG.log(Level.INFO, "EntityManager is{0} opened",
+                em.isOpen() ? "" : " not");
     }
 
     private void initPaymentModes() {
