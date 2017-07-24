@@ -12,6 +12,7 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  *
@@ -69,7 +70,7 @@ public class PasswordGeneratorTest {
     /**
      * Test of encrypt_SHA256 method, of class PasswordGenerator.
      */
-    //@Test
+    @Test
     public void testEncrypt_SHA256() {
         System.out.println("encrypt_SHA256");
         String pwd = "error";
@@ -88,10 +89,10 @@ public class PasswordGeneratorTest {
     }
 
     private void assertPasswordEncryption(String pwd, String pwd_sha256) {
-        assert PasswordGenerator.encrypt_SHA256(pwd).equals(pwd_sha256);
-
         System.out.println("\"" + pwd + "\" ==> " + PasswordGenerator.
                 encrypt_SHA256(pwd));
+        assert PasswordGenerator.encrypt_SHA256(pwd).equals(pwd_sha256);
+
     }
 
 }
