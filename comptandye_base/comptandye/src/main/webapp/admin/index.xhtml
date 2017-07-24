@@ -9,6 +9,10 @@
         <title>Console d'Administration</title>
     </h:head>
     <h:body>
-        <p>Bonjour Administrateur</p>
+        <p>Bonjour Administrateur, vous voilà connecté sur la session <h:outputText value="#{session.id}" style="font-weight: bold"></h:outputText></p>
+        <p><a href="../welcome.html">Welcome Page</a></p>
+        <h:form>
+            <h:commandButton action="#{session.invalidate()}" value="Invalidate"></h:commandButton>
+        </h:form>
     </h:body>
 </html>

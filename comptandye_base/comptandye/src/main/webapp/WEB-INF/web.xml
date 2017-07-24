@@ -46,4 +46,52 @@
             30
         </session-timeout>
     </session-config>
+    <welcome-file-list>
+        <welcome-file>welcome.html</welcome-file>
+    </welcome-file-list>
+    <security-constraint>
+        <display-name>ADMIN_secured_access</display-name>
+        <web-resource-collection>
+            <web-resource-name>Administration secured pages</web-resource-name>
+            <description>admin tools and restapi</description>
+            <url-pattern>/admin/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>Administrator</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>PRO_secured_access</display-name>
+        <web-resource-collection>
+            <web-resource-name>Professional secured pages</web-resource-name>
+            <description>Professional resources</description>
+            <url-pattern>/pro/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>Professional</role-name>
+            <role-name>Administrator</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>comptandye-realm</realm-name>
+        <form-login-config>
+            <form-login-page>/login_register/login.html</form-login-page>
+            <form-error-page>/error.html</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-role>
+        <description/>
+        <role-name>Administrator</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>Professional</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>Individual</role-name>
+    </security-role>
 </web-app>
