@@ -42,8 +42,21 @@ public class PasswordGenerator {
         return encrypt_SHA256_base64(pwd);
     }
 
+    public static String encrypt_SHA256(String pwd, String base) {
+
+        switch (base) {
+            case "base64":
+                return encrypt_SHA256_base64(pwd);
+            case "base16":
+                return encrypt_SHA256_base16(pwd);
+            default:
+                return encrypt_SHA256_base64(pwd);
+        }
+
+    }
+
     private static String encrypt_SHA256_base16(String pwd) {
-        String spwd = "NO_ACCESS";
+        String encoded = "NO_ACCESS";
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] bytes = md.digest(pwd.getBytes());
@@ -53,12 +66,12 @@ public class PasswordGenerator {
                 sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).
                         substring(1));
             }
-            spwd = sb.toString();
+            encoded = sb.toString();
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(PasswordGenerator.class.getName()).
                     log(Level.SEVERE, "SHA-256 is not a supported algorithm");
         }
-        return spwd;
+        return encoded;
 
     }
 
