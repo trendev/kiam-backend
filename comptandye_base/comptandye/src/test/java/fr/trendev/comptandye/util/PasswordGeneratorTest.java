@@ -72,7 +72,10 @@ public class PasswordGeneratorTest {
      */
     @Test
     public void testEncrypt_SHA256() {
-        System.out.println("encrypt_SHA256");
+        System.out.println("** encrypt_SHA256 **");
+
+        System.out.println("encrypt_SHA256 Base64");
+        System.out.println("---------------------");
         String pwd = "error";
         String pwd_sha256 = "ygD8z7QImJ7dxAEGLE0SGaas62ubVUEjV/F5CGLo8Xg=";
 
@@ -86,10 +89,16 @@ public class PasswordGeneratorTest {
         assertPasswordEncryption(pwd2, pwd2_sha256, "base64");
         assertPasswordEncryption(pwd3, pwd3_sha256, "base64");
 
-        pwd_sha256 = "";
-        pwd2_sha256 = "";
-        pwd3_sha256 = "";
+        System.out.println("encrypt_SHA256 Base16");
+        System.out.println("---------------------");
 
+        pwd_sha256 = "ca00fccfb408989eddc401062c4d1219a6aceb6b9b55412357f1790862e8f178";
+        pwd2_sha256 = "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8";
+        pwd3_sha256 = "f2838ae81b17b2ffacd7d5cc68a314621eb2d08bd57f82a36fb1a64964bf3346";
+
+        assertPasswordEncryption(pwd, pwd_sha256, "base16");
+        assertPasswordEncryption(pwd2, pwd2_sha256, "base16");
+        assertPasswordEncryption(pwd3, pwd3_sha256, "base16");
     }
 
     private void assertPasswordEncryption(String pwd, String pwd_sha256,
