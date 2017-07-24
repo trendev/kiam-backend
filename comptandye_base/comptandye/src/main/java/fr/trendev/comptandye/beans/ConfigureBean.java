@@ -111,6 +111,7 @@ public class ConfigureBean implements Serializable {
         vgay.setUserGroups(new LinkedList<>());
         vgay.setUsername("Vaness");
         vgay.setUuid(UUIDGenerator.generate("PRO_", true));
+        vgay.setRegistrationDate(cal.getTime());
 
         /**
          * Creates the Professional user group
