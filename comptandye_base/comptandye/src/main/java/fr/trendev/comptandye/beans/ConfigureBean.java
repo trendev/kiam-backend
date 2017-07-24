@@ -60,8 +60,7 @@ public class ConfigureBean implements Serializable {
          */
         Administrator trendevfr = new Administrator();
         trendevfr.setEmail("trendevfr@gmail.com");
-        trendevfr.setPassword(
-                "b6cd79aa40668a176dbe690a5cf81599b3c67b2414e9a29de5735de47c0eceed");
+        trendevfr.setPassword("ts15qkBmihdtvmkKXPgVmbPGeyQU6aKd5XNd5HwOzu0=");
         trendevfr.setUserGroups(new LinkedList<>());
         trendevfr.setUsername("trendevfr_admin");
 
@@ -71,8 +70,7 @@ public class ConfigureBean implements Serializable {
 
         Administrator comptandye = new Administrator();
         comptandye.setEmail("comptandye@gmail.com");
-        comptandye.setPassword(
-                "999591e11d1ba7910fb3dc5f3b050fbb79ffd3a2ce2fec072ba06e501b078103");
+        comptandye.setPassword("mZWR4R0bp5EPs9xfOwUPu3n/06LOL+wHK6BuUBsHgQM=");
         comptandye.setUserGroups(new LinkedList<>());
         comptandye.setUsername("comptandye_admin");
 
@@ -80,8 +78,7 @@ public class ConfigureBean implements Serializable {
 
         Administrator jsie = new Administrator();
         jsie.setEmail("julien.sie@gmail.com");
-        jsie.setPassword(
-                "46b609b15f3157b7ec264ce0ac5a86c22673bc818415a9fa7b400d60f70986b2");
+        jsie.setPassword("RrYJsV8xV7fsJkzgrFqGwiZzvIGEFan6e0ANYPcJhrI=");
         jsie.setUserGroups(new LinkedList<>());
         jsie.setUsername("jsie");
 
@@ -110,8 +107,7 @@ public class ConfigureBean implements Serializable {
          */
         Professional vgay = new Professional();
         vgay.setEmail("vanessa.gay@gmail.com");
-        vgay.setPassword(
-                "114ad5ad7e277e6618171a4cc915fddce964271359bfd9a43067e2ad929b8562");
+        vgay.setPassword("EUrVrX4nfmYYFxpMyRX93OlkJxNZv9mkMGfirZKbhWI=");
         vgay.setUserGroups(new LinkedList<>());
         vgay.setUsername("Vaness");
         vgay.setUuid(UUIDGenerator.generate("PRO_", true));
