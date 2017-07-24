@@ -52,8 +52,7 @@ public class PasswordGeneratorTest {
 
         assert spwd.isEmpty();
 
-        IntStream.range(0, n).forEach(i -> spwd.add(PasswordGenerator.
-                encrypt_SHA256(PasswordGenerator.
+        IntStream.range(0, n).forEach(i -> spwd.add(PasswordGenerator.encrypt_SHA256(PasswordGenerator.
                         autoGenerate(size))));
 
         assert !spwd.isEmpty();
@@ -74,13 +73,13 @@ public class PasswordGeneratorTest {
     public void testEncrypt_SHA256() {
         System.out.println("encrypt_SHA256");
         String pwd = "error";
-        String pwd_sha256 = "ca00fccfb408989eddc401062c4d1219a6aceb6b9b55412357f1790862e8f178";
+        String pwd_sha256 = "ygD8z7QImJ7dxAEGLE0SGaas62ubVUEjV/F5CGLo8Xg=";
 
         String pwd2 = "password";
-        String pwd2_sha256 = "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8";
+        String pwd2_sha256 = "XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg=";
 
         String pwd3 = "comptandye_password";
-        String pwd3_sha256 = "f2838ae81b17b2ffacd7d5cc68a314621eb2d08bd57f82a36fb1a64964bf3346";
+        String pwd3_sha256 = "8oOK6BsXsv+s19XMaKMUYh6y0IvVf4Kjb7GmSWS/M0Y=";
 
         assertPasswordEncryption(pwd, pwd_sha256);
         assertPasswordEncryption(pwd2, pwd2_sha256);
@@ -89,8 +88,7 @@ public class PasswordGeneratorTest {
     }
 
     private void assertPasswordEncryption(String pwd, String pwd_sha256) {
-        System.out.println("\"" + pwd + "\" ==> " + PasswordGenerator.
-                encrypt_SHA256(pwd));
+        System.out.println("\"" + pwd + "\" ==> " + PasswordGenerator.encrypt_SHA256(pwd));
         assert PasswordGenerator.encrypt_SHA256(pwd).equals(pwd_sha256);
 
     }

@@ -39,6 +39,10 @@ public class PasswordGenerator {
     }
 
     public static String encrypt_SHA256(String pwd) {
+        return encrypt_SHA256_base64(pwd);
+    }
+
+    private static String encrypt_SHA256_base16(String pwd) {
         String spwd = "NO_ACCESS";
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -58,8 +62,8 @@ public class PasswordGenerator {
 
     }
 
-    public static String encrypt_SHA256_(String pwd) {
-        String encoded = "";
+    private static String encrypt_SHA256_base64(String pwd) {
+        String encoded = "NO_ACCESS";
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] hash = md.digest(pwd.getBytes(StandardCharsets.UTF_8));
