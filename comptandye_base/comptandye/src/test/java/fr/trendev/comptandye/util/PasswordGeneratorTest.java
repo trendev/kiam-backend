@@ -42,11 +42,11 @@ public class PasswordGeneratorTest {
     /**
      * Test of autoGenerate method, of class PasswordGenerator.
      */
-    //@Test
+    @Test
     public void testAutoGenerate() {
         System.out.println("autoGenerate");
 
-        int n = 10000;
+        int n = 5;
         int size = 10;
         Set<String> spwd = new HashSet<>(n);
 
