@@ -63,6 +63,7 @@ public class ConfigureBean implements Serializable {
         trendevfr.setPassword("ts15qkBmihdtvmkKXPgVmbPGeyQU6aKd5XNd5HwOzu0=");
         trendevfr.setUserGroups(new LinkedList<>());
         trendevfr.setUsername("trendevfr_admin");
+        trendevfr.setUuid(UUIDGenerator.generate("ADMIN_", true));
 
         Calendar cal = Calendar.getInstance();
         //cal.add(Calendar.YEAR, -2);
@@ -73,6 +74,7 @@ public class ConfigureBean implements Serializable {
         comptandye.setPassword("mZWR4R0bp5EPs9xfOwUPu3n/06LOL+wHK6BuUBsHgQM=");
         comptandye.setUserGroups(new LinkedList<>());
         comptandye.setUsername("comptandye_admin");
+        comptandye.setUuid(UUIDGenerator.generate("ADMIN_", true));
 
         comptandye.setRegistrationDate(cal.getTime());
 
@@ -81,6 +83,7 @@ public class ConfigureBean implements Serializable {
         jsie.setPassword("RrYJsV8xV7fsJkzgrFqGwiZzvIGEFan6e0ANYPcJhrI=");
         jsie.setUserGroups(new LinkedList<>());
         jsie.setUsername("jsie");
+        jsie.setUuid(UUIDGenerator.generate("ADMIN_", true));
 
         jsie.setRegistrationDate(cal.getTime());
 
