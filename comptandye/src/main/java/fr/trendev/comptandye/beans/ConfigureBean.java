@@ -5,11 +5,11 @@
  */
 package fr.trendev.comptandye.beans;
 
-import fr.trendev.comptandye.ejbsessions.UserGroupFacade;
 import fr.trendev.comptandye.entities.Administrator;
 import fr.trendev.comptandye.entities.PaymentMode;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.UserGroup;
+import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.util.UUIDGenerator;
 import java.io.Serializable;
 import java.util.Arrays;
@@ -20,9 +20,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -40,7 +40,7 @@ public class ConfigureBean implements Serializable {
     @PersistenceContext(unitName = "DEFAULT_PU")
     private EntityManager em;
 
-    @EJB
+    @Inject
     UserGroupFacade userGroupFacade;
 
     @PostConstruct

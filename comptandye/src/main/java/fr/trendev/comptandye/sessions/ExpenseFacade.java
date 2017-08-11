@@ -1,14 +1,14 @@
-package fr.trendev.comptandye.ejbsessions;
+package fr.trendev.comptandye.sessions;
 
-import fr.trendev.comptandye.entities.PaymentMode;
+import fr.trendev.comptandye.entities.Expense;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 
 @Stateless
-@Named("paymentMode")
-public class PaymentModeFacade extends AbstractFacade<PaymentMode, Long> {
+@Named("expense")
+public class ExpenseFacade extends AbstractFacade<Expense, Long> {
 
     @Inject
     private EntityManager em;
@@ -18,8 +18,8 @@ public class PaymentModeFacade extends AbstractFacade<PaymentMode, Long> {
         return em;
     }
 
-    public PaymentModeFacade() {
-        super(PaymentMode.class);
+    public ExpenseFacade() {
+        super(Expense.class);
     }
 
 }

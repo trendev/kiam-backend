@@ -1,14 +1,14 @@
-package fr.trendev.comptandye.ejbsessions;
+package fr.trendev.comptandye.sessions;
 
-import fr.trendev.comptandye.entities.Category;
+import fr.trendev.comptandye.entities.Service;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 
 @Stateless
-@Named("category")
-public class CategoryFacade extends AbstractFacade<Category, Long> {
+@Named("service")
+public class ServiceFacade extends AbstractFacade<Service, Long> {
 
     @Inject
     private EntityManager em;
@@ -18,8 +18,8 @@ public class CategoryFacade extends AbstractFacade<Category, Long> {
         return em;
     }
 
-    public CategoryFacade() {
-        super(Category.class);
+    public ServiceFacade() {
+        super(Service.class);
     }
 
 }

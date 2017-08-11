@@ -1,4 +1,4 @@
-package fr.trendev.comptandye.ejbsessions;
+package fr.trendev.comptandye.sessions;
 
 import fr.trendev.comptandye.entities.CustomerDetails;
 import javax.ejb.Stateless;

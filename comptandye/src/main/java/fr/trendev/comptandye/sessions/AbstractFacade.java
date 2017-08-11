@@ -1,4 +1,4 @@
-package fr.trendev.comptandye.ejbsessions;
+package fr.trendev.comptandye.sessions;
 
 import java.util.Collections;
 import java.util.List;

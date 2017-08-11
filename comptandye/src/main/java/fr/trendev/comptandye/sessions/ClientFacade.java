@@ -1,14 +1,14 @@
-package fr.trendev.comptandye.ejbsessions;
+package fr.trendev.comptandye.sessions;
 
-import fr.trendev.comptandye.entities.Individual;
+import fr.trendev.comptandye.entities.Client;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 
 @Stateless
-@Named("individual")
-public class IndividualFacade extends AbstractFacade<Individual, String> {
+@Named("client")
+public class ClientFacade extends AbstractFacade<Client, Long> {
 
     @Inject
     private EntityManager em;
@@ -18,8 +18,8 @@ public class IndividualFacade extends AbstractFacade<Individual, String> {
         return em;
     }
 
-    public IndividualFacade() {
-        super(Individual.class);
+    public ClientFacade() {
+        super(Client.class);
     }
 
 }
