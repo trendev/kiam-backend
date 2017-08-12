@@ -32,9 +32,9 @@ import javax.persistence.PersistenceContext;
  */
 @Singleton
 @Startup
-public class ConfigureBean implements Serializable {
+public class DemoConfigureBean implements Serializable {
 
-    private static final Logger LOG = Logger.getLogger(ConfigureBean.class.
+    private static final Logger LOG = Logger.getLogger(DemoConfigureBean.class.
             getName());
 
     @PersistenceContext(unitName = "DEFAULT_PU")

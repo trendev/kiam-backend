@@ -56,11 +56,13 @@
             <description>admin tools and restapi</description>
             <url-pattern>/admin/*</url-pattern>
         </web-resource-collection>
-        <web-resource-collection>
+        <!-- 
+<web-resource-collection>
             <web-resource-name>Full access to Rest API</web-resource-name>
             <description>Rest API for Admin tasks</description>
             <url-pattern>/restapi/admin/*</url-pattern>
-        </web-resource-collection>
+        </web-resource-collection>`
+        -->
         <auth-constraint>
             <description/>
             <role-name>Administrator</role-name>
