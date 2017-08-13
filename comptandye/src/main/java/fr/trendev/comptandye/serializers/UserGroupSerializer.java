@@ -44,7 +44,8 @@ public class UserGroupSerializer extends StdSerializer<UserGroup> {
             }
         });
         jg.writeEndArray();
-
+        jg.writeEndObject();
+        jg.close();
     }
 
 }
