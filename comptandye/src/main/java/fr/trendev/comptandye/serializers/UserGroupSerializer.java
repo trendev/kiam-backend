@@ -40,7 +40,10 @@ public class UserGroupSerializer extends StdSerializer<UserGroup> {
                 jg.writeString(u.getEmail());
             } catch (IOException ex) {
                 Logger.getLogger(UserGroupSerializer.class.getName()).
-                        log(Level.SEVERE, null, ex);
+                        log(Level.SEVERE, "Error serializing "
+                                + UserGroupSerializer.class
+                                + ": impossible to serialize " + u.getEmail(),
+                                ex);
             }
         });
         jg.writeEndArray();
