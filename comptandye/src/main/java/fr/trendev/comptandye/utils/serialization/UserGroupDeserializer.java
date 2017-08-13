@@ -53,7 +53,7 @@ public class UserGroupDeserializer extends StdDeserializer<UserGroup> {
 
                 System.out.println("TYPE: " + type.toGenericString() + " / "
                         + e.getValue().asText());
-
+// TODO : use polymorphic method instead...
                 switch (type.toGenericString()) {
                     case "public final class java.lang.String":
                         value = e.getValue().asText();
