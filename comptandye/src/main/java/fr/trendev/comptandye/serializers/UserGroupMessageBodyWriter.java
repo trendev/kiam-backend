@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.providers;
+package fr.trendev.comptandye.serializers;
 
 import fr.trendev.comptandye.entities.UserGroup;
 import java.io.IOException;

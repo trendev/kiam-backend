@@ -3,8 +3,6 @@
  */
 package fr.trendev.comptandye.entities;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -23,9 +21,9 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "USER_ACCOUNT")
 @DiscriminatorColumn(length = 31, name = "ACCOUNT_TYPE")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "email")
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "email")
 public abstract class UserAccount {
 
     @Id
