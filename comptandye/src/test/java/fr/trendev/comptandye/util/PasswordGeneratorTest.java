@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.util;
 
+import fr.trendev.comptandye.utils.PasswordGenerator;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.IntStream;

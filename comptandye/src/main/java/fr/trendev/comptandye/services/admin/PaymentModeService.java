@@ -6,7 +6,7 @@
 package fr.trendev.comptandye.services.admin;
 
 import fr.trendev.comptandye.entities.PaymentMode;
-import fr.trendev.comptandye.exceptions.utils.ExceptionHelper;
+import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
 import fr.trendev.comptandye.sessions.PaymentModeFacade;
 import java.text.MessageFormat;
 import java.util.List;

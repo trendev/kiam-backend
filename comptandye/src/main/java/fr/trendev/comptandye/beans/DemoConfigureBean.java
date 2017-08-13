@@ -10,7 +10,7 @@ import fr.trendev.comptandye.entities.PaymentMode;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
-import fr.trendev.comptandye.util.UUIDGenerator;
+import fr.trendev.comptandye.utils.UUIDGenerator;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Calendar;

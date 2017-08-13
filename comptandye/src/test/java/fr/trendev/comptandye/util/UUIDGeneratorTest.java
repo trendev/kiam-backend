@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.util;
 
+import fr.trendev.comptandye.utils.UUIDGenerator;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

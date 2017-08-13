@@ -4,7 +4,7 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import fr.trendev.comptandye.serializers.UserGroupSerializer;
+import fr.trendev.comptandye.utils.serialization.UserGroupSerializer;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;

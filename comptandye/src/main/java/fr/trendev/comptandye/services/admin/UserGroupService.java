@@ -7,7 +7,7 @@ package fr.trendev.comptandye.services.admin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.trendev.comptandye.entities.UserGroup;
-import fr.trendev.comptandye.exceptions.utils.ExceptionHelper;
+import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
 import java.text.MessageFormat;
 import java.util.List;
