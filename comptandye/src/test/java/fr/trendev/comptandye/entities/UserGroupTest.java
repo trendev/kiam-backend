@@ -68,17 +68,18 @@ public class UserGroupTest {
         assert result.contains(admin01.getEmail());
         assert result.contains(admin02.getEmail());
 
-//        String input = "{\"name\":\"Stars\",\"description\":\"This is the TOP 10 contributors group\",\"userAccounts\":[]}";
-//        UserGroup grp = new ObjectMapper().readerFor(UserGroup.class).readValue(
-//                input);
-//
-//        assert grp.getName().equals("Stars");
-//        assert grp.getDescription().equals(
-//                "This is the TOP 10 contributors group");
-//        /**
-//         * if there is no field userAccounts : grp.getUserAccounts() will be
-//         * null !
-//         */
-//        assert grp.getUserAccounts().isEmpty();
+        String input = "{\"name\":\"Stars\",\"description\":\"This is the TOP 10 contributors group\",\"userAccounts\":[]}";
+        UserGroup grp = new ObjectMapper().readerFor(UserGroup.class).readValue(
+                input);
+
+        assert "Stars".equals(grp.getName());
+        assert "This is the TOP 10 contributors group".equals(grp.
+                getDescription());
+        /**
+         * if there is no field userAccounts : grp.getUserAccounts() will be
+         * null !
+         */
+        assert grp.getUserAccounts() != null;
+        assert grp.getUserAccounts().isEmpty();
     }
 }
