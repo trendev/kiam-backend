@@ -3,8 +3,8 @@
  */
 package fr.trendev.comptandye.entities;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import fr.trendev.comptandye.serializers.UserGroupSerializer;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -20,9 +20,10 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "USER_GROUP")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "name")
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "name")
+@JsonSerialize(using = UserGroupSerializer.class)
 public class UserGroup {
 
     @Id
