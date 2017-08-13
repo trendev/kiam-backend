@@ -28,13 +28,13 @@ import javax.ws.rs.core.Response;
 @Stateless
 @Path("/admin/user-group")
 public class UserGroupService {
-    
+
     @Inject
     UserGroupFacade facade;
-    
+
     private static final Logger LOG = Logger.getLogger(UserGroupService.class.
             getName());
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
@@ -42,20 +42,23 @@ public class UserGroupService {
         try {
             List<UserGroup> list = facade.findAll();
             LOG.log(Level.INFO, "{0} user-group", list.size());
-            
+
             return Response.status(Response.Status.OK).entity(
                     /*new GenericEntity<List<UserGroup>>(
                             list) {
             }*/new ObjectMapper().writeValueAsString(list)).
                     build();
         } catch (Exception ex) {
+
+            ex.printStackTrace();
+
             Throwable t = ExceptionHelper.
                     findRootCauseException(ex);
-            
+
             String msg = MessageFormat.format(
                     "Exception occurs providing the user-group list for an administrator: {0} ; {1}",
                     new Object[]{t.getClass().toString(), t.getMessage()});
-            
+
             LOG.
                     log(Level.WARNING, msg);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
@@ -63,5 +66,5 @@ public class UserGroupService {
                     build();
         }
     }
-    
+
 }

@@ -31,6 +31,9 @@ public class UserGroupSerializer extends StdSerializer<UserGroup> {
     public void serialize(UserGroup t, JsonGenerator jg, SerializerProvider sp)
             throws IOException {
 
+        Logger.getLogger(UserGroupSerializer.class.getName()).
+                log(Level.INFO, "Serializing {0}", t.getName());
+
         jg.writeStartObject();
         jg.writeStringField("name", t.getName());
         jg.writeStringField("description", t.getDescription());
@@ -48,7 +51,6 @@ public class UserGroupSerializer extends StdSerializer<UserGroup> {
         });
         jg.writeEndArray();
         jg.writeEndObject();
-        jg.close();
     }
 
 }

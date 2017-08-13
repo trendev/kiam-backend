@@ -60,7 +60,9 @@ public class UserGroupTest {
 
         admin01.getUserGroups().add(group);
         admin02.getUserGroups().add(group);
-        String result = new ObjectMapper().writeValueAsString(group);
+
+        ObjectMapper om = new ObjectMapper();
+        String result = om.writeValueAsString(group);
         System.out.println("result = " + result);
 
         assert result.contains(admin01.getEmail());
