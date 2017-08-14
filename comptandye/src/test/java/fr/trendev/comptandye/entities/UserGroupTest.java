@@ -65,8 +65,8 @@ public class UserGroupTest {
         String result = om.writeValueAsString(group);
         System.out.println("result = " + result);
 
-        assert result.contains(admin01.getEmail());
-        assert result.contains(admin02.getEmail());
+        assert !result.contains(admin01.getEmail());
+        assert !result.contains(admin02.getEmail());
 
         String input = "{\"name\":\"Stars\",\"description\":\"This is the TOP 10 contributors group\",\"userAccounts\":[]}";
         UserGroup grp = new ObjectMapper().readerFor(UserGroup.class).readValue(
@@ -79,7 +79,7 @@ public class UserGroupTest {
          * if there is no field userAccounts : grp.getUserAccounts() will be
          * null !
          */
-        assert grp.getUserAccounts() != null;
-        assert grp.getUserAccounts().isEmpty();
+        assert grp.getUserAccounts() == null;
+//        assert grp.getUserAccounts().isEmpty();
     }
 }

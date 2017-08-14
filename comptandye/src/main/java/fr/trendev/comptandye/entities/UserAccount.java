@@ -21,9 +21,6 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "USER_ACCOUNT")
 @DiscriminatorColumn(length = 31, name = "ACCOUNT_TYPE")
-//@JsonIdentityInfo(
-//        generator = ObjectIdGenerators.PropertyGenerator.class,
-//        property = "email")
 public abstract class UserAccount {
 
     @Id
