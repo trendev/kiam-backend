@@ -3,6 +3,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -39,6 +40,7 @@ public class Address {
 
     @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Customer.class,
             mappedBy = "address")
+    @JsonIgnore
     private List<Customer> customers;
 
     public Long getId() {

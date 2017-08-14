@@ -3,6 +3,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -40,6 +41,7 @@ public abstract class UserAccount {
     private Date registrationDate;
 
     @ManyToMany(cascade = {CascadeType.ALL}, targetEntity = UserGroup.class)
+    @JsonIgnore
     private List<UserGroup> userGroups;
 
     public String getEmail() {

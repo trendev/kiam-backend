@@ -3,6 +3,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -15,9 +16,11 @@ import javax.persistence.OneToMany;
 public class Individual extends Customer {
 
     @OneToMany(targetEntity = InvidualBill.class, mappedBy = "individual")
+    @JsonIgnore
     private List<InvidualBill> invidualBills;
 
     @ManyToMany(targetEntity = Professional.class)
+    @JsonIgnore
     private List<Professional> professionals;
 
     public List<InvidualBill> getInvidualBills() {

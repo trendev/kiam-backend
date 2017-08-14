@@ -3,6 +3,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
@@ -28,24 +29,31 @@ public class Client {
     private String email;
 
     @OneToOne(targetEntity = SocialNetworkAccounts.class)
+    @JsonIgnore
     private SocialNetworkAccounts socialNetworkAccounts;
 
     @OneToOne(targetEntity = CustomerDetails.class)
+    @JsonIgnore
     private CustomerDetails customerDetails;
 
     @ManyToOne(targetEntity = Address.class)
+    @JsonIgnore
     private Address address;
 
     @ManyToOne(targetEntity = Professional.class)
+    @JsonIgnore
     private Professional professional;
 
     @ManyToOne(targetEntity = Category.class)
+    @JsonIgnore
     private Category category;
 
     @OneToMany(targetEntity = ClientBill.class, mappedBy = "client")
+    @JsonIgnore
     private List<ClientBill> clientBills;
 
     @ManyToMany(targetEntity = CollectiveGroup.class, mappedBy = "clients")
+    @JsonIgnore
     private List<CollectiveGroup> collectiveGroups;
 
     public Long getId() {

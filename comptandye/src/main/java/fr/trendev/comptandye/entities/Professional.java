@@ -3,6 +3,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
@@ -25,27 +26,35 @@ public class Professional extends Customer {
     private String companyID;
 
     @OneToMany(targetEntity = Offering.class, mappedBy = "professional")
+    @JsonIgnore
     private List<Offering> offerings;
 
     @OneToMany(targetEntity = Bill.class, mappedBy = "professional")
+    @JsonIgnore
     private List<Bill> bills;
 
     @OneToMany(targetEntity = Client.class, mappedBy = "professional")
+    @JsonIgnore
     private List<Client> clients;
 
     @OneToMany(targetEntity = CollectiveGroup.class, mappedBy = "professional")
+    @JsonIgnore
     private List<CollectiveGroup> collectiveGroups;
 
     @OneToMany(targetEntity = Category.class, mappedBy = "professional")
+    @JsonIgnore
     private List<Category> categories;
 
     @OneToMany(targetEntity = Expense.class, mappedBy = "professional")
+    @JsonIgnore
     private List<Expense> expenses;
 
     @ManyToMany(targetEntity = Individual.class, mappedBy = "professionals")
+    @JsonIgnore
     private List<Individual> individuals;
 
     @ManyToMany(targetEntity = PaymentMode.class)
+    @JsonIgnore
     private List<PaymentMode> paymentModes;
 
     public String getWebsite() {

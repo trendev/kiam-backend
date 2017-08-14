@@ -3,6 +3,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -15,13 +16,16 @@ import javax.persistence.OneToOne;
 public abstract class Customer extends UserAccount {
 
     @OneToOne(targetEntity = CustomerDetails.class)
+    @JsonIgnore
     private CustomerDetails customerDetails;
 
     @OneToOne(cascade = {CascadeType.ALL},
             targetEntity = SocialNetworkAccounts.class)
+    @JsonIgnore
     private SocialNetworkAccounts socialNetworkAccounts;
 
     @ManyToOne(cascade = {CascadeType.ALL}, targetEntity = Address.class)
+    @JsonIgnore
     private Address address;
 
     public CustomerDetails getCustomerDetails() {

@@ -3,6 +3,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Basic;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
@@ -32,6 +33,7 @@ public abstract class Offering {
     private int duration;
 
     @ManyToOne(targetEntity = Professional.class)
+    @JsonIgnore
     private Professional professional;
 
     public Long getId() {

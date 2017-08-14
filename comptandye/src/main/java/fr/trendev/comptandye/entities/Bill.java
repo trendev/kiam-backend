@@ -3,6 +3,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -49,12 +50,15 @@ public abstract class Bill {
 
     @Id
     @ManyToOne(targetEntity = Professional.class)
+    @JsonIgnore
     private Professional professional;
 
     @OneToMany(targetEntity = Payment.class, mappedBy = "bill")
+    @JsonIgnore
     private List<Payment> payments;
 
     @ManyToMany(targetEntity = Offering.class)
+    @JsonIgnore
     private List<Offering> offerings;
 
     public Long getReference() {

@@ -3,6 +3,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,10 +30,12 @@ public class Payment {
     private String currency = "EUR";
 
     @ManyToOne(targetEntity = PaymentMode.class)
+    @JsonIgnore
     private PaymentMode paymentMode;
 
     @Id
     @ManyToOne(targetEntity = Bill.class)
+    @JsonIgnore
     private Bill bill;
 
     public Long getId() {

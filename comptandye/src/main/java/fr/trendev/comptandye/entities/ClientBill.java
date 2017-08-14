@@ -3,6 +3,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -14,9 +15,11 @@ import javax.persistence.OneToOne;
 public class ClientBill extends Bill {
 
     @OneToOne(targetEntity = CollectiveGroup.class)
+    @JsonIgnore
     private CollectiveGroup collectiveGroup;
 
     @ManyToOne(targetEntity = Client.class)
+    @JsonIgnore
     private Client client;
 
     public CollectiveGroup getCollectiveGroup() {

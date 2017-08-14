@@ -3,6 +3,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -37,6 +38,7 @@ public class SocialNetworkAccounts {
 
     @OneToOne(cascade = {CascadeType.ALL}, targetEntity = Customer.class,
             mappedBy = "socialNetworkAccounts")
+    @JsonIgnore
     private Customer customer;
 
     public Long getId() {

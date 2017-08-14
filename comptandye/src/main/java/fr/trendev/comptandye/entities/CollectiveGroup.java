@@ -3,6 +3,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
@@ -29,12 +30,15 @@ public class CollectiveGroup {
     private String groupName;
 
     @OneToOne(targetEntity = Address.class)
+    @JsonIgnore
     private Address address;
 
     @ManyToOne(targetEntity = Professional.class)
+    @JsonIgnore
     private Professional professional;
 
     @ManyToMany(targetEntity = Client.class)
+    @JsonIgnore
     private List<Client> clients;
 
     public Long getId() {
