@@ -48,7 +48,7 @@ public class PasswordGeneratorTest {
         System.out.println("autoGenerate");
 
         int n = 5;
-        int size = 10;
+        int size = 12;
         Set<String> spwd = new HashSet<>(n);
 
         assert spwd.isEmpty();
