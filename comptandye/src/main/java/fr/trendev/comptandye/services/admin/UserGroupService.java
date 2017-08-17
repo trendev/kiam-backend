@@ -78,7 +78,6 @@ public class UserGroupService {
 
         try {
             List<UserGroup> list = facade.findAll();
-            LOG.log(Level.INFO, "{0} user-group", list.size());
 
             if (index < 0 || index >= list.size()) {
                 return Response.status(Response.Status.EXPECTATION_FAILED).
