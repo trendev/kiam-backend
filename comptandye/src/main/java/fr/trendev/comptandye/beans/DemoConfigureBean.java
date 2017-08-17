@@ -94,7 +94,7 @@ public class DemoConfigureBean implements Serializable {
          */
         UserGroup adminGroup = new UserGroup();
         adminGroup.setName("Administrator");
-        adminGroup.setDescription("This is the Administrator Group");
+        adminGroup.setDescription("Administrator Group");
         adminGroup.setUserAccounts(new LinkedList<>());
 
         /**
@@ -123,7 +123,7 @@ public class DemoConfigureBean implements Serializable {
          */
         UserGroup pro = new UserGroup();
         pro.setName("Professional");
-        pro.setDescription("This is the Professional User Group");
+        pro.setDescription("Professional User Group");
         pro.setUserAccounts(new LinkedList<>());
 
         /**
@@ -139,7 +139,7 @@ public class DemoConfigureBean implements Serializable {
          */
         UserGroup ind = new UserGroup();
         ind.setName("Individual");
-        ind.setDescription("This is the Individual User Group");
+        ind.setDescription("Individual User Group");
         ind.setUserAccounts(Collections.EMPTY_LIST);
         ind.setUserAccounts(new ArrayList<>());
 

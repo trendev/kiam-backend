@@ -5,7 +5,6 @@
  */
 package fr.trendev.comptandye.services.admin;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
@@ -33,9 +32,6 @@ public class UserGroupService {
     @Inject
     UserGroupFacade facade;
 
-    @Inject
-    ObjectMapper om;
-
     private static final Logger LOG = Logger.getLogger(UserGroupService.class.
             getName());
 
@@ -47,8 +43,8 @@ public class UserGroupService {
             List<UserGroup> list = facade.findAll();
             LOG.log(Level.INFO, "{0} user-group", list.size());
 
-            return Response.status(Response.Status.OK).entity(
-                    om.writeValueAsString(list)).
+            return Response.status(Response.Status.OK)
+                    .entity(list).
                     build();
         } catch (Exception ex) {
 
@@ -88,8 +84,8 @@ public class UserGroupService {
                         build();
             }
 
-            return Response.status(Response.Status.OK).entity(
-                    om.writeValueAsString(list.get(index).getUserAccounts())).
+            return Response.status(Response.Status.OK)
+                    .entity(list.get(index).getUserAccounts()).
                     build();
         } catch (Exception ex) {
 
