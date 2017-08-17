@@ -6,12 +6,14 @@
 package fr.trendev.comptandye.beans;
 
 import fr.trendev.comptandye.entities.Administrator;
+import fr.trendev.comptandye.entities.Individual;
 import fr.trendev.comptandye.entities.PaymentMode;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
@@ -139,13 +141,35 @@ public class DemoConfigureBean implements Serializable {
         ind.setName("Individual");
         ind.setDescription("This is the Individual User Group");
         ind.setUserAccounts(Collections.EMPTY_LIST);
+        ind.setUserAccounts(new ArrayList<>());
 
+        Individual skonx = new Individual();
+        skonx.setEmail("skonx2006@gmail.com");
+        skonx.setUserGroups(new ArrayList<>());
+
+        Individual sylvioc = new Individual();
+        sylvioc.setEmail("sylvie.gay@gmail.com");
+        sylvioc.setUserGroups(new ArrayList<>());
+
+        ind.getUserAccounts().add(skonx);
+        skonx.getUserGroups().add(ind);
+
+        ind.getUserAccounts().add(sylvioc);
+        sylvioc.getUserGroups().add(ind);
+//        
         /**
          * Store the groups and their contents
          */
         em.persist(adminGroup);
         em.persist(pro);
         em.persist(ind);
+
+//        sylvioc.getUserGroups().remove(ind);
+//        ind.getUserAccounts().remove(sylvioc);
+        sylvioc.getUserGroups().forEach(g -> g.getUserAccounts().remove(
+                sylvioc));
+
+        em.remove(sylvioc);
 
         this.initPaymentModes();
     }

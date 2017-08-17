@@ -40,7 +40,8 @@ public abstract class UserAccount {
     @Temporal(TemporalType.TIMESTAMP)
     private Date registrationDate;
 
-    @ManyToMany(cascade = {CascadeType.ALL}, targetEntity = UserGroup.class)
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
+        CascadeType.REFRESH}, targetEntity = UserGroup.class)
     @JsonIgnore
     private List<UserGroup> userGroups;
 

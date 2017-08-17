@@ -28,7 +28,8 @@ public class UserGroup {
     @Basic
     private String description;
 
-    @ManyToMany(cascade = {CascadeType.ALL}, targetEntity = UserAccount.class,
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
+        CascadeType.REFRESH}, targetEntity = UserAccount.class,
             mappedBy = "userGroups")
     @JsonIgnore
     private List<UserAccount> userAccounts;
