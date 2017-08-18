@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.json.Json;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -60,7 +61,7 @@ public class UserGroupService {
             LOG.
                     log(Level.WARNING, msg);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    msg).
+                    Json.createObjectBuilder().add("error", msg).build()).
                     build();
         }
     }
@@ -69,18 +70,21 @@ public class UserGroupService {
     @Path("{index}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response findUsersFromIndex(@PathParam("index") int index) {
-        LOG.log(Level.INFO, "Providing the user list of the User Group at index"
-                + index);
+        LOG.log(Level.INFO,
+                "Providing the user list of the User Group at index ["
+                + index + "]");
 
         try {
             List<UserGroup> list = facade.findAll();
 
             if (index < 0 || index >= list.size()) {
+                String msg = "index [" + index
+                        + "] is out of range [0-"
+                        + (list.size() - 1) + "]";
                 return Response.status(Response.Status.EXPECTATION_FAILED).
                         entity(
-                                "index [" + index
-                                + "] is out of range [0-"
-                                + (list.size() - 1) + "]").
+                                Json.createObjectBuilder().add("error", msg).
+                                        build()).
                         build();
             }
 
@@ -101,7 +105,7 @@ public class UserGroupService {
             LOG.
                     log(Level.WARNING, msg);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    msg).
+                    Json.createObjectBuilder().add("error", msg).build()).
                     build();
         }
     }
