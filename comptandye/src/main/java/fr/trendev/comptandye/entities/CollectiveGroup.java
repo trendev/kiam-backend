@@ -30,7 +30,6 @@ public class CollectiveGroup {
     private String groupName;
 
     @OneToOne(cascade = {CascadeType.ALL}, targetEntity = Address.class)
-    @JsonIgnore
     private Address address;
 
     @ManyToMany(targetEntity = Client.class)
