@@ -3,14 +3,12 @@
  */
 package fr.trendev.comptandye.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Basic;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 /**
  * @author jsie
@@ -31,10 +29,6 @@ public abstract class Offering {
 
     @Basic
     private int duration;
-
-    @ManyToOne(targetEntity = Professional.class)
-    @JsonIgnore
-    private Professional professional;
 
     public Long getId() {
         return this.id;
@@ -66,14 +60,6 @@ public abstract class Offering {
 
     public void setDuration(int duration) {
         this.duration = duration;
-    }
-
-    public Professional getProfessional() {
-        return this.professional;
-    }
-
-    public void setProfessional(Professional professional) {
-        this.professional = professional;
     }
 
 }

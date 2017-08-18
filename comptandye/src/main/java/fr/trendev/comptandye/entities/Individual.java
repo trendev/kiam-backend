@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 
 /**
  * @author jsie
@@ -15,21 +14,9 @@ import javax.persistence.OneToMany;
 @Entity
 public class Individual extends Customer {
 
-    @OneToMany(targetEntity = InvidualBill.class, mappedBy = "individual")
-    @JsonIgnore
-    private List<InvidualBill> invidualBills;
-
     @ManyToMany(targetEntity = Professional.class)
     @JsonIgnore
     private List<Professional> professionals;
-
-    public List<InvidualBill> getInvidualBills() {
-        return this.invidualBills;
-    }
-
-    public void setInvidualBills(List<InvidualBill> invidualBills) {
-        this.invidualBills = invidualBills;
-    }
 
     public List<Professional> getProfessionals() {
         return this.professionals;

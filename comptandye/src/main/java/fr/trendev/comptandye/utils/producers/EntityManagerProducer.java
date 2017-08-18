@@ -1,4 +1,4 @@
-package fr.trendev.comptandye.utils.producer;
+package fr.trendev.comptandye.utils.producers;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;

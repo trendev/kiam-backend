@@ -3,11 +3,12 @@
  */
 package fr.trendev.comptandye.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -45,20 +46,18 @@ public abstract class Bill {
     @Temporal(TemporalType.TIMESTAMP)
     private Date paymentDate;
 
-    @Basic
-    private String comment;
+    @ElementCollection
+    private List<String> comments;
 
     @Id
     @ManyToOne(targetEntity = Professional.class)
-    @JsonIgnore
     private Professional professional;
 
-    @OneToMany(targetEntity = Payment.class, mappedBy = "bill")
-    @JsonIgnore
+    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Payment.class,
+            mappedBy = "bill")
     private List<Payment> payments;
 
     @ManyToMany(targetEntity = Offering.class)
-    @JsonIgnore
     private List<Offering> offerings;
 
     public Long getReference() {
@@ -101,12 +100,12 @@ public abstract class Bill {
         this.paymentDate = paymentDate;
     }
 
-    public String getComment() {
-        return this.comment;
+    public List<String> getComments() {
+        return this.comments;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setComments(List<String> comments) {
+        this.comments = comments;
     }
 
     public Professional getProfessional() {

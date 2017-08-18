@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  * @author jsie
@@ -29,8 +30,7 @@ public class Payment {
     @Basic
     private String currency = "EUR";
 
-    @ManyToOne(targetEntity = PaymentMode.class)
-    @JsonIgnore
+    @OneToOne(targetEntity = PaymentMode.class)
     private PaymentMode paymentMode;
 
     @Id

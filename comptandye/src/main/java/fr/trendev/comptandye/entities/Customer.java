@@ -3,10 +3,8 @@
  */
 package fr.trendev.comptandye.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 /**
@@ -15,18 +13,15 @@ import javax.persistence.OneToOne;
 @Entity
 public abstract class Customer extends UserAccount {
 
-    @OneToOne(targetEntity = CustomerDetails.class)
-    @JsonIgnore
+    @OneToOne(cascade = {CascadeType.ALL}, targetEntity = CustomerDetails.class)
     private CustomerDetails customerDetails;
+
+    @OneToOne(cascade = {CascadeType.ALL}, targetEntity = Address.class)
+    private Address address;
 
     @OneToOne(cascade = {CascadeType.ALL},
             targetEntity = SocialNetworkAccounts.class)
-    @JsonIgnore
     private SocialNetworkAccounts socialNetworkAccounts;
-
-    @ManyToOne(cascade = {CascadeType.ALL}, targetEntity = Address.class)
-    @JsonIgnore
-    private Address address;
 
     public CustomerDetails getCustomerDetails() {
         return this.customerDetails;
@@ -36,6 +31,14 @@ public abstract class Customer extends UserAccount {
         this.customerDetails = customerDetails;
     }
 
+    public Address getAddress() {
+        return this.address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
     public SocialNetworkAccounts getSocialNetworkAccounts() {
         return this.socialNetworkAccounts;
     }
@@ -43,14 +46,6 @@ public abstract class Customer extends UserAccount {
     public void setSocialNetworkAccounts(
             SocialNetworkAccounts socialNetworkAccounts) {
         this.socialNetworkAccounts = socialNetworkAccounts;
-    }
-
-    public Address getAddress() {
-        return this.address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
     }
 
 }

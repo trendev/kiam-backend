@@ -10,8 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 
 /**
  * @author jsie
@@ -29,11 +28,7 @@ public class Category {
     @Basic
     private String name;
 
-    @ManyToOne(targetEntity = Professional.class)
-    @JsonIgnore
-    private Professional professional;
-
-    @OneToMany(targetEntity = Client.class, mappedBy = "category")
+    @ManyToMany(targetEntity = Client.class, mappedBy = "categories")
     @JsonIgnore
     private List<Client> clients;
 
@@ -59,14 +54,6 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Professional getProfessional() {
-        return this.professional;
-    }
-
-    public void setProfessional(Professional professional) {
-        this.professional = professional;
     }
 
     public List<Client> getClients() {

@@ -4,11 +4,15 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * @author jsie
@@ -20,32 +24,40 @@ public class Professional extends Customer {
     private String website;
 
     @Basic
-    private String business;
-
-    @Basic
     private String companyID;
 
-    @OneToMany(targetEntity = Offering.class, mappedBy = "professional")
-    @JsonIgnore
-    private List<Offering> offerings;
+    @Basic
+    private String VATcode;
 
-    @OneToMany(targetEntity = Bill.class, mappedBy = "professional")
+    @Basic
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creationDate;
+
+    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Bill.class,
+            mappedBy = "professional")
     @JsonIgnore
     private List<Bill> bills;
 
-    @OneToMany(targetEntity = Client.class, mappedBy = "professional")
+    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Client.class,
+            mappedBy = "professional")
     @JsonIgnore
     private List<Client> clients;
 
-    @OneToMany(targetEntity = CollectiveGroup.class, mappedBy = "professional")
+    @OneToMany(targetEntity = Business.class)
+    private List<Business> businesses;
+
+    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Offering.class)
+    @JsonIgnore
+    private List<Offering> offerings;
+
+    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Category.class)
+    private List<Category> categories;
+
+    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = CollectiveGroup.class)
     @JsonIgnore
     private List<CollectiveGroup> collectiveGroups;
 
-    @OneToMany(targetEntity = Category.class, mappedBy = "professional")
-    @JsonIgnore
-    private List<Category> categories;
-
-    @OneToMany(targetEntity = Expense.class, mappedBy = "professional")
+    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Expense.class)
     @JsonIgnore
     private List<Expense> expenses;
 
@@ -54,7 +66,6 @@ public class Professional extends Customer {
     private List<Individual> individuals;
 
     @ManyToMany(targetEntity = PaymentMode.class)
-    @JsonIgnore
     private List<PaymentMode> paymentModes;
 
     public String getWebsite() {
@@ -65,14 +76,6 @@ public class Professional extends Customer {
         this.website = website;
     }
 
-    public String getBusiness() {
-        return this.business;
-    }
-
-    public void setBusiness(String business) {
-        this.business = business;
-    }
-
     public String getCompanyID() {
         return this.companyID;
     }
@@ -81,12 +84,20 @@ public class Professional extends Customer {
         this.companyID = companyID;
     }
 
-    public List<Offering> getOfferings() {
-        return this.offerings;
+    public String getVATcode() {
+        return this.VATcode;
     }
 
-    public void setOfferings(List<Offering> offerings) {
-        this.offerings = offerings;
+    public void setVATcode(String VATcode) {
+        this.VATcode = VATcode;
+    }
+
+    public Date getCreationDate() {
+        return this.creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
     public List<Bill> getBills() {
@@ -105,12 +116,20 @@ public class Professional extends Customer {
         this.clients = clients;
     }
 
-    public List<CollectiveGroup> getCollectiveGroups() {
-        return this.collectiveGroups;
+    public List<Business> getBusinesses() {
+        return this.businesses;
     }
 
-    public void setCollectiveGroups(List<CollectiveGroup> collectiveGroups) {
-        this.collectiveGroups = collectiveGroups;
+    public void setBusinesses(List<Business> businesses) {
+        this.businesses = businesses;
+    }
+
+    public List<Offering> getOfferings() {
+        return this.offerings;
+    }
+
+    public void setOfferings(List<Offering> offerings) {
+        this.offerings = offerings;
     }
 
     public List<Category> getCategories() {
@@ -119,6 +138,14 @@ public class Professional extends Customer {
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
+    }
+
+    public List<CollectiveGroup> getCollectiveGroups() {
+        return this.collectiveGroups;
+    }
+
+    public void setCollectiveGroups(List<CollectiveGroup> collectiveGroups) {
+        this.collectiveGroups = collectiveGroups;
     }
 
     public List<Expense> getExpenses() {

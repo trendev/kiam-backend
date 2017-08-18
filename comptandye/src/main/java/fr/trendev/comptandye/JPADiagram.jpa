@@ -111,21 +111,21 @@
     <jpa:entity compositePrimaryKeyClass="CustomerPK" abs="true" class="Customer" superclassId="_1490100823157" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101376664">
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
-            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490101737208" connected-attribute-id="_14901088600451378" v="true" xvt="" name="address" id="_14901088600451377">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
+            <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490101578444" v="true" xvt="" name="customerDetails" id="_14901093969381510">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:cascade>
                     <jpa:cascade-all/>
                 </jpa:cascade>
-            </jpa:many-to-one>
-            <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490101578444" v="true" xvt="" name="customerDetails" id="_14901093969381510">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
+            </jpa:one-to-one>
+            <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490101737208" v="true" xvt="" name="address" id="_1503055153023119">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-all/>
+                </jpa:cascade>
             </jpa:one-to-one>
-            <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490104062170" connected-attribute-id="_149028162264043" v="true" xvt="" name="socialNetworkAccounts" id="_149028162263742">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
+            <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490104062170" v="true" xvt="" name="socialNetworkAccounts" id="_1503055248950120">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:cascade>
@@ -147,43 +147,69 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:basic attribute-type="String" v="true" xvt="" name="business" id="_149234004194954">
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:basic>
             <jpa:basic attribute-type="String" v="true" xvt="" name="companyID" id="_150001807687657">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:one-to-many orp="false" collection-type="java.util.List" mkt="NEW" connected-entity-id="_1490172966686" connected-attribute-id="_149017620658456" v="true" xvt="" name="offerings" id="_149017620658557">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
+            <jpa:basic attribute-type="String" v="true" xvt="" name="VATcode" id="_1503061008672135">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-            </jpa:one-to-many>
+            </jpa:basic>
+            <jpa:basic attribute-type="java.util.Date" v="true" xvt="" name="creationDate" id="_1503061429501137">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+            </jpa:basic>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490178979567" connected-attribute-id="_1490179812677393" v="true" xvt="" name="bills" id="_1490179812678394">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-all/>
+                </jpa:cascade>
             </jpa:one-to-many>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490101555530" connected-attribute-id="_14902921628221105" v="true" xvt="" name="clients" id="_14902921628221106">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-all/>
+                </jpa:cascade>
             </jpa:one-to-many>
-            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490281931338" connected-attribute-id="_14902925544431116" v="true" xvt="" name="collectiveGroups" id="_14902925544441117">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
+            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1503060694288" v="true" xvt="" name="businesses" id="_1503060822737133">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:one-to-many>
-            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490704206844" connected-attribute-id="_1490704545007122" v="true" xvt="" name="categories" id="_1490704545008123">
+            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1490172966686" v="true" xvt="" name="offerings" id="_1503064222749343">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-all/>
+                </jpa:cascade>
             </jpa:one-to-many>
-            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1499512549878" connected-attribute-id="_1499513227017246" v="true" xvt="" name="expenses" id="_1499513227018247">
+            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1490704206844" v="true" xvt="" name="categories" id="_1503076923115623">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-all/>
+                </jpa:cascade>
+            </jpa:one-to-many>
+            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1490281931338" v="true" xvt="" name="collectiveGroups" id="_1503077601277626">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-all/>
+                </jpa:cascade>
+            </jpa:one-to-many>
+            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1499512549878" v="true" xvt="" name="expenses" id="_1503078556360627">
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-all/>
+                </jpa:cascade>
             </jpa:one-to-many>
             <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490101520286" connected-attribute-id="_1490180547173493" v="true" xvt="" name="individuals" id="_1490180547178494">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
@@ -191,7 +217,6 @@
                 <jpa:xm nil="false" req="false"/>
             </jpa:many-to-many>
             <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490184243036" v="true" xvt="" name="paymentModes" id="_149020649962680">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:many-to-many>
@@ -220,15 +245,19 @@
         <jpa:nq e="false" name="Professional.findByCompanyID">
             <jpa:query>Select p from Professional p where p.companyID=:companyID</jpa:query>
         </jpa:nq>
+        <jpa:nq e="false" name="Professional.findByVATcode">
+            <jpa:query>Select p from Professional p where p.VATcode=:VATcode</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Professional.findByAttribute1">
+            <jpa:query>Select p from Professional p where p.attribute1=:attribute1</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Professional.findByCreationDate">
+            <jpa:query>Select p from Professional p where p.creationDate=:creationDate</jpa:query>
+        </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="IndividualPK" abs="false" class="Individual" superclassId="_1490101376664" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101520286">
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
-            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490180671085" connected-attribute-id="_1490181206897608" v="true" xvt="" name="invidualBills" id="_1490181206898609">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:one-to-many>
             <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490101456632" connected-attribute-id="_1490180547178494" v="true" xvt="" name="professionals" id="_1490180547173493">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
@@ -246,17 +275,7 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490101737208" v="true" xvt="" name="address" id="_14901104337732074">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:many-to-one>
             <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490101456632" connected-attribute-id="_14902921628221106" v="true" xvt="" name="professional" id="_14902921628221105">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:many-to-one>
-            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490704206844" connected-attribute-id="_1490704637505126" v="true" xvt="" name="category" id="_1490704637505125">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -265,19 +284,37 @@
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-all/>
+                </jpa:cascade>
             </jpa:one-to-many>
             <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490104062170" v="true" xvt="" name="socialNetworkAccounts" id="_149028166301044">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-all/>
+                </jpa:cascade>
             </jpa:one-to-one>
             <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490101578444" v="true" xvt="" name="customerDetails" id="_1490283406937193">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-all/>
+                </jpa:cascade>
+            </jpa:one-to-one>
+            <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490101737208" v="true" xvt="" name="address" id="_1503055318751123">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-all/>
+                </jpa:cascade>
             </jpa:one-to-one>
             <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490281931338" connected-attribute-id="_1490283569372198" v="true" xvt="" name="collectiveGroups" id="_1490283569412199">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:many-to-many>
+            <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490704206844" connected-attribute-id="_1503077170376625" v="true" xvt="" name="categories" id="_1503077170356624">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:many-to-many>
@@ -398,14 +435,6 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490101376664" connected-attribute-id="_14901088600451377" v="true" xvt="" name="customers" id="_14901088600451378">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-                <jpa:cascade>
-                    <jpa:cascade-all/>
-                </jpa:cascade>
-            </jpa:one-to-many>
             <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_149010173721267">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -450,14 +479,6 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:one-to-one orp="false" optional="true" primaryKey="false" connected-entity-id="_1490101376664" connected-attribute-id="_149028162263742" v="true" xvt="" name="customer" id="_149028162264043">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-                <jpa:cascade>
-                    <jpa:cascade-all/>
-                </jpa:cascade>
-            </jpa:one-to-one>
             <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_1490104062174399">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -531,11 +552,6 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490101456632" connected-attribute-id="_149017620658557" v="true" xvt="" name="professional" id="_149017620658456">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:many-to-one>
             <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_149017296671124">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -572,25 +588,25 @@
                 <jpa:xm nil="false" req="false"/>
                 <jpa:temporal>TIMESTAMP</jpa:temporal>
             </jpa:basic>
-            <jpa:basic attribute-type="String" v="true" xvt="" name="comment" id="_1490288120263797">
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:basic>
             <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_1490179812678394" v="true" xvt="" name="professional" id="_1490179812677393">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:many-to-one>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490206901623" connected-attribute-id="_149020760041791" v="true" xvt="" name="payments" id="_149020760041892">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-all/>
+                </jpa:cascade>
             </jpa:one-to-many>
             <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490172966686" v="true" xvt="" name="offerings" id="_1490179520493122">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:many-to-many>
+            <jpa:element-collection target-class="java.lang.String" collection-type="java.util.List" v="true" xvt="" name="comments" id="_1503066002122403">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:element-collection>
             <jpa:id attribute-type="Long" v="true" xvt="" name="reference" id="_1490181067111504">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -626,13 +642,7 @@
     <jpa:entity compositePrimaryKeyClass="InvidualBillPK" abs="false" class="InvidualBill" superclassId="_1490178979567" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490180671085">
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
-            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490101520286" connected-attribute-id="_1490181206898609" v="true" xvt="" name="individual" id="_1490181206897608">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:many-to-one>
-            <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490281931338" v="true" xvt="" name="collectiveGroup" id="_14902926907031124">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
+            <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490101520286" v="true" xvt="" name="individual" id="_1503073892988616">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:one-to-one>
@@ -645,12 +655,10 @@
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490101555530" connected-attribute-id="_1490181195213607" v="true" xvt="" name="client" id="_1490181195212606">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:many-to-one>
             <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490281931338" v="true" xvt="" name="collectiveGroup" id="_1490288049311796">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:one-to-one>
@@ -693,16 +701,15 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490184243036" v="true" xvt="" name="paymentMode" id="_149020723198887">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:many-to-one>
             <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490178979567" connected-attribute-id="_149020760041892" v="true" xvt="" name="bill" id="_149020760041791">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:many-to-one>
+            <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490184243036" v="true" xvt="" name="paymentMode" id="_1503081214518630">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:one-to-one>
             <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_149020690169583">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -726,15 +733,13 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490101456632" connected-attribute-id="_14902925544441117" v="true" xvt="" name="professional" id="_14902925544431116">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:many-to-one>
             <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490101737208" v="true" xvt="" name="address" id="_1490283543806197">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-all/>
+                </jpa:cascade>
             </jpa:one-to-one>
             <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490101555530" connected-attribute-id="_1490283569412199" v="true" xvt="" name="clients" id="_1490283569372198">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
@@ -773,16 +778,11 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490101456632" connected-attribute-id="_1490704545008123" v="true" xvt="" name="professional" id="_1490704545007122">
+            <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490101555530" connected-attribute-id="_1503077170356624" v="true" xvt="" name="clients" id="_1503077170376625">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-            </jpa:many-to-one>
-            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490101555530" connected-attribute-id="_1490704637505125" v="true" xvt="" name="clients" id="_1490704637505126">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:one-to-many>
+            </jpa:many-to-many>
             <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_1490704207066109">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -819,13 +819,7 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490101456632" connected-attribute-id="_1499513227018247" v="true" xvt="" name="professional" id="_1499513227017246">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:many-to-one>
             <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490184243036" v="true" xvt="" name="paymentMode" id="_1499514056020846">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:many-to-one>
@@ -858,6 +852,22 @@
             <jpa:query>Select e from Expense e where e.invoiceRef=:invoiceRef</jpa:query>
         </jpa:nq>
     </jpa:entity>
+    <jpa:entity compositePrimaryKeyClass="BusinessPK" abs="false" class="Business" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1503060694288">
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes>
+            <jpa:id attribute-type="String" v="true" xvt="" name="name" id="_1503060753512132">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:nq e="false" name="Business.findAll">
+            <jpa:query>Select e from Business e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Business.findByDescription">
+            <jpa:query>Select b from Business b where b.description=:description</jpa:query>
+        </jpa:nq>
+    </jpa:entity>
     <jpa:snp loc="BEFORE_PACKAGE" e="true">/**
         * This file was generated by the JPA Modeler
         */</jpa:snp>
@@ -875,27 +885,28 @@
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1490172966686" x="-275" y="838"/>
-            <i ref="_1490180671085" x="782" y="550"/>
-            <i ref="_1490704123469" x="9" y="229"/>
-            <i ref="_1490101578444" x="533" y="229"/>
-            <i ref="_1490100852900" x="531" y="-7"/>
-            <i ref="_1490101520286" x="419" y="517"/>
-            <i ref="_1490104062170" x="-222" y="573"/>
-            <i ref="_1490113906035" x="-127" y="1164"/>
-            <i ref="_1490704206844" x="119" y="977"/>
-            <i ref="_1490101376664" x="229" y="229"/>
-            <i ref="_1490113751330" x="-395" y="1151"/>
-            <i ref="_1490206901623" x="471" y="1490"/>
-            <i ref="_1490178979567" x="836" y="1328"/>
-            <i ref="_1499512549878" x="-77" y="1281"/>
-            <i ref="_1490101737208" x="-254" y="202"/>
-            <i ref="_1490281931338" x="533" y="1013"/>
-            <i ref="_1490101456632" x="149" y="418"/>
-            <i ref="_1490184243036" x="172" y="1415"/>
-            <i ref="_1490100823157" x="213" y="-27"/>
-            <i ref="_1490180682743" x="695" y="703"/>
-            <i ref="_1490101555530" x="389" y="754"/>
+            <i ref="_1490172966686" x="-273" y="843"/>
+            <i ref="_1490180671085" x="859" y="513"/>
+            <i ref="_1490704123469" x="5" y="225"/>
+            <i ref="_1503060694288" x="-358" y="414"/>
+            <i ref="_1490101578444" x="527" y="225"/>
+            <i ref="_1490100852900" x="527" y="-11"/>
+            <i ref="_1490101520286" x="415" y="513"/>
+            <i ref="_1490104062170" x="-226" y="569"/>
+            <i ref="_1490113906035" x="-131" y="1160"/>
+            <i ref="_1490704206844" x="115" y="973"/>
+            <i ref="_1490101376664" x="234" y="225"/>
+            <i ref="_1490113751330" x="-399" y="1147"/>
+            <i ref="_1490206901623" x="467" y="1486"/>
+            <i ref="_1490178979567" x="838" y="1324"/>
+            <i ref="_1499512549878" x="-86" y="1355"/>
+            <i ref="_1490101737208" x="-258" y="198"/>
+            <i ref="_1490281931338" x="567" y="1147"/>
+            <i ref="_1490101456632" x="115" y="414"/>
+            <i ref="_1490184243036" x="168" y="1411"/>
+            <i ref="_1490100823157" x="217" y="-51"/>
+            <i ref="_1490180682743" x="691" y="699"/>
+            <i ref="_1490101555530" x="385" y="749"/>
         </jpa:ws>
     </jpa:wsl>
 </jpa:entity-mappings>

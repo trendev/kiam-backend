@@ -6,6 +6,7 @@ package fr.trendev.comptandye.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,33 +29,31 @@ public class Client {
     @Basic
     private String email;
 
-    @OneToOne(targetEntity = SocialNetworkAccounts.class)
-    @JsonIgnore
+    @OneToOne(cascade = {CascadeType.ALL},
+            targetEntity = SocialNetworkAccounts.class)
     private SocialNetworkAccounts socialNetworkAccounts;
 
-    @OneToOne(targetEntity = CustomerDetails.class)
-    @JsonIgnore
+    @OneToOne(cascade = {CascadeType.ALL}, targetEntity = CustomerDetails.class)
     private CustomerDetails customerDetails;
 
-    @ManyToOne(targetEntity = Address.class)
-    @JsonIgnore
+    @OneToOne(cascade = {CascadeType.ALL}, targetEntity = Address.class)
     private Address address;
 
     @ManyToOne(targetEntity = Professional.class)
     @JsonIgnore
     private Professional professional;
 
-    @ManyToOne(targetEntity = Category.class)
-    @JsonIgnore
-    private Category category;
-
-    @OneToMany(targetEntity = ClientBill.class, mappedBy = "client")
+    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = ClientBill.class,
+            mappedBy = "client")
     @JsonIgnore
     private List<ClientBill> clientBills;
 
     @ManyToMany(targetEntity = CollectiveGroup.class, mappedBy = "clients")
     @JsonIgnore
     private List<CollectiveGroup> collectiveGroups;
+
+    @ManyToMany(targetEntity = Category.class)
+    private List<Category> categories;
 
     public Long getId() {
         return this.id;
@@ -105,14 +104,6 @@ public class Client {
         this.professional = professional;
     }
 
-    public Category getCategory() {
-        return this.category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
     public List<ClientBill> getClientBills() {
         return this.clientBills;
     }
@@ -127,6 +118,14 @@ public class Client {
 
     public void setCollectiveGroups(List<CollectiveGroup> collectiveGroups) {
         this.collectiveGroups = collectiveGroups;
+    }
+
+    public List<Category> getCategories() {
+        return this.categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 
 }

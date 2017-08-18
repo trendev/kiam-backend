@@ -3,15 +3,11 @@
  */
 package fr.trendev.comptandye.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 /**
  * @author jsie
@@ -37,11 +33,6 @@ public class Address {
 
     @Basic
     private String country = "FRANCE";
-
-    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Customer.class,
-            mappedBy = "address")
-    @JsonIgnore
-    private List<Customer> customers;
 
     public Long getId() {
         return this.id;
@@ -89,14 +80,6 @@ public class Address {
 
     public void setCountry(String country) {
         this.country = country;
-    }
-
-    public List<Customer> getCustomers() {
-        return this.customers;
-    }
-
-    public void setCustomers(List<Customer> customers) {
-        this.customers = customers;
     }
 
 }

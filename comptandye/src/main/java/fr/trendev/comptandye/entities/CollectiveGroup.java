@@ -6,12 +6,12 @@ package fr.trendev.comptandye.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -29,13 +29,9 @@ public class CollectiveGroup {
     @Basic
     private String groupName;
 
-    @OneToOne(targetEntity = Address.class)
+    @OneToOne(cascade = {CascadeType.ALL}, targetEntity = Address.class)
     @JsonIgnore
     private Address address;
-
-    @ManyToOne(targetEntity = Professional.class)
-    @JsonIgnore
-    private Professional professional;
 
     @ManyToMany(targetEntity = Client.class)
     @JsonIgnore
@@ -63,14 +59,6 @@ public class CollectiveGroup {
 
     public void setAddress(Address address) {
         this.address = address;
-    }
-
-    public Professional getProfessional() {
-        return this.professional;
-    }
-
-    public void setProfessional(Professional professional) {
-        this.professional = professional;
     }
 
     public List<Client> getClients() {

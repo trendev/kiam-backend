@@ -3,14 +3,11 @@
  */
 package fr.trendev.comptandye.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -35,11 +32,6 @@ public class SocialNetworkAccounts {
 
     @Basic
     private String pinterest;
-
-    @OneToOne(cascade = {CascadeType.ALL}, targetEntity = Customer.class,
-            mappedBy = "socialNetworkAccounts")
-    @JsonIgnore
-    private Customer customer;
 
     public Long getId() {
         return this.id;
@@ -79,14 +71,6 @@ public class SocialNetworkAccounts {
 
     public void setPinterest(String pinterest) {
         this.pinterest = pinterest;
-    }
-
-    public Customer getCustomer() {
-        return this.customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
     }
 
 }
