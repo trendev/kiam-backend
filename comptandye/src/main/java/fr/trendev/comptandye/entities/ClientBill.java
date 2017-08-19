@@ -3,6 +3,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -16,7 +17,8 @@ public class ClientBill extends Bill {
     @OneToOne(targetEntity = CollectiveGroup.class)
     private CollectiveGroup collectiveGroup;
 
-    @ManyToOne(targetEntity = Client.class)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
+        CascadeType.REFRESH}, targetEntity = Client.class)
     private Client client;
 
     public CollectiveGroup getCollectiveGroup() {

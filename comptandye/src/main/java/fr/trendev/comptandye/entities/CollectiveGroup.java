@@ -32,7 +32,8 @@ public class CollectiveGroup {
     @OneToOne(cascade = {CascadeType.ALL}, targetEntity = Address.class)
     private Address address;
 
-    @ManyToMany(targetEntity = Client.class)
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
+        CascadeType.REFRESH}, targetEntity = Client.class)
     @JsonIgnore
     private List<Client> clients;
 

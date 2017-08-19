@@ -4,6 +4,7 @@
 package fr.trendev.comptandye.entities;
 
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
@@ -14,7 +15,8 @@ import javax.persistence.OneToMany;
 @Entity
 public class Package extends Offering {
 
-    @OneToMany(targetEntity = Offering.class)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
+        CascadeType.REFRESH}, targetEntity = Offering.class)
     @JoinTable(name = "PACKAGE_SERVICES")
     private List<Offering> offerings;
 

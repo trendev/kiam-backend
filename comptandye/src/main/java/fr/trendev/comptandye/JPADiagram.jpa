@@ -279,6 +279,12 @@
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-persist/>
+                    <jpa:cascade-merge/>
+                    <jpa:cascade-refresh/>
+                    <jpa:cascade-detach/>
+                </jpa:cascade>
             </jpa:many-to-one>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490180682743" connected-attribute-id="_1490181195212606" v="true" xvt="" name="clientBills" id="_1490181195213607">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
@@ -313,10 +319,22 @@
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-persist/>
+                    <jpa:cascade-merge/>
+                    <jpa:cascade-refresh/>
+                    <jpa:cascade-detach/>
+                </jpa:cascade>
             </jpa:many-to-many>
             <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490704206844" connected-attribute-id="_1503077170376625" v="true" xvt="" name="categories" id="_1503077170356624">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-persist/>
+                    <jpa:cascade-merge/>
+                    <jpa:cascade-refresh/>
+                    <jpa:cascade-detach/>
+                </jpa:cascade>
             </jpa:many-to-many>
             <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_149010155553255">
                 <jpa:xwm nil="false" req="false"/>
@@ -525,6 +543,12 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:join-table name="PACKAGE_SERVICES"/>
+                <jpa:cascade>
+                    <jpa:cascade-persist/>
+                    <jpa:cascade-merge/>
+                    <jpa:cascade-refresh/>
+                    <jpa:cascade-detach/>
+                </jpa:cascade>
             </jpa:one-to-many>
         </jpa:attributes>
         <jpa:nq e="false" name="Package.findAll">
@@ -657,6 +681,12 @@
             <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490101555530" connected-attribute-id="_1490181195213607" v="true" xvt="" name="client" id="_1490181195212606">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-persist/>
+                    <jpa:cascade-merge/>
+                    <jpa:cascade-refresh/>
+                    <jpa:cascade-detach/>
+                </jpa:cascade>
             </jpa:many-to-one>
             <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490281931338" v="true" xvt="" name="collectiveGroup" id="_1490288049311796">
                 <jpa:xwm nil="false" req="false"/>
@@ -744,6 +774,12 @@
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-persist/>
+                    <jpa:cascade-merge/>
+                    <jpa:cascade-refresh/>
+                    <jpa:cascade-detach/>
+                </jpa:cascade>
             </jpa:many-to-many>
             <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_1490283461395196">
                 <jpa:xwm nil="false" req="false"/>
@@ -884,47 +920,47 @@
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1490172966686" x="-275" y="841"/>
-            <i ref="_1490180671085" x="857" y="511">
+            <i ref="_1490172966686" x="-277" y="839"/>
+            <i ref="_1490180671085" x="855" y="509">
                 <el>
                     <e ref="_1503073892988616">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490704123469" x="3" y="223"/>
-            <i ref="_1503060694288" x="-360" y="412"/>
-            <i ref="_1490101578444" x="525" y="223"/>
-            <i ref="_1490100852900" x="525" y="-13">
+            <i ref="_1490704123469" x="1" y="221"/>
+            <i ref="_1503060694288" x="-362" y="410"/>
+            <i ref="_1490101578444" x="523" y="221"/>
+            <i ref="_1490100852900" x="523" y="-15">
                 <el>
                     <e ref="_14901160469883436">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101520286" x="413" y="511">
+            <i ref="_1490101520286" x="411" y="509">
                 <el>
                     <e ref="_1490180547173493">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490104062170" x="-228" y="567"/>
-            <i ref="_1490113906035" x="-133" y="1158">
+            <i ref="_1490104062170" x="-230" y="565"/>
+            <i ref="_1490113906035" x="-135" y="1156">
                 <el>
                     <e ref="_149017313754828">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490704206844" x="113" y="971">
+            <i ref="_1490704206844" x="111" y="969">
                 <el>
                     <e ref="_1503077170376625">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101376664" x="232" y="223">
+            <i ref="_1490101376664" x="230" y="221">
                 <el>
                     <e ref="_14901093969381510">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -937,8 +973,8 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490113751330" x="-401" y="1145"/>
-            <i ref="_1490206901623" x="467" y="1409">
+            <i ref="_1490113751330" x="-403" y="1143"/>
+            <i ref="_1490206901623" x="465" y="1407">
                 <el>
                     <e ref="_1503081214518630">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -948,7 +984,7 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490178979567" x="836" y="1322">
+            <i ref="_1490178979567" x="834" y="1320">
                 <el>
                     <e ref="_149020760041892">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -961,15 +997,15 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1499512549878" x="-88" y="1353">
+            <i ref="_1499512549878" x="-90" y="1351">
                 <el>
                     <e ref="_1499514056020846">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101737208" x="-252" y="176"/>
-            <i ref="_1490281931338" x="578" y="1145">
+            <i ref="_1490101737208" x="-254" y="174"/>
+            <i ref="_1490281931338" x="576" y="1143">
                 <el>
                     <e ref="_1490283543806197">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -979,7 +1015,7 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490101456632" x="113" y="412">
+            <i ref="_1490101456632" x="111" y="410">
                 <el>
                     <e ref="_1490179812678394">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1010,15 +1046,15 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490184243036" x="166" y="1409"/>
-            <i ref="_1490100823157" x="215" y="-53">
+            <i ref="_1490184243036" x="164" y="1407"/>
+            <i ref="_1490100823157" x="213" y="-55">
                 <el>
                     <e ref="_14901160469863435">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490180682743" x="689" y="697">
+            <i ref="_1490180682743" x="687" y="695">
                 <el>
                     <e ref="_1490288049311796">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1028,7 +1064,7 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490101555530" x="383" y="747">
+            <i ref="_1490101555530" x="381" y="745">
                 <el>
                     <e ref="_149028166301044">
                         <v st="1" si="12.0" cl="#00ff00"/>

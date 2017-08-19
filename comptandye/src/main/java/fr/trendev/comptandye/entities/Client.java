@@ -39,7 +39,8 @@ public class Client {
     @OneToOne(cascade = {CascadeType.ALL}, targetEntity = Address.class)
     private Address address;
 
-    @ManyToOne(targetEntity = Professional.class)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
+        CascadeType.REFRESH}, targetEntity = Professional.class)
     @JsonIgnore
     private Professional professional;
 
@@ -48,11 +49,14 @@ public class Client {
     @JsonIgnore
     private List<ClientBill> clientBills;
 
-    @ManyToMany(targetEntity = CollectiveGroup.class, mappedBy = "clients")
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
+        CascadeType.REFRESH}, targetEntity = CollectiveGroup.class,
+            mappedBy = "clients")
     @JsonIgnore
     private List<CollectiveGroup> collectiveGroups;
 
-    @ManyToMany(targetEntity = Category.class)
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
+        CascadeType.REFRESH}, targetEntity = Category.class)
     private List<Category> categories;
 
     public Long getId() {
