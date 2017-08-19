@@ -7,15 +7,14 @@
       xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Console d'Administration</title>
+        <title>comptandye - Console d'Administration</title>
     </h:head>
     <h:body>
-        <p:notificationBar position="top" effect="slide" styleClass="top" widgetVar="bar">
-            <p>Bonjour Administrateur, vous voilà connecté sur la session <h:outputText value="#{session.id}" style="font-weight: bold"></h:outputText></p>
+        <p:notificationBar position="top" effect="slide" styleClass="top" widgetVar="bar" autoDisplay="true">
+            <p>Bonjour Administrateur, vous voilà connecté sur la session 
+                <h:outputText value="#{session.id}" style="font-weight: bold"></h:outputText>
+            </p>
             <p><a href="../index.html">Welcome Page</a></p>
-            <p:commandButton value="Cacher" onclick="PF('bar').hide()" type="button" icon="ui-icon-arrow-1-n"/>
         </p:notificationBar>
-        <p:commandButton value="Afficher" onclick="PF('bar').show()" type="button" icon="ui-icon-arrow-1-s"/>
-
     </h:body>
 </html>
