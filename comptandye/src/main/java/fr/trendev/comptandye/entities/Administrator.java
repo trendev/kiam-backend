@@ -17,6 +17,7 @@ public class Administrator extends UserAccount {
     }
 
     public Administrator() {
+        super();
     }
 
 }

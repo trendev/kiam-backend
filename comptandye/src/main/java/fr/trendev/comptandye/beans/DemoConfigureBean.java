@@ -14,7 +14,6 @@ import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -122,11 +121,9 @@ public class DemoConfigureBean implements Serializable {
 
         Individual skonx = new Individual();
         skonx.setEmail("skonx2006@gmail.com");
-        skonx.setUserGroups(new ArrayList<>());
 
         Individual sylvioc = new Individual();
         sylvioc.setEmail("sylvie.gay@gmail.com");
-        sylvioc.setUserGroups(new ArrayList<>());
 
         ind.getUserAccounts().add(skonx);
         skonx.getUserGroups().add(ind);

@@ -48,12 +48,11 @@ public abstract class UserAccount {
 
     public UserAccount(String email, String password, String username,
             String uuid) {
+        this();
         this.email = email;
         this.password = password;
         this.username = username;
         this.uuid = uuid;
-        this.registrationDate = new Date();
-        this.userGroups = new LinkedList<>();
     }
 
     public UserAccount() {

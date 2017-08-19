@@ -4,6 +4,7 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
@@ -20,6 +21,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "USER_GROUP")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserGroup {
 
     @Id

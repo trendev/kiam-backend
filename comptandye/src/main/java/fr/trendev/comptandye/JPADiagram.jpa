@@ -6,10 +6,11 @@
             <jpa:a>_14901008440196</jpa:a>
             <jpa:a>_149087938362378</jpa:a>
             <jpa:a>_149011954705724</jpa:a>
-            <jpa:post>this.registrationDate = new Date();
-this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
+            <jpa:pre>this();</jpa:pre>
+            <jpa:post></jpa:post>
         </jpa:con>
         <jpa:con am="PUBLIC" e="true">
+            <jpa:pre></jpa:pre>
             <jpa:post>this.registrationDate = new Date();
 this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
         </jpa:con>
@@ -96,6 +97,7 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
         <jpa:con am="PUBLIC" e="true">
             <jpa:post>this.userAccounts = new LinkedList&lt;&gt;();</jpa:post>
         </jpa:con>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_NULL)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -137,6 +139,7 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
             <jpa:a>_14901008440196</jpa:a>
             <jpa:a>_149087938362378</jpa:a>
             <jpa:a>_149011954705724</jpa:a>
+            <jpa:pre></jpa:pre>
         </jpa:con>
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_14901149376313047</jpa:a>
@@ -146,9 +149,11 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
             <jpa:a>_14901093969381510</jpa:a>
             <jpa:a>_1503055153023119</jpa:a>
             <jpa:a>_1503055248950120</jpa:a>
+            <jpa:pre></jpa:pre>
         </jpa:con>
         <jpa:con am="PUBLIC" e="true">
-            <jpa:post>super();</jpa:post>
+            <jpa:pre>super();</jpa:pre>
+            <jpa:post></jpa:post>
         </jpa:con>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -864,9 +869,12 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
             <jpa:a>_14901008440196</jpa:a>
             <jpa:a>_149087938362378</jpa:a>
             <jpa:a>_149011954705724</jpa:a>
+            <jpa:pre></jpa:pre>
             <jpa:post></jpa:post>
         </jpa:con>
-        <jpa:con am="PUBLIC" e="true"/>
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:pre>super();</jpa:pre>
+        </jpa:con>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes/>
         <jpa:nq e="false" name="Administrator.findAll">
