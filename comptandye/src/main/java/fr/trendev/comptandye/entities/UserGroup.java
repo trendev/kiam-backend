@@ -34,6 +34,24 @@ public class UserGroup {
     @JsonIgnore
     private List<UserAccount> userAccounts;
 
+    public UserGroup(String name) {
+        this.name = name;
+    }
+
+    public UserGroup(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    public UserGroup(String name, String description, List userAccounts) {
+        this.name = name;
+        this.description = description;
+        this.userAccounts = userAccounts;
+    }
+
+    public UserGroup() {
+    }
+
     public String getName() {
         return this.name;
     }

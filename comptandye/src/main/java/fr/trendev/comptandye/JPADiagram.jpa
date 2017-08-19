@@ -74,6 +74,19 @@
         <jpa:discriminator-column name="ACCOUNT_TYPE"/>
     </jpa:entity>
     <jpa:entity lbl-ref="_14901008529027" compositePrimaryKeyClass="UserGroupPK" abs="false" class="UserGroup" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490100852900">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_14901008529027</jpa:a>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_14901008529027</jpa:a>
+            <jpa:a>_149062419655951</jpa:a>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_14901008529027</jpa:a>
+            <jpa:a>_149062419655951</jpa:a>
+            <jpa:a>_14901160469883436</jpa:a>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="description" id="_149062419655951">
