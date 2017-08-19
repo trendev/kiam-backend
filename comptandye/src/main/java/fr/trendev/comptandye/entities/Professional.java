@@ -68,6 +68,15 @@ public class Professional extends Customer {
     @ManyToMany(targetEntity = PaymentMode.class)
     private List<PaymentMode> paymentModes;
 
+    public Professional(String email, String password, String username,
+            String uuid) {
+        super(email, password, username, uuid);
+    }
+
+    public Professional() {
+        super();
+    }
+
     public String getWebsite() {
         return this.website;
     }

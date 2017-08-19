@@ -18,6 +18,13 @@ public class Business {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String name;
 
+    public Business(String name) {
+        this.name = name;
+    }
+
+    public Business() {
+    }
+
     public String getName() {
         return this.name;
     }

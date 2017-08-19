@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jpa:entity-mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" pkg="fr.trendev.comptandye.entities" v="3.6" rws="_14901008082912" Pws="_14901008082912" cws="_14901008082912" thm="PNBColorScheme" dbthm="PLightColorScheme" sm="false" xs="false" id="_14901008082901" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd">
     <jpa:entity lbl-ref="_14901008440196" compositePrimaryKeyClass="UserAccountPK" abs="true" class="UserAccount" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490100823157">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_14901149376313047</jpa:a>
+            <jpa:a>_14901008440196</jpa:a>
+            <jpa:a>_149087938362378</jpa:a>
+            <jpa:a>_149011954705724</jpa:a>
+            <jpa:post>this.registrationDate = new Date();
+this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:post>this.registrationDate = new Date();
+this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
+        </jpa:con>
+        <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="password" id="_14901008440196">
@@ -76,17 +89,14 @@
     <jpa:entity lbl-ref="_14901008529027" compositePrimaryKeyClass="UserGroupPK" abs="false" class="UserGroup" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490100852900">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_14901008529027</jpa:a>
+            <jpa:a>_149062419655951</jpa:a>
+            <jpa:pre>this();</jpa:pre>
+            <jpa:post></jpa:post>
         </jpa:con>
         <jpa:con am="PUBLIC" e="true">
-            <jpa:a>_14901008529027</jpa:a>
-            <jpa:a>_149062419655951</jpa:a>
+            <jpa:post>this.userAccounts = new LinkedList&lt;&gt;();</jpa:post>
         </jpa:con>
-        <jpa:con am="PUBLIC" e="true">
-            <jpa:a>_14901008529027</jpa:a>
-            <jpa:a>_149062419655951</jpa:a>
-            <jpa:a>_14901160469883436</jpa:a>
-        </jpa:con>
-        <jpa:con am="PUBLIC" e="true"/>
+        <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="description" id="_149062419655951">
@@ -122,6 +132,24 @@
         <jpa:table name="USER_GROUP"/>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="CustomerPK" abs="true" class="Customer" superclassId="_1490100823157" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101376664">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_14901149376313047</jpa:a>
+            <jpa:a>_14901008440196</jpa:a>
+            <jpa:a>_149087938362378</jpa:a>
+            <jpa:a>_149011954705724</jpa:a>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_14901149376313047</jpa:a>
+            <jpa:a>_14901008440196</jpa:a>
+            <jpa:a>_149087938362378</jpa:a>
+            <jpa:a>_149011954705724</jpa:a>
+            <jpa:a>_14901093969381510</jpa:a>
+            <jpa:a>_1503055153023119</jpa:a>
+            <jpa:a>_1503055248950120</jpa:a>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:post>super();</jpa:post>
+        </jpa:con>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490101578444" v="true" xvt="" name="customerDetails" id="_14901093969381510">
@@ -154,6 +182,15 @@
         </jpa:nq>
     </jpa:entity>
     <jpa:entity lbl-ref="_14901008440196" compositePrimaryKeyClass="ProfessionalPK" abs="false" class="Professional" superclassId="_1490101376664" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101456632">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_14901149376313047</jpa:a>
+            <jpa:a>_14901008440196</jpa:a>
+            <jpa:a>_149087938362378</jpa:a>
+            <jpa:a>_149011954705724</jpa:a>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:post>super();</jpa:post>
+        </jpa:con>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="website" id="_1490104021917395">
@@ -269,6 +306,15 @@
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="IndividualPK" abs="false" class="Individual" superclassId="_1490101376664" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101520286">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_14901149376313047</jpa:a>
+            <jpa:a>_14901008440196</jpa:a>
+            <jpa:a>_149087938362378</jpa:a>
+            <jpa:a>_149011954705724</jpa:a>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:post>super();</jpa:post>
+        </jpa:con>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490101456632" connected-attribute-id="_1490180547178494" v="true" xvt="" name="professionals" id="_1490180547173493">
@@ -711,6 +757,10 @@
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="PaymentModePK" abs="false" class="PaymentMode" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490184243036">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_149020688438782</jpa:a>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="name" id="_149020688438782">
@@ -809,6 +859,14 @@
         <jpa:table name="COLLECTIVE_GROUP"/>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="AdministratorPK" abs="false" class="Administrator" superclassId="_1490100823157" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490704123469">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_14901149376313047</jpa:a>
+            <jpa:a>_14901008440196</jpa:a>
+            <jpa:a>_149087938362378</jpa:a>
+            <jpa:a>_149011954705724</jpa:a>
+            <jpa:post></jpa:post>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes/>
         <jpa:nq e="false" name="Administrator.findAll">
@@ -901,6 +959,10 @@
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="BusinessPK" abs="false" class="Business" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1503060694288">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_1503060753512132</jpa:a>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:id attribute-type="String" v="true" xvt="" name="name" id="_1503060753512132">
@@ -921,6 +983,7 @@
         */</jpa:snp>
     <jpa:c>
         <ct>java.util.List</ct>
+        <ct>java.util.LinkedList</ct>
         <ct>java.util.ArrayList</ct>
         <ct>java.util.Map</ct>
         <ct>java.util.Set</ct>
@@ -933,47 +996,47 @@
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1490172966686" x="-277" y="839"/>
-            <i ref="_1490180671085" x="855" y="509">
+            <i ref="_1490172966686" x="-279" y="837"/>
+            <i ref="_1490180671085" x="853" y="507">
                 <el>
                     <e ref="_1503073892988616">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490704123469" x="1" y="221"/>
-            <i ref="_1503060694288" x="-362" y="410"/>
-            <i ref="_1490101578444" x="523" y="221"/>
-            <i ref="_1490100852900" x="523" y="-15">
+            <i ref="_1490704123469" x="-1" y="219"/>
+            <i ref="_1503060694288" x="-364" y="408"/>
+            <i ref="_1490101578444" x="521" y="219"/>
+            <i ref="_1490100852900" x="521" y="-17">
                 <el>
                     <e ref="_14901160469883436">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101520286" x="411" y="509">
+            <i ref="_1490101520286" x="401" y="507">
                 <el>
                     <e ref="_1490180547173493">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490104062170" x="-230" y="565"/>
-            <i ref="_1490113906035" x="-135" y="1156">
+            <i ref="_1490104062170" x="-232" y="563"/>
+            <i ref="_1490113906035" x="-137" y="1154">
                 <el>
                     <e ref="_149017313754828">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490704206844" x="111" y="969">
+            <i ref="_1490704206844" x="109" y="967">
                 <el>
                     <e ref="_1503077170376625">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101376664" x="230" y="221">
+            <i ref="_1490101376664" x="228" y="219">
                 <el>
                     <e ref="_14901093969381510">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -986,8 +1049,8 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490113751330" x="-403" y="1143"/>
-            <i ref="_1490206901623" x="465" y="1407">
+            <i ref="_1490113751330" x="-405" y="1141"/>
+            <i ref="_1490206901623" x="463" y="1405">
                 <el>
                     <e ref="_1503081214518630">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -997,7 +1060,7 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490178979567" x="834" y="1320">
+            <i ref="_1490178979567" x="832" y="1318">
                 <el>
                     <e ref="_149020760041892">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1010,15 +1073,15 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1499512549878" x="-90" y="1351">
+            <i ref="_1499512549878" x="-92" y="1349">
                 <el>
                     <e ref="_1499514056020846">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101737208" x="-254" y="174"/>
-            <i ref="_1490281931338" x="576" y="1143">
+            <i ref="_1490101737208" x="-256" y="172"/>
+            <i ref="_1490281931338" x="574" y="1141">
                 <el>
                     <e ref="_1490283543806197">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1028,7 +1091,7 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490101456632" x="111" y="410">
+            <i ref="_1490101456632" x="109" y="408">
                 <el>
                     <e ref="_1490179812678394">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1059,15 +1122,15 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490184243036" x="164" y="1407"/>
-            <i ref="_1490100823157" x="213" y="-55">
+            <i ref="_1490184243036" x="163" y="1405"/>
+            <i ref="_1490100823157" x="211" y="-57">
                 <el>
                     <e ref="_14901160469863435">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490180682743" x="687" y="695">
+            <i ref="_1490180682743" x="685" y="693">
                 <el>
                     <e ref="_1490288049311796">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1077,7 +1140,7 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490101555530" x="381" y="745">
+            <i ref="_1490101555530" x="379" y="743">
                 <el>
                     <e ref="_149028166301044">
                         <v st="1" si="12.0" cl="#00ff00"/>

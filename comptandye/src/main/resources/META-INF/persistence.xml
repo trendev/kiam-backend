@@ -25,6 +25,7 @@
     <class>fr.trendev.comptandye.entities.Category</class>
     <class>fr.trendev.comptandye.entities.Expense</class>
     <class>fr.trendev.comptandye.entities.Business</class>
+    <class>fr.trendev.comptandye.entities.toto.Administrator</class>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>

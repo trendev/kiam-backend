@@ -79,7 +79,7 @@ public class UserGroupTest {
          * if there is no field userAccounts : grp.getUserAccounts() will be
          * null !
          */
-        assert grp.getUserAccounts() == null;
-//        assert grp.getUserAccounts().isEmpty();
+        assert grp.getUserAccounts() != null;
+        assert grp.getUserAccounts().isEmpty();
     }
 }

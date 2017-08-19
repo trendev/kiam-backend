@@ -4,6 +4,7 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -34,22 +35,14 @@ public class UserGroup {
     @JsonIgnore
     private List<UserAccount> userAccounts;
 
-    public UserGroup(String name) {
-        this.name = name;
-    }
-
     public UserGroup(String name, String description) {
+        this();
         this.name = name;
         this.description = description;
-    }
-
-    public UserGroup(String name, String description, List userAccounts) {
-        this.name = name;
-        this.description = description;
-        this.userAccounts = userAccounts;
     }
 
     public UserGroup() {
+        this.userAccounts = new LinkedList<>();
     }
 
     public String getName() {

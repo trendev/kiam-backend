@@ -23,6 +23,23 @@ public abstract class Customer extends UserAccount {
             targetEntity = SocialNetworkAccounts.class)
     private SocialNetworkAccounts socialNetworkAccounts;
 
+    public Customer(String email, String password, String username, String uuid) {
+        super(email, password, username, uuid);
+    }
+
+    public Customer(String email, String password, String username, String uuid,
+            CustomerDetails customerDetails, Address address,
+            SocialNetworkAccounts socialNetworkAccounts) {
+        super(email, password, username, uuid);
+        this.customerDetails = customerDetails;
+        this.address = address;
+        this.socialNetworkAccounts = socialNetworkAccounts;
+    }
+
+    public Customer() {
+        super();
+    }
+
     public CustomerDetails getCustomerDetails() {
         return this.customerDetails;
     }

@@ -5,6 +5,7 @@ package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -44,6 +45,21 @@ public abstract class UserAccount {
         CascadeType.REFRESH}, targetEntity = UserGroup.class)
     @JsonIgnore
     private List<UserGroup> userGroups;
+
+    public UserAccount(String email, String password, String username,
+            String uuid) {
+        this.email = email;
+        this.password = password;
+        this.username = username;
+        this.uuid = uuid;
+        this.registrationDate = new Date();
+        this.userGroups = new LinkedList<>();
+    }
+
+    public UserAccount() {
+        this.registrationDate = new Date();
+        this.userGroups = new LinkedList<>();
+    }
 
     public String getEmail() {
         return this.email;

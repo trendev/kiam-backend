@@ -11,4 +11,12 @@ import javax.persistence.Entity;
 @Entity
 public class Administrator extends UserAccount {
 
+    public Administrator(String email, String password, String username,
+            String uuid) {
+        super(email, password, username, uuid);
+    }
+
+    public Administrator() {
+    }
+
 }

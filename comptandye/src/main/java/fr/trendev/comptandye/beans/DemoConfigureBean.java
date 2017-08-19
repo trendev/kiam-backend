@@ -6,6 +6,7 @@
 package fr.trendev.comptandye.beans;
 
 import fr.trendev.comptandye.entities.Administrator;
+import fr.trendev.comptandye.entities.Business;
 import fr.trendev.comptandye.entities.Individual;
 import fr.trendev.comptandye.entities.PaymentMode;
 import fr.trendev.comptandye.entities.Professional;
@@ -15,9 +16,7 @@ import fr.trendev.comptandye.utils.UUIDGenerator;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,6 +51,9 @@ public class DemoConfigureBean implements Serializable {
         if (userGroupFacade.findAll().isEmpty()) {
             this.initUsersAndGroups();
         }
+        this.initPaymentModes();
+        this.initBusinesses();
+
         this.displayUserGroupDetails();
     }
 
@@ -60,42 +62,26 @@ public class DemoConfigureBean implements Serializable {
         /**
          * Creates 3 administrators with different passwords
          */
-        Administrator trendevfr = new Administrator();
-        trendevfr.setEmail("trendevfr@gmail.com");
-        trendevfr.setPassword("ts15qkBmihdtvmkKXPgVmbPGeyQU6aKd5XNd5HwOzu0=");
-        trendevfr.setUserGroups(new LinkedList<>());
-        trendevfr.setUsername("trendevfr_admin");
-        trendevfr.setUuid(UUIDGenerator.generate("ADMIN_", true));
+//        Calendar cal = Calendar.getInstance();
+//        cal.add(Calendar.YEAR, -2);
+//        trendevfr.setRegistrationDate(cal.getTime());
+        Administrator trendevfr = new Administrator("trendevfr@gmail.com",
+                "ts15qkBmihdtvmkKXPgVmbPGeyQU6aKd5XNd5HwOzu0=",
+                "trendevfr_admin", UUIDGenerator.generate("ADMIN_", true));
 
-        Calendar cal = Calendar.getInstance();
-        //cal.add(Calendar.YEAR, -2);
-        trendevfr.setRegistrationDate(cal.getTime());
+        Administrator comptandye = new Administrator("comptandye@gmail.com",
+                "mZWR4R0bp5EPs9xfOwUPu3n/06LOL+wHK6BuUBsHgQM=",
+                "comptandye_admin", UUIDGenerator.generate("ADMIN_", true));
 
-        Administrator comptandye = new Administrator();
-        comptandye.setEmail("comptandye@gmail.com");
-        comptandye.setPassword("mZWR4R0bp5EPs9xfOwUPu3n/06LOL+wHK6BuUBsHgQM=");
-        comptandye.setUserGroups(new LinkedList<>());
-        comptandye.setUsername("comptandye_admin");
-        comptandye.setUuid(UUIDGenerator.generate("ADMIN_", true));
-
-        comptandye.setRegistrationDate(cal.getTime());
-
-        Administrator jsie = new Administrator();
-        jsie.setEmail("julien.sie@gmail.com");
-        jsie.setPassword("RrYJsV8xV7fsJkzgrFqGwiZzvIGEFan6e0ANYPcJhrI=");
-        jsie.setUserGroups(new LinkedList<>());
-        jsie.setUsername("jsie");
-        jsie.setUuid(UUIDGenerator.generate("ADMIN_", true));
-
-        jsie.setRegistrationDate(cal.getTime());
+        Administrator jsie = new Administrator("julien.sie@gmail.com",
+                "RrYJsV8xV7fsJkzgrFqGwiZzvIGEFan6e0ANYPcJhrI=", "jsie",
+                UUIDGenerator.generate("ADMIN_", true));
 
         /**
          * Creates the Administrator Group
          */
-        UserGroup adminGroup = new UserGroup();
-        adminGroup.setName("Administrator");
-        adminGroup.setDescription("Administrator Group");
-        adminGroup.setUserAccounts(new LinkedList<>());
+        UserGroup adminGroup = new UserGroup("Administrator",
+                "Administrator Group");
 
         /**
          * Adds the administrators to the group and the group to the
@@ -113,18 +99,13 @@ public class DemoConfigureBean implements Serializable {
         Professional vgay = new Professional();
         vgay.setEmail("vanessa.gay@gmail.com");
         vgay.setPassword("EUrVrX4nfmYYFxpMyRX93OlkJxNZv9mkMGfirZKbhWI=");
-        vgay.setUserGroups(new LinkedList<>());
         vgay.setUsername("Vaness");
         vgay.setUuid(UUIDGenerator.generate("PRO_", true));
-        vgay.setRegistrationDate(cal.getTime());
 
         /**
          * Creates the Professional user group
          */
-        UserGroup pro = new UserGroup();
-        pro.setName("Professional");
-        pro.setDescription("Professional User Group");
-        pro.setUserAccounts(new LinkedList<>());
+        UserGroup pro = new UserGroup("Professional", "Professional User Group");
 
         /**
          * Adds the first user to the professional group and vice versa
@@ -137,11 +118,7 @@ public class DemoConfigureBean implements Serializable {
          * application
          *
          */
-        UserGroup ind = new UserGroup();
-        ind.setName("Individual");
-        ind.setDescription("Individual User Group");
-        ind.setUserAccounts(Collections.EMPTY_LIST);
-        ind.setUserAccounts(new ArrayList<>());
+        UserGroup ind = new UserGroup("Individual", "Individual User Group");
 
         Individual skonx = new Individual();
         skonx.setEmail("skonx2006@gmail.com");
@@ -156,7 +133,7 @@ public class DemoConfigureBean implements Serializable {
 
         ind.getUserAccounts().add(sylvioc);
         sylvioc.getUserGroups().add(ind);
-//        
+
         /**
          * Store the groups and their contents
          */
@@ -164,14 +141,11 @@ public class DemoConfigureBean implements Serializable {
         em.persist(pro);
         em.persist(ind);
 
-//        sylvioc.getUserGroups().remove(ind);
-//        ind.getUserAccounts().remove(sylvioc);
         sylvioc.getUserGroups().forEach(g -> g.getUserAccounts().remove(
                 sylvioc));
 
         em.remove(sylvioc);
 
-        this.initPaymentModes();
     }
 
     private void displayUserGroupDetails() {
@@ -218,12 +192,18 @@ public class DemoConfigureBean implements Serializable {
 
     private void initPaymentModes() {
         Arrays.
-                asList("CreditCard", "Cheque", "Paylib", "Paypal",
-                        "Cash").stream().forEach(s -> {
-                    PaymentMode pm = new PaymentMode();
-                    pm.setName(s);
-                    em.persist(pm);
+                asList("CB", "Chèque", "Paylib", "Paypal",
+                        "Espèces", "Virement").stream().forEach(pm -> {
+                    em.persist(new PaymentMode(pm));
                 });
+    }
+
+    private void initBusinesses() {
+        Arrays.
+                asList("Coiffure", "Esthétique", "Onglerie").stream().forEach(
+                b -> {
+            em.persist(new Business(b));
+        });
     }
 
 }

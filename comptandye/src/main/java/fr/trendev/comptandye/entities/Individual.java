@@ -18,6 +18,15 @@ public class Individual extends Customer {
     @JsonIgnore
     private List<Professional> professionals;
 
+    public Individual(String email, String password, String username,
+            String uuid) {
+        super(email, password, username, uuid);
+    }
+
+    public Individual() {
+        super();
+    }
+
     public List<Professional> getProfessionals() {
         return this.professionals;
     }

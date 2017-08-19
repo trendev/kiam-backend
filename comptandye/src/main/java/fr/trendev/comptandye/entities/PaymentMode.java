@@ -22,6 +22,13 @@ public class PaymentMode {
     @Basic
     private String name;
 
+    public PaymentMode(String name) {
+        this.name = name;
+    }
+
+    public PaymentMode() {
+    }
+
     public Long getId() {
         return this.id;
     }
