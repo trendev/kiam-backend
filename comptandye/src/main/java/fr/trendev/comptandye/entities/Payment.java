@@ -24,9 +24,15 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    /**
+     * Amount in cents (1/100 of the currency)
+     */
     @Basic
-    private float amount;
+    private int amount;
 
+    /**
+     * Default value is Euros (EUR)
+     */
     @Basic
     private String currency = "EUR";
 
@@ -38,6 +44,17 @@ public class Payment {
     @JsonIgnore
     private Bill bill;
 
+    public Payment(int amount, String currency, PaymentMode paymentMode,
+            Bill bill) {
+        this.amount = amount;
+        this.currency = currency;
+        this.paymentMode = paymentMode;
+        this.bill = bill;
+    }
+
+    public Payment() {
+    }
+
     public Long getId() {
         return this.id;
     }
@@ -46,11 +63,11 @@ public class Payment {
         this.id = id;
     }
 
-    public float getAmount() {
+    public int getAmount() {
         return this.amount;
     }
 
-    public void setAmount(float amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 
