@@ -653,10 +653,17 @@
         <jpa:table name="SOCIAL_NETWORK_ACCOUNT"/>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="ServicePK" abs="false" class="Service" superclassId="_1490172966686" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490113751330">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_1490176760174139</jpa:a>
+            <jpa:a>_1490176780392140</jpa:a>
+            <jpa:a>_1503316869889414</jpa:a>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="int" v="true" xvt="" name="duration" id="_1503316869889414">
+                <jpa:des>Duration (in minutes)</jpa:des>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
