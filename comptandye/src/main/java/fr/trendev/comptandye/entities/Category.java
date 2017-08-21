@@ -3,6 +3,7 @@ package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
@@ -30,7 +31,15 @@ public class Category {
 
     @ManyToMany(targetEntity = Client.class, mappedBy = "categories")
     @JsonIgnore
-    private List<Client> clients;
+    private List<Client> clients = new LinkedList<>();
+
+    public Category(String description, String name) {
+        this.description = description;
+        this.name = name;
+    }
+
+    public Category() {
+    }
 
     public Long getId() {
         return this.id;

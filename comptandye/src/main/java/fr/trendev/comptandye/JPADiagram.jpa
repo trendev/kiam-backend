@@ -965,6 +965,7 @@
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="CategoryPK" abs="false" class="Category" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490704206844">
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
+        <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="description" id="_1490704221835111">
@@ -975,7 +976,7 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490101555530" connected-attribute-id="_1503077170356624" v="true" xvt="" name="clients" id="_1503077170376625">
+            <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490101555530" connected-attribute-id="_1503077170356624" v="true" xvt="" name="clients" dv="new LinkedList&lt;&gt;()" id="_1503077170376625">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
