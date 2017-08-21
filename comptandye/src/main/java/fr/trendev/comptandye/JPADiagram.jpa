@@ -361,7 +361,19 @@
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="ClientPK" abs="false" class="Client" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101555530">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_1490283378549192</jpa:a>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true"/>
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_1490283378549192</jpa:a>
+            <jpa:a>_149028166301044</jpa:a>
+            <jpa:a>_1490283406937193</jpa:a>
+            <jpa:a>_1503055318751123</jpa:a>
+            <jpa:a>_14902921628221105</jpa:a>
+        </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
+        <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="email" id="_1490283378549192">
@@ -379,7 +391,7 @@
                     <jpa:cascade-detach/>
                 </jpa:cascade>
             </jpa:many-to-one>
-            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490180682743" connected-attribute-id="_1490181195212606" v="true" xvt="" name="clientBills" id="_1490181195213607">
+            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490180682743" connected-attribute-id="_1490181195212606" v="true" xvt="" name="clientBills" dv="new LinkedList&lt;&gt;()" id="_1490181195213607">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -408,7 +420,7 @@
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-one>
-            <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490281931338" connected-attribute-id="_1490283569372198" v="true" xvt="" name="collectiveGroups" id="_1490283569412199">
+            <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490281931338" connected-attribute-id="_1490283569372198" v="true" xvt="" name="collectiveGroups" dv="new LinkedList&lt;&gt;()" id="_1490283569412199">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -419,7 +431,7 @@
                     <jpa:cascade-detach/>
                 </jpa:cascade>
             </jpa:many-to-many>
-            <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490704206844" connected-attribute-id="_1503077170376625" v="true" xvt="" name="categories" id="_1503077170356624">
+            <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490704206844" connected-attribute-id="_1503077170376625" v="true" xvt="" name="categories" dv="new LinkedList&lt;&gt;()" id="_1503077170356624">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:cascade>
@@ -887,6 +899,13 @@
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="PaymentPK" abs="false" class="Payment" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490206901623">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_149020701195485</jpa:a>
+            <jpa:a>_149020716672986</jpa:a>
+            <jpa:a>_1503081214518630</jpa:a>
+            <jpa:a>_149020760041791</jpa:a>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>

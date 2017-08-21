@@ -3,6 +3,7 @@ package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -47,17 +48,34 @@ public class Client {
     @OneToMany(cascade = {CascadeType.ALL}, targetEntity = ClientBill.class,
             mappedBy = "client")
     @JsonIgnore
-    private List<ClientBill> clientBills;
+    private List<ClientBill> clientBills = new LinkedList<>();
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
         CascadeType.REFRESH}, targetEntity = CollectiveGroup.class,
             mappedBy = "clients")
     @JsonIgnore
-    private List<CollectiveGroup> collectiveGroups;
+    private List<CollectiveGroup> collectiveGroups = new LinkedList<>();
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
         CascadeType.REFRESH}, targetEntity = Category.class)
-    private List<Category> categories;
+    private List<Category> categories = new LinkedList<>();
+
+    public Client(String email) {
+        this.email = email;
+    }
+
+    public Client() {
+    }
+
+    public Client(String email, SocialNetworkAccounts socialNetworkAccounts,
+            CustomerDetails customerDetails, Address address,
+            Professional professional) {
+        this.email = email;
+        this.socialNetworkAccounts = socialNetworkAccounts;
+        this.customerDetails = customerDetails;
+        this.address = address;
+        this.professional = professional;
+    }
 
     public Long getId() {
         return this.id;
