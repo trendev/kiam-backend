@@ -3,9 +3,12 @@ package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+
+;
 
 /**
  * @author jsie
@@ -16,7 +19,7 @@ public class Individual extends Customer {
 
     @ManyToMany(targetEntity = Professional.class)
     @JsonIgnore
-    private List<Professional> professionals;
+    private List<Professional> professionals = new LinkedList<>();
 
     public Individual(String email, String password, String username,
             String uuid) {
@@ -25,6 +28,13 @@ public class Individual extends Customer {
 
     public Individual() {
         super();
+    }
+
+    public Individual(String email, String password, String username,
+            String uuid, CustomerDetails customerDetails, Address address,
+            SocialNetworkAccounts socialNetworkAccounts) {
+        super(email, password, username, uuid, customerDetails, address,
+                socialNetworkAccounts);
     }
 
     public List<Professional> getProfessionals() {
