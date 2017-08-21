@@ -211,6 +211,7 @@
             <jpa:a>_1503055248950120</jpa:a>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
+        <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="website" id="_1490104021917395">
@@ -230,7 +231,7 @@
                 <jpa:xm nil="false" req="false"/>
                 <jpa:temporal>TIMESTAMP</jpa:temporal>
             </jpa:basic>
-            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490178979567" connected-attribute-id="_1490179812677393" v="true" xvt="" name="bills" id="_1490179812678394">
+            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490178979567" connected-attribute-id="_1490179812677393" v="true" xvt="" name="bills" dv="new LinkedList&lt;&gt;()" id="_1490179812678394">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -238,7 +239,7 @@
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-many>
-            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490101555530" connected-attribute-id="_14902921628221105" v="true" xvt="" name="clients" id="_14902921628221106">
+            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490101555530" connected-attribute-id="_14902921628221105" v="true" xvt="" name="clients" dv="new LinkedList&lt;&gt;()" id="_14902921628221106">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -246,11 +247,11 @@
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-many>
-            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1503060694288" v="true" xvt="" name="businesses" id="_1503060822737133">
+            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1503060694288" v="true" xvt="" name="businesses" dv="new LinkedList&lt;&gt;()" id="_1503060822737133">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:one-to-many>
-            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1490172966686" v="true" xvt="" name="offerings" id="_1503064222749343">
+            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1490172966686" v="true" xvt="" name="offerings" dv="new LinkedList&lt;&gt;()" id="_1503064222749343">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -258,14 +259,14 @@
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-many>
-            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1490704206844" v="true" xvt="" name="categories" id="_1503076923115623">
+            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1490704206844" v="true" xvt="" name="categories" dv="new LinkedList&lt;&gt;()" id="_1503076923115623">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:cascade>
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-many>
-            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1490281931338" v="true" xvt="" name="collectiveGroups" id="_1503077601277626">
+            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1490281931338" v="true" xvt="" name="collectiveGroups" dv="new LinkedList&lt;&gt;()" id="_1503077601277626">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -273,7 +274,7 @@
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-many>
-            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1499512549878" v="true" xvt="" name="expenses" id="_1503078556360627">
+            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1499512549878" v="true" xvt="" name="expenses" dv="new LinkedList&lt;&gt;()" id="_1503078556360627">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -281,12 +282,12 @@
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-many>
-            <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490101520286" connected-attribute-id="_1490180547173493" v="true" xvt="" name="individuals" id="_1490180547178494">
+            <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490101520286" connected-attribute-id="_1490180547173493" v="true" xvt="" name="individuals" dv="new LinkedList&lt;&gt;()" id="_1490180547178494">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:many-to-many>
-            <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490184243036" v="true" xvt="" name="paymentModes" id="_149020649962680">
+            <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490184243036" v="true" xvt="" name="paymentModes" dv="new LinkedList&lt;&gt;()" id="_149020649962680">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:many-to-many>

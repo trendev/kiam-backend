@@ -4,6 +4,7 @@ package fr.trendev.comptandye.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -36,37 +37,37 @@ public class Professional extends Customer {
     @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Bill.class,
             mappedBy = "professional")
     @JsonIgnore
-    private List<Bill> bills;
+    private List<Bill> bills = new LinkedList<>();
 
     @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Client.class,
             mappedBy = "professional")
     @JsonIgnore
-    private List<Client> clients;
+    private List<Client> clients = new LinkedList<>();
 
     @OneToMany(targetEntity = Business.class)
-    private List<Business> businesses;
+    private List<Business> businesses = new LinkedList<>();
 
     @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Offering.class)
     @JsonIgnore
-    private List<Offering> offerings;
+    private List<Offering> offerings = new LinkedList<>();
 
     @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Category.class)
-    private List<Category> categories;
+    private List<Category> categories = new LinkedList<>();
 
     @OneToMany(cascade = {CascadeType.ALL}, targetEntity = CollectiveGroup.class)
     @JsonIgnore
-    private List<CollectiveGroup> collectiveGroups;
+    private List<CollectiveGroup> collectiveGroups = new LinkedList<>();
 
     @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Expense.class)
     @JsonIgnore
-    private List<Expense> expenses;
+    private List<Expense> expenses = new LinkedList<>();
 
     @ManyToMany(targetEntity = Individual.class, mappedBy = "professionals")
     @JsonIgnore
-    private List<Individual> individuals;
+    private List<Individual> individuals = new LinkedList<>();
 
     @ManyToMany(targetEntity = PaymentMode.class)
-    private List<PaymentMode> paymentModes;
+    private List<PaymentMode> paymentModes = new LinkedList<>();
 
     public Professional(String email, String password, String username,
             String uuid) {
