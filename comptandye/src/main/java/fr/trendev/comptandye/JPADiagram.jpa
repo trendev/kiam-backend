@@ -686,9 +686,10 @@
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="PackagePK" abs="false" class="Package" superclassId="_1490172966686" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490113906035">
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
+        <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
-            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1490172966686" v="true" xvt="" name="offerings" id="_149017313754828">
+            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1490172966686" v="true" xvt="" name="offerings" dv="new LinkedList&lt;&gt;()" id="_149017313754828">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:join-table name="PACKAGE_SERVICES"/>

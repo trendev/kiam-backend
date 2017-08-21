@@ -2,6 +2,7 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -18,7 +19,14 @@ public class Package extends Offering {
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
         CascadeType.REFRESH}, targetEntity = Offering.class)
     @JoinTable(name = "PACKAGE_SERVICES")
-    private List<Offering> offerings;
+    private List<Offering> offerings = new LinkedList<>();
+
+    public Package(String name, int price) {
+        super(name, price);
+    }
+
+    public Package() {
+    }
 
     public List<Offering> getOfferings() {
         return this.offerings;
