@@ -11,9 +11,9 @@
         </jpa:con>
         <jpa:con am="PUBLIC" e="true">
             <jpa:pre></jpa:pre>
-            <jpa:post>this.registrationDate = new Date();
-this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
+            <jpa:post>this.registrationDate = new Date(); this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
         </jpa:con>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -155,6 +155,7 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
             <jpa:pre>super();</jpa:pre>
             <jpa:post></jpa:post>
         </jpa:con>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490101578444" v="true" xvt="" name="customerDetails" id="_14901093969381510">
@@ -196,6 +197,7 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
         <jpa:con am="PUBLIC" e="true">
             <jpa:post>super();</jpa:post>
         </jpa:con>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="website" id="_1490104021917395">
@@ -320,6 +322,7 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
         <jpa:con am="PUBLIC" e="true">
             <jpa:post>super();</jpa:post>
         </jpa:con>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490101456632" connected-attribute-id="_1490180547178494" v="true" xvt="" name="professionals" id="_1490180547173493">
@@ -333,6 +336,7 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="ClientPK" abs="false" class="Client" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101555530">
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="email" id="_1490283378549192">
@@ -423,6 +427,7 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="CustomerDetailsPK" abs="false" class="CustomerDetails" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101578444">
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="firstName" id="_149010159285359">
@@ -495,6 +500,7 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
         <jpa:table name="CUSTOMER_DETAILS"/>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="AddressPK" abs="false" class="Address" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101737208">
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="street" id="_149010174910869">
@@ -543,6 +549,7 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="SocialNetworkAccountsPK" abs="false" class="SocialNetworkAccounts" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490104062170">
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="facebook" id="_1490104873485484">
@@ -585,6 +592,7 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
         <jpa:table name="SOCIAL_NETWORK_ACCOUNT"/>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="ServicePK" abs="false" class="Service" superclassId="_1490172966686" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490113751330">
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes/>
         <jpa:nq e="false" name="Service.findAll">
@@ -601,6 +609,7 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="PackagePK" abs="false" class="Package" superclassId="_1490172966686" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490113906035">
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1490172966686" v="true" xvt="" name="offerings" id="_149017313754828">
@@ -626,6 +635,7 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="OfferingPK" abs="true" class="Offering" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490172966686">
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="name" id="_1490176760174139">
@@ -661,6 +671,7 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
         <jpa:discriminator-column/>
     </jpa:entity>
     <jpa:entity lbl-ref="_149017899245630" compositePrimaryKeyType="D" compositePrimaryKeyClass="BillPK" abs="true" class="Bill" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490178979567">
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="float" v="true" xvt="" name="amount" id="_149017899245630">
@@ -728,6 +739,7 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
         <jpa:discriminator-column/>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="InvidualBillPK" abs="false" class="InvidualBill" superclassId="_1490178979567" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490180671085">
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490101520286" v="true" xvt="" name="individual" id="_1503073892988616">
@@ -740,6 +752,7 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="ClientBillPK" abs="false" class="ClientBill" superclassId="_1490178979567" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490180682743">
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490101555530" connected-attribute-id="_1490181195213607" v="true" xvt="" name="client" id="_1490181195212606">
@@ -766,6 +779,7 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
             <jpa:a>_149020688438782</jpa:a>
         </jpa:con>
         <jpa:con am="PUBLIC" e="true"/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="name" id="_149020688438782">
@@ -789,6 +803,7 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="PaymentPK" abs="false" class="Payment" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490206901623">
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="float" v="true" xvt="" name="amount" id="_149020701195485">
@@ -825,6 +840,7 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="CollectiveGroupPK" abs="false" class="CollectiveGroup" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490281931338">
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="groupName" id="_1490282399999187">
@@ -875,6 +891,7 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
         <jpa:con am="PUBLIC" e="true">
             <jpa:pre>super();</jpa:pre>
         </jpa:con>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes/>
         <jpa:nq e="false" name="Administrator.findAll">
@@ -882,6 +899,7 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="CategoryPK" abs="false" class="Category" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490704206844">
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="description" id="_1490704221835111">
@@ -914,6 +932,7 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="ExpensePK" abs="false" class="Expense" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1499512549878">
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="name" id="_149951257358656">
@@ -971,6 +990,7 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
             <jpa:a>_1503060753512132</jpa:a>
         </jpa:con>
         <jpa:con am="PUBLIC" e="true"/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:id attribute-type="String" v="true" xvt="" name="name" id="_1503060753512132">
@@ -986,9 +1006,7 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
             <jpa:query>Select b from Business b where b.description=:description</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:snp loc="BEFORE_PACKAGE" e="true">/**
-        * This file was generated by the JPA Modeler
-        */</jpa:snp>
+    <jpa:snp loc="BEFORE_PACKAGE" e="true">/** * This file was generated by the JPA Modeler */</jpa:snp>
     <jpa:c>
         <ct>java.util.List</ct>
         <ct>java.util.LinkedList</ct>
@@ -1004,47 +1022,47 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1490172966686" x="-281" y="835"/>
-            <i ref="_1490180671085" x="851" y="505">
+            <i ref="_1490172966686" x="-287" y="829"/>
+            <i ref="_1490180671085" x="845" y="499">
                 <el>
                     <e ref="_1503073892988616">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490704123469" x="-3" y="217"/>
-            <i ref="_1503060694288" x="-366" y="406"/>
-            <i ref="_1490101578444" x="519" y="217"/>
-            <i ref="_1490100852900" x="519" y="-19">
+            <i ref="_1490704123469" x="-9" y="211"/>
+            <i ref="_1503060694288" x="-372" y="400"/>
+            <i ref="_1490101578444" x="513" y="211"/>
+            <i ref="_1490100852900" x="513" y="-25">
                 <el>
                     <e ref="_14901160469883436">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101520286" x="399" y="505">
+            <i ref="_1490101520286" x="393" y="499">
                 <el>
                     <e ref="_1490180547173493">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490104062170" x="-234" y="561"/>
-            <i ref="_1490113906035" x="-139" y="1152">
+            <i ref="_1490104062170" x="-240" y="555"/>
+            <i ref="_1490113906035" x="-145" y="1146">
                 <el>
                     <e ref="_149017313754828">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490704206844" x="107" y="965">
+            <i ref="_1490704206844" x="101" y="959">
                 <el>
                     <e ref="_1503077170376625">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101376664" x="226" y="217">
+            <i ref="_1490101376664" x="220" y="211">
                 <el>
                     <e ref="_14901093969381510">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1057,8 +1075,8 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
                     </e>
                 </el>
             </i>
-            <i ref="_1490113751330" x="-407" y="1139"/>
-            <i ref="_1490206901623" x="461" y="1403">
+            <i ref="_1490113751330" x="-413" y="1133"/>
+            <i ref="_1490206901623" x="455" y="1397">
                 <el>
                     <e ref="_1503081214518630">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1068,7 +1086,7 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
                     </e>
                 </el>
             </i>
-            <i ref="_1490178979567" x="830" y="1316">
+            <i ref="_1490178979567" x="824" y="1310">
                 <el>
                     <e ref="_149020760041892">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1081,15 +1099,15 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
                     </e>
                 </el>
             </i>
-            <i ref="_1499512549878" x="-94" y="1347">
+            <i ref="_1499512549878" x="-100" y="1341">
                 <el>
                     <e ref="_1499514056020846">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101737208" x="-258" y="170"/>
-            <i ref="_1490281931338" x="572" y="1139">
+            <i ref="_1490101737208" x="-264" y="164"/>
+            <i ref="_1490281931338" x="566" y="1133">
                 <el>
                     <e ref="_1490283543806197">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1099,7 +1117,7 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101456632" x="107" y="406">
+            <i ref="_1490101456632" x="101" y="400">
                 <el>
                     <e ref="_1490179812678394">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1130,15 +1148,15 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
                     </e>
                 </el>
             </i>
-            <i ref="_1490184243036" x="161" y="1403"/>
-            <i ref="_1490100823157" x="209" y="-59">
+            <i ref="_1490184243036" x="155" y="1397"/>
+            <i ref="_1490100823157" x="203" y="-55">
                 <el>
                     <e ref="_14901160469863435">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490180682743" x="683" y="691">
+            <i ref="_1490180682743" x="677" y="685">
                 <el>
                     <e ref="_1490288049311796">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1148,7 +1166,7 @@ this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101555530" x="377" y="741">
+            <i ref="_1490101555530" x="371" y="735">
                 <el>
                     <e ref="_149028166301044">
                         <v st="1" si="12.0" cl="#00ff00"/>
