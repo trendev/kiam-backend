@@ -427,7 +427,22 @@
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="CustomerDetailsPK" abs="false" class="CustomerDetails" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101578444">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_149010159285359</jpa:a>
+            <jpa:a>_149010160079560</jpa:a>
+            <jpa:a>_1490105587212561</jpa:a>
+            <jpa:a>_149010163278061</jpa:a>
+            <jpa:a>_149010163896262</jpa:a>
+            <jpa:a>_149010166120363</jpa:a>
+            <jpa:a>_149010168028264</jpa:a>
+            <jpa:a>_149098087463456</jpa:a>
+            <jpa:pre>this();</jpa:pre>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:post>this.comments = new ArrayList&lt;&gt;();</jpa:post>
+        </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
+        <jpa:snp loc="IMPORT" e="true">import java.util.ArrayList;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="firstName" id="_149010159285359">
