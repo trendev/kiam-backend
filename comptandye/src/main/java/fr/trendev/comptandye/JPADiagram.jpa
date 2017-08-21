@@ -6,12 +6,12 @@
             <jpa:a>_14901008440196</jpa:a>
             <jpa:a>_149087938362378</jpa:a>
             <jpa:a>_149011954705724</jpa:a>
-            <jpa:pre>this();</jpa:pre>
+            <jpa:pre></jpa:pre>
             <jpa:post></jpa:post>
         </jpa:con>
         <jpa:con am="PUBLIC" e="true">
             <jpa:pre></jpa:pre>
-            <jpa:post>this.registrationDate = new Date(); this.userGroups = new LinkedList&lt;&gt;();</jpa:post>
+            <jpa:post></jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
@@ -29,12 +29,12 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:basic attribute-type="java.util.Date" v="true" xvt="" name="registrationDate" id="_149086726806159">
+            <jpa:basic attribute-type="java.util.Date" v="true" xvt="" name="registrationDate" dv="new Date()" id="_149086726806159">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:temporal>TIMESTAMP</jpa:temporal>
             </jpa:basic>
-            <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490100852900" connected-attribute-id="_14901160469883436" v="true" xvt="" name="userGroups" id="_14901160469863435">
+            <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490100852900" connected-attribute-id="_14901160469883436" v="true" xvt="" name="userGroups" dv="new LinkedList&lt;&gt;()" id="_14901160469863435">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -91,11 +91,11 @@
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_14901008529027</jpa:a>
             <jpa:a>_149062419655951</jpa:a>
-            <jpa:pre>this();</jpa:pre>
+            <jpa:pre></jpa:pre>
             <jpa:post></jpa:post>
         </jpa:con>
         <jpa:con am="PUBLIC" e="true">
-            <jpa:post>this.userAccounts = new LinkedList&lt;&gt;();</jpa:post>
+            <jpa:post></jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
@@ -105,7 +105,7 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490100823157" connected-attribute-id="_14901160469863435" v="true" xvt="" name="userAccounts" id="_14901160469883436">
+            <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490100823157" connected-attribute-id="_14901160469863435" v="true" xvt="" name="userAccounts" dv="new LinkedList&lt;&gt;()" id="_14901160469883436">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -196,6 +196,19 @@
         </jpa:con>
         <jpa:con am="PUBLIC" e="true">
             <jpa:post>super();</jpa:post>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_14901149376313047</jpa:a>
+            <jpa:a>_14901008440196</jpa:a>
+            <jpa:a>_149087938362378</jpa:a>
+            <jpa:a>_149011954705724</jpa:a>
+            <jpa:a>_1490104021917395</jpa:a>
+            <jpa:a>_150001807687657</jpa:a>
+            <jpa:a>_1503061008672135</jpa:a>
+            <jpa:a>_1503061429501137</jpa:a>
+            <jpa:a>_14901093969381510</jpa:a>
+            <jpa:a>_1503055153023119</jpa:a>
+            <jpa:a>_1503055248950120</jpa:a>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
@@ -1062,47 +1075,47 @@
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1490172966686" x="-291" y="825"/>
-            <i ref="_1490180671085" x="841" y="495">
+            <i ref="_1490172966686" x="-293" y="823"/>
+            <i ref="_1490180671085" x="839" y="493">
                 <el>
                     <e ref="_1503073892988616">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490704123469" x="-13" y="207"/>
-            <i ref="_1503060694288" x="-376" y="396"/>
-            <i ref="_1490101578444" x="509" y="207"/>
-            <i ref="_1490100852900" x="509" y="-29">
+            <i ref="_1490704123469" x="-15" y="205"/>
+            <i ref="_1503060694288" x="-378" y="394"/>
+            <i ref="_1490101578444" x="507" y="205"/>
+            <i ref="_1490100852900" x="507" y="-31">
                 <el>
                     <e ref="_14901160469883436">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101520286" x="389" y="495">
+            <i ref="_1490101520286" x="387" y="493">
                 <el>
                     <e ref="_1490180547173493">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490104062170" x="-244" y="553"/>
-            <i ref="_1490113906035" x="-149" y="1142">
+            <i ref="_1490104062170" x="-246" y="551"/>
+            <i ref="_1490113906035" x="-151" y="1140">
                 <el>
                     <e ref="_149017313754828">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490704206844" x="97" y="955">
+            <i ref="_1490704206844" x="95" y="953">
                 <el>
                     <e ref="_1503077170376625">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101376664" x="216" y="207">
+            <i ref="_1490101376664" x="214" y="205">
                 <el>
                     <e ref="_14901093969381510">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1115,8 +1128,8 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490113751330" x="-424" y="1129"/>
-            <i ref="_1490206901623" x="451" y="1393">
+            <i ref="_1490113751330" x="-426" y="1127"/>
+            <i ref="_1490206901623" x="449" y="1391">
                 <el>
                     <e ref="_1503081214518630">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1126,7 +1139,7 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490178979567" x="820" y="1306">
+            <i ref="_1490178979567" x="818" y="1304">
                 <el>
                     <e ref="_149020760041892">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1139,15 +1152,15 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1499512549878" x="-104" y="1337">
+            <i ref="_1499512549878" x="-106" y="1335">
                 <el>
                     <e ref="_1499514056020846">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101737208" x="-268" y="160"/>
-            <i ref="_1490281931338" x="562" y="1129">
+            <i ref="_1490101737208" x="-270" y="158"/>
+            <i ref="_1490281931338" x="560" y="1127">
                 <el>
                     <e ref="_1490283543806197">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1157,7 +1170,7 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490101456632" x="97" y="396">
+            <i ref="_1490101456632" x="95" y="394">
                 <el>
                     <e ref="_1490179812678394">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1188,15 +1201,15 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490184243036" x="151" y="1393"/>
-            <i ref="_1490100823157" x="199" y="-59">
+            <i ref="_1490184243036" x="149" y="1391"/>
+            <i ref="_1490100823157" x="197" y="-61">
                 <el>
                     <e ref="_14901160469863435">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490180682743" x="673" y="681">
+            <i ref="_1490180682743" x="671" y="679">
                 <el>
                     <e ref="_1490288049311796">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1206,7 +1219,7 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490101555530" x="367" y="731">
+            <i ref="_1490101555530" x="365" y="729">
                 <el>
                     <e ref="_149028166301044">
                         <v st="1" si="12.0" cl="#00ff00"/>

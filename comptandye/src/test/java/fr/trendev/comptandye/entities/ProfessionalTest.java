@@ -38,13 +38,13 @@ public class ProfessionalTest {
     }
 
     @Test
-    public void testConstructor() {
-        Professional pro = new Professional();
-        assert pro.getUserGroups() != null;
-        assert pro.getUserGroups().isEmpty();
-        assert pro.getRegistrationDate() != null;
+    public void testConstructors() {
+        Professional instance = new Professional();
+        assert instance.getUserGroups() != null;
+        assert instance.getUserGroups().isEmpty();
+        assert instance.getRegistrationDate() != null;
         Date now = new Date();
-        assert now.equals(pro.getRegistrationDate()) || now.after(pro.
+        assert now.equals(instance.getRegistrationDate()) || now.after(instance.
                 getRegistrationDate());
     }
 

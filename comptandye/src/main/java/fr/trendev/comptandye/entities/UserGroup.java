@@ -33,16 +33,14 @@ public class UserGroup {
         CascadeType.REFRESH}, targetEntity = UserAccount.class,
             mappedBy = "userGroups")
     @JsonIgnore
-    private List<UserAccount> userAccounts;
+    private List<UserAccount> userAccounts = new LinkedList<>();
 
     public UserGroup(String name, String description) {
-        this();
         this.name = name;
         this.description = description;
     }
 
     public UserGroup() {
-        this.userAccounts = new LinkedList<>();
     }
 
     public String getName() {

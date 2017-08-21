@@ -39,16 +39,15 @@ public abstract class UserAccount {
 
     @Basic
     @Temporal(TemporalType.TIMESTAMP)
-    private Date registrationDate;
+    private Date registrationDate = new Date();
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
         CascadeType.REFRESH}, targetEntity = UserGroup.class)
     @JsonIgnore
-    private List<UserGroup> userGroups;
+    private List<UserGroup> userGroups = new LinkedList<>();
 
     public UserAccount(String email, String password, String username,
             String uuid) {
-        this();
         this.email = email;
         this.password = password;
         this.username = username;
@@ -56,8 +55,6 @@ public abstract class UserAccount {
     }
 
     public UserAccount() {
-        this.registrationDate = new Date();
-        this.userGroups = new LinkedList<>();
     }
 
     public String getEmail() {

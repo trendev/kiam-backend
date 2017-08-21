@@ -77,6 +77,18 @@ public class Professional extends Customer {
         super();
     }
 
+    public Professional(String email, String password, String username,
+            String uuid, CustomerDetails customerDetails, Address address,
+            SocialNetworkAccounts socialNetworkAccounts, String website,
+            String companyID, String VATcode, Date creationDate) {
+        super(email, password, username, uuid, customerDetails, address,
+                socialNetworkAccounts);
+        this.website = website;
+        this.companyID = companyID;
+        this.VATcode = VATcode;
+        this.creationDate = creationDate;
+    }
+
     public String getWebsite() {
         return this.website;
     }
