@@ -44,7 +44,8 @@ public class ProfessionalTest {
         assert pro.getUserGroups().isEmpty();
         assert pro.getRegistrationDate() != null;
         Date now = new Date();
-        assert now.equals(pro.getRegistrationDate());
+        assert now.equals(pro.getRegistrationDate()) || now.after(pro.
+                getRegistrationDate());
     }
 
 }

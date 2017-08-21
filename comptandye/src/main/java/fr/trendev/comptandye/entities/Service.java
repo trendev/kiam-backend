@@ -2,6 +2,7 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 
 /**
@@ -10,5 +11,16 @@ import javax.persistence.Entity;
 @Entity
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Service extends Offering {
+
+    @Basic
+    private int duration;
+
+    public int getDuration() {
+        return this.duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
 
 }

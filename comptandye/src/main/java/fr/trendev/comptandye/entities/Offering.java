@@ -27,9 +27,6 @@ public abstract class Offering {
     @Basic
     private float price;
 
-    @Basic
-    private int duration;
-
     public Long getId() {
         return this.id;
     }
@@ -52,14 +49,6 @@ public abstract class Offering {
 
     public void setPrice(float price) {
         this.price = price;
-    }
-
-    public int getDuration() {
-        return this.duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
     }
 
 }
