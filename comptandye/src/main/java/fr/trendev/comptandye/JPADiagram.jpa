@@ -515,6 +515,20 @@
         <jpa:table name="CUSTOMER_DETAILS"/>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="AddressPK" abs="false" class="Address" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101737208">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_149010174910869</jpa:a>
+            <jpa:a>_149331184908654</jpa:a>
+            <jpa:a>_149010175746470</jpa:a>
+            <jpa:a>_149010176456971</jpa:a>
+            <jpa:a>_149010176933672</jpa:a>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true"/>
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_149010174910869</jpa:a>
+            <jpa:a>_149331184908654</jpa:a>
+            <jpa:a>_149010175746470</jpa:a>
+            <jpa:a>_149010176456971</jpa:a>
+        </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -534,7 +548,7 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:basic attribute-type="String" v="true" xvt="" name="country" dv="&quot;FRANCE&quot;" id="_149010176933672">
+            <jpa:basic attribute-type="String" v="true" xvt="" name="country" dv="&quot;France&quot;" id="_149010176933672">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>

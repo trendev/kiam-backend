@@ -32,7 +32,27 @@ public class Address {
     private String city;
 
     @Basic
-    private String country = "FRANCE";
+    private String country = "France";
+
+    public Address(String street, String optional, String postalCode,
+            String city, String country) {
+        this.street = street;
+        this.optional = optional;
+        this.postalCode = postalCode;
+        this.city = city;
+        this.country = country;
+    }
+
+    public Address() {
+    }
+
+    public Address(String street, String optional, String postalCode,
+            String city) {
+        this.street = street;
+        this.optional = optional;
+        this.postalCode = postalCode;
+        this.city = city;
+    }
 
     public Long getId() {
         return this.id;
