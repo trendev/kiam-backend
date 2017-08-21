@@ -704,6 +704,11 @@
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="OfferingPK" abs="true" class="Offering" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490172966686">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_1490176760174139</jpa:a>
+            <jpa:a>_1490176780392140</jpa:a>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -711,7 +716,8 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:basic attribute-type="float" v="true" xvt="" name="price" id="_1490176780392140">
+            <jpa:basic attribute-type="int" v="true" xvt="" name="price" id="_1490176780392140">
+                <jpa:des>Price in cents (1/100 of the currency)</jpa:des>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
@@ -964,6 +970,11 @@
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="CategoryPK" abs="false" class="Category" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490704206844">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_1490704221835111</jpa:a>
+            <jpa:a>_1490704473418120</jpa:a>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>

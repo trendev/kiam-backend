@@ -24,8 +24,19 @@ public abstract class Offering {
     @Basic
     private String name;
 
+    /**
+     * Price in cents (1/100 of the currency)
+     */
     @Basic
-    private float price;
+    private int price;
+
+    public Offering(String name, int price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    public Offering() {
+    }
 
     public Long getId() {
         return this.id;
@@ -43,11 +54,11 @@ public abstract class Offering {
         this.name = name;
     }
 
-    public float getPrice() {
+    public int getPrice() {
         return this.price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
