@@ -82,4 +82,25 @@ public class UserGroupTest {
         assert grp.getUserAccounts() != null;
         assert grp.getUserAccounts().isEmpty();
     }
+
+    @Test
+    public void testConstructors() {
+        System.out.println("testConstructors");
+
+        UserGroup instance = new UserGroup();
+
+        assert instance.getName() == null;
+        assert instance.getDescription() == null;
+        assert instance.getUserAccounts() != null;
+        assert instance.getUserAccounts().isEmpty();
+
+        String name = "TestGrp";
+        String desc = "This is a test group";
+        instance = new UserGroup(name, desc);
+
+        assert name.equals(instance.getName());
+        assert desc.equals(instance.getDescription());
+        assert instance.getUserAccounts() != null;
+        assert instance.getUserAccounts().isEmpty();
+    }
 }
