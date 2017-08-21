@@ -685,6 +685,11 @@
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="PackagePK" abs="false" class="Package" superclassId="_1490172966686" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490113906035">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_1490176760174139</jpa:a>
+            <jpa:a>_1490176780392140</jpa:a>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
@@ -1017,14 +1022,29 @@
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="ExpensePK" abs="false" class="Expense" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1499512549878">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_149951257358656</jpa:a>
+            <jpa:a>_149951257579557</jpa:a>
+            <jpa:a>_1499513890817845</jpa:a>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_149951257358656</jpa:a>
+            <jpa:a>_149951257579557</jpa:a>
+            <jpa:a>_149951257869758</jpa:a>
+            <jpa:a>_1499513890817845</jpa:a>
+            <jpa:a>_1503348975952509</jpa:a>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
+        <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="name" id="_149951257358656">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:basic attribute-type="float" v="true" xvt="" name="amount" id="_149951257579557">
+            <jpa:basic attribute-type="int" v="true" xvt="" name="amount" id="_149951257579557">
+                <jpa:des>Amount in cents (1/100 of the currency)</jpa:des>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
@@ -1037,11 +1057,11 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490184243036" v="true" xvt="" name="paymentMode" id="_1499514056020846">
+            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1490184243036" v="true" xvt="" name="paymentModes" dv="new LinkedList&lt;&gt;()" id="_1503348975952509">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-            </jpa:many-to-one>
-            <jpa:element-collection target-class="java.lang.String" collection-type="java.util.List" v="true" xvt="" name="categories" id="_149951274256360">
+            </jpa:one-to-many>
+            <jpa:element-collection target-class="java.lang.String" collection-type="java.util.List" v="true" xvt="" name="categories" dv="new LinkedList&lt;&gt;()" id="_149951274256360">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:element-collection>
@@ -1186,7 +1206,7 @@
             </i>
             <i ref="_1499512549878" x="-106" y="1335">
                 <el>
-                    <e ref="_1499514056020846">
+                    <e ref="_1503348975952509">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>

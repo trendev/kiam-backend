@@ -3,6 +3,7 @@ package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.ElementCollection;
@@ -10,7 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -28,8 +29,11 @@ public class Expense {
     @Basic
     private String name;
 
+    /**
+     * Amount in cents (1/100 of the currency)
+     */
     @Basic
-    private float amount;
+    private int amount;
 
     @Basic
     @Temporal(TemporalType.TIMESTAMP)
@@ -39,10 +43,28 @@ public class Expense {
     private String invoiceRef;
 
     @ElementCollection
-    private List<String> categories;
+    private List<String> categories = new LinkedList<>();
 
-    @ManyToOne(targetEntity = PaymentMode.class)
-    private PaymentMode paymentMode;
+    @OneToMany(targetEntity = PaymentMode.class)
+    private List<PaymentMode> paymentModes = new LinkedList<>();
+
+    public Expense(String name, int amount, String invoiceRef) {
+        this.name = name;
+        this.amount = amount;
+        this.invoiceRef = invoiceRef;
+    }
+
+    public Expense(String name, int amount, Date paymentDate, String invoiceRef,
+            List paymentModes) {
+        this.name = name;
+        this.amount = amount;
+        this.paymentDate = paymentDate;
+        this.invoiceRef = invoiceRef;
+        this.paymentModes = paymentModes;
+    }
+
+    public Expense() {
+    }
 
     public Long getId() {
         return this.id;
@@ -60,11 +82,11 @@ public class Expense {
         this.name = name;
     }
 
-    public float getAmount() {
+    public int getAmount() {
         return this.amount;
     }
 
-    public void setAmount(float amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 
@@ -92,12 +114,12 @@ public class Expense {
         this.categories = categories;
     }
 
-    public PaymentMode getPaymentMode() {
-        return this.paymentMode;
+    public List<PaymentMode> getPaymentModes() {
+        return this.paymentModes;
     }
 
-    public void setPaymentMode(PaymentMode paymentMode) {
-        this.paymentMode = paymentMode;
+    public void setPaymentModes(List<PaymentMode> paymentModes) {
+        this.paymentModes = paymentModes;
     }
 
 }
