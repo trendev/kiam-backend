@@ -578,6 +578,13 @@
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="SocialNetworkAccountsPK" abs="false" class="SocialNetworkAccounts" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490104062170">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_1490104873485484</jpa:a>
+            <jpa:a>_1490104876952485</jpa:a>
+            <jpa:a>_1490104879382486</jpa:a>
+            <jpa:a>_1490104881966487</jpa:a>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -1080,7 +1087,7 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490104062170" x="-244" y="551"/>
+            <i ref="_1490104062170" x="-244" y="553"/>
             <i ref="_1490113906035" x="-149" y="1142">
                 <el>
                     <e ref="_149017313754828">

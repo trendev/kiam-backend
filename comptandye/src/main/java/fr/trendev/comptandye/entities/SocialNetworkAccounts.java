@@ -33,6 +33,17 @@ public class SocialNetworkAccounts {
     @Basic
     private String pinterest;
 
+    public SocialNetworkAccounts(String facebook, String twitter,
+            String instagram, String pinterest) {
+        this.facebook = facebook;
+        this.twitter = twitter;
+        this.instagram = instagram;
+        this.pinterest = pinterest;
+    }
+
+    public SocialNetworkAccounts() {
+    }
+
     public Long getId() {
         return this.id;
     }
