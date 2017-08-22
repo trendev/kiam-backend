@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.beans;
 
+import fr.trendev.comptandye.entities.Address;
 import fr.trendev.comptandye.entities.Administrator;
 import fr.trendev.comptandye.entities.Business;
 import fr.trendev.comptandye.entities.Individual;
@@ -156,6 +157,12 @@ public class DemoConfigureBean implements Serializable {
                 sylvioc));
 
         em.remove(sylvioc);
+
+        skonx.setAddress(new Address("79 avenue de la jonchere",
+                "Appartement A113",
+                "77600", "Chanteloup-en-Brie"));
+
+        em.merge(skonx);
 
     }
 
