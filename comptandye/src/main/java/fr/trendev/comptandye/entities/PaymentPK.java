@@ -56,8 +56,8 @@ public class PaymentPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 17 * hash + (this.getId() != null ? this.getId().hashCode() : 0);
-        hash = 17 * hash
+        hash = 47 * hash + (this.getId() != null ? this.getId().hashCode() : 0);
+        hash = 47 * hash
                 + (this.getBill() != null ? this.getBill().hashCode() : 0);
         return hash;
     }

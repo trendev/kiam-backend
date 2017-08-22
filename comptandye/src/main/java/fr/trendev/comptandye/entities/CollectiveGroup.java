@@ -3,6 +3,7 @@ package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -35,7 +36,19 @@ public class CollectiveGroup {
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
         CascadeType.REFRESH}, targetEntity = Client.class)
     @JsonIgnore
-    private List<Client> clients;
+    private List<Client> clients = new LinkedList<>();
+
+    public CollectiveGroup(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public CollectiveGroup(String groupName, Address address) {
+        this.groupName = groupName;
+        this.address = address;
+    }
+
+    public CollectiveGroup() {
+    }
 
     public Long getId() {
         return this.id;
