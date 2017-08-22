@@ -767,14 +767,28 @@
         <jpa:discriminator-column/>
     </jpa:entity>
     <jpa:entity lbl-ref="_149017899245630" compositePrimaryKeyType="D" compositePrimaryKeyClass="BillPK" abs="true" class="Bill" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490178979567">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_1490181108037605</jpa:a>
+            <jpa:a>_149017899245630</jpa:a>
+            <jpa:a>_149017912276532</jpa:a>
+            <jpa:a>_149018414188437</jpa:a>
+            <jpa:a>_1503066002122403</jpa:a>
+            <jpa:a>_1490179812677393</jpa:a>
+            <jpa:a>_149020760041892</jpa:a>
+            <jpa:a>_1490179520493122</jpa:a>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
+        <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
-            <jpa:basic attribute-type="float" v="true" xvt="" name="amount" id="_149017899245630">
+            <jpa:basic attribute-type="int" v="true" xvt="" name="amount" id="_149017899245630">
+                <jpa:des>Amount in cents (1/100 of the currency)</jpa:des>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:basic attribute-type="float" v="true" xvt="" name="discount" id="_149017912276532">
+            <jpa:basic attribute-type="int" v="true" xvt="" name="discount" id="_149017912276532">
+                <jpa:des>a percentage discount</jpa:des>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
@@ -787,18 +801,18 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:many-to-one>
-            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490206901623" connected-attribute-id="_149020760041791" v="true" xvt="" name="payments" id="_149020760041892">
+            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490206901623" connected-attribute-id="_149020760041791" v="true" xvt="" name="payments" dv="new LinkedList&lt;&gt;()" id="_149020760041892">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:cascade>
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-many>
-            <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490172966686" v="true" xvt="" name="offerings" id="_1490179520493122">
+            <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490172966686" v="true" xvt="" name="offerings" dv="new LinkedList&lt;&gt;()" id="_1490179520493122">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:many-to-many>
-            <jpa:element-collection target-class="java.lang.String" collection-type="java.util.List" v="true" xvt="" name="comments" id="_1503066002122403">
+            <jpa:element-collection target-class="java.lang.String" collection-type="java.util.List" v="true" xvt="" name="comments" dv="new LinkedList&lt;&gt;()" id="_1503066002122403">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:element-collection>
@@ -905,7 +919,9 @@
             <jpa:a>_1503081214518630</jpa:a>
             <jpa:a>_149020760041791</jpa:a>
         </jpa:con>
-        <jpa:con am="PUBLIC" e="true"/>
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:post></jpa:post>
+        </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -945,6 +961,14 @@
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="CollectiveGroupPK" abs="false" class="CollectiveGroup" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490281931338">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_1490282399999187</jpa:a>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_1490282399999187</jpa:a>
+            <jpa:a>_1490283543806197</jpa:a>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>

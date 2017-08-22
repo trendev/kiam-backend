@@ -3,6 +3,7 @@ package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -36,18 +37,24 @@ public abstract class Bill {
     @Temporal(TemporalType.TIMESTAMP)
     private Date deliveryDate;
 
+    /**
+     * Amount in cents (1/100 of the currency)
+     */
     @Basic
-    private float amount;
+    private int amount;
 
+    /**
+     * a percentage discount
+     */
     @Basic
-    private float discount;
+    private int discount;
 
     @Basic
     @Temporal(TemporalType.TIMESTAMP)
     private Date paymentDate;
 
     @ElementCollection
-    private List<String> comments;
+    private List<String> comments = new LinkedList<>();
 
     @Id
     @ManyToOne(targetEntity = Professional.class)
@@ -55,10 +62,26 @@ public abstract class Bill {
 
     @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Payment.class,
             mappedBy = "bill")
-    private List<Payment> payments;
+    private List<Payment> payments = new LinkedList<>();
 
     @ManyToMany(targetEntity = Offering.class)
-    private List<Offering> offerings;
+    private List<Offering> offerings = new LinkedList<>();
+
+    public Bill(Date deliveryDate, int amount, int discount, Date paymentDate,
+            List comments, Professional professional, List payments,
+            List offerings) {
+        this.deliveryDate = deliveryDate;
+        this.amount = amount;
+        this.discount = discount;
+        this.paymentDate = paymentDate;
+        this.comments = comments;
+        this.professional = professional;
+        this.payments = payments;
+        this.offerings = offerings;
+    }
+
+    public Bill() {
+    }
 
     public Long getReference() {
         return this.reference;
@@ -76,19 +99,19 @@ public abstract class Bill {
         this.deliveryDate = deliveryDate;
     }
 
-    public float getAmount() {
+    public int getAmount() {
         return this.amount;
     }
 
-    public void setAmount(float amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 
-    public float getDiscount() {
+    public int getDiscount() {
         return this.discount;
     }
 
-    public void setDiscount(float discount) {
+    public void setDiscount(int discount) {
         this.discount = discount;
     }
 
