@@ -12,6 +12,7 @@ import fr.trendev.comptandye.entities.PaymentMode;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
+import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import java.io.Serializable;
 import java.util.Arrays;
@@ -19,6 +20,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -95,11 +98,9 @@ public class DemoConfigureBean implements Serializable {
         /**
          * Creates the first professional
          */
-        Professional vgay = new Professional();
-        vgay.setEmail("vanessa.gay@gmail.com");
-        vgay.setPassword("EUrVrX4nfmYYFxpMyRX93OlkJxNZv9mkMGfirZKbhWI=");
-        vgay.setUsername("Vaness");
-        vgay.setUuid(UUIDGenerator.generate("PRO_", true));
+        Professional vgay = new Professional("vanessa.gay@gmail.com",
+                "EUrVrX4nfmYYFxpMyRX93OlkJxNZv9mkMGfirZKbhWI=", "Vaness",
+                UUIDGenerator.generate("PRO_", true));
 
         /**
          * Creates the Professional user group
@@ -125,11 +126,24 @@ public class DemoConfigureBean implements Serializable {
         Individual sylvioc = new Individual();
         sylvioc.setEmail("sylvie.gay@gmail.com");
 
+        List<Individual> individuals = IntStream
+                .range(0, 1000)
+                .mapToObj(i -> new Individual("hankmoody_" + i + "@hella.com",
+                        PasswordGenerator.encrypt_SHA256("Californication" + i),
+                        "hankmoody_" + i, UUIDGenerator.
+                                generate("IND_", true)))
+                .collect(Collectors.toList());
+
         ind.getUserAccounts().add(skonx);
         skonx.getUserGroups().add(ind);
 
         ind.getUserAccounts().add(sylvioc);
         sylvioc.getUserGroups().add(ind);
+
+        individuals.forEach(i -> {
+            ind.getUserAccounts().add(i);
+            i.getUserGroups().add(ind);
+        });
 
         /**
          * Store the groups and their contents
