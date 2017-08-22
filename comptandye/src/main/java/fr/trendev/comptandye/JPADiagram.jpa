@@ -849,7 +849,21 @@
         <jpa:discriminator-column/>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="InvidualBillPK" abs="false" class="InvidualBill" superclassId="_1490178979567" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490180671085">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_1490181108037605</jpa:a>
+            <jpa:a>_149017899245630</jpa:a>
+            <jpa:a>_149017912276532</jpa:a>
+            <jpa:a>_149018414188437</jpa:a>
+            <jpa:a>_1503066002122403</jpa:a>
+            <jpa:a>_1503073892988616</jpa:a>
+            <jpa:a>_1490179812677393</jpa:a>
+            <jpa:a>_149020760041892</jpa:a>
+            <jpa:a>_1490179520493122</jpa:a>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
+        <jpa:snp loc="IMPORT" e="true">import java.util.Date;
+import java.util.List;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490101520286" v="true" xvt="" name="individual" id="_1503073892988616">
@@ -862,7 +876,22 @@
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="ClientBillPK" abs="false" class="ClientBill" superclassId="_1490178979567" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490180682743">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_1490181108037605</jpa:a>
+            <jpa:a>_149017899245630</jpa:a>
+            <jpa:a>_149017912276532</jpa:a>
+            <jpa:a>_149018414188437</jpa:a>
+            <jpa:a>_1503066002122403</jpa:a>
+            <jpa:a>_1490288049311796</jpa:a>
+            <jpa:a>_1490179812677393</jpa:a>
+            <jpa:a>_1490181195212606</jpa:a>
+            <jpa:a>_149020760041892</jpa:a>
+            <jpa:a>_1490179520493122</jpa:a>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
+        <jpa:snp loc="IMPORT" e="true">import java.util.Date;
+import java.util.List;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490101555530" connected-attribute-id="_1490181195213607" v="true" xvt="" name="client" id="_1490181195212606">

@@ -2,6 +2,8 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
@@ -14,6 +16,17 @@ public class InvidualBill extends Bill {
 
     @OneToOne(targetEntity = Individual.class)
     private Individual individual;
+
+    public InvidualBill(Date deliveryDate, int amount, int discount,
+            Date paymentDate, List comments, Professional professional,
+            List payments, List offerings, Individual individual) {
+        super(deliveryDate, amount, discount, paymentDate, comments,
+                professional, payments, offerings);
+        this.individual = individual;
+    }
+
+    public InvidualBill() {
+    }
 
     public Individual getIndividual() {
         return this.individual;

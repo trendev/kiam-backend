@@ -2,6 +2,8 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import java.util.Date;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -20,6 +22,19 @@ public class ClientBill extends Bill {
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
         CascadeType.REFRESH}, targetEntity = Client.class)
     private Client client;
+
+    public ClientBill(Date deliveryDate, int amount, int discount,
+            Date paymentDate, List comments, Professional professional,
+            List payments, List offerings, CollectiveGroup collectiveGroup,
+            Client client) {
+        super(deliveryDate, amount, discount, paymentDate, comments,
+                professional, payments, offerings);
+        this.collectiveGroup = collectiveGroup;
+        this.client = client;
+    }
+
+    public ClientBill() {
+    }
 
     public CollectiveGroup getCollectiveGroup() {
         return this.collectiveGroup;
