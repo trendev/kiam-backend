@@ -6,8 +6,10 @@
 package fr.trendev.comptandye.services.admin;
 
 import fr.trendev.comptandye.entities.PaymentMode;
-import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
 import fr.trendev.comptandye.sessions.PaymentModeFacade;
+import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.logging.Level;
@@ -27,6 +29,7 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 @Path("/admin/payment-mode")
+@Api(value = "payment-mode", description = "Payment modes")
 public class PaymentModeService {
 
     @Inject
@@ -37,6 +40,7 @@ public class PaymentModeService {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Get all payment modes")
     public Response findAll() {
         LOG.log(Level.INFO, "Providing all payment-modes");
         try {

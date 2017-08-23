@@ -129,9 +129,10 @@ public class DemoConfigureBean implements Serializable {
 
         List<Individual> individuals = IntStream
                 .range(0, 1000)
-                .mapToObj(i -> new Individual("hankmoody_" + i + "@hella.com",
+                .mapToObj(i -> new Individual("hankmoody_" + (i + 1)
+                        + "@hella.com",
                         PasswordGenerator.encrypt_SHA256("Californication" + i),
-                        "hankmoody_" + i, UUIDGenerator.
+                        "hankmoody_" + (i + 1), UUIDGenerator.
                                 generate("IND_", true)))
                 .collect(Collectors.toList());
 

@@ -21,6 +21,35 @@
         <url-pattern>/restapi/*</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>jersey</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <param-value>
+                io.swagger.jaxrs.listing,
+                fr.trendev.comptandye.services.admin
+            </param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>jersey</servlet-name>
+        <url-pattern>/api/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Jersey2Config</servlet-name>
+        <servlet-class>io.swagger.jersey.config.JerseyJaxrsConfig</servlet-class>
+        <init-param>
+            <param-name>api.version</param-name>
+            <param-value>0.3.0</param-value>
+        </init-param>
+        <init-param>
+            <param-name>swagger.api.basepath</param-name>
+            <param-value>/comptandye/restapi</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
@@ -57,7 +86,7 @@
             <url-pattern>/admin/*</url-pattern>
         </web-resource-collection>
         <!-- 
-<web-resource-collection>
+    <web-resource-collection>
             <web-resource-name>Full access to Rest API</web-resource-name>
             <description>Rest API for Admin tasks</description>
             <url-pattern>/restapi/admin/*</url-pattern>
