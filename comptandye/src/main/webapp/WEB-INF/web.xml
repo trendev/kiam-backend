@@ -20,7 +20,8 @@
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
         <url-pattern>/restapi/*</url-pattern>
     </servlet-mapping>
-    <servlet>
+    <!--swagger configuration-->
+    <!--    <servlet>
         <servlet-name>jersey</servlet-name>
         <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
         <init-param>
@@ -48,7 +49,7 @@
             <param-value>/comptandye/restapi</param-value>
         </init-param>
         <load-on-startup>2</load-on-startup>
-    </servlet>
+    </servlet>-->
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -85,17 +86,7 @@
             <description>admin tools and restapi</description>
             <url-pattern>/admin/*</url-pattern>
         </web-resource-collection>
-        <!-- 
-    <web-resource-collection>
-            <web-resource-name>Full access to Rest API</web-resource-name>
-            <description>Rest API for Admin tasks</description>
-            <url-pattern>/restapi/admin/*</url-pattern>
-        </web-resource-collection>`
-        -->
-        <auth-constraint>
-            <description/>
-            <role-name>Administrator</role-name>
-        </auth-constraint>
+        <!--don't forget to add security on /restapi/admin/* and /api/*-->
     </security-constraint>
     <security-constraint>
         <display-name>PRO_secured_access</display-name>

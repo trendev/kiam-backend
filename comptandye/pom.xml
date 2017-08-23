@@ -44,13 +44,6 @@
             <version>1.3</version>
             <scope>test</scope>
         </dependency>
-        <!-- using javaee-api instead -->
-        <!--        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-            <version>7.0</version>
-            <scope>provided</scope>
-        </dependency>-->
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
@@ -82,7 +75,8 @@
             <artifactId>primefaces</artifactId>
             <version>6.1</version>
         </dependency>
-        <dependency>
+        <!--swagger dependencies-->
+        <!--        <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-core</artifactId>
             <version>1.5.16</version>
@@ -92,7 +86,7 @@
             <artifactId>swagger-jersey2-jaxrs</artifactId>
             <version>1.5.16</version>
         </dependency>
-        <!-- io.swagger will use 1.7.22, use the latest one instead -->
+         io.swagger will use 1.7.22, use the latest one instead 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-nop</artifactId>
@@ -102,7 +96,7 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.25</version>
-        </dependency>
+        </dependency>-->
     </dependencies>
 
     <build>
