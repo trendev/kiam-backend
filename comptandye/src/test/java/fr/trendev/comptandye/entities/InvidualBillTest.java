@@ -22,22 +22,22 @@ import org.junit.Test;
  * @author jsie
  */
 public class InvidualBillTest {
-
+    
     public InvidualBillTest() {
     }
-
+    
     @BeforeClass
     public static void setUpClass() {
     }
-
+    
     @AfterClass
     public static void tearDownClass() {
     }
-
+    
     @Before
     public void setUp() {
     }
-
+    
     @After
     public void tearDown() {
     }
@@ -61,7 +61,8 @@ public class InvidualBillTest {
         assert instance.getOfferings() != null;
         assert instance.getOfferings().isEmpty();
         assert instance.getIndividual() == null;
-
+        
+        String reference = "Ref-123456";
         Date deliveryDate = new Date();
         int totalAmount = 10000;
         int amount = 9000; //90 euros
@@ -78,12 +79,13 @@ public class InvidualBillTest {
                 .range(0, 10)
                 .mapToObj(i -> new Service("Service #" + i, 1000, 10))
                 .collect(Collectors.toList());
-
-        instance = new InvidualBill(deliveryDate, amount, discount, paymentDate,
+        
+        instance = new InvidualBill(reference, deliveryDate, amount, discount,
+                paymentDate,
                 comments, professional, payments, offerings,
                 new Individual());
-
-        assert instance.getReference() == null;
+        
+        assert instance.getReference().equals(reference);
         assert instance.getDeliveryDate() != null;
         assert instance.getAmount() == amount;
         assert instance.getDiscount() == discount;
@@ -92,20 +94,20 @@ public class InvidualBillTest {
         assert instance.getComments().size() == 2;
         assert instance.getProfessional().equals(professional);
         assert instance.getPayments() != null;
-
+        
         assert instance.getPayments().contains(payment);
         assert instance.getOfferings() != null;
         assert instance.getOfferings().size() == 10;
-
+        
         assert instance.getOfferings().stream().mapToInt(o -> o.getPrice()).
                 sum() == totalAmount;
-
+        
         assert instance.getPayments().stream().mapToInt(p -> p.getAmount()).
                 sum() == amount;
-
+        
         assert amount == (totalAmount - (discount * totalAmount / 100));
-
+        
         assert instance.getIndividual() != null;
     }
-
+    
 }

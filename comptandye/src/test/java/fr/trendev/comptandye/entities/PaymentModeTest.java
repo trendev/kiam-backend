@@ -40,14 +40,12 @@ public class PaymentModeTest {
     public void testConstructors() {
         PaymentMode instance = new PaymentMode();
 
-        assert instance.getId() == null;
         assert instance.getName() == null;
 
         String name = "Cash";
 
         instance = new PaymentMode(name);
 
-        assert instance.getId() == null;
         assert instance.getName().equals(name);
 
     }

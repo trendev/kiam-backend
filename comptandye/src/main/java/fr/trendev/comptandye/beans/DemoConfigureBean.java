@@ -8,9 +8,12 @@ package fr.trendev.comptandye.beans;
 import fr.trendev.comptandye.entities.Address;
 import fr.trendev.comptandye.entities.Administrator;
 import fr.trendev.comptandye.entities.Business;
+import fr.trendev.comptandye.entities.ClientBill;
 import fr.trendev.comptandye.entities.Individual;
+import fr.trendev.comptandye.entities.Payment;
 import fr.trendev.comptandye.entities.PaymentMode;
 import fr.trendev.comptandye.entities.Professional;
+import fr.trendev.comptandye.entities.Service;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.utils.PasswordGenerator;
@@ -18,6 +21,8 @@ import fr.trendev.comptandye.utils.UUIDGenerator;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,6 +63,8 @@ public class DemoConfigureBean implements Serializable {
         this.initBusinesses();
 
         this.displayUserGroupDetails();
+
+        this.createBills();
     }
 
     private void initUsersAndGroups() {
@@ -223,6 +230,31 @@ public class DemoConfigureBean implements Serializable {
                 b -> {
             em.persist(new Business(b));
         });
+    }
+
+    private void createBills() {
+        try {
+            Professional vanessa = em.find(Professional.class,
+                    "vanessa.gay@gmail.com");
+            LOG.log(Level.WARNING, "Creating a bill for {0} / {1} / {2}",
+                    new Object[]{vanessa.
+                                getEmail(), vanessa.getUsername(), vanessa.
+                        getUuid()});
+
+            ClientBill bill = new ClientBill("Ref#12345", new Date(), 10000, 0,
+                    new Date(),
+                    Arrays.asList("Cool", "sympa"),
+                    vanessa, new LinkedList<>(), Arrays.asList(new Service(
+                            "un truc long", 10000, 60)), null, null);
+
+            Payment pm = new Payment(10000, "EUR", em.find(PaymentMode.class,
+                    "CB"), bill);
+            bill.getPayments().add(pm);
+            vanessa.getBills().add(bill);
+            em.merge(vanessa);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
 }

@@ -23,11 +23,11 @@ public class ClientBill extends Bill {
         CascadeType.REFRESH}, targetEntity = Client.class)
     private Client client;
 
-    public ClientBill(Date deliveryDate, int amount, int discount,
-            Date paymentDate, List comments, Professional professional,
-            List payments, List offerings, CollectiveGroup collectiveGroup,
-            Client client) {
-        super(deliveryDate, amount, discount, paymentDate, comments,
+    public ClientBill(String reference, Date deliveryDate, int amount,
+            int discount, Date paymentDate, List comments,
+            Professional professional, List payments, List offerings,
+            CollectiveGroup collectiveGroup, Client client) {
+        super(reference, deliveryDate, amount, discount, paymentDate, comments,
                 professional, payments, offerings);
         this.collectiveGroup = collectiveGroup;
         this.client = client;

@@ -22,30 +22,30 @@ import org.junit.Test;
  * @author jsie
  */
 public class BillTest {
-
+    
     public BillTest() {
     }
-
+    
     @BeforeClass
     public static void setUpClass() {
     }
-
+    
     @AfterClass
     public static void tearDownClass() {
     }
-
+    
     @Before
     public void setUp() {
     }
-
+    
     @After
     public void tearDown() {
     }
-
+    
     @Test
     public void testConstructors() {
         Bill instance = new BillImpl();
-
+        
         assert instance.getReference() == null;
         assert instance.getDeliveryDate() == null;
         assert instance.getAmount() == 0;
@@ -58,7 +58,8 @@ public class BillTest {
         assert instance.getPayments().isEmpty();
         assert instance.getOfferings() != null;
         assert instance.getOfferings().isEmpty();
-
+        
+        String reference = "Ref-123456";
         Date deliveryDate = new Date();
         int totalAmount = 10000;
         int amount = 9000; //90 euros
@@ -75,12 +76,13 @@ public class BillTest {
                 .range(0, 10)
                 .mapToObj(i -> new Service("Service #" + i, 1000, 10))
                 .collect(Collectors.toList());
-
-        instance = new BillImpl(deliveryDate, amount, discount, paymentDate,
+        
+        instance = new BillImpl(reference, deliveryDate, amount, discount,
+                paymentDate,
                 comments,
                 professional, payments, offerings);
-
-        assert instance.getReference() == null;
+        
+        assert instance.getReference().equals(reference);
         assert instance.getDeliveryDate() != null;
         assert instance.getAmount() == amount;
         assert instance.getDiscount() == discount;
@@ -89,33 +91,33 @@ public class BillTest {
         assert instance.getComments().size() == 2;
         assert instance.getProfessional().equals(professional);
         assert instance.getPayments() != null;
-
+        
         assert instance.getPayments().contains(payment);
         assert instance.getOfferings() != null;
         assert instance.getOfferings().size() == 10;
-
+        
         assert instance.getOfferings().stream().mapToInt(o -> o.getPrice()).
                 sum() == totalAmount;
-
+        
         assert instance.getPayments().stream().mapToInt(p -> p.getAmount()).
                 sum() == amount;
-
+        
         assert amount == (totalAmount - (discount * totalAmount / 100));
-
+        
     }
-
+    
     public class BillImpl extends Bill {
-
-        public BillImpl(Date deliveryDate, int amount, int discount,
-                Date paymentDate, List comments, Professional professional,
-                List payments, List offerings) {
-            super(deliveryDate, amount, discount, paymentDate, comments,
-                    professional, payments, offerings);
+        
+        public BillImpl(String reference, Date deliveryDate, int amount,
+                int discount, Date paymentDate, List comments,
+                Professional professional, List payments, List offerings) {
+            super(reference, deliveryDate, amount, discount, paymentDate,
+                    comments, professional, payments, offerings);
         }
-
+        
         public BillImpl() {
         }
-
+        
     }
-
+    
 }

@@ -65,9 +65,10 @@ public abstract class Bill {
     @ManyToMany(targetEntity = Offering.class)
     private List<Offering> offerings = new LinkedList<>();
 
-    public Bill(Date deliveryDate, int amount, int discount, Date paymentDate,
-            List comments, Professional professional, List payments,
-            List offerings) {
+    public Bill(String reference, Date deliveryDate, int amount, int discount,
+            Date paymentDate, List comments, Professional professional,
+            List payments, List offerings) {
+        this.reference = reference;
         this.deliveryDate = deliveryDate;
         this.amount = amount;
         this.discount = discount;
