@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class BillPK implements Serializable {
 
-    private Long reference;
+    private String reference;
 
     private Date deliveryDate;
 
@@ -17,17 +17,17 @@ public class BillPK implements Serializable {
     public BillPK() {
     }
 
-    public BillPK(Long reference, Date deliveryDate, String professional) {
+    public BillPK(String reference, Date deliveryDate, String professional) {
         this.reference = reference;
         this.deliveryDate = deliveryDate;
         this.professional = professional;
     }
 
-    public Long getReference() {
+    public String getReference() {
         return this.reference;
     }
 
-    public void setReference(Long reference) {
+    public void setReference(String reference) {
         this.reference = reference;
     }
 
@@ -73,11 +73,11 @@ public class BillPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + (this.getReference() != null ? this.getReference().
+        hash = 71 * hash + (this.getReference() != null ? this.getReference().
                 hashCode() : 0);
-        hash = 97 * hash + (this.getDeliveryDate() != null ? this.
+        hash = 71 * hash + (this.getDeliveryDate() != null ? this.
                 getDeliveryDate().hashCode() : 0);
-        hash = 97 * hash + (this.getProfessional() != null ? this.
+        hash = 71 * hash + (this.getProfessional() != null ? this.
                 getProfessional().hashCode() : 0);
         return hash;
     }

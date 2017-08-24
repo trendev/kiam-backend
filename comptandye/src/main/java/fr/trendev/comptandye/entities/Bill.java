@@ -10,8 +10,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.ManyToMany;
@@ -31,8 +29,7 @@ import javax.persistence.TemporalType;
 public abstract class Bill {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long reference;
+    private String reference;
 
     @Id
     @Temporal(TemporalType.TIMESTAMP)
@@ -84,11 +81,11 @@ public abstract class Bill {
     public Bill() {
     }
 
-    public Long getReference() {
+    public String getReference() {
         return this.reference;
     }
 
-    public void setReference(Long reference) {
+    public void setReference(String reference) {
         this.reference = reference;
     }
 
