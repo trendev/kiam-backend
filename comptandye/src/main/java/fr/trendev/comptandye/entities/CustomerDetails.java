@@ -52,12 +52,10 @@ public class CustomerDetails {
     private String picturePath;
 
     @ElementCollection
-    private List<String> comments;
+    private List<String> comments = new ArrayList<>();
 
     public CustomerDetails(String firstName, String lastName, String nickname,
-            String phone, Date birthdate, char sex, String picturePath,
-            List comments) {
-        this();
+            String phone, Date birthdate, char sex, String picturePath) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.nickname = nickname;
@@ -65,11 +63,9 @@ public class CustomerDetails {
         this.birthdate = birthdate;
         this.sex = sex;
         this.picturePath = picturePath;
-        this.comments = comments;
     }
 
     public CustomerDetails() {
-        this.comments = new ArrayList<>();
     }
 
     public Long getId() {
