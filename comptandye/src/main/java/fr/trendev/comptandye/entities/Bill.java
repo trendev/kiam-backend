@@ -27,6 +27,7 @@ import javax.persistence.TemporalType;
 @IdClass(BillPK.class)
 @DiscriminatorColumn(length = 31)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@SuppressWarnings("unchecked")
 public abstract class Bill {
 
     @Id

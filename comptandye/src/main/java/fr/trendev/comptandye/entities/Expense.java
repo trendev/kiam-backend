@@ -20,6 +20,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@SuppressWarnings("unchecked")
 public class Expense {
 
     @Id

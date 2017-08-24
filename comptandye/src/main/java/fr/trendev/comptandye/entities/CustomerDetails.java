@@ -2,6 +2,7 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -21,6 +22,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "CUSTOMER_DETAILS")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@SuppressWarnings("unchecked")
 public class CustomerDetails {
 
     @Id
@@ -51,7 +53,7 @@ public class CustomerDetails {
     private String picturePath;
 
     @ElementCollection
-    private List<String> comments;
+    private List<String> comments = new ArrayList<>();
 
     public CustomerDetails(String firstName, String lastName, String nickname,
             String phone, Date birthdate, char sex, String picturePath,
