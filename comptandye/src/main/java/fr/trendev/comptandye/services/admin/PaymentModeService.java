@@ -17,7 +17,6 @@ import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -45,10 +44,7 @@ public class PaymentModeService {
             List<PaymentMode> list = facade.findAll();
             LOG.log(Level.INFO, "{0} payment-mode", list.size());
 
-            return Response.status(Response.Status.OK).entity(
-                    new GenericEntity<List<PaymentMode>>(
-                            list) {
-            }).
+            return Response.status(Response.Status.OK).entity(list).
                     build();
         } catch (Exception ex) {
             Throwable t = ExceptionHelper.

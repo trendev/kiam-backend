@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -45,9 +46,12 @@ public abstract class AbstractFacade<E, P> {
     }
 
     public List<E> findAll() {
-        CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        EntityManager em = this.getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<E> cq = cb.createQuery(entityClass);
+        Root<E> root = cq.from(entityClass);
         cq.select(cq.from(entityClass));
-        return getEntityManager().createQuery(cq).getResultList();
+        return em.createQuery(cq).getResultList();
     }
 
     public List<E> findRange(int startPosition, int size) {
