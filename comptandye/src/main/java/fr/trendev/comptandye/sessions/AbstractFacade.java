@@ -28,8 +28,8 @@ public abstract class AbstractFacade<E, P> {
         getEntityManager().remove(getEntityManager().merge(entity));
     }
 
-    public E find(P id) {
-        return getEntityManager().find(entityClass, id);
+    public E find(P key) {
+        return getEntityManager().find(entityClass, key);
     }
 
     public List<E> findAll() {
