@@ -1,15 +1,10 @@
 package fr.trendev.comptandye.sessions;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Optional;
-import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -49,7 +44,7 @@ public abstract class AbstractFacade<E, P> {
         EntityManager em = this.getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<E> cq = cb.createQuery(entityClass);
-        Root<E> root = cq.from(entityClass);
+//        Root<E> root = cq.from(entityClass);
         cq.select(cq.from(entityClass));
         return em.createQuery(cq).getResultList();
     }
@@ -77,58 +72,6 @@ public abstract class AbstractFacade<E, P> {
         cq.select(getEntityManager().getCriteriaBuilder().count(rt));
         Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
-    }
-
-    public Optional<E> findSingleByNamedQuery(String namedQueryName) {
-        return findOrEmpty(() -> getEntityManager().createNamedQuery(
-                namedQueryName, entityClass).getSingleResult());
-    }
-
-    public Optional<E> findSingleByNamedQuery(String namedQueryName,
-            Map<String, Object> parameters) {
-        return findSingleByNamedQuery(namedQueryName, null, parameters);
-    }
-
-    public Optional<E> findSingleByNamedQuery(String namedQueryName,
-            String entityGraph, Map<String, Object> parameters) {
-        Set<Entry<String, Object>> rawParameters = parameters.entrySet();
-        TypedQuery<E> query = getEntityManager().
-                createNamedQuery(namedQueryName, entityClass);
-        rawParameters.stream().forEach((entry) -> {
-            query.setParameter(entry.getKey(), entry.getValue());
-        });
-        if (entityGraph != null) {
-            query.setHint("javax.persistence.loadgraph", getEntityManager().
-                    getEntityGraph(entityGraph));
-        }
-        return findOrEmpty(() -> query.getSingleResult());
-    }
-
-    public List<E> findByNamedQuery(String namedQueryName) {
-        return findByNamedQuery(namedQueryName, -1);
-    }
-
-    public List<E> findByNamedQuery(String namedQueryName,
-            Map<String, Object> parameters) {
-        return findByNamedQuery(namedQueryName, parameters, -1);
-    }
-
-    public List<E> findByNamedQuery(String namedQueryName, int resultLimit) {
-        return findByNamedQuery(namedQueryName, Collections.EMPTY_MAP,
-                resultLimit);
-    }
-
-    public List<E> findByNamedQuery(String namedQueryName,
-            Map<String, Object> parameters, int resultLimit) {
-        Set<Entry<String, Object>> rawParameters = parameters.entrySet();
-        Query query = getEntityManager().createNamedQuery(namedQueryName);
-        if (resultLimit > 0) {
-            query.setMaxResults(resultLimit);
-        }
-        rawParameters.stream().forEach((entry) -> {
-            query.setParameter(entry.getKey(), entry.getValue());
-        });
-        return query.getResultList();
     }
 
     public static <E> Optional<E> findOrEmpty(final DaoRetriever<E> retriever) {
