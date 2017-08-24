@@ -21,30 +21,30 @@ import org.junit.Test;
  * @author jsie
  */
 public class CustomerDetailsTest {
-    
+
     public CustomerDetailsTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
-    
+
     @Test
     public void testConstructors() {
         CustomerDetails instance = new CustomerDetails();
-        
+
         assert instance.getId() == null;
         assert instance.getFirstName() == null;
         assert instance.getLastName() == null;
@@ -55,7 +55,7 @@ public class CustomerDetailsTest {
         assert instance.getPicturePath() == null;
         assert instance.getComments() != null;
         assert instance.getComments().isEmpty();
-        
+
         String firstName = "John";
         String lastName = "Doe";
         String nickname = "X";
@@ -65,15 +65,15 @@ public class CustomerDetailsTest {
         Date birthdate = cal.getTime();
         char sex = 'H';
         String picturePath = "/home/user01/Pictures/profil.jpg";
-        
+
         List<String> comments = IntStream.range(0, 100).mapToObj(i ->
                 ("Comment #" + (i + 1))).
                 collect(Collectors.toList());
-        
+
         instance = new CustomerDetails(firstName, lastName, nickname, phone,
-                birthdate, sex, picturePath);
-        instance.setComments(comments);
-        
+                birthdate, sex, picturePath, comments);
+//        instance.setComments(comments);
+
         assert instance.getId() == null;;
         assert firstName.equals(instance.getFirstName());
         assert lastName.equals(instance.getLastName());
@@ -84,5 +84,5 @@ public class CustomerDetailsTest {
         assert picturePath.equals(instance.getPicturePath());
         assert comments.containsAll(instance.getComments());
     }
-    
+
 }

@@ -2,7 +2,6 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -52,10 +51,11 @@ public class CustomerDetails {
     private String picturePath;
 
     @ElementCollection
-    private List<String> comments = new ArrayList<>();
+    private List<String> comments;
 
     public CustomerDetails(String firstName, String lastName, String nickname,
-            String phone, Date birthdate, char sex, String picturePath) {
+            String phone, Date birthdate, char sex, String picturePath,
+            List comments) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.nickname = nickname;
@@ -63,6 +63,7 @@ public class CustomerDetails {
         this.birthdate = birthdate;
         this.sex = sex;
         this.picturePath = picturePath;
+        this.comments = comments;
     }
 
     public CustomerDetails() {
