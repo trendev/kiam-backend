@@ -25,7 +25,7 @@ public class PaymentModeService extends CommonRestService<PaymentMode, String> {
     PaymentModeFacade facade;
 
     @Inject
-    Logger log;
+    Logger logger;
 
     public PaymentModeService() {
         super("payment-mode");
@@ -38,7 +38,7 @@ public class PaymentModeService extends CommonRestService<PaymentMode, String> {
 
     @Override
     protected Logger getLogger() {
-        return log;
+        return logger;
     }
 
 }

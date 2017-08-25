@@ -64,7 +64,8 @@ public abstract class CommonRestService<E, P> {
             return Optional.ofNullable(this.getFacade().find(key))
                     .map(result -> Response.status(Response.Status.OK).entity(
                             result).build())
-                    .orElse(Response.status(Response.Status.NOT_FOUND).build());
+                    .orElse(Response.status(Response.Status.NOT_FOUND).entity(
+                            Json.createObjectBuilder().build()).build());
         } catch (Exception ex) {
 
             String errmsg = ExceptionHelper.handleException(ex,
