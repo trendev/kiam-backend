@@ -5,6 +5,8 @@
  */
 package fr.trendev.comptandye.utils.exceptions;
 
+import java.text.MessageFormat;
+
 /**
  *
  * @author jsie
@@ -12,9 +14,21 @@ package fr.trendev.comptandye.utils.exceptions;
 public class ExceptionHelper {
 
     @SuppressWarnings("empty-statement")
-    public final static Throwable findRootCauseException(Exception e) {
+    private static Throwable findRootCauseException(Exception e) {
         Throwable t = e;
         for (; t.getCause() != null; t = t.getCause());
         return t;
+    }
+
+    public final static String handleException(Exception ex, String message) {
+
+        Throwable t = findRootCauseException(ex);
+
+        String errmsg = MessageFormat.format(
+                "{0}: {1} ; {2}",
+                new Object[]{message, t.getClass().toString(), t.getMessage()});
+
+        return errmsg;
+
     }
 }

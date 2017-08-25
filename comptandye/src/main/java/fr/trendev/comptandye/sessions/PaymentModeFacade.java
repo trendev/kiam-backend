@@ -8,7 +8,7 @@ import javax.persistence.EntityManager;
 
 @Stateless
 @Named("paymentMode")
-public class PaymentModeFacade extends AbstractFacade<PaymentMode, Long> {
+public class PaymentModeFacade extends AbstractFacade<PaymentMode, String> {
 
     @Inject
     private EntityManager em;
