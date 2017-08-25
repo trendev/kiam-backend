@@ -58,8 +58,7 @@ public abstract class Bill {
     @ManyToOne(targetEntity = Professional.class)
     private Professional professional;
 
-    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Payment.class,
-            mappedBy = "bill")
+    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Payment.class)
     private List<Payment> payments = new LinkedList<>();
 
     @ManyToMany(targetEntity = Offering.class)

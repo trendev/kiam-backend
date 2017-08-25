@@ -248,7 +248,7 @@ public class DemoConfigureBean implements Serializable {
                             "un truc long", 10000, 60)), null, null);
 
             Payment pm = new Payment(10000, "EUR", em.find(PaymentMode.class,
-                    "CB"), bill);
+                    "CB"));
             bill.getPayments().add(pm);
             vanessa.getBills().add(bill);
             em.merge(vanessa);
