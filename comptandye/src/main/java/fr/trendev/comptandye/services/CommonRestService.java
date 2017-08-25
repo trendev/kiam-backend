@@ -8,6 +8,7 @@ package fr.trendev.comptandye.services;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
@@ -23,23 +24,24 @@ import javax.ws.rs.core.Response;
 public abstract class CommonRestService<E, P> {
 
     private final String path;
-    private final Logger LOG;
 
-    public CommonRestService(String path, Logger LOG) {
+    public CommonRestService(String path) {
         this.path = path;
-        this.LOG = LOG;
     }
 
     protected abstract AbstractFacade<E, P> getFacade();
 
+    protected abstract Logger getLogger();
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
-        LOG.log(Level.INFO, "Providing the {0} list", path);
+        getLogger().log(Level.INFO, "Providing the {0} list", path);
         try {
             List<E> list = this.getFacade().findAll();
-            LOG.log(Level.INFO, "{0} list size = {1}", new Object[]{path, list.
-                size()});
+            getLogger().log(Level.INFO, "{0} list size = {1}",
+                    new Object[]{path, list.
+                                size()});
 
             return Response.status(Response.Status.OK)
                     .entity(list).
@@ -47,9 +49,28 @@ public abstract class CommonRestService<E, P> {
         } catch (Exception ex) {
 
             String errmsg = ExceptionHelper.handleException(ex,
-                    "Exception occurs providing the " + path
-                    + " list for an administrator");
-            LOG.
+                    "Exception occurs providing " + path
+                    + " list to administrator");
+            getLogger().
+                    log(Level.WARNING, errmsg);
+            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
+                    Json.createObjectBuilder().add("error", errmsg).build()).
+                    build();
+        }
+    }
+
+    public Response find(P key) {
+        try {
+            return Optional.ofNullable(this.getFacade().find(key))
+                    .map(result -> Response.status(Response.Status.OK).entity(
+                            result).build())
+                    .orElse(Response.status(Response.Status.NOT_FOUND).build());
+        } catch (Exception ex) {
+
+            String errmsg = ExceptionHelper.handleException(ex,
+                    "Exception occurs providing " + path
+                    + " to administrator");
+            getLogger().
                     log(Level.WARNING, errmsg);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).

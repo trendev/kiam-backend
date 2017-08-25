@@ -24,14 +24,21 @@ public class PaymentModeService extends CommonRestService<PaymentMode, String> {
     @Inject
     PaymentModeFacade facade;
 
+    @Inject
+    Logger log;
+
     public PaymentModeService() {
-        super("payment-mode", Logger.getLogger(PaymentModeService.class.
-                getName()));
+        super("payment-mode");
     }
 
     @Override
     protected PaymentModeFacade getFacade() {
         return facade;
+    }
+
+    @Override
+    protected Logger getLogger() {
+        return log;
     }
 
 }

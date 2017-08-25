@@ -10,7 +10,12 @@ import fr.trendev.comptandye.sessions.UserGroupFacade;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -23,9 +28,11 @@ public class UserGroupService extends CommonRestService<UserGroup, String> {
     @Inject
     UserGroupFacade facade;
 
-    public UserGroupService() {
-        super("user-group", Logger.getLogger(UserGroupService.class.getName()));
+    @Inject
+    Logger log;
 
+    public UserGroupService() {
+        super("user-group");
     }
 
     @Override
@@ -33,47 +40,17 @@ public class UserGroupService extends CommonRestService<UserGroup, String> {
         return facade;
     }
 
-//    @GET
-//    @Path("{index}")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response findUsersFromIndex(@PathParam("index") int index) {
-//        LOG.log(Level.INFO,
-//                "Providing the user list of the User Group at index ["
-//                + index + "]");
-//
-//        try {
-//            List<UserGroup> list = facade.findAll();
-//
-//            if (index < 0 || index >= list.size()) {
-//                String msg = "index [" + index
-//                        + "] is out of range [0-"
-//                        + (list.size() - 1) + "]";
-//                return Response.status(Response.Status.EXPECTATION_FAILED).
-//                        entity(
-//                                Json.createObjectBuilder().add("error", msg).
-//                                        build()).
-//                        build();
-//            }
-//
-//            return Response.status(Response.Status.OK)
-//                    .entity(list.get(index).getUserAccounts()).
-//                    build();
-//        } catch (Exception ex) {
-//
-//            ex.printStackTrace();
-//
-//            Throwable t = ExceptionHelper.
-//                    findRootCauseException(ex);
-//
-//            String msg = MessageFormat.format(
-//                    "Exception occurs providing the user-group list for an administrator: {0} ; {1}",
-//                    new Object[]{t.getClass().toString(), t.getMessage()});
-//
-//            LOG.
-//                    log(Level.WARNING, msg);
-//            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-//                    Json.createObjectBuilder().add("error", msg).build()).
-//                    build();
-//        }
-//    }
+    @Override
+    protected Logger getLogger() {
+        return log;
+    }
+
+    @Path("{name}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserGroup(@PathParam("name") String name) {
+//        log.debug("REST request to get UserGroup : {}", name);
+        return super.find(name);
+    }
+
 }
