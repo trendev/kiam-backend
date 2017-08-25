@@ -9,6 +9,7 @@ import javax.json.Json;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
+//Uncomment in order to provide this ExceptionMapper
 //@Provider
 public class DebugExceptionMapper implements ExceptionMapper<Exception> {
 
