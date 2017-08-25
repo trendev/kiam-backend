@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
 import javax.ws.rs.GET;
+import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -71,6 +72,32 @@ public abstract class CommonRestService<E, P> {
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs providing " + path
                     + " to administrator");
+            getLogger().
+                    log(Level.WARNING, errmsg);
+            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
+                    Json.createObjectBuilder().add("error", errmsg).build()).
+                    build();
+        }
+    }
+
+    @Path("count")
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response count() {
+
+        try {
+            Long count = this.getFacade().count();
+            getLogger().log(Level.INFO, "Total Count of {0} = {1}",
+                    new Object[]{path, count});
+
+            return Response.status(Response.Status.OK)
+                    .entity(count).
+                    build();
+        } catch (Exception ex) {
+
+            String errmsg = ExceptionHelper.handleException(ex,
+                    "Exception occurs providing " + path
+                    + " list to administrator");
             getLogger().
                     log(Level.WARNING, errmsg);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
