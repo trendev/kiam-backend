@@ -62,8 +62,7 @@ public class DemoConfigureBean implements Serializable {
         this.initPaymentModes();
         this.initBusinesses();
 
-        this.displayUserGroupDetails();
-
+//        this.displayUserGroupDetails();
         this.createBills();
     }
 

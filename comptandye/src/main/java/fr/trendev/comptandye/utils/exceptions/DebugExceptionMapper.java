@@ -8,9 +8,8 @@ package fr.trendev.comptandye.utils.exceptions;
 import javax.json.Json;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
-import javax.ws.rs.ext.Provider;
 
-@Provider
+//@Provider
 public class DebugExceptionMapper implements ExceptionMapper<Exception> {
 
     @Override
