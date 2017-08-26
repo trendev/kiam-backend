@@ -164,10 +164,18 @@ public class UserGroupService {
     public Response put(UserGroup entity) {
         LOG.log(Level.INFO, "Updating UserGroup {0}", entity);
         try {
-            facade.edit(entity);
-            LOG.log(Level.INFO, "UserGroup {0} updated", entity);
-            return Response.ok(entity).
-                    build();
+            return Optional.ofNullable(facade.find(entity.getName()))
+                    .map(result -> {
+                        entity.setUserAccounts(result.getUserAccounts());
+                        facade.edit(entity);
+                        LOG.log(Level.INFO, "UserGroup {0} updated", entity);
+                        return Response.status(Response.Status.OK).entity(
+                                result).build();
+                    })
+                    .orElse(Response.status(Response.Status.NOT_FOUND).entity(
+                            Json.createObjectBuilder().add("error", "UserGroup "
+                                    + entity.getName() + " not found").build()).
+                            build());
         } catch (Exception ex) {
 
             String errmsg = ExceptionHelper.handleException(ex,
