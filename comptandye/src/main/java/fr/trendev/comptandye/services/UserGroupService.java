@@ -9,6 +9,7 @@ import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +33,7 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 @Path("UserGroup")
-public class UserGroupService extends CommonRestService<UserGroup, String> {
+public class UserGroupService {
 
     @Inject
     UserGroupFacade facade;
@@ -40,18 +41,50 @@ public class UserGroupService extends CommonRestService<UserGroup, String> {
     @Inject
     Logger logger;
 
-    public UserGroupService() {
-        super("UserGroup");
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findAll() {
+        logger.log(Level.INFO, "Providing the UserGroup list");
+        try {
+            List<UserGroup> list = facade.findAll();
+            logger.log(Level.INFO, "UserGroup list size = {0}", list.
+                    size());
+
+            return Response.status(Response.Status.OK)
+                    .entity(list).
+                    build();
+        } catch (Exception ex) {
+
+            String errmsg = ExceptionHelper.handleException(ex,
+                    "Exception occurs providing UserGroup list to administrator");
+            logger.log(Level.WARNING, errmsg);
+            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
+                    Json.createObjectBuilder().add("error", errmsg).build()).
+                    build();
+        }
     }
 
-    @Override
-    protected UserGroupFacade getFacade() {
-        return facade;
-    }
+    @Path("count")
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response count() {
 
-    @Override
-    protected Logger getLogger() {
-        return logger;
+        try {
+            Long count = facade.count();
+            logger.log(Level.INFO, "Total Count of UserGroup = {0}", count);
+
+            return Response.status(Response.Status.OK)
+                    .entity(count).
+                    build();
+        } catch (Exception ex) {
+
+            String errmsg = ExceptionHelper.handleException(ex,
+                    "Exception occurs providing UserGroup count to administrator");
+            logger.log(Level.WARNING, errmsg);
+            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
+                    Json.createObjectBuilder().add("error", errmsg).build()).
+                    build();
+        }
     }
 
     @Path("{name}")
@@ -59,7 +92,22 @@ public class UserGroupService extends CommonRestService<UserGroup, String> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserGroup(@PathParam("name") String name) {
         logger.log(Level.INFO, "REST request to get UserGroup : {0}", name);
-        return super.find(name);
+        try {
+            return Optional.ofNullable(facade.find(name))
+                    .map(result -> Response.status(Response.Status.OK).entity(
+                            result).build())
+                    .orElse(Response.status(Response.Status.NOT_FOUND).entity(
+                            Json.createObjectBuilder().build()).build());
+        } catch (Exception ex) {
+
+            String errmsg = ExceptionHelper.handleException(ex,
+                    "Exception occurs providing UserGroup " + name
+                    + " to administrator");
+            logger.log(Level.WARNING, errmsg);
+            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
+                    Json.createObjectBuilder().add("error", errmsg).build()).
+                    build();
+        }
     }
 
     @Path("{name}/userAccounts")
@@ -78,7 +126,7 @@ public class UserGroupService extends CommonRestService<UserGroup, String> {
 
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs providing userAccounts of user-group to administrator");
-            getLogger().
+            logger.
                     log(Level.WARNING, errmsg);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).
@@ -90,10 +138,10 @@ public class UserGroupService extends CommonRestService<UserGroup, String> {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response post(UserGroup entity) {
-        getLogger().log(Level.INFO, "Creating UserGroup {0}", entity);
+        logger.log(Level.INFO, "Creating UserGroup {0}", entity);
         try {
-            getFacade().create(entity);
-            getLogger().log(Level.INFO, "UserGroup {0} created", entity);
+            facade.create(entity);
+            logger.log(Level.INFO, "UserGroup {0} created", entity);
             return Response.created(new URI("/restapi/UserGroup/" + entity.
                     getName())).
                     entity(entity).
@@ -102,7 +150,7 @@ public class UserGroupService extends CommonRestService<UserGroup, String> {
 
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs creating UserGroup " + entity);
-            getLogger().
+            logger.
                     log(Level.WARNING, errmsg);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).
@@ -114,17 +162,17 @@ public class UserGroupService extends CommonRestService<UserGroup, String> {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(UserGroup entity) {
-        getLogger().log(Level.INFO, "Updating UserGroup {0}", entity);
+        logger.log(Level.INFO, "Updating UserGroup {0}", entity);
         try {
-            getFacade().edit(entity);
-            getLogger().log(Level.INFO, "UserGroup {0} updated", entity);
+            facade.edit(entity);
+            logger.log(Level.INFO, "UserGroup {0} updated", entity);
             return Response.ok(entity).
                     build();
         } catch (Exception ex) {
 
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs updating UserGroup " + entity);
-            getLogger().
+            logger.
                     log(Level.WARNING, errmsg);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).
@@ -135,17 +183,17 @@ public class UserGroupService extends CommonRestService<UserGroup, String> {
     @Path("{name}")
     @DELETE
     public Response delete(@PathParam("name") String name) {
-        getLogger().log(Level.INFO, "Deleting UserGroup {0}", name);
+        logger.log(Level.INFO, "Deleting UserGroup {0}", name);
         try {
             facade.remove(facade.find(name));
-            getLogger().log(Level.INFO, "UserGroup {0} deleted", name);
+            logger.log(Level.INFO, "UserGroup {0} deleted", name);
             return Response.ok().
                     build();
         } catch (Exception ex) {
 
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs deleting UserGroup " + name);
-            getLogger().
+            logger.
                     log(Level.WARNING, errmsg);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).
