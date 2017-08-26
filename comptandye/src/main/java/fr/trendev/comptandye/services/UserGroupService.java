@@ -26,7 +26,7 @@ import javax.ws.rs.core.Response;
  * @author jsie
  */
 @Stateless
-@Path("user-group")
+@Path("UserGroup")
 public class UserGroupService extends CommonRestService<UserGroup, String> {
 
     @Inject
@@ -36,7 +36,7 @@ public class UserGroupService extends CommonRestService<UserGroup, String> {
     Logger logger;
 
     public UserGroupService() {
-        super("user-group");
+        super("UserGroup");
     }
 
     @Override
@@ -57,7 +57,7 @@ public class UserGroupService extends CommonRestService<UserGroup, String> {
         return super.find(name);
     }
 
-    @Path("{name}/user-accounts")
+    @Path("{name}/userAccounts")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserAccounts(@PathParam("name") String name) {

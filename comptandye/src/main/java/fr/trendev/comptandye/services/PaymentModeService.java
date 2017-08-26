@@ -17,8 +17,8 @@ import javax.ws.rs.Path;
  * @author jsie
  */
 @Stateless
-@Path("payment-mode")
-//@Api(value = "payment-mode", description = "Payment modes")
+@Path("PaymentMode")
+//@Api(value = "PaymentMode", description = "Payment modes")
 public class PaymentModeService extends CommonRestService<PaymentMode, String> {
 
     @Inject
@@ -28,7 +28,7 @@ public class PaymentModeService extends CommonRestService<PaymentMode, String> {
     Logger logger;
 
     public PaymentModeService() {
-        super("payment-mode");
+        super("PaymentMode");
     }
 
     @Override
