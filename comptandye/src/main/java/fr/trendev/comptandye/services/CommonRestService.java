@@ -12,9 +12,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -100,27 +98,6 @@ public abstract class CommonRestService<E, P> {
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs providing " + path
                     + " list to administrator");
-            getLogger().
-                    log(Level.WARNING, errmsg);
-            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    Json.createObjectBuilder().add("error", errmsg).build()).
-                    build();
-        }
-    }
-
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response create(E e) {
-        getLogger().log(Level.INFO, "Creating Entity {0}", path);
-        try {
-            getFacade().create(e);
-            getLogger().log(Level.INFO, "Entity {0} created", path);
-            return Response.status(Response.Status.CREATED).entity(e).build();
-        } catch (Exception ex) {
-
-            String errmsg = ExceptionHelper.handleException(ex,
-                    "Exception occurs creating Entity " + path);
             getLogger().
                     log(Level.WARNING, errmsg);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(

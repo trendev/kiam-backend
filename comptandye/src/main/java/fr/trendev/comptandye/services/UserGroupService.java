@@ -8,13 +8,16 @@ package fr.trendev.comptandye.services;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
+import java.net.URI;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.Json;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -28,27 +31,27 @@ import javax.ws.rs.core.Response;
 @Stateless
 @Path("UserGroup")
 public class UserGroupService extends CommonRestService<UserGroup, String> {
-
+    
     @Inject
     UserGroupFacade facade;
-
+    
     @Inject
     Logger logger;
-
+    
     public UserGroupService() {
         super("UserGroup");
     }
-
+    
     @Override
     protected UserGroupFacade getFacade() {
         return facade;
     }
-
+    
     @Override
     protected Logger getLogger() {
         return logger;
     }
-
+    
     @Path("{name}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -56,7 +59,7 @@ public class UserGroupService extends CommonRestService<UserGroup, String> {
         logger.log(Level.INFO, "REST request to get UserGroup : {0}", name);
         return super.find(name);
     }
-
+    
     @Path("{name}/userAccounts")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -70,9 +73,33 @@ public class UserGroupService extends CommonRestService<UserGroup, String> {
                     .orElse(Response.status(Response.Status.NOT_FOUND).entity(
                             Json.createArrayBuilder().build()).build());
         } catch (Exception ex) {
-
+            
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs providing userAccounts of user-group to administrator");
+            getLogger().
+                    log(Level.WARNING, errmsg);
+            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
+                    Json.createObjectBuilder().add("error", errmsg).build()).
+                    build();
+        }
+    }
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response create(UserGroup entity) {
+        getLogger().log(Level.INFO, "Creating UserGroup {0}", entity);
+        try {
+            getFacade().create(entity);
+            getLogger().log(Level.INFO, "Entity {0} created", entity);
+            return Response.created(new URI("/restapi/UserGroup/" + entity.
+                    getName())).
+                    entity(entity).
+                    build();
+        } catch (Exception ex) {
+            
+            String errmsg = ExceptionHelper.handleException(ex,
+                    "Exception occurs creating UserGroup " + entity);
             getLogger().
                     log(Level.WARNING, errmsg);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
