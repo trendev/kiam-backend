@@ -52,6 +52,7 @@ public abstract class AbstractFacade<E, P> {
         return q.getSingleResult();
     }
 
+    @SuppressWarnings("unchecked")
     public P getIdentifier(E entity) throws IllegalArgumentException {
         return (P) getEntityManager().getEntityManagerFactory().
                 getPersistenceUnitUtil().getIdentifier(entity);
