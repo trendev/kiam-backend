@@ -43,8 +43,9 @@ import javax.persistence.PersistenceContext;
 @Startup
 public class DemoConfigureBean implements Serializable {
 
-    private static final Logger LOG = Logger.getLogger(DemoConfigureBean.class.
-            getName());
+    private static final Logger logger = Logger.getLogger(
+            DemoConfigureBean.class.
+                    getName());
 
     @PersistenceContext(unitName = "DEFAULT_PU")
     private EntityManager em;
@@ -165,35 +166,46 @@ public class DemoConfigureBean implements Serializable {
 
         em.remove(sylvioc);
 
-        skonx.setAddress(new Address("79 avenue de la jonchere",
+        Address skonxAddress = new Address("79 avenue de la jonchere",
                 "Appartement A113",
-                "77600", "Chanteloup-en-Brie"));
+                "77600", "Chanteloup-en-Brie");
+
+        em.persist(skonxAddress);
+        skonx.setAddress(skonxAddress);
 
         em.merge(skonx);
+
+        em.flush();
+        if (em.contains(skonxAddress)) {
+            em.refresh(skonxAddress);
+            logger.log(Level.INFO, "Id of Skonx Address = " + skonxAddress.
+                    getId());
+        }
 
     }
 
     private void displayUserGroupDetails() {
         List<UserGroup> userGroup = userGroupFacade.findAll();
         userGroup.forEach(group -> {
-            LOG.info("## GROUP ##");
-            LOG.log(Level.INFO, "Name = {0}", group.getName());
+            logger.info("## GROUP ##");
+            logger.log(Level.INFO, "Name = {0}", group.getName());
 
-            LOG.log(Level.INFO, "Description = {0}", group.getDescription());
+            logger.log(Level.INFO, "Description = {0}", group.getDescription());
 
             int n = group.getUserAccounts().size();
-            LOG.
+            logger.
                     log(Level.INFO, "{0} User{1}", new Object[]{n,
                 n > 1 ? "s" : ""});
 
             if (n > 0) {
-                LOG.info("Users id: ");
+                logger.info("Users id: ");
             }
-            group.getUserAccounts().forEach(u -> LOG.log(Level.INFO, "- {0}",
+            group.getUserAccounts().forEach(u -> logger.log(Level.INFO,
+                    "- {0}",
                     u.
                             getEmail()));
 
-            LOG.info("###########");
+            logger.info("###########");
         });
     }
 
@@ -203,15 +215,15 @@ public class DemoConfigureBean implements Serializable {
         if (em.isJoinedToTransaction()) {
             try {
                 em.flush();
-                LOG.log(Level.INFO, "clean() : OK");
+                logger.log(Level.INFO, "clean() : OK");
             } catch (Exception e) {
-                LOG.log(Level.WARNING, "clean() : FAILED ==> {0}", e.
+                logger.log(Level.WARNING, "clean() : FAILED ==> {0}", e.
                         getMessage());
             }
         }
-        LOG.log(Level.INFO, "EntityManager is{0} joined to transaction", em.
+        logger.log(Level.INFO, "EntityManager is{0} joined to transaction", em.
                 isJoinedToTransaction() ? "" : " not");
-        LOG.log(Level.INFO, "EntityManager is{0} opened",
+        logger.log(Level.INFO, "EntityManager is{0} opened",
                 em.isOpen() ? "" : " not");
     }
 
@@ -235,7 +247,7 @@ public class DemoConfigureBean implements Serializable {
         try {
             Professional vanessa = em.find(Professional.class,
                     "vanessa.gay@gmail.com");
-            LOG.log(Level.WARNING, "Creating a bill for {0} / {1} / {2}",
+            logger.log(Level.WARNING, "Creating a bill for {0} / {1} / {2}",
                     new Object[]{vanessa.
                                 getEmail(), vanessa.getUsername(), vanessa.
                         getUuid()});
