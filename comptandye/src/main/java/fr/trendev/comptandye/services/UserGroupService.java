@@ -16,6 +16,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -88,7 +89,7 @@ public class UserGroupService extends CommonRestService<UserGroup, String> {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response create(UserGroup entity) {
+    public Response post(UserGroup entity) {
         getLogger().log(Level.INFO, "Creating UserGroup {0}", entity);
         try {
             getFacade().create(entity);
@@ -112,7 +113,7 @@ public class UserGroupService extends CommonRestService<UserGroup, String> {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response update(UserGroup entity) {
+    public Response put(UserGroup entity) {
         getLogger().log(Level.INFO, "Updating UserGroup {0}", entity);
         try {
             getFacade().edit(entity);
@@ -123,6 +124,27 @@ public class UserGroupService extends CommonRestService<UserGroup, String> {
 
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs updating UserGroup " + entity);
+            getLogger().
+                    log(Level.WARNING, errmsg);
+            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
+                    Json.createObjectBuilder().add("error", errmsg).build()).
+                    build();
+        }
+    }
+
+    @Path("{name}")
+    @DELETE
+    public Response delete(@PathParam("name") String name) {
+        getLogger().log(Level.INFO, "Deleting UserGroup {0}", name);
+        try {
+            facade.remove(facade.find(name));
+            getLogger().log(Level.INFO, "UserGroup {0} deleted", name);
+            return Response.ok().
+                    build();
+        } catch (Exception ex) {
+
+            String errmsg = ExceptionHelper.handleException(ex,
+                    "Exception occurs deleting UserGroup " + name);
             getLogger().
                     log(Level.WARNING, errmsg);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
