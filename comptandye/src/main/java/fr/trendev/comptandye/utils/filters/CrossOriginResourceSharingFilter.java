@@ -38,7 +38,7 @@ public class CrossOriginResourceSharingFilter implements Filter {
 
         Principal user = req.getUserPrincipal();
 
-        LOG.log(Level.INFO, "[{1}] has requested {2} {0} and we're adding CORS",
+        LOG.log(Level.INFO, "[{1}] has requested {2} {0} and we add CORS",
                 new Object[]{req.getRequestURL(), (user != null) ? user.
                     getName() : "ANONYMOUS user", req.getMethod()});
 
