@@ -38,16 +38,16 @@ public class UserGroupService {
     @Inject
     UserGroupFacade facade;
 
-    @Inject
-    Logger logger;
+    private static final Logger LOG = Logger.getLogger(UserGroupService.class.
+            getName());
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
-        logger.log(Level.INFO, "Providing the UserGroup list");
+        LOG.log(Level.INFO, "Providing the UserGroup list");
         try {
             List<UserGroup> list = facade.findAll();
-            logger.log(Level.INFO, "UserGroup list size = {0}", list.
+            LOG.log(Level.INFO, "UserGroup list size = {0}", list.
                     size());
 
             return Response.status(Response.Status.OK)
@@ -57,7 +57,7 @@ public class UserGroupService {
 
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs providing UserGroup list to administrator");
-            logger.log(Level.WARNING, errmsg);
+            LOG.log(Level.WARNING, errmsg);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).
                     build();
@@ -71,7 +71,7 @@ public class UserGroupService {
 
         try {
             Long count = facade.count();
-            logger.log(Level.INFO, "Total Count of UserGroup = {0}", count);
+            LOG.log(Level.INFO, "Total Count of UserGroup = {0}", count);
 
             return Response.status(Response.Status.OK)
                     .entity(count).
@@ -80,7 +80,7 @@ public class UserGroupService {
 
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs providing UserGroup count to administrator");
-            logger.log(Level.WARNING, errmsg);
+            LOG.log(Level.WARNING, errmsg);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).
                     build();
@@ -91,7 +91,7 @@ public class UserGroupService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserGroup(@PathParam("name") String name) {
-        logger.log(Level.INFO, "REST request to get UserGroup : {0}", name);
+        LOG.log(Level.INFO, "REST request to get UserGroup : {0}", name);
         try {
             return Optional.ofNullable(facade.find(name))
                     .map(result -> Response.status(Response.Status.OK).entity(
@@ -103,7 +103,7 @@ public class UserGroupService {
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs providing UserGroup " + name
                     + " to administrator");
-            logger.log(Level.WARNING, errmsg);
+            LOG.log(Level.WARNING, errmsg);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).
                     build();
@@ -114,7 +114,7 @@ public class UserGroupService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserAccounts(@PathParam("name") String name) {
-        logger.log(Level.INFO,
+        LOG.log(Level.INFO,
                 "REST request to get userAccounts of UserGroup : {0}", name);
         try {
             return Optional.ofNullable(facade.find(name))
@@ -126,7 +126,7 @@ public class UserGroupService {
 
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs providing userAccounts of user-group to administrator");
-            logger.
+            LOG.
                     log(Level.WARNING, errmsg);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).
@@ -138,10 +138,10 @@ public class UserGroupService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response post(UserGroup entity) {
-        logger.log(Level.INFO, "Creating UserGroup {0}", entity);
+        LOG.log(Level.INFO, "Creating UserGroup {0}", entity);
         try {
             facade.create(entity);
-            logger.log(Level.INFO, "UserGroup {0} created", entity);
+            LOG.log(Level.INFO, "UserGroup {0} created", entity);
             return Response.created(new URI("/restapi/UserGroup/" + entity.
                     getName())).
                     entity(entity).
@@ -150,7 +150,7 @@ public class UserGroupService {
 
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs creating UserGroup " + entity);
-            logger.
+            LOG.
                     log(Level.WARNING, errmsg);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).
@@ -162,17 +162,17 @@ public class UserGroupService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(UserGroup entity) {
-        logger.log(Level.INFO, "Updating UserGroup {0}", entity);
+        LOG.log(Level.INFO, "Updating UserGroup {0}", entity);
         try {
             facade.edit(entity);
-            logger.log(Level.INFO, "UserGroup {0} updated", entity);
+            LOG.log(Level.INFO, "UserGroup {0} updated", entity);
             return Response.ok(entity).
                     build();
         } catch (Exception ex) {
 
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs updating UserGroup " + entity);
-            logger.
+            LOG.
                     log(Level.WARNING, errmsg);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).
@@ -183,17 +183,17 @@ public class UserGroupService {
     @Path("{name}")
     @DELETE
     public Response delete(@PathParam("name") String name) {
-        logger.log(Level.INFO, "Deleting UserGroup {0}", name);
+        LOG.log(Level.INFO, "Deleting UserGroup {0}", name);
         try {
             facade.remove(facade.find(name));
-            logger.log(Level.INFO, "UserGroup {0} deleted", name);
+            LOG.log(Level.INFO, "UserGroup {0} deleted", name);
             return Response.ok().
                     build();
         } catch (Exception ex) {
 
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs deleting UserGroup " + name);
-            logger.
+            LOG.
                     log(Level.WARNING, errmsg);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).
