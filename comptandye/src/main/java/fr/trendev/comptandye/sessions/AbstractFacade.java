@@ -52,8 +52,8 @@ public abstract class AbstractFacade<E, P> {
         return q.getSingleResult();
     }
 
-    public Object getIdentifier(E entity) throws IllegalArgumentException {
-        return getEntityManager().getEntityManagerFactory().
+    public P getIdentifier(E entity) throws IllegalArgumentException {
+        return (P) getEntityManager().getEntityManagerFactory().
                 getPersistenceUnitUtil().getIdentifier(entity);
     }
 }
