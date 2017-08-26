@@ -68,7 +68,9 @@ public class UserGroupTest {
         assert !result.contains(admin01.getEmail());
         assert !result.contains(admin02.getEmail());
 
-        String input = "{\"name\":\"Stars\",\"description\":\"This is the TOP 10 contributors group\",\"userAccounts\":[]}";
+        String input = "{\"name\":\"Stars\",\"description\":\"This is the TOP 10 contributors group\",\"userAccounts\":[{\"email\":\"lew.ashby@californication.com\",\"password\":\"EUrVrX4nfmYYFxpMyRX93OlkJxNZv9mkMGfirZKbhWI=\",\"username\":\"Lew\",\"uuid\":\"PRO_8d1b632f2d134a57abb93cd73360ce7e\",\"registrationDate\":1503762652756},{\"email\":\"hank.moody@hella.com\",\"password\":\"ts15qkBmihdtvmkKXPgVmbPGeyQU6aKd5XNd5HwOzu0=\",\"username\":\"Hank\",\"uuid\":\"ADMIN_5575788fbff249d1b437c87e35dc64c5\",\"registrationDate\":1503762652756},{\"email\":\"john.doe@domain.com\",\"password\":\"mZWR4R0bp5EPs9xfOwUPu3n/06LOL+wHK6BuUBsHgQM=\",\"username\":\"X\",\"uuid\":\"ADMIN_6c8c91036cab4d77b0852697b54e5cf6\",\"registrationDate\":1503762652756},{\"email\":\"julien.sie@gmail.com\",\"password\":\"RrYJsV8xV7fsJkzgrFqGwiZzvigeFan6e0ANYPcJhrI=\",\"username\":\"jsie\",\"uuid\":\"ADMIN_04fab928429049758fa05efc88887dde\",\"registrationDate\":1503762652756}]}";
+
+        System.out.println("Deserializing " + input);
         UserGroup grp = new ObjectMapper().readerFor(UserGroup.class).readValue(
                 input);
 
@@ -76,8 +78,7 @@ public class UserGroupTest {
         assert "This is the TOP 10 contributors group".equals(grp.
                 getDescription());
         /**
-         * if there is no field userAccounts : grp.getUserAccounts() will be
-         * null !
+         * userAccounts field is initialized but ignored during deserialization
          */
         assert grp.getUserAccounts() != null;
         assert grp.getUserAccounts().isEmpty();
