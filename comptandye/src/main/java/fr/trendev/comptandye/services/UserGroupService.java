@@ -166,8 +166,8 @@ public class UserGroupService {
         try {
             return Optional.ofNullable(facade.find(entity.getName()))
                     .map(result -> {
-                        entity.setUserAccounts(result.getUserAccounts());
-                        facade.edit(entity);
+                        result.setDescription(entity.getDescription());
+                        facade.edit(result);
                         LOG.log(Level.INFO, "UserGroup {0} updated", entity);
                         return Response.status(Response.Status.OK).entity(
                                 result).build();
