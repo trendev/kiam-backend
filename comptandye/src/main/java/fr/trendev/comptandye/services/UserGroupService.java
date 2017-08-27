@@ -97,7 +97,8 @@ public class UserGroupService {
                     .map(result -> Response.status(Response.Status.OK).entity(
                             result).build())
                     .orElse(Response.status(Response.Status.NOT_FOUND).entity(
-                            Json.createObjectBuilder().build()).build());
+                            Json.createObjectBuilder().add("error", "UserGroup "
+                                    + name + " not found").build()).build());
         } catch (Exception ex) {
 
             String errmsg = ExceptionHelper.handleException(ex,
@@ -121,7 +122,8 @@ public class UserGroupService {
                     .map(result -> Response.status(Response.Status.OK).entity(
                             result.getUserAccounts()).build())
                     .orElse(Response.status(Response.Status.NOT_FOUND).entity(
-                            Json.createArrayBuilder().build()).build());
+                            Json.createObjectBuilder().add("error", "UserGroup "
+                                    + name + " not found").build()).build());
         } catch (Exception ex) {
 
             String errmsg = ExceptionHelper.handleException(ex,
@@ -138,10 +140,10 @@ public class UserGroupService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response post(UserGroup entity) {
-        LOG.log(Level.INFO, "Creating UserGroup {0}", entity);
+        LOG.log(Level.INFO, "Creating UserGroup {0}", entity.getName());
         try {
             facade.create(entity);
-            LOG.log(Level.INFO, "UserGroup {0} created", entity);
+            LOG.log(Level.INFO, "UserGroup {0} created", entity.getName());
             return Response.created(new URI("/restapi/UserGroup/" + entity.
                     getName())).
                     entity(entity).
@@ -149,7 +151,7 @@ public class UserGroupService {
         } catch (Exception ex) {
 
             String errmsg = ExceptionHelper.handleException(ex,
-                    "Exception occurs creating UserGroup " + entity);
+                    "Exception occurs creating UserGroup " + entity.getName());
             LOG.
                     log(Level.WARNING, errmsg);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
@@ -162,13 +164,14 @@ public class UserGroupService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(UserGroup entity) {
-        LOG.log(Level.INFO, "Updating UserGroup {0}", entity);
+        LOG.log(Level.INFO, "Updating UserGroup {0}", entity.getName());
         try {
             return Optional.ofNullable(facade.find(entity.getName()))
                     .map(result -> {
                         result.setDescription(entity.getDescription());
                         facade.edit(result);
-                        LOG.log(Level.INFO, "UserGroup {0} updated", entity);
+                        LOG.log(Level.INFO, "UserGroup {0} updated", entity.
+                                getName());
                         return Response.status(Response.Status.OK).entity(
                                 result).build();
                     })
