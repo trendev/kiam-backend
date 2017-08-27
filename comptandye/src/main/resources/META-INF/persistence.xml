@@ -26,8 +26,9 @@
         <class>fr.trendev.comptandye.entities.Business</class>
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
-            <property name="eclipselink.logging.level" value="FINE"/>
-            <property name="eclipselink.logging.parameters" value="true"/>
+            <!--Enable SQL Logging-->
+            <!--            <property name="eclipselink.logging.level" value="FINE"/>
+            <property name="eclipselink.logging.parameters" value="true"/>-->
         </properties>
     </persistence-unit>
 </persistence>
