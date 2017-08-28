@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.utils.exceptions;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
 import javax.ws.rs.core.Response;
@@ -20,7 +21,9 @@ public class DebugExceptionMapper implements ExceptionMapper<Exception> {
 
     @Override
     public Response toResponse(Exception ex) {
-        ex.printStackTrace();
+        logger.
+                log(Level.WARNING, "DebugExceptionMapper: " + ex.getMessage(),
+                        ex);
         String errmsg = ExceptionHelper.handleException(ex,
                 "DebugExceptionMapper caught an Exception");
         return Response.status(Response.Status.EXPECTATION_FAILED).entity(Json.

@@ -6,7 +6,11 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.entities.Administrator;
+import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.sessions.AdministratorFacade;
+import fr.trendev.comptandye.sessions.UserGroupFacade;
+import fr.trendev.comptandye.utils.PasswordGenerator;
+import fr.trendev.comptandye.utils.UUIDGenerator;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
 import java.net.URI;
 import java.util.List;
@@ -37,6 +41,9 @@ public class AdministratorService {
 
     @Inject
     AdministratorFacade facade;
+
+    @Inject
+    UserGroupFacade userGroupFacade;
 
     private static final Logger LOG = Logger.getLogger(
             AdministratorService.class.
@@ -146,6 +153,25 @@ public class AdministratorService {
     public Response post(Administrator entity) {
         LOG.log(Level.INFO, "Creating Administrator {0}", entity.getEmail());
         try {
+            //generates an UUID if no one is provided
+            if (entity.getUuid() == null || entity.getUuid().isEmpty()) {
+                String uuid = UUIDGenerator.generate("ADMIN_", true);
+                LOG.log(Level.WARNING,
+                        "No UUID provided for new Administrator {0}. Generated UUID = {1}",
+                        new Object[]{entity.getEmail(), uuid});
+                entity.setUuid(uuid);
+            }
+
+            //encrypts the provided password
+            String encrypted_pwd = PasswordGenerator.encrypt_SHA256(entity.
+                    getPassword());
+            entity.setPassword(encrypted_pwd);
+
+            //adds the new administrator to the group and the group to the new admin
+            UserGroup adminGroup = userGroupFacade.find("Administrator");
+            adminGroup.getUserAccounts().add(entity);
+            entity.getUserGroups().add(adminGroup);
+
             facade.create(entity);
             LOG.log(Level.INFO, "Administrator {0} created", entity.getEmail());
             return Response.created(new URI("/restapi/Administrator/" + entity.
@@ -173,7 +199,7 @@ public class AdministratorService {
         try {
             return Optional.ofNullable(facade.find(entity.getEmail()))
                     .map(result -> {
-                        //result.setPassword(entity.getPassword());
+                        result.setPassword(entity.getPassword());
                         result.setUsername(entity.getUsername());
                         result.setUuid(entity.getUuid());
                         result.setRegistrationDate(entity.getRegistrationDate());
@@ -207,6 +233,8 @@ public class AdministratorService {
     public Response delete(@PathParam("email") String email) {
         LOG.log(Level.INFO, "Deleting Administrator {0}", email);
         try {
+            // TODO : handle bi-direction relationship deletion
+            // TODO : handle not found Administrator with Optional
             facade.remove(facade.find(email));
             LOG.log(Level.INFO, "Administrator {0} deleted", email);
             return Response.ok().
