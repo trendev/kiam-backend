@@ -197,10 +197,25 @@ public class UserGroupService {
     public Response delete(@PathParam("name") String name) {
         LOG.log(Level.INFO, "Deleting UserGroup {0}", name);
         try {
-            facade.remove(facade.find(name));
-            LOG.log(Level.INFO, "UserGroup {0} deleted", name);
-            return Response.ok().
-                    build();
+            return Optional.ofNullable(facade.find(name))
+                    .map(result -> {
+                        result.getUserAccounts().forEach(u -> {
+                            u.getUserGroups().remove(result);
+                            LOG.log(Level.INFO,
+                                    "User {0} removed from UserGroup {1}",
+                                    new Object[]{u.getEmail(), name});
+                        });
+                        facade.remove(result);
+                        LOG.log(Level.INFO, "UserGroup {0} deleted", name);
+                        return Response.ok().
+                                build();
+                    })
+                    .orElse(Response.status(Response.Status.NOT_FOUND).entity(
+                            Json.createObjectBuilder().add("error",
+                                    "UserGroup "
+                                    + name + " not found").build()).
+                            build());
+
         } catch (Exception ex) {
 
             String errmsg = ExceptionHelper.handleException(ex,
