@@ -135,7 +135,7 @@ public class DemoConfigureBean implements Serializable {
         sylvioc.setEmail("sylvie.gay@gmail.com");
 
         List<Individual> individuals = IntStream
-                .range(0, 1000)
+                .range(0, 10)
                 .mapToObj(i -> new Individual("hank.moody-" + (i + 1)
                         + "@hella.com",
                         PasswordGenerator.encrypt_SHA256("Californication" + i),
