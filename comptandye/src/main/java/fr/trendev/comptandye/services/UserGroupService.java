@@ -127,7 +127,8 @@ public class UserGroupService {
         } catch (Exception ex) {
 
             String errmsg = ExceptionHelper.handleException(ex,
-                    "Exception occurs providing userAccounts of user-group to administrator");
+                    "Exception occurs providing userAccounts of " + name
+                    + " to administrator");
             LOG.
                     log(Level.WARNING, errmsg);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
