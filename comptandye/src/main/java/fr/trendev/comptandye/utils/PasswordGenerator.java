@@ -39,11 +39,18 @@ public class PasswordGenerator {
     }
 
     public static String encrypt_SHA256(String pwd) {
+        if (pwd == null || pwd.isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Password to encrypt cannot be null or empty");
+        }
         return encrypt_SHA256_base64(pwd);
     }
 
     public static String encrypt_SHA256(String pwd, String base) {
-
+        if (pwd == null || pwd.isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Password to encrypt cannot be null or empty");
+        }
         switch (base) {
             case "base64":
                 return encrypt_SHA256_base64(pwd);
@@ -77,6 +84,7 @@ public class PasswordGenerator {
 
     private static String encrypt_SHA256_base64(String pwd) {
         String encoded = "NO_ACCESS";
+
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] hash = md.digest(pwd.getBytes(StandardCharsets.UTF_8));
