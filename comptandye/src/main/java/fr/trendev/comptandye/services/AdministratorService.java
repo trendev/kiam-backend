@@ -320,4 +320,54 @@ public class AdministratorService {
         }
     }
 
+    @Path("{email}/removeFrom/{name}")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response removeFrom(@PathParam("email") String email,
+            @PathParam("name") String name) {
+        LOG.log(Level.INFO, "Removing Administrator {0} from UserGroup {1}",
+                new Object[]{email, name});
+        try {
+            return Optional.ofNullable(facade.find(email))
+                    .map(admin -> {
+                        return Optional.ofNullable(userGroupFacade.find(name))
+                                .map(grp -> {
+                                    boolean result = admin.getUserGroups().
+                                            remove(grp)
+                                            && grp.getUserAccounts().remove(
+                                                    admin);
+                                    facade.edit(admin);
+                                    LOG.log(Level.INFO,
+                                            "Administrator {0} removed from UserGroup {1} : {2}",
+                                            new Object[]{email, name, result});
+                                    return Response.ok(grp).build();
+                                })
+                                .orElse(Response.status(
+                                        Response.Status.NOT_FOUND).entity(
+                                                Json.createObjectBuilder().add(
+                                                        "error",
+                                                        "Administrator "
+                                                        + email
+                                                        + " cannot be removed from undiscovered UserGroup "
+                                                        + name).build()).build());
+                    })
+                    .orElse(Response.status(Response.Status.NOT_FOUND).entity(
+                            Json.createObjectBuilder().add("error",
+                                    "Administrator "
+                                    + email
+                                    + " not found and cannot be removed from "
+                                    + name).build()).build());
+        } catch (Exception ex) {
+
+            String errmsg = ExceptionHelper.handleException(ex,
+                    "Exception occurs removing Administrator " + email
+                    + " from UserGroup " + name);
+            LOG.
+                    log(Level.WARNING, errmsg);
+            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
+                    Json.createObjectBuilder().add("error", errmsg).build()).
+                    build();
+        }
+    }
+
 }
