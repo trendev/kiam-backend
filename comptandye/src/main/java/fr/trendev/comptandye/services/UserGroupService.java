@@ -183,7 +183,7 @@ public class UserGroupService {
         } catch (Exception ex) {
 
             String errmsg = ExceptionHelper.handleException(ex,
-                    "Exception occurs updating UserGroup " + entity);
+                    "Exception occurs updating UserGroup " + entity.getName());
             LOG.
                     log(Level.WARNING, errmsg);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
