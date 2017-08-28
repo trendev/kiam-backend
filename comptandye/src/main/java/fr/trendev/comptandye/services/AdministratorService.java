@@ -232,9 +232,58 @@ public class AdministratorService {
         }
     }
 
+    @Path("{email}/insertTo/{name}")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response insertTo(@PathParam("email") String email,
+            @PathParam("name") String name) {
+        LOG.log(Level.INFO, "Inserting Administrator {0} into UserGroup {1}",
+                new Object[]{email, name});
+        try {
+            return Optional.ofNullable(facade.find(email))
+                    .map(admin -> {
+                        return Optional.ofNullable(userGroupFacade.find(name))
+                                .map(grp -> {
+                                    admin.getUserGroups().add(grp);
+                                    grp.getUserAccounts().add(admin);
+                                    facade.edit(admin);
+                                    LOG.log(Level.INFO,
+                                            "Administrator {0} inserted in UserGroup {1}",
+                                            new Object[]{email, name});
+                                    return Response.ok(grp).build();
+                                })
+                                .orElse(Response.status(
+                                        Response.Status.NOT_FOUND).entity(
+                                                Json.createObjectBuilder().add(
+                                                        "error",
+                                                        "Administrator "
+                                                        + email
+                                                        + " cannot be added to undiscovered UserGroup "
+                                                        + name).build()).build());
+                    })
+                    .orElse(Response.status(Response.Status.NOT_FOUND).entity(
+                            Json.createObjectBuilder().add("error",
+                                    "Administrator "
+                                    + email
+                                    + " not found and cannot be added to "
+                                    + name).build()).build());
+        } catch (Exception ex) {
+
+            String errmsg = ExceptionHelper.handleException(ex,
+                    "Exception occurs inserting Administrator " + email
+                    + " in UserGroup " + name);
+            LOG.
+                    log(Level.WARNING, errmsg);
+            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
+                    Json.createObjectBuilder().add("error", errmsg).build()).
+                    build();
+        }
+    }
+
     @Path("{email}")
     @DELETE
-    public Response delete(@PathParam("email") String email) {
+    public Response delete(@PathParam("email") String email
+    ) {
         LOG.log(Level.INFO, "Deleting Administrator {0}", email);
         try {
             return Optional.ofNullable(facade.find(email))
@@ -246,13 +295,15 @@ public class AdministratorService {
                                     new Object[]{email, grp.getName()});
                         });
                         facade.remove(result);
-                        LOG.log(Level.INFO, "Administrator {0} deleted", email);
+                        LOG.log(Level.INFO, "Administrator {0} deleted",
+                                email);
                         return Response.ok().build();
                     })
-                    .orElse(Response.status(Response.Status.NOT_FOUND).entity(
-                            Json.createObjectBuilder().add("error",
-                                    "Administrator "
-                                    + email + " not found").build()).
+                    .orElse(Response.status(Response.Status.NOT_FOUND).
+                            entity(
+                                    Json.createObjectBuilder().add("error",
+                                            "Administrator "
+                                            + email + " not found").build()).
                             build());
 
         } catch (Exception ex) {
@@ -261,8 +312,10 @@ public class AdministratorService {
                     "Exception occurs deleting Administrator " + email);
             LOG.
                     log(Level.WARNING, errmsg);
-            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    Json.createObjectBuilder().add("error", errmsg).build()).
+            return Response.status(Response.Status.EXPECTATION_FAILED).
+                    entity(
+                            Json.createObjectBuilder().add("error", errmsg).
+                                    build()).
                     build();
         }
     }
