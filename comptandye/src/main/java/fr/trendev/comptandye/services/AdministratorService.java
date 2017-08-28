@@ -233,12 +233,24 @@ public class AdministratorService {
     public Response delete(@PathParam("email") String email) {
         LOG.log(Level.INFO, "Deleting Administrator {0}", email);
         try {
-            // TODO : handle bi-direction relationship deletion
-            // TODO : handle not found Administrator with Optional
-            facade.remove(facade.find(email));
-            LOG.log(Level.INFO, "Administrator {0} deleted", email);
-            return Response.ok().
-                    build();
+            return Optional.ofNullable(facade.find(email))
+                    .map(result -> {
+                        result.getUserGroups().forEach(grp -> {
+                            grp.getUserAccounts().remove(result);
+                            LOG.log(Level.INFO,
+                                    "Administrator {0} removed from UserGroup {1}",
+                                    new Object[]{email, grp.getName()});
+                        });
+                        facade.remove(result);
+                        LOG.log(Level.INFO, "Administrator {0} deleted", email);
+                        return Response.ok().build();
+                    })
+                    .orElse(Response.status(Response.Status.NOT_FOUND).entity(
+                            Json.createObjectBuilder().add("error",
+                                    "Administrator "
+                                    + email + " not found").build()).
+                            build());
+
         } catch (Exception ex) {
 
             String errmsg = ExceptionHelper.handleException(ex,
