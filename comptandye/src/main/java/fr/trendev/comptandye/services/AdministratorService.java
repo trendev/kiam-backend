@@ -199,7 +199,11 @@ public class AdministratorService {
         try {
             return Optional.ofNullable(facade.find(entity.getEmail()))
                     .map(result -> {
-                        result.setPassword(entity.getPassword());
+                        //encrypts the provided password
+                        String encrypted_pwd = PasswordGenerator.encrypt_SHA256(
+                                entity.getPassword());
+                        result.setPassword(encrypted_pwd);
+
                         result.setUsername(entity.getUsername());
                         result.setUuid(entity.getUuid());
                         result.setRegistrationDate(entity.getRegistrationDate());
