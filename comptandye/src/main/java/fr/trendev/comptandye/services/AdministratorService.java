@@ -74,7 +74,7 @@ public class AdministratorService extends CommonService<Administrator, String> {
     @Path("{email}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAdministrator(@PathParam("email") String email) {
+    public Response find(@PathParam("email") String email) {
         LOG.log(Level.INFO, "REST request to get Administrator : {0}", email);
         try {
             return Optional.ofNullable(administratorFacade.find(email))
