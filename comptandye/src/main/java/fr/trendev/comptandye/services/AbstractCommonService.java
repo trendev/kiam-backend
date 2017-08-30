@@ -27,11 +27,11 @@ import javax.ws.rs.core.Response;
  *
  * @author jsie
  */
-public abstract class CommonService<E, P> {
+public abstract class AbstractCommonService<E, P> {
 
     private final Class<E> entityClass;
 
-    public CommonService(Class<E> entityClass) {
+    public AbstractCommonService(Class<E> entityClass) {
         this.entityClass = entityClass;
     }
 
@@ -262,7 +262,6 @@ public abstract class CommonService<E, P> {
                                 .map(a -> {
                                     boolean result = associationFunction.
                                             apply(e, a);
-                                    //TODO : manage this action using the Enum
                                     entityFacade.edit(e);
                                     getLogger().log(Level.INFO,
                                             "{0} {1} {2} {3} {4} : {5}",

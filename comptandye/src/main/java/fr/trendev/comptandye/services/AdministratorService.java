@@ -32,7 +32,7 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 @Path("Administrator")
-public class AdministratorService extends CommonService<Administrator, String> {
+public class AdministratorService extends AbstractCommonService<Administrator, String> {
 
     @Inject
     AdministratorFacade administratorFacade;

@@ -28,7 +28,7 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 @Path("UserGroup")
-public class UserGroupService extends CommonService<UserGroup, String> {
+public class UserGroupService extends AbstractCommonService<UserGroup, String> {
 
     @Inject
     UserGroupFacade userGroupFacade;
