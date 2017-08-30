@@ -8,6 +8,7 @@ package fr.trendev.comptandye.services;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -65,6 +66,30 @@ public abstract class CommonService<E, P> {
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs providing " + entityClass.getSimpleName()
                     + " count");
+            getLogger().log(Level.WARNING, errmsg);
+            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
+                    Json.createObjectBuilder().add("error", errmsg).build()).
+                    build();
+        }
+    }
+
+    public Response find(AbstractFacade<E, P> facade,
+            P primaryKey) {
+        try {
+            return Optional.ofNullable(facade.find(primaryKey))
+                    .map(result -> Response.status(Response.Status.OK).entity(
+                            result).build())
+                    .orElse(Response.status(Response.Status.NOT_FOUND).entity(
+                            Json.createObjectBuilder().add("error",
+                                    entityClass.getSimpleName() + " "
+                                    + primaryKey + " not found").build()).
+                            build());
+        } catch (Exception ex) {
+
+            String errmsg = ExceptionHelper.handleException(ex,
+                    "Exception occurs providing " + entityClass.getSimpleName()
+                    + " "
+                    + primaryKey);
             getLogger().log(Level.WARNING, errmsg);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).

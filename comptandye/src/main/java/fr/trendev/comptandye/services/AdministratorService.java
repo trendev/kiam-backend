@@ -76,24 +76,7 @@ public class AdministratorService extends CommonService<Administrator, String> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response find(@PathParam("email") String email) {
         LOG.log(Level.INFO, "REST request to get Administrator : {0}", email);
-        try {
-            return Optional.ofNullable(administratorFacade.find(email))
-                    .map(result -> Response.status(Response.Status.OK).entity(
-                            result).build())
-                    .orElse(Response.status(Response.Status.NOT_FOUND).entity(
-                            Json.createObjectBuilder().add("error",
-                                    "Administrator "
-                                    + email + " not found").build()).build());
-        } catch (Exception ex) {
-
-            String errmsg = ExceptionHelper.handleException(ex,
-                    "Exception occurs providing Administrator " + email
-                    + " to administrator");
-            LOG.log(Level.WARNING, errmsg);
-            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    Json.createObjectBuilder().add("error", errmsg).build()).
-                    build();
-        }
+        return super.find(administratorFacade, email);
     }
 
     @Path("{email}/userGroups")
