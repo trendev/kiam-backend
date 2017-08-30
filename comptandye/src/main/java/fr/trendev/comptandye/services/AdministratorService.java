@@ -12,7 +12,6 @@ import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
-import java.net.URI;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -95,43 +94,28 @@ public class AdministratorService extends CommonService<Administrator, String> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response post(Administrator entity) {
         LOG.log(Level.INFO, "Creating Administrator {0}", entity.getEmail());
-        try {
+
+        return super.post(entity, administratorFacade, entity.getEmail(),
+                e -> {
             //generates an UUID if no one is provided
-            if (entity.getUuid() == null || entity.getUuid().isEmpty()) {
+            if (e.getUuid() == null || e.getUuid().isEmpty()) {
                 String uuid = UUIDGenerator.generate("ADMIN_", true);
                 LOG.log(Level.WARNING,
                         "No UUID provided for new Administrator {0}. Generated UUID = {1}",
-                        new Object[]{entity.getEmail(), uuid});
-                entity.setUuid(uuid);
+                        new Object[]{e.getEmail(), uuid});
+                e.setUuid(uuid);
             }
 
             //encrypts the provided password
-            String encrypted_pwd = PasswordGenerator.encrypt_SHA256(entity.
+            String encrypted_pwd = PasswordGenerator.encrypt_SHA256(e.
                     getPassword());
-            entity.setPassword(encrypted_pwd);
+            e.setPassword(encrypted_pwd);
 
             //adds the new administrator to the group and the group to the new admin
             UserGroup adminGroup = userGroupFacade.find("Administrator");
-            adminGroup.getUserAccounts().add(entity);
-            entity.getUserGroups().add(adminGroup);
-
-            administratorFacade.create(entity);
-            LOG.log(Level.INFO, "Administrator {0} created", entity.getEmail());
-            return Response.created(new URI("/restapi/Administrator/" + entity.
-                    getEmail())).
-                    entity(entity).
-                    build();
-        } catch (Exception ex) {
-
-            String errmsg = ExceptionHelper.handleException(ex,
-                    "Exception occurs creating Administrator " + entity.
-                            getEmail());
-            LOG.
-                    log(Level.WARNING, errmsg);
-            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    Json.createObjectBuilder().add("error", errmsg).build()).
-                    build();
-        }
+            adminGroup.getUserAccounts().add(e);
+            e.getUserGroups().add(adminGroup);
+        });
     }
 
     @PUT

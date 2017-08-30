@@ -11,8 +11,10 @@ import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,6 +39,7 @@ public abstract class CommonService<E, P> {
     private String prettyPrintPK(P pk) {
         if (pk instanceof BillPK) {
             BillPK key = (BillPK) pk;
+            //TODO : format using StringBuilder...
             JsonObject jsonObject = Json.createObjectBuilder()
                     .add("reference", key.getReference())
                     .add("deliveryDate", key.getDeliveryDate().toString())
@@ -104,15 +107,15 @@ public abstract class CommonService<E, P> {
     }
 
     protected Response find(AbstractFacade<E, P> facade,
-            P primaryKey) {
+            P pk) {
         try {
-            return Optional.ofNullable(facade.find(primaryKey))
+            return Optional.ofNullable(facade.find(pk))
                     .map(result -> Response.status(Response.Status.OK).entity(
                             result).build())
                     .orElse(Response.status(Response.Status.NOT_FOUND).entity(
                             Json.createObjectBuilder().add("error",
                                     entityClass.getSimpleName() + " "
-                                    + prettyPrintPK(primaryKey) + " not found").
+                                    + prettyPrintPK(pk) + " not found").
                                     build()).
                             build());
         } catch (Exception ex) {
@@ -120,7 +123,7 @@ public abstract class CommonService<E, P> {
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs providing " + entityClass.getSimpleName()
                     + " "
-                    + prettyPrintPK(primaryKey));
+                    + prettyPrintPK(pk));
             getLogger().log(Level.WARNING, errmsg);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).
@@ -129,16 +132,16 @@ public abstract class CommonService<E, P> {
     }
 
     protected <R> Response provideRelation(AbstractFacade<E, P> facade,
-            P primaryKey, Function<E, R> getFunction) {
+            P pk, Function<E, R> getFunction) {
         try {
 
-            return Optional.ofNullable(facade.find(primaryKey))
+            return Optional.ofNullable(facade.find(pk))
                     .map(result -> Response.status(Response.Status.OK).entity(
                             getFunction.apply(result)).build())
                     .orElse(Response.status(Response.Status.NOT_FOUND).entity(
                             Json.createObjectBuilder().add("error",
                                     entityClass.getSimpleName() + " "
-                                    + prettyPrintPK(primaryKey) + " not found").
+                                    + prettyPrintPK(pk) + " not found").
                                     build()).
                             build());
         } catch (Exception ex) {
@@ -147,7 +150,31 @@ public abstract class CommonService<E, P> {
                     "Exception occurs providing a relationship of "
                     + entityClass.getSimpleName()
                     + " "
-                    + prettyPrintPK(primaryKey));
+                    + prettyPrintPK(pk));
+            getLogger().log(Level.WARNING, errmsg);
+            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
+                    Json.createObjectBuilder().add("error", errmsg).build()).
+                    build();
+        }
+    }
+
+    protected Response post(E entity, AbstractFacade<E, P> facade, P pk,
+            Consumer<E> initAction) {
+        try {
+            initAction.accept(entity);
+            facade.create(entity);
+            getLogger().log(Level.INFO, entityClass.getSimpleName()
+                    + " {0} created", prettyPrintPK(pk));
+            return Response.created(new URI("/restapi/" + entityClass.
+                    getSimpleName() + "/" + prettyPrintPK(pk))).entity(entity).
+                    build();
+        } catch (Exception ex) {
+
+            String errmsg = ExceptionHelper.handleException(ex,
+                    "Exception occurs creating "
+                    + entityClass.getSimpleName()
+                    + " "
+                    + prettyPrintPK(pk));
             getLogger().log(Level.WARNING, errmsg);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).
