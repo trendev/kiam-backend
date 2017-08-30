@@ -9,7 +9,6 @@ import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,35 +32,28 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 @Path("UserGroup")
-public class UserGroupService {
+public class UserGroupService extends CommonService<UserGroup, String> {
 
     @Inject
-    UserGroupFacade facade;
+    UserGroupFacade userGroupFacade;
 
     private static final Logger LOG = Logger.getLogger(UserGroupService.class.
             getName());
+
+    public UserGroupService() {
+        super(UserGroup.class);
+    }
+
+    @Override
+    protected Logger getLogger() {
+        return LOG;
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the UserGroup list");
-        try {
-            List<UserGroup> list = facade.findAll();
-            LOG.log(Level.INFO, "UserGroup list size = {0}", list.
-                    size());
-
-            return Response.status(Response.Status.OK)
-                    .entity(list).
-                    build();
-        } catch (Exception ex) {
-
-            String errmsg = ExceptionHelper.handleException(ex,
-                    "Exception occurs providing UserGroup list to administrator");
-            LOG.log(Level.WARNING, errmsg);
-            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    Json.createObjectBuilder().add("error", errmsg).build()).
-                    build();
-        }
+        return findAll(userGroupFacade, facade -> facade.findAll());
     }
 
     @Path("count")
@@ -70,7 +62,7 @@ public class UserGroupService {
     public Response count() {
 
         try {
-            Long count = facade.count();
+            Long count = userGroupFacade.count();
             LOG.log(Level.INFO, "Total Count of UserGroup = {0}", count);
 
             return Response.status(Response.Status.OK)
@@ -93,7 +85,7 @@ public class UserGroupService {
     public Response getUserGroup(@PathParam("name") String name) {
         LOG.log(Level.INFO, "REST request to get UserGroup : {0}", name);
         try {
-            return Optional.ofNullable(facade.find(name))
+            return Optional.ofNullable(userGroupFacade.find(name))
                     .map(result -> Response.status(Response.Status.OK).entity(
                             result).build())
                     .orElse(Response.status(Response.Status.NOT_FOUND).entity(
@@ -118,7 +110,7 @@ public class UserGroupService {
         LOG.log(Level.INFO,
                 "REST request to get userAccounts of UserGroup : {0}", name);
         try {
-            return Optional.ofNullable(facade.find(name))
+            return Optional.ofNullable(userGroupFacade.find(name))
                     .map(result -> Response.status(Response.Status.OK).entity(
                             result.getUserAccounts()).build())
                     .orElse(Response.status(Response.Status.NOT_FOUND).entity(
@@ -143,7 +135,7 @@ public class UserGroupService {
     public Response post(UserGroup entity) {
         LOG.log(Level.INFO, "Creating UserGroup {0}", entity.getName());
         try {
-            facade.create(entity);
+            userGroupFacade.create(entity);
             LOG.log(Level.INFO, "UserGroup {0} created", entity.getName());
             return Response.created(new URI("/restapi/UserGroup/" + entity.
                     getName())).
@@ -167,10 +159,10 @@ public class UserGroupService {
     public Response put(UserGroup entity) {
         LOG.log(Level.INFO, "Updating UserGroup {0}", entity.getName());
         try {
-            return Optional.ofNullable(facade.find(entity.getName()))
+            return Optional.ofNullable(userGroupFacade.find(entity.getName()))
                     .map(result -> {
                         result.setDescription(entity.getDescription());
-                        facade.edit(result);
+                        userGroupFacade.edit(result);
                         LOG.log(Level.INFO, "UserGroup {0} updated", entity.
                                 getName());
                         return Response.status(Response.Status.OK).entity(
@@ -197,7 +189,7 @@ public class UserGroupService {
     public Response delete(@PathParam("name") String name) {
         LOG.log(Level.INFO, "Deleting UserGroup {0}", name);
         try {
-            return Optional.ofNullable(facade.find(name))
+            return Optional.ofNullable(userGroupFacade.find(name))
                     .map(result -> {
                         result.getUserAccounts().forEach(u -> {
                             u.getUserGroups().remove(result);
@@ -205,7 +197,7 @@ public class UserGroupService {
                                     "User {0} removed from UserGroup {1}",
                                     new Object[]{u.getEmail(), name});
                         });
-                        facade.remove(result);
+                        userGroupFacade.remove(result);
                         LOG.log(Level.INFO, "UserGroup {0} deleted", name);
                         return Response.ok().
                                 build();

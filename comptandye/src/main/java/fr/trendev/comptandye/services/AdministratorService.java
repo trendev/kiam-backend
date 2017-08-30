@@ -13,7 +13,6 @@ import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,10 +36,10 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 @Path("Administrator")
-public class AdministratorService {
+public class AdministratorService extends CommonService<Administrator, String> {
 
     @Inject
-    AdministratorFacade facade;
+    AdministratorFacade administratorFacade;
 
     @Inject
     UserGroupFacade userGroupFacade;
@@ -49,27 +48,20 @@ public class AdministratorService {
             AdministratorService.class.
                     getName());
 
+    public AdministratorService() {
+        super(Administrator.class);
+    }
+
+    @Override
+    protected Logger getLogger() {
+        return LOG;
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Administrator list");
-        try {
-            List<Administrator> list = facade.findAll();
-            LOG.log(Level.INFO, "Administrator list size = {0}", list.
-                    size());
-
-            return Response.status(Response.Status.OK)
-                    .entity(list).
-                    build();
-        } catch (Exception ex) {
-
-            String errmsg = ExceptionHelper.handleException(ex,
-                    "Exception occurs providing Administrator list to administrator");
-            LOG.log(Level.WARNING, errmsg);
-            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    Json.createObjectBuilder().add("error", errmsg).build()).
-                    build();
-        }
+        return findAll(administratorFacade, facade -> facade.findAll());
     }
 
     @Path("count")
@@ -78,7 +70,7 @@ public class AdministratorService {
     public Response count() {
 
         try {
-            Long count = facade.count();
+            Long count = administratorFacade.count();
             LOG.log(Level.INFO, "Total Count of Administrator = {0}", count);
 
             return Response.status(Response.Status.OK)
@@ -101,7 +93,7 @@ public class AdministratorService {
     public Response getAdministrator(@PathParam("email") String email) {
         LOG.log(Level.INFO, "REST request to get Administrator : {0}", email);
         try {
-            return Optional.ofNullable(facade.find(email))
+            return Optional.ofNullable(administratorFacade.find(email))
                     .map(result -> Response.status(Response.Status.OK).entity(
                             result).build())
                     .orElse(Response.status(Response.Status.NOT_FOUND).entity(
@@ -127,7 +119,7 @@ public class AdministratorService {
         LOG.log(Level.INFO,
                 "REST request to get userGroups of Administrator : {0}", email);
         try {
-            return Optional.ofNullable(facade.find(email))
+            return Optional.ofNullable(administratorFacade.find(email))
                     .map(result -> Response.status(Response.Status.OK).entity(
                             result.getUserGroups()).build())
                     .orElse(Response.status(Response.Status.NOT_FOUND).entity(
@@ -172,7 +164,7 @@ public class AdministratorService {
             adminGroup.getUserAccounts().add(entity);
             entity.getUserGroups().add(adminGroup);
 
-            facade.create(entity);
+            administratorFacade.create(entity);
             LOG.log(Level.INFO, "Administrator {0} created", entity.getEmail());
             return Response.created(new URI("/restapi/Administrator/" + entity.
                     getEmail())).
@@ -197,7 +189,8 @@ public class AdministratorService {
     public Response put(Administrator entity) {
         LOG.log(Level.INFO, "Updating Administrator {0}", entity.getEmail());
         try {
-            return Optional.ofNullable(facade.find(entity.getEmail()))
+            return Optional.ofNullable(administratorFacade.find(entity.
+                    getEmail()))
                     .map(result -> {
                         //encrypts the provided password
                         String encrypted_pwd = PasswordGenerator.encrypt_SHA256(
@@ -208,7 +201,7 @@ public class AdministratorService {
                         result.setUuid(entity.getUuid());
                         result.setRegistrationDate(entity.getRegistrationDate());
 
-                        facade.edit(result);
+                        administratorFacade.edit(result);
                         LOG.log(Level.INFO, "Administrator {0} updated", entity.
                                 getEmail());
                         return Response.status(Response.Status.OK).entity(
@@ -240,13 +233,13 @@ public class AdministratorService {
         LOG.log(Level.INFO, "Inserting Administrator {0} into UserGroup {1}",
                 new Object[]{email, name});
         try {
-            return Optional.ofNullable(facade.find(email))
+            return Optional.ofNullable(administratorFacade.find(email))
                     .map(admin -> {
                         return Optional.ofNullable(userGroupFacade.find(name))
                                 .map(grp -> {
                                     admin.getUserGroups().add(grp);
                                     grp.getUserAccounts().add(admin);
-                                    facade.edit(admin);
+                                    administratorFacade.edit(admin);
                                     LOG.log(Level.INFO,
                                             "Administrator {0} inserted in UserGroup {1}",
                                             new Object[]{email, name});
@@ -286,7 +279,7 @@ public class AdministratorService {
     ) {
         LOG.log(Level.INFO, "Deleting Administrator {0}", email);
         try {
-            return Optional.ofNullable(facade.find(email))
+            return Optional.ofNullable(administratorFacade.find(email))
                     .map(result -> {
                         result.getUserGroups().forEach(grp -> {
                             grp.getUserAccounts().remove(result);
@@ -294,7 +287,7 @@ public class AdministratorService {
                                     "Administrator {0} removed from UserGroup {1}",
                                     new Object[]{email, grp.getName()});
                         });
-                        facade.remove(result);
+                        administratorFacade.remove(result);
                         LOG.log(Level.INFO, "Administrator {0} deleted",
                                 email);
                         return Response.ok().build();
@@ -328,7 +321,7 @@ public class AdministratorService {
         LOG.log(Level.INFO, "Removing Administrator {0} from UserGroup {1}",
                 new Object[]{email, name});
         try {
-            return Optional.ofNullable(facade.find(email))
+            return Optional.ofNullable(administratorFacade.find(email))
                     .map(admin -> {
                         return Optional.ofNullable(userGroupFacade.find(name))
                                 .map(grp -> {
@@ -336,7 +329,7 @@ public class AdministratorService {
                                             remove(grp)
                                             && grp.getUserAccounts().remove(
                                                     admin);
-                                    facade.edit(admin);
+                                    administratorFacade.edit(admin);
                                     LOG.log(Level.INFO,
                                             "Administrator {0} removed from UserGroup {1} : {2}",
                                             new Object[]{email, name, result});
