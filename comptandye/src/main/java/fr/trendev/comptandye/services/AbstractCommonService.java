@@ -35,9 +35,13 @@ public abstract class AbstractCommonService<E, P> {
 
     private String prettyPrintPK(P pk) {
         if (pk instanceof BillPK) {
-            //TODO : handle the specific case of Bill with BillPK
             BillPK key = (BillPK) pk;
             StringBuilder sb = new StringBuilder();
+            sb.append("bill?");
+            sb.append("reference=").append(key.getReference()).append("&");
+            sb.append("deliveryDate=").append(key.getDeliveryDate().getTime()).
+                    append("&");
+            sb.append("professional=").append(key.getProfessional());
             return sb.toString();
 
         } else {
