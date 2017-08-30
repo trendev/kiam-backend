@@ -34,6 +34,31 @@ public abstract class CommonService<E, P> {
 
     protected abstract Logger getLogger();
 
+    private String prettyPrintPK(P pk) {
+        if (pk instanceof BillPK) {
+            BillPK key = (BillPK) pk;
+            JsonObject jsonObject = Json.createObjectBuilder()
+                    .add("reference", key.getReference())
+                    .add("deliveryDate", key.getDeliveryDate().toString())
+                    .add("professional", key.getProfessional())
+                    .build();
+            String jsonString = pk.toString();
+            try (Writer writer = new StringWriter()) {
+                Json.createWriter(writer).write(jsonObject);
+                jsonString = writer.toString();
+            } catch (IOException ex) {
+                getLogger().log(Level.WARNING,
+                        "PrimaryKey {0} cannot be pretty printed : {1}",
+                        new Object[]{pk, ex});
+            } finally {
+                return jsonString;
+            }
+
+        } else {
+            return pk.toString();
+        }
+    }
+
     protected Response findAll(AbstractFacade<E, P> facade,
             Function<AbstractFacade<E, P>, List<E>> findAllFunction) {
         try {
@@ -78,7 +103,7 @@ public abstract class CommonService<E, P> {
         }
     }
 
-    public Response find(AbstractFacade<E, P> facade,
+    protected Response find(AbstractFacade<E, P> facade,
             P primaryKey) {
         try {
             return Optional.ofNullable(facade.find(primaryKey))
@@ -103,28 +128,30 @@ public abstract class CommonService<E, P> {
         }
     }
 
-    private String prettyPrintPK(P pk) {
-        if (pk instanceof BillPK) {
-            BillPK key = (BillPK) pk;
-            JsonObject jsonObject = Json.createObjectBuilder()
-                    .add("reference", key.getReference())
-                    .add("deliveryDate", key.getDeliveryDate().toString())
-                    .add("professional", key.getProfessional())
-                    .build();
-            String jsonString = pk.toString();
-            try (Writer writer = new StringWriter()) {
-                Json.createWriter(writer).write(jsonObject);
-                jsonString = writer.toString();
-            } catch (IOException ex) {
-                getLogger().log(Level.WARNING,
-                        "PrimaryKey {0} cannot be pretty printed : {1}",
-                        new Object[]{pk, ex});
-            } finally {
-                return jsonString;
-            }
+    protected <R> Response provideRelation(AbstractFacade<E, P> facade,
+            P primaryKey, Function<E, R> getFunction) {
+        try {
 
-        } else {
-            return pk.toString();
+            return Optional.ofNullable(facade.find(primaryKey))
+                    .map(result -> Response.status(Response.Status.OK).entity(
+                            getFunction.apply(result)).build())
+                    .orElse(Response.status(Response.Status.NOT_FOUND).entity(
+                            Json.createObjectBuilder().add("error",
+                                    entityClass.getSimpleName() + " "
+                                    + prettyPrintPK(primaryKey) + " not found").
+                                    build()).
+                            build());
+        } catch (Exception ex) {
+
+            String errmsg = ExceptionHelper.handleException(ex,
+                    "Exception occurs providing a relationship of "
+                    + entityClass.getSimpleName()
+                    + " "
+                    + prettyPrintPK(primaryKey));
+            getLogger().log(Level.WARNING, errmsg);
+            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
+                    Json.createObjectBuilder().add("error", errmsg).build()).
+                    build();
         }
     }
 }
