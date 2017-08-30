@@ -186,42 +186,16 @@ public class AdministratorService extends CommonService<Administrator, String> {
 
     @Path("{email}")
     @DELETE
-    public Response delete(@PathParam("email") String email
-    ) {
-        LOG.log(Level.INFO, "Deleting Administrator {0}", email);
-        try {
-            return Optional.ofNullable(administratorFacade.find(email))
-                    .map(result -> {
-                        result.getUserGroups().forEach(grp -> {
-                            grp.getUserAccounts().remove(result);
-                            LOG.log(Level.INFO,
-                                    "Administrator {0} removed from UserGroup {1}",
-                                    new Object[]{email, grp.getName()});
-                        });
-                        administratorFacade.remove(result);
-                        LOG.log(Level.INFO, "Administrator {0} deleted",
-                                email);
-                        return Response.ok().build();
-                    })
-                    .orElse(Response.status(Response.Status.NOT_FOUND).
-                            entity(
-                                    Json.createObjectBuilder().add("error",
-                                            "Administrator "
-                                            + email + " not found").build()).
-                            build());
-
-        } catch (Exception ex) {
-
-            String errmsg = ExceptionHelper.handleException(ex,
-                    "Exception occurs deleting Administrator " + email);
-            LOG.
-                    log(Level.WARNING, errmsg);
-            return Response.status(Response.Status.EXPECTATION_FAILED).
-                    entity(
-                            Json.createObjectBuilder().add("error", errmsg).
-                                    build()).
-                    build();
-        }
+    public Response delete(@PathParam("email") String email) {
+        LOG.log(Level.INFO, "NEW Deleting Administrator {0}", email);
+        return super.delete(administratorFacade, email, e -> {
+            e.getUserGroups().forEach(grp -> {
+                grp.getUserAccounts().remove(e);
+                LOG.log(Level.INFO,
+                        "Administrator {0} removed from UserGroup {1}",
+                        new Object[]{email, grp.getName()});
+            });
+        });
     }
 
     @Path("{email}/removeFrom/{name}")

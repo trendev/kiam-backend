@@ -213,4 +213,35 @@ public abstract class CommonService<E, P> {
                     build();
         }
     }
+
+    protected Response delete(AbstractFacade<E, P> facade, P pk,
+            Consumer<E> deleteAction) {
+        try {
+            return Optional.ofNullable(facade.find(pk))
+                    .map(result -> {
+                        deleteAction.accept(result);
+                        facade.remove(result);
+                        getLogger().log(Level.INFO, entityClass.getSimpleName()
+                                + " {0} deleted", prettyPrintPK(pk));
+                        return Response.ok().build();
+                    })
+                    .orElse(Response.status(Response.Status.NOT_FOUND).entity(
+                            Json.createObjectBuilder().add("error",
+                                    entityClass.getSimpleName() + " "
+                                    + prettyPrintPK(pk) + " not found").
+                                    build()).
+                            build());
+        } catch (Exception ex) {
+
+            String errmsg = ExceptionHelper.handleException(ex,
+                    "Exception occurs deleting "
+                    + entityClass.getSimpleName()
+                    + " "
+                    + prettyPrintPK(pk));
+            getLogger().log(Level.WARNING, errmsg);
+            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
+                    Json.createObjectBuilder().add("error", errmsg).build()).
+                    build();
+        }
+    }
 }
