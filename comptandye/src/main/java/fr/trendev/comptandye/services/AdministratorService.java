@@ -61,30 +61,14 @@ public class AdministratorService extends CommonService<Administrator, String> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Administrator list");
-        return findAll(administratorFacade, facade -> facade.findAll());
+        return super.findAll(administratorFacade, facade -> facade.findAll());
     }
 
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response count() {
-
-        try {
-            Long count = administratorFacade.count();
-            LOG.log(Level.INFO, "Total Count of Administrator = {0}", count);
-
-            return Response.status(Response.Status.OK)
-                    .entity(count).
-                    build();
-        } catch (Exception ex) {
-
-            String errmsg = ExceptionHelper.handleException(ex,
-                    "Exception occurs providing Administrator count to administrator");
-            LOG.log(Level.WARNING, errmsg);
-            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    Json.createObjectBuilder().add("error", errmsg).build()).
-                    build();
-        }
+        return super.count(administratorFacade);
     }
 
     @Path("{email}")

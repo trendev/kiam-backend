@@ -33,52 +33,36 @@ import javax.ws.rs.core.Response;
 @Stateless
 @Path("UserGroup")
 public class UserGroupService extends CommonService<UserGroup, String> {
-
+    
     @Inject
     UserGroupFacade userGroupFacade;
-
+    
     private static final Logger LOG = Logger.getLogger(UserGroupService.class.
             getName());
-
+    
     public UserGroupService() {
         super(UserGroup.class);
     }
-
+    
     @Override
     protected Logger getLogger() {
         return LOG;
     }
-
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the UserGroup list");
-        return findAll(userGroupFacade, facade -> facade.findAll());
+        return super.findAll(userGroupFacade, facade -> facade.findAll());
     }
-
+    
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response count() {
-
-        try {
-            Long count = userGroupFacade.count();
-            LOG.log(Level.INFO, "Total Count of UserGroup = {0}", count);
-
-            return Response.status(Response.Status.OK)
-                    .entity(count).
-                    build();
-        } catch (Exception ex) {
-
-            String errmsg = ExceptionHelper.handleException(ex,
-                    "Exception occurs providing UserGroup count to administrator");
-            LOG.log(Level.WARNING, errmsg);
-            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    Json.createObjectBuilder().add("error", errmsg).build()).
-                    build();
-        }
+        return super.count(userGroupFacade);
     }
-
+    
     @Path("{name}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -92,7 +76,7 @@ public class UserGroupService extends CommonService<UserGroup, String> {
                             Json.createObjectBuilder().add("error", "UserGroup "
                                     + name + " not found").build()).build());
         } catch (Exception ex) {
-
+            
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs providing UserGroup " + name
                     + " to administrator");
@@ -102,7 +86,7 @@ public class UserGroupService extends CommonService<UserGroup, String> {
                     build();
         }
     }
-
+    
     @Path("{name}/userAccounts")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -117,7 +101,7 @@ public class UserGroupService extends CommonService<UserGroup, String> {
                             Json.createObjectBuilder().add("error", "UserGroup "
                                     + name + " not found").build()).build());
         } catch (Exception ex) {
-
+            
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs providing userAccounts of " + name
                     + " to administrator");
@@ -128,7 +112,7 @@ public class UserGroupService extends CommonService<UserGroup, String> {
                     build();
         }
     }
-
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -142,7 +126,7 @@ public class UserGroupService extends CommonService<UserGroup, String> {
                     entity(entity).
                     build();
         } catch (Exception ex) {
-
+            
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs creating UserGroup " + entity.getName());
             LOG.
@@ -152,7 +136,7 @@ public class UserGroupService extends CommonService<UserGroup, String> {
                     build();
         }
     }
-
+    
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -173,7 +157,7 @@ public class UserGroupService extends CommonService<UserGroup, String> {
                                     + entity.getName() + " not found").build()).
                             build());
         } catch (Exception ex) {
-
+            
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs updating UserGroup " + entity.getName());
             LOG.
@@ -183,7 +167,7 @@ public class UserGroupService extends CommonService<UserGroup, String> {
                     build();
         }
     }
-
+    
     @Path("{name}")
     @DELETE
     public Response delete(@PathParam("name") String name) {
@@ -207,9 +191,9 @@ public class UserGroupService extends CommonService<UserGroup, String> {
                                     "UserGroup "
                                     + name + " not found").build()).
                             build());
-
+            
         } catch (Exception ex) {
-
+            
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs deleting UserGroup " + name);
             LOG.
@@ -219,5 +203,5 @@ public class UserGroupService extends CommonService<UserGroup, String> {
                     build();
         }
     }
-
+    
 }

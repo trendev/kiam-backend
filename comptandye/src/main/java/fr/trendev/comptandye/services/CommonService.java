@@ -50,4 +50,25 @@ public abstract class CommonService<E, P> {
                     build();
         }
     }
+
+    protected Response count(AbstractFacade<E, P> facade) {
+        try {
+            Long count = facade.count();
+            getLogger().log(Level.INFO, "Total Count of {0} = {1}",
+                    new Object[]{entityClass.getSimpleName(), count});
+
+            return Response.status(Response.Status.OK)
+                    .entity(count).
+                    build();
+        } catch (Exception ex) {
+
+            String errmsg = ExceptionHelper.handleException(ex,
+                    "Exception occurs providing " + entityClass.getSimpleName()
+                    + " count");
+            getLogger().log(Level.WARNING, errmsg);
+            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
+                    Json.createObjectBuilder().add("error", errmsg).build()).
+                    build();
+        }
+    }
 }
