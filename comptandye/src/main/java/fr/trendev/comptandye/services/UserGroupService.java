@@ -66,7 +66,7 @@ public class UserGroupService extends CommonService<UserGroup, String> {
     @Path("{name}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserGroup(@PathParam("name") String name) {
+    public Response find(@PathParam("name") String name) {
         LOG.log(Level.INFO, "REST request to get UserGroup : {0}", name);
         try {
             return Optional.ofNullable(userGroupFacade.find(name))
