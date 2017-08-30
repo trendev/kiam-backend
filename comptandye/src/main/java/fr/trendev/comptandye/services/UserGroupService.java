@@ -100,7 +100,6 @@ public class UserGroupService extends CommonService<UserGroup, String> {
     @DELETE
     public Response delete(@PathParam("name") String name) {
         LOG.log(Level.INFO, "Deleting UserGroup {0}", name);
-
         return super.delete(userGroupFacade, name, e -> {
             e.getUserAccounts().forEach(u -> {
                 u.getUserGroups().remove(e);
