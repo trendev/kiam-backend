@@ -94,30 +94,9 @@ public class UserGroupService extends CommonService<UserGroup, String> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(UserGroup entity) {
         LOG.log(Level.INFO, "Updating UserGroup {0}", entity.getName());
-        try {
-            return Optional.ofNullable(userGroupFacade.find(entity.getName()))
-                    .map(result -> {
-                        result.setDescription(entity.getDescription());
-                        userGroupFacade.edit(result);
-                        LOG.log(Level.INFO, "UserGroup {0} updated", entity.
-                                getName());
-                        return Response.status(Response.Status.OK).entity(
-                                result).build();
-                    })
-                    .orElse(Response.status(Response.Status.NOT_FOUND).entity(
-                            Json.createObjectBuilder().add("error", "UserGroup "
-                                    + entity.getName() + " not found").build()).
-                            build());
-        } catch (Exception ex) {
-
-            String errmsg = ExceptionHelper.handleException(ex,
-                    "Exception occurs updating UserGroup " + entity.getName());
-            LOG.
-                    log(Level.WARNING, errmsg);
-            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    Json.createObjectBuilder().add("error", errmsg).build()).
-                    build();
-        }
+        return super.put(entity, userGroupFacade, entity.getName(), e -> {
+            e.setDescription(entity.getDescription());
+        });
     }
 
     @Path("{name}")
