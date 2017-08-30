@@ -246,7 +246,9 @@ public abstract class CommonService<E, P> {
         }
     }
 
-    protected <A, U> Response insertTo(AbstractFacade<E, P> entityFacade,
+    protected <A, U> Response manageAssociation(
+            AssociationManagementEnum option,
+            AbstractFacade<E, P> entityFacade,
             P entityPk,
             AbstractFacade<A, U> associationFacade,
             U associationPk,
@@ -260,12 +262,15 @@ public abstract class CommonService<E, P> {
                                 .map(a -> {
                                     boolean result = associationFunction.
                                             apply(e, a);
+                                    //TODO : manage this action using the Enum
                                     entityFacade.edit(e);
                                     getLogger().log(Level.INFO,
-                                            "{0} {1} inserted in {2} {3} : {4}",
+                                            "{0} {1} {2} {3} {4} : {5}",
                                             new Object[]{entityClass.
                                                         getSimpleName(),
                                                 entityPk,
+                                                option.equals(
+                                                        AssociationManagementEnum.INSERT) ? "inserted in " : "removed from",
                                                 associationEntityClass.
                                                         getSimpleName(),
                                                 associationPk,
@@ -280,7 +285,10 @@ public abstract class CommonService<E, P> {
                                                                 getSimpleName()
                                                         + " "
                                                         + entityPk
-                                                        + " cannot be added to undiscovered "
+                                                        + " cannot be "
+                                                        + (option.equals(
+                                                                AssociationManagementEnum.INSERT) ? "inserted into" : "removed from")
+                                                        + " undiscovered "
                                                         + associationEntityClass.
                                                                 getSimpleName()
                                                         + " "
@@ -291,12 +299,17 @@ public abstract class CommonService<E, P> {
                             Json.createObjectBuilder().add("error",
                                     entityClass.getSimpleName() + " "
                                     + entityPk
-                                    + " not found and cannot be added to "
+                                    + " not found and cannot be " + (option.
+                                            equals(
+                                                    AssociationManagementEnum.INSERT) ? "inserted into" : "removed from")
+                                    + " "
                                     + associationPk).build()).build());
         } catch (Exception ex) {
 
             String errmsg = ExceptionHelper.handleException(ex,
-                    "Exception occurs inserting " + entityClass.getSimpleName()
+                    "Exception occurs " + (option.equals(
+                            AssociationManagementEnum.INSERT) ? "inserting" : "removing")
+                    + " " + entityClass.getSimpleName()
                     + " " + entityPk
                     + " in " + associationEntityClass.getSimpleName() + " "
                     + associationPk);

@@ -11,13 +11,10 @@ import fr.trendev.comptandye.sessions.AdministratorFacade;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UUIDGenerator;
-import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.json.Json;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -144,7 +141,9 @@ public class AdministratorService extends CommonService<Administrator, String> {
         LOG.log(Level.INFO, "Inserting Administrator {0} into UserGroup {1}",
                 new Object[]{email, name});
 
-        return super.<UserGroup, String>insertTo(administratorFacade, email,
+        return super.<UserGroup, String>manageAssociation(
+                AssociationManagementEnum.INSERT,
+                administratorFacade, email,
                 userGroupFacade,
                 name, UserGroup.class,
                 (e, a) ->
@@ -172,47 +171,14 @@ public class AdministratorService extends CommonService<Administrator, String> {
             @PathParam("name") String name) {
         LOG.log(Level.INFO, "Removing Administrator {0} from UserGroup {1}",
                 new Object[]{email, name});
-        try {
-            return Optional.ofNullable(administratorFacade.find(email))
-                    .map(admin -> {
-                        return Optional.ofNullable(userGroupFacade.find(name))
-                                .map(grp -> {
-                                    boolean result = admin.getUserGroups().
-                                            remove(grp)
-                                            && grp.getUserAccounts().remove(
-                                                    admin);
-                                    administratorFacade.edit(admin);
-                                    LOG.log(Level.INFO,
-                                            "Administrator {0} removed from UserGroup {1} : {2}",
-                                            new Object[]{email, name, result});
-                                    return Response.ok(grp).build();
-                                })
-                                .orElse(Response.status(
-                                        Response.Status.NOT_FOUND).entity(
-                                                Json.createObjectBuilder().add(
-                                                        "error",
-                                                        "Administrator "
-                                                        + email
-                                                        + " cannot be removed from undiscovered UserGroup "
-                                                        + name).build()).build());
-                    })
-                    .orElse(Response.status(Response.Status.NOT_FOUND).entity(
-                            Json.createObjectBuilder().add("error",
-                                    "Administrator "
-                                    + email
-                                    + " not found and cannot be removed from "
-                                    + name).build()).build());
-        } catch (Exception ex) {
 
-            String errmsg = ExceptionHelper.handleException(ex,
-                    "Exception occurs removing Administrator " + email
-                    + " from UserGroup " + name);
-            LOG.
-                    log(Level.WARNING, errmsg);
-            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    Json.createObjectBuilder().add("error", errmsg).build()).
-                    build();
-        }
+        return super.<UserGroup, String>manageAssociation(
+                AssociationManagementEnum.REMOVE,
+                administratorFacade, email,
+                userGroupFacade,
+                name, UserGroup.class,
+                (e, a) ->
+                e.getUserGroups().remove(a) & a.getUserAccounts().remove(e));
     }
 
 }
