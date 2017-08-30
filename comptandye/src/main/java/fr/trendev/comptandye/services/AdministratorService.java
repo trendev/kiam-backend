@@ -123,41 +123,17 @@ public class AdministratorService extends CommonService<Administrator, String> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(Administrator entity) {
         LOG.log(Level.INFO, "Updating Administrator {0}", entity.getEmail());
-        try {
-            return Optional.ofNullable(administratorFacade.find(entity.
-                    getEmail()))
-                    .map(result -> {
-                        //encrypts the provided password
-                        String encrypted_pwd = PasswordGenerator.encrypt_SHA256(
-                                entity.getPassword());
-                        result.setPassword(encrypted_pwd);
+        return super.put(entity, administratorFacade, entity.getEmail(), e ->
+        {
+            //encrypts the provided password
+            String encrypted_pwd = PasswordGenerator.encrypt_SHA256(
+                    entity.getPassword());
+            e.setPassword(encrypted_pwd);
 
-                        result.setUsername(entity.getUsername());
-                        result.setUuid(entity.getUuid());
-                        result.setRegistrationDate(entity.getRegistrationDate());
-
-                        administratorFacade.edit(result);
-                        LOG.log(Level.INFO, "Administrator {0} updated", entity.
-                                getEmail());
-                        return Response.status(Response.Status.OK).entity(
-                                result).build();
-                    })
-                    .orElse(Response.status(Response.Status.NOT_FOUND).entity(
-                            Json.createObjectBuilder().add("error",
-                                    "Administrator "
-                                    + entity.getEmail() + " not found").build()).
-                            build());
-        } catch (Exception ex) {
-
-            String errmsg = ExceptionHelper.handleException(ex,
-                    "Exception occurs updating Administrator " + entity.
-                            getEmail());
-            LOG.
-                    log(Level.WARNING, errmsg);
-            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    Json.createObjectBuilder().add("error", errmsg).build()).
-                    build();
-        }
+            e.setUsername(entity.getUsername());
+            e.setUuid(entity.getUuid());
+            e.setRegistrationDate(entity.getRegistrationDate());
+        });
     }
 
     @Path("{email}/insertTo/{name}")
