@@ -8,7 +8,6 @@ package fr.trendev.comptandye.services;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
-import java.net.URI;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -86,23 +85,8 @@ public class UserGroupService extends CommonService<UserGroup, String> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response post(UserGroup entity) {
         LOG.log(Level.INFO, "Creating UserGroup {0}", entity.getName());
-        try {
-            userGroupFacade.create(entity);
-            LOG.log(Level.INFO, "UserGroup {0} created", entity.getName());
-            return Response.created(new URI("/restapi/UserGroup/" + entity.
-                    getName())).
-                    entity(entity).
-                    build();
-        } catch (Exception ex) {
-
-            String errmsg = ExceptionHelper.handleException(ex,
-                    "Exception occurs creating UserGroup " + entity.getName());
-            LOG.
-                    log(Level.WARNING, errmsg);
-            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    Json.createObjectBuilder().add("error", errmsg).build()).
-                    build();
-        }
+        return super.post(entity, userGroupFacade, entity.getName(), e -> {
+        });
     }
 
     @PUT
