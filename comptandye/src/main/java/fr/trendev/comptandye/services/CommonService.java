@@ -14,6 +14,7 @@ import java.io.Writer;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.logging.Level;
@@ -238,6 +239,67 @@ public abstract class CommonService<E, P> {
                     + entityClass.getSimpleName()
                     + " "
                     + prettyPrintPK(pk));
+            getLogger().log(Level.WARNING, errmsg);
+            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
+                    Json.createObjectBuilder().add("error", errmsg).build()).
+                    build();
+        }
+    }
+
+    protected <A, U> Response insertTo(AbstractFacade<E, P> entityFacade,
+            P entityPk,
+            AbstractFacade<A, U> associationFacade,
+            U associationPk,
+            Class<A> associationEntityClass,
+            BiFunction<E, A, Boolean> associationFunction) {
+        try {
+            return Optional.ofNullable(entityFacade.find(entityPk))
+                    .map(e -> {
+                        return Optional.ofNullable(associationFacade.find(
+                                associationPk))
+                                .map(a -> {
+                                    boolean result = associationFunction.
+                                            apply(e, a);
+                                    entityFacade.edit(e);
+                                    getLogger().log(Level.INFO,
+                                            "{0} {1} inserted in {2} {3} : {4}",
+                                            new Object[]{entityClass.
+                                                        getSimpleName(),
+                                                entityPk,
+                                                associationEntityClass.
+                                                        getSimpleName(),
+                                                associationPk,
+                                                result});
+                                    return Response.ok(a).build();
+                                })
+                                .orElse(Response.status(
+                                        Response.Status.NOT_FOUND).entity(
+                                                Json.createObjectBuilder().add(
+                                                        "error",
+                                                        entityClass.
+                                                                getSimpleName()
+                                                        + " "
+                                                        + entityPk
+                                                        + " cannot be added to undiscovered "
+                                                        + associationEntityClass.
+                                                                getSimpleName()
+                                                        + " "
+                                                        + associationPk).build()).
+                                        build());
+                    })
+                    .orElse(Response.status(Response.Status.NOT_FOUND).entity(
+                            Json.createObjectBuilder().add("error",
+                                    entityClass.getSimpleName() + " "
+                                    + entityPk
+                                    + " not found and cannot be added to "
+                                    + associationPk).build()).build());
+        } catch (Exception ex) {
+
+            String errmsg = ExceptionHelper.handleException(ex,
+                    "Exception occurs inserting " + entityClass.getSimpleName()
+                    + " " + entityPk
+                    + " in " + associationEntityClass.getSimpleName() + " "
+                    + associationPk);
             getLogger().log(Level.WARNING, errmsg);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).

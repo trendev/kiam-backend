@@ -143,45 +143,12 @@ public class AdministratorService extends CommonService<Administrator, String> {
             @PathParam("name") String name) {
         LOG.log(Level.INFO, "Inserting Administrator {0} into UserGroup {1}",
                 new Object[]{email, name});
-        try {
-            return Optional.ofNullable(administratorFacade.find(email))
-                    .map(admin -> {
-                        return Optional.ofNullable(userGroupFacade.find(name))
-                                .map(grp -> {
-                                    admin.getUserGroups().add(grp);
-                                    grp.getUserAccounts().add(admin);
-                                    administratorFacade.edit(admin);
-                                    LOG.log(Level.INFO,
-                                            "Administrator {0} inserted in UserGroup {1}",
-                                            new Object[]{email, name});
-                                    return Response.ok(grp).build();
-                                })
-                                .orElse(Response.status(
-                                        Response.Status.NOT_FOUND).entity(
-                                                Json.createObjectBuilder().add(
-                                                        "error",
-                                                        "Administrator "
-                                                        + email
-                                                        + " cannot be added to undiscovered UserGroup "
-                                                        + name).build()).build());
-                    })
-                    .orElse(Response.status(Response.Status.NOT_FOUND).entity(
-                            Json.createObjectBuilder().add("error",
-                                    "Administrator "
-                                    + email
-                                    + " not found and cannot be added to "
-                                    + name).build()).build());
-        } catch (Exception ex) {
 
-            String errmsg = ExceptionHelper.handleException(ex,
-                    "Exception occurs inserting Administrator " + email
-                    + " in UserGroup " + name);
-            LOG.
-                    log(Level.WARNING, errmsg);
-            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    Json.createObjectBuilder().add("error", errmsg).build()).
-                    build();
-        }
+        return super.<UserGroup, String>insertTo(administratorFacade, email,
+                userGroupFacade,
+                name, UserGroup.class,
+                (e, a) ->
+                e.getUserGroups().add(a) & a.getUserAccounts().add(e));
     }
 
     @Path("{email}")
