@@ -77,24 +77,8 @@ public class UserGroupService extends CommonService<UserGroup, String> {
     public Response getUserAccounts(@PathParam("name") String name) {
         LOG.log(Level.INFO,
                 "REST request to get userAccounts of UserGroup : {0}", name);
-        try {
-            return Optional.ofNullable(userGroupFacade.find(name))
-                    .map(result -> Response.status(Response.Status.OK).entity(
-                            result.getUserAccounts()).build())
-                    .orElse(Response.status(Response.Status.NOT_FOUND).entity(
-                            Json.createObjectBuilder().add("error", "UserGroup "
-                                    + name + " not found").build()).build());
-        } catch (Exception ex) {
-
-            String errmsg = ExceptionHelper.handleException(ex,
-                    "Exception occurs providing userAccounts of " + name
-                    + " to administrator");
-            LOG.
-                    log(Level.WARNING, errmsg);
-            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    Json.createObjectBuilder().add("error", errmsg).build()).
-                    build();
-        }
+        return super.provideRelation(userGroupFacade, name,
+                UserGroup::getUserAccounts);
     }
 
     @POST
