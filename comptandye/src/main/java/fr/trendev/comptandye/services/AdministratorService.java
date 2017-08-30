@@ -85,25 +85,9 @@ public class AdministratorService extends CommonService<Administrator, String> {
     public Response getUserGroups(@PathParam("email") String email) {
         LOG.log(Level.INFO,
                 "REST request to get userGroups of Administrator : {0}", email);
-        try {
-            return Optional.ofNullable(administratorFacade.find(email))
-                    .map(result -> Response.status(Response.Status.OK).entity(
-                            result.getUserGroups()).build())
-                    .orElse(Response.status(Response.Status.NOT_FOUND).entity(
-                            Json.createObjectBuilder().add("error",
-                                    "Administrator "
-                                    + email + " not found").build()).build());
-        } catch (Exception ex) {
-
-            String errmsg = ExceptionHelper.handleException(ex,
-                    "Exception occurs providing userGroups of " + email
-                    + " to administrator");
-            LOG.
-                    log(Level.WARNING, errmsg);
-            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    Json.createObjectBuilder().add("error", errmsg).build()).
-                    build();
-        }
+        return super.provideRelation(administratorFacade,
+                email,
+                Administrator::getUserGroups);
     }
 
     @POST
