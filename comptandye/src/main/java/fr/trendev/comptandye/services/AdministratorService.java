@@ -187,7 +187,7 @@ public class AdministratorService extends CommonService<Administrator, String> {
     @Path("{email}")
     @DELETE
     public Response delete(@PathParam("email") String email) {
-        LOG.log(Level.INFO, "NEW Deleting Administrator {0}", email);
+        LOG.log(Level.INFO, "Deleting Administrator {0}", email);
         return super.delete(administratorFacade, email, e -> {
             e.getUserGroups().forEach(grp -> {
                 grp.getUserAccounts().remove(e);

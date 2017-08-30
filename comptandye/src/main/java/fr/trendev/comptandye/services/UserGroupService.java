@@ -7,13 +7,10 @@ package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
-import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.json.Json;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -103,36 +100,15 @@ public class UserGroupService extends CommonService<UserGroup, String> {
     @DELETE
     public Response delete(@PathParam("name") String name) {
         LOG.log(Level.INFO, "Deleting UserGroup {0}", name);
-        try {
-            return Optional.ofNullable(userGroupFacade.find(name))
-                    .map(result -> {
-                        result.getUserAccounts().forEach(u -> {
-                            u.getUserGroups().remove(result);
-                            LOG.log(Level.INFO,
-                                    "User {0} removed from UserGroup {1}",
-                                    new Object[]{u.getEmail(), name});
-                        });
-                        userGroupFacade.remove(result);
-                        LOG.log(Level.INFO, "UserGroup {0} deleted", name);
-                        return Response.ok().
-                                build();
-                    })
-                    .orElse(Response.status(Response.Status.NOT_FOUND).entity(
-                            Json.createObjectBuilder().add("error",
-                                    "UserGroup "
-                                    + name + " not found").build()).
-                            build());
 
-        } catch (Exception ex) {
-
-            String errmsg = ExceptionHelper.handleException(ex,
-                    "Exception occurs deleting UserGroup " + name);
-            LOG.
-                    log(Level.WARNING, errmsg);
-            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    Json.createObjectBuilder().add("error", errmsg).build()).
-                    build();
-        }
+        return super.delete(userGroupFacade, name, e -> {
+            e.getUserAccounts().forEach(u -> {
+                u.getUserGroups().remove(e);
+                LOG.log(Level.INFO,
+                        "User {0} removed from UserGroup {1}",
+                        new Object[]{u.getEmail(), name});
+            });
+        });
     }
 
 }
