@@ -8,9 +8,6 @@ package fr.trendev.comptandye.services;
 import fr.trendev.comptandye.entities.BillPK;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +17,6 @@ import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
-import javax.json.JsonObject;
 import javax.ws.rs.core.Response;
 
 /**
@@ -39,24 +35,10 @@ public abstract class AbstractCommonService<E, P> {
 
     private String prettyPrintPK(P pk) {
         if (pk instanceof BillPK) {
+            //TODO : handle the specific case of Bill with BillPK
             BillPK key = (BillPK) pk;
-            //TODO : format using StringBuilder...
-            JsonObject jsonObject = Json.createObjectBuilder()
-                    .add("reference", key.getReference())
-                    .add("deliveryDate", key.getDeliveryDate().toString())
-                    .add("professional", key.getProfessional())
-                    .build();
-            String jsonString = pk.toString();
-            try (Writer writer = new StringWriter()) {
-                Json.createWriter(writer).write(jsonObject);
-                jsonString = writer.toString();
-            } catch (IOException ex) {
-                getLogger().log(Level.WARNING,
-                        "PrimaryKey {0} cannot be pretty printed : {1}",
-                        new Object[]{pk, ex});
-            } finally {
-                return jsonString;
-            }
+            StringBuilder sb = new StringBuilder();
+            return sb.toString();
 
         } else {
             return pk.toString();
