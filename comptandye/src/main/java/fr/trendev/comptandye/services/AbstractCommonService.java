@@ -317,7 +317,7 @@ public abstract class AbstractCommonService<E, P> {
         }
     }
 
-    private String stringify(E entity) {
+    protected String stringify(E entity) {
         String jsonString = entity.toString();
         try {
             jsonString = om.writeValueAsString(entity);
