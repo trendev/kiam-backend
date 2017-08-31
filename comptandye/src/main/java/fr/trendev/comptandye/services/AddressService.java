@@ -65,7 +65,7 @@ public class AddressService extends AbstractCommonService<Address, Long> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response find(@PathParam("id") Long id,
-            @QueryParam("refresh") Boolean refresh) {
+            @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get Address : {0}", id);
         return super.find(addressFacade, id, refresh);
     }

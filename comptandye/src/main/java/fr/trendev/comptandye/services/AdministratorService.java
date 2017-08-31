@@ -72,7 +72,7 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response find(@PathParam("email") String email,
-            @QueryParam("refresh") Boolean refresh) {
+            @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get Administrator : {0}", email);
         return super.find(administratorFacade, email, refresh);
     }

@@ -64,7 +64,7 @@ public class UserGroupService extends AbstractCommonService<UserGroup, String> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response find(@PathParam("name") String name,
-            @QueryParam("refresh") Boolean refresh) {
+            @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get UserGroup : {0}", name);
         return super.find(userGroupFacade, name, refresh);
     }
