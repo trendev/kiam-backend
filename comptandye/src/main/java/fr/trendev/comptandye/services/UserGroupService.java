@@ -82,7 +82,7 @@ public class UserGroupService extends AbstractCommonService<UserGroup, String> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response post(UserGroup entity) {
         LOG.log(Level.INFO, "Creating UserGroup {0}", entity.getName());
-        return super.post(entity, userGroupFacade, entity.getName(), e -> {
+        return super.post(entity, userGroupFacade, e -> {
         });
     }
 

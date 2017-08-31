@@ -92,7 +92,7 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
     public Response post(Administrator entity) {
         LOG.log(Level.INFO, "Creating Administrator {0}", entity.getEmail());
 
-        return super.post(entity, administratorFacade, entity.getEmail(),
+        return super.post(entity, administratorFacade,
                 e -> {
             //generates an UUID if no one is provided
             if (e.getUuid() == null || e.getUuid().isEmpty()) {

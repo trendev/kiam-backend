@@ -5,6 +5,8 @@
  */
 package fr.trendev.comptandye.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.trendev.comptandye.entities.BillPK;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
@@ -16,6 +18,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.inject.Inject;
 import javax.json.Json;
 import javax.ws.rs.core.Response;
 
@@ -24,6 +27,9 @@ import javax.ws.rs.core.Response;
  * @author jsie
  */
 public abstract class AbstractCommonService<E, P> {
+
+    @Inject
+    ObjectMapper om;
 
     private final Class<E> entityClass;
 
@@ -145,11 +151,17 @@ public abstract class AbstractCommonService<E, P> {
         }
     }
 
-    protected Response post(E entity, AbstractFacade<E, P> facade, P pk,
+    protected Response post(E entity, AbstractFacade<E, P> facade,
             Consumer<E> initAction) {
+
+        String jsonString = this.stringify(entity);
+
         try {
             initAction.accept(entity);
             facade.create(entity);
+            facade.flush();
+            facade.refresh(entity);
+            P pk = facade.getIdentifier(entity);
             getLogger().log(Level.INFO, entityClass.getSimpleName()
                     + " {0} created", prettyPrintPK(pk));
             return Response.created(new URI("/restapi/" + entityClass.
@@ -161,7 +173,7 @@ public abstract class AbstractCommonService<E, P> {
                     "Exception occurs creating "
                     + entityClass.getSimpleName()
                     + " "
-                    + prettyPrintPK(pk));
+                    + jsonString);
             getLogger().log(Level.WARNING, errmsg);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).
@@ -303,5 +315,16 @@ public abstract class AbstractCommonService<E, P> {
                     Json.createObjectBuilder().add("error", errmsg).build()).
                     build();
         }
+    }
+
+    private String stringify(E entity) {
+        String jsonString = entity.toString();
+        try {
+            jsonString = om.writeValueAsString(entity);
+        } catch (JsonProcessingException ex) {
+            getLogger().log(Level.WARNING,
+                    "An entity can not be produced as a String", ex);
+        }
+        return jsonString;
     }
 }
