@@ -161,8 +161,10 @@ public class DemoConfigureBean implements Serializable {
         em.persist(pro);
         em.persist(ind);
 
-        sylvioc.getUserGroups().forEach(g -> g.getUserAccounts().remove(
-                sylvioc));
+        sylvioc.getUserGroups().forEach(g -> {
+            g.getUserAccounts().remove(sylvioc);
+            em.merge(g);
+        });
 
         em.remove(sylvioc);
 
