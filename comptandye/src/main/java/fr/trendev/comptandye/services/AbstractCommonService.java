@@ -37,7 +37,7 @@ public abstract class AbstractCommonService<E, P> {
         if (pk instanceof BillPK) {
             BillPK key = (BillPK) pk;
             StringBuilder sb = new StringBuilder();
-            sb.append("bill?");
+            sb.append("pk?");
             sb.append("reference=").append(key.getReference()).append("&");
             sb.append("deliveryDate=").append(key.getDeliveryDate().getTime()).
                     append("&");
