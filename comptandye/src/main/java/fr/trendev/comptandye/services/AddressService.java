@@ -83,7 +83,13 @@ public class AddressService extends AbstractCommonService<Address, Long> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(Address entity) {
         LOG.log(Level.INFO, "Updating Address {0}", entity.getId());
-        return super.put(entity, addressFacade, entity.getId(), e -> {
+        return super.put(entity, addressFacade, entity.getId(),
+                e -> {
+            e.setStreet(entity.getStreet());
+            e.setOptional(entity.getOptional());
+            e.setPostalCode(entity.getPostalCode());
+            e.setCity(entity.getCity());
+            e.setCountry(entity.getCountry());
         });
     }
 
