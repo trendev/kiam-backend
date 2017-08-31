@@ -19,6 +19,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -62,9 +63,10 @@ public class UserGroupService extends AbstractCommonService<UserGroup, String> {
     @Path("{name}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response find(@PathParam("name") String name) {
+    public Response find(@PathParam("name") String name,
+            @QueryParam("refresh") Boolean refresh) {
         LOG.log(Level.INFO, "REST request to get UserGroup : {0}", name);
-        return super.find(userGroupFacade, name);
+        return super.find(userGroupFacade, name, refresh);
     }
 
     @Path("{name}/userAccounts")

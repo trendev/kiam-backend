@@ -27,18 +27,18 @@ import javax.ws.rs.core.Response;
  * @author jsie
  */
 public abstract class AbstractCommonService<E, P> {
-
+    
     @Inject
     ObjectMapper om;
-
+    
     private final Class<E> entityClass;
-
+    
     public AbstractCommonService(Class<E> entityClass) {
         this.entityClass = entityClass;
     }
-
+    
     protected abstract Logger getLogger();
-
+    
     private String prettyPrintPK(P pk) {
         if (pk instanceof BillPK) {
             BillPK key = (BillPK) pk;
@@ -49,12 +49,12 @@ public abstract class AbstractCommonService<E, P> {
                     append("&");
             sb.append("professional=").append(key.getProfessional());
             return sb.toString();
-
+            
         } else {
             return pk.toString();
         }
     }
-
+    
     protected Response findAll(AbstractFacade<E, P> facade,
             Function<AbstractFacade<E, P>, List<E>> findAllFunction) {
         try {
@@ -62,12 +62,12 @@ public abstract class AbstractCommonService<E, P> {
             getLogger().log(Level.INFO, "{0} list size = {1}", new Object[]{
                 entityClass.getSimpleName(), list.
                 size()});
-
+            
             return Response.status(Response.Status.OK)
                     .entity(list).
                     build();
         } catch (Exception ex) {
-
+            
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs providing " + entityClass.getSimpleName()
                     + " list");
@@ -77,18 +77,18 @@ public abstract class AbstractCommonService<E, P> {
                     build();
         }
     }
-
+    
     protected Response count(AbstractFacade<E, P> facade) {
         try {
             Long count = facade.count();
             getLogger().log(Level.INFO, "Total Count of {0} = {1}",
                     new Object[]{entityClass.getSimpleName(), count});
-
+            
             return Response.status(Response.Status.OK)
                     .entity(count).
                     build();
         } catch (Exception ex) {
-
+            
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs providing " + entityClass.getSimpleName()
                     + " count");
@@ -98,13 +98,18 @@ public abstract class AbstractCommonService<E, P> {
                     build();
         }
     }
-
+    
     protected Response find(AbstractFacade<E, P> facade,
-            P pk) {
+            P pk, boolean refresh) {
         try {
             return Optional.ofNullable(facade.find(pk))
-                    .map(result -> Response.status(Response.Status.OK).entity(
-                            result).build())
+                    .map(result -> {
+                        if (refresh) {
+                            facade.refresh(result);
+                        }
+                        return Response.status(Response.Status.OK).
+                                entity(result).build();
+                    })
                     .orElse(Response.status(Response.Status.NOT_FOUND).entity(
                             Json.createObjectBuilder().add("error",
                                     entityClass.getSimpleName() + " "
@@ -112,7 +117,7 @@ public abstract class AbstractCommonService<E, P> {
                                     build()).
                             build());
         } catch (Exception ex) {
-
+            
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs providing " + entityClass.getSimpleName()
                     + " "
@@ -123,11 +128,11 @@ public abstract class AbstractCommonService<E, P> {
                     build();
         }
     }
-
+    
     protected <R> Response provideRelation(AbstractFacade<E, P> facade,
             P pk, Function<E, R> getFunction) {
         try {
-
+            
             return Optional.ofNullable(facade.find(pk))
                     .map(result -> Response.status(Response.Status.OK).entity(
                             getFunction.apply(result)).build())
@@ -138,7 +143,7 @@ public abstract class AbstractCommonService<E, P> {
                                     build()).
                             build());
         } catch (Exception ex) {
-
+            
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs providing a relationship of "
                     + entityClass.getSimpleName()
@@ -150,12 +155,12 @@ public abstract class AbstractCommonService<E, P> {
                     build();
         }
     }
-
+    
     protected Response post(E entity, AbstractFacade<E, P> facade,
             Consumer<E> initAction) {
-
+        
         String jsonString = this.stringify(entity);
-
+        
         try {
             initAction.accept(entity);
             facade.create(entity);
@@ -168,7 +173,7 @@ public abstract class AbstractCommonService<E, P> {
                     getSimpleName() + "/" + prettyPrintPK(pk))).entity(entity).
                     build();
         } catch (Exception ex) {
-
+            
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs creating "
                     + entityClass.getSimpleName()
@@ -180,7 +185,7 @@ public abstract class AbstractCommonService<E, P> {
                     build();
         }
     }
-
+    
     protected Response put(E entity, AbstractFacade<E, P> facade, P pk,
             Consumer<E> updateAction) {
         try {
@@ -200,7 +205,7 @@ public abstract class AbstractCommonService<E, P> {
                                     build()).
                             build());
         } catch (Exception ex) {
-
+            
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs updating "
                     + entityClass.getSimpleName()
@@ -212,7 +217,7 @@ public abstract class AbstractCommonService<E, P> {
                     build();
         }
     }
-
+    
     protected Response delete(AbstractFacade<E, P> facade, P pk,
             Consumer<E> deleteAction) {
         try {
@@ -231,7 +236,7 @@ public abstract class AbstractCommonService<E, P> {
                                     build()).
                             build());
         } catch (Exception ex) {
-
+            
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs deleting "
                     + entityClass.getSimpleName()
@@ -243,7 +248,7 @@ public abstract class AbstractCommonService<E, P> {
                     build();
         }
     }
-
+    
     protected <A, U> Response manageAssociation(
             AssociationManagementEnum option,
             AbstractFacade<E, P> entityFacade,
@@ -302,7 +307,7 @@ public abstract class AbstractCommonService<E, P> {
                                     + " "
                                     + associationPk).build()).build());
         } catch (Exception ex) {
-
+            
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs " + (option.equals(
                             AssociationManagementEnum.INSERT) ? "inserting" : "removing")
@@ -316,7 +321,7 @@ public abstract class AbstractCommonService<E, P> {
                     build();
         }
     }
-
+    
     protected String stringify(E entity) {
         String jsonString = entity.toString();
         try {

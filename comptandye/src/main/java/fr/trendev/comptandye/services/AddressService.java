@@ -19,6 +19,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -63,9 +64,10 @@ public class AddressService extends AbstractCommonService<Address, Long> {
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response find(@PathParam("id") Long id) {
+    public Response find(@PathParam("id") Long id,
+            @QueryParam("refresh") Boolean refresh) {
         LOG.log(Level.INFO, "REST request to get Address : {0}", id);
-        return super.find(addressFacade, id);
+        return super.find(addressFacade, id, refresh);
     }
 
     @POST

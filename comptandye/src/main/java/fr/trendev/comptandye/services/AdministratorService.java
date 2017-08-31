@@ -23,6 +23,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -70,9 +71,10 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
     @Path("{email}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response find(@PathParam("email") String email) {
+    public Response find(@PathParam("email") String email,
+            @QueryParam("refresh") Boolean refresh) {
         LOG.log(Level.INFO, "REST request to get Administrator : {0}", email);
-        return super.find(administratorFacade, email);
+        return super.find(administratorFacade, email, refresh);
     }
 
     @Path("{email}/userGroups")
