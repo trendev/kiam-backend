@@ -11,7 +11,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -62,5 +64,15 @@ public class AddressService extends AbstractCommonService<Address, Long> {
     public Response find(@PathParam("id") Long id) {
         LOG.log(Level.INFO, "REST request to get Address : {0}", id);
         return super.find(addressFacade, id);
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response post(Address entity) {
+        LOG.log(Level.INFO, "Creating Address {0}", super.stringify(entity));
+
+        return super.post(entity, addressFacade, e -> {
+        });
     }
 }
