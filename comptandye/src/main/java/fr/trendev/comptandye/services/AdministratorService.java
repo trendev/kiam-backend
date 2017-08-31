@@ -159,6 +159,7 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
         return super.delete(administratorFacade, email, e -> {
             e.getUserGroups().forEach(grp -> {
                 grp.getUserAccounts().remove(e);
+                userGroupFacade.edit(grp);
                 LOG.log(Level.INFO,
                         "Administrator {0} removed from UserGroup {1}",
                         new Object[]{email, grp.getName()});
