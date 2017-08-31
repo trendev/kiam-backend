@@ -47,4 +47,11 @@ public class AddressService extends AbstractCommonService<Address, Long> {
         LOG.log(Level.INFO, "Providing the Address list");
         return super.findAll(addressFacade, facade -> facade.findAll());
     }
+
+    @Path("count")
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response count() {
+        return super.count(addressFacade);
+    }
 }
