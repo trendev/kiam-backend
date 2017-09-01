@@ -41,12 +41,12 @@ public class BusinessTest {
 
         Business instance = new Business();
 
-        assert instance.getName() == null;
+        assert instance.getDesignation() == null;
 
         String name = "R&D";
         instance = new Business(name);
 
-        assert name.equals(instance.getName());
+        assert name.equals(instance.getDesignation());
 
     }
 

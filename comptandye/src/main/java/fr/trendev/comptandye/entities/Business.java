@@ -13,21 +13,21 @@ import javax.persistence.Id;
 public class Business {
 
     @Id
-    private String name;
+    private String designation;
 
-    public Business(String name) {
-        this.name = name;
+    public Business(String designation) {
+        this.designation = designation;
     }
 
     public Business() {
     }
 
-    public String getName() {
-        return this.name;
+    public String getDesignation() {
+        return this.designation;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDesignation(String designation) {
+        this.designation = designation;
     }
 
 }
