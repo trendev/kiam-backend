@@ -50,7 +50,7 @@ public class UserGroupService extends AbstractCommonService<UserGroup, String> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the UserGroup list");
-        return super.findAll(userGroupFacade, facade -> facade.findAll());
+        return super.findAll(userGroupFacade);
     }
 
     @Path("count")

@@ -56,10 +56,9 @@ public abstract class AbstractCommonService<E, P> {
         }
     }
 
-    protected Response findAll(AbstractFacade<E, P> facade,
-            Function<AbstractFacade<E, P>, List<E>> findAllFunction) {
+    protected Response findAll(AbstractFacade<E, P> facade) {
         try {
-            List<E> list = findAllFunction.apply(facade);
+            List<E> list = facade.findAll();
             getLogger().log(Level.INFO, "{0} list size = {1}", new Object[]{
                 entityClass.getSimpleName(), list.
                 size()});

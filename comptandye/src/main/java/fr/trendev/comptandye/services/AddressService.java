@@ -51,7 +51,7 @@ public class AddressService extends AbstractCommonService<Address, Long> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Address list");
-        return super.findAll(addressFacade, facade -> facade.findAll());
+        return super.findAll(addressFacade);
     }
 
     @Path("count")

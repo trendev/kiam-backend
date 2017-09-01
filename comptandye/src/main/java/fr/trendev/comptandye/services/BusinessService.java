@@ -50,7 +50,7 @@ public class BusinessService extends AbstractCommonService<Business, String> {
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Business list");
         return super.
-                findAll(businessFacade, facade -> facade.findAll());
+                findAll(businessFacade);
     }
 
     @Path("count")

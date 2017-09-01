@@ -52,7 +52,7 @@ public class CustomerDetailsService extends AbstractCommonService<CustomerDetail
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the CustomerDetails list");
         return super.
-                findAll(customerDetailsFacade, facade -> facade.findAll());
+                findAll(customerDetailsFacade);
     }
 
     @Path("count")

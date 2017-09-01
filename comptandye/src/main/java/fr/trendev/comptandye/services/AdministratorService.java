@@ -58,7 +58,7 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Administrator list");
-        return super.findAll(administratorFacade, facade -> facade.findAll());
+        return super.findAll(administratorFacade);
     }
 
     @Path("count")
