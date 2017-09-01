@@ -8,8 +8,8 @@ package fr.trendev.comptandye.beans;
 import fr.trendev.comptandye.entities.Address;
 import fr.trendev.comptandye.entities.Administrator;
 import fr.trendev.comptandye.entities.Business;
-import fr.trendev.comptandye.entities.ClientBill;
 import fr.trendev.comptandye.entities.Individual;
+import fr.trendev.comptandye.entities.IndividualBill;
 import fr.trendev.comptandye.entities.Payment;
 import fr.trendev.comptandye.entities.PaymentMode;
 import fr.trendev.comptandye.entities.Professional;
@@ -106,7 +106,7 @@ public class DemoConfigureBean implements Serializable {
         /**
          * Creates the first professional
          */
-        Professional vgay = new Professional("vanessa.gay@gmail.com",
+        Professional vanessa = new Professional("vanessa.gay@gmail.com",
                 "EUrVrX4nfmYYFxpMyRX93OlkJxNZv9mkMGfirZKbhWI=", "Vaness",
                 UUIDGenerator.generate("PRO_", true));
 
@@ -118,8 +118,8 @@ public class DemoConfigureBean implements Serializable {
         /**
          * Adds the first user to the professional group and vice versa
          */
-        vgay.getUserGroups().add(pro);
-        pro.getUserAccounts().add(vgay);
+        vanessa.getUserGroups().add(pro);
+        pro.getUserAccounts().add(vanessa);
 
         /**
          * Creates the Individual group, empty on the current version of the
@@ -154,19 +154,15 @@ public class DemoConfigureBean implements Serializable {
             i.getUserGroups().add(ind);
         });
 
+        vanessa.getIndividuals().add(sylvioc);
+        sylvioc.getProfessionals().add(vanessa);
+
         /**
          * Store the groups and their contents
          */
         em.persist(adminGroup);
         em.persist(pro);
         em.persist(ind);
-
-        sylvioc.getUserGroups().forEach(g -> {
-            g.getUserAccounts().remove(sylvioc);
-            em.merge(g);
-        });
-
-        em.remove(sylvioc);
 
         Address skonxAddress = new Address("79 avenue de la jonchere",
                 "Appartement A113",
@@ -249,16 +245,19 @@ public class DemoConfigureBean implements Serializable {
         try {
             Professional vanessa = em.find(Professional.class,
                     "vanessa.gay@gmail.com");
+            Individual sylvioc = em.find(Individual.class,
+                    "sylvie.gay@gmail.com");
             logger.log(Level.WARNING, "Creating a bill for {0} / {1} / {2}",
                     new Object[]{vanessa.
                                 getEmail(), vanessa.getUsername(), vanessa.
                         getUuid()});
 
-            ClientBill bill = new ClientBill("Ref#12345", new Date(), 10000, 0,
+            IndividualBill bill = new IndividualBill("Ref#12345", new Date(),
+                    10000, 0,
                     new Date(),
                     Arrays.asList("Cool", "sympa"),
                     vanessa, new LinkedList<>(), Arrays.asList(new Service(
-                            "un truc long", 10000, 60)), null, null);
+                            "un truc long", 10000, 60)), sylvioc);
 
             Payment pm = new Payment(10000, "EUR", em.find(PaymentMode.class,
                     "CB"));
