@@ -12,12 +12,12 @@ import javax.persistence.OneToOne;
  */
 @Entity
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class InvidualBill extends Bill {
+public class IndividualBill extends Bill {
 
     @OneToOne(targetEntity = Individual.class)
     private Individual individual;
 
-    public InvidualBill(String reference, Date deliveryDate, int amount,
+    public IndividualBill(String reference, Date deliveryDate, int amount,
             int discount, Date paymentDate, List comments,
             Professional professional, List payments, List offerings,
             Individual individual) {
@@ -26,7 +26,7 @@ public class InvidualBill extends Bill {
         this.individual = individual;
     }
 
-    public InvidualBill() {
+    public IndividualBill() {
     }
 
     public Individual getIndividual() {

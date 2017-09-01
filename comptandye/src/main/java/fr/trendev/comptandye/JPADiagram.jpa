@@ -851,7 +851,7 @@
         </jpa:nq>
         <jpa:discriminator-column/>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="InvidualBillPK" abs="false" class="InvidualBill" superclassId="_1490178979567" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490180671085">
+    <jpa:entity compositePrimaryKeyClass="IndividualBillPK" abs="false" class="IndividualBill" superclassId="_1490178979567" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490180671085">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490181067111504</jpa:a>
             <jpa:a>_1490181108037605</jpa:a>
@@ -875,8 +875,8 @@ import java.util.List;</jpa:snp>
                 <jpa:xm nil="false" req="false"/>
             </jpa:one-to-one>
         </jpa:attributes>
-        <jpa:nq e="false" name="InvidualBill.findAll">
-            <jpa:query>Select e from InvidualBill e</jpa:query>
+        <jpa:nq e="false" name="IndividualBill.findAll">
+            <jpa:query>Select e from IndividualBill e</jpa:query>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="ClientBillPK" abs="false" class="ClientBill" superclassId="_1490178979567" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490180682743">

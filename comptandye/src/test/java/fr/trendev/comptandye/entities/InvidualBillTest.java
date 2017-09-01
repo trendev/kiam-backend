@@ -43,11 +43,11 @@ public class InvidualBillTest {
     }
 
     /**
-     * Test of getIndividual method, of class InvidualBill.
+     * Test of getIndividual method, of class IndividualBill.
      */
     @Test
     public void testConstructors() {
-        InvidualBill instance = new InvidualBill();
+        IndividualBill instance = new IndividualBill();
         assert instance.getReference() == null;
         assert instance.getDeliveryDate() == null;
         assert instance.getAmount() == 0;
@@ -80,7 +80,7 @@ public class InvidualBillTest {
                 .mapToObj(i -> new Service("Service #" + i, 1000, 10))
                 .collect(Collectors.toList());
 
-        instance = new InvidualBill(reference, deliveryDate, amount, discount,
+        instance = new IndividualBill(reference, deliveryDate, amount, discount,
                 paymentDate,
                 comments, professional, payments, offerings,
                 new Individual());

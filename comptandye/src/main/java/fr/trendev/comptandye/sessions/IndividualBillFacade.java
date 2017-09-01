@@ -1,7 +1,7 @@
 package fr.trendev.comptandye.sessions;
 
 import fr.trendev.comptandye.entities.BillPK;
-import fr.trendev.comptandye.entities.InvidualBill;
+import fr.trendev.comptandye.entities.IndividualBill;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -9,7 +9,7 @@ import javax.persistence.EntityManager;
 
 @Stateless
 @Named("invidualBill")
-public class InvidualBillFacade extends AbstractFacade<InvidualBill, BillPK> {
+public class IndividualBillFacade extends AbstractFacade<IndividualBill, BillPK> {
 
     @Inject
     private EntityManager em;
@@ -19,8 +19,8 @@ public class InvidualBillFacade extends AbstractFacade<InvidualBill, BillPK> {
         return em;
     }
 
-    public InvidualBillFacade() {
-        super(InvidualBill.class);
+    public IndividualBillFacade() {
+        super(IndividualBill.class);
     }
 
 }
