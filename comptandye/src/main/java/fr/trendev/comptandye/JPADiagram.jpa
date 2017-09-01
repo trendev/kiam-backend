@@ -511,7 +511,6 @@
             <jpa:basic attribute-type="String" v="true" xvt="" name="picturePath" id="_149010168028264">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:lob/>
             </jpa:basic>
             <jpa:element-collection target-class="java.lang.String" collection-type="java.util.List" v="true" xvt="" name="comments" dv="new ArrayList&lt;&gt;()" id="_149098087463456">
                 <jpa:xwm nil="false" req="false"/>

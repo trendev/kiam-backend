@@ -8,6 +8,7 @@ package fr.trendev.comptandye.beans;
 import fr.trendev.comptandye.entities.Address;
 import fr.trendev.comptandye.entities.Administrator;
 import fr.trendev.comptandye.entities.Business;
+import fr.trendev.comptandye.entities.CustomerDetails;
 import fr.trendev.comptandye.entities.Individual;
 import fr.trendev.comptandye.entities.IndividualBill;
 import fr.trendev.comptandye.entities.Payment;
@@ -20,6 +21,7 @@ import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
@@ -109,6 +111,12 @@ public class DemoConfigureBean implements Serializable {
         Professional vanessa = new Professional("vanessa.gay@gmail.com",
                 "EUrVrX4nfmYYFxpMyRX93OlkJxNZv9mkMGfirZKbhWI=", "Vaness",
                 UUIDGenerator.generate("PRO_", true));
+        Calendar cal = Calendar.getInstance();
+        cal.set(1983, 9, 25);
+        vanessa.setCustomerDetails(new CustomerDetails("Vanessa", "Gay",
+                "Vaness", "0675295422", cal.getTime(), 'F', "FS path", Arrays.
+                asList(
+                        "Fun", "Pro", "Living with a nice guy", "3 children")));
 
         /**
          * Creates the Professional user group
