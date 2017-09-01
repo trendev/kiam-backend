@@ -44,17 +44,17 @@ import javax.persistence.PersistenceContext;
 @Singleton
 @Startup
 public class DemoConfigureBean implements Serializable {
-
+    
     private static final Logger logger = Logger.getLogger(
             DemoConfigureBean.class.
                     getName());
-
+    
     @PersistenceContext(unitName = "DEFAULT_PU")
     private EntityManager em;
-
+    
     @Inject
     UserGroupFacade userGroupFacade;
-
+    
     @PostConstruct
     public void init() {
         this.clean();
@@ -68,7 +68,7 @@ public class DemoConfigureBean implements Serializable {
 //        this.displayUserGroupDetails();
         this.createBills();
     }
-
+    
     private void initUsersAndGroups() {
 
         /**
@@ -80,11 +80,11 @@ public class DemoConfigureBean implements Serializable {
         Administrator trendevfr = new Administrator("trendevfr@gmail.com",
                 "ts15qkBmihdtvmkKXPgVmbPGeyQU6aKd5XNd5HwOzu0=",
                 "trendevfr_admin", UUIDGenerator.generate("ADMIN_", true));
-
+        
         Administrator comptandye = new Administrator("comptandye@gmail.com",
                 "mZWR4R0bp5EPs9xfOwUPu3n/06LOL+wHK6BuUBsHgQM=",
                 "comptandye_admin", UUIDGenerator.generate("ADMIN_", true));
-
+        
         Administrator jsie = new Administrator("julien.sie@gmail.com",
                 "RrYJsV8xV7fsJkzgrFqGwiZzvIGEFan6e0ANYPcJhrI=", "jsie",
                 UUIDGenerator.generate("ADMIN_", true));
@@ -112,7 +112,7 @@ public class DemoConfigureBean implements Serializable {
                 "EUrVrX4nfmYYFxpMyRX93OlkJxNZv9mkMGfirZKbhWI=", "Vaness",
                 UUIDGenerator.generate("PRO_", true));
         Calendar cal = Calendar.getInstance();
-        cal.set(1983, 9, 25);
+        cal.set(1983, 9, 25, 0, 0, 0);
         vanessa.setCustomerDetails(new CustomerDetails("Vanessa", "Gay",
                 "Vaness", "0675295422", cal.getTime(), 'F', "FS path", Arrays.
                 asList(
@@ -135,13 +135,13 @@ public class DemoConfigureBean implements Serializable {
          *
          */
         UserGroup ind = new UserGroup("Individual", "Individual User Group");
-
+        
         Individual skonx = new Individual();
         skonx.setEmail("skonx2006@gmail.com");
-
+        
         Individual sylvioc = new Individual();
         sylvioc.setEmail("sylvie.gay@gmail.com");
-
+        
         List<Individual> individuals = IntStream
                 .range(0, 10)
                 .mapToObj(i -> new Individual("hank.moody-" + (i + 1)
@@ -150,18 +150,18 @@ public class DemoConfigureBean implements Serializable {
                         "hankmoody_" + (i + 1), UUIDGenerator.
                                 generate("IND_", true)))
                 .collect(Collectors.toList());
-
+        
         ind.getUserAccounts().add(skonx);
         skonx.getUserGroups().add(ind);
-
+        
         ind.getUserAccounts().add(sylvioc);
         sylvioc.getUserGroups().add(ind);
-
+        
         individuals.forEach(i -> {
             ind.getUserAccounts().add(i);
             i.getUserGroups().add(ind);
         });
-
+        
         vanessa.getIndividuals().add(sylvioc);
         sylvioc.getProfessionals().add(vanessa);
 
@@ -171,38 +171,38 @@ public class DemoConfigureBean implements Serializable {
         em.persist(adminGroup);
         em.persist(pro);
         em.persist(ind);
-
+        
         Address skonxAddress = new Address("79 avenue de la jonchere",
                 "Appartement A113",
                 "77600", "Chanteloup-en-Brie");
-
+        
         em.persist(skonxAddress);
         skonx.setAddress(skonxAddress);
-
+        
         em.merge(skonx);
-
+        
         em.flush();
         if (em.contains(skonxAddress)) {
             em.refresh(skonxAddress);
             logger.log(Level.INFO, "Id of Skonx Address = " + skonxAddress.
                     getId());
         }
-
+        
     }
-
+    
     private void displayUserGroupDetails() {
         List<UserGroup> userGroup = userGroupFacade.findAll();
         userGroup.forEach(group -> {
             logger.info("## GROUP ##");
             logger.log(Level.INFO, "Name = {0}", group.getName());
-
+            
             logger.log(Level.INFO, "Description = {0}", group.getDescription());
-
+            
             int n = group.getUserAccounts().size();
             logger.
                     log(Level.INFO, "{0} User{1}", new Object[]{n,
                 n > 1 ? "s" : ""});
-
+            
             if (n > 0) {
                 logger.info("Users id: ");
             }
@@ -210,14 +210,14 @@ public class DemoConfigureBean implements Serializable {
                     "- {0}",
                     u.
                             getEmail()));
-
+            
             logger.info("###########");
         });
     }
-
+    
     private void clean() {
         userGroupFacade.findAll().forEach(g -> em.remove(g));
-
+        
         if (em.isJoinedToTransaction()) {
             try {
                 em.flush();
@@ -232,7 +232,7 @@ public class DemoConfigureBean implements Serializable {
         logger.log(Level.INFO, "EntityManager is{0} opened",
                 em.isOpen() ? "" : " not");
     }
-
+    
     private void initPaymentModes() {
         Arrays.
                 asList("CB", "Chèque", "Paylib", "Paypal",
@@ -240,7 +240,7 @@ public class DemoConfigureBean implements Serializable {
                     em.persist(new PaymentMode(pm));
                 });
     }
-
+    
     private void initBusinesses() {
         Arrays.
                 asList("Coiffure", "Esthétique", "Onglerie").stream().forEach(
@@ -248,7 +248,7 @@ public class DemoConfigureBean implements Serializable {
             em.persist(new Business(b));
         });
     }
-
+    
     private void createBills() {
         try {
             Professional vanessa = em.find(Professional.class,
@@ -259,14 +259,14 @@ public class DemoConfigureBean implements Serializable {
                     new Object[]{vanessa.
                                 getEmail(), vanessa.getUsername(), vanessa.
                         getUuid()});
-
+            
             IndividualBill bill = new IndividualBill("Ref#12345", new Date(),
                     10000, 0,
                     new Date(),
                     Arrays.asList("Cool", "sympa"),
                     vanessa, new LinkedList<>(), Arrays.asList(new Service(
                             "un truc long", 10000, 60)), sylvioc);
-
+            
             Payment pm = new Payment(10000, "EUR", em.find(PaymentMode.class,
                     "CB"));
             bill.getPayments().add(pm);
@@ -276,5 +276,5 @@ public class DemoConfigureBean implements Serializable {
             ex.printStackTrace();
         }
     }
-
+    
 }
