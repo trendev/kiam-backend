@@ -108,7 +108,7 @@ public abstract class AbstractCommonService<E, P> {
                         if (refresh) {
                             facade.refresh(result);
                         }
-                        this.detailAdministrator(result);
+                        //this.displayDebugInfo_Administrator(result);
                         return Response.status(Response.Status.OK).
                                 entity(result).build();
                     })
@@ -335,7 +335,7 @@ public abstract class AbstractCommonService<E, P> {
         return jsonString;
     }
 
-    private void detailAdministrator(E result) {
+    private void displayDebugInfo_Administrator(E result) {
         if (result instanceof Administrator) {
             getLogger().log(Level.SEVERE,
                     "Administrator infos : usergroups empty = {0} ; usergroups size = {1}",
