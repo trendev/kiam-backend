@@ -125,9 +125,11 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
         return super.put(entity, administratorFacade, entity.getEmail(), e ->
         {
             //encrypts the provided password
-            String encrypted_pwd = PasswordGenerator.encrypt_SHA256(
-                    entity.getPassword());
-            e.setPassword(encrypted_pwd);
+            if (entity.getPassword() != null && !entity.getPassword().isEmpty()) {
+                String encrypted_pwd = PasswordGenerator.encrypt_SHA256(
+                        entity.getPassword());
+                e.setPassword(encrypted_pwd);
+            }
 
             e.setUsername(entity.getUsername());
             e.setUuid(entity.getUuid());
