@@ -72,7 +72,7 @@ public abstract class AbstractCommonService<E, P> {
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs providing " + entityClass.getSimpleName()
                     + " list");
-            getLogger().log(Level.WARNING, errmsg);
+            getLogger().log(Level.WARNING, errmsg, ex);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).
                     build();
@@ -93,7 +93,7 @@ public abstract class AbstractCommonService<E, P> {
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs providing " + entityClass.getSimpleName()
                     + " count");
-            getLogger().log(Level.WARNING, errmsg);
+            getLogger().log(Level.WARNING, errmsg, ex);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).
                     build();
@@ -124,7 +124,7 @@ public abstract class AbstractCommonService<E, P> {
                     "Exception occurs providing " + entityClass.getSimpleName()
                     + " "
                     + prettyPrintPK(pk));
-            getLogger().log(Level.WARNING, errmsg);
+            getLogger().log(Level.WARNING, errmsg, ex);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).
                     build();
@@ -151,7 +151,7 @@ public abstract class AbstractCommonService<E, P> {
                     + entityClass.getSimpleName()
                     + " "
                     + prettyPrintPK(pk));
-            getLogger().log(Level.WARNING, errmsg);
+            getLogger().log(Level.WARNING, errmsg, ex);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).
                     build();
@@ -181,7 +181,7 @@ public abstract class AbstractCommonService<E, P> {
                     + entityClass.getSimpleName()
                     + " "
                     + jsonString);
-            getLogger().log(Level.WARNING, errmsg);
+            getLogger().log(Level.WARNING, errmsg, ex);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).
                     build();
@@ -213,7 +213,7 @@ public abstract class AbstractCommonService<E, P> {
                     + entityClass.getSimpleName()
                     + " "
                     + prettyPrintPK(pk));
-            getLogger().log(Level.WARNING, errmsg);
+            getLogger().log(Level.WARNING, errmsg, ex);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).
                     build();
@@ -317,7 +317,7 @@ public abstract class AbstractCommonService<E, P> {
                     + " " + entityPk
                     + " in " + associationEntityClass.getSimpleName() + " "
                     + associationPk);
-            getLogger().log(Level.WARNING, errmsg);
+            getLogger().log(Level.WARNING, errmsg, ex);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).
                     build();
@@ -330,7 +330,7 @@ public abstract class AbstractCommonService<E, P> {
             jsonString = om.writeValueAsString(entity);
         } catch (JsonProcessingException ex) {
             getLogger().log(Level.WARNING,
-                    "An entity can not be produced as a String", ex);
+                    "Entity " + entity + " can not be produced as a String", ex);
         }
         return jsonString;
     }
@@ -338,7 +338,7 @@ public abstract class AbstractCommonService<E, P> {
     private void detailAdministrator(E result) {
         if (result instanceof Administrator) {
             getLogger().log(Level.SEVERE,
-                    "Administrator infos : {0} {1}",
+                    "Administrator infos : usergroups empty = {0} ; usergroups size = {1}",
                     new Object[]{((Administrator) result).
                                 getUserGroups().isEmpty(),
                         ((Administrator) result).getUserGroups().
