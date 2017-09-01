@@ -117,6 +117,9 @@ public class DemoConfigureBean implements Serializable {
                 "Vaness", "0675295422", cal.getTime(), 'F', "FS path", Arrays.
                 asList(
                         "Fun", "Pro", "Living with a nice guy", "3 children")));
+        
+        logger.log(Level.INFO, "Vaness's birthdate is " + vanessa.
+                getCustomerDetails().getBirthdate());
 
         /**
          * Creates the Professional user group
