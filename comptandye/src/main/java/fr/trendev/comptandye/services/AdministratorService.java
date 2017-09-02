@@ -154,7 +154,7 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
     @Path("{email}/insertToUserGroup/{name}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public Response insertTo(@PathParam("email") String email,
+    public Response insertToUserGroup(@PathParam("email") String email,
             @PathParam("name") String name) {
         LOG.log(Level.INFO, "Inserting Administrator {0} into UserGroup {1}",
                 new Object[]{email, name});
@@ -171,7 +171,7 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
     @Path("{email}/removeFromUserGroup/{name}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public Response removeFrom(@PathParam("email") String email,
+    public Response removeFromUserGroup(@PathParam("email") String email,
             @PathParam("name") String name) {
         LOG.log(Level.INFO, "Removing Administrator {0} from UserGroup {1}",
                 new Object[]{email, name});

@@ -175,7 +175,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     @Path("{email}/insertToUserGroup/{name}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public Response insertTo(@PathParam("email") String email,
+    public Response insertToUserGroup(@PathParam("email") String email,
             @PathParam("name") String name) {
         LOG.log(Level.INFO, "Inserting Professional {0} into UserGroup {1}",
                 new Object[]{email, name});
@@ -192,7 +192,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     @Path("{email}/removeFromUserGroup/{name}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public Response removeFrom(@PathParam("email") String email,
+    public Response removeFromUserGroup(@PathParam("email") String email,
             @PathParam("name") String name) {
         LOG.log(Level.INFO, "Removing Professional {0} from UserGroup {1}",
                 new Object[]{email, name});
@@ -274,4 +274,38 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 email,
                 Professional::getIndividuals);
     }
+
+//    @Path("{email}/insertToUserGroup/{name}")
+//    @PUT
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Response insertTo(@PathParam("email") String email,
+//            @PathParam("name") String name) {
+//        LOG.log(Level.INFO, "Inserting Professional {0} into UserGroup {1}",
+//                new Object[]{email, name});
+//
+//        return super.<UserGroup, String>manageAssociation(
+//                AssociationManagementEnum.INSERT,
+//                professionalFacade, email,
+//                userGroupFacade,
+//                name, UserGroup.class,
+//                (e, a) ->
+//                e.getUserGroups().add(a) & a.getUserAccounts().add(e));
+//    }
+//
+//    @Path("{email}/removeFromUserGroup/{name}")
+//    @PUT
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Response removeFrom(@PathParam("email") String email,
+//            @PathParam("name") String name) {
+//        LOG.log(Level.INFO, "Removing Professional {0} from UserGroup {1}",
+//                new Object[]{email, name});
+//
+//        return super.<UserGroup, String>manageAssociation(
+//                AssociationManagementEnum.REMOVE,
+//                professionalFacade, email,
+//                userGroupFacade,
+//                name, UserGroup.class,
+//                (e, a) ->
+//                e.getUserGroups().remove(a) & a.getUserAccounts().remove(e));
+//    }
 }
