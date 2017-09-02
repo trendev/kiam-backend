@@ -172,7 +172,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
         });
     }
 
-    @Path("{email}/insertTo/{name}")
+    @Path("{email}/insertToUserGroup/{name}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public Response insertTo(@PathParam("email") String email,
@@ -189,7 +189,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 e.getUserGroups().add(a) & a.getUserAccounts().add(e));
     }
 
-    @Path("{email}/removeFrom/{name}")
+    @Path("{email}/removeFromUserGroup/{name}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public Response removeFrom(@PathParam("email") String email,

@@ -137,7 +137,21 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
         });
     }
 
-    @Path("{email}/insertTo/{name}")
+    @Path("{email}")
+    @DELETE
+    public Response delete(@PathParam("email") String email) {
+        LOG.log(Level.INFO, "Deleting Administrator {0}", email);
+        return super.delete(administratorFacade, email, e -> {
+            e.getUserGroups().forEach(grp -> {
+                grp.getUserAccounts().remove(e);
+                LOG.log(Level.INFO,
+                        "Administrator {0} removed from UserGroup {1}",
+                        new Object[]{email, grp.getName()});
+            });
+        });
+    }
+
+    @Path("{email}/insertToUserGroup/{name}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public Response insertTo(@PathParam("email") String email,
@@ -154,21 +168,7 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
                 e.getUserGroups().add(a) & a.getUserAccounts().add(e));
     }
 
-    @Path("{email}")
-    @DELETE
-    public Response delete(@PathParam("email") String email) {
-        LOG.log(Level.INFO, "Deleting Administrator {0}", email);
-        return super.delete(administratorFacade, email, e -> {
-            e.getUserGroups().forEach(grp -> {
-                grp.getUserAccounts().remove(e);
-                LOG.log(Level.INFO,
-                        "Administrator {0} removed from UserGroup {1}",
-                        new Object[]{email, grp.getName()});
-            });
-        });
-    }
-
-    @Path("{email}/removeFrom/{name}")
+    @Path("{email}/removeFromUserGroup/{name}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public Response removeFrom(@PathParam("email") String email,
