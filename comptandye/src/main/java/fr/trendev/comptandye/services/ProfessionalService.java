@@ -238,4 +238,28 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 email,
                 Professional::getOfferings);
     }
+
+    @Path("{email}/collectiveGroups")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCollectiveGroups(@PathParam("email") String email) {
+        LOG.log(Level.INFO,
+                "REST request to get collectiveGroups of Professional : {0}",
+                email);
+        return super.provideRelation(professionalFacade,
+                email,
+                Professional::getCollectiveGroups);
+    }
+
+    @Path("{email}/expenses")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getExpenses(@PathParam("email") String email) {
+        LOG.log(Level.INFO,
+                "REST request to get expenses of Professional : {0}",
+                email);
+        return super.provideRelation(professionalFacade,
+                email,
+                Professional::getExpenses);
+    }
 }
