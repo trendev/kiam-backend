@@ -8,7 +8,10 @@ package fr.trendev.comptandye.beans;
 import fr.trendev.comptandye.entities.Address;
 import fr.trendev.comptandye.entities.Administrator;
 import fr.trendev.comptandye.entities.Business;
+import fr.trendev.comptandye.entities.Category;
+import fr.trendev.comptandye.entities.CollectiveGroup;
 import fr.trendev.comptandye.entities.CustomerDetails;
+import fr.trendev.comptandye.entities.Expense;
 import fr.trendev.comptandye.entities.Individual;
 import fr.trendev.comptandye.entities.IndividualBill;
 import fr.trendev.comptandye.entities.Payment;
@@ -135,6 +138,15 @@ public class DemoConfigureBean implements Serializable {
         vanessa.getBusinesses().addAll(Arrays.asList(em.find(Business.class,
                 "Esthétique"),
                 em.find(Business.class, "Coiffure")));
+
+        vanessa.getExpenses().add(new Expense("something_expensive", 100000,
+                new Date(), "invoice#1", Arrays.asList(em.
+                        find(PaymentMode.class, "CB"), em.
+                        find(PaymentMode.class, "Espèces"))));
+
+        vanessa.getCollectiveGroups().add(
+                new CollectiveGroup("Senior Residence"));
+        vanessa.getCategories().add(new Category("GOLD clients", "GOLD"));
 
         logger.log(Level.INFO, "Vaness's birthdate is " + vanessa.
                 getCustomerDetails().getBirthdate());
