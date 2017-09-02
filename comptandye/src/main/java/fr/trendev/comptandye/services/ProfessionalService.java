@@ -5,8 +5,10 @@
  */
 package fr.trendev.comptandye.services;
 
+import fr.trendev.comptandye.entities.Individual;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.UserGroup;
+import fr.trendev.comptandye.sessions.IndividualFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.utils.PasswordGenerator;
@@ -40,6 +42,9 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
 
     @Inject
     UserGroupFacade userGroupFacade;
+
+    @Inject
+    IndividualFacade individualFacade;
 
     private static final Logger LOG = Logger.getLogger(
             ProfessionalService.class.
@@ -275,37 +280,41 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 Professional::getIndividuals);
     }
 
-//    @Path("{email}/insertToUserGroup/{name}")
-//    @PUT
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response insertTo(@PathParam("email") String email,
-//            @PathParam("name") String name) {
-//        LOG.log(Level.INFO, "Inserting Professional {0} into UserGroup {1}",
-//                new Object[]{email, name});
-//
-//        return super.<UserGroup, String>manageAssociation(
-//                AssociationManagementEnum.INSERT,
-//                professionalFacade, email,
-//                userGroupFacade,
-//                name, UserGroup.class,
-//                (e, a) ->
-//                e.getUserGroups().add(a) & a.getUserAccounts().add(e));
-//    }
-//
-//    @Path("{email}/removeFromUserGroup/{name}")
-//    @PUT
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response removeFrom(@PathParam("email") String email,
-//            @PathParam("name") String name) {
-//        LOG.log(Level.INFO, "Removing Professional {0} from UserGroup {1}",
-//                new Object[]{email, name});
-//
-//        return super.<UserGroup, String>manageAssociation(
-//                AssociationManagementEnum.REMOVE,
-//                professionalFacade, email,
-//                userGroupFacade,
-//                name, UserGroup.class,
-//                (e, a) ->
-//                e.getUserGroups().remove(a) & a.getUserAccounts().remove(e));
-//    }
+    @Path("{proemail}/buildBusinessRelationship/{indemail}")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response buildBusinessRelationship(
+            @PathParam("proemail") String proemail,
+            @PathParam("indemail") String indemail) {
+        LOG.log(Level.INFO,
+                "Build business relationship between Professional {0} and Individual {1}",
+                new Object[]{proemail, indemail});
+
+        return super.<Individual, String>manageAssociation(
+                AssociationManagementEnum.INSERT,
+                professionalFacade, proemail,
+                individualFacade,
+                indemail, Individual.class,
+                (p, i) ->
+                p.getIndividuals().add(i) & i.getProfessionals().add(p));
+    }
+
+    @Path("{proemail}/endBusinessRelationship/{indemail}")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response endBusinessRelationship(
+            @PathParam("proemail") String proemail,
+            @PathParam("indemail") String indemail) {
+        LOG.log(Level.INFO,
+                "End business relationship between Professional {0} and Individual {1}",
+                new Object[]{proemail, indemail});
+
+        return super.<Individual, String>manageAssociation(
+                AssociationManagementEnum.REMOVE,
+                professionalFacade, proemail,
+                individualFacade,
+                indemail, Individual.class,
+                (p, i) ->
+                p.getIndividuals().remove(i) & i.getProfessionals().remove(p));
+    }
 }
