@@ -30,14 +30,16 @@ public class Client {
     @Basic
     private String email;
 
-    @OneToOne(cascade = {CascadeType.ALL},
+    @OneToOne(orphanRemoval = true, cascade = {CascadeType.ALL},
             targetEntity = SocialNetworkAccounts.class)
     private SocialNetworkAccounts socialNetworkAccounts;
 
-    @OneToOne(cascade = {CascadeType.ALL}, targetEntity = CustomerDetails.class)
+    @OneToOne(orphanRemoval = true, cascade = {CascadeType.ALL},
+            targetEntity = CustomerDetails.class)
     private CustomerDetails customerDetails;
 
-    @OneToOne(cascade = {CascadeType.ALL}, targetEntity = Address.class)
+    @OneToOne(orphanRemoval = true, cascade = {CascadeType.ALL},
+            targetEntity = Address.class)
     private Address address;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST,

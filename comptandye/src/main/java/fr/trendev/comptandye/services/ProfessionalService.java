@@ -206,5 +206,14 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 e.getUserGroups().remove(a) & a.getUserAccounts().remove(e));
     }
 
-    //TODO : complete with the other relationships
+    @Path("{email}/bills")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getBills(@PathParam("email") String email) {
+        LOG.log(Level.INFO,
+                "REST request to get bills of Professional : {0}", email);
+        return super.provideRelation(professionalFacade,
+                email,
+                Professional::getBills);
+    }
 }

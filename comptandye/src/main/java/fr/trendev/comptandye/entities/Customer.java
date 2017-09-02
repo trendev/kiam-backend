@@ -13,13 +13,15 @@ import javax.persistence.OneToOne;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public abstract class Customer extends UserAccount {
 
-    @OneToOne(cascade = {CascadeType.ALL}, targetEntity = CustomerDetails.class)
+    @OneToOne(orphanRemoval = true, cascade = {CascadeType.ALL},
+            targetEntity = CustomerDetails.class)
     private CustomerDetails customerDetails;
 
-    @OneToOne(cascade = {CascadeType.ALL}, targetEntity = Address.class)
+    @OneToOne(orphanRemoval = true, cascade = {CascadeType.ALL},
+            targetEntity = Address.class)
     private Address address;
 
-    @OneToOne(cascade = {CascadeType.ALL},
+    @OneToOne(orphanRemoval = true, cascade = {CascadeType.ALL},
             targetEntity = SocialNetworkAccounts.class)
     private SocialNetworkAccounts socialNetworkAccounts;
 

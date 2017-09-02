@@ -158,21 +158,21 @@
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
-            <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490101578444" v="true" xvt="" name="customerDetails" id="_14901093969381510">
+            <jpa:one-to-one own="true" orp="true" optional="true" primaryKey="false" connected-entity-id="_1490101578444" v="true" xvt="" name="customerDetails" id="_14901093969381510">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:cascade>
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-one>
-            <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490101737208" v="true" xvt="" name="address" id="_1503055153023119">
+            <jpa:one-to-one own="true" orp="true" optional="true" primaryKey="false" connected-entity-id="_1490101737208" v="true" xvt="" name="address" id="_1503055153023119">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:cascade>
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-one>
-            <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490104062170" v="true" xvt="" name="socialNetworkAccounts" id="_1503055248950120">
+            <jpa:one-to-one own="true" orp="true" optional="true" primaryKey="false" connected-entity-id="_1490104062170" v="true" xvt="" name="socialNetworkAccounts" id="_1503055248950120">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:cascade>
@@ -399,21 +399,21 @@
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-many>
-            <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490104062170" v="true" xvt="" name="socialNetworkAccounts" id="_149028166301044">
+            <jpa:one-to-one own="true" orp="true" optional="true" primaryKey="false" connected-entity-id="_1490104062170" v="true" xvt="" name="socialNetworkAccounts" id="_149028166301044">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:cascade>
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-one>
-            <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490101578444" v="true" xvt="" name="customerDetails" id="_1490283406937193">
+            <jpa:one-to-one own="true" orp="true" optional="true" primaryKey="false" connected-entity-id="_1490101578444" v="true" xvt="" name="customerDetails" id="_1490283406937193">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:cascade>
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-one>
-            <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490101737208" v="true" xvt="" name="address" id="_1503055318751123">
+            <jpa:one-to-one own="true" orp="true" optional="true" primaryKey="false" connected-entity-id="_1490101737208" v="true" xvt="" name="address" id="_1503055318751123">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:cascade>
@@ -1000,7 +1000,7 @@ import java.util.List;</jpa:snp>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490101737208" v="true" xvt="" name="address" id="_1490283543806197">
+            <jpa:one-to-one own="true" orp="true" optional="true" primaryKey="false" connected-entity-id="_1490101737208" v="true" xvt="" name="address" id="_1490283543806197">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:cascade>

@@ -30,7 +30,8 @@ public class CollectiveGroup {
     @Basic
     private String groupName;
 
-    @OneToOne(cascade = {CascadeType.ALL}, targetEntity = Address.class)
+    @OneToOne(orphanRemoval = true, cascade = {CascadeType.ALL},
+            targetEntity = Address.class)
     private Address address;
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
