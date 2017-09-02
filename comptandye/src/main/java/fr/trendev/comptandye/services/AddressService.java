@@ -35,7 +35,7 @@ public class AddressService extends AbstractCommonService<Address, Long> {
     AddressFacade addressFacade;
 
     private static final Logger LOG = Logger.getLogger(
-            AdministratorService.class.
+            AddressService.class.
                     getName());
 
     public AddressService() {
