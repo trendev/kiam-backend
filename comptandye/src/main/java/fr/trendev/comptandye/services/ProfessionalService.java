@@ -262,4 +262,16 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 email,
                 Professional::getExpenses);
     }
+
+    @Path("{email}/individuals")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getIndividuals(@PathParam("email") String email) {
+        LOG.log(Level.INFO,
+                "REST request to get individuals of Professional : {0}",
+                email);
+        return super.provideRelation(professionalFacade,
+                email,
+                Professional::getIndividuals);
+    }
 }
