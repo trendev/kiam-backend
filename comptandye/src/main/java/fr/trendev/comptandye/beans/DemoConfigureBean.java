@@ -148,6 +148,13 @@ public class DemoConfigureBean implements Serializable {
                 new CollectiveGroup("Senior Residence"));
         vanessa.getCategories().add(new Category("GOLD clients", "GOLD"));
 
+        vanessa.getPaymentModes().addAll(Arrays.asList(
+                new PaymentMode("CB"),
+                new PaymentMode("Chèque"),
+                new PaymentMode("Espèces"),
+                new PaymentMode("Virement")
+        ));
+
         logger.log(Level.INFO, "Vaness's birthdate is " + vanessa.
                 getCustomerDetails().getBirthdate());
 
