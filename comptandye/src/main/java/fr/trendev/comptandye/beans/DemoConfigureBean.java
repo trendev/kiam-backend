@@ -59,12 +59,14 @@ public class DemoConfigureBean implements Serializable {
     @PostConstruct
     public void init() {
         this.clean();
+
+        this.initPaymentModes();
+        this.initBusinesses();
+
         //check that the User Group table is empty
         if (userGroupFacade.findAll().isEmpty()) {
             this.initUsersAndGroups();
         }
-        this.initPaymentModes();
-        this.initBusinesses();
 
 //        this.displayUserGroupDetails();
         this.createBills();
@@ -125,6 +127,14 @@ public class DemoConfigureBean implements Serializable {
         vanessa.setSocialNetworkAccounts(new SocialNetworkAccounts(
                 "https://www.facebook.com/gayvanessa",
                 "@VanessCE", null, "https://www.pinterest.com/vanessagay14/"));
+
+        vanessa.setCompanyID("501476154");
+        cal.set(2014, 1, 20, 0, 0, 0);
+        vanessa.setCreationDate(cal.getTime());
+
+        vanessa.getBusinesses().addAll(Arrays.asList(em.find(Business.class,
+                "Esthétique"),
+                em.find(Business.class, "Coiffure")));
 
         logger.log(Level.INFO, "Vaness's birthdate is " + vanessa.
                 getCustomerDetails().getBirthdate());
