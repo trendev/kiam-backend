@@ -281,12 +281,15 @@ public class DemoConfigureBean implements Serializable {
                                 getEmail(), vanessa.getUsername(), vanessa.
                         getUuid()});
 
+            Service longservice = new Service("Fashion color", 10000, 60);
+            vanessa.getOfferings().add(longservice);
+
             IndividualBill bill = new IndividualBill("Ref#12345", new Date(),
                     10000, 0,
                     new Date(),
                     Arrays.asList("Cool", "sympa"),
-                    vanessa, new LinkedList<>(), Arrays.asList(new Service(
-                            "un truc long", 10000, 60)), sylvioc);
+                    vanessa, new LinkedList<>(), Arrays.asList(longservice),
+                    sylvioc);
 
             Payment pm = new Payment(10000, "EUR", em.find(PaymentMode.class,
                     "CB"));
