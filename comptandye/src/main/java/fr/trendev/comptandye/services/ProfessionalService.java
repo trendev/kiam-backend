@@ -77,17 +77,6 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
         return super.find(professionalFacade, email, refresh);
     }
 
-    @Path("{email}/userGroups")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserGroups(@PathParam("email") String email) {
-        LOG.log(Level.INFO,
-                "REST request to get userGroups of Professional : {0}", email);
-        return super.provideRelation(professionalFacade,
-                email,
-                Professional::getUserGroups);
-    }
-
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -170,6 +159,17 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                         new Object[]{email, i.getEmail()});
             });
         });
+    }
+
+    @Path("{email}/userGroups")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserGroups(@PathParam("email") String email) {
+        LOG.log(Level.INFO,
+                "REST request to get userGroups of Professional : {0}", email);
+        return super.provideRelation(professionalFacade,
+                email,
+                Professional::getUserGroups);
     }
 
     @Path("{email}/insertToUserGroup/{name}")
