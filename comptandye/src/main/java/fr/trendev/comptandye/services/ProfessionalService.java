@@ -206,4 +206,5 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 e.getUserGroups().remove(a) & a.getUserAccounts().remove(e));
     }
 
+    //TODO : complete with the other relationships
 }
