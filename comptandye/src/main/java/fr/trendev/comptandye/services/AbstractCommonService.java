@@ -267,6 +267,7 @@ public abstract class AbstractCommonService<E, P> {
                                     boolean result = associationFunction.
                                             apply(e, a);
                                     entityFacade.edit(e);
+                                    associationFacade.edit(a);
                                     getLogger().log(Level.INFO,
                                             "{0} {1} {2} {3} {4} : {5}",
                                             new Object[]{entityClass.
