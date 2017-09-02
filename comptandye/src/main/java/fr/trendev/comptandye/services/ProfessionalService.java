@@ -135,8 +135,40 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
             e.setUuid(entity.getUuid());
             e.setRegistrationDate(entity.getRegistrationDate());
 
-            //TODO : adds field from Customer
-            //TODO : adds field from Professional
+            e.setCustomerDetails(entity.getCustomerDetails());
+            e.setAddress(entity.getAddress());
+            e.setSocialNetworkAccounts(entity.getSocialNetworkAccounts());
+
+            e.setWebsite(entity.getWebsite());
+            e.setCompanyID(entity.getCompanyID());
+            e.setVATcode(entity.getVATcode());
+            e.setCreationDate(entity.getCreationDate());
+            e.setBusinesses(entity.getBusinesses());
+            e.setCategories(entity.getCategories());
+            e.setPaymentModes(entity.getPaymentModes());
+
+        });
+    }
+
+    @Path("{email}")
+    @DELETE
+    public Response delete(@PathParam("email") String email) {
+        LOG.log(Level.INFO, "Deleting Professional {0}", email);
+        return super.delete(professionalFacade, email, e -> {
+
+            e.getUserGroups().forEach(grp -> {
+                grp.getUserAccounts().remove(e);
+                LOG.log(Level.INFO,
+                        "Professional {0} removed from UserGroup {1}",
+                        new Object[]{email, grp.getName()});
+            });
+
+            e.getIndividuals().forEach(i -> {
+                i.getProfessionals().remove(e);
+                LOG.log(Level.INFO,
+                        "Professional {0} and Individual {1} association deleted",
+                        new Object[]{email, i.getEmail()});
+            });
         });
     }
 
@@ -155,20 +187,6 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 name, UserGroup.class,
                 (e, a) ->
                 e.getUserGroups().add(a) & a.getUserAccounts().add(e));
-    }
-
-    @Path("{email}")
-    @DELETE
-    public Response delete(@PathParam("email") String email) {
-        LOG.log(Level.INFO, "Deleting Professional {0}", email);
-        return super.delete(professionalFacade, email, e -> {
-            e.getUserGroups().forEach(grp -> {
-                grp.getUserAccounts().remove(e);
-                LOG.log(Level.INFO,
-                        "Professional {0} removed from UserGroup {1}",
-                        new Object[]{email, grp.getName()});
-            });
-        });
     }
 
     @Path("{email}/removeFrom/{name}")
