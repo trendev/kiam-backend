@@ -279,7 +279,12 @@ public abstract class AbstractCommonService<E, P> {
                                                         getSimpleName(),
                                                 associationPk,
                                                 result});
-                                    return Response.ok(a).build();
+                                    return result ? Response.ok(a).build() : Response.
+                                            status(Response.Status.BAD_REQUEST).
+                                            entity(Json.createObjectBuilder().
+                                                    add("error",
+                                                            "No existing association").
+                                                    build()).build();
                                 })
                                 .orElse(Response.status(
                                         Response.Status.NOT_FOUND).entity(
