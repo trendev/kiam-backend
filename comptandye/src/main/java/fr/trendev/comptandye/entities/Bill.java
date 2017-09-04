@@ -61,7 +61,7 @@ public abstract class Bill {
     @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Payment.class)
     private List<Payment> payments = new LinkedList<>();
 
-    @ManyToMany(targetEntity = Offering.class)
+    @ManyToMany(cascade = {CascadeType.ALL}, targetEntity = Offering.class)
     private List<Offering> offerings = new LinkedList<>();
 
     public Bill(String reference, Date deliveryDate, int amount, int discount,
