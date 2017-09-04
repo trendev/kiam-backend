@@ -813,6 +813,9 @@
             <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490172966686" v="true" xvt="" name="offerings" dv="new LinkedList&lt;&gt;()" id="_1490179520493122">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-all/>
+                </jpa:cascade>
             </jpa:many-to-many>
             <jpa:element-collection target-class="java.lang.String" collection-type="java.util.List" v="true" xvt="" name="comments" dv="new LinkedList&lt;&gt;()" id="_1503066002122403">
                 <jpa:xwm nil="false" req="false"/>
