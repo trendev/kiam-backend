@@ -300,27 +300,28 @@ public class DemoConfigureBean implements Serializable {
                                 getEmail(), vanessa.getUsername(), vanessa.
                         getUuid()});
 
-            Service longservice = new Service("Fashion color", 10000, 60);
+            Service longservice = new Service("Fashion color", 5000, 60);
             vanessa.getOfferings().add(longservice);
 
             IndividualBill bill = new IndividualBill("Ref#12345", new Date(),
-                    10000, 0,
+                    5000, 0,
                     new Date(),
                     Arrays.asList("Cool", "sympa"),
                     vanessa, new LinkedList<>(), Arrays.asList(longservice),
                     sylvioc);
 
             IndividualBill bill2 = new IndividualBill("Ref#54321", new Date(),
-                    10000, 0,
+                    5000, 0,
                     new Date(),
                     Arrays.asList("Long", "Pffff"),
                     vanessa, new LinkedList<>(), Arrays.asList(longservice),
                     sylvioc);
 
-            Payment pm = new Payment(10000, "EUR", em.find(PaymentMode.class,
+            Payment pm = new Payment(5000, "EUR", em.find(PaymentMode.class,
                     "CB"));
             bill.getPayments().add(pm);
             vanessa.getBills().add(bill);
+            bill2.getPayments().add(pm);
             vanessa.getBills().add(bill2);
             em.merge(vanessa);
         } catch (Exception ex) {
