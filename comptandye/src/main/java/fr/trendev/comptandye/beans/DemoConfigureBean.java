@@ -310,10 +310,18 @@ public class DemoConfigureBean implements Serializable {
                     vanessa, new LinkedList<>(), Arrays.asList(longservice),
                     sylvioc);
 
+            IndividualBill bill2 = new IndividualBill("Ref#54321", new Date(),
+                    10000, 0,
+                    new Date(),
+                    Arrays.asList("Long", "Pffff"),
+                    vanessa, new LinkedList<>(), Arrays.asList(longservice),
+                    sylvioc);
+
             Payment pm = new Payment(10000, "EUR", em.find(PaymentMode.class,
                     "CB"));
             bill.getPayments().add(pm);
             vanessa.getBills().add(bill);
+            vanessa.getBills().add(bill2);
             em.merge(vanessa);
         } catch (Exception ex) {
             ex.printStackTrace();
