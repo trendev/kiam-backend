@@ -280,40 +280,40 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 Professional::getIndividuals);
     }
 
-    @Path("{proemail}/buildBusinessRelationship/{indemail}")
+    @Path("{proEmail}/buildBusinessRelationship/{indEmail}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public Response buildBusinessRelationship(
-            @PathParam("proemail") String proemail,
-            @PathParam("indemail") String indemail) {
+            @PathParam("proEmail") String proEmail,
+            @PathParam("indEmail") String indEmail) {
         LOG.log(Level.INFO,
                 "Build business relationship between Professional {0} and Individual {1}",
-                new Object[]{proemail, indemail});
+                new Object[]{proEmail, indEmail});
 
         return super.<Individual, String>manageAssociation(
                 AssociationManagementEnum.INSERT,
-                professionalFacade, proemail,
+                professionalFacade, proEmail,
                 individualFacade,
-                indemail, Individual.class,
+                indEmail, Individual.class,
                 (p, i) ->
                 p.getIndividuals().add(i) & i.getProfessionals().add(p));
     }
 
-    @Path("{proemail}/endBusinessRelationship/{indemail}")
+    @Path("{proEmail}/endBusinessRelationship/{indEmail}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public Response endBusinessRelationship(
-            @PathParam("proemail") String proemail,
-            @PathParam("indemail") String indemail) {
+            @PathParam("proEmail") String proEmail,
+            @PathParam("indEmail") String indEmail) {
         LOG.log(Level.INFO,
                 "End business relationship between Professional {0} and Individual {1}",
-                new Object[]{proemail, indemail});
+                new Object[]{proEmail, indEmail});
 
         return super.<Individual, String>manageAssociation(
                 AssociationManagementEnum.REMOVE,
-                professionalFacade, proemail,
+                professionalFacade, proEmail,
                 individualFacade,
-                indemail, Individual.class,
+                indEmail, Individual.class,
                 (p, i) ->
                 p.getIndividuals().remove(i) & i.getProfessionals().remove(p));
     }
