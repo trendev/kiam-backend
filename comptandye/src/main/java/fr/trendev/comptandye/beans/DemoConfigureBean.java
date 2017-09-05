@@ -249,31 +249,6 @@ public class DemoConfigureBean implements Serializable {
 
     }
 
-    private void displayUserGroupDetails() {
-        List<UserGroup> userGroup = userGroupFacade.findAll();
-        userGroup.forEach(group -> {
-            logger.info("## GROUP ##");
-            logger.log(Level.INFO, "Name = {0}", group.getName());
-
-            logger.log(Level.INFO, "Description = {0}", group.getDescription());
-
-            int n = group.getUserAccounts().size();
-            logger.
-                    log(Level.INFO, "{0} User{1}", new Object[]{n,
-                n > 1 ? "s" : ""});
-
-            if (n > 0) {
-                logger.info("Users id: ");
-            }
-            group.getUserAccounts().forEach(u -> logger.log(Level.INFO,
-                    "- {0}",
-                    u.
-                            getEmail()));
-
-            logger.info("###########");
-        });
-    }
-
     private void clean() {
         userGroupFacade.findAll().forEach(g -> em.remove(g));
 
@@ -342,7 +317,7 @@ public class DemoConfigureBean implements Serializable {
             vanessa.getBills().add(bill);
             bill2.getPayments().add(pm);
             vanessa.getBills().add(bill2);
-            em.merge(vanessa);
+            //em.merge(vanessa);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
