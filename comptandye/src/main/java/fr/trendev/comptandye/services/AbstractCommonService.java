@@ -192,7 +192,7 @@ public abstract class AbstractCommonService<E, P> {
             return Optional.ofNullable(facade.find(pk))
                     .map(result -> {
                         updateAction.accept(result);
-                        facade.flush();
+                        facade.edit(result);
                         getLogger().log(Level.INFO, entityClass.getSimpleName()
                                 + " {0} updated", prettyPrintPK(pk));
                         return Response.status(Response.Status.OK).entity(
@@ -267,7 +267,8 @@ public abstract class AbstractCommonService<E, P> {
                                 .map(a -> {
                                     boolean result = associationFunction.
                                             apply(e, a);
-                                    entityFacade.flush();
+                                    entityFacade.edit(e);
+                                    associationFacade.edit(a);
                                     getLogger().log(Level.INFO,
                                             "{0} {1} {2} {3} {4} : {5}",
                                             new Object[]{entityClass.
