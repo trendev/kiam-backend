@@ -173,6 +173,8 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                     .flatMap(List<Offering>::stream)
                     .filter(o -> e.getOfferings().contains(o))
                     .forEach(o -> e.getOfferings().remove(o));
+
+            //TODO : clean other relations
         });
     }
 
