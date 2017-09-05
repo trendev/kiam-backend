@@ -317,7 +317,7 @@ public class DemoConfigureBean implements Serializable {
             vanessa.getBills().add(bill);
             bill2.getPayments().add(pm);
             vanessa.getBills().add(bill2);
-            //em.merge(vanessa);
+            em.merge(vanessa);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

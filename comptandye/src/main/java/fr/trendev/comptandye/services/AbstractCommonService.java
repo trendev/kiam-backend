@@ -224,7 +224,7 @@ public abstract class AbstractCommonService<E, P> {
             return Optional.ofNullable(facade.find(pk))
                     .map(result -> {
                         prepareDelete.accept(result);
-                        facade.flush();
+//                        facade.flush();
                         facade.refresh(result);
                         facade.remove(result);
                         getLogger().log(Level.INFO, entityClass.getSimpleName()
