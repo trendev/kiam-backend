@@ -7,7 +7,6 @@ package fr.trendev.comptandye.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.trendev.comptandye.entities.Administrator;
 import fr.trendev.comptandye.entities.BillPK;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
@@ -193,7 +192,7 @@ public abstract class AbstractCommonService<E, P> {
             return Optional.ofNullable(facade.find(pk))
                     .map(result -> {
                         updateAction.accept(result);
-                        facade.edit(result);
+                        facade.flush();
                         getLogger().log(Level.INFO, entityClass.getSimpleName()
                                 + " {0} updated", prettyPrintPK(pk));
                         return Response.status(Response.Status.OK).entity(
@@ -220,12 +219,14 @@ public abstract class AbstractCommonService<E, P> {
     }
 
     protected Response delete(AbstractFacade<E, P> facade, P pk,
-            Consumer<E> deleteAction) {
+            Consumer<E> prepareDelete) {
         try {
             return Optional.ofNullable(facade.find(pk))
                     .map(result -> {
+                        prepareDelete.accept(result);
+                        facade.flush();
+                        facade.refresh(result);
                         facade.remove(result);
-                        deleteAction.accept(result);
                         getLogger().log(Level.INFO, entityClass.getSimpleName()
                                 + " {0} deleted", prettyPrintPK(pk));
                         return Response.ok().build();
@@ -266,8 +267,7 @@ public abstract class AbstractCommonService<E, P> {
                                 .map(a -> {
                                     boolean result = associationFunction.
                                             apply(e, a);
-                                    entityFacade.edit(e);
-                                    associationFacade.edit(a);
+                                    entityFacade.flush();
                                     getLogger().log(Level.INFO,
                                             "{0} {1} {2} {3} {4} : {5}",
                                             new Object[]{entityClass.
@@ -338,16 +338,5 @@ public abstract class AbstractCommonService<E, P> {
                     "Entity " + entity + " can not be produced as a String", ex);
         }
         return jsonString;
-    }
-
-    private void displayDebugInfo_Administrator(E result) {
-        if (result instanceof Administrator) {
-            getLogger().log(Level.SEVERE,
-                    "Administrator infos : usergroups empty = {0} ; usergroups size = {1}",
-                    new Object[]{((Administrator) result).
-                                getUserGroups().isEmpty(),
-                        ((Administrator) result).getUserGroups().
-                                size()});
-        }
     }
 }
