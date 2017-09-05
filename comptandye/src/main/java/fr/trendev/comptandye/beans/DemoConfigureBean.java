@@ -9,6 +9,7 @@ import fr.trendev.comptandye.entities.Address;
 import fr.trendev.comptandye.entities.Administrator;
 import fr.trendev.comptandye.entities.Business;
 import fr.trendev.comptandye.entities.Category;
+import fr.trendev.comptandye.entities.Client;
 import fr.trendev.comptandye.entities.CollectiveGroup;
 import fr.trendev.comptandye.entities.CustomerDetails;
 import fr.trendev.comptandye.entities.Expense;
@@ -145,7 +146,9 @@ public class DemoConfigureBean implements Serializable {
                         find(PaymentMode.class, "Espèces"))));
 
         vanessa.getCollectiveGroups().add(
-                new CollectiveGroup("Senior Residence"));
+                new CollectiveGroup("Senior Residence", new Address(
+                        "10 route de la ferme du pavillon", "appart 202",
+                        "77600", "Chanteloup-en-Brie")));
         vanessa.getCategories().add(new Category("GOLD clients", "GOLD"));
 
         vanessa.getPaymentModes().addAll(Arrays.asList(
@@ -155,8 +158,26 @@ public class DemoConfigureBean implements Serializable {
                 new PaymentMode("Virement")
         ));
 
-        logger.log(Level.INFO, "Vaness's birthdate is " + vanessa.
-                getCustomerDetails().getBirthdate());
+        Category cat1 = new Category("long time customers", "Fidelity");
+        Client client1 = new Client("valery.lamome@hotmail.fr");
+        client1.setAddress(new Address("down town", "water recycling",
+                "77600", "Quincy-Voisins"));
+        cat1.getClients().add(client1);
+        client1.getCategories().add(cat1);
+
+        vanessa.getClients().add(client1);
+        client1.setProfessional(vanessa);
+
+        client1.getCollectiveGroups().add(vanessa.getCollectiveGroups().get(0));
+        vanessa.getCollectiveGroups().get(0).getClients().add(client1);
+
+        em.persist(cat1);
+
+        vanessa.getCategories().add(cat1);
+
+        logger.log(Level.INFO, "Vaness's birthdate is "
+                + vanessa.
+                        getCustomerDetails().getBirthdate());
 
         /**
          * Creates the Professional user group
@@ -218,8 +239,6 @@ public class DemoConfigureBean implements Serializable {
 
         em.persist(skonxAddress);
         skonx.setAddress(skonxAddress);
-
-        em.merge(skonx);
 
         em.flush();
         if (em.contains(skonxAddress)) {
