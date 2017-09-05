@@ -5,7 +5,9 @@
  */
 package fr.trendev.comptandye.services;
 
+import fr.trendev.comptandye.entities.Bill;
 import fr.trendev.comptandye.entities.Individual;
+import fr.trendev.comptandye.entities.Offering;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.sessions.IndividualFacade;
@@ -13,6 +15,7 @@ import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UUIDGenerator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -148,6 +151,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     @DELETE
     public Response delete(@PathParam("email") String email) {
         LOG.log(Level.INFO, "Deleting Professional {0}", email);
+
         return super.delete(professionalFacade, email, e -> {
 
             e.getUserGroups().forEach(grp -> {
@@ -163,6 +167,12 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                         "Professional {0} and Individual {1} association deleted",
                         new Object[]{email, i.getEmail()});
             });
+
+            e.getBills().stream()
+                    .map(Bill::getOfferings)
+                    .flatMap(List<Offering>::stream)
+                    .filter(o -> e.getOfferings().contains(o))
+                    .forEach(o -> e.getOfferings().remove(o));
         });
     }
 
