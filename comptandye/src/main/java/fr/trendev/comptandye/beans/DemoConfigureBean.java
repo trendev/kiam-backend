@@ -50,7 +50,7 @@ import javax.persistence.PersistenceContext;
 @Startup
 public class DemoConfigureBean implements Serializable {
 
-    private static final Logger logger = Logger.getLogger(
+    private static final Logger LOG = Logger.getLogger(
             DemoConfigureBean.class.
                     getName());
 
@@ -72,7 +72,6 @@ public class DemoConfigureBean implements Serializable {
             this.initUsersAndGroups();
         }
 
-//        this.displayUserGroupDetails();
         this.createBills();
     }
 
@@ -112,6 +111,7 @@ public class DemoConfigureBean implements Serializable {
         comptandye.getUserGroups().add(adminGroup);
         jsie.getUserGroups().add(adminGroup);
 
+        em.persist(adminGroup);
         /**
          * Creates the first professional
          */
@@ -175,7 +175,7 @@ public class DemoConfigureBean implements Serializable {
 
         vanessa.getCategories().add(cat1);
 
-        logger.log(Level.INFO, "Vaness's birthdate is "
+        LOG.log(Level.INFO, "Vaness's birthdate is "
                 + vanessa.
                         getCustomerDetails().getBirthdate());
 
@@ -227,9 +227,8 @@ public class DemoConfigureBean implements Serializable {
         sylvioc.getProfessionals().add(vanessa);
 
         /**
-         * Store the groups and their contents
+         * Store the professional and individual groups and their contents
          */
-        em.persist(adminGroup);
         em.persist(pro);
         em.persist(ind);
 
@@ -243,7 +242,7 @@ public class DemoConfigureBean implements Serializable {
         em.flush();
         if (em.contains(skonxAddress)) {
             em.refresh(skonxAddress);
-            logger.log(Level.INFO, "Id of Skonx Address = " + skonxAddress.
+            LOG.log(Level.INFO, "Id of Skonx Address = " + skonxAddress.
                     getId());
         }
 
@@ -255,15 +254,15 @@ public class DemoConfigureBean implements Serializable {
         if (em.isJoinedToTransaction()) {
             try {
                 em.flush();
-                logger.log(Level.INFO, "clean() : OK");
+                LOG.log(Level.INFO, "clean() : OK");
             } catch (Exception e) {
-                logger.log(Level.WARNING, "clean() : FAILED ==> {0}", e.
+                LOG.log(Level.WARNING, "clean() : FAILED ==> {0}", e.
                         getMessage());
             }
         }
-        logger.log(Level.INFO, "EntityManager is{0} joined to transaction", em.
+        LOG.log(Level.INFO, "EntityManager is{0} joined to transaction", em.
                 isJoinedToTransaction() ? "" : " not");
-        logger.log(Level.INFO, "EntityManager is{0} opened",
+        LOG.log(Level.INFO, "EntityManager is{0} opened",
                 em.isOpen() ? "" : " not");
     }
 
@@ -289,7 +288,7 @@ public class DemoConfigureBean implements Serializable {
                     "vanessa.gay@gmail.com");
             Individual sylvioc = em.find(Individual.class,
                     "sylvie.gay@gmail.com");
-            logger.log(Level.WARNING, "Creating a bill for {0} / {1} / {2}",
+            LOG.log(Level.WARNING, "Creating a bill for {0} / {1} / {2}",
                     new Object[]{vanessa.
                                 getEmail(), vanessa.getUsername(), vanessa.
                         getUuid()});
@@ -297,7 +296,7 @@ public class DemoConfigureBean implements Serializable {
             Service longservice = new Service("Fashion color", 5000, 60);
             vanessa.getOfferings().add(longservice);
 
-            IndividualBill bill = new IndividualBill("Ref#12345", new Date(),
+            IndividualBill bill1 = new IndividualBill("Ref#12345", new Date(),
                     5000, 0,
                     new Date(),
                     Arrays.asList("Cool", "sympa"),
@@ -313,13 +312,12 @@ public class DemoConfigureBean implements Serializable {
 
             Payment pm = new Payment(5000, "EUR", em.find(PaymentMode.class,
                     "CB"));
-            bill.getPayments().add(pm);
-            vanessa.getBills().add(bill);
+            bill1.getPayments().add(pm);
+            vanessa.getBills().add(bill1);
             bill2.getPayments().add(pm);
             vanessa.getBills().add(bill2);
-            em.merge(vanessa);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            LOG.log(Level.SEVERE, "Error in createBills()", ex);
         }
     }
 
