@@ -119,7 +119,8 @@ public class DemoConfigureBean implements Serializable {
                 "EUrVrX4nfmYYFxpMyRX93OlkJxNZv9mkMGfirZKbhWI=", "Vaness",
                 UUIDGenerator.generate("PRO_", true));
         Calendar cal = Calendar.getInstance();
-        cal.set(1983, 9, 25, 0, 0, 0);
+        cal.clear();
+        cal.set(1983, 9, 25);
         vanessa.setCustomerDetails(new CustomerDetails("Vanessa", "Gay",
                 "Vaness", "0675295422", cal.getTime(), 'F', null, Arrays.
                 asList(
@@ -133,7 +134,8 @@ public class DemoConfigureBean implements Serializable {
                 "@VanessCE", null, "https://www.pinterest.com/vanessagay14/"));
 
         vanessa.setCompanyID("501476154");
-        cal.set(2014, 1, 20, 0, 0, 0);
+        cal.clear();
+        cal.set(2014, 1, 20);
         vanessa.setCreationDate(cal.getTime());
 
         vanessa.getBusinesses().addAll(Arrays.asList(em.find(Business.class,
