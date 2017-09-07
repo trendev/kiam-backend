@@ -13,6 +13,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
+ * User groups should be linked to User Accounts type but it's still possible to
+ * create many usergroup. This class is linked to jdbc-realm authentication.
+ *
  * @author jsie
  */
 @Entity

@@ -10,6 +10,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 
 /**
+ * A package can be a set of Services and also included other packages (ex:
+ * X-mas packages including other packages...)
+ *
  * @author jsie
  */
 @Entity

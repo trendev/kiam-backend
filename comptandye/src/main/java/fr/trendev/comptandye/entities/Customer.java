@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 /**
+ * Groups common fields between Professional and Individual
+ *
  * @author jsie
  */
 @Entity

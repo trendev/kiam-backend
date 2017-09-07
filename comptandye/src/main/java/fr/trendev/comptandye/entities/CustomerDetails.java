@@ -39,18 +39,33 @@ public class CustomerDetails {
     @Basic
     private String nickname;
 
+    /**
+     * The phone is represented by a String. At the present time, no regexp
+     * validation is performed.
+     */
     @Basic
     private String phone;
 
+    /**
+     * Birthdate is stored in DB as DATETIME(3). In order to avoid issues with
+     * javascript/JAVA conversion on Dates before 1970 and earlier, we've
+     * decided to store the DATETIME and let down the DATE only.
+     */
     @Column(columnDefinition = "DATETIME(3)")
     @Basic
     @Temporal(TemporalType.TIMESTAMP)
     @Past(message = "Birthdate cannot be today or in the future...")
     private Date birthdate;
 
+    /**
+     * Should be 'F' or 'M'
+     */
     @Basic
-    private char sex;
+    private char sex = 'F';
 
+    /**
+     * Path on the server FS - not used at the present time
+     */
     @Basic
     private String picturePath;
 

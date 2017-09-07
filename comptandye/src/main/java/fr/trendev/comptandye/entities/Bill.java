@@ -29,6 +29,10 @@ import javax.persistence.TemporalType;
 @SuppressWarnings("unchecked")
 public abstract class Bill {
 
+    /**
+     * Will be automatically generated based on the deliveryDate, the
+     * Professional email and a timestamp.
+     */
     @Id
     private String reference;
 
