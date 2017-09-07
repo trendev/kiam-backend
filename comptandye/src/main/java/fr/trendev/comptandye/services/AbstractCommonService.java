@@ -224,8 +224,6 @@ public abstract class AbstractCommonService<E, P> {
                     .map(result -> {
                         prepareDelete.accept(result);
                         facade.flush();
-//TODO : investigation in progress
-//                        facade.refresh(result);
                         facade.remove(result);
                         getLogger().log(Level.INFO, entityClass.getSimpleName()
                                 + " {0} deleted", prettyPrintPK(pk));

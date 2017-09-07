@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -31,6 +32,7 @@ public abstract class Bill {
     @Id
     private String reference;
 
+    @Column(columnDefinition = "DATETIME(3) NOT NULL")
     @Id
     @Temporal(TemporalType.TIMESTAMP)
     private Date deliveryDate;
@@ -47,6 +49,7 @@ public abstract class Bill {
     @Basic
     private int discount;
 
+    @Column(columnDefinition = "DATETIME(3)")
     @Basic
     @Temporal(TemporalType.TIMESTAMP)
     private Date paymentDate;

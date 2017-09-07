@@ -31,7 +31,7 @@ public class Professional extends Customer {
     private String VATcode;
 
     @Basic
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date creationDate;
 
     @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Bill.class,

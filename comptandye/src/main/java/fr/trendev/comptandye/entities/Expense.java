@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,6 +37,7 @@ public class Expense {
     @Basic
     private int amount;
 
+    @Column(columnDefinition = "DATETIME(3)")
     @Basic
     @Temporal(TemporalType.TIMESTAMP)
     private Date paymentDate;
