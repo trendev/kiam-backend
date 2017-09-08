@@ -2,8 +2,6 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -47,23 +45,16 @@ public abstract class Customer extends UserAccount {
 
     public Customer() {
         super();
-        LOG.log(Level.INFO,
-                "==============> I call this constructor !!!!");
         this.customerDetails = new CustomerDetails();
         this.address = new Address();
         this.socialNetworkAccounts = new SocialNetworkAccounts();
     }
-    private static final Logger LOG = Logger.getLogger(Customer.class.getName());
 
     public CustomerDetails getCustomerDetails() {
-        LOG.log(Level.INFO,
-                "==============> And this getter !!!!");
         return this.customerDetails;
     }
 
     public void setCustomerDetails(CustomerDetails customerDetails) {
-        LOG.log(Level.INFO,
-                "==============> And this setter !!!!");
         this.customerDetails = customerDetails;
     }
 
