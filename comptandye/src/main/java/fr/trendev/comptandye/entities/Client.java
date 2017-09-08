@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -20,6 +21,7 @@ import javax.persistence.OneToOne;
  * @author jsie
  */
 @Entity
+@IdClass(ClientPK.class)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Client {
 
@@ -42,6 +44,7 @@ public class Client {
             targetEntity = Address.class)
     private Address address;
 
+    @Id
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
         CascadeType.REFRESH}, targetEntity = Professional.class)
     @JsonIgnore
@@ -63,8 +66,9 @@ public class Client {
     @JsonIgnore
     private List<Category> categories = new LinkedList<>();
 
-    public Client(String email) {
+    public Client(String email, Professional professional) {
         this.email = email;
+        this.professional = professional;
         this.customerDetails = new CustomerDetails();
         this.address = new Address();
         this.socialNetworkAccounts = new SocialNetworkAccounts();

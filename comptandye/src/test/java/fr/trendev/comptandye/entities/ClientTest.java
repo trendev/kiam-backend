@@ -57,7 +57,9 @@ public class ClientTest {
 
         String email = "client@gmail.com";
 
-        instance = new Client(email);
+        Professional pro = new Professional();
+
+        instance = new Client(email, pro);
 
         assert instance.getId() == null;
         assert instance.getEmail().equals(email);

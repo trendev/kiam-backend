@@ -161,7 +161,7 @@ public class DemoConfigureBean implements Serializable {
         ));
 
         Category cat1 = new Category("long time customers", "Fidelity");
-        Client client1 = new Client("valery.lamome@hotmail.fr");
+        Client client1 = new Client("valery.lamome@hotmail.fr", vanessa);
         client1.setAddress(new Address("down town", "water recycling",
                 "77600", "Quincy-Voisins"));
         cat1.getClients().add(client1);
