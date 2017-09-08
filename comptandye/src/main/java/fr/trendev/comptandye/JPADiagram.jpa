@@ -273,6 +273,7 @@
                 </jpa:cascade>
             </jpa:one-to-many>
             <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1490704206844" v="true" xvt="" name="categories" dv="new LinkedList&lt;&gt;()" id="_1503076923115623">
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:cascade>
@@ -905,6 +906,7 @@ import java.util.List;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490101520286" v="true" xvt="" name="individual" id="_1503073892988616">
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:one-to-one>
@@ -934,6 +936,7 @@ import java.util.List;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490101555530" connected-attribute-id="_1490181195213607" v="true" xvt="" name="client" id="_1490181195212606">
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:cascade>
@@ -944,6 +947,7 @@ import java.util.List;</jpa:snp>
                 </jpa:cascade>
             </jpa:many-to-one>
             <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490281931338" v="true" xvt="" name="collectiveGroup" id="_1490288049311796">
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:one-to-one>
@@ -1238,10 +1242,10 @@ import java.util.List;</jpa:snp>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
             <i ref="_1490172966686" x="-315" y="801"/>
-            <i ref="_1490180671085" x="819" y="471">
+            <i ref="_1490180671085" x="818" y="471">
                 <el>
                     <e ref="_1503073892988616">
-                        <v st="1" si="12.0" cl="#00ff00"/>
+                        <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
@@ -1344,7 +1348,7 @@ import java.util.List;</jpa:snp>
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                     <e ref="_1503076923115623">
-                        <v st="1" si="12.0" cl="#00ff00"/>
+                        <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                     <e ref="_1503077601277626">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1371,10 +1375,10 @@ import java.util.List;</jpa:snp>
             <i ref="_1490180682743" x="649" y="657">
                 <el>
                     <e ref="_1490288049311796">
-                        <v st="1" si="12.0" cl="#00ff00"/>
+                        <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                     <e ref="_1490181195212606">
-                        <v st="1" si="12.0" cl="#00ff00"/>
+                        <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>

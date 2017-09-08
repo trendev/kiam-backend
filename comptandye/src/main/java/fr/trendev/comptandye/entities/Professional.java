@@ -52,6 +52,7 @@ public class Professional extends Customer {
     private List<Offering> offerings = new LinkedList<>();
 
     @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Category.class)
+    @JsonIgnore
     private List<Category> categories = new LinkedList<>();
 
     @OneToMany(cascade = {CascadeType.ALL}, targetEntity = CollectiveGroup.class)
