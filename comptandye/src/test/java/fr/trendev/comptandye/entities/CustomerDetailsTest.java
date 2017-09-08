@@ -51,7 +51,7 @@ public class CustomerDetailsTest {
         assert instance.getNickname() == null;
         assert instance.getPhone() == null;
         assert instance.getBirthdate() == null;
-        assert instance.getSex() == Character.UNASSIGNED;
+        assert instance.getSex() == 'F';
         assert instance.getPicturePath() == null;
         assert instance.getComments() != null;
         assert instance.getComments().isEmpty();
