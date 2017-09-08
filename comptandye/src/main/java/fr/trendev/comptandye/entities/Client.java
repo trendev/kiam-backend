@@ -60,6 +60,7 @@ public class Client {
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
         CascadeType.REFRESH}, targetEntity = Category.class)
+    @JsonIgnore
     private List<Category> categories = new LinkedList<>();
 
     public Client(String email) {

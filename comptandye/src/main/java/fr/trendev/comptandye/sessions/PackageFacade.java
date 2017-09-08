@@ -1,6 +1,6 @@
 package fr.trendev.comptandye.sessions;
 
-import fr.trendev.comptandye.entities.Package;
+import fr.trendev.comptandye.entities.Pack;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -8,7 +8,7 @@ import javax.persistence.EntityManager;
 
 @Stateless
 @Named("package")
-public class PackageFacade extends AbstractFacade<Package, Long> {
+public class PackageFacade extends AbstractFacade<Pack, Long> {
 
     @Inject
     private EntityManager em;
@@ -19,7 +19,7 @@ public class PackageFacade extends AbstractFacade<Package, Long> {
     }
 
     public PackageFacade() {
-        super(Package.class);
+        super(Pack.class);
     }
 
 }

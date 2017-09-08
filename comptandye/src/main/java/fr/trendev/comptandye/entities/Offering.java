@@ -30,9 +30,16 @@ public abstract class Offering {
     @Basic
     private int price;
 
-    public Offering(String name, int price) {
+    /**
+     * Duration (in minutes)
+     */
+    @Basic
+    private int duration;
+
+    public Offering(String name, int price, int duration) {
         this.name = name;
         this.price = price;
+        this.duration = duration;
     }
 
     public Offering() {
@@ -60,6 +67,14 @@ public abstract class Offering {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getDuration() {
+        return this.duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
 }

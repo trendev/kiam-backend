@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,7 +30,9 @@ public class Category {
     @Basic
     private String name;
 
-    @ManyToMany(targetEntity = Client.class, mappedBy = "categories")
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
+        CascadeType.REFRESH}, targetEntity = Client.class,
+            mappedBy = "categories")
     @JsonIgnore
     private List<Client> clients = new LinkedList<>();
 

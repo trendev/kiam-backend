@@ -15,9 +15,9 @@ import org.junit.Test;
  *
  * @author jsie
  */
-public class PackageTest {
+public class PackTest {
 
-    public PackageTest() {
+    public PackTest() {
     }
 
     @BeforeClass
@@ -38,22 +38,25 @@ public class PackageTest {
 
     @Test
     public void testConstructors() {
-        Package instance = new Package();
+        Pack instance = new Pack();
 
         assert instance.getId() == null;
         assert instance.getName() == null;
         assert instance.getPrice() == 0;
+        assert instance.getDuration() == 0;
         assert instance.getOfferings() != null;
         assert instance.getOfferings().isEmpty();
 
         String name = "Service Set #1";
         int price = 10000; // 100 euros
+        int duration = 60;
 
-        instance = new Package(name, price);
+        instance = new Pack(name, price, duration);
 
         assert instance.getId() == null;
         assert instance.getName().equals(name);
         assert instance.getPrice() == price;
+        assert instance.getDuration() == duration;
         assert instance.getOfferings() != null;
         assert instance.getOfferings().isEmpty();
     }

@@ -453,6 +453,7 @@
                 </jpa:cascade>
             </jpa:many-to-many>
             <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490704206844" connected-attribute-id="_1503077170376625" v="true" xvt="" name="categories" dv="new LinkedList&lt;&gt;()" id="_1503077170356624">
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:cascade>
@@ -697,18 +698,12 @@
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490176760174139</jpa:a>
             <jpa:a>_1490176780392140</jpa:a>
-            <jpa:a>_1503316869889414</jpa:a>
+            <jpa:a>_150488904917075</jpa:a>
         </jpa:con>
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
-        <jpa:attributes>
-            <jpa:basic attribute-type="int" v="true" xvt="" name="duration" id="_1503316869889414">
-                <jpa:des>Duration (in minutes)</jpa:des>
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:basic>
-        </jpa:attributes>
+        <jpa:attributes/>
         <jpa:nq e="false" name="Service.findAll">
             <jpa:query>Select e from Service e</jpa:query>
         </jpa:nq>
@@ -725,21 +720,22 @@
             <jpa:query>Select s from Service s where s.duration=:duration</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="PackagePK" abs="false" class="Package" superclassId="_1490172966686" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490113906035">
+    <jpa:entity compositePrimaryKeyClass="PackPK" abs="false" class="Pack" superclassId="_1490172966686" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490113906035">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490176760174139</jpa:a>
             <jpa:a>_1490176780392140</jpa:a>
+            <jpa:a>_150488904917075</jpa:a>
         </jpa:con>
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
-        <jpa:des>A package can be a set of Services and also included other packages (ex: X-mas packages including other packages...)</jpa:des>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
-            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1490172966686" v="true" xvt="" name="offerings" dv="new LinkedList&lt;&gt;()" id="_149017313754828">
+            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1490172966686" v="true" xvt="" name="offerings" dv="new LinkedList&lt;&gt;()" id="_150489073375385">
+                <jpa:des>TODO : recursively check that all services and packs are owned by the same Professional.</jpa:des>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:join-table name="PACKAGE_SERVICES"/>
+                <jpa:join-table name="PACK_SERVICES"/>
                 <jpa:cascade>
                     <jpa:cascade-persist/>
                     <jpa:cascade-merge/>
@@ -748,20 +744,21 @@
                 </jpa:cascade>
             </jpa:one-to-many>
         </jpa:attributes>
-        <jpa:nq e="false" name="Package.findAll">
-            <jpa:query>Select e from Package e</jpa:query>
+        <jpa:nq e="false" name="Pack.findAll">
+            <jpa:query>Select e from Pack e</jpa:query>
         </jpa:nq>
-        <jpa:nq e="false" name="Package.findByName">
-            <jpa:query>Select s from Package s where s.name=:name</jpa:query>
+        <jpa:nq e="false" name="Pack.findByName">
+            <jpa:query>Select s from Pack s where s.name=:name</jpa:query>
         </jpa:nq>
-        <jpa:nq e="false" name="Package.findByTotalPrice">
-            <jpa:query>Select s from Package s where s.totalPrice=:totalPrice</jpa:query>
+        <jpa:nq e="false" name="Pack.findByTotalPrice">
+            <jpa:query>Select s from Pack s where s.totalPrice=:totalPrice</jpa:query>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="OfferingPK" abs="true" class="Offering" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490172966686">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490176760174139</jpa:a>
             <jpa:a>_1490176780392140</jpa:a>
+            <jpa:a>_150488904917075</jpa:a>
         </jpa:con>
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
@@ -773,6 +770,11 @@
             </jpa:basic>
             <jpa:basic attribute-type="int" v="true" xvt="" name="price" id="_1490176780392140">
                 <jpa:des>Price in cents (1/100 of the currency)</jpa:des>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="int" v="true" xvt="" name="duration" id="_150488904917075">
+                <jpa:des>Duration (in minutes)</jpa:des>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
@@ -790,6 +792,9 @@
         </jpa:nq>
         <jpa:nq e="false" name="Offering.findByPrice">
             <jpa:query>Select o from Offering o where o.price=:price</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Offering.findByDuration">
+            <jpa:query>Select o from Offering o where o.duration=:duration</jpa:query>
         </jpa:nq>
         <jpa:nq e="false" name="Offering.findByDuration">
             <jpa:query>Select o from Offering o where o.duration=:duration</jpa:query>
@@ -831,21 +836,33 @@
                 <jpa:column unique="false" nullable="true" insertable="true" updatable="true" column-definition="DATETIME(3)"/>
             </jpa:basic>
             <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_1490179812678394" v="true" xvt="" name="professional" id="_1490179812677393">
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-persist/>
+                    <jpa:cascade-merge/>
+                    <jpa:cascade-refresh/>
+                    <jpa:cascade-detach/>
+                </jpa:cascade>
             </jpa:many-to-one>
             <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1490206901623" v="true" xvt="" name="payments" dv="new LinkedList&lt;&gt;()" id="_150365567487858">
+                <jpa:des>Should be ignored during a PUT</jpa:des>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:cascade>
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-many>
-            <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490172966686" v="true" xvt="" name="offerings" dv="new LinkedList&lt;&gt;()" id="_1490179520493122">
+            <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490172966686" v="true" xvt="" name="offerings" dv="new LinkedList&lt;&gt;()" ui="true" id="_1490179520493122">
+                <jpa:des>Should be ignored during a PUT and cannot be used to create Offerings during a POST (No PERSIST on the relation).</jpa:des>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:cascade>
-                    <jpa:cascade-all/>
+                    <jpa:cascade-merge/>
+                    <jpa:cascade-remove/>
+                    <jpa:cascade-refresh/>
+                    <jpa:cascade-detach/>
                 </jpa:cascade>
             </jpa:many-to-many>
             <jpa:element-collection target-class="java.lang.String" collection-type="java.util.List" v="true" xvt="" name="comments" dv="new LinkedList&lt;&gt;()" id="_1503066002122403">
@@ -950,6 +967,12 @@ import java.util.List;</jpa:snp>
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-persist/>
+                    <jpa:cascade-merge/>
+                    <jpa:cascade-refresh/>
+                    <jpa:cascade-detach/>
+                </jpa:cascade>
             </jpa:one-to-one>
         </jpa:attributes>
         <jpa:nq e="false" name="ClientBill.findAll">
@@ -1115,6 +1138,12 @@ import java.util.List;</jpa:snp>
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-persist/>
+                    <jpa:cascade-merge/>
+                    <jpa:cascade-refresh/>
+                    <jpa:cascade-detach/>
+                </jpa:cascade>
             </jpa:many-to-many>
             <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_1490704207066109">
                 <jpa:xwm nil="false" req="false"/>
@@ -1241,7 +1270,7 @@ import java.util.List;</jpa:snp>
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1490172966686" x="-315" y="801"/>
+            <i ref="_1490172966686" x="-410" y="801"/>
             <i ref="_1490180671085" x="818" y="471">
                 <el>
                     <e ref="_1503073892988616">
@@ -1267,9 +1296,9 @@ import java.util.List;</jpa:snp>
                 </el>
             </i>
             <i ref="_1490104062170" x="-268" y="529"/>
-            <i ref="_1490113906035" x="-173" y="1118">
+            <i ref="_1490113906035" x="-268" y="1025">
                 <el>
-                    <e ref="_149017313754828">
+                    <e ref="_150489073375385">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
@@ -1294,7 +1323,7 @@ import java.util.List;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490113751330" x="-448" y="1105"/>
+            <i ref="_1490113751330" x="-543" y="1025"/>
             <i ref="_1490206901623" x="427" y="1369">
                 <el>
                     <e ref="_1503081214518630">
@@ -1302,13 +1331,13 @@ import java.util.List;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490178979567" x="796" y="1274">
+            <i ref="_1490178979567" x="840" y="1369">
                 <el>
                     <e ref="_150365567487858">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                     <e ref="_1490179812677393">
-                        <v st="1" si="12.0" cl="#00ff00"/>
+                        <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                     <e ref="_1490179520493122">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1323,7 +1352,7 @@ import java.util.List;</jpa:snp>
                 </el>
             </i>
             <i ref="_1490101737208" x="-292" y="136"/>
-            <i ref="_1490281931338" x="539" y="1105">
+            <i ref="_1490281931338" x="539" y="1099">
                 <el>
                     <e ref="_1490283543806197">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1403,7 +1432,7 @@ import java.util.List;</jpa:snp>
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                     <e ref="_1503077170356624">
-                        <v st="1" si="12.0" cl="#00ff00"/>
+                        <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>

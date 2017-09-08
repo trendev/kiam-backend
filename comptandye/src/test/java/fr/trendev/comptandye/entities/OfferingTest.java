@@ -46,22 +46,25 @@ public class OfferingTest {
         assert instance.getId() == null;
         assert instance.getName() == null;
         assert instance.getPrice() == 0;
+        assert instance.getDuration() == 0;
 
         String name = "Offering #1";
         int price = 1000; // 10 euros
+        int duration = 60;
 
-        instance = new OfferingImpl(name, price);
+        instance = new OfferingImpl(name, price, duration);
 
         assert instance.getId() == null;
         assert instance.getName().equals(name);
         assert instance.getPrice() == price;
+        assert instance.getDuration() == duration;
 
     }
 
     public class OfferingImpl extends Offering {
 
-        public OfferingImpl(String name, int price) {
-            super(name, price);
+        public OfferingImpl(String name, int price, int duration) {
+            super(name, price, duration);
         }
 
         public OfferingImpl() {

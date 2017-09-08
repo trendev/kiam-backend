@@ -10,25 +10,26 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 
 /**
- * A package can be a set of Services and also included other packages (ex:
- * X-mas packages including other packages...)
- *
  * @author jsie
  */
 @Entity
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class Package extends Offering {
+public class Pack extends Offering {
 
+    /**
+     * TODO : recursively check that all services and packs are owned by the
+     * same Professional.
+     */
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
         CascadeType.REFRESH}, targetEntity = Offering.class)
-    @JoinTable(name = "PACKAGE_SERVICES")
+    @JoinTable(name = "PACK_SERVICES")
     private List<Offering> offerings = new LinkedList<>();
 
-    public Package(String name, int price) {
-        super(name, price);
+    public Pack(String name, int price, int duration) {
+        super(name, price, duration);
     }
 
-    public Package() {
+    public Pack() {
     }
 
     public List<Offering> getOfferings() {
