@@ -147,6 +147,9 @@
             <jpa:a>_149087938362378</jpa:a>
             <jpa:a>_149011954705724</jpa:a>
             <jpa:pre></jpa:pre>
+            <jpa:post>this.customerDetails = new CustomerDetails();
+        this.address = new Address();
+        this.socialNetworkAccounts = new SocialNetworkAccounts();</jpa:post>
         </jpa:con>
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_14901149376313047</jpa:a>
@@ -160,7 +163,9 @@
         </jpa:con>
         <jpa:con am="PUBLIC" e="true">
             <jpa:pre>super();</jpa:pre>
-            <jpa:post></jpa:post>
+            <jpa:post>this.customerDetails = new CustomerDetails();
+        this.address = new Address();
+        this.socialNetworkAccounts = new SocialNetworkAccounts();</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:des>Groups common fields between Professional and Individual</jpa:des>
@@ -371,8 +376,15 @@
     <jpa:entity compositePrimaryKeyClass="ClientPK" abs="false" class="Client" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101555530">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490283378549192</jpa:a>
+            <jpa:post>this.customerDetails = new CustomerDetails();
+        this.address = new Address();
+        this.socialNetworkAccounts = new SocialNetworkAccounts();</jpa:post>
         </jpa:con>
-        <jpa:con am="PUBLIC" e="true"/>
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:post>this.customerDetails = new CustomerDetails();
+        this.address = new Address();
+        this.socialNetworkAccounts = new SocialNetworkAccounts();</jpa:post>
+        </jpa:con>
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490283378549192</jpa:a>
             <jpa:a>_149028166301044</jpa:a>
@@ -1009,12 +1021,15 @@ import java.util.List;</jpa:snp>
     <jpa:entity compositePrimaryKeyClass="CollectiveGroupPK" abs="false" class="CollectiveGroup" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490281931338">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490282399999187</jpa:a>
+            <jpa:post>this.address = new Address();</jpa:post>
         </jpa:con>
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490282399999187</jpa:a>
             <jpa:a>_1490283543806197</jpa:a>
         </jpa:con>
-        <jpa:con am="PUBLIC" e="true"/>
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:post>this.address = new Address();</jpa:post>
+        </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
@@ -1222,47 +1237,47 @@ import java.util.List;</jpa:snp>
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1490172966686" x="-313" y="803"/>
-            <i ref="_1490180671085" x="821" y="473">
+            <i ref="_1490172966686" x="-315" y="801"/>
+            <i ref="_1490180671085" x="819" y="471">
                 <el>
                     <e ref="_1503073892988616">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490704123469" x="-35" y="185"/>
-            <i ref="_1503060694288" x="-398" y="374"/>
-            <i ref="_1490101578444" x="487" y="185"/>
-            <i ref="_1490100852900" x="487" y="-51">
+            <i ref="_1490704123469" x="-37" y="183"/>
+            <i ref="_1503060694288" x="-400" y="372"/>
+            <i ref="_1490101578444" x="485" y="183"/>
+            <i ref="_1490100852900" x="485" y="-53">
                 <el>
                     <e ref="_14901160469883436">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101520286" x="367" y="473">
+            <i ref="_1490101520286" x="365" y="471">
                 <el>
                     <e ref="_1490180547173493">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490104062170" x="-266" y="531"/>
-            <i ref="_1490113906035" x="-171" y="1120">
+            <i ref="_1490104062170" x="-268" y="529"/>
+            <i ref="_1490113906035" x="-173" y="1118">
                 <el>
                     <e ref="_149017313754828">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490704206844" x="75" y="933">
+            <i ref="_1490704206844" x="73" y="931">
                 <el>
                     <e ref="_1503077170376625">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101376664" x="194" y="185">
+            <i ref="_1490101376664" x="192" y="183">
                 <el>
                     <e ref="_14901093969381510">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1275,15 +1290,15 @@ import java.util.List;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490113751330" x="-446" y="1107"/>
-            <i ref="_1490206901623" x="429" y="1371">
+            <i ref="_1490113751330" x="-448" y="1105"/>
+            <i ref="_1490206901623" x="427" y="1369">
                 <el>
                     <e ref="_1503081214518630">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490178979567" x="798" y="1276">
+            <i ref="_1490178979567" x="796" y="1274">
                 <el>
                     <e ref="_150365567487858">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1296,15 +1311,15 @@ import java.util.List;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1499512549878" x="-127" y="1315">
+            <i ref="_1499512549878" x="-129" y="1313">
                 <el>
                     <e ref="_1503348975952509">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101737208" x="-290" y="138"/>
-            <i ref="_1490281931338" x="539" y="1107">
+            <i ref="_1490101737208" x="-292" y="136"/>
+            <i ref="_1490281931338" x="539" y="1105">
                 <el>
                     <e ref="_1490283543806197">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1314,7 +1329,7 @@ import java.util.List;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101456632" x="75" y="374">
+            <i ref="_1490101456632" x="73" y="372">
                 <el>
                     <e ref="_1490179812678394">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1345,15 +1360,15 @@ import java.util.List;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490184243036" x="129" y="1371"/>
-            <i ref="_1490100823157" x="179" y="-81">
+            <i ref="_1490184243036" x="127" y="1369"/>
+            <i ref="_1490100823157" x="177" y="-83">
                 <el>
                     <e ref="_14901160469863435">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490180682743" x="651" y="659">
+            <i ref="_1490180682743" x="649" y="657">
                 <el>
                     <e ref="_1490288049311796">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1363,7 +1378,7 @@ import java.util.List;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101555530" x="345" y="709">
+            <i ref="_1490101555530" x="343" y="707">
                 <el>
                     <e ref="_149028166301044">
                         <v st="1" si="12.0" cl="#00ff00"/>

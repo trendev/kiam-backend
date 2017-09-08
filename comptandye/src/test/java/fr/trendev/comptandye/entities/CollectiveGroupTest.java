@@ -16,22 +16,22 @@ import org.junit.Test;
  * @author jsie
  */
 public class CollectiveGroupTest {
-    
+
     public CollectiveGroupTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -42,32 +42,32 @@ public class CollectiveGroupTest {
     @Test
     public void testConstructors() {
         CollectiveGroup instance = new CollectiveGroup();
-        
+
         assert instance.getId() == null;
         assert instance.getGroupName() == null;
-        assert instance.getAddress() == null;
+        assert instance.getAddress() != null;
         assert instance.getClients() != null;
         assert instance.getClients().isEmpty();
-        
+
         String groupName = "Collective Group";
-        
+
         instance = new CollectiveGroup(groupName);
-        
+
         assert instance.getId() == null;
         assert instance.getGroupName().equals(groupName);
-        assert instance.getAddress() == null;
+        assert instance.getAddress() != null;
         assert instance.getClients() != null;
         assert instance.getClients().isEmpty();
-        
+
         Address address = new Address();
-        
+
         instance = new CollectiveGroup(groupName, address);
-        
+
         assert instance.getId() == null;
         assert instance.getGroupName().equals(groupName);
         assert instance.getAddress().equals(address);
         assert instance.getClients() != null;
         assert instance.getClients().isEmpty();
     }
-    
+
 }

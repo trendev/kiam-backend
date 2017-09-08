@@ -118,7 +118,10 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
         LOG.log(Level.INFO, "Updating Professional {0}", entity.getEmail());
         return super.put(entity, professionalFacade, entity.getEmail(), e ->
         {
-            //encrypts the provided password
+            /**
+             * encrypts the provided password
+             *
+             */
             if (entity.getPassword() != null && !entity.getPassword().isEmpty()) {
                 String encrypted_pwd = PasswordGenerator.encrypt_SHA256(
                         entity.getPassword());
@@ -126,8 +129,21 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
             }
 
             e.setUsername(entity.getUsername());
+            /**
+             * TODO : Should only be performed by an Administrator
+             */
             e.setUuid(entity.getUuid());
             e.setRegistrationDate(entity.getRegistrationDate());
+
+            /**
+             * Will automatically ignore the id of the provided object : avoid
+             * to hack another object swapping the current saved (or not object)
+             * by an existing one.
+             */
+            entity.getCustomerDetails().setId(e.getCustomerDetails().getId());
+            entity.getAddress().setId(e.getAddress().getId());
+            entity.getSocialNetworkAccounts().setId(
+                    e.getSocialNetworkAccounts().getId());
 
             e.setCustomerDetails(entity.getCustomerDetails());
             e.setAddress(entity.getAddress());

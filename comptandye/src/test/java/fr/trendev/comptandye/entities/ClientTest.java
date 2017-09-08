@@ -44,9 +44,9 @@ public class ClientTest {
 
         assert instance.getId() == null;
         assert instance.getEmail() == null;
-        assert instance.getSocialNetworkAccounts() == null;
-        assert instance.getCustomerDetails() == null;
-        assert instance.getAddress() == null;
+        assert instance.getSocialNetworkAccounts() != null;
+        assert instance.getCustomerDetails() != null;
+        assert instance.getAddress() != null;
         assert instance.getProfessional() == null;
         assert instance.getClientBills() != null;
         assert instance.getClientBills().isEmpty();
@@ -61,9 +61,9 @@ public class ClientTest {
 
         assert instance.getId() == null;
         assert instance.getEmail().equals(email);
-        assert instance.getSocialNetworkAccounts() == null;
-        assert instance.getCustomerDetails() == null;
-        assert instance.getAddress() == null;
+        assert instance.getSocialNetworkAccounts() != null;
+        assert instance.getCustomerDetails() != null;
+        assert instance.getAddress() != null;
         assert instance.getProfessional() == null;
         assert instance.getClientBills() != null;
         assert instance.getClientBills().isEmpty();

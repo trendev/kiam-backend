@@ -64,9 +64,15 @@ public class Client {
 
     public Client(String email) {
         this.email = email;
+        this.customerDetails = new CustomerDetails();
+        this.address = new Address();
+        this.socialNetworkAccounts = new SocialNetworkAccounts();
     }
 
     public Client() {
+        this.customerDetails = new CustomerDetails();
+        this.address = new Address();
+        this.socialNetworkAccounts = new SocialNetworkAccounts();
     }
 
     public Client(String email, SocialNetworkAccounts socialNetworkAccounts,

@@ -51,9 +51,9 @@ public class CustomerTest {
         assert instance.getRegistrationDate() != null;
         assert instance.getUserGroups() != null;
         assert instance.getUserGroups().isEmpty();
-        assert instance.getCustomerDetails() == null;
-        assert instance.getAddress() == null;
-        assert instance.getSocialNetworkAccounts() == null;
+        assert instance.getCustomerDetails() != null;
+        assert instance.getAddress() != null;
+        assert instance.getSocialNetworkAccounts() != null;
 
         String email = "customer@domain.com";
         String password = "encrypted_pwd";
@@ -68,9 +68,9 @@ public class CustomerTest {
         assert instance.getRegistrationDate() != null;
         assert instance.getUserGroups() != null;
         assert instance.getUserGroups().isEmpty();
-        assert instance.getCustomerDetails() == null;
-        assert instance.getAddress() == null;
-        assert instance.getSocialNetworkAccounts() == null;
+        assert instance.getCustomerDetails() != null;
+        assert instance.getAddress() != null;
+        assert instance.getSocialNetworkAccounts() != null;
 
         instance = new CustomerImpl(email, password, username, uuid,
                 new CustomerDetails(), new Address(),

@@ -54,9 +54,9 @@ public class IndividualTest {
                 getRegistrationDate());
         assert instance.getUserGroups() != null;
         assert instance.getUserGroups().isEmpty();
-        assert instance.getCustomerDetails() == null;
-        assert instance.getAddress() == null;
-        assert instance.getSocialNetworkAccounts() == null;
+        assert instance.getCustomerDetails() != null;
+        assert instance.getAddress() != null;
+        assert instance.getSocialNetworkAccounts() != null;
         assert instance.getProfessionals() != null;
         assert instance.getProfessionals().isEmpty();
 
@@ -73,9 +73,9 @@ public class IndividualTest {
         assert instance.getRegistrationDate() != null;
         assert instance.getUserGroups() != null;
         assert instance.getUserGroups().isEmpty();
-        assert instance.getCustomerDetails() == null;
-        assert instance.getAddress() == null;
-        assert instance.getSocialNetworkAccounts() == null;
+        assert instance.getCustomerDetails() != null;
+        assert instance.getAddress() != null;
+        assert instance.getSocialNetworkAccounts() != null;
         assert instance.getProfessionals() != null;
         assert instance.getProfessionals().isEmpty();
 

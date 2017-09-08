@@ -41,6 +41,7 @@ public class CollectiveGroup {
 
     public CollectiveGroup(String groupName) {
         this.groupName = groupName;
+        this.address = new Address();
     }
 
     public CollectiveGroup(String groupName, Address address) {
@@ -49,6 +50,7 @@ public class CollectiveGroup {
     }
 
     public CollectiveGroup() {
+        this.address = new Address();
     }
 
     public Long getId() {
