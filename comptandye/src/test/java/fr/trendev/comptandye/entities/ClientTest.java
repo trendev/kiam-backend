@@ -81,7 +81,7 @@ public class ClientTest {
         instance.setCategories(IntStream
                 .range(0, size)
                 .mapToObj(i -> new Category("This Category#" + i, "Category #"
-                        + i))
+                        + i, new Professional()))
                 .collect(Collectors.toList())
         );
 

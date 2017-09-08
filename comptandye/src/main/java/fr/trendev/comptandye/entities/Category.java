@@ -7,19 +7,24 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 /**
  * @author jsie
  */
 @Entity
+@IdClass(CategoryPK.class)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Category {
 
+    @Column(name = "CATEGORY_ID")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -30,15 +35,23 @@ public class Category {
     @Basic
     private String name;
 
+    @Id
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
+        CascadeType.REFRESH}, targetEntity = Professional.class)
+    @JsonIgnore
+    private Professional professionalFromCategory;
+
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
         CascadeType.REFRESH}, targetEntity = Client.class,
             mappedBy = "categories")
     @JsonIgnore
     private List<Client> clients = new LinkedList<>();
 
-    public Category(String description, String name) {
+    public Category(String description, String name,
+            Professional professionalFromCategory) {
         this.description = description;
         this.name = name;
+        this.professionalFromCategory = professionalFromCategory;
     }
 
     public Category() {
@@ -66,6 +79,15 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Professional getProfessionalFromCategory() {
+        return this.professionalFromCategory;
+    }
+
+    public void setProfessionalFromCategory(
+            Professional professionalFromCategory) {
+        this.professionalFromCategory = professionalFromCategory;
     }
 
     public List<Client> getClients() {

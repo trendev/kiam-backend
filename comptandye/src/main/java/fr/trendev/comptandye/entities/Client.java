@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,6 +26,7 @@ import javax.persistence.OneToOne;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Client {
 
+    @Column(name = "CLIENT_ID")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

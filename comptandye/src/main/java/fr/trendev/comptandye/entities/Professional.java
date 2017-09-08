@@ -42,10 +42,6 @@ public class Professional extends Customer {
     @OneToMany(targetEntity = Business.class)
     private List<Business> businesses = new LinkedList<>();
 
-    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Category.class)
-    @JsonIgnore
-    private List<Category> categories = new LinkedList<>();
-
     @OneToMany(cascade = {CascadeType.ALL}, targetEntity = CollectiveGroup.class)
     @JsonIgnore
     private List<CollectiveGroup> collectiveGroups = new LinkedList<>();
@@ -63,6 +59,11 @@ public class Professional extends Customer {
             mappedBy = "professionalFromOffering")
     @JsonIgnore
     private List<Offering> offerings = new LinkedList<>();
+
+    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Category.class,
+            mappedBy = "professionalFromCategory")
+    @JsonIgnore
+    private List<Category> categories = new LinkedList<>();
 
     @ManyToMany(targetEntity = Individual.class, mappedBy = "professionals")
     @JsonIgnore
@@ -140,14 +141,6 @@ public class Professional extends Customer {
         this.businesses = businesses;
     }
 
-    public List<Category> getCategories() {
-        return this.categories;
-    }
-
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
-    }
-
     public List<CollectiveGroup> getCollectiveGroups() {
         return this.collectiveGroups;
     }
@@ -178,6 +171,14 @@ public class Professional extends Customer {
 
     public void setOfferings(List<Offering> offerings) {
         this.offerings = offerings;
+    }
+
+    public List<Category> getCategories() {
+        return this.categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 
     public List<Individual> getIndividuals() {

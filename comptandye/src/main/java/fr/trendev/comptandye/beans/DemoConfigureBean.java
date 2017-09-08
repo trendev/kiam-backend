@@ -72,6 +72,7 @@ public class DemoConfigureBean implements Serializable {
             this.initUsersAndGroups();
         }
 
+        this.createCategoryAndClient();
         this.createBills();
     }
 
@@ -151,7 +152,6 @@ public class DemoConfigureBean implements Serializable {
                 new CollectiveGroup("Senior Residence", new Address(
                         "10 route de la ferme du pavillon", "appart 202",
                         "77600", "Chanteloup-en-Brie")));
-        vanessa.getCategories().add(new Category("GOLD clients", "GOLD"));
 
         vanessa.getPaymentModes().addAll(Arrays.asList(
                 new PaymentMode("CB"),
@@ -159,23 +159,6 @@ public class DemoConfigureBean implements Serializable {
                 new PaymentMode("Espèces"),
                 new PaymentMode("Virement")
         ));
-
-        Category cat1 = new Category("long time customers", "Fidelity");
-        Client client1 = new Client("valery.lamome@hotmail.fr", vanessa);
-        client1.setAddress(new Address("down town", "water recycling",
-                "77600", "Quincy-Voisins"));
-        cat1.getClients().add(client1);
-        client1.getCategories().add(cat1);
-
-        vanessa.getClients().add(client1);
-        client1.setProfessionalFromClient(vanessa);
-
-        client1.getCollectiveGroups().add(vanessa.getCollectiveGroups().get(0));
-        vanessa.getCollectiveGroups().get(0).getClients().add(client1);
-
-        em.persist(cat1);
-
-        vanessa.getCategories().add(cat1);
 
         LOG.log(Level.INFO, "Vaness's birthdate is "
                 + vanessa.
@@ -321,6 +304,26 @@ public class DemoConfigureBean implements Serializable {
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Error in createBills()", ex);
         }
+    }
+
+    private void createCategoryAndClient() {
+        Professional vanessa = em.find(Professional.class,
+                "vanessa.gay@gmail.com");
+        Category cat1 = new Category("long time customers", "Fidelity", vanessa);
+        Client client1 = new Client("valery.lamome@hotmail.fr", vanessa);
+
+        client1.setAddress(new Address("down town", "water recycling",
+                "77600", "Quincy-Voisins"));
+        cat1.getClients().add(client1);
+        client1.getCategories().add(cat1);
+
+        vanessa.getClients().add(client1);
+        client1.setProfessionalFromClient(vanessa);
+//
+//        client1.getCollectiveGroups().add(vanessa.getCollectiveGroups().get(0));
+//        vanessa.getCollectiveGroups().get(0).getClients().add(client1);
+//
+//        vanessa.getCategories().add(cat1);
     }
 
 }
