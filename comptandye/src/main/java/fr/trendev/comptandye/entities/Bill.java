@@ -14,6 +14,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -65,8 +66,9 @@ public abstract class Bill {
     @Id
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
         CascadeType.REFRESH}, targetEntity = Professional.class)
+    @JoinColumn(name = "PROFESSIONAL_EMAIL1", referencedColumnName = "EMAIL")
     @JsonIgnore
-    private Professional professional;
+    private Professional professionalFromBill;
 
     /**
      * Should be ignored during a PUT
@@ -83,7 +85,7 @@ public abstract class Bill {
     private List<Offering> offerings = new LinkedList<>();
 
     public Bill(String reference, Date deliveryDate, int amount, int discount,
-            Date paymentDate, List comments, Professional professional,
+            Date paymentDate, List comments, Professional professionalFromBill,
             List payments, List offerings) {
         this.reference = reference;
         this.deliveryDate = deliveryDate;
@@ -91,7 +93,7 @@ public abstract class Bill {
         this.discount = discount;
         this.paymentDate = paymentDate;
         this.comments = comments;
-        this.professional = professional;
+        this.professionalFromBill = professionalFromBill;
         this.payments = payments;
         this.offerings = offerings;
     }
@@ -147,12 +149,12 @@ public abstract class Bill {
         this.comments = comments;
     }
 
-    public Professional getProfessional() {
-        return this.professional;
+    public Professional getProfessionalFromBill() {
+        return this.professionalFromBill;
     }
 
-    public void setProfessional(Professional professional) {
-        this.professional = professional;
+    public void setProfessionalFromBill(Professional professionalFromBill) {
+        this.professionalFromBill = professionalFromBill;
     }
 
     public List<Payment> getPayments() {

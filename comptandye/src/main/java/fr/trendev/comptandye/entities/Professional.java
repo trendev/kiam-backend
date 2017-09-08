@@ -35,7 +35,7 @@ public class Professional extends Customer {
     private Date creationDate;
 
     @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Bill.class,
-            mappedBy = "professional")
+            mappedBy = "professionalFromBill")
     @JsonIgnore
     private List<Bill> bills = new LinkedList<>();
 
@@ -59,7 +59,7 @@ public class Professional extends Customer {
     private List<Expense> expenses = new LinkedList<>();
 
     @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Client.class,
-            mappedBy = "professional")
+            mappedBy = "professionalFromClient")
     @JsonIgnore
     private List<Client> clients = new LinkedList<>();
 

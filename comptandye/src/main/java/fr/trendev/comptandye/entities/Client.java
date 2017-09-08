@@ -48,7 +48,7 @@ public class Client {
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
         CascadeType.REFRESH}, targetEntity = Professional.class)
     @JsonIgnore
-    private Professional professional;
+    private Professional professionalFromClient;
 
     @OneToMany(cascade = {CascadeType.ALL}, targetEntity = ClientBill.class,
             mappedBy = "client")
@@ -66,9 +66,9 @@ public class Client {
     @JsonIgnore
     private List<Category> categories = new LinkedList<>();
 
-    public Client(String email, Professional professional) {
+    public Client(String email, Professional professionalFromClient) {
         this.email = email;
-        this.professional = professional;
+        this.professionalFromClient = professionalFromClient;
         this.customerDetails = new CustomerDetails();
         this.address = new Address();
         this.socialNetworkAccounts = new SocialNetworkAccounts();
@@ -82,12 +82,12 @@ public class Client {
 
     public Client(String email, SocialNetworkAccounts socialNetworkAccounts,
             CustomerDetails customerDetails, Address address,
-            Professional professional) {
+            Professional professionalFromClient) {
         this.email = email;
         this.socialNetworkAccounts = socialNetworkAccounts;
         this.customerDetails = customerDetails;
         this.address = address;
-        this.professional = professional;
+        this.professionalFromClient = professionalFromClient;
     }
 
     public Long getId() {
@@ -131,12 +131,12 @@ public class Client {
         this.address = address;
     }
 
-    public Professional getProfessional() {
-        return this.professional;
+    public Professional getProfessionalFromClient() {
+        return this.professionalFromClient;
     }
 
-    public void setProfessional(Professional professional) {
-        this.professional = professional;
+    public void setProfessionalFromClient(Professional professionalFromClient) {
+        this.professionalFromClient = professionalFromClient;
     }
 
     public List<ClientBill> getClientBills() {

@@ -47,7 +47,7 @@ public class ClientTest {
         assert instance.getSocialNetworkAccounts() != null;
         assert instance.getCustomerDetails() != null;
         assert instance.getAddress() != null;
-        assert instance.getProfessional() == null;
+        assert instance.getProfessionalFromClient() == null;
         assert instance.getClientBills() != null;
         assert instance.getClientBills().isEmpty();
         assert instance.getCollectiveGroups() != null;
@@ -66,7 +66,7 @@ public class ClientTest {
         assert instance.getSocialNetworkAccounts() != null;
         assert instance.getCustomerDetails() != null;
         assert instance.getAddress() != null;
-        assert instance.getProfessional() == null;
+        assert instance.getProfessionalFromClient() != null;
         assert instance.getClientBills() != null;
         assert instance.getClientBills().isEmpty();
         assert instance.getCollectiveGroups() != null;
@@ -90,7 +90,7 @@ public class ClientTest {
         assert instance.getSocialNetworkAccounts() != null;
         assert instance.getCustomerDetails() != null;
         assert instance.getAddress() != null;
-        assert instance.getProfessional() != null;
+        assert instance.getProfessionalFromClient() != null;
         assert instance.getClientBills() != null;
         assert instance.getClientBills().isEmpty();
         assert instance.getCollectiveGroups() != null;

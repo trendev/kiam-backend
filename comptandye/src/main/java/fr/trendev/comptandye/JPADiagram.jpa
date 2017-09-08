@@ -402,7 +402,7 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_1504895192869453" v="true" xvt="" name="professional" id="_1504895192868452">
+            <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_1504895192869453" v="true" xvt="" name="professionalFromClient" id="_1504895192868452">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -836,7 +836,7 @@
                 <jpa:temporal>TIMESTAMP</jpa:temporal>
                 <jpa:column unique="false" nullable="true" insertable="true" updatable="true" column-definition="DATETIME(3)"/>
             </jpa:basic>
-            <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_1490179812678394" v="true" xvt="" name="professional" id="_1490179812677393">
+            <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_1490179812678394" v="true" xvt="" name="professionalFromBill" id="_1490179812677393">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -846,6 +846,7 @@
                     <jpa:cascade-refresh/>
                     <jpa:cascade-detach/>
                 </jpa:cascade>
+                <jpa:join-column name="PROFESSIONAL_EMAIL1" rc="EMAIL" unique="false" nullable="true" insertable="true" updatable="true"/>
             </jpa:many-to-one>
             <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1490206901623" v="true" xvt="" name="payments" dv="new LinkedList&lt;&gt;()" id="_150365567487858">
                 <jpa:des>Should be ignored during a PUT</jpa:des>
@@ -1383,6 +1384,9 @@ import java.util.List;</jpa:snp>
                     <e ref="_1503078556360627">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
+                    <e ref="_1504895192869453">
+                        <v st="1" si="12.0" cl="#ff0000"/>
+                    </e>
                     <e ref="_1490180547178494">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
@@ -1421,6 +1425,9 @@ import java.util.List;</jpa:snp>
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                     <e ref="_1490181195213607">
+                        <v st="1" si="12.0" cl="#ff0000"/>
+                    </e>
+                    <e ref="_1504895192868452">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                     <e ref="_1490283569412199">
