@@ -8,7 +8,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 
 @Stateless
-@Named("invidualBill")
+@Named("individualBill")
 public class IndividualBillFacade extends AbstractFacade<IndividualBill, BillPK> {
 
     @Inject

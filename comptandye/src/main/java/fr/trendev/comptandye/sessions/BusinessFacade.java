@@ -7,7 +7,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 
 @Stateless
-@Named("businessFacade")
+@Named("business")
 public class BusinessFacade extends AbstractFacade<Business, String> {
 
     @Inject

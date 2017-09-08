@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 
 /**
@@ -22,11 +21,11 @@ public class Pack extends Offering {
      */
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
         CascadeType.REFRESH}, targetEntity = Offering.class)
-    @JoinTable(name = "PACK_SERVICES")
     private List<Offering> offerings = new LinkedList<>();
 
-    public Pack(String name, int price, int duration) {
-        super(name, price, duration);
+    public Pack(String name, int price, int duration,
+            Professional professionalFromOffering) {
+        super(name, price, duration, professionalFromOffering);
     }
 
     public Pack() {

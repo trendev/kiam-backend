@@ -74,7 +74,8 @@ public class BillTest {
         List<Payment> payments = Arrays.asList(payment);
         List<Offering> offerings = IntStream
                 .range(0, 10)
-                .mapToObj(i -> new Service("Service #" + i, 1000, 10))
+                .mapToObj(i -> new Service("Service #" + i, 1000, 10,
+                        professional))
                 .collect(Collectors.toList());
 
         instance = new BillImpl(reference, deliveryDate, amount, discount,

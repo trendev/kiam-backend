@@ -295,7 +295,7 @@ public class DemoConfigureBean implements Serializable {
                                 getEmail(), vanessa.getUsername(), vanessa.
                         getUuid()});
 
-            Service longservice = new Service("Fashion color", 5000, 60);
+            Service longservice = new Service("Fashion color", 5000, 60, vanessa);
             vanessa.getOfferings().add(longservice);
 
             IndividualBill bill1 = new IndividualBill("Ref#12345", new Date(),
