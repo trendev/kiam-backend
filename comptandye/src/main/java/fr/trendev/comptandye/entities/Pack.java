@@ -24,11 +24,10 @@ public class Pack extends Offering {
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
         CascadeType.REFRESH}, targetEntity = Offering.class)
     @JoinColumns({
-        @JoinColumn(name = "PACK_ID", referencedColumnName = "ID",
+        @JoinColumn(name = "PACK_ID", referencedColumnName = "OFFERING_ID",
                 table = "OFFERING")
         ,@JoinColumn(name = "PACK_PROFESSIONALFROMOFFERING_EMAIL",
-                referencedColumnName = "PROFESSIONALFROMOFFERING_EMAIL",
-                table = "OFFERING")})
+                referencedColumnName = "OFFERING_PRO_EMAIL", table = "OFFERING")})
     private List<Offering> offerings = new LinkedList<>();
 
     public Pack(String name, int price, int duration,
