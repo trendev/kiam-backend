@@ -15,6 +15,7 @@ import fr.trendev.comptandye.entities.CustomerDetails;
 import fr.trendev.comptandye.entities.Expense;
 import fr.trendev.comptandye.entities.Individual;
 import fr.trendev.comptandye.entities.IndividualBill;
+import fr.trendev.comptandye.entities.Pack;
 import fr.trendev.comptandye.entities.Payment;
 import fr.trendev.comptandye.entities.PaymentMode;
 import fr.trendev.comptandye.entities.Professional;
@@ -280,6 +281,11 @@ public class DemoConfigureBean implements Serializable {
 
             Service longservice = new Service("Fashion color", 5000, 60, vanessa);
             vanessa.getOfferings().add(longservice);
+            Pack specialPack = new Pack("Suprem Pack", 8000, 120, vanessa);
+            specialPack.getOfferings().add(longservice);
+            specialPack.getOfferings().add(
+                    new Service("Exclusive service", 5000, 60, vanessa));
+            vanessa.getOfferings().add(specialPack);
 
             IndividualBill bill1 = new IndividualBill("Ref#12345", new Date(),
                     5000, 0,
