@@ -24,7 +24,7 @@ import javax.persistence.ManyToOne;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public abstract class Offering {
 
-    @Column(name = "OFFERING_ID")
+    @Column(name = "OFFERING_ID", nullable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -47,7 +47,8 @@ public abstract class Offering {
     @Id
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
         CascadeType.REFRESH}, targetEntity = Professional.class)
-    @JoinColumn(name = "OFFERING_PRO_EMAIL", referencedColumnName = "EMAIL")
+    @JoinColumn(name = "OFFERING_PRO_EMAIL", referencedColumnName = "EMAIL",
+            nullable = false)
     @JsonIgnore
     private Professional professionalFromOffering;
 

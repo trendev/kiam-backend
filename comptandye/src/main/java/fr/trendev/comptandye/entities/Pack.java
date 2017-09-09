@@ -7,7 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 
 /**
@@ -23,11 +23,12 @@ public class Pack extends Offering {
      */
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
         CascadeType.REFRESH}, targetEntity = Offering.class)
-    @JoinColumns({
+    @JoinTable(name = "PACK", joinColumns = {
         @JoinColumn(name = "PACK_ID", referencedColumnName = "OFFERING_ID",
                 table = "OFFERING")
-        ,@JoinColumn(name = "PACK_PROFESSIONALFROMOFFERING_EMAIL",
-                referencedColumnName = "OFFERING_PRO_EMAIL", table = "OFFERING")})
+        ,@JoinColumn(name = "PACK_PRO_EMAIL",
+                referencedColumnName = "PROFESSIONALFROMOFFERING_EMAIL",
+                table = "OFFERING")})
     private List<Offering> offerings = new LinkedList<>();
 
     public Pack(String name, int price, int duration,
