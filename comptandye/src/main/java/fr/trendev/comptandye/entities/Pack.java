@@ -24,7 +24,7 @@ public class Pack extends Offering {
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
         CascadeType.REFRESH}, targetEntity = Offering.class)
     @JoinTable(name = "PACK", joinColumns = {
-        @JoinColumn(name = "PACK_ID", referencedColumnName = "ID",
+        @JoinColumn(name = "PACK_ID", referencedColumnName = "OFFERING_ID",
                 table = "OFFERING")
         ,@JoinColumn(name = "PACK_PROFESSIONAL_EMAIL",
                 referencedColumnName = "OFFERING_PRO_EMAIL", table = "OFFERING")})

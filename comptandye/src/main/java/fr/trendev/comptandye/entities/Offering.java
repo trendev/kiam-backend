@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,6 +24,7 @@ import javax.persistence.ManyToOne;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public abstract class Offering {
 
+    @Column(name = "OFFERING_ID")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
