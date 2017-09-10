@@ -52,7 +52,7 @@ public class Client {
         CascadeType.REFRESH}, targetEntity = Professional.class)
     @JoinColumn(name = "CLIENT_PRO_EMAIL", referencedColumnName = "EMAIL")
     @JsonIgnore
-    private Professional professionalFromClient;
+    private Professional professional;
 
     @OneToMany(cascade = {CascadeType.ALL}, targetEntity = ClientBill.class,
             mappedBy = "client")
@@ -70,9 +70,9 @@ public class Client {
     @JsonIgnore
     private List<Category> categories = new LinkedList<>();
 
-    public Client(String email, Professional professionalFromClient) {
+    public Client(String email, Professional professional) {
         this.email = email;
-        this.professionalFromClient = professionalFromClient;
+        this.professional = professional;
         this.customerDetails = new CustomerDetails();
         this.address = new Address();
         this.socialNetworkAccounts = new SocialNetworkAccounts();
@@ -86,12 +86,12 @@ public class Client {
 
     public Client(String email, SocialNetworkAccounts socialNetworkAccounts,
             CustomerDetails customerDetails, Address address,
-            Professional professionalFromClient) {
+            Professional professional) {
         this.email = email;
         this.socialNetworkAccounts = socialNetworkAccounts;
         this.customerDetails = customerDetails;
         this.address = address;
-        this.professionalFromClient = professionalFromClient;
+        this.professional = professional;
     }
 
     public Long getId() {
@@ -135,12 +135,12 @@ public class Client {
         this.address = address;
     }
 
-    public Professional getProfessionalFromClient() {
-        return this.professionalFromClient;
+    public Professional getProfessional() {
+        return this.professional;
     }
 
-    public void setProfessionalFromClient(Professional professionalFromClient) {
-        this.professionalFromClient = professionalFromClient;
+    public void setProfessional(Professional professional) {
+        this.professional = professional;
     }
 
     public List<ClientBill> getClientBills() {

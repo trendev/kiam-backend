@@ -324,7 +324,7 @@ public class DemoConfigureBean implements Serializable {
         client1.getCategories().add(cat1);
 
         vanessa.getClients().add(client1);
-        client1.setProfessionalFromClient(vanessa);
+        client1.setProfessional(vanessa);
 
         client1.getCollectiveGroups().add(vanessa.getCollectiveGroups().get(0));
         vanessa.getCollectiveGroups().get(0).getClients().add(client1);

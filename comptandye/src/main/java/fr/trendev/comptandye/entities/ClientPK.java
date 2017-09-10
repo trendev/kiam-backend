@@ -9,14 +9,14 @@ public class ClientPK implements Serializable {
 
     private Long id;
 
-    private String professionalFromClient;
+    private String professional;
 
     public ClientPK() {
     }
 
-    public ClientPK(Long id, String professionalFromClient) {
+    public ClientPK(Long id, String professional) {
         this.id = id;
-        this.professionalFromClient = professionalFromClient;
+        this.professional = professional;
     }
 
     public Long getId() {
@@ -27,12 +27,12 @@ public class ClientPK implements Serializable {
         this.id = id;
     }
 
-    public String getProfessionalFromClient() {
-        return this.professionalFromClient;
+    public String getProfessional() {
+        return this.professional;
     }
 
-    public void setProfessionalFromClient(String professionalFromClient) {
-        this.professionalFromClient = professionalFromClient;
+    public void setProfessional(String professional) {
+        this.professional = professional;
     }
 
     @Override
@@ -47,8 +47,8 @@ public class ClientPK implements Serializable {
         if (!java.util.Objects.equals(this.getId(), other.getId())) {
             return false;
         }
-        if (!java.util.Objects.equals(this.getProfessionalFromClient(), other.
-                getProfessionalFromClient())) {
+        if (!java.util.Objects.equals(this.getProfessional(), other.
+                getProfessional())) {
             return false;
         }
         return true;
@@ -57,16 +57,16 @@ public class ClientPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 71 * hash + (this.getId() != null ? this.getId().hashCode() : 0);
-        hash = 71 * hash + (this.getProfessionalFromClient() != null ? this.
-                getProfessionalFromClient().hashCode() : 0);
+        hash = 97 * hash + (this.getId() != null ? this.getId().hashCode() : 0);
+        hash = 97 * hash + (this.getProfessional() != null ? this.
+                getProfessional().hashCode() : 0);
         return hash;
     }
 
     @Override
     public String toString() {
-        return "ClientPK{" + " id=" + id + ", professionalFromClient="
-                + professionalFromClient + '}';
+        return "ClientPK{" + " id=" + id + ", professional=" + professional
+                + '}';
     }
 
 }
