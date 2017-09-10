@@ -21,10 +21,10 @@ public class IndividualBill extends Bill {
 
     public IndividualBill(String reference, Date deliveryDate, int amount,
             int discount, Date paymentDate, List comments,
-            Professional professionalFromBill, List payments, List offerings,
+            Professional professional, List payments, List offerings,
             Individual individual) {
         super(reference, deliveryDate, amount, discount, paymentDate, comments,
-                professionalFromBill, payments, offerings);
+                professional, payments, offerings);
         this.individual = individual;
     }
 

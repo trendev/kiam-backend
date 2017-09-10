@@ -12,16 +12,15 @@ public class BillPK implements Serializable {
 
     private Date deliveryDate;
 
-    private String professionalFromBill;
+    private String professional;
 
     public BillPK() {
     }
 
-    public BillPK(String reference, Date deliveryDate,
-            String professionalFromBill) {
+    public BillPK(String reference, Date deliveryDate, String professional) {
         this.reference = reference;
         this.deliveryDate = deliveryDate;
-        this.professionalFromBill = professionalFromBill;
+        this.professional = professional;
     }
 
     public String getReference() {
@@ -40,12 +39,12 @@ public class BillPK implements Serializable {
         this.deliveryDate = deliveryDate;
     }
 
-    public String getProfessionalFromBill() {
-        return this.professionalFromBill;
+    public String getProfessional() {
+        return this.professional;
     }
 
-    public void setProfessionalFromBill(String professionalFromBill) {
-        this.professionalFromBill = professionalFromBill;
+    public void setProfessional(String professional) {
+        this.professional = professional;
     }
 
     @Override
@@ -64,8 +63,8 @@ public class BillPK implements Serializable {
                 getDeliveryDate())) {
             return false;
         }
-        if (!java.util.Objects.equals(this.getProfessionalFromBill(), other.
-                getProfessionalFromBill())) {
+        if (!java.util.Objects.equals(this.getProfessional(), other.
+                getProfessional())) {
             return false;
         }
         return true;
@@ -73,21 +72,20 @@ public class BillPK implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 47 * hash + (this.getReference() != null ? this.getReference().
+        int hash = 7;
+        hash = 59 * hash + (this.getReference() != null ? this.getReference().
                 hashCode() : 0);
-        hash = 47 * hash + (this.getDeliveryDate() != null ? this.
+        hash = 59 * hash + (this.getDeliveryDate() != null ? this.
                 getDeliveryDate().hashCode() : 0);
-        hash = 47 * hash + (this.getProfessionalFromBill() != null ? this.
-                getProfessionalFromBill().hashCode() : 0);
+        hash = 59 * hash + (this.getProfessional() != null ? this.
+                getProfessional().hashCode() : 0);
         return hash;
     }
 
     @Override
     public String toString() {
         return "BillPK{" + " reference=" + reference + ", deliveryDate="
-                + deliveryDate + ", professionalFromBill="
-                + professionalFromBill + '}';
+                + deliveryDate + ", professional=" + professional + '}';
     }
 
 }

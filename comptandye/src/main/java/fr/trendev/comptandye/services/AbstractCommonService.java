@@ -47,7 +47,7 @@ public abstract class AbstractCommonService<E, P> {
             sb.append("reference=").append(key.getReference()).append("&");
             sb.append("deliveryDate=").append(key.getDeliveryDate().getTime()).
                     append("&");
-            sb.append("professional=").append(key.getProfessionalFromBill());
+            sb.append("professional=").append(key.getProfessional());
             return sb.toString();
 
         } else {

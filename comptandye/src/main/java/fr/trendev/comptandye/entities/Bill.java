@@ -66,9 +66,9 @@ public abstract class Bill {
     @Id
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
         CascadeType.REFRESH}, targetEntity = Professional.class)
-    @JoinColumn(name = "PROFESSIONAL_EMAIL1", referencedColumnName = "EMAIL")
+    @JoinColumn(name = "PROFESSIONAL_EMAIL", referencedColumnName = "EMAIL")
     @JsonIgnore
-    private Professional professionalFromBill;
+    private Professional professional;
 
     /**
      * Should be ignored during a PUT
@@ -85,7 +85,7 @@ public abstract class Bill {
     private List<Offering> offerings = new LinkedList<>();
 
     public Bill(String reference, Date deliveryDate, int amount, int discount,
-            Date paymentDate, List comments, Professional professionalFromBill,
+            Date paymentDate, List comments, Professional professional,
             List payments, List offerings) {
         this.reference = reference;
         this.deliveryDate = deliveryDate;
@@ -93,7 +93,7 @@ public abstract class Bill {
         this.discount = discount;
         this.paymentDate = paymentDate;
         this.comments = comments;
-        this.professionalFromBill = professionalFromBill;
+        this.professional = professional;
         this.payments = payments;
         this.offerings = offerings;
     }
@@ -149,12 +149,12 @@ public abstract class Bill {
         this.comments = comments;
     }
 
-    public Professional getProfessionalFromBill() {
-        return this.professionalFromBill;
+    public Professional getProfessional() {
+        return this.professional;
     }
 
-    public void setProfessionalFromBill(Professional professionalFromBill) {
-        this.professionalFromBill = professionalFromBill;
+    public void setProfessional(Professional professional) {
+        this.professional = professional;
     }
 
     public List<Payment> getPayments() {

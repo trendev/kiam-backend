@@ -56,7 +56,7 @@ public class ClientBillTest {
         assert instance.getPaymentDate() == null;
         assert instance.getComments() != null;
         assert instance.getComments().isEmpty();
-        assert instance.getProfessionalFromBill() == null;
+        assert instance.getProfessional() == null;
         assert instance.getPayments() != null;
         assert instance.getPayments().isEmpty();
         assert instance.getOfferings() != null;
@@ -96,7 +96,7 @@ public class ClientBillTest {
         assert instance.getPaymentDate() != null;
         assert instance.getComments() != null;
         assert instance.getComments().size() == 2;
-        assert instance.getProfessionalFromBill().equals(professional);
+        assert instance.getProfessional().equals(professional);
         assert instance.getPayments() != null;
 
         assert instance.getPayments().contains(payment);
