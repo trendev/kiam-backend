@@ -72,9 +72,8 @@ public class CustomerDetailsTest {
 
         instance = new CustomerDetails(firstName, lastName, nickname, phone,
                 birthdate, sex, picturePath, comments);
-//        instance.setComments(comments);
 
-        assert instance.getId() == null;;
+        assert instance.getId() == null;
         assert firstName.equals(instance.getFirstName());
         assert lastName.equals(instance.getLastName());
         assert nickname.equals(instance.getNickname());
