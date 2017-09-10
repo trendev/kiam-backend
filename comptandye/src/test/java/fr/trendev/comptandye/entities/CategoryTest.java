@@ -48,7 +48,7 @@ public class CategoryTest {
         assert instance.getName() == null;
         assert instance.getClients() != null;
         assert instance.getClients().isEmpty();
-        assert instance.getProfessionalFromCategory() == null;
+        assert instance.getProfessional() == null;
 
         String description = "This a test of Category";
         String name = "Category #1";
@@ -60,7 +60,7 @@ public class CategoryTest {
         assert instance.getName().equals(name);
         assert instance.getClients() != null;
         assert instance.getClients().isEmpty();
-        assert instance.getProfessionalFromCategory() != null;
+        assert instance.getProfessional() != null;
 
     }
 

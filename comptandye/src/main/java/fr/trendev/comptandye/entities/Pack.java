@@ -30,9 +30,8 @@ public class Pack extends Offering {
                 referencedColumnName = "OFFERING_PRO_EMAIL", table = "OFFERING")})
     private List<Offering> offerings = new LinkedList<>();
 
-    public Pack(String name, int price, int duration,
-            Professional professionalFromOffering) {
-        super(name, price, duration, professionalFromOffering);
+    public Pack(String name, int price, int duration, Professional professional) {
+        super(name, price, duration, professional);
     }
 
     public Pack() {

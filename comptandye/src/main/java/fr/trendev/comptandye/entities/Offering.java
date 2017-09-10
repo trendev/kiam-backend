@@ -48,14 +48,14 @@ public abstract class Offering {
     @JoinColumn(name = "OFFERING_PRO_EMAIL", referencedColumnName = "EMAIL",
             nullable = false, updatable = false)
     @JsonIgnore
-    private Professional professionalFromOffering;
+    private Professional professional;
 
     public Offering(String name, int price, int duration,
-            Professional professionalFromOffering) {
+            Professional professional) {
         this.name = name;
         this.price = price;
         this.duration = duration;
-        this.professionalFromOffering = professionalFromOffering;
+        this.professional = professional;
     }
 
     public Offering() {
@@ -93,13 +93,12 @@ public abstract class Offering {
         this.duration = duration;
     }
 
-    public Professional getProfessionalFromOffering() {
-        return this.professionalFromOffering;
+    public Professional getProfessional() {
+        return this.professional;
     }
 
-    public void setProfessionalFromOffering(
-            Professional professionalFromOffering) {
-        this.professionalFromOffering = professionalFromOffering;
+    public void setProfessional(Professional professional) {
+        this.professional = professional;
     }
 
 }

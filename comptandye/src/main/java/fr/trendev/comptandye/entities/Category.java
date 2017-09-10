@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
@@ -38,8 +39,9 @@ public class Category {
     @Id
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
         CascadeType.REFRESH}, targetEntity = Professional.class)
+    @JoinColumn(name = "CATEGORY_PRO_EMAIL", referencedColumnName = "EMAIL")
     @JsonIgnore
-    private Professional professionalFromCategory;
+    private Professional professional;
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
         CascadeType.REFRESH}, targetEntity = Client.class,
@@ -47,11 +49,10 @@ public class Category {
     @JsonIgnore
     private List<Client> clients = new LinkedList<>();
 
-    public Category(String description, String name,
-            Professional professionalFromCategory) {
+    public Category(String description, String name, Professional professional) {
         this.description = description;
         this.name = name;
-        this.professionalFromCategory = professionalFromCategory;
+        this.professional = professional;
     }
 
     public Category() {
@@ -81,13 +82,12 @@ public class Category {
         this.name = name;
     }
 
-    public Professional getProfessionalFromCategory() {
-        return this.professionalFromCategory;
+    public Professional getProfessional() {
+        return this.professional;
     }
 
-    public void setProfessionalFromCategory(
-            Professional professionalFromCategory) {
-        this.professionalFromCategory = professionalFromCategory;
+    public void setProfessional(Professional professional) {
+        this.professional = professional;
     }
 
     public List<Client> getClients() {

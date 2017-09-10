@@ -46,7 +46,7 @@ public class PackTest {
         assert instance.getDuration() == 0;
         assert instance.getOfferings() != null;
         assert instance.getOfferings().isEmpty();
-        assert instance.getProfessionalFromOffering() == null;
+        assert instance.getProfessional() == null;
 
         String name = "Service Set #1";
         int price = 10000; // 100 euros
@@ -60,7 +60,7 @@ public class PackTest {
         assert instance.getDuration() == duration;
         assert instance.getOfferings() != null;
         assert instance.getOfferings().isEmpty();
-        assert instance.getProfessionalFromOffering() != null;
+        assert instance.getProfessional() != null;
 
     }
 

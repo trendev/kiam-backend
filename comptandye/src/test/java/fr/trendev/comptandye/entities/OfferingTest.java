@@ -47,7 +47,7 @@ public class OfferingTest {
         assert instance.getName() == null;
         assert instance.getPrice() == 0;
         assert instance.getDuration() == 0;
-        assert instance.getProfessionalFromOffering() == null;
+        assert instance.getProfessional() == null;
 
         String name = "Offering #1";
         int price = 1000; // 10 euros
@@ -59,7 +59,7 @@ public class OfferingTest {
         assert instance.getName().equals(name);
         assert instance.getPrice() == price;
         assert instance.getDuration() == duration;
-        assert instance.getProfessionalFromOffering() != null;
+        assert instance.getProfessional() != null;
 
     }
 

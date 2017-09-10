@@ -12,8 +12,8 @@ import javax.persistence.Entity;
 public class Service extends Offering {
 
     public Service(String name, int price, int duration,
-            Professional professionalFromOffering) {
-        super(name, price, duration, professionalFromOffering);
+            Professional professional) {
+        super(name, price, duration, professional);
     }
 
     public Service() {

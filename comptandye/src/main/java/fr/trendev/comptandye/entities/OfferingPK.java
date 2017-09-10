@@ -9,14 +9,14 @@ public class OfferingPK implements Serializable {
 
     private Long id;
 
-    private String professionalFromOffering;
+    private String professional;
 
     public OfferingPK() {
     }
 
-    public OfferingPK(Long id, String professionalFromOffering) {
+    public OfferingPK(Long id, String professional) {
         this.id = id;
-        this.professionalFromOffering = professionalFromOffering;
+        this.professional = professional;
     }
 
     public Long getId() {
@@ -27,12 +27,12 @@ public class OfferingPK implements Serializable {
         this.id = id;
     }
 
-    public String getProfessionalFromOffering() {
-        return this.professionalFromOffering;
+    public String getProfessional() {
+        return this.professional;
     }
 
-    public void setProfessionalFromOffering(String professionalFromOffering) {
-        this.professionalFromOffering = professionalFromOffering;
+    public void setProfessional(String professional) {
+        this.professional = professional;
     }
 
     @Override
@@ -47,8 +47,8 @@ public class OfferingPK implements Serializable {
         if (!java.util.Objects.equals(this.getId(), other.getId())) {
             return false;
         }
-        if (!java.util.Objects.equals(this.getProfessionalFromOffering(), other.
-                getProfessionalFromOffering())) {
+        if (!java.util.Objects.equals(this.getProfessional(), other.
+                getProfessional())) {
             return false;
         }
         return true;
@@ -56,17 +56,17 @@ public class OfferingPK implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 71 * hash + (this.getId() != null ? this.getId().hashCode() : 0);
-        hash = 71 * hash + (this.getProfessionalFromOffering() != null ? this.
-                getProfessionalFromOffering().hashCode() : 0);
+        int hash = 5;
+        hash = 89 * hash + (this.getId() != null ? this.getId().hashCode() : 0);
+        hash = 89 * hash + (this.getProfessional() != null ? this.
+                getProfessional().hashCode() : 0);
         return hash;
     }
 
     @Override
     public String toString() {
-        return "OfferingPK{" + " id=" + id + ", professionalFromOffering="
-                + professionalFromOffering + '}';
+        return "OfferingPK{" + " id=" + id + ", professional=" + professional
+                + '}';
     }
 
 }
