@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<jpa:entity-mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" pkg="fr.trendev.comptandye.entities" v="3.6" rws="_14901008082912" Pws="_14901008082912" cws="_14901008082912" thm="PMacColorScheme" dbthm="PLightColorScheme" ee="JAVA_EE_7" sm="false" xs="false" id="_14901008082901" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd">
+<jpa:entity-mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" pkg="fr.trendev.comptandye.entities" v="3.6" rws="_14901008082912" Pws="_14901008082912" cws="_14901008082912" thm="PNBColorScheme" dbthm="PLightColorScheme" ee="JAVA_EE_7" sm="false" xs="false" id="_14901008082901" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd">
     <jpa:entity lbl-ref="_14901008440196" compositePrimaryKeyClass="UserAccountPK" abs="true" class="UserAccount" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490100823157">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_14901149376313047</jpa:a>
@@ -256,14 +256,6 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:one-to-many>
-            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1490281931338" v="true" xvt="" name="collectiveGroups" dv="new LinkedList&lt;&gt;()" id="_1503077601277626">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-                <jpa:cascade>
-                    <jpa:cascade-all/>
-                </jpa:cascade>
-            </jpa:one-to-many>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490101555530" connected-attribute-id="_1504895192868452" v="true" xvt="" name="clients" dv="new LinkedList&lt;&gt;()" id="_1504895192869453">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
@@ -289,6 +281,14 @@
                 </jpa:cascade>
             </jpa:one-to-many>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1499512549878" connected-attribute-id="_150513285565066" v="true" xvt="" name="expenses" dv="new LinkedList&lt;&gt;()" id="_150513285566867">
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-all/>
+                </jpa:cascade>
+            </jpa:one-to-many>
+            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490281931338" connected-attribute-id="_150513719043493" v="true" xvt="" name="collectiveGroups" dv="new LinkedList&lt;&gt;()" id="_150513719043594">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -1068,14 +1068,16 @@ import java.util.List;</jpa:snp>
             <jpa:query>Select p from Payment p where p.currency=:currency</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="CollectiveGroupPK" abs="false" class="CollectiveGroup" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490281931338">
+    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="CollectiveGroupPK" abs="false" class="CollectiveGroup" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490281931338">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490282399999187</jpa:a>
+            <jpa:a>_150513719043493</jpa:a>
             <jpa:post>this.address = new Address();</jpa:post>
         </jpa:con>
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490282399999187</jpa:a>
             <jpa:a>_1490283543806197</jpa:a>
+            <jpa:a>_150513719043493</jpa:a>
         </jpa:con>
         <jpa:con am="PUBLIC" e="true">
             <jpa:post>this.address = new Address();</jpa:post>
@@ -1088,6 +1090,18 @@ import java.util.List;</jpa:snp>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
+            <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_150513719043594" v="true" xvt="" name="professional" id="_150513719043493">
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-persist/>
+                    <jpa:cascade-merge/>
+                    <jpa:cascade-refresh/>
+                    <jpa:cascade-detach/>
+                </jpa:cascade>
+                <jpa:join-column name="COLLECTIVE_GROUP_PRO_EMAIL" rc="EMAIL" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table=""/>
+            </jpa:many-to-one>
             <jpa:one-to-one own="true" orp="true" optional="true" primaryKey="false" connected-entity-id="_1490101737208" v="true" xvt="" name="address" id="_1490283543806197">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -1109,6 +1123,7 @@ import java.util.List;</jpa:snp>
             <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_1490283461395196">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:column name="COLLECTIVE_GROUP_ID" unique="false" nullable="true" insertable="true" updatable="true"/>
                 <jpa:generated-value strategy="AUTO"/>
             </jpa:id>
         </jpa:attributes>
@@ -1242,6 +1257,12 @@ import java.util.List;</jpa:snp>
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-persist/>
+                    <jpa:cascade-merge/>
+                    <jpa:cascade-refresh/>
+                    <jpa:cascade-detach/>
+                </jpa:cascade>
                 <jpa:join-column name="EXPENSE_PRO_EMAIL" rc="EMAIL" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table=""/>
             </jpa:many-to-one>
             <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1490184243036" v="true" xvt="" name="paymentModes" dv="new LinkedList&lt;&gt;()" id="_1503348975952509">
@@ -1316,46 +1337,46 @@ import java.util.List;</jpa:snp>
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1490172966686" x="-578" y="771">
+            <i ref="_1490172966686" x="-580" y="769">
                 <el>
                     <e ref="_15049019949221632">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490180671085" x="802" y="455">
+            <i ref="_1490180671085" x="800" y="453">
                 <el>
                     <e ref="_1503073892988616">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490704123469" x="-53" y="167"/>
-            <i ref="_1503060694288" x="-416" y="356"/>
-            <i ref="_1490101578444" x="469" y="167"/>
-            <i ref="_1490100852900" x="469" y="-69">
+            <i ref="_1490704123469" x="-55" y="165"/>
+            <i ref="_1503060694288" x="-418" y="354"/>
+            <i ref="_1490101578444" x="467" y="165"/>
+            <i ref="_1490100852900" x="467" y="-71">
                 <el>
                     <e ref="_14901160469883436">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101520286" x="349" y="455">
+            <i ref="_1490101520286" x="347" y="453">
                 <el>
                     <e ref="_1490180547173493">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490104062170" x="-295" y="511"/>
-            <i ref="_1490113906035" x="-295" y="976">
+            <i ref="_1490104062170" x="-297" y="509"/>
+            <i ref="_1490113906035" x="-297" y="974">
                 <el>
                     <e ref="_150489073375385">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490704206844" x="32" y="969">
+            <i ref="_1490704206844" x="30" y="967">
                 <el>
                     <e ref="_15049038294552105">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1365,7 +1386,7 @@ import java.util.List;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101376664" x="176" y="167">
+            <i ref="_1490101376664" x="174" y="165">
                 <el>
                     <e ref="_14901093969381510">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1378,15 +1399,15 @@ import java.util.List;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490113751330" x="-559" y="1009"/>
-            <i ref="_1490206901623" x="411" y="1353">
+            <i ref="_1490113751330" x="-561" y="1007"/>
+            <i ref="_1490206901623" x="409" y="1351">
                 <el>
                     <e ref="_1503081214518630">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490178979567" x="824" y="1353">
+            <i ref="_1490178979567" x="822" y="1351">
                 <el>
                     <e ref="_150365567487858">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1399,7 +1420,7 @@ import java.util.List;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1499512549878" x="-145" y="1294">
+            <i ref="_1499512549878" x="-147" y="1292">
                 <el>
                     <e ref="_1503348975952509">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1409,27 +1430,27 @@ import java.util.List;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101737208" x="-308" y="120"/>
-            <i ref="_1490281931338" x="525" y="1083">
+            <i ref="_1490101737208" x="-310" y="118"/>
+            <i ref="_1490281931338" x="519" y="1081">
                 <el>
                     <e ref="_1490283543806197">
                         <v st="1" si="12.0" cl="#00ff00"/>
+                    </e>
+                    <e ref="_150513719043493">
+                        <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                     <e ref="_1490283569372198">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101456632" x="57" y="356">
+            <i ref="_1490101456632" x="55" y="354">
                 <el>
                     <e ref="_1490179812678394">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                     <e ref="_1503060822737133">
                         <v st="1" si="12.0" cl="#00ff00"/>
-                    </e>
-                    <e ref="_1503077601277626">
-                        <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                     <e ref="_1504895192869453">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1443,6 +1464,9 @@ import java.util.List;</jpa:snp>
                     <e ref="_150513285566867">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
+                    <e ref="_150513719043594">
+                        <v st="1" si="12.0" cl="#ff0000"/>
+                    </e>
                     <e ref="_1490180547178494">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
@@ -1451,15 +1475,15 @@ import java.util.List;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490184243036" x="111" y="1353"/>
-            <i ref="_1490100823157" x="161" y="-99">
+            <i ref="_1490184243036" x="109" y="1351"/>
+            <i ref="_1490100823157" x="159" y="-101">
                 <el>
                     <e ref="_14901160469863435">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490180682743" x="633" y="641">
+            <i ref="_1490180682743" x="631" y="639">
                 <el>
                     <e ref="_1490288049311796">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1469,7 +1493,7 @@ import java.util.List;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101555530" x="327" y="691">
+            <i ref="_1490101555530" x="325" y="689">
                 <el>
                     <e ref="_149028166301044">
                         <v st="1" si="12.0" cl="#00ff00"/>

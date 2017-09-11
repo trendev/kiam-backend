@@ -48,26 +48,28 @@ public class CollectiveGroupTest {
         assert instance.getAddress() != null;
         assert instance.getClients() != null;
         assert instance.getClients().isEmpty();
+        assert instance.getProfessional() == null;
 
         String groupName = "Collective Group";
 
-        instance = new CollectiveGroup(groupName);
+        instance = new CollectiveGroup(groupName, new Professional());
 
         assert instance.getId() == null;
         assert instance.getGroupName().equals(groupName);
         assert instance.getAddress() != null;
         assert instance.getClients() != null;
         assert instance.getClients().isEmpty();
+        assert instance.getProfessional() != null;
 
         Address address = new Address();
 
-        instance = new CollectiveGroup(groupName, address);
+        instance = new CollectiveGroup(groupName, address, new Professional());
 
         assert instance.getId() == null;
         assert instance.getGroupName().equals(groupName);
         assert instance.getAddress().equals(address);
         assert instance.getClients() != null;
         assert instance.getClients().isEmpty();
+        assert instance.getProfessional() != null;
     }
-
 }

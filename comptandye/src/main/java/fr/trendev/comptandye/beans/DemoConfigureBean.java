@@ -152,7 +152,7 @@ public class DemoConfigureBean implements Serializable {
         vanessa.getCollectiveGroups().add(
                 new CollectiveGroup("Senior Residence", new Address(
                         "10 route de la ferme du pavillon", "appart 202",
-                        "77600", "Chanteloup-en-Brie")));
+                        "77600", "Chanteloup-en-Brie"), vanessa));
 
         vanessa.getPaymentModes().addAll(Arrays.asList(
                 new PaymentMode("CB"),

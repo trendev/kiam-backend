@@ -5,16 +5,16 @@ package fr.trendev.comptandye.entities;
 
 import java.io.Serializable;
 
-public class ExpensePK implements Serializable {
+public class CollectiveGroupPK implements Serializable {
 
     private Long id;
 
     private String professional;
 
-    public ExpensePK() {
+    public CollectiveGroupPK() {
     }
 
-    public ExpensePK(Long id, String professional) {
+    public CollectiveGroupPK(Long id, String professional) {
         this.id = id;
         this.professional = professional;
     }
@@ -43,7 +43,7 @@ public class ExpensePK implements Serializable {
         if (!java.util.Objects.equals(getClass(), obj.getClass())) {
             return false;
         }
-        final ExpensePK other = (ExpensePK) obj;
+        final CollectiveGroupPK other = (CollectiveGroupPK) obj;
         if (!java.util.Objects.equals(this.getId(), other.getId())) {
             return false;
         }
@@ -57,16 +57,16 @@ public class ExpensePK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 97 * hash + (this.getId() != null ? this.getId().hashCode() : 0);
-        hash = 97 * hash + (this.getProfessional() != null ? this.
+        hash = 19 * hash + (this.getId() != null ? this.getId().hashCode() : 0);
+        hash = 19 * hash + (this.getProfessional() != null ? this.
                 getProfessional().hashCode() : 0);
         return hash;
     }
 
     @Override
     public String toString() {
-        return "ExpensePK{" + " id=" + id + ", professional=" + professional
-                + '}';
+        return "CollectiveGroupPK{" + " id=" + id + ", professional="
+                + professional + '}';
     }
 
 }

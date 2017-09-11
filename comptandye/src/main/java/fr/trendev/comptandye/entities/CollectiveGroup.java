@@ -7,11 +7,15 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -20,9 +24,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "COLLECTIVE_GROUP")
+@IdClass(CollectiveGroupPK.class)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CollectiveGroup {
 
+    @Column(name = "COLLECTIVE_GROUP_ID")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -34,19 +40,30 @@ public class CollectiveGroup {
             targetEntity = Address.class)
     private Address address;
 
+    @Id
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
+        CascadeType.REFRESH}, targetEntity = Professional.class)
+    @JoinColumn(name = "COLLECTIVE_GROUP_PRO_EMAIL",
+            referencedColumnName = "EMAIL")
+    @JsonIgnore
+    private Professional professional;
+
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
         CascadeType.REFRESH}, targetEntity = Client.class)
     @JsonIgnore
     private List<Client> clients = new LinkedList<>();
 
-    public CollectiveGroup(String groupName) {
+    public CollectiveGroup(String groupName, Professional professional) {
         this.groupName = groupName;
+        this.professional = professional;
         this.address = new Address();
     }
 
-    public CollectiveGroup(String groupName, Address address) {
+    public CollectiveGroup(String groupName, Address address,
+            Professional professional) {
         this.groupName = groupName;
         this.address = address;
+        this.professional = professional;
     }
 
     public CollectiveGroup() {
@@ -75,6 +92,14 @@ public class CollectiveGroup {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public Professional getProfessional() {
+        return this.professional;
+    }
+
+    public void setProfessional(Professional professional) {
+        this.professional = professional;
     }
 
     public List<Client> getClients() {

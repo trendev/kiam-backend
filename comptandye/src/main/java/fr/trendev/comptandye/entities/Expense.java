@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -55,7 +56,8 @@ public class Expense {
     private List<String> categories = new LinkedList<>();
 
     @Id
-    @ManyToOne(targetEntity = Professional.class)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
+        CascadeType.REFRESH}, targetEntity = Professional.class)
     @JoinColumn(name = "EXPENSE_PRO_EMAIL", referencedColumnName = "EMAIL")
     @JsonIgnore
     private Professional professional;
