@@ -144,10 +144,11 @@ public class DemoConfigureBean implements Serializable {
                 "Esthétique"),
                 em.find(Business.class, "Coiffure")));
 
-        vanessa.getExpenses().add(new Expense("something_expensive", 100000,
-                new Date(), "invoice#1", vanessa, Arrays.asList(em.
-                        find(PaymentMode.class, "CB"), em.
-                        find(PaymentMode.class, "Espèces"))));
+        vanessa.getExpenses().add(new Expense("Material", 100000,
+                new Date(), "invoice#1", Arrays.
+                        asList("Partner", "Provider"), vanessa, Arrays.asList(
+                new Payment(30000, "EUR", em.find(PaymentMode.class, "CB")),
+                new Payment(70000, "EUR", em.find(PaymentMode.class, "Espèces")))));
 
         vanessa.getCollectiveGroups().add(
                 new CollectiveGroup("Senior Residence", new Address(

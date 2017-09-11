@@ -73,7 +73,8 @@ public abstract class Bill {
     /**
      * Should be ignored during a PUT
      */
-    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Payment.class)
+    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Payment.class,
+            orphanRemoval = true)
     private List<Payment> payments = new LinkedList<>();
 
     /**

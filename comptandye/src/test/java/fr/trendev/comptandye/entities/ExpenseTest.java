@@ -54,30 +54,19 @@ public class ExpenseTest {
         assert instance.getInvoiceRef() == null;
         assert instance.getCategories() != null;
         assert instance.getCategories().isEmpty();
-        assert instance.getPaymentModes() != null;
-        assert instance.getPaymentModes().isEmpty();
+        assert instance.getPayments() != null;
+        assert instance.getPayments().isEmpty();
         assert instance.getProfessional() == null;
 
         String name = "Expensive expense";
-        int amount = 100000; // 1000 euros
+        int amount = 50000; // 1000 euros
         String invoiceRef = "Invoice12345ABC";
 
-        instance = new Expense(name, amount, invoiceRef, new Professional());
-
-        assert instance.getId() == null;
-        assert instance.getName().equals(name);
-        assert instance.getAmount() == amount;
-        assert instance.getPaymentDate() == null;
-        assert instance.getInvoiceRef().equals(invoiceRef);
-        assert instance.getCategories() != null;
-        assert instance.getCategories().isEmpty();
-        assert instance.getPaymentModes() != null;
-        assert instance.getPaymentModes().isEmpty();
-        assert instance.getProfessional() != null;
-
-        instance = new Expense(name, amount, new Date(), invoiceRef,
+        instance = new Expense(name, amount, new Date(), invoiceRef, Arrays.
+                asList("Partner", "Provider"),
                 new Professional(),
-                Arrays.asList(new PaymentMode(), new PaymentMode()));
+                Arrays.asList(new Payment(30000, "EUR", new PaymentMode("CB")),
+                        new Payment(30000, "EUR", new PaymentMode("Espèces"))));
 
         int size = 10;
         instance.setCategories(IntStream.range(0, size).mapToObj(i ->
@@ -91,8 +80,8 @@ public class ExpenseTest {
         assert instance.getInvoiceRef().equals(invoiceRef);
         assert instance.getCategories() != null;
         assert instance.getCategories().size() == size;
-        assert instance.getPaymentModes() != null;
-        assert instance.getPaymentModes().size() == 2;
+        assert instance.getPayments() != null;
+        assert instance.getPayments().size() == 2;
         assert instance.getProfessional() != null;
 
     }

@@ -62,25 +62,22 @@ public class Expense {
     @JsonIgnore
     private Professional professional;
 
-    @OneToMany(targetEntity = PaymentMode.class)
-    private List<PaymentMode> paymentModes = new LinkedList<>();
-
-    public Expense(String name, int amount, String invoiceRef,
-            Professional professional) {
-        this.name = name;
-        this.amount = amount;
-        this.invoiceRef = invoiceRef;
-        this.professional = professional;
-    }
+    /**
+     * Should be ignored during a PUT
+     */
+    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Payment.class,
+            orphanRemoval = true)
+    private List<Payment> payments = new LinkedList<>();
 
     public Expense(String name, int amount, Date paymentDate, String invoiceRef,
-            Professional professional, List paymentModes) {
+            List categories, Professional professional, List payments) {
         this.name = name;
         this.amount = amount;
         this.paymentDate = paymentDate;
         this.invoiceRef = invoiceRef;
+        this.categories = categories;
         this.professional = professional;
-        this.paymentModes = paymentModes;
+        this.payments = payments;
     }
 
     public Expense() {
@@ -142,12 +139,12 @@ public class Expense {
         this.professional = professional;
     }
 
-    public List<PaymentMode> getPaymentModes() {
-        return this.paymentModes;
+    public List<Payment> getPayments() {
+        return this.payments;
     }
 
-    public void setPaymentModes(List<PaymentMode> paymentModes) {
-        this.paymentModes = paymentModes;
+    public void setPayments(List<Payment> payments) {
+        this.payments = payments;
     }
 
 }
