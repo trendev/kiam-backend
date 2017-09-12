@@ -13,13 +13,18 @@ public class SocialNetworkAccountsFacade extends AbstractFacade<SocialNetworkAcc
     @Inject
     private EntityManager em;
 
+    public SocialNetworkAccountsFacade() {
+        super(SocialNetworkAccounts.class);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public SocialNetworkAccountsFacade() {
-        super(SocialNetworkAccounts.class);
+    @Override
+    public String prettyPrintPK(Long pk) {
+        return pk.toString();
     }
 
 }

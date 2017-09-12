@@ -13,13 +13,18 @@ public class ProfessionalFacade extends AbstractFacade<Professional, String> {
     @Inject
     private EntityManager em;
 
+    public ProfessionalFacade() {
+        super(Professional.class);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public ProfessionalFacade() {
-        super(Professional.class);
+    @Override
+    public String prettyPrintPK(String pk) {
+        return pk;
     }
 
 }

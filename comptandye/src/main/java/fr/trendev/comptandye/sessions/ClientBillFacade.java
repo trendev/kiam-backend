@@ -14,13 +14,24 @@ public class ClientBillFacade extends AbstractFacade<ClientBill, BillPK> {
     @Inject
     private EntityManager em;
 
+    public ClientBillFacade() {
+        super(ClientBill.class);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public ClientBillFacade() {
-        super(ClientBill.class);
+    @Override
+    public String prettyPrintPK(BillPK pk) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("key?");
+        sb.append("reference=").append(pk.getReference());
+        //converts the delivery date in UTC long
+        sb.append("&deliverydate=").append(pk.getDeliveryDate().getTime());
+        sb.append("&professional=").append(pk.getProfessional());
+        return sb.toString();
     }
 
 }

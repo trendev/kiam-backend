@@ -13,13 +13,18 @@ public class IndividualFacade extends AbstractFacade<Individual, String> {
     @Inject
     private EntityManager em;
 
+    public IndividualFacade() {
+        super(Individual.class);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public IndividualFacade() {
-        super(Individual.class);
+    @Override
+    public String prettyPrintPK(String pk) {
+        return pk;
     }
 
 }

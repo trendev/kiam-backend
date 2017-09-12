@@ -13,13 +13,18 @@ public class AdministratorFacade extends AbstractFacade<Administrator, String> {
     @Inject
     private EntityManager em;
 
+    public AdministratorFacade() {
+        super(Administrator.class);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public AdministratorFacade() {
-        super(Administrator.class);
+    @Override
+    public String prettyPrintPK(String pk) {
+        return pk;
     }
 
 }

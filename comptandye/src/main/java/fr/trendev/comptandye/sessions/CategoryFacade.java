@@ -14,13 +14,22 @@ public class CategoryFacade extends AbstractFacade<Category, CategoryPK> {
     @Inject
     private EntityManager em;
 
+    public CategoryFacade() {
+        super(Category.class);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public CategoryFacade() {
-        super(Category.class);
+    @Override
+    public String prettyPrintPK(CategoryPK pk) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("key?");
+        sb.append("id=").append(pk.getId());
+        sb.append("&professional=").append(pk.getProfessional());
+        return sb.toString();
     }
 
 }

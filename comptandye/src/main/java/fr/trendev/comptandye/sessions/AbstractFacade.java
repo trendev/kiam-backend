@@ -16,6 +16,8 @@ public abstract class AbstractFacade<E, P> {
 
     protected abstract EntityManager getEntityManager();
 
+    public abstract String prettyPrintPK(P pk);
+
     public void create(E entity) {
         getEntityManager().persist(entity);
     }

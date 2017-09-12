@@ -14,13 +14,23 @@ public class IndividualBillFacade extends AbstractFacade<IndividualBill, BillPK>
     @Inject
     private EntityManager em;
 
+    public IndividualBillFacade() {
+        super(IndividualBill.class);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public IndividualBillFacade() {
-        super(IndividualBill.class);
+    @Override
+    public String prettyPrintPK(BillPK pk) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("key?");
+        sb.append("reference=").append(pk.getReference());
+        //converts the delivery date in UTC long
+        sb.append("&deliverydate=").append(pk.getDeliveryDate().getTime());
+        sb.append("&professional=").append(pk.getProfessional());
+        return sb.toString();
     }
-
 }

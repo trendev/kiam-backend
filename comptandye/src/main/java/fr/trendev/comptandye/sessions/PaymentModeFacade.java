@@ -13,13 +13,18 @@ public class PaymentModeFacade extends AbstractFacade<PaymentMode, String> {
     @Inject
     private EntityManager em;
 
+    public PaymentModeFacade() {
+        super(PaymentMode.class);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public PaymentModeFacade() {
-        super(PaymentMode.class);
+    @Override
+    public String prettyPrintPK(String pk) {
+        return pk;
     }
 
 }

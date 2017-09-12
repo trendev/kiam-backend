@@ -13,13 +13,18 @@ public class AddressFacade extends AbstractFacade<Address, Long> {
     @Inject
     private EntityManager em;
 
+    public AddressFacade() {
+        super(Address.class);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public AddressFacade() {
-        super(Address.class);
+    @Override
+    public String prettyPrintPK(Long pk) {
+        return pk.toString();
     }
 
 }

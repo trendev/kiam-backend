@@ -14,13 +14,22 @@ public class CollectiveGroupFacade extends AbstractFacade<CollectiveGroup, Colle
     @Inject
     private EntityManager em;
 
+    public CollectiveGroupFacade() {
+        super(CollectiveGroup.class);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public CollectiveGroupFacade() {
-        super(CollectiveGroup.class);
+    @Override
+    public String prettyPrintPK(CollectiveGroupPK pk) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("key?");
+        sb.append("id=").append(pk.getId());
+        sb.append("&professional=").append(pk.getProfessional());
+        return sb.toString();
     }
 
 }

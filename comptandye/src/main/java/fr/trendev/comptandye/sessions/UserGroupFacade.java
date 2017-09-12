@@ -13,13 +13,18 @@ public class UserGroupFacade extends AbstractFacade<UserGroup, String> {
     @Inject
     private EntityManager em;
 
+    public UserGroupFacade() {
+        super(UserGroup.class);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public UserGroupFacade() {
-        super(UserGroup.class);
+    @Override
+    public String prettyPrintPK(String pk) {
+        return pk;
     }
 
 }

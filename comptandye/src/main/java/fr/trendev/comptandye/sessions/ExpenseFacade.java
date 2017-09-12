@@ -14,13 +14,22 @@ public class ExpenseFacade extends AbstractFacade<Expense, ExpensePK> {
     @Inject
     private EntityManager em;
 
+    public ExpenseFacade() {
+        super(Expense.class);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public ExpenseFacade() {
-        super(Expense.class);
+    @Override
+    public String prettyPrintPK(ExpensePK pk) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("key?");
+        sb.append("id=").append(pk.getId());
+        sb.append("&professional=").append(pk.getProfessional());
+        return sb.toString();
     }
 
 }

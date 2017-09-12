@@ -14,13 +14,22 @@ public class ClientFacade extends AbstractFacade<Client, ClientPK> {
     @Inject
     private EntityManager em;
 
+    public ClientFacade() {
+        super(Client.class);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public ClientFacade() {
-        super(Client.class);
+    @Override
+    public String prettyPrintPK(ClientPK pk) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("key?");
+        sb.append("id=").append(pk.getId());
+        sb.append("&professional=").append(pk.getProfessional());
+        return sb.toString();
     }
 
 }

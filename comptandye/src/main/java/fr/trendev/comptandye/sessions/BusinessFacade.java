@@ -13,13 +13,18 @@ public class BusinessFacade extends AbstractFacade<Business, String> {
     @Inject
     private EntityManager em;
 
+    public BusinessFacade() {
+        super(Business.class);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public BusinessFacade() {
-        super(Business.class);
+    @Override
+    public String prettyPrintPK(String pk) {
+        return pk;
     }
 
 }

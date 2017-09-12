@@ -13,13 +13,18 @@ public class CustomerDetailsFacade extends AbstractFacade<CustomerDetails, Long>
     @Inject
     private EntityManager em;
 
+    public CustomerDetailsFacade() {
+        super(CustomerDetails.class);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public CustomerDetailsFacade() {
-        super(CustomerDetails.class);
+    @Override
+    public String prettyPrintPK(Long pk) {
+        return pk.toString();
     }
 
 }

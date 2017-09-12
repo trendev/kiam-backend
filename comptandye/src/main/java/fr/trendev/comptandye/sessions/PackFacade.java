@@ -14,13 +14,22 @@ public class PackFacade extends AbstractFacade<Pack, OfferingPK> {
     @Inject
     private EntityManager em;
 
+    public PackFacade() {
+        super(Pack.class);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public PackFacade() {
-        super(Pack.class);
+    @Override
+    public String prettyPrintPK(OfferingPK pk) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("key?");
+        sb.append("id=").append(pk.getId());
+        sb.append("&professional=").append(pk.getProfessional());
+        return sb.toString();
     }
 
 }

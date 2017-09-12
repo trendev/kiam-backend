@@ -14,13 +14,22 @@ public class ServiceFacade extends AbstractFacade<Service, OfferingPK> {
     @Inject
     private EntityManager em;
 
+    public ServiceFacade() {
+        super(Service.class);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public ServiceFacade() {
-        super(Service.class);
+    @Override
+    public String prettyPrintPK(OfferingPK pk) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("key?");
+        sb.append("id=").append(pk.getId());
+        sb.append("&professional=").append(pk.getProfessional());
+        return sb.toString();
     }
 
 }
