@@ -10,8 +10,11 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -25,7 +28,9 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "USER_ACCOUNT")
-@DiscriminatorColumn(length = 31, name = "ACCOUNT_TYPE")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "USER_ACCOUNT_TYPE",
+        discriminatorType = DiscriminatorType.STRING)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public abstract class UserAccount {
 
