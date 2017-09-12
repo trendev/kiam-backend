@@ -47,7 +47,7 @@ public class UserGroupService extends AbstractCommonService<UserGroup, String> {
     }
 
     @Override
-    protected String prettyPrintPK(String pk) {
+    String prettyPrintPK(String pk) {
         return pk;
     }
 

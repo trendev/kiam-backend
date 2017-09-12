@@ -60,7 +60,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     }
 
     @Override
-    protected String prettyPrintPK(String pk) {
+    String prettyPrintPK(String pk) {
         return pk;
     }
 

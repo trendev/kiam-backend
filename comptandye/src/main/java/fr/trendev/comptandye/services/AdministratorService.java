@@ -55,7 +55,7 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
     }
 
     @Override
-    protected String prettyPrintPK(String pk) {
+    String prettyPrintPK(String pk) {
         return pk;
     }
 

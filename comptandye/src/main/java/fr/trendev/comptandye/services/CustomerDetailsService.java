@@ -48,7 +48,7 @@ public class CustomerDetailsService extends AbstractCommonService<CustomerDetail
     }
 
     @Override
-    protected String prettyPrintPK(Long pk) {
+    String prettyPrintPK(Long pk) {
         return pk.toString();
     }
 

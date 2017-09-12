@@ -46,7 +46,7 @@ public class BusinessService extends AbstractCommonService<Business, String> {
     }
 
     @Override
-    protected String prettyPrintPK(String pk) {
+    String prettyPrintPK(String pk) {
         return pk;
     }
 

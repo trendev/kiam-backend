@@ -48,7 +48,7 @@ public class AddressService extends AbstractCommonService<Address, Long> {
     }
 
     @Override
-    protected String prettyPrintPK(Long pk) {
+    String prettyPrintPK(Long pk) {
         return pk.toString();
     }
 

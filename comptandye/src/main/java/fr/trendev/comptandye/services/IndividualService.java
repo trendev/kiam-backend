@@ -59,7 +59,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
     }
 
     @Override
-    protected String prettyPrintPK(String pk) {
+    String prettyPrintPK(String pk) {
         return pk;
     }
 

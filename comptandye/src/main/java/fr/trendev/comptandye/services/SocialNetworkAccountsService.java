@@ -48,7 +48,7 @@ public class SocialNetworkAccountsService extends AbstractCommonService<SocialNe
     }
 
     @Override
-    protected String prettyPrintPK(Long pk) {
+    String prettyPrintPK(Long pk) {
         return pk.toString();
     }
 
