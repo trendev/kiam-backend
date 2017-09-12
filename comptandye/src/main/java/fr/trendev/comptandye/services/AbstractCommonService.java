@@ -12,6 +12,7 @@ import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -37,8 +38,6 @@ public abstract class AbstractCommonService<E, P> {
     }
 
     protected abstract Logger getLogger();
-
-    protected abstract String prettyPrintPK(P pk);
 
     protected Response findAll(AbstractFacade<E, P> facade) {
         try {
@@ -97,7 +96,7 @@ public abstract class AbstractCommonService<E, P> {
                     .orElse(Response.status(Response.Status.NOT_FOUND).entity(
                             Json.createObjectBuilder().add("error",
                                     entityClass.getSimpleName() + " "
-                                    + prettyPrintPK(pk) + " not found").
+                                    + facade.prettyPrintPK(pk) + " not found").
                                     build()).
                             build());
         } catch (Exception ex) {
@@ -105,7 +104,7 @@ public abstract class AbstractCommonService<E, P> {
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs providing " + entityClass.getSimpleName()
                     + " "
-                    + prettyPrintPK(pk));
+                    + facade.prettyPrintPK(pk));
             getLogger().log(Level.WARNING, errmsg, ex);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).
@@ -123,7 +122,7 @@ public abstract class AbstractCommonService<E, P> {
                     .orElse(Response.status(Response.Status.NOT_FOUND).entity(
                             Json.createObjectBuilder().add("error",
                                     entityClass.getSimpleName() + " "
-                                    + prettyPrintPK(pk) + " not found").
+                                    + facade.prettyPrintPK(pk) + " not found").
                                     build()).
                             build());
         } catch (Exception ex) {
@@ -132,7 +131,7 @@ public abstract class AbstractCommonService<E, P> {
                     "Exception occurs providing a relationship of "
                     + entityClass.getSimpleName()
                     + " "
-                    + prettyPrintPK(pk));
+                    + facade.prettyPrintPK(pk));
             getLogger().log(Level.WARNING, errmsg, ex);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).
@@ -152,9 +151,10 @@ public abstract class AbstractCommonService<E, P> {
             facade.refresh(entity);
             P pk = facade.getIdentifier(entity);
             getLogger().log(Level.INFO, entityClass.getSimpleName()
-                    + " {0} created", prettyPrintPK(pk));
+                    + " {0} created", facade.prettyPrintPK(pk));
             return Response.created(new URI("/restapi/" + entityClass.
-                    getSimpleName() + "/" + prettyPrintPK(pk))).entity(entity).
+                    getSimpleName() + "/" + facade.prettyPrintPK(pk))).entity(
+                    entity).
                     build();
         } catch (Exception ex) {
 
@@ -170,6 +170,46 @@ public abstract class AbstractCommonService<E, P> {
         }
     }
 
+    protected <O, K> Response post(E entity, K ownerPK,
+            Function<K, String> ownerPrettyPrintFunction,
+            Class<O> ownerClass,
+            AbstractFacade<E, P> facade, AbstractFacade<O, K> ownerFacade,
+            BiConsumer<E, O> setFunction,
+            Function<O, List<? super E>> getFunction,
+            Consumer<E> initAction) {
+        String jsonString = this.stringify(entity);
+        getLogger().log(Level.INFO, "Creating {0} {1}", new Object[]{
+            entityClass.getSimpleName(), jsonString});
+        try {
+            return Optional.ofNullable(ownerFacade.find(ownerPK))
+                    .map(o -> {
+                        setFunction.accept(entity, o);
+                        getFunction.apply(o).add(entity);
+                        return this.post(entity, facade, initAction);
+                    })
+                    .orElse(Response.status(Response.Status.NOT_FOUND).entity(
+                            Json.createObjectBuilder().add("error",
+                                    "Cannot create " + entityClass.
+                                            getSimpleName() + " " + jsonString
+                                    + " because " + ownerClass.getSimpleName()
+                                    + " " + ownerPrettyPrintFunction.apply(
+                                            ownerPK)
+                                    + " is not found !").
+                                    build()).
+                            build());
+        } catch (Exception ex) {
+
+            String errmsg = ExceptionHelper.handleException(ex,
+                    "Exception occurs in subroutine post() creating Service "
+                    + jsonString);
+            getLogger().log(Level.SEVERE, errmsg, ex);
+            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
+                    Json.createObjectBuilder().add("error", errmsg).build()).
+                    build();
+        }
+
+    }
+
     protected Response put(E entity, AbstractFacade<E, P> facade, P pk,
             Consumer<E> updateAction) {
         try {
@@ -178,14 +218,14 @@ public abstract class AbstractCommonService<E, P> {
                         updateAction.accept(result);
                         facade.edit(result);
                         getLogger().log(Level.INFO, entityClass.getSimpleName()
-                                + " {0} updated", prettyPrintPK(pk));
+                                + " {0} updated", facade.prettyPrintPK(pk));
                         return Response.status(Response.Status.OK).entity(
                                 result).build();
                     })
                     .orElse(Response.status(Response.Status.NOT_FOUND).entity(
                             Json.createObjectBuilder().add("error",
                                     entityClass.getSimpleName() + " "
-                                    + prettyPrintPK(pk) + " not found").
+                                    + facade.prettyPrintPK(pk) + " not found").
                                     build()).
                             build());
         } catch (Exception ex) {
@@ -194,7 +234,7 @@ public abstract class AbstractCommonService<E, P> {
                     "Exception occurs updating "
                     + entityClass.getSimpleName()
                     + " "
-                    + prettyPrintPK(pk));
+                    + facade.prettyPrintPK(pk));
             getLogger().log(Level.WARNING, errmsg, ex);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).
@@ -211,13 +251,13 @@ public abstract class AbstractCommonService<E, P> {
                         facade.flush();
                         facade.remove(result);
                         getLogger().log(Level.INFO, entityClass.getSimpleName()
-                                + " {0} deleted", prettyPrintPK(pk));
+                                + " {0} deleted", facade.prettyPrintPK(pk));
                         return Response.ok().build();
                     })
                     .orElse(Response.status(Response.Status.NOT_FOUND).entity(
                             Json.createObjectBuilder().add("error",
                                     entityClass.getSimpleName() + " "
-                                    + prettyPrintPK(pk) + " not found").
+                                    + facade.prettyPrintPK(pk) + " not found").
                                     build()).
                             build());
         } catch (Exception ex) {
@@ -226,7 +266,7 @@ public abstract class AbstractCommonService<E, P> {
                     "Exception occurs deleting "
                     + entityClass.getSimpleName()
                     + " "
-                    + prettyPrintPK(pk));
+                    + facade.prettyPrintPK(pk));
             getLogger().log(Level.WARNING, errmsg, ex);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).
