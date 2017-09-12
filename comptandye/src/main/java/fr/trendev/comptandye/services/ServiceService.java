@@ -104,24 +104,6 @@ public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
         }
     }
 
-//    private Response post(Service entity, String professional) {
-//        String jsonString = super.stringify(entity);
-//        LOG.log(Level.INFO, "Creating Service {0}", jsonString);
-//        try {
-//            return Optional.ofNullable(professionalFacade.find(professional))
-//                    .map(pro -> super.post(entity, serviceFacade, e -> {
-//                        e.setProfessional(pro);
-//                        pro.getOfferings().add(e);
-//                    }))
-//                    .orElse(Response.status(Response.Status.NOT_FOUND).entity(
-//                            Json.createObjectBuilder().add("error",
-//                                    "Cannot create Service " + jsonString
-//                                    + " because Professional "
-//                                    + professional + " is not found !").
-//                                    build()).
-//                            build());
-//        } catch (Exception ex) {
-//
 //    @PUT
 //    @Consumes(MediaType.APPLICATION_JSON)
 //    @Produces(MediaType.APPLICATION_JSON)
