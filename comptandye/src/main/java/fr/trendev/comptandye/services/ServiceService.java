@@ -110,17 +110,21 @@ public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(@Context SecurityContext sec, Service entity,
             @QueryParam("professional") String professional) {
-        LOG.log(Level.INFO, "Updating Service {0}", entity.getId());
         if (sec.isSecure() && sec.isUserInRole("Professional")) {
-            return super.put(entity, serviceFacade, new OfferingPK(entity.
-                    getId(), sec.getUserPrincipal().getName()), e -> {
+            OfferingPK pk = new OfferingPK(entity.getId(), sec.
+                    getUserPrincipal().getName());
+            LOG.log(Level.INFO, "Updating Service {0}", serviceFacade.
+                    prettyPrintPK(pk));
+            return super.put(entity, serviceFacade, pk, e -> {
                 e.setName(entity.getName());
                 e.setPrice(entity.getPrice());
                 e.setDuration(entity.getDuration());
             });
         } else {
-            return super.put(entity, serviceFacade, new OfferingPK(entity.
-                    getId(), professional), e -> {
+            OfferingPK pk = new OfferingPK(entity.getId(), professional);
+            LOG.log(Level.INFO, "Updating Service {0}", serviceFacade.
+                    prettyPrintPK(pk));
+            return super.put(entity, serviceFacade, pk, e -> {
                 e.setName(entity.getName());
                 e.setPrice(entity.getPrice());
                 e.setDuration(entity.getDuration());
@@ -133,13 +137,18 @@ public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
     public Response delete(@Context SecurityContext sec,
             @QueryParam("id") Long id,
             @QueryParam("professional") String professional) {
-        LOG.log(Level.INFO, "Deleting Service {0}", id);
         if (sec.isSecure() && sec.isUserInRole("Professional")) {
-            return super.delete(serviceFacade, new OfferingPK(id, sec.
-                    getUserPrincipal().getName()),
+            OfferingPK pk = new OfferingPK(id, sec.
+                    getUserPrincipal().getName());
+            LOG.log(Level.INFO, "Deleting Service {0}", serviceFacade.
+                    prettyPrintPK(pk));
+            return super.delete(serviceFacade, pk,
                     e -> e.getProfessional().getOfferings().remove(e));
         } else {
-            return super.delete(serviceFacade, new OfferingPK(id, professional),
+            OfferingPK pk = new OfferingPK(id, professional);
+            LOG.log(Level.INFO, "Deleting Service {0}", serviceFacade.
+                    prettyPrintPK(pk));
+            return super.delete(serviceFacade, pk,
                     e -> e.getProfessional().getOfferings().remove(e));
         }
     }
