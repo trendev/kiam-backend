@@ -46,11 +46,6 @@ public class UserGroupService extends AbstractCommonService<UserGroup, String> {
         return LOG;
     }
 
-    @Override
-    String prettyPrintPK(String pk) {
-        return pk;
-    }
-
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {

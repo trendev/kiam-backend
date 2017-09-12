@@ -45,11 +45,6 @@ public class BusinessService extends AbstractCommonService<Business, String> {
         return LOG;
     }
 
-    @Override
-    String prettyPrintPK(String pk) {
-        return pk;
-    }
-
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {

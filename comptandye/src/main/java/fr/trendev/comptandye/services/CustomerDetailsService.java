@@ -47,11 +47,6 @@ public class CustomerDetailsService extends AbstractCommonService<CustomerDetail
         return LOG;
     }
 
-    @Override
-    String prettyPrintPK(Long pk) {
-        return pk.toString();
-    }
-
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
