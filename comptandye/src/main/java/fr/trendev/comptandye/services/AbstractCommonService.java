@@ -7,7 +7,6 @@ package fr.trendev.comptandye.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.trendev.comptandye.entities.BillPK;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
 import java.net.URI;
@@ -39,21 +38,7 @@ public abstract class AbstractCommonService<E, P> {
 
     protected abstract Logger getLogger();
 
-    private String prettyPrintPK(P pk) {
-        if (pk instanceof BillPK) {
-            BillPK key = (BillPK) pk;
-            StringBuilder sb = new StringBuilder();
-            sb.append("pk?");
-            sb.append("reference=").append(key.getReference()).append("&");
-            sb.append("deliveryDate=").append(key.getDeliveryDate().getTime()).
-                    append("&");
-            sb.append("professional=").append(key.getProfessional());
-            return sb.toString();
-
-        } else {
-            return pk.toString();
-        }
-    }
+    protected abstract String prettyPrintPK(P pk);
 
     protected Response findAll(AbstractFacade<E, P> facade) {
         try {

@@ -58,6 +58,11 @@ public class IndividualService extends AbstractCommonService<Individual, String>
         return LOG;
     }
 
+    @Override
+    protected String prettyPrintPK(String pk) {
+        return pk;
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {

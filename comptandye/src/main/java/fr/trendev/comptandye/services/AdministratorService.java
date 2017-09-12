@@ -54,6 +54,11 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
         return LOG;
     }
 
+    @Override
+    protected String prettyPrintPK(String pk) {
+        return pk;
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {

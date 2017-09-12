@@ -47,6 +47,11 @@ public class AddressService extends AbstractCommonService<Address, Long> {
         return LOG;
     }
 
+    @Override
+    protected String prettyPrintPK(Long pk) {
+        return pk.toString();
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {

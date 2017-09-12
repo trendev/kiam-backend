@@ -30,37 +30,42 @@ import javax.ws.rs.core.Response;
 @Stateless
 @Path("SocialNetworkAccounts")
 public class SocialNetworkAccountsService extends AbstractCommonService<SocialNetworkAccounts, Long> {
-    
+
     @Inject
     SocialNetworkAccountsFacade socialNetworkAccountsFacade;
-    
+
     private static final Logger LOG = Logger.getLogger(
             SocialNetworkAccountsService.class.
                     getName());
-    
+
     public SocialNetworkAccountsService() {
         super(SocialNetworkAccounts.class);
     }
-    
+
     @Override
     protected Logger getLogger() {
         return LOG;
     }
-    
+
+    @Override
+    protected String prettyPrintPK(Long pk) {
+        return pk.toString();
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the SocialNetworkAccounts list");
         return super.findAll(socialNetworkAccountsFacade);
     }
-    
+
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response count() {
         return super.count(socialNetworkAccountsFacade);
     }
-    
+
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -70,18 +75,18 @@ public class SocialNetworkAccountsService extends AbstractCommonService<SocialNe
                 id);
         return super.find(socialNetworkAccountsFacade, id, refresh);
     }
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response post(SocialNetworkAccounts entity) {
         LOG.log(Level.INFO, "Creating SocialNetworkAccounts {0}", super.
                 stringify(entity));
-        
+
         return super.post(entity, socialNetworkAccountsFacade, e -> {
         });
     }
-    
+
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -97,7 +102,7 @@ public class SocialNetworkAccountsService extends AbstractCommonService<SocialNe
             e.setPinterest(entity.getPinterest());
         });
     }
-    
+
     @Path("{id}")
     @DELETE
     public Response delete(@PathParam("id") Long id) {
