@@ -171,7 +171,7 @@ public abstract class AbstractCommonService<E, P> {
     }
 
     protected <O, K> Response post(E entity, K ownerPK,
-            Function<K, String> ownerPrettyPrintFunction,
+            BiFunction<AbstractFacade<O, K>, K, String> ownerPrettyPrintFunction,
             Class<O> ownerClass,
             AbstractFacade<E, P> facade, AbstractFacade<O, K> ownerFacade,
             BiConsumer<E, O> setFunction,
@@ -193,6 +193,7 @@ public abstract class AbstractCommonService<E, P> {
                                             getSimpleName() + " " + jsonString
                                     + " because " + ownerClass.getSimpleName()
                                     + " " + ownerPrettyPrintFunction.apply(
+                                            ownerFacade,
                                             ownerPK)
                                     + " is not found !").
                                     build()).

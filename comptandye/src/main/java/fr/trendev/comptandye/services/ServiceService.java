@@ -8,6 +8,7 @@ package fr.trendev.comptandye.services;
 import fr.trendev.comptandye.entities.OfferingPK;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.Service;
+import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.sessions.ServiceFacade;
 import java.util.logging.Level;
@@ -87,14 +88,14 @@ public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
         if (sec.isSecure() && sec.isUserInRole("Professional")) {
             return super.<Professional, String>post(entity, sec.
                     getUserPrincipal().getName(),
-                    professionalFacade::prettyPrintPK,
+                    AbstractFacade::prettyPrintPK,
                     Professional.class,
                     serviceFacade, professionalFacade, Service::setProfessional,
                     Professional::getOfferings, e -> {
             });
         } else {
             return super.<Professional, String>post(entity, professional,
-                    professionalFacade::prettyPrintPK,
+                    AbstractFacade::prettyPrintPK,
                     Professional.class,
                     serviceFacade, professionalFacade, Service::setProfessional,
                     Professional::getOfferings, e -> {
