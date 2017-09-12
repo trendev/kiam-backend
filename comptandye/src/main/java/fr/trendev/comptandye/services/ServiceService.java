@@ -19,6 +19,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -104,21 +105,29 @@ public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
         }
     }
 
-//    @PUT
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response put(Service entity) {
-//        LOG.log(Level.INFO, "Updating Service {0}", entity.getId());
-//        return super.put(entity, serviceFacade, entity.getId(),
-//                e -> {
-//            e.setStreet(entity.getStreet());
-//            e.setOptional(entity.getOptional());
-//            e.setPostalCode(entity.getPostalCode());
-//            e.setCity(entity.getCity());
-//            e.setCountry(entity.getCountry());
-//        });
-//    }
-//
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response put(@Context SecurityContext sec, Service entity,
+            @QueryParam("professional") String professional) {
+        LOG.log(Level.INFO, "Updating Service {0}", entity.getId());
+        if (sec.isSecure() && sec.isUserInRole("Professional")) {
+            return super.put(entity, serviceFacade, new OfferingPK(entity.
+                    getId(), sec.getUserPrincipal().getName()), e -> {
+                e.setName(entity.getName());
+                e.setPrice(entity.getPrice());
+                e.setDuration(entity.getDuration());
+            });
+        } else {
+            return super.put(entity, serviceFacade, new OfferingPK(entity.
+                    getId(), professional), e -> {
+                e.setName(entity.getName());
+                e.setPrice(entity.getPrice());
+                e.setDuration(entity.getDuration());
+            });
+        }
+    }
+
     @Path("key")
     @DELETE
     public Response delete(@Context SecurityContext sec,
