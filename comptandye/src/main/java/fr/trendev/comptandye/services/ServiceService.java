@@ -1,0 +1,155 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package fr.trendev.comptandye.services;
+
+import fr.trendev.comptandye.entities.OfferingPK;
+import fr.trendev.comptandye.entities.Service;
+import fr.trendev.comptandye.sessions.ProfessionalFacade;
+import fr.trendev.comptandye.sessions.ServiceFacade;
+import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.json.Json;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+
+/**
+ *
+ * @author jsie
+ */
+@Stateless
+@Path("Service")
+public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
+
+    @Inject
+    ServiceFacade serviceFacade;
+
+    @Inject
+    ProfessionalFacade professionalFacade;
+
+    private static final Logger LOG = Logger.getLogger(ServiceService.class.
+            getName());
+
+    public ServiceService() {
+        super(Service.class);
+    }
+
+    @Override
+    protected Logger getLogger() {
+        return LOG;
+    }
+
+    @Override
+    protected String prettyPrintPK(OfferingPK pk) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("key?");
+        sb.append("id=").append(pk.getId());
+        sb.append("&professional=").append(pk.getProfessional());
+        return sb.toString();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findAll() {
+        LOG.log(Level.INFO, "Providing the Service list");
+        return super.findAll(serviceFacade);
+    }
+
+    @Path("count")
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response count() {
+        return super.count(serviceFacade);
+    }
+
+    @Path("key")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response find(@QueryParam("id") Long id,
+            @QueryParam("professional") String professional,
+            @QueryParam("refresh") boolean refresh) {
+        OfferingPK pk = new OfferingPK(id, professional);
+        LOG.log(Level.INFO, "REST request to get Service : {0}", prettyPrintPK(
+                pk));
+        return super.find(serviceFacade, pk, refresh);
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response post(@Context SecurityContext sec, Service entity,
+            @QueryParam("professional") String professional) {
+        //TODO : remove isSecure test when using Enterprise Bean Security 
+        if (sec.isSecure() && sec.isUserInRole("Professional")) {
+            return this.post(entity, sec.getUserPrincipal().getName());
+        } else {
+            return this.post(entity, professional);
+        }
+    }
+
+    private Response post(Service entity, String professional) {
+        String jsonString = super.stringify(entity);
+        LOG.log(Level.INFO, "Creating Service {0}", jsonString);
+        try {
+            return Optional.ofNullable(professionalFacade.find(professional))
+                    .map(pro -> super.post(entity, serviceFacade, e -> {
+                        e.setProfessional(pro);
+                        pro.getOfferings().add(e);
+                    }))
+                    .orElse(Response.status(Response.Status.NOT_FOUND).entity(
+                            Json.createObjectBuilder().add("error",
+                                    "Cannot create Service " + jsonString
+                                    + " because Professional "
+                                    + professional + " is not found !").
+                                    build()).
+                            build());
+        } catch (Exception ex) {
+
+            String errmsg = ExceptionHelper.handleException(ex,
+                    "Exception occurs in subroutine post() creating Service "
+                    + jsonString);
+            LOG.log(Level.SEVERE, errmsg, ex);
+            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
+                    Json.createObjectBuilder().add("error", errmsg).build()).
+                    build();
+        }
+
+    }
+//
+//    @PUT
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Response put(Service entity) {
+//        LOG.log(Level.INFO, "Updating Service {0}", entity.getId());
+//        return super.put(entity, serviceFacade, entity.getId(),
+//                e -> {
+//            e.setStreet(entity.getStreet());
+//            e.setOptional(entity.getOptional());
+//            e.setPostalCode(entity.getPostalCode());
+//            e.setCity(entity.getCity());
+//            e.setCountry(entity.getCountry());
+//        });
+//    }
+//
+//    @Path("{id}")
+//    @DELETE
+//    public Response delete(@PathParam("id") Long id) {
+//        LOG.log(Level.INFO, "Deleting Service {0}", id);
+//        return super.delete(serviceFacade, id, e -> {
+//        });
+//    }
+}
