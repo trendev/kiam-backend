@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -136,11 +137,19 @@ public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
 //        });
 //    }
 //
-//    @Path("{id}")
-//    @DELETE
-//    public Response delete(@PathParam("id") Long id) {
-//        LOG.log(Level.INFO, "Deleting Service {0}", id);
-//        return super.delete(serviceFacade, id, e -> {
-//        });
-//    }
+    @Path("key")
+    @DELETE
+    public Response delete(@Context SecurityContext sec,
+            @QueryParam("id") Long id,
+            @QueryParam("professional") String professional) {
+        LOG.log(Level.INFO, "Deleting Service {0}", id);
+        if (sec.isSecure() && sec.isUserInRole("Professional")) {
+            return super.delete(serviceFacade, new OfferingPK(id, sec.
+                    getUserPrincipal().getName()),
+                    e -> e.getProfessional().getOfferings().remove(e));
+        } else {
+            return super.delete(serviceFacade, new OfferingPK(id, professional),
+                    e -> e.getProfessional().getOfferings().remove(e));
+        }
+    }
 }
