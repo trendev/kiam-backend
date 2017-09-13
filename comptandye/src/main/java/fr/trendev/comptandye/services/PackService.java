@@ -149,4 +149,31 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
         return super.delete(packFacade, pk,
                 e -> e.getProfessional().getOfferings().remove(e));
     }
+
+//    @Path("hide/key")
+//    @PUT
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Response hide(@Context SecurityContext sec,
+//            @QueryParam("id") Long id,
+//            @QueryParam("professional") String professional) {
+//        OfferingPK pk;
+//
+//        if (sec.isSecure() && sec.isUserInRole("Professional")) {
+//            pk = new OfferingPK(id, sec.
+//                    getUserPrincipal().getName());
+//        } else {
+//            pk = new OfferingPK(id, professional);
+//        }
+//
+//        LOG.log(Level.INFO, "Hiding Service {0} from Professional {1}",
+//                new Object[]{serviceFacade.
+//                            prettyPrintPK(pk), pk.getProfessional()});
+//        //TODO : use a recursive process to delete service from the entire Professional's offering
+//        return super.<Professional, String>manageAssociation(
+//                AssociationManagementEnum.REMOVE,
+//                serviceFacade, pk,
+//                professionalFacade,
+//                pk.getProfessional(), Professional.class,
+//                (s, p) -> p.getOfferings().remove(s));
+//    }
 }
