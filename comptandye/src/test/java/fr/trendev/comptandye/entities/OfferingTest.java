@@ -48,6 +48,7 @@ public class OfferingTest {
         assert instance.getPrice() == 0;
         assert instance.getDuration() == 0;
         assert instance.getProfessional() == null;
+        assert instance.isHidden() == false;
 
         String name = "Offering #1";
         int price = 1000; // 10 euros
@@ -55,11 +56,14 @@ public class OfferingTest {
 
         instance = new OfferingImpl(name, price, duration, new Professional());
 
+        instance.setHidden(true);
+
         assert instance.getId() == null;
         assert instance.getName().equals(name);
         assert instance.getPrice() == price;
         assert instance.getDuration() == duration;
         assert instance.getProfessional() != null;
+        assert instance.isHidden() == true;
 
     }
 

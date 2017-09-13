@@ -47,12 +47,15 @@ public class PackTest {
         assert instance.getOfferings() != null;
         assert instance.getOfferings().isEmpty();
         assert instance.getProfessional() == null;
+        assert instance.isHidden() == false;
 
         String name = "Service Set #1";
         int price = 10000; // 100 euros
         int duration = 60;
 
         instance = new Pack(name, price, duration, new Professional());
+
+        instance.setHidden(true);
 
         assert instance.getId() == null;
         assert instance.getName().equals(name);
@@ -61,6 +64,7 @@ public class PackTest {
         assert instance.getOfferings() != null;
         assert instance.getOfferings().isEmpty();
         assert instance.getProfessional() != null;
+        assert instance.isHidden() == true;
 
     }
 
