@@ -86,23 +86,22 @@ public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response post(@Context SecurityContext sec, Service entity,
             @QueryParam("professional") String professional) {
+
+        String email;
         //TODO : remove isSecure test when using Enterprise Bean Security 
         if (sec.isSecure() && sec.isUserInRole("Professional")) {
-            return super.<Professional, String>post(entity, sec.
-                    getUserPrincipal().getName(),
-                    AbstractFacade::prettyPrintPK,
-                    Professional.class,
-                    serviceFacade, professionalFacade, Service::setProfessional,
-                    Professional::getOfferings, e -> {
-            });
+            email = sec.getUserPrincipal().getName();
         } else {
-            return super.<Professional, String>post(entity, professional,
-                    AbstractFacade::prettyPrintPK,
-                    Professional.class,
-                    serviceFacade, professionalFacade, Service::setProfessional,
-                    Professional::getOfferings, e -> {
-            });
+            email = professional;
         }
+
+        return super.<Professional, String>post(entity, email,
+                AbstractFacade::prettyPrintPK,
+                Professional.class,
+                serviceFacade, professionalFacade, Service::setProfessional,
+                Professional::getOfferings, e -> {
+        });
+
     }
 
     @PUT
