@@ -299,7 +299,7 @@ public abstract class AbstractCommonService<E, P> {
                                                         getSimpleName(),
                                                 entityPk,
                                                 option.equals(
-                                                        AssociationManagementEnum.INSERT) ? "inserted in " : "removed from",
+                                                        AssociationManagementEnum.INSERT) ? "associated to " : "unassociated with",
                                                 associationEntityClass.
                                                         getSimpleName(),
                                                 associationPk,
@@ -321,7 +321,7 @@ public abstract class AbstractCommonService<E, P> {
                                                         + entityPk
                                                         + " cannot be "
                                                         + (option.equals(
-                                                                AssociationManagementEnum.INSERT) ? "inserted into" : "removed from")
+                                                                AssociationManagementEnum.INSERT) ? "associated to" : "unassociated with")
                                                         + " undiscovered "
                                                         + associationEntityClass.
                                                                 getSimpleName()
@@ -335,17 +335,17 @@ public abstract class AbstractCommonService<E, P> {
                                     + entityPk
                                     + " not found and cannot be " + (option.
                                             equals(
-                                                    AssociationManagementEnum.INSERT) ? "inserted into" : "removed from")
+                                                    AssociationManagementEnum.INSERT) ? "associated to" : "unassociated with")
                                     + " "
                                     + associationPk).build()).build());
         } catch (Exception ex) {
 
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs " + (option.equals(
-                            AssociationManagementEnum.INSERT) ? "inserting" : "removing")
+                            AssociationManagementEnum.INSERT) ? "associating" : "unassociated")
                     + " " + entityClass.getSimpleName()
                     + " " + entityPk
-                    + " in " + associationEntityClass.getSimpleName() + " "
+                    + " with " + associationEntityClass.getSimpleName() + " "
                     + associationPk);
             getLogger().log(Level.WARNING, errmsg, ex);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
