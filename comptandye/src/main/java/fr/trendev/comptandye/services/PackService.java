@@ -8,19 +8,23 @@ package fr.trendev.comptandye.services;
 import fr.trendev.comptandye.entities.OfferingPK;
 import fr.trendev.comptandye.entities.Pack;
 import fr.trendev.comptandye.entities.Professional;
+import fr.trendev.comptandye.entities.Service;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.PackFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
+import fr.trendev.comptandye.sessions.ServiceFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.json.Json;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
@@ -41,6 +45,9 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
 
     @Inject
     ProfessionalFacade professionalFacade;
+
+    @Inject
+    ServiceFacade serviceFacade;
 
     private static final Logger LOG = Logger.getLogger(PackService.class.
             getName());
@@ -150,30 +157,84 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
                 e -> e.getProfessional().getOfferings().remove(e));
     }
 
-//    @Path("hide/key")
-//    @PUT
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response hide(@Context SecurityContext sec,
-//            @QueryParam("id") Long id,
-//            @QueryParam("professional") String professional) {
-//        OfferingPK pk;
-//
-//        if (sec.isSecure() && sec.isUserInRole("Professional")) {
-//            pk = new OfferingPK(id, sec.
-//                    getUserPrincipal().getName());
-//        } else {
-//            pk = new OfferingPK(id, professional);
-//        }
-//
-//        LOG.log(Level.INFO, "Hiding Service {0} from Professional {1}",
-//                new Object[]{serviceFacade.
-//                            prettyPrintPK(pk), pk.getProfessional()});
-//        //TODO : use a recursive process to delete service from the entire Professional's offering
-//        return super.<Professional, String>manageAssociation(
-//                AssociationManagementEnum.REMOVE,
-//                serviceFacade, pk,
-//                professionalFacade,
-//                pk.getProfessional(), Professional.class,
-//                (s, p) -> p.getOfferings().remove(s));
-//    }
+    @Path("{packid}/{action}/offering/{offeringid}/{type}")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response managePackContent(@Context SecurityContext sec,
+            @PathParam("packid") Long packid, @PathParam("action") String action,
+            @PathParam("offeringid") Long offeringid,
+            @PathParam("type") String type,
+            @QueryParam("professional") String professional) {
+
+        OfferingPK packPK;
+        OfferingPK offeringPK;
+
+        if (sec.isSecure() && sec.isUserInRole("Professional")) {
+            packPK = new OfferingPK(packid, sec.
+                    getUserPrincipal().getName());
+            offeringPK = new OfferingPK(offeringid, sec.
+                    getUserPrincipal().getName());
+        } else {
+            packPK = new OfferingPK(packid, professional);
+            offeringPK = new OfferingPK(offeringid, professional);
+        }
+
+        AssociationManagementEnum operation;
+        switch (action) {
+            case "add":
+                operation = AssociationManagementEnum.INSERT;
+                break;
+            case "remove":
+                operation = AssociationManagementEnum.REMOVE;
+                break;
+            default:
+                String errmsg = "Action " + action
+                        + " not supported in managePackContent()";
+                getLogger().log(Level.WARNING, errmsg);
+                return Response.status(Response.Status.EXPECTATION_FAILED).
+                        entity(
+                                Json.createObjectBuilder().add("error", errmsg).
+                                        build()).
+                        build();
+        }
+
+        switch (type) {
+            case "service":
+                return super.<Service, OfferingPK>manageAssociation(
+                        operation,
+                        packFacade, packPK,
+                        serviceFacade,
+                        offeringPK, Service.class,
+                        (p, o) -> {
+                    if (operation.equals(AssociationManagementEnum.INSERT)) {
+                        return p.getOfferings().add(o);
+                    } else {
+                        return p.getOfferings().remove(o);
+                    }
+                });
+            case "pack":
+                return super.<Pack, OfferingPK>manageAssociation(
+                        operation,
+                        packFacade, packPK,
+                        packFacade,
+                        offeringPK, Pack.class,
+                        (p, o) -> {
+                    if (operation.equals(AssociationManagementEnum.INSERT)) {
+                        return p.getOfferings().add(o);
+                    } else {
+                        return p.getOfferings().remove(o);
+                    }
+                });
+            default:
+                String errmsg = "Type " + type
+                        + " not supported in managePackContent()";
+                getLogger().log(Level.WARNING, errmsg);
+                return Response.status(Response.Status.EXPECTATION_FAILED).
+                        entity(
+                                Json.createObjectBuilder().add("error", errmsg).
+                                        build()).
+                        build();
+        }
+
+    }
 }
