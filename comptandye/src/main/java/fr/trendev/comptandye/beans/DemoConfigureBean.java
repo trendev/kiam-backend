@@ -280,33 +280,37 @@ public class DemoConfigureBean implements Serializable {
                                 getEmail(), vanessa.getUsername(), vanessa.
                         getUuid()});
 
-            Service longservice = new Service("Fashion color", 5000, 60, vanessa);
-            vanessa.getOfferings().add(longservice);
+            Service service1 = new Service("Fashion color", 5000, 60, vanessa);
+            Service service2 = new Service("Exclusive service", 5000, 60,
+                    vanessa);
+            vanessa.getOfferings().add(service1);
+            vanessa.getOfferings().add(service2);
             Pack specialPack = new Pack("Suprem Pack", 8000, 120, vanessa);
-            specialPack.getOfferings().add(longservice);
-            specialPack.getOfferings().add(
-                    new Service("Exclusive service", 5000, 60, vanessa));
+            specialPack.getOfferings().add(service1);
+            specialPack.getOfferings().add(service2);
             vanessa.getOfferings().add(specialPack);
 
             IndividualBill bill1 = new IndividualBill("Ref#12345", new Date(),
                     5000, 0,
                     new Date(),
                     Arrays.asList("Cool", "sympa"),
-                    vanessa, new LinkedList<>(), Arrays.asList(longservice),
+                    vanessa, new LinkedList<>(), Arrays.asList(service1),
                     sylvioc);
 
             IndividualBill bill2 = new IndividualBill("Ref#54321", new Date(),
-                    5000, 0,
+                    8000, 0,
                     new Date(),
                     Arrays.asList("Long", "Pffff"),
-                    vanessa, new LinkedList<>(), Arrays.asList(longservice),
+                    vanessa, new LinkedList<>(), Arrays.asList(specialPack),
                     sylvioc);
 
             Payment pm = new Payment(5000, "EUR", em.find(PaymentMode.class,
                     "CB"));
+            Payment pm2 = new Payment(8000, "EUR", em.find(PaymentMode.class,
+                    "Espèces"));
             bill1.getPayments().add(pm);
             vanessa.getBills().add(bill1);
-            bill2.getPayments().add(pm);
+            bill2.getPayments().add(pm2);
             vanessa.getBills().add(bill2);
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Error in createBills()", ex);
