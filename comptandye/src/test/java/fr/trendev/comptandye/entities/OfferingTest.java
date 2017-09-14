@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import java.util.Arrays;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -65,6 +66,22 @@ public class OfferingTest {
         assert instance.getProfessional() != null;
         assert instance.isHidden() == true;
 
+    }
+
+    @Test
+    public void testBusinessesGetter() {
+        Offering instance = new OfferingImpl();
+        assert instance.getBusinesses() != null;
+        assert instance.getBusinesses().isEmpty() == true;
+    }
+
+    @Test
+    public void testBusinessesSetter() {
+        Offering instance = new OfferingImpl();
+        instance.setBusinesses(Arrays.asList(new Business(), new Business(),
+                new Business()));
+        assert instance.getBusinesses() != null;
+        assert instance.getBusinesses().size() == 3;
     }
 
     public class OfferingImpl extends Offering {

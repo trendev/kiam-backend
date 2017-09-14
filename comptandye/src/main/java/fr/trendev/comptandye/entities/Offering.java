@@ -3,6 +3,8 @@ package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import java.util.LinkedList;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  * @author jsie
@@ -54,6 +57,9 @@ public abstract class Offering {
             nullable = false, updatable = false)
     @JsonIgnore
     private Professional professional;
+
+    @OneToMany(targetEntity = Business.class)
+    private List<Business> businesses = new LinkedList<>();
 
     public Offering(String name, int price, int duration,
             Professional professional) {
@@ -112,6 +118,14 @@ public abstract class Offering {
 
     public void setProfessional(Professional professional) {
         this.professional = professional;
+    }
+
+    public List<Business> getBusinesses() {
+        return this.businesses;
+    }
+
+    public void setBusinesses(List<Business> businesses) {
+        this.businesses = businesses;
     }
 
 }

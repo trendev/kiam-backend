@@ -72,12 +72,12 @@ public class BillPK implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 23 * hash + (this.getReference() != null ? this.getReference().
+        int hash = 5;
+        hash = 53 * hash + (this.getReference() != null ? this.getReference().
                 hashCode() : 0);
-        hash = 23 * hash + (this.getDeliveryDate() != null ? this.
+        hash = 53 * hash + (this.getDeliveryDate() != null ? this.
                 getDeliveryDate().hashCode() : 0);
-        hash = 23 * hash + (this.getProfessional() != null ? this.
+        hash = 53 * hash + (this.getProfessional() != null ? this.
                 getProfessional().hashCode() : 0);
         return hash;
     }

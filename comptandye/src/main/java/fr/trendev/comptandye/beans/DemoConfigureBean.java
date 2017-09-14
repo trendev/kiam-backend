@@ -281,8 +281,13 @@ public class DemoConfigureBean implements Serializable {
                         getUuid()});
 
             Service service1 = new Service("Fashion color", 5000, 60, vanessa);
-            Service service2 = new Service("Exclusive service", 5000, 60,
+            service1.getBusinesses().add(em.find(Business.class, "Coiffure"));
+
+            Service service2 = new Service("Exclusive service for dark skin",
+                    5000, 60,
                     vanessa);
+            service2.getBusinesses().add(em.find(Business.class, "Esthétique"));
+
             vanessa.getOfferings().add(service1);
             vanessa.getOfferings().add(service2);
             Pack specialPack = new Pack("Suprem Pack", 8000, 120, vanessa);
