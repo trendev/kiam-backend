@@ -39,42 +39,42 @@ import javax.ws.rs.core.SecurityContext;
 @Stateless
 @Path("Pack")
 public class PackService extends AbstractCommonService<Pack, OfferingPK> {
-
+    
     @Inject
     PackFacade packFacade;
-
+    
     @Inject
     ProfessionalFacade professionalFacade;
-
+    
     @Inject
     ServiceFacade serviceFacade;
-
+    
     private static final Logger LOG = Logger.getLogger(PackService.class.
             getName());
-
+    
     public PackService() {
         super(Pack.class);
     }
-
+    
     @Override
     protected Logger getLogger() {
         return LOG;
     }
-
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Pack list");
         return super.findAll(packFacade);
     }
-
+    
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response count() {
         return super.count(packFacade);
     }
-
+    
     @Path("key")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -87,13 +87,13 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
                         pk));
         return super.find(packFacade, pk, refresh);
     }
-
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response post(@Context SecurityContext sec, Pack entity,
             @QueryParam("professional") String professional) {
-
+        
         String email;
         //TODO : remove isSecure test when using Enterprise Bean Security 
         if (sec.isSecure() && sec.isUserInRole("Professional")) {
@@ -101,31 +101,31 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
         } else {
             email = professional;
         }
-
+        
         return super.<Professional, String>post(entity, email,
                 AbstractFacade::prettyPrintPK,
                 Professional.class,
                 packFacade, professionalFacade, Pack::setProfessional,
                 Professional::getOfferings, e -> {
         });
-
+        
     }
-
+    
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(@Context SecurityContext sec, Pack entity,
             @QueryParam("professional") String professional) {
-
+        
         OfferingPK pk;
-
+        
         if (sec.isSecure() && sec.isUserInRole("Professional")) {
             pk = new OfferingPK(entity.getId(), sec.
                     getUserPrincipal().getName());
         } else {
             pk = new OfferingPK(entity.getId(), professional);
         }
-
+        
         LOG.log(Level.INFO, "Updating Pack {0}", packFacade.
                 prettyPrintPK(pk));
         return super.put(entity, packFacade, pk, e -> {
@@ -133,30 +133,31 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
             e.setPrice(entity.getPrice());
             e.setDuration(entity.getDuration());
             e.setHidden(entity.isHidden());
+            e.setBusinesses(entity.getBusinesses());
         });
     }
-
+    
     @Path("key")
     @DELETE
     public Response delete(@Context SecurityContext sec,
             @QueryParam("id") Long id,
             @QueryParam("professional") String professional) {
-
+        
         OfferingPK pk;
-
+        
         if (sec.isSecure() && sec.isUserInRole("Professional")) {
             pk = new OfferingPK(id, sec.
                     getUserPrincipal().getName());
         } else {
             pk = new OfferingPK(id, professional);
         }
-
+        
         LOG.log(Level.INFO, "Deleting Pack {0}", packFacade.
                 prettyPrintPK(pk));
         return super.delete(packFacade, pk,
                 e -> e.getProfessional().getOfferings().remove(e));
     }
-
+    
     @Path("{packid}/{action}/offering/{offeringid}/{type}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -165,10 +166,10 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
             @PathParam("offeringid") Long offeringid,
             @PathParam("type") String type,
             @QueryParam("professional") String professional) {
-
+        
         OfferingPK packPK;
         OfferingPK offeringPK;
-
+        
         if (sec.isSecure() && sec.isUserInRole("Professional")) {
             packPK = new OfferingPK(packid, sec.
                     getUserPrincipal().getName());
@@ -178,7 +179,7 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
             packPK = new OfferingPK(packid, professional);
             offeringPK = new OfferingPK(offeringid, professional);
         }
-
+        
         AssociationManagementEnum operation;
         switch (action) {
             case "add":
@@ -197,7 +198,7 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
                                         build()).
                         build();
         }
-
+        
         switch (type) {
             case "service":
                 return super.<Service, OfferingPK>manageAssociation(
@@ -235,6 +236,6 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
                                         build()).
                         build();
         }
-
+        
     }
 }
