@@ -2980,7 +2980,7 @@
 					"response": []
 				},
 				{
-					"name": "add a service",
+					"name": "addService",
 					"event": [
 						{
 							"listen": "test",
@@ -3035,17 +3035,16 @@
 					],
 					"request": {
 						"url": {
-							"raw": "{{API_URL}}/Pack/{{created_pack_id}}/add/offering/{{created_offering_id}}/service?professional=vanessa.gay@gmail.com",
+							"raw": "{{API_URL}}/Pack/{{created_pack_id}}/addService/offering/{{created_offering_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"Pack",
 								"{{created_pack_id}}",
-								"add",
+								"addService",
 								"offering",
-								"{{created_offering_id}}",
-								"service"
+								"{{created_offering_id}}"
 							],
 							"query": [
 								{
@@ -3065,7 +3064,7 @@
 					"response": []
 				},
 				{
-					"name": "add a pack",
+					"name": "addPack",
 					"event": [
 						{
 							"listen": "test",
@@ -3120,17 +3119,16 @@
 					],
 					"request": {
 						"url": {
-							"raw": "{{API_URL}}/Pack/{{created_pack_id}}/add/offering/{{created_subpack_id}}/pack?professional=vanessa.gay@gmail.com",
+							"raw": "{{API_URL}}/Pack/{{created_pack_id}}/addPack/offering/{{created_subpack_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"Pack",
 								"{{created_pack_id}}",
-								"add",
+								"addPack",
 								"offering",
-								"{{created_subpack_id}}",
-								"pack"
+								"{{created_subpack_id}}"
 							],
 							"query": [
 								{
@@ -3150,7 +3148,7 @@
 					"response": []
 				},
 				{
-					"name": "remove service",
+					"name": "removeService",
 					"event": [
 						{
 							"listen": "test",
@@ -3182,17 +3180,16 @@
 					],
 					"request": {
 						"url": {
-							"raw": "{{API_URL}}/Pack/{{created_pack_id}}/remove/offering/{{created_offering_id}}/service?professional=vanessa.gay@gmail.com",
+							"raw": "{{API_URL}}/Pack/{{created_pack_id}}/removeService/offering/{{created_offering_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"Pack",
 								"{{created_pack_id}}",
-								"remove",
+								"removeService",
 								"offering",
-								"{{created_offering_id}}",
-								"service"
+								"{{created_offering_id}}"
 							],
 							"query": [
 								{
@@ -3212,7 +3209,7 @@
 					"response": []
 				},
 				{
-					"name": "remove pack",
+					"name": "removePack",
 					"event": [
 						{
 							"listen": "test",
@@ -3244,17 +3241,16 @@
 					],
 					"request": {
 						"url": {
-							"raw": "{{API_URL}}/Pack/{{created_pack_id}}/remove/offering/{{created_subpack_id}}/pack?professional=vanessa.gay@gmail.com",
+							"raw": "{{API_URL}}/Pack/{{created_pack_id}}/removePack/offering/{{created_subpack_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"Pack",
 								"{{created_pack_id}}",
-								"remove",
+								"removePack",
 								"offering",
-								"{{created_subpack_id}}",
-								"pack"
+								"{{created_subpack_id}}"
 							],
 							"query": [
 								{
