@@ -166,8 +166,11 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
             @PathParam("packid") Long packid,
             @PathParam("offeringid") Long offeringid,
             @QueryParam("professional") String professional) {
-        Map<String, OfferingPK> pks = this.getPKs(sec, packid, offeringid,
-                professional);
+
+        Map<String, OfferingPK> pks = this.getPKs(sec, professional, new Long[]{
+            packid, offeringid},
+                new String[]{"packPK", "offeringPK"});
+
         return super.<Service, OfferingPK>manageAssociation(
                 AssociationManagementEnum.INSERT,
                 packFacade, pks.get("packPK"),
@@ -183,8 +186,11 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
             @PathParam("packid") Long packid,
             @PathParam("offeringid") Long offeringid,
             @QueryParam("professional") String professional) {
-        Map<String, OfferingPK> pks = this.getPKs(sec, packid, offeringid,
-                professional);
+
+        Map<String, OfferingPK> pks = this.getPKs(sec, professional, new Long[]{
+            packid, offeringid},
+                new String[]{"packPK", "offeringPK"});
+
         return super.<Service, OfferingPK>manageAssociation(
                 AssociationManagementEnum.REMOVE,
                 packFacade, pks.get("packPK"),
@@ -200,8 +206,11 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
             @PathParam("packid") Long packid,
             @PathParam("offeringid") Long offeringid,
             @QueryParam("professional") String professional) {
-        Map<String, OfferingPK> pks = this.getPKs(sec, packid, offeringid,
-                professional);
+
+        Map<String, OfferingPK> pks = this.getPKs(sec, professional, new Long[]{
+            packid, offeringid},
+                new String[]{"packPK", "offeringPK"});
+
         return super.<Pack, OfferingPK>manageAssociation(
                 AssociationManagementEnum.INSERT,
                 packFacade, pks.get("packPK"),
@@ -217,8 +226,11 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
             @PathParam("packid") Long packid,
             @PathParam("offeringid") Long offeringid,
             @QueryParam("professional") String professional) {
-        Map<String, OfferingPK> pks = this.getPKs(sec, packid, offeringid,
-                professional);
+
+        Map<String, OfferingPK> pks = this.getPKs(sec, professional, new Long[]{
+            packid, offeringid},
+                new String[]{"packPK", "offeringPK"});
+
         return super.<Pack, OfferingPK>manageAssociation(
                 AssociationManagementEnum.REMOVE,
                 packFacade, pks.get("packPK"),
@@ -228,24 +240,20 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
     }
 
     private Map<String, OfferingPK> getPKs(SecurityContext sec,
-            Long packid,
-            Long offeringid, String professional) {
-        OfferingPK packPK;
-        OfferingPK offeringPK;
-        Map<String, OfferingPK> map = new TreeMap<>();
+            String professional, Long[] ids, String[] keys) {
 
+        String proEmail;
         if (sec.isSecure() && sec.isUserInRole("Professional")) {
-            packPK = new OfferingPK(packid, sec.
-                    getUserPrincipal().getName());
-            offeringPK = new OfferingPK(offeringid, sec.
-                    getUserPrincipal().getName());
+            proEmail = sec.getUserPrincipal().getName();
         } else {
-            packPK = new OfferingPK(packid, professional);
-            offeringPK = new OfferingPK(offeringid, professional);
+            proEmail = professional;
         }
 
-        map.put("packPK", packPK);
-        map.put("offeringPK", offeringPK);
+        Map<String, OfferingPK> map = new TreeMap<>();
+
+        for (int i = 0; i < ids.length; i++) {
+            map.put(keys[i], new OfferingPK(ids[i], proEmail));
+        }
 
         return map;
     }
