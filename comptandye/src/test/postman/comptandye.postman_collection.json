@@ -2542,7 +2542,8 @@
 									"tests[\"name is \\\"beauty service\\\"\"] = jsonData.name === \"beauty service\";",
 									"tests[\"price is 10000\"] = jsonData.price === 10000;",
 									"tests[\"duration is 180\"] = jsonData.duration === 180;",
-									"tests[\"hidden is false\"] = jsonData.hidden === false;"
+									"tests[\"hidden is false\"] = jsonData.hidden === false;",
+									"tests[\"cltype is service\"] = jsonData.cltype === \"service\";"
 								]
 							}
 						}
@@ -2599,7 +2600,8 @@
 									"tests[\"name is \\\"beauty service\\\"\"] = jsonData.name === \"beauty service\";",
 									"tests[\"price is 10000\"] = jsonData.price === 10000;",
 									"tests[\"duration is 180\"] = jsonData.duration === 180;",
-									"tests[\"hidden is false\"] = jsonData.hidden === false;"
+									"tests[\"hidden is false\"] = jsonData.hidden === false;",
+									"tests[\"cltype is service\"] = jsonData.cltype === \"service\";"
 								]
 							}
 						}
@@ -2660,7 +2662,8 @@
 									"tests[\"price is 100000\"] = jsonData.price === 100000;",
 									"tests[\"duration is 300\"] = jsonData.duration === 300;",
 									"tests[\"hidden is true\"] = jsonData.hidden === true;",
-									"tests[\"first business designation is \\\"Esthétique\\\"\"] = jsonData.businesses[0].designation === \"Esthétique\";"
+									"tests[\"first business designation is \\\"Esthétique\\\"\"] = jsonData.businesses[0].designation === \"Esthétique\";",
+									"tests[\"cltype is service\"] = jsonData.cltype === \"service\";"
 								]
 							}
 						}
@@ -2820,7 +2823,8 @@
 									"tests[\"name is \\\"MASTER PACK\\\"\"] = jsonData.name === \"MASTER PACK\";",
 									"tests[\"price is 100000\"] = jsonData.price === 100000;",
 									"tests[\"duration is 600\"] = jsonData.duration === 600;",
-									"tests[\"hidden is true\"] = jsonData.hidden === false;"
+									"tests[\"hidden is true\"] = jsonData.hidden === false;",
+									"tests[\"cltype is pack\"] = jsonData.cltype === \"pack\";"
 								]
 							}
 						}
@@ -2877,7 +2881,8 @@
 									"tests[\"name is \\\"MASTER PACK\\\"\"] = jsonData.name === \"MASTER PACK\";",
 									"tests[\"price is 100000\"] = jsonData.price === 100000;",
 									"tests[\"duration is 600\"] = jsonData.duration === 600;",
-									"tests[\"hidden is false\"] = jsonData.hidden === false;"
+									"tests[\"hidden is false\"] = jsonData.hidden === false;",
+									"tests[\"cltype is pack\"] = jsonData.cltype === \"pack\";"
 								]
 							}
 						}
@@ -2939,7 +2944,8 @@
 									"tests[\"price is 100000\"] = jsonData.price === 100000;",
 									"tests[\"duration is 600\"] = jsonData.duration === 600;",
 									"tests[\"hidden is true\"] = jsonData.hidden === true;",
-									"tests[\"businesses length is 2\"] = jsonData.businesses.length === 2;"
+									"tests[\"businesses length is 2\"] = jsonData.businesses.length === 2;",
+									"tests[\"cltype is pack\"] = jsonData.cltype === \"pack\";"
 								]
 							}
 						}
@@ -2996,7 +3002,8 @@
 									"tests[\"name is \\\"beauty service\\\"\"] = jsonData.name === \"beauty service\";",
 									"tests[\"price is 10000\"] = jsonData.price === 10000;",
 									"tests[\"duration is 180\"] = jsonData.duration === 180;",
-									"tests[\"hidden is false\"] = jsonData.hidden === false;"
+									"tests[\"hidden is false\"] = jsonData.hidden === false;",
+									"tests[\"cltype is service\"] = jsonData.cltype === \"service\";"
 								]
 							}
 						},
@@ -3080,7 +3087,8 @@
 									"tests[\"name is \\\"SubPack for Winners\\\"\"] = jsonData.name === \"SubPack for Winners\";",
 									"tests[\"price is 5000\"] = jsonData.price === 5000;",
 									"tests[\"duration is 10\"] = jsonData.duration === 10;",
-									"tests[\"hidden is false\"] = jsonData.hidden === false;"
+									"tests[\"hidden is false\"] = jsonData.hidden === false;",
+									"tests[\"cltype is pack\"] = jsonData.cltype === \"pack\";"
 								]
 							}
 						},
@@ -3165,6 +3173,7 @@
 									"tests[\"price is 10000\"] = jsonData.price === 10000;",
 									"tests[\"duration is 180\"] = jsonData.duration === 180;",
 									"tests[\"hidden is false\"] = jsonData.hidden === false;",
+									"tests[\"cltype is service\"] = jsonData.cltype === \"service\";",
 									"",
 									"pm.sendRequest({",
 									"    url: \"{{API_URL}}/Service/key?id={{created_offering_id}}&professional=vanessa.gay@gmail.com\",",
@@ -3226,6 +3235,7 @@
 									"tests[\"price is 5000\"] = jsonData.price === 5000;",
 									"tests[\"duration is 10\"] = jsonData.duration === 10;",
 									"tests[\"hidden is false\"] = jsonData.hidden === false;",
+									"tests[\"cltype is pack\"] = jsonData.cltype === \"pack\";",
 									"",
 									"pm.sendRequest({",
 									"    url: \"{{API_URL}}/Pack/key?id={{created_subpack_id}}&professional=vanessa.gay@gmail.com\",",

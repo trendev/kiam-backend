@@ -57,8 +57,8 @@ public class CategoryPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 29 * hash + (this.getId() != null ? this.getId().hashCode() : 0);
-        hash = 29 * hash + (this.getProfessional() != null ? this.
+        hash = 53 * hash + (this.getId() != null ? this.getId().hashCode() : 0);
+        hash = 53 * hash + (this.getProfessional() != null ? this.
                 getProfessional().hashCode() : 0);
         return hash;
     }
