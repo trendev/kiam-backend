@@ -35,39 +35,39 @@ import javax.ws.rs.core.SecurityContext;
 @Stateless
 @Path("Service")
 public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
-
+    
     @Inject
     ServiceFacade serviceFacade;
-
+    
     @Inject
     ProfessionalFacade professionalFacade;
-
+    
     private static final Logger LOG = Logger.getLogger(ServiceService.class.
             getName());
-
+    
     public ServiceService() {
         super(Service.class);
     }
-
+    
     @Override
     protected Logger getLogger() {
         return LOG;
     }
-
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Service list");
         return super.findAll(serviceFacade);
     }
-
+    
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response count() {
         return super.count(serviceFacade);
     }
-
+    
     @Path("key")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -80,13 +80,13 @@ public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
                         pk));
         return super.find(serviceFacade, pk, refresh);
     }
-
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response post(@Context SecurityContext sec, Service entity,
             @QueryParam("professional") String professional) {
-
+        
         String email;
         //TODO : remove isSecure test when using Enterprise Bean Security 
         if (sec.isSecure() && sec.isUserInRole("Professional")) {
@@ -94,31 +94,31 @@ public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
         } else {
             email = professional;
         }
-
+        
         return super.<Professional, String>post(entity, email,
                 AbstractFacade::prettyPrintPK,
                 Professional.class,
                 serviceFacade, professionalFacade, Service::setProfessional,
                 Professional::getOfferings, e -> {
         });
-
+        
     }
-
+    
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(@Context SecurityContext sec, Service entity,
             @QueryParam("professional") String professional) {
-
+        
         OfferingPK pk;
-
+        
         if (sec.isSecure() && sec.isUserInRole("Professional")) {
             pk = new OfferingPK(entity.getId(), sec.
                     getUserPrincipal().getName());
         } else {
             pk = new OfferingPK(entity.getId(), professional);
         }
-
+        
         LOG.log(Level.INFO, "Updating Service {0}", serviceFacade.
                 prettyPrintPK(pk));
         return super.put(entity, serviceFacade, pk, e -> {
@@ -126,24 +126,25 @@ public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
             e.setPrice(entity.getPrice());
             e.setDuration(entity.getDuration());
             e.setHidden(entity.isHidden());
+            e.setBusinesses(entity.getBusinesses());
         });
     }
-
+    
     @Path("key")
     @DELETE
     public Response delete(@Context SecurityContext sec,
             @QueryParam("id") Long id,
             @QueryParam("professional") String professional) {
-
+        
         OfferingPK pk;
-
+        
         if (sec.isSecure() && sec.isUserInRole("Professional")) {
             pk = new OfferingPK(id, sec.
                     getUserPrincipal().getName());
         } else {
             pk = new OfferingPK(id, professional);
         }
-
+        
         LOG.log(Level.INFO, "Deleting Service {0}", serviceFacade.
                 prettyPrintPK(pk));
         return super.delete(serviceFacade, pk,
