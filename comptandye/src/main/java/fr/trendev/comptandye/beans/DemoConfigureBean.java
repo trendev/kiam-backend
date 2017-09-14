@@ -74,7 +74,7 @@ public class DemoConfigureBean implements Serializable {
         }
 
         this.createCategoryAndClient();
-        this.createBills();
+        this.createBillsAndOfferings();
     }
 
     private void initUsersAndGroups() {
@@ -269,7 +269,7 @@ public class DemoConfigureBean implements Serializable {
         });
     }
 
-    private void createBills() {
+    private void createBillsAndOfferings() {
         try {
             Professional vanessa = em.find(Professional.class,
                     "vanessa.gay@gmail.com");
