@@ -118,18 +118,13 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
     public Response put(@Context SecurityContext sec, Pack entity,
             @QueryParam("professional") String professional) {
 
-        OfferingPK pk;
-
-        if (sec.isSecure() && sec.isUserInRole("Professional")) {
-            pk = new OfferingPK(entity.getId(), sec.
-                    getUserPrincipal().getName());
-        } else {
-            pk = new OfferingPK(entity.getId(), professional);
-        }
+        Map<String, OfferingPK> pks = this.getPKs(sec, professional, new Long[]{
+            entity.getId()},
+                new String[]{"pk"});
 
         LOG.log(Level.INFO, "Updating Pack {0}", packFacade.
-                prettyPrintPK(pk));
-        return super.put(entity, packFacade, pk, e -> {
+                prettyPrintPK(pks.get("pk")));
+        return super.put(entity, packFacade, pks.get("pk"), e -> {
             e.setName(entity.getName());
             e.setPrice(entity.getPrice());
             e.setDuration(entity.getDuration());
@@ -144,18 +139,13 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
             @QueryParam("id") Long id,
             @QueryParam("professional") String professional) {
 
-        OfferingPK pk;
-
-        if (sec.isSecure() && sec.isUserInRole("Professional")) {
-            pk = new OfferingPK(id, sec.
-                    getUserPrincipal().getName());
-        } else {
-            pk = new OfferingPK(id, professional);
-        }
+        Map<String, OfferingPK> pks = this.getPKs(sec, professional, new Long[]{
+            id},
+                new String[]{"pk"});
 
         LOG.log(Level.INFO, "Deleting Pack {0}", packFacade.
-                prettyPrintPK(pk));
-        return super.delete(packFacade, pk,
+                prettyPrintPK(pks.get("pk")));
+        return super.delete(packFacade, pks.get("pk"),
                 e -> e.getProfessional().getOfferings().remove(e));
     }
 
