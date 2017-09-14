@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Service extends Offering {
 
+    public final String type = "service";
+
     public Service(String name, int price, int duration,
             Professional professional) {
         super(name, price, duration, professional);

@@ -17,6 +17,8 @@ import javax.persistence.OneToOne;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ClientBill extends Bill {
 
+    public final String type = "clientbill";
+
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
         CascadeType.REFRESH}, targetEntity = CollectiveGroup.class)
     @JsonIgnore

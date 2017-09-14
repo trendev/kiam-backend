@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Pack extends Offering {
 
+    public final String type = "pack";
+
     /**
      * TODO : recursively check that all services and packs are owned by the
      * same Professional.
