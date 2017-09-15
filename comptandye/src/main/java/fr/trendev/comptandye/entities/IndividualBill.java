@@ -15,8 +15,6 @@ import javax.persistence.OneToOne;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class IndividualBill extends Bill {
 
-    public final String cltype = "individualbill";
-
     @OneToOne(targetEntity = Individual.class)
     @JsonIgnore
     private Individual individual;

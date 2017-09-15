@@ -3,6 +3,8 @@ package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,6 +31,12 @@ import javax.persistence.TemporalType;
 @DiscriminatorColumn(length = 31)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @SuppressWarnings("unchecked")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "cltype",
+        visible = true)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = ClientBill.class, name = "clientbill")
+    ,   @JsonSubTypes.Type(value = IndividualBill.class, name = "individualbill")})
 public abstract class Bill {
 
     /**
@@ -42,6 +50,9 @@ public abstract class Bill {
     @Id
     @Temporal(TemporalType.TIMESTAMP)
     private Date deliveryDate;
+
+    @Basic
+    private String cltype;
 
     /**
      * Amount in cents (1/100 of the currency)
@@ -116,6 +127,14 @@ public abstract class Bill {
 
     public void setDeliveryDate(Date deliveryDate) {
         this.deliveryDate = deliveryDate;
+    }
+
+    public String getCltype() {
+        return this.cltype;
+    }
+
+    public void setCltype(String cltype) {
+        this.cltype = cltype;
     }
 
     public int getAmount() {

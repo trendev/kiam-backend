@@ -308,6 +308,7 @@ public class DemoConfigureBean implements Serializable {
                     Arrays.asList("Cool", "sympa"),
                     vanessa, new LinkedList<>(), Arrays.asList(service1),
                     sylvioc);
+            bill1.setCltype("individualbill");
 
             IndividualBill bill2 = new IndividualBill("Ref#54321", new Date(),
                     8000, 0,
@@ -315,6 +316,7 @@ public class DemoConfigureBean implements Serializable {
                     Arrays.asList("Long", "Pffff"),
                     vanessa, new LinkedList<>(), Arrays.asList(specialPack),
                     sylvioc);
+            bill2.setCltype("individualbill");
 
             Payment pm = new Payment(5000, "EUR", em.find(PaymentMode.class,
                     "CB"));

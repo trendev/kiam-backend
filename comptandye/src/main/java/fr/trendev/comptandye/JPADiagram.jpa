@@ -860,9 +860,15 @@
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:annotation e="true" n="@java.lang.SuppressWarnings(&quot;unchecked&quot;)"/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonTypeInfo(use = JsonTypeInfo.Id.NAME,&#xA;        include = JsonTypeInfo.As.EXISTING_PROPERTY,&#xA;        property = &quot;cltype&quot;,&#xA;        visible = true)&#xA;"/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({&#xA;  @JsonSubTypes.Type(value = ClientBill.class, name = &quot;clientbill&quot;), &#xA;  @JsonSubTypes.Type(value = IndividualBill.class, name = &quot;individualbill&quot;)&#xA;})"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" xvt="" name="cltype" id="_1505479466713230">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
             <jpa:basic attribute-type="int" v="true" xvt="" name="amount" id="_149017899245630">
                 <jpa:des>Amount in cents (1/100 of the currency)</jpa:des>
                 <jpa:xwm nil="false" req="false"/>
@@ -946,6 +952,9 @@
         <jpa:nq e="false" name="Bill.findByComment">
             <jpa:query>Select b from Bill b where b.comment=:comment</jpa:query>
         </jpa:nq>
+        <jpa:nq e="false" name="Bill.findByCltype">
+            <jpa:query>Select b from Bill b where b.cltype=:cltype</jpa:query>
+        </jpa:nq>
         <jpa:discriminator-column/>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="IndividualBillPK" abs="false" class="IndividualBill" superclassId="_1490178979567" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490180671085">
@@ -965,7 +974,6 @@
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.Date;
             import java.util.List;</jpa:snp>
-        <jpa:snp loc="BEFORE_FIELD" e="true">public final String cltype = "individualbill";</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490101520286" v="true" xvt="" name="individual" id="_1503073892988616">
@@ -995,8 +1003,7 @@
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.Date;
-            import java.util.List;</jpa:snp>
-        <jpa:snp loc="BEFORE_FIELD" e="true">public final String cltype = "clientbill";</jpa:snp>
+import java.util.List;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490101555530" connected-attribute-id="_1490181195213607" v="true" xvt="" name="client" id="_1490181195212606">
