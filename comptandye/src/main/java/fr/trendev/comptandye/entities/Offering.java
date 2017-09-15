@@ -27,8 +27,9 @@ import javax.persistence.OneToMany;
 @IdClass(OfferingPK.class)
 @DiscriminatorColumn(length = 31)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY,
-        property = "cltype")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "cltype",
+        visible = true)
 @JsonSubTypes({
     @JsonSubTypes.Type(value = Service.class, name = "service")
     ,   @JsonSubTypes.Type(value = Pack.class, name = "pack")})
@@ -38,6 +39,9 @@ public abstract class Offering {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Basic
+    private String cltype;
 
     @Basic
     private String name;
@@ -85,6 +89,14 @@ public abstract class Offering {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCltype() {
+        return this.cltype;
+    }
+
+    public void setCltype(String cltype) {
+        this.cltype = cltype;
     }
 
     public String getName() {

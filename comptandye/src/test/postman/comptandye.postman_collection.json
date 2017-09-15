@@ -2577,7 +2577,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\":\"beauty service\",\n\t\"price\":10000,\n\t\"duration\":180\n}"
+							"raw": "{\n\t\"name\":\"beauty service\",\n\t\"price\":10000,\n\t\"duration\":180,\n\t\"cltype\":\"service\"\n}"
 						},
 						"description": ""
 					},
@@ -2697,7 +2697,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"id\":{{created_offering_id}},\n\t\"name\":\"new beauty service\",\n\t\"price\":100000,\n\t\"duration\":300,\n\t\"hidden\":true,\n\t\"businesses\": [\n            {\n                \"designation\": \"Esthétique\"\n            }\n    ]\n}"
+							"raw": "{\n\t\"cltype\": \"service\",\n\t\"id\":{{created_offering_id}},\n\t\"name\":\"new beauty service\",\n\t\"price\":100000,\n\t\"duration\":300,\n\t\"hidden\":true,\n\t\"businesses\": [\n            {\n                \"designation\": \"Esthétique\"\n            }\n    ]\n}"
 						},
 						"description": ""
 					},
@@ -2858,7 +2858,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\":\"MASTER PACK\",\n\t\"price\":100000,\n\t\"duration\":600\n}"
+							"raw": "{\n\t\"name\":\"MASTER PACK\",\n\t\"price\":100000,\n\t\"duration\":600,\n\t\"cltype\":\"pack\"\n}"
 						},
 						"description": ""
 					},
@@ -2979,7 +2979,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"id\":{{created_pack_id}},\n\t\"name\":\"WEDDING PACK\",\n\t\"price\":100000,\n\t\"duration\":600,\n\t\"hidden\":true,\n\t\"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            },\n            {\n                \"designation\": \"Esthétique\"\n            }\n    ]\n}"
+							"raw": "{\n\t\"id\":{{created_pack_id}},\n\t\"name\":\"WEDDING PACK\",\n\t\"price\":100000,\n\t\"duration\":600,\n\t\"hidden\":true,\n\t\"cltype\":\"pack\",\n\t\"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            },\n            {\n                \"designation\": \"Esthétique\"\n            }\n    ]\n}"
 						},
 						"description": ""
 					},
@@ -3027,7 +3027,8 @@
 									"                {",
 									"                    designation: \"Esthétique\"",
 									"                }",
-									"            ]",
+									"                ],",
+									"                cltype:\"service\"",
 									"            })",
 									"    }",
 									"}, function (err, response) {",
@@ -3112,7 +3113,8 @@
 									"                {",
 									"                    designation: \"Esthétique\"",
 									"                }",
-									"            ]",
+									"                ],",
+									"                cltype:\"pack\"",
 									"            })",
 									"    }",
 									"}, function (err, response) {",

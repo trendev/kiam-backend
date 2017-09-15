@@ -17,8 +17,6 @@ import javax.persistence.OneToMany;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Pack extends Offering {
 
-    private final String cltype = "pack";
-
     /**
      * TODO : recursively check that all services and packs are owned by the
      * same Professional.
@@ -37,10 +35,6 @@ public class Pack extends Offering {
     }
 
     public Pack() {
-    }
-
-    public String getCltype() {
-        return this.cltype;
     }
 
     public List<Offering> getOfferings() {

@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.services;
 
+import fr.trendev.comptandye.utils.AssociationManagementEnum;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.trendev.comptandye.sessions.AbstractFacade;

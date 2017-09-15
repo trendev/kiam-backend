@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.services;
 
+import fr.trendev.comptandye.utils.AssociationManagementEnum;
 import fr.trendev.comptandye.entities.Individual;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.UserGroup;

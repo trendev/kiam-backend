@@ -283,16 +283,19 @@ public class DemoConfigureBean implements Serializable {
             Business coiffure = em.find(Business.class, "Coiffure");
             Business esthetique = em.find(Business.class, "Esthétique");
             Service service1 = new Service("Fashion color", 5000, 60, vanessa);
+            service1.setCltype("service");
             service1.getBusinesses().add(coiffure);
 
             Service service2 = new Service("Exclusive service for dark skin",
                     5000, 60,
                     vanessa);
+            service2.setCltype("service");
             service2.getBusinesses().add(esthetique);
 
             vanessa.getOfferings().add(service1);
             vanessa.getOfferings().add(service2);
             Pack specialPack = new Pack("Supreme Pack", 8000, 120, vanessa);
+            specialPack.setCltype("pack");
             specialPack.getOfferings().add(service1);
             specialPack.getOfferings().add(service2);
             specialPack.getBusinesses().add(coiffure);
