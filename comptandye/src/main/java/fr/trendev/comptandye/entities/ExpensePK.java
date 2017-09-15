@@ -57,8 +57,8 @@ public class ExpensePK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 61 * hash + (this.getId() != null ? this.getId().hashCode() : 0);
-        hash = 61 * hash + (this.getProfessional() != null ? this.
+        hash = 23 * hash + (this.getId() != null ? this.getId().hashCode() : 0);
+        hash = 23 * hash + (this.getProfessional() != null ? this.
                 getProfessional().hashCode() : 0);
         return hash;
     }
