@@ -66,7 +66,8 @@ public class ExpenseTest {
                 asList("Partner", "Provider"),
                 new Professional(),
                 Arrays.asList(new Payment(30000, "EUR", new PaymentMode("CB")),
-                        new Payment(30000, "EUR", new PaymentMode("Espèces"))));
+                        new Payment(30000, "EUR", new PaymentMode("Espèces"))),
+                Arrays.asList(new Business("Buziness")));
 
         int size = 10;
         instance.setCategories(IntStream.range(0, size).mapToObj(i ->

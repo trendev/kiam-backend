@@ -148,7 +148,8 @@ public class DemoConfigureBean implements Serializable {
                 new Date(), "invoice#1", Arrays.
                         asList("Partner", "Provider"), vanessa, Arrays.asList(
                 new Payment(30000, "EUR", em.find(PaymentMode.class, "CB")),
-                new Payment(70000, "EUR", em.find(PaymentMode.class, "Espèces")))));
+                new Payment(70000, "EUR", em.find(PaymentMode.class, "Espèces"))),
+                Arrays.asList(em.find(Business.class, "Coiffure"))));
 
         vanessa.getCollectiveGroups().add(
                 new CollectiveGroup("Senior Residence", new Address(

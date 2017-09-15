@@ -69,8 +69,12 @@ public class Expense {
             orphanRemoval = true)
     private List<Payment> payments = new LinkedList<>();
 
+    @OneToMany(targetEntity = Business.class)
+    private List<Business> businesses = new LinkedList<>();
+
     public Expense(String name, int amount, Date paymentDate, String invoiceRef,
-            List categories, Professional professional, List payments) {
+            List categories, Professional professional, List payments,
+            List businesses) {
         this.name = name;
         this.amount = amount;
         this.paymentDate = paymentDate;
@@ -78,6 +82,7 @@ public class Expense {
         this.categories = categories;
         this.professional = professional;
         this.payments = payments;
+        this.businesses = businesses;
     }
 
     public Expense() {
@@ -145,6 +150,14 @@ public class Expense {
 
     public void setPayments(List<Payment> payments) {
         this.payments = payments;
+    }
+
+    public List<Business> getBusinesses() {
+        return this.businesses;
+    }
+
+    public void setBusinesses(List<Business> businesses) {
+        this.businesses = businesses;
     }
 
 }
