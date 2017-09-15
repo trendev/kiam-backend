@@ -201,7 +201,8 @@ public abstract class AbstractCommonService<E, P> {
         } catch (Exception ex) {
 
             String errmsg = ExceptionHelper.handleException(ex,
-                    "Exception occurs in subroutine post() creating Service "
+                    "Exception occurs in subroutine post() creating "
+                    + entityClass.getSimpleName() + " "
                     + jsonString);
             getLogger().log(Level.SEVERE, errmsg, ex);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
