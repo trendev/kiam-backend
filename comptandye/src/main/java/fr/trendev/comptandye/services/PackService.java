@@ -13,6 +13,7 @@ import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.PackFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.sessions.ServiceFacade;
+import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
@@ -108,6 +109,11 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
                 Professional.class,
                 packFacade, professionalFacade, Pack::setProfessional,
                 Professional::getOfferings, e -> {
+            if (!e.getOfferings().isEmpty()) {
+                LOG.log(Level.WARNING,
+                        "Services and Packs provided during the Pack creation will be ignored !");
+                e.setOfferings(Collections.emptyList());
+            }
         });
 
     }
