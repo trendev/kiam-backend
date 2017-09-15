@@ -3,6 +3,8 @@ package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
@@ -25,6 +27,11 @@ import javax.persistence.OneToMany;
 @IdClass(OfferingPK.class)
 @DiscriminatorColumn(length = 31)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY,
+        property = "cltype")
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Service.class, name = "service")
+    ,   @JsonSubTypes.Type(value = Pack.class, name = "pack")})
 public abstract class Offering {
 
     @Column(name = "OFFERING_ID")

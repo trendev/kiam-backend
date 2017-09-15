@@ -11,7 +11,7 @@ import javax.persistence.Entity;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Service extends Offering {
 
-    public final String cltype = "service";
+    private final String cltype = "service";
 
     public Service(String name, int price, int duration,
             Professional professional) {
@@ -19,6 +19,10 @@ public class Service extends Offering {
     }
 
     public Service() {
+    }
+
+    public String getCltype() {
+        return this.cltype;
     }
 
 }

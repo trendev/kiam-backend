@@ -17,7 +17,7 @@ import javax.persistence.OneToMany;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Pack extends Offering {
 
-    public final String cltype = "pack";
+    private final String cltype = "pack";
 
     /**
      * TODO : recursively check that all services and packs are owned by the
@@ -37,6 +37,10 @@ public class Pack extends Offering {
     }
 
     public Pack() {
+    }
+
+    public String getCltype() {
+        return this.cltype;
     }
 
     public List<Offering> getOfferings() {
