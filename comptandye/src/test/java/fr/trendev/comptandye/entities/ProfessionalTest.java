@@ -94,6 +94,7 @@ public class ProfessionalTest {
         assert instance.getAddress() != null;
         assert instance.getSocialNetworkAccounts() != null;
         assert instance.getWebsite() == null;
+        assert instance.getCompanyName() == null;
         assert instance.getCompanyID() == null;
         assert instance.getVATcode() == null;
         assert instance.getCreationDate() == null;
@@ -117,6 +118,7 @@ public class ProfessionalTest {
         assert instance.getPaymentModes().isEmpty();
 
         String website = "http://www.mycompany.com";
+        String companyName = "MyCompany";
         String companyID = "XXXX123456FR";
         String VATcode = "FRTVA1234564";
         Calendar cal = Calendar.getInstance();
@@ -125,7 +127,7 @@ public class ProfessionalTest {
 
         instance = new Professional(email, password, username, uuid,
                 new CustomerDetails(), new Address(),
-                new SocialNetworkAccounts(), website, companyID,
+                new SocialNetworkAccounts(), website, companyName, companyID,
                 VATcode, creationDate);
 
         assert instance.getEmail().equals(email);
@@ -139,6 +141,7 @@ public class ProfessionalTest {
         assert instance.getAddress() != null;
         assert instance.getSocialNetworkAccounts() != null;
         assert instance.getWebsite().equals(website);
+        assert instance.getCompanyName().equals(companyName);
         assert instance.getCompanyID().equals(companyID);
         assert instance.getVATcode().equals(VATcode);
         assert instance.getCreationDate() != null;

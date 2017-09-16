@@ -50,21 +50,21 @@ import javax.persistence.PersistenceContext;
 @Singleton
 @Startup
 public class DemoConfigureBean implements Serializable {
-
+    
     private static final Logger LOG = Logger.getLogger(
             DemoConfigureBean.class.
                     getName());
-
+    
     @PersistenceContext(unitName = "DEFAULT_PU")
     private EntityManager em;
-
+    
     @Inject
     UserGroupFacade userGroupFacade;
-
+    
     @PostConstruct
     public void init() {
         this.clean();
-
+        
         this.initPaymentModes();
         this.initBusinesses();
 
@@ -72,11 +72,11 @@ public class DemoConfigureBean implements Serializable {
         if (userGroupFacade.findAll().isEmpty()) {
             this.initUsersAndGroups();
         }
-
+        
         this.createCategoryAndClient();
         this.createBillsAndOfferings();
     }
-
+    
     private void initUsersAndGroups() {
 
         /**
@@ -88,11 +88,11 @@ public class DemoConfigureBean implements Serializable {
         Administrator trendevfr = new Administrator("trendevfr@gmail.com",
                 "ts15qkBmihdtvmkKXPgVmbPGeyQU6aKd5XNd5HwOzu0=",
                 "trendevfr_admin", UUIDGenerator.generate("ADMIN_", true));
-
+        
         Administrator comptandye = new Administrator("comptandye@gmail.com",
                 "mZWR4R0bp5EPs9xfOwUPu3n/06LOL+wHK6BuUBsHgQM=",
                 "comptandye_admin", UUIDGenerator.generate("ADMIN_", true));
-
+        
         Administrator jsie = new Administrator("julien.sie@gmail.com",
                 "RrYJsV8xV7fsJkzgrFqGwiZzvIGEFan6e0ANYPcJhrI=", "jsie",
                 UUIDGenerator.generate("ADMIN_", true));
@@ -112,7 +112,7 @@ public class DemoConfigureBean implements Serializable {
         trendevfr.getUserGroups().add(adminGroup);
         comptandye.getUserGroups().add(adminGroup);
         jsie.getUserGroups().add(adminGroup);
-
+        
         em.persist(adminGroup);
         /**
          * Creates the first professional
@@ -127,42 +127,43 @@ public class DemoConfigureBean implements Serializable {
                 "Vaness", "0675295422", cal.getTime(), 'F', null, Arrays.
                 asList(
                         "Fun", "Pro", "Living with a nice guy", "3 children")));
-
+        
         vanessa.setAddress(new Address("47 Rue René Benoist", null, "77860",
                 "Quincy-Voisins"));
-
+        
         vanessa.setSocialNetworkAccounts(new SocialNetworkAccounts(
                 "https://www.facebook.com/gayvanessa",
                 "@VanessCE", null, "https://www.pinterest.com/vanessagay14/"));
-
+        
         vanessa.setCompanyID("501476154");
+        vanessa.setCompanyName("VANESSA ESTHETIQUE ET COIFFURE");
         cal.clear();
         cal.set(2014, 1, 20);
         vanessa.setCreationDate(cal.getTime());
-
+        
         vanessa.getBusinesses().addAll(Arrays.asList(em.find(Business.class,
                 "Esthétique"),
                 em.find(Business.class, "Coiffure")));
-
+        
         vanessa.getExpenses().add(new Expense("Material", 100000,
                 new Date(), "invoice#1", Arrays.
                         asList("Partner", "Provider"), vanessa, Arrays.asList(
                 new Payment(30000, "EUR", em.find(PaymentMode.class, "CB")),
                 new Payment(70000, "EUR", em.find(PaymentMode.class, "Espèces"))),
                 Arrays.asList(em.find(Business.class, "Coiffure"))));
-
+        
         vanessa.getCollectiveGroups().add(
                 new CollectiveGroup("Senior Residence", new Address(
                         "10 route de la ferme du pavillon", "appart 202",
                         "77600", "Chanteloup-en-Brie"), vanessa));
-
+        
         vanessa.getPaymentModes().addAll(Arrays.asList(
                 new PaymentMode("CB"),
                 new PaymentMode("Chèque"),
                 new PaymentMode("Espèces"),
                 new PaymentMode("Virement")
         ));
-
+        
         LOG.log(Level.INFO, "Vaness's birthdate is "
                 + vanessa.
                         getCustomerDetails().getBirthdate());
@@ -184,13 +185,13 @@ public class DemoConfigureBean implements Serializable {
          *
          */
         UserGroup ind = new UserGroup("Individual", "Individual User Group");
-
+        
         Individual skonx = new Individual();
         skonx.setEmail("skonx2006@gmail.com");
-
+        
         Individual sylvioc = new Individual();
         sylvioc.setEmail("sylvie.gay@gmail.com");
-
+        
         List<Individual> individuals = IntStream
                 .range(0, 10)
                 .mapToObj(i -> new Individual("hank.moody-" + (i + 1)
@@ -199,18 +200,18 @@ public class DemoConfigureBean implements Serializable {
                         "hankmoody_" + (i + 1), UUIDGenerator.
                                 generate("IND_", true)))
                 .collect(Collectors.toList());
-
+        
         ind.getUserAccounts().add(skonx);
         skonx.getUserGroups().add(ind);
-
+        
         ind.getUserAccounts().add(sylvioc);
         sylvioc.getUserGroups().add(ind);
-
+        
         individuals.forEach(i -> {
             ind.getUserAccounts().add(i);
             i.getUserGroups().add(ind);
         });
-
+        
         vanessa.getIndividuals().add(sylvioc);
         sylvioc.getProfessionals().add(vanessa);
 
@@ -219,26 +220,26 @@ public class DemoConfigureBean implements Serializable {
          */
         em.persist(pro);
         em.persist(ind);
-
+        
         Address skonxAddress = new Address("79 avenue de la jonchere",
                 "Appartement A113",
                 "77600", "Chanteloup-en-Brie");
-
+        
         em.persist(skonxAddress);
         skonx.setAddress(skonxAddress);
-
+        
         em.flush();
         if (em.contains(skonxAddress)) {
             em.refresh(skonxAddress);
             LOG.log(Level.INFO, "Id of Skonx Address = " + skonxAddress.
                     getId());
         }
-
+        
     }
-
+    
     private void clean() {
         userGroupFacade.findAll().forEach(g -> em.remove(g));
-
+        
         if (em.isJoinedToTransaction()) {
             try {
                 em.flush();
@@ -253,7 +254,7 @@ public class DemoConfigureBean implements Serializable {
         LOG.log(Level.INFO, "EntityManager is{0} opened",
                 em.isOpen() ? "" : " not");
     }
-
+    
     private void initPaymentModes() {
         Arrays.
                 asList("CB", "Chèque", "Paylib", "Paypal",
@@ -261,7 +262,7 @@ public class DemoConfigureBean implements Serializable {
                     em.persist(new PaymentMode(pm));
                 });
     }
-
+    
     private void initBusinesses() {
         Arrays.
                 asList("Coiffure", "Esthétique", "Onglerie").stream().forEach(
@@ -269,7 +270,7 @@ public class DemoConfigureBean implements Serializable {
             em.persist(new Business(b));
         });
     }
-
+    
     private void createBillsAndOfferings() {
         try {
             Professional vanessa = em.find(Professional.class,
@@ -280,19 +281,19 @@ public class DemoConfigureBean implements Serializable {
                     new Object[]{vanessa.
                                 getEmail(), vanessa.getUsername(), vanessa.
                         getUuid()});
-
+            
             Business coiffure = em.find(Business.class, "Coiffure");
             Business esthetique = em.find(Business.class, "Esthétique");
             Service service1 = new Service("Fashion color", 5000, 60, vanessa);
             service1.setCltype("service");
             service1.getBusinesses().add(coiffure);
-
+            
             Service service2 = new Service("Exclusive service for dark skin",
                     5000, 60,
                     vanessa);
             service2.setCltype("service");
             service2.getBusinesses().add(esthetique);
-
+            
             vanessa.getOfferings().add(service1);
             vanessa.getOfferings().add(service2);
             Pack specialPack = new Pack("Supreme Pack", 8000, 120, vanessa);
@@ -302,7 +303,7 @@ public class DemoConfigureBean implements Serializable {
             specialPack.getBusinesses().add(coiffure);
             specialPack.getBusinesses().add(esthetique);
             vanessa.getOfferings().add(specialPack);
-
+            
             IndividualBill bill1 = new IndividualBill("Ref#12345", new Date(),
                     5000, 0,
                     new Date(),
@@ -310,7 +311,7 @@ public class DemoConfigureBean implements Serializable {
                     vanessa, new LinkedList<>(), Arrays.asList(service1),
                     sylvioc);
             bill1.setCltype("individualbill");
-
+            
             IndividualBill bill2 = new IndividualBill("Ref#54321", new Date(),
                     8000, 0,
                     new Date(),
@@ -318,7 +319,7 @@ public class DemoConfigureBean implements Serializable {
                     vanessa, new LinkedList<>(), Arrays.asList(specialPack),
                     sylvioc);
             bill2.setCltype("individualbill");
-
+            
             Payment pm = new Payment(5000, "EUR", em.find(PaymentMode.class,
                     "CB"));
             Payment pm2 = new Payment(8000, "EUR", em.find(PaymentMode.class,
@@ -331,25 +332,25 @@ public class DemoConfigureBean implements Serializable {
             LOG.log(Level.SEVERE, "Error in createBills()", ex);
         }
     }
-
+    
     private void createCategoryAndClient() {
         Professional vanessa = em.find(Professional.class,
                 "vanessa.gay@gmail.com");
         Category cat1 = new Category("long time customers", "Fidelity", vanessa);
         Client client1 = new Client("valery.lamome@hotmail.fr", vanessa);
-
+        
         client1.setAddress(new Address("down town", "water recycling",
                 "77600", "Quincy-Voisins"));
         cat1.getClients().add(client1);
         client1.getCategories().add(cat1);
-
+        
         vanessa.getClients().add(client1);
         client1.setProfessional(vanessa);
-
+        
         client1.getCollectiveGroups().add(vanessa.getCollectiveGroups().get(0));
         vanessa.getCollectiveGroups().get(0).getClients().add(client1);
-
+        
         vanessa.getCategories().add(cat1);
     }
-
+    
 }

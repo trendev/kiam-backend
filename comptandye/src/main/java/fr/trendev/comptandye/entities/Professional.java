@@ -25,6 +25,9 @@ public class Professional extends Customer {
     private String website;
 
     @Basic
+    private String companyName;
+
+    @Basic
     private String companyID;
 
     @Basic
@@ -86,10 +89,12 @@ public class Professional extends Customer {
     public Professional(String email, String password, String username,
             String uuid, CustomerDetails customerDetails, Address address,
             SocialNetworkAccounts socialNetworkAccounts, String website,
-            String companyID, String VATcode, Date creationDate) {
+            String companyName, String companyID, String VATcode,
+            Date creationDate) {
         super(email, password, username, uuid, customerDetails, address,
                 socialNetworkAccounts);
         this.website = website;
+        this.companyName = companyName;
         this.companyID = companyID;
         this.VATcode = VATcode;
         this.creationDate = creationDate;
@@ -101,6 +106,14 @@ public class Professional extends Customer {
 
     public void setWebsite(String website) {
         this.website = website;
+    }
+
+    public String getCompanyName() {
+        return this.companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     public String getCompanyID() {
