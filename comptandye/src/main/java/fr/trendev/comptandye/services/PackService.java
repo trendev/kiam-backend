@@ -234,8 +234,4 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
                 (p, o) -> p.getOfferings().remove(o));
     }
 
-    private String getProEmail(SecurityContext sec, String professional) {
-        return (sec.isSecure() && sec.isUserInRole("Professional"))
-                ? sec.getUserPrincipal().getName() : professional;
-    }
 }

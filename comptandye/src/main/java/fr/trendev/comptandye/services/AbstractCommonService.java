@@ -5,10 +5,10 @@
  */
 package fr.trendev.comptandye.services;
 
-import fr.trendev.comptandye.utils.AssociationManagementEnum;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.trendev.comptandye.sessions.AbstractFacade;
+import fr.trendev.comptandye.utils.AssociationManagementEnum;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
 import java.net.URI;
 import java.util.List;
@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
 /**
  *
@@ -365,5 +366,10 @@ public abstract class AbstractCommonService<E, P> {
                     "Entity " + entity + " can not be produced as a String", ex);
         }
         return jsonString;
+    }
+
+    protected String getProEmail(SecurityContext sec, String professional) {
+        return (sec.isSecure() && sec.isUserInRole("Professional"))
+                ? sec.getUserPrincipal().getName() : professional;
     }
 }
