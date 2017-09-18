@@ -92,16 +92,18 @@ public class PaymentService extends AbstractCommonService<Payment, Long> {
                 e -> {
             e.setAmount(entity.getAmount());
             e.setCurrency(entity.getCurrency());
-            e.setPaymentMode(entity.getPaymentMode());
+//            e.setPaymentMode(entity.getPaymentMode());
 
-//            if (paymentModeFacade.find(entity.getPaymentMode().getName())
-//                    != null) {
-//                e.setPaymentMode(entity.getPaymentMode());
-//            } else {
-//                String msg = "PaymentMode " + entity.getPaymentMode().getName()
-//                        + " doesn't exist !";
-//                throw new IllegalArgumentException(msg);
-//            }
+            if (paymentModeFacade.
+                    find(entity.getPaymentMode().getName())
+                    != null) {
+                e.setPaymentMode(entity.getPaymentMode());
+            } else {
+                String msg = "PaymentMode " + entity.getPaymentMode().
+                        getName()
+                        + " doesn't exist !";
+                throw new IllegalArgumentException(msg);
+            }
         });
     }
     
