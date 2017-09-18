@@ -31,39 +31,39 @@ import javax.ws.rs.core.Response;
 @Stateless
 @Path("Payment")
 public class PaymentService extends AbstractCommonService<Payment, Long> {
-    
+
     @Inject
     PaymentFacade paymentFacade;
-    
+
     @Inject
     PaymentModeFacade paymentModeFacade;
-    
+
     private static final Logger LOG = Logger.getLogger(PaymentService.class.
             getName());
-    
+
     public PaymentService() {
         super(Payment.class);
     }
-    
+
     @Override
     protected Logger getLogger() {
         return LOG;
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Payment list");
         return super.findAll(paymentFacade);
     }
-    
+
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response count() {
         return super.count(paymentFacade);
     }
-    
+
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -72,17 +72,17 @@ public class PaymentService extends AbstractCommonService<Payment, Long> {
         LOG.log(Level.INFO, "REST request to get Payment : {0}", id);
         return super.find(paymentFacade, id, refresh);
     }
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response post(Payment entity) {
         LOG.log(Level.INFO, "Creating Payment {0}", super.stringify(entity));
-        
+
         return super.post(entity, paymentFacade, e -> {
         });
     }
-    
+
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -92,7 +92,12 @@ public class PaymentService extends AbstractCommonService<Payment, Long> {
                 e -> {
             e.setAmount(entity.getAmount());
             e.setCurrency(entity.getCurrency());
-//            e.setPaymentMode(entity.getPaymentMode());
+            /**
+             * Should not be used:
+             * https://bugs.eclipse.org/bugs/show_bug.cgi?id=247662
+             *
+             * e.setPaymentMode(entity.getPaymentMode());
+             */
 
             if (paymentModeFacade.
                     find(entity.getPaymentMode().getName())
@@ -106,7 +111,7 @@ public class PaymentService extends AbstractCommonService<Payment, Long> {
             }
         });
     }
-    
+
     @Path("{id}")
     @DELETE
     public Response delete(@PathParam("id") Long id) {

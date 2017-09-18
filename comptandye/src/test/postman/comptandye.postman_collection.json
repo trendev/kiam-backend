@@ -762,6 +762,211 @@
 			]
 		},
 		{
+			"name": "Payment",
+			"description": "",
+			"item": [
+				{
+					"name": "findAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Payment table is not empty\"] = jsonData.length >= 1;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{API_URL}}/Payment",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "count",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Total count >= 1\"] = responseBody >= 1;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{API_URL}}/Payment/count",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"tests[\"Status code is 201\"] = responseCode.code === 201;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"pm.environment.set(\"created_payment_id\", jsonData.id);",
+									"",
+									"tests[\"amount is 100\"] = jsonData.amount === 100;",
+									"tests[\"currency is \\\"EUR\\\"\"] = jsonData.currency === \"EUR\";",
+									"tests[\"paymentMode.name is \\\"CB\\\"\"] = jsonData.paymentMode.name === \"CB\";",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{API_URL}}/Payment",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"amount\":100,\n\t\"paymentMode\":\n\t{\n\t\t\"name\":\"CB\"\n\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "find",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is \"+pm.environment.get(\"created_payment_id\")] = jsonData.id == pm.environment.get(\"created_payment_id\");",
+									"tests[\"amount is 100\"] = jsonData.amount === 100;",
+									"tests[\"currency is \\\"EUR\\\"\"] = jsonData.currency === \"EUR\";",
+									"tests[\"paymentMode.name is \\\"CB\\\"\"] = jsonData.paymentMode.name === \"CB\";"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{API_URL}}/Payment/{{created_payment_id}}?refresh=true",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Payment",
+								"{{created_payment_id}}"
+							],
+							"query": [
+								{
+									"key": "refresh",
+									"value": "true",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is \"+pm.environment.get(\"created_payment_id\")] = jsonData.id == pm.environment.get(\"created_payment_id\");",
+									"tests[\"amount is 200\"] = jsonData.amount === 200;",
+									"tests[\"currency is \\\"EUR\\\"\"] = jsonData.currency === \"EUR\";",
+									"tests[\"paymentMode.name is \\\"Chèque\\\"\"] = jsonData.paymentMode.name === \"Chèque\";"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{API_URL}}/Payment",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\":{{created_payment_id}},\n\t\"amount\":200,\n\t\"paymentMode\":\n\t{\n\t\t\"name\":\"Chèque\"\n\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{API_URL}}/Payment/{{created_payment_id}}",
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "CustomerDetails",
 			"description": "",
 			"item": [
@@ -1006,7 +1211,7 @@
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"CustomerDetails table is not empty\"] = jsonData.length >= 1;"
+									"tests[\"Business table is not empty\"] = jsonData.length >= 1;"
 								]
 							}
 						}
@@ -1139,6 +1344,163 @@
 					],
 					"request": {
 						"url": "{{API_URL}}/Business/{{created_business_designation}}",
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PaymentMode",
+			"description": "",
+			"item": [
+				{
+					"name": "findAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"PaymentMode table is not empty\"] = jsonData.length >= 1;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{API_URL}}/PaymentMode",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "count",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Total count >= 1\"] = responseBody >= 1;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{API_URL}}/PaymentMode/count",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 201\"] = responseCode.code === 201;",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"name is defined\"] = jsonData.name !== undefined;",
+									"pm.environment.set(\"created_paymentmode_name\", jsonData.name);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{API_URL}}/PaymentMode",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"BitCoins\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "find",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"name is \"+pm.environment.get(\"created_paymentmode_name\")] = jsonData.name == pm.environment.get(\"created_paymentmode_name\");"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{API_URL}}/PaymentMode/{{created_paymentmode_name}}?refresh=true",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"PaymentMode",
+								"{{created_paymentmode_name}}"
+							],
+							"query": [
+								{
+									"key": "refresh",
+									"value": "true",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{API_URL}}/PaymentMode/{{created_paymentmode_name}}",
 						"method": "DELETE",
 						"header": [],
 						"body": {},
