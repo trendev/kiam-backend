@@ -5,7 +5,6 @@
  */
 package fr.trendev.comptandye.services;
 
-import fr.trendev.comptandye.utils.AssociationManagementEnum;
 import fr.trendev.comptandye.entities.OfferingPK;
 import fr.trendev.comptandye.entities.Pack;
 import fr.trendev.comptandye.entities.Professional;
@@ -14,9 +13,8 @@ import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.PackFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.sessions.ServiceFacade;
+import fr.trendev.comptandye.utils.AssociationManagementEnum;
 import java.util.Collections;
-import java.util.Map;
-import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -97,13 +95,7 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
     public Response post(@Context SecurityContext sec, Pack entity,
             @QueryParam("professional") String professional) {
 
-        String email;
-        //TODO : remove isSecure test when using Enterprise Bean Security 
-        if (sec.isSecure() && sec.isUserInRole("Professional")) {
-            email = sec.getUserPrincipal().getName();
-        } else {
-            email = professional;
-        }
+        String email = this.getProEmail(sec, professional);
 
         return super.<Professional, String>post(entity, email,
                 AbstractFacade::prettyPrintPK,
@@ -125,13 +117,12 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
     public Response put(@Context SecurityContext sec, Pack entity,
             @QueryParam("professional") String professional) {
 
-        Map<String, OfferingPK> pks = this.getPKs(sec, professional, new Long[]{
-            entity.getId()},
-                new String[]{"pk"});
+        OfferingPK pk = new OfferingPK(entity.getId(), this.getProEmail(sec,
+                professional));
 
         LOG.log(Level.INFO, "Updating Pack {0}", packFacade.
-                prettyPrintPK(pks.get("pk")));
-        return super.put(entity, packFacade, pks.get("pk"), e -> {
+                prettyPrintPK(pk));
+        return super.put(entity, packFacade, pk, e -> {
             e.setName(entity.getName());
             e.setPrice(entity.getPrice());
             e.setDuration(entity.getDuration());
@@ -146,13 +137,12 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
             @QueryParam("id") Long id,
             @QueryParam("professional") String professional) {
 
-        Map<String, OfferingPK> pks = this.getPKs(sec, professional, new Long[]{
-            id},
-                new String[]{"pk"});
+        OfferingPK pk = new OfferingPK(id, this.getProEmail(sec,
+                professional));
 
         LOG.log(Level.INFO, "Deleting Pack {0}", packFacade.
-                prettyPrintPK(pks.get("pk")));
-        return super.delete(packFacade, pks.get("pk"),
+                prettyPrintPK(pk));
+        return super.delete(packFacade, pk,
                 e -> e.getProfessional().getOfferings().remove(e));
     }
 
@@ -164,15 +154,17 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
             @PathParam("offeringid") Long offeringid,
             @QueryParam("professional") String professional) {
 
-        Map<String, OfferingPK> pks = this.getPKs(sec, professional, new Long[]{
-            packid, offeringid},
-                new String[]{"packPK", "offeringPK"});
+        OfferingPK packPK = new OfferingPK(packid, this.getProEmail(sec,
+                professional));
+
+        OfferingPK offeringPK = new OfferingPK(offeringid, this.getProEmail(sec,
+                professional));
 
         return super.<Service, OfferingPK>manageAssociation(
                 AssociationManagementEnum.INSERT,
-                packFacade, pks.get("packPK"),
+                packFacade, packPK,
                 serviceFacade,
-                pks.get("offeringPK"), Service.class,
+                offeringPK, Service.class,
                 (p, o) -> p.getOfferings().add(o));
     }
 
@@ -184,15 +176,17 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
             @PathParam("offeringid") Long offeringid,
             @QueryParam("professional") String professional) {
 
-        Map<String, OfferingPK> pks = this.getPKs(sec, professional, new Long[]{
-            packid, offeringid},
-                new String[]{"packPK", "offeringPK"});
+        OfferingPK packPK = new OfferingPK(packid, this.getProEmail(sec,
+                professional));
+
+        OfferingPK offeringPK = new OfferingPK(offeringid, this.getProEmail(sec,
+                professional));
 
         return super.<Service, OfferingPK>manageAssociation(
                 AssociationManagementEnum.REMOVE,
-                packFacade, pks.get("packPK"),
+                packFacade, packPK,
                 serviceFacade,
-                pks.get("offeringPK"), Service.class,
+                offeringPK, Service.class,
                 (p, o) -> p.getOfferings().remove(o));
     }
 
@@ -204,15 +198,17 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
             @PathParam("offeringid") Long offeringid,
             @QueryParam("professional") String professional) {
 
-        Map<String, OfferingPK> pks = this.getPKs(sec, professional, new Long[]{
-            packid, offeringid},
-                new String[]{"packPK", "offeringPK"});
+        OfferingPK packPK = new OfferingPK(packid, this.getProEmail(sec,
+                professional));
+
+        OfferingPK offeringPK = new OfferingPK(offeringid, this.getProEmail(sec,
+                professional));
 
         return super.<Pack, OfferingPK>manageAssociation(
                 AssociationManagementEnum.INSERT,
-                packFacade, pks.get("packPK"),
+                packFacade, packPK,
                 packFacade,
-                pks.get("offeringPK"), Pack.class,
+                offeringPK, Pack.class,
                 (p, o) -> p.getOfferings().add(o));
     }
 
@@ -224,34 +220,22 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
             @PathParam("offeringid") Long offeringid,
             @QueryParam("professional") String professional) {
 
-        Map<String, OfferingPK> pks = this.getPKs(sec, professional, new Long[]{
-            packid, offeringid},
-                new String[]{"packPK", "offeringPK"});
+        OfferingPK packPK = new OfferingPK(packid, this.getProEmail(sec,
+                professional));
+
+        OfferingPK offeringPK = new OfferingPK(offeringid, this.getProEmail(sec,
+                professional));
 
         return super.<Pack, OfferingPK>manageAssociation(
                 AssociationManagementEnum.REMOVE,
-                packFacade, pks.get("packPK"),
+                packFacade, packPK,
                 packFacade,
-                pks.get("offeringPK"), Pack.class,
+                offeringPK, Pack.class,
                 (p, o) -> p.getOfferings().remove(o));
     }
 
-    private Map<String, OfferingPK> getPKs(SecurityContext sec,
-            String professional, Long[] ids, String[] keys) {
-
-        String proEmail;
-        if (sec.isSecure() && sec.isUserInRole("Professional")) {
-            proEmail = sec.getUserPrincipal().getName();
-        } else {
-            proEmail = professional;
-        }
-
-        Map<String, OfferingPK> map = new TreeMap<>();
-
-        for (int i = 0; i < ids.length; i++) {
-            map.put(keys[i], new OfferingPK(ids[i], proEmail));
-        }
-
-        return map;
+    private String getProEmail(SecurityContext sec, String professional) {
+        return (sec.isSecure() && sec.isUserInRole("Professional"))
+                ? sec.getUserPrincipal().getName() : professional;
     }
 }
