@@ -32,7 +32,7 @@ public class Payment {
     @Basic
     private String currency = "EUR";
 
-    @OneToOne(targetEntity = PaymentMode.class)
+    @OneToOne(optional = false, targetEntity = PaymentMode.class)
     private PaymentMode paymentMode;
 
     public Payment(int amount, String currency, PaymentMode paymentMode) {

@@ -37,43 +37,43 @@ import javax.ws.rs.core.Response;
 @Stateless
 @Path("Professional")
 public class ProfessionalService extends AbstractCommonService<Professional, String> {
-    
+
     @Inject
     ProfessionalFacade professionalFacade;
-    
+
     @Inject
     UserGroupFacade userGroupFacade;
-    
+
     @Inject
     IndividualFacade individualFacade;
-    
+
     private static final Logger LOG = Logger.getLogger(
             ProfessionalService.class.
                     getName());
-    
+
     public ProfessionalService() {
         super(Professional.class);
     }
-    
+
     @Override
     protected Logger getLogger() {
         return LOG;
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Professional list");
         return super.findAll(professionalFacade);
     }
-    
+
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response count() {
         return super.count(professionalFacade);
     }
-    
+
     @Path("{email}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -82,13 +82,13 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
         LOG.log(Level.INFO, "REST request to get Professional : {0}", email);
         return super.find(professionalFacade, email, refresh);
     }
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response post(Professional entity) {
         LOG.log(Level.INFO, "Creating Professional {0}", entity.getEmail());
-        
+
         return super.post(entity, professionalFacade,
                 e -> {
             //generates an UUID if no one is provided
@@ -111,7 +111,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
             e.getUserGroups().add(proGroup);
         });
     }
-    
+
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -128,7 +128,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                         entity.getPassword());
                 e.setPassword(encrypted_pwd);
             }
-            
+
             e.setUsername(entity.getUsername());
             /**
              * TODO : Should only be performed by an Administrator
@@ -138,18 +138,18 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
 
             /**
              * Will automatically ignore the id of the provided object : avoid
-             * to hack another object swapping the current saved (or not object)
+             * to hack another object swapping the current saved (or not) object
              * by an existing one.
              */
             entity.getCustomerDetails().setId(e.getCustomerDetails().getId());
             entity.getAddress().setId(e.getAddress().getId());
             entity.getSocialNetworkAccounts().setId(
                     e.getSocialNetworkAccounts().getId());
-            
+
             e.setCustomerDetails(entity.getCustomerDetails());
             e.setAddress(entity.getAddress());
             e.setSocialNetworkAccounts(entity.getSocialNetworkAccounts());
-            
+
             e.setWebsite(entity.getWebsite());
             e.setCompanyID(entity.getCompanyID());
             e.setCompanyName(entity.getCompanyName());
@@ -158,24 +158,24 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
             e.setBusinesses(entity.getBusinesses());
             e.setCategories(entity.getCategories());
             e.setPaymentModes(entity.getPaymentModes());
-            
+
         });
     }
-    
+
     @Path("{email}")
     @DELETE
     public Response delete(@PathParam("email") String email) {
         LOG.log(Level.INFO, "Deleting Professional {0}", email);
-        
+
         return super.delete(professionalFacade, email, e -> {
-            
+
             e.getUserGroups().forEach(grp -> {
                 grp.getUserAccounts().remove(e);
                 LOG.log(Level.INFO,
                         "Professional {0} removed from UserGroup {1}",
                         new Object[]{email, grp.getName()});
             });
-            
+
             e.getIndividuals().forEach(i -> {
                 i.getProfessionals().remove(e);
                 LOG.log(Level.INFO,
@@ -190,7 +190,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
 //                    .forEach(o -> e.getOfferings().remove(o));
         });
     }
-    
+
     @Path("{email}/userGroups")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -201,7 +201,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 email,
                 Professional::getUserGroups);
     }
-    
+
     @Path("{email}/insertToUserGroup/{name}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -209,7 +209,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
             @PathParam("name") String name) {
         LOG.log(Level.INFO, "Inserting Professional {0} into UserGroup {1}",
                 new Object[]{email, name});
-        
+
         return super.<UserGroup, String>manageAssociation(
                 AssociationManagementEnum.INSERT,
                 professionalFacade, email,
@@ -218,7 +218,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 (e, a) ->
                 e.getUserGroups().add(a) & a.getUserAccounts().add(e));
     }
-    
+
     @Path("{email}/removeFromUserGroup/{name}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -226,7 +226,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
             @PathParam("name") String name) {
         LOG.log(Level.INFO, "Removing Professional {0} from UserGroup {1}",
                 new Object[]{email, name});
-        
+
         return super.<UserGroup, String>manageAssociation(
                 AssociationManagementEnum.REMOVE,
                 professionalFacade, email,
@@ -235,7 +235,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 (e, a) ->
                 e.getUserGroups().remove(a) & a.getUserAccounts().remove(e));
     }
-    
+
     @Path("{email}/bills")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -246,7 +246,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 email,
                 Professional::getBills);
     }
-    
+
     @Path("{email}/clients")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -257,7 +257,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 email,
                 Professional::getClients);
     }
-    
+
     @Path("{email}/offerings")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -268,7 +268,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 email,
                 Professional::getOfferings);
     }
-    
+
     @Path("{email}/categories")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -279,7 +279,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 email,
                 Professional::getCategories);
     }
-    
+
     @Path("{email}/collectiveGroups")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -291,7 +291,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 email,
                 Professional::getCollectiveGroups);
     }
-    
+
     @Path("{email}/expenses")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -303,7 +303,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 email,
                 Professional::getExpenses);
     }
-    
+
     @Path("{email}/individuals")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -315,7 +315,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 email,
                 Professional::getIndividuals);
     }
-    
+
     @Path("{proEmail}/buildBusinessRelationship/{indEmail}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -325,7 +325,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
         LOG.log(Level.INFO,
                 "Build business relationship between Professional {0} and Individual {1}",
                 new Object[]{proEmail, indEmail});
-        
+
         return super.<Individual, String>manageAssociation(
                 AssociationManagementEnum.INSERT,
                 professionalFacade, proEmail,
@@ -334,7 +334,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 (p, i) ->
                 p.getIndividuals().add(i) & i.getProfessionals().add(p));
     }
-    
+
     @Path("{proEmail}/endBusinessRelationship/{indEmail}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -344,7 +344,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
         LOG.log(Level.INFO,
                 "End business relationship between Professional {0} and Individual {1}",
                 new Object[]{proEmail, indEmail});
-        
+
         return super.<Individual, String>manageAssociation(
                 AssociationManagementEnum.REMOVE,
                 professionalFacade, proEmail,
