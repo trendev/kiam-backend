@@ -76,10 +76,10 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
         return super.count(packFacade);
     }
 
-    @Path("key")
+    @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response find(@QueryParam("id") Long id,
+    public Response find(@PathParam("id") Long id,
             @QueryParam("professional") String professional,
             @QueryParam("refresh") boolean refresh) {
         OfferingPK pk = new OfferingPK(id, professional);
@@ -131,10 +131,10 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
         });
     }
 
-    @Path("key")
+    @Path("{id}")
     @DELETE
     public Response delete(@Context SecurityContext sec,
-            @QueryParam("id") Long id,
+            @PathParam("id") Long id,
             @QueryParam("professional") String professional) {
 
         OfferingPK pk = new OfferingPK(id, this.getProEmail(sec,
