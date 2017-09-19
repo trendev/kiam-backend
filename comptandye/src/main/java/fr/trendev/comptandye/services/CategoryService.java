@@ -40,42 +40,42 @@ import javax.ws.rs.core.SecurityContext;
 @Stateless
 @Path("Category")
 public class CategoryService extends AbstractCommonService<Category, CategoryPK> {
-    
+
     @Inject
     CategoryFacade categoryFacade;
-    
+
     @Inject
     ProfessionalFacade professionalFacade;
-    
+
     @Inject
     ClientFacade clientFacade;
-    
+
     private static final Logger LOG = Logger.getLogger(CategoryService.class.
             getName());
-    
+
     public CategoryService() {
         super(Category.class);
     }
-    
+
     @Override
     protected Logger getLogger() {
         return LOG;
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Category list");
         return super.findAll(categoryFacade);
     }
-    
+
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response count() {
         return super.count(categoryFacade);
     }
-    
+
     @Path("key")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -89,33 +89,33 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
                                 pk));
         return super.find(categoryFacade, pk, refresh);
     }
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response post(@Context SecurityContext sec, Category entity,
             @QueryParam("professional") String professional) {
-        
+
         String email = this.getProEmail(sec, professional);
-        
+
         return super.<Professional, String>post(entity, email,
                 AbstractFacade::prettyPrintPK,
                 Professional.class,
                 categoryFacade, professionalFacade, Category::setProfessional,
                 Professional::getCategories, e -> {
         });
-        
+
     }
-    
+
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(@Context SecurityContext sec, Category entity,
             @QueryParam("professional") String professional) {
-        
+
         CategoryPK pk = new CategoryPK(entity.getId(), this.getProEmail(sec,
                 professional));
-        
+
         LOG.log(Level.INFO, "Updating Category {0}", categoryFacade.
                 prettyPrintPK(pk));
         return super.put(entity, categoryFacade, pk, e -> {
@@ -123,16 +123,16 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
             e.setName(entity.getName());
         });
     }
-    
+
     @Path("key")
     @DELETE
     public Response delete(@Context SecurityContext sec,
             @QueryParam("id") Long id,
             @QueryParam("professional") String professional) {
-        
+
         CategoryPK pk = new CategoryPK(id, this.getProEmail(sec,
                 professional));
-        
+
         LOG.log(Level.INFO, "Deleting Category {0}", categoryFacade.
                 prettyPrintPK(pk));
         return super.delete(categoryFacade, pk,
@@ -141,7 +141,7 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
             e.getClients().forEach(cl -> cl.getCategories().remove(e));
         });
     }
-    
+
     @Path("{categoryid}/addClient/{clientid}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -149,13 +149,13 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
             @PathParam("categoryid") Long categoryid,
             @PathParam("clientid") Long clientid,
             @QueryParam("professional") String professional) {
-        
+
         CategoryPK categoryPK = new CategoryPK(categoryid, this.getProEmail(sec,
                 professional));
-        
+
         ClientPK clientPK = new ClientPK(clientid, this.getProEmail(sec,
                 professional));
-        
+
         return super.<Client, ClientPK>manageAssociation(
                 AssociationManagementEnum.INSERT,
                 categoryFacade, categoryPK,
@@ -164,7 +164,7 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
                 (cat, cl) -> cat.getClients().add(cl) & cl.getCategories().
                 add(cat));
     }
-    
+
     @Path("{categoryid}/removeClient/{clientid}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -172,13 +172,13 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
             @PathParam("categoryid") Long categoryid,
             @PathParam("clientid") Long clientid,
             @QueryParam("professional") String professional) {
-        
+
         CategoryPK categoryPK = new CategoryPK(categoryid, this.getProEmail(sec,
                 professional));
-        
+
         ClientPK clientPK = new ClientPK(clientid, this.getProEmail(sec,
                 professional));
-        
+
         return super.<Client, ClientPK>manageAssociation(
                 AssociationManagementEnum.REMOVE,
                 categoryFacade, categoryPK,
@@ -186,5 +186,18 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
                 clientPK, Client.class,
                 (cat, cl) -> cat.getClients().remove(cl) & cl.getCategories().
                 remove(cat));
+    }
+
+    @Path("clients/key")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getClients(@QueryParam("id") Long id,
+            @QueryParam("professional") String professional) {
+        CategoryPK pk = new CategoryPK(id, professional);
+        LOG.log(Level.INFO, "REST request to get Clients of Category : {0}",
+                categoryFacade.prettyPrintPK(pk));
+        return super.provideRelation(categoryFacade,
+                pk,
+                Category::getClients);
     }
 }
