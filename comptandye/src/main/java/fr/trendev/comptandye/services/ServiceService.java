@@ -21,6 +21,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
@@ -68,10 +69,10 @@ public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
         return super.count(serviceFacade);
     }
 
-    @Path("key")
+    @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response find(@QueryParam("id") Long id,
+    public Response find(@PathParam("id") Long id,
             @QueryParam("professional") String professional,
             @QueryParam("refresh") boolean refresh) {
         OfferingPK pk = new OfferingPK(id, professional);
@@ -118,10 +119,10 @@ public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
         });
     }
 
-    @Path("key")
+    @Path("{id}")
     @DELETE
     public Response delete(@Context SecurityContext sec,
-            @QueryParam("id") Long id,
+            @PathParam("id") Long id,
             @QueryParam("professional") String professional) {
 
         OfferingPK pk = new OfferingPK(id, this.getProEmail(sec, professional));
