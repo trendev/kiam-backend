@@ -10,6 +10,7 @@ import fr.trendev.comptandye.entities.Administrator;
 import fr.trendev.comptandye.entities.Business;
 import fr.trendev.comptandye.entities.Category;
 import fr.trendev.comptandye.entities.Client;
+import fr.trendev.comptandye.entities.ClientBill;
 import fr.trendev.comptandye.entities.CollectiveGroup;
 import fr.trendev.comptandye.entities.CustomerDetails;
 import fr.trendev.comptandye.entities.Expense;
@@ -352,6 +353,23 @@ public class DemoConfigureBean implements Serializable {
         vanessa.getCollectiveGroups().get(0).getClients().add(client1);
 
         vanessa.getCategories().add(cat1);
+
+        Payment payment = new Payment(1500, "EUR", em.find(PaymentMode.class,
+                "Virement"));
+
+        Service service = new Service("A service for Mrs LAMOME", 1500, 60,
+                vanessa);
+
+        em.persist(service);
+
+        ClientBill bill = new ClientBill("#REF-" + vanessa.getUuid(), new Date(),
+                1500, 0,
+                new Date(), Arrays.asList("Has left her first son"), vanessa,
+                Arrays.asList(payment), Arrays.asList(service),
+                vanessa.getCollectiveGroups().get(0), client1);
+
+        vanessa.getBills().add(bill);
+        client1.getClientBills().add(bill);
     }
 
 }
