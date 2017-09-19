@@ -45,6 +45,7 @@ public class CollectiveGroupTest {
 
         assert instance.getId() == null;
         assert instance.getGroupName() == null;
+        assert instance.getPhone() == null;
         assert instance.getAddress() != null;
         assert instance.getClients() != null;
         assert instance.getClients().isEmpty();
@@ -52,10 +53,12 @@ public class CollectiveGroupTest {
 
         String groupName = "Collective Group";
 
-        instance = new CollectiveGroup(groupName, new Professional());
+        instance = new CollectiveGroup(groupName, "0123456789",
+                new Professional());
 
         assert instance.getId() == null;
         assert instance.getGroupName().equals(groupName);
+        assert instance.getPhone().equals("0123456789");
         assert instance.getAddress() != null;
         assert instance.getClients() != null;
         assert instance.getClients().isEmpty();
@@ -63,10 +66,12 @@ public class CollectiveGroupTest {
 
         Address address = new Address();
 
-        instance = new CollectiveGroup(groupName, address, new Professional());
+        instance = new CollectiveGroup(groupName, "0123456789", address,
+                new Professional());
 
         assert instance.getId() == null;
         assert instance.getGroupName().equals(groupName);
+        assert instance.getPhone().equals("0123456789");
         assert instance.getAddress().equals(address);
         assert instance.getClients() != null;
         assert instance.getClients().isEmpty();

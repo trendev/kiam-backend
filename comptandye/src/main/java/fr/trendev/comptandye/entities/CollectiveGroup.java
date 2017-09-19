@@ -36,6 +36,9 @@ public class CollectiveGroup {
     @Basic
     private String groupName;
 
+    @Basic
+    private String phone;
+
     @OneToOne(orphanRemoval = true, cascade = {CascadeType.ALL},
             targetEntity = Address.class)
     private Address address;
@@ -53,15 +56,18 @@ public class CollectiveGroup {
     @JsonIgnore
     private List<Client> clients = new LinkedList<>();
 
-    public CollectiveGroup(String groupName, Professional professional) {
+    public CollectiveGroup(String groupName, String phone,
+            Professional professional) {
         this.groupName = groupName;
+        this.phone = phone;
         this.professional = professional;
         this.address = new Address();
     }
 
-    public CollectiveGroup(String groupName, Address address,
+    public CollectiveGroup(String groupName, String phone, Address address,
             Professional professional) {
         this.groupName = groupName;
+        this.phone = phone;
         this.address = address;
         this.professional = professional;
     }
@@ -84,6 +90,14 @@ public class CollectiveGroup {
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
+    }
+
+    public String getPhone() {
+        return this.phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public Address getAddress() {
