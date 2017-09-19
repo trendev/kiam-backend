@@ -76,10 +76,10 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
         return super.count(categoryFacade);
     }
 
-    @Path("key")
+    @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response find(@QueryParam("id") Long id,
+    public Response find(@PathParam("id") Long id,
             @QueryParam("professional") String professional,
             @QueryParam("refresh") boolean refresh) {
         CategoryPK pk = new CategoryPK(id, professional);
@@ -124,10 +124,10 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
         });
     }
 
-    @Path("key")
+    @Path("{id}")
     @DELETE
     public Response delete(@Context SecurityContext sec,
-            @QueryParam("id") Long id,
+            @PathParam("id") Long id,
             @QueryParam("professional") String professional) {
 
         CategoryPK pk = new CategoryPK(id, this.getProEmail(sec,
@@ -188,10 +188,10 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
                 remove(cat));
     }
 
-    @Path("clients/key")
+    @Path("{id}/clients")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getClients(@QueryParam("id") Long id,
+    public Response getClients(@PathParam("id") Long id,
             @QueryParam("professional") String professional) {
         CategoryPK pk = new CategoryPK(id, professional);
         LOG.log(Level.INFO, "REST request to get Clients of Category : {0}",
