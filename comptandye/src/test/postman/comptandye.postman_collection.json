@@ -2971,21 +2971,15 @@
 					],
 					"request": {
 						"url": {
-							"raw": "{{API_URL}}/Service/key?id={{created_offering_id}}&professional=vanessa.gay@gmail.com&refresh=true",
+							"raw": "{{API_URL}}/Service/{{created_offering_id}}?professional=vanessa.gay@gmail.com&refresh=true",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"Service",
-								"key"
+								"{{created_offering_id}}"
 							],
 							"query": [
-								{
-									"key": "id",
-									"value": "{{created_offering_id}}",
-									"equals": true,
-									"description": ""
-								},
 								{
 									"key": "professional",
 									"value": "vanessa.gay@gmail.com",
@@ -3081,26 +3075,20 @@
 					],
 					"request": {
 						"url": {
-							"raw": "{{API_URL}}/Service/key?id={{created_offering_id}}&professional=vanessa.gay@gmail.com",
+							"raw": "{{API_URL}}/Service/{{created_offering_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"Service",
-								"key"
+								"{{created_offering_id}}"
 							],
 							"query": [
 								{
-									"description": "",
-									"equals": true,
-									"key": "id",
-									"value": "{{created_offering_id}}"
-								},
-								{
-									"description": "",
-									"equals": true,
 									"key": "professional",
-									"value": "vanessa.gay@gmail.com"
+									"value": "vanessa.gay@gmail.com",
+									"equals": true,
+									"description": ""
 								}
 							],
 							"variable": []
@@ -3252,21 +3240,15 @@
 					],
 					"request": {
 						"url": {
-							"raw": "{{API_URL}}/Pack/key?id={{created_pack_id}}&professional=vanessa.gay@gmail.com&refresh=true",
+							"raw": "{{API_URL}}/Pack/{{created_pack_id}}?professional=vanessa.gay@gmail.com&refresh=true",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"Pack",
-								"key"
+								"{{created_pack_id}}"
 							],
 							"query": [
-								{
-									"key": "id",
-									"value": "{{created_pack_id}}",
-									"equals": true,
-									"description": ""
-								},
 								{
 									"key": "professional",
 									"value": "vanessa.gay@gmail.com",
@@ -3541,7 +3523,7 @@
 									"tests[\"cltype is service\"] = jsonData.cltype === \"service\";",
 									"",
 									"pm.sendRequest({",
-									"    url: \"{{API_URL}}/Service/key?id={{created_offering_id}}&professional=vanessa.gay@gmail.com\",",
+									"    url: \"{{API_URL}}/Service/{{created_offering_id}}?professional=vanessa.gay@gmail.com\",",
 									"    method: 'DELETE'",
 									"}, function (err, res) {",
 									"    pm.expect(res).to.have.property('code', 200);",
@@ -3603,7 +3585,7 @@
 									"tests[\"cltype is pack\"] = jsonData.cltype === \"pack\";",
 									"",
 									"pm.sendRequest({",
-									"    url: \"{{API_URL}}/Pack/key?id={{created_subpack_id}}&professional=vanessa.gay@gmail.com\",",
+									"    url: \"{{API_URL}}/Pack/{{created_subpack_id}}?professional=vanessa.gay@gmail.com\",",
 									"    method: 'DELETE'",
 									"}, function (err, res) {",
 									"    pm.expect(res).to.have.property('code', 200);",
@@ -3659,21 +3641,15 @@
 					],
 					"request": {
 						"url": {
-							"raw": "{{API_URL}}/Pack/key?id={{created_pack_id}}&professional=vanessa.gay@gmail.com",
+							"raw": "{{API_URL}}/Pack/{{created_pack_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"Pack",
-								"key"
+								"{{created_pack_id}}"
 							],
 							"query": [
-								{
-									"key": "id",
-									"value": "{{created_pack_id}}",
-									"equals": true,
-									"description": ""
-								},
 								{
 									"key": "professional",
 									"value": "vanessa.gay@gmail.com",
@@ -3914,21 +3890,15 @@
 					],
 					"request": {
 						"url": {
-							"raw": "{{API_URL}}/Expense/key?id={{created_expense_id}}&professional=vanessa.gay@gmail.com&refresh=true",
+							"raw": "{{API_URL}}/Expense/{{created_expense_id}}?professional=vanessa.gay@gmail.com&refresh=true",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"Expense",
-								"key"
+								"{{created_expense_id}}"
 							],
 							"query": [
-								{
-									"key": "id",
-									"value": "{{created_expense_id}}",
-									"equals": true,
-									"description": ""
-								},
 								{
 									"key": "professional",
 									"value": "vanessa.gay@gmail.com",
@@ -3966,21 +3936,15 @@
 					],
 					"request": {
 						"url": {
-							"raw": "{{API_URL}}/Expense/key?id={{created_expense_id}}&professional=vanessa.gay@gmail.com",
+							"raw": "{{API_URL}}/Expense/{{created_expense_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"Expense",
-								"key"
+								"{{created_expense_id}}"
 							],
 							"query": [
-								{
-									"key": "id",
-									"value": "{{created_expense_id}}",
-									"equals": true,
-									"description": ""
-								},
 								{
 									"key": "professional",
 									"value": "vanessa.gay@gmail.com",
@@ -4131,21 +4095,15 @@
 					],
 					"request": {
 						"url": {
-							"raw": "{{API_URL}}/Category/key?id={{created_category_id}}&professional=vanessa.gay@gmail.com&refresh=true",
+							"raw": "{{API_URL}}/Category/{{created_category_id}}?professional=vanessa.gay@gmail.com&refresh=true",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"Category",
-								"key"
+								"{{created_category_id}}"
 							],
 							"query": [
-								{
-									"key": "id",
-									"value": "{{created_category_id}}",
-									"equals": true,
-									"description": ""
-								},
 								{
 									"key": "professional",
 									"value": "vanessa.gay@gmail.com",
@@ -4288,22 +4246,16 @@
 					"name": "getClients",
 					"request": {
 						"url": {
-							"raw": "{{API_URL}}/Category/clients/key?id={{created_category_id}}&professional=vanessa.gay@gmail.com",
+							"raw": "{{API_URL}}/Category/{{created_category_id}}/clients?professional=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"Category",
-								"clients",
-								"key"
+								"{{created_category_id}}",
+								"clients"
 							],
 							"query": [
-								{
-									"key": "id",
-									"value": "{{created_category_id}}",
-									"equals": true,
-									"description": ""
-								},
 								{
 									"key": "professional",
 									"value": "vanessa.gay@gmail.com",
@@ -4396,21 +4348,15 @@
 					],
 					"request": {
 						"url": {
-							"raw": "{{API_URL}}/Category/key?id={{created_category_id}}&professional=vanessa.gay@gmail.com",
+							"raw": "{{API_URL}}/Category/{{created_category_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"Category",
-								"key"
+								"{{created_category_id}}"
 							],
 							"query": [
-								{
-									"key": "id",
-									"value": "{{created_category_id}}",
-									"equals": true,
-									"description": ""
-								},
 								{
 									"key": "professional",
 									"value": "vanessa.gay@gmail.com",
@@ -4574,21 +4520,15 @@
 					],
 					"request": {
 						"url": {
-							"raw": "{{API_URL}}/CollectiveGroup/key?id={{created_collectivegroup_id}}&professional=vanessa.gay@gmail.com&refresh=true",
+							"raw": "{{API_URL}}/CollectiveGroup/{{created_collectivegroup_id}}?professional=vanessa.gay@gmail.com&refresh=true",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"CollectiveGroup",
-								"key"
+								"{{created_collectivegroup_id}}"
 							],
 							"query": [
-								{
-									"key": "id",
-									"value": "{{created_collectivegroup_id}}",
-									"equals": true,
-									"description": ""
-								},
 								{
 									"key": "professional",
 									"value": "vanessa.gay@gmail.com",
@@ -4737,22 +4677,16 @@
 					"name": "getClients",
 					"request": {
 						"url": {
-							"raw": "{{API_URL}}/CollectiveGroup/clients/key?id={{created_collectivegroup_id}}&professional=vanessa.gay@gmail.com",
+							"raw": "{{API_URL}}/CollectiveGroup/{{created_collectivegroup_id}}/clients?professional=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"CollectiveGroup",
-								"clients",
-								"key"
+								"{{created_collectivegroup_id}}",
+								"clients"
 							],
 							"query": [
-								{
-									"key": "id",
-									"value": "{{created_collectivegroup_id}}",
-									"equals": true,
-									"description": ""
-								},
 								{
 									"key": "professional",
 									"value": "vanessa.gay@gmail.com",
@@ -4845,21 +4779,15 @@
 					],
 					"request": {
 						"url": {
-							"raw": "{{API_URL}}/CollectiveGroup/key?id={{created_collectivegroup_id}}&professional=vanessa.gay@gmail.com",
+							"raw": "{{API_URL}}/CollectiveGroup/{{created_collectivegroup_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"CollectiveGroup",
-								"key"
+								"{{created_collectivegroup_id}}"
 							],
 							"query": [
-								{
-									"key": "id",
-									"value": "{{created_collectivegroup_id}}",
-									"equals": true,
-									"description": ""
-								},
 								{
 									"key": "professional",
 									"value": "vanessa.gay@gmail.com",

@@ -77,10 +77,10 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
         return super.count(collectiveGroupFacade);
     }
 
-    @Path("key")
+    @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response find(@QueryParam("id") Long id,
+    public Response find(@PathParam("id") Long id,
             @QueryParam("professional") String professional,
             @QueryParam("refresh") boolean refresh) {
         CollectiveGroupPK pk = new CollectiveGroupPK(id, professional);
@@ -131,10 +131,10 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
         });
     }
 
-    @Path("key")
+    @Path("{id}")
     @DELETE
     public Response delete(@Context SecurityContext sec,
-            @QueryParam("id") Long id,
+            @PathParam("id") Long id,
             @QueryParam("professional") String professional) {
 
         CollectiveGroupPK pk = new CollectiveGroupPK(id, this.getProEmail(sec,
@@ -200,10 +200,10 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
                 remove(cg));
     }
 
-    @Path("clients/key")
+    @Path("{id}/clients")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getClients(@QueryParam("id") Long id,
+    public Response getClients(@PathParam("id") Long id,
             @QueryParam("professional") String professional) {
         CollectiveGroupPK pk = new CollectiveGroupPK(id, professional);
         LOG.log(Level.INFO,
