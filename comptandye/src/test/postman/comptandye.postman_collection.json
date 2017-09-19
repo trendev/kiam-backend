@@ -4250,7 +4250,7 @@
 							"script": {
 								"type": "text/javascript",
 								"exec": [
-									"pm.environment.set(\"created_client_id\", 49);"
+									"pm.environment.set(\"created_client_id\", 48);"
 								]
 							}
 						}
@@ -4285,6 +4285,42 @@
 					"response": []
 				},
 				{
+					"name": "getClients",
+					"request": {
+						"url": {
+							"raw": "{{API_URL}}/Category/clients/key?id={{created_category_id}}&professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Category",
+								"clients",
+								"key"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{created_category_id}}",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
 					"name": "removeClient",
 					"event": [
 						{
@@ -4311,7 +4347,7 @@
 							"script": {
 								"type": "text/javascript",
 								"exec": [
-									"pm.environment.set(\"created_client_id\", 49);"
+									"pm.environment.set(\"created_client_id\", 48);"
 								]
 							}
 						}
@@ -4663,7 +4699,7 @@
 							"script": {
 								"type": "text/javascript",
 								"exec": [
-									"pm.environment.set(\"created_client_id\", 49);"
+									"pm.environment.set(\"created_client_id\", 48);"
 								]
 							}
 						}
@@ -4698,6 +4734,42 @@
 					"response": []
 				},
 				{
+					"name": "getClients",
+					"request": {
+						"url": {
+							"raw": "{{API_URL}}/CollectiveGroup/clients/key?id={{created_collectivegroup_id}}&professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"CollectiveGroup",
+								"clients",
+								"key"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{created_collectivegroup_id}}",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
 					"name": "removeClient",
 					"event": [
 						{
@@ -4724,7 +4796,7 @@
 							"script": {
 								"type": "text/javascript",
 								"exec": [
-									"pm.environment.set(\"created_client_id\", 49);"
+									"pm.environment.set(\"created_client_id\", 48);"
 								]
 							}
 						}
