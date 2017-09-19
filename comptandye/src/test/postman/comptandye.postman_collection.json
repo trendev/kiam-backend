@@ -3998,6 +3998,400 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Category",
+			"description": "",
+			"item": [
+				{
+					"name": "findAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Category table is not empty\"] = jsonData.length >= 1;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{API_URL}}/Category",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "count",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"tests[\"count >= 1\"] = responseBody >= 1;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{API_URL}}/Category/count",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 201\"] = responseCode.code === 201;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"pm.environment.set(\"created_category_id\", jsonData.id);",
+									"tests[\"name is \\\"NEW_CATEGORY\\\"\"] = jsonData.name === \"NEW_CATEGORY\";",
+									"tests[\"description is \\\"This a new category for special clients\\\"\"] = jsonData.description === \"This a new category for special clients\";"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{API_URL}}/Category?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Category"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"NEW_CATEGORY\",\n\t\"description\":\"This a new category for special clients\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "find",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"//created_category_id environment variable is stored as a string...",
+									"tests[\"id is \"+pm.environment.get(\"created_category_id\")] = jsonData.id == pm.environment.get(\"created_category_id\");",
+									"tests[\"name is \\\"NEW_CATEGORY\\\"\"] = jsonData.name === \"NEW_CATEGORY\";",
+									"tests[\"description is \\\"This a new category for special clients\\\"\"] = jsonData.description === \"This a new category for special clients\";"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{API_URL}}/Category/key?id={{created_category_id}}&professional=vanessa.gay@gmail.com&refresh=true",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Category",
+								"key"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{created_category_id}}",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "refresh",
+									"value": "true",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"//created_category_id environment variable is stored as a string...",
+									"tests[\"id is \"+pm.environment.get(\"created_category_id\")] = jsonData.id == pm.environment.get(\"created_category_id\");",
+									"tests[\"name is \\\"New Category\\\"\"] = jsonData.name === \"New Category\";",
+									"tests[\"description is \\\"This a new description for the Category\\\"\"] = jsonData.description === \"This a new description for the Category\";"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{API_URL}}/Category?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Category"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\":{{created_category_id}},\n\t\"name\":\"New Category\",\n\t\"description\":\"This a new description for the Category\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "addClient",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"//created_offering_id environment variable is stored as a string...",
+									"tests[\"id is \"+pm.environment.get(\"created_offering_id\")] = jsonData.id == pm.environment.get(\"created_offering_id\");",
+									"tests[\"name is \\\"beauty service\\\"\"] = jsonData.name === \"beauty service\";",
+									"tests[\"price is 10000\"] = jsonData.price === 10000;",
+									"tests[\"duration is 180\"] = jsonData.duration === 180;",
+									"tests[\"hidden is false\"] = jsonData.hidden === false;",
+									"tests[\"cltype is service\"] = jsonData.cltype === \"service\";"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.environment.set(\"created_client_id\", 49);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{API_URL}}/Category/{{created_category_id}}/addClient/{{created_client_id}}?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Category",
+								"{{created_category_id}}",
+								"addClient",
+								"{{created_client_id}}"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "removeClient",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"//created_offering_id environment variable is stored as a string...",
+									"tests[\"id is \"+pm.environment.get(\"created_offering_id\")] = jsonData.id == pm.environment.get(\"created_offering_id\");",
+									"tests[\"name is \\\"beauty service\\\"\"] = jsonData.name === \"beauty service\";",
+									"tests[\"price is 10000\"] = jsonData.price === 10000;",
+									"tests[\"duration is 180\"] = jsonData.duration === 180;",
+									"tests[\"hidden is false\"] = jsonData.hidden === false;",
+									"tests[\"cltype is service\"] = jsonData.cltype === \"service\";"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.environment.set(\"created_client_id\", 49);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{API_URL}}/Category/{{created_category_id}}/removeClient/{{created_client_id}}?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Category",
+								"{{created_category_id}}",
+								"removeClient",
+								"{{created_client_id}}"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{API_URL}}/Category/key?id={{created_category_id}}&professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Category",
+								"key"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{created_category_id}}",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
