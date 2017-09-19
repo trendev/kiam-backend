@@ -4392,6 +4392,419 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "CollectiveGroup",
+			"description": "",
+			"item": [
+				{
+					"name": "findAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"CollectiveGroup table is not empty\"] = jsonData.length >= 1;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{API_URL}}/CollectiveGroup",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "count",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"tests[\"count >= 1\"] = responseBody >= 1;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{API_URL}}/CollectiveGroup/count",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 201\"] = responseCode.code === 201;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"pm.environment.set(\"created_collectivegroup_id\", jsonData.id);",
+									"tests[\"groupName is \\\"Maison de retraite de Chanteloup-en-Brie\\\"\"] = jsonData.groupName === \"Maison de retraite de Chanteloup-en-Brie\";",
+									"tests[\"phone is \\\"0123456789\\\"\"] = jsonData.phone === \"0123456789\";",
+									"tests[\"Address is defined\"] = jsonData.address !== undefined;",
+									"tests[\"id is defined\"] = jsonData.address.id !== undefined;",
+									"pm.environment.set(\"created_address_id\", jsonData.address.id);",
+									"tests[\"address.street is \\\"Allée de Fontenelle\\\"\"] = jsonData.address.street === \"Allée de Fontenelle\";",
+									"tests[\"address.optional is \\\"Château de Fontenelle\\\"\"] = jsonData.address.optional === \"Château de Fontenelle\";",
+									"tests[\"address.postalCode is \\\"77600\\\"\"] = jsonData.address.postalCode === \"77600\";",
+									"tests[\"address.city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.address.city === \"Chanteloup-en-Brie\";"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{API_URL}}/CollectiveGroup?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"CollectiveGroup"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"groupName\":\"Maison de retraite de Chanteloup-en-Brie\",\n\t\"phone\":\"0123456789\",\n\t\"address\":{\n\t\t\"street\":\"Allée de Fontenelle\",\n\t\t\"optional\":\"Château de Fontenelle\",\n\t\t\"postalCode\":\"77600\",\n\t\t\"city\":\"Chanteloup-en-Brie\"\n\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "find",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"//created_collectivegroup_id environment variable is stored as a string...",
+									"tests[\"id is \"+pm.environment.get(\"created_collectivegroup_id\")] = jsonData.id == pm.environment.get(\"created_collectivegroup_id\");",
+									"tests[\"groupName is \\\"Maison de retraite de Chanteloup-en-Brie\\\"\"] = jsonData.groupName === \"Maison de retraite de Chanteloup-en-Brie\";",
+									"tests[\"phone is \\\"0123456789\\\"\"] = jsonData.phone === \"0123456789\";",
+									"tests[\"Address is defined\"] = jsonData.address !== undefined;",
+									"tests[\"address.id is \"+pm.environment.get(\"created_address_id\")] = jsonData.address.id == pm.environment.get(\"created_address_id\");",
+									"tests[\"address.street is \\\"Allée de Fontenelle\\\"\"] = jsonData.address.street === \"Allée de Fontenelle\";",
+									"tests[\"address.optional is \\\"Château de Fontenelle\\\"\"] = jsonData.address.optional === \"Château de Fontenelle\";",
+									"tests[\"address.postalCode is \\\"77600\\\"\"] = jsonData.address.postalCode === \"77600\";",
+									"tests[\"address.city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.address.city === \"Chanteloup-en-Brie\";"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{API_URL}}/CollectiveGroup/key?id={{created_collectivegroup_id}}&professional=vanessa.gay@gmail.com&refresh=true",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"CollectiveGroup",
+								"key"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{created_collectivegroup_id}}",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "refresh",
+									"value": "true",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"//created_collectivegroup_id environment variable is stored as a string...",
+									"tests[\"id is \"+pm.environment.get(\"created_collectivegroup_id\")] = jsonData.id == pm.environment.get(\"created_collectivegroup_id\");",
+									"tests[\"groupName is \\\"E.H.P.A.D. LE CHATEAU DE FONTENELLE\\\"\"] = jsonData.groupName === \"E.H.P.A.D. LE CHATEAU DE FONTENELLE\";",
+									"tests[\"phone is \\\"0132547698\\\"\"] = jsonData.phone === \"0132547698\";",
+									"tests[\"Address is defined\"] = jsonData.address !== undefined;",
+									"tests[\"address.id is \"+pm.environment.get(\"created_address_id\")] = jsonData.address.id == pm.environment.get(\"created_address_id\");",
+									"tests[\"address.street is \\\"Allée Fontenelle\\\"\"] = jsonData.address.street === \"Allée Fontenelle\";",
+									"tests[\"address.optional is \\\"Château de Fontenelle\\\"\"] = jsonData.address.optional === \"Château de Fontenelle\";",
+									"tests[\"address.postalCode is \\\"77600\\\"\"] = jsonData.address.postalCode === \"77600\";",
+									"tests[\"address.city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.address.city === \"Chanteloup-en-Brie\";"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{API_URL}}/CollectiveGroup?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"CollectiveGroup"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": {{created_collectivegroup_id}},\n    \"groupName\": \"E.H.P.A.D. LE CHATEAU DE FONTENELLE\",\n    \"phone\": \"0132547698\",\n    \"address\": {\n        \"street\": \"Allée Fontenelle\",\n        \"optional\": \"Château de Fontenelle\",\n        \"postalCode\": \"77600\",\n        \"city\": \"Chanteloup-en-Brie\",\n        \"country\": \"France\"\n    }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "addClient",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"//created_offering_id environment variable is stored as a string...",
+									"tests[\"id is \"+pm.environment.get(\"created_offering_id\")] = jsonData.id == pm.environment.get(\"created_offering_id\");",
+									"tests[\"name is \\\"beauty service\\\"\"] = jsonData.name === \"beauty service\";",
+									"tests[\"price is 10000\"] = jsonData.price === 10000;",
+									"tests[\"duration is 180\"] = jsonData.duration === 180;",
+									"tests[\"hidden is false\"] = jsonData.hidden === false;",
+									"tests[\"cltype is service\"] = jsonData.cltype === \"service\";"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.environment.set(\"created_client_id\", 49);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{API_URL}}/CollectiveGroup/{{created_collectivegroup_id}}/addClient/{{created_client_id}}?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"CollectiveGroup",
+								"{{created_collectivegroup_id}}",
+								"addClient",
+								"{{created_client_id}}"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "removeClient",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"//created_offering_id environment variable is stored as a string...",
+									"tests[\"id is \"+pm.environment.get(\"created_offering_id\")] = jsonData.id == pm.environment.get(\"created_offering_id\");",
+									"tests[\"name is \\\"beauty service\\\"\"] = jsonData.name === \"beauty service\";",
+									"tests[\"price is 10000\"] = jsonData.price === 10000;",
+									"tests[\"duration is 180\"] = jsonData.duration === 180;",
+									"tests[\"hidden is false\"] = jsonData.hidden === false;",
+									"tests[\"cltype is service\"] = jsonData.cltype === \"service\";"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.environment.set(\"created_client_id\", 49);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{API_URL}}/CollectiveGroup/{{created_collectivegroup_id}}/removeClient/{{created_client_id}}?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"CollectiveGroup",
+								"{{created_collectivegroup_id}}",
+								"removeClient",
+								"{{created_client_id}}"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{API_URL}}/CollectiveGroup/key?id={{created_collectivegroup_id}}&professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"CollectiveGroup",
+								"key"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{created_collectivegroup_id}}",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
