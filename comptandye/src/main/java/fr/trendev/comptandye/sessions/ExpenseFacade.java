@@ -26,8 +26,7 @@ public class ExpenseFacade extends AbstractFacade<Expense, ExpensePK> {
     @Override
     public String prettyPrintPK(ExpensePK pk) {
         StringBuilder sb = new StringBuilder();
-        sb.append("key?");
-        sb.append("id=").append(pk.getId());
+        sb.append(pk.getId());
         sb.append("&professional=").append(pk.getProfessional());
         return sb.toString();
     }

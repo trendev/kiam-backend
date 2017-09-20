@@ -26,8 +26,7 @@ public class ClientFacade extends AbstractFacade<Client, ClientPK> {
     @Override
     public String prettyPrintPK(ClientPK pk) {
         StringBuilder sb = new StringBuilder();
-        sb.append("key?");
-        sb.append("id=").append(pk.getId());
+        sb.append(pk.getId());
         sb.append("&professional=").append(pk.getProfessional());
         return sb.toString();
     }

@@ -26,10 +26,9 @@ public class ClientBillFacade extends AbstractFacade<ClientBill, BillPK> {
     @Override
     public String prettyPrintPK(BillPK pk) {
         StringBuilder sb = new StringBuilder();
-        sb.append("key?");
-        sb.append("reference=").append(pk.getReference());
+        sb.append(pk.getReference());
         //converts the delivery date in UTC long
-        sb.append("&deliverydate=").append(pk.getDeliveryDate().getTime());
+        sb.append("/").append(pk.getDeliveryDate().getTime());
         sb.append("&professional=").append(pk.getProfessional());
         return sb.toString();
     }

@@ -26,8 +26,7 @@ public class ServiceFacade extends AbstractFacade<Service, OfferingPK> {
     @Override
     public String prettyPrintPK(OfferingPK pk) {
         StringBuilder sb = new StringBuilder();
-        sb.append("key?");
-        sb.append("id=").append(pk.getId());
+        sb.append(pk.getId());
         sb.append("&professional=").append(pk.getProfessional());
         return sb.toString();
     }
