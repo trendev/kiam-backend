@@ -27,7 +27,7 @@ public class PackFacade extends AbstractFacade<Pack, OfferingPK> {
     public String prettyPrintPK(OfferingPK pk) {
         StringBuilder sb = new StringBuilder();
         sb.append(pk.getId());
-        sb.append("&professional=").append(pk.getProfessional());
+        sb.append("?professional=").append(pk.getProfessional());
         return sb.toString();
     }
 

@@ -300,12 +300,14 @@ public abstract class AbstractCommonService<E, P> {
                                             "{0} {1} {2} {3} {4} : {5}",
                                             new Object[]{entityClass.
                                                         getSimpleName(),
-                                                entityPk,
+                                                entityFacade.prettyPrintPK(
+                                                        entityPk),
                                                 option.equals(
                                                         AssociationManagementEnum.INSERT) ? "associated to " : "unassociated with",
                                                 associationEntityClass.
                                                         getSimpleName(),
-                                                associationPk,
+                                                associationFacade.prettyPrintPK(
+                                                        associationPk),
                                                 result});
                                     return result ? Response.ok(a).build() : Response.
                                             status(Response.Status.BAD_REQUEST).
@@ -321,7 +323,9 @@ public abstract class AbstractCommonService<E, P> {
                                                         entityClass.
                                                                 getSimpleName()
                                                         + " "
-                                                        + entityPk
+                                                        + entityFacade.
+                                                                prettyPrintPK(
+                                                                        entityPk)
                                                         + " cannot be "
                                                         + (option.equals(
                                                                 AssociationManagementEnum.INSERT) ? "associated to" : "unassociated with")
@@ -329,27 +333,34 @@ public abstract class AbstractCommonService<E, P> {
                                                         + associationEntityClass.
                                                                 getSimpleName()
                                                         + " "
-                                                        + associationPk).build()).
+                                                        + associationFacade.
+                                                                prettyPrintPK(
+                                                                        associationPk)).
+                                                        build()).
                                         build());
                     })
                     .orElse(Response.status(Response.Status.NOT_FOUND).entity(
                             Json.createObjectBuilder().add("error",
                                     entityClass.getSimpleName() + " "
-                                    + entityPk
+                                    + entityFacade.prettyPrintPK(
+                                            entityPk)
                                     + " not found and cannot be " + (option.
                                             equals(
                                                     AssociationManagementEnum.INSERT) ? "associated to" : "unassociated with")
                                     + " "
-                                    + associationPk).build()).build());
+                                    + associationFacade.prettyPrintPK(
+                                            associationPk)).build()).build());
         } catch (Exception ex) {
 
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs " + (option.equals(
                             AssociationManagementEnum.INSERT) ? "associating" : "unassociated")
                     + " " + entityClass.getSimpleName()
-                    + " " + entityPk
+                    + " " + entityFacade.prettyPrintPK(
+                            entityPk)
                     + " with " + associationEntityClass.getSimpleName() + " "
-                    + associationPk);
+                    + associationFacade.prettyPrintPK(
+                            associationPk));
             getLogger().log(Level.WARNING, errmsg, ex);
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder().add("error", errmsg).build()).

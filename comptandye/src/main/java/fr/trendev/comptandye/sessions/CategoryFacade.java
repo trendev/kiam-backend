@@ -27,7 +27,7 @@ public class CategoryFacade extends AbstractFacade<Category, CategoryPK> {
     public String prettyPrintPK(CategoryPK pk) {
         StringBuilder sb = new StringBuilder();
         sb.append(pk.getId());
-        sb.append("&professional=").append(pk.getProfessional());
+        sb.append("?professional=").append(pk.getProfessional());
         return sb.toString();
     }
 

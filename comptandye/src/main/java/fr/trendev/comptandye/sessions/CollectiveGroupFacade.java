@@ -27,7 +27,7 @@ public class CollectiveGroupFacade extends AbstractFacade<CollectiveGroup, Colle
     public String prettyPrintPK(CollectiveGroupPK pk) {
         StringBuilder sb = new StringBuilder();
         sb.append(pk.getId());
-        sb.append("&professional=").append(pk.getProfessional());
+        sb.append("?professional=").append(pk.getProfessional());
         return sb.toString();
     }
 
