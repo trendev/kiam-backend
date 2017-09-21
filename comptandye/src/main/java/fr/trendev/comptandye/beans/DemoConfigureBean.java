@@ -12,6 +12,7 @@ import fr.trendev.comptandye.entities.Category;
 import fr.trendev.comptandye.entities.Client;
 import fr.trendev.comptandye.entities.ClientBill;
 import fr.trendev.comptandye.entities.CollectiveGroup;
+import fr.trendev.comptandye.entities.CollectiveGroupBill;
 import fr.trendev.comptandye.entities.CustomerDetails;
 import fr.trendev.comptandye.entities.Expense;
 import fr.trendev.comptandye.entities.Individual;
@@ -88,15 +89,15 @@ public class DemoConfigureBean implements Serializable {
 //        trendevfr.setRegistrationDate(cal.getTime());
         Administrator trendevfr = new Administrator("trendevfr@gmail.com",
                 "ts15qkBmihdtvmkKXPgVmbPGeyQU6aKd5XNd5HwOzu0=",
-                "trendevfr_admin", UUIDGenerator.generate("ADMIN_", true));
+                "trendevfr_admin", UUIDGenerator.generate("ADMIN-", true));
 
         Administrator comptandye = new Administrator("comptandye@gmail.com",
                 "mZWR4R0bp5EPs9xfOwUPu3n/06LOL+wHK6BuUBsHgQM=",
-                "comptandye_admin", UUIDGenerator.generate("ADMIN_", true));
+                "comptandye_admin", UUIDGenerator.generate("ADMIN-", true));
 
         Administrator jsie = new Administrator("julien.sie@gmail.com",
                 "RrYJsV8xV7fsJkzgrFqGwiZzvIGEFan6e0ANYPcJhrI=", "jsie",
-                UUIDGenerator.generate("ADMIN_", true));
+                UUIDGenerator.generate("ADMIN-", true));
 
         /**
          * Creates the Administrator Group
@@ -120,7 +121,7 @@ public class DemoConfigureBean implements Serializable {
          */
         Professional vanessa = new Professional("vanessa.gay@gmail.com",
                 "EUrVrX4nfmYYFxpMyRX93OlkJxNZv9mkMGfirZKbhWI=", "Vaness",
-                UUIDGenerator.generate("PRO_", true));
+                UUIDGenerator.generate("PRO-", true));
         Calendar cal = Calendar.getInstance();
         cal.clear();
         cal.set(1983, 9, 25);
@@ -200,7 +201,7 @@ public class DemoConfigureBean implements Serializable {
                         + "@hella.com",
                         PasswordGenerator.encrypt_SHA256("Californication" + i),
                         "hankmoody_" + (i + 1), UUIDGenerator.
-                                generate("IND_", true)))
+                                generate("IND-", true)))
                 .collect(Collectors.toList());
 
         ind.getUserAccounts().add(skonx);
@@ -306,7 +307,8 @@ public class DemoConfigureBean implements Serializable {
             specialPack.getBusinesses().add(esthetique);
             vanessa.getOfferings().add(specialPack);
 
-            IndividualBill bill1 = new IndividualBill("Ref#12345", new Date(),
+            IndividualBill bill1 = new IndividualBill("I1" + vanessa.getUuid(),
+                    new Date(),
                     5000, 0,
                     new Date(),
                     Arrays.asList("Cool", "sympa"),
@@ -314,7 +316,8 @@ public class DemoConfigureBean implements Serializable {
                     sylvioc);
             bill1.setCltype("individualbill");
 
-            IndividualBill bill2 = new IndividualBill("Ref#54321", new Date(),
+            IndividualBill bill2 = new IndividualBill("I2" + vanessa.getUuid(),
+                    new Date(),
                     8000, 0,
                     new Date(),
                     Arrays.asList("Long", "Pffff"),
@@ -362,7 +365,7 @@ public class DemoConfigureBean implements Serializable {
 
         em.persist(service);
 
-        ClientBill bill = new ClientBill("#REF-" + vanessa.getUuid(), new Date(),
+        ClientBill bill = new ClientBill("#C1" + vanessa.getUuid(), new Date(),
                 1500, 0,
                 new Date(), Arrays.asList("Has left her first son"), vanessa,
                 Arrays.asList(payment), Arrays.asList(service), client1);
@@ -370,6 +373,18 @@ public class DemoConfigureBean implements Serializable {
 
         vanessa.getBills().add(bill);
         client1.getClientBills().add(bill);
+
+        CollectiveGroupBill cgbill = new CollectiveGroupBill("#CG1" + vanessa.
+                getUuid(), new Date(),
+                1500, 0,
+                new Date(), Arrays.asList("BAU", "Easy but long"), vanessa,
+                Arrays.asList(payment), Arrays.asList(service), vanessa.
+                getCollectiveGroups().get(0));
+        cgbill.setCltype("collectivegroupbill");
+
+        vanessa.getBills().add(cgbill);
+        vanessa.getCollectiveGroups().get(0).getCollectiveGroupBills().add(
+                cgbill);
     }
 
 }
