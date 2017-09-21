@@ -39,9 +39,9 @@ public abstract class AbstractCommonService<E, P> {
         this.entityClass = entityClass;
     }
 
-    protected abstract Logger getLogger();
+    abstract Logger getLogger();
 
-    protected Response findAll(AbstractFacade<E, P> facade) {
+    Response findAll(AbstractFacade<E, P> facade) {
         try {
             List<E> list = facade.findAll();
             getLogger().log(Level.INFO, "{0} list size = {1}", new Object[]{
@@ -63,7 +63,7 @@ public abstract class AbstractCommonService<E, P> {
         }
     }
 
-    protected Response count(AbstractFacade<E, P> facade) {
+    Response count(AbstractFacade<E, P> facade) {
         try {
             Long count = facade.count();
             getLogger().log(Level.INFO, "Total Count of {0} = {1}",
@@ -84,7 +84,7 @@ public abstract class AbstractCommonService<E, P> {
         }
     }
 
-    protected Response find(AbstractFacade<E, P> facade,
+    Response find(AbstractFacade<E, P> facade,
             P pk, boolean refresh) {
         try {
             return Optional.ofNullable(facade.find(pk))
@@ -114,7 +114,7 @@ public abstract class AbstractCommonService<E, P> {
         }
     }
 
-    protected <R> Response provideRelation(AbstractFacade<E, P> facade,
+    <R> Response provideRelation(AbstractFacade<E, P> facade,
             P pk, Function<E, R> getFunction) {
         try {
 
@@ -141,7 +141,7 @@ public abstract class AbstractCommonService<E, P> {
         }
     }
 
-    protected Response post(E entity, AbstractFacade<E, P> facade,
+    Response post(E entity, AbstractFacade<E, P> facade,
             Consumer<E> initAction) {
 
         String jsonString = this.stringify(entity);
@@ -172,7 +172,7 @@ public abstract class AbstractCommonService<E, P> {
         }
     }
 
-    protected <O, K> Response post(E entity, K ownerPK,
+    <O, K> Response post(E entity, K ownerPK,
             BiFunction<AbstractFacade<O, K>, K, String> ownerPrettyPrintFunction,
             Class<O> ownerClass,
             AbstractFacade<E, P> facade, AbstractFacade<O, K> ownerFacade,
@@ -214,7 +214,7 @@ public abstract class AbstractCommonService<E, P> {
 
     }
 
-    protected Response put(E entity, AbstractFacade<E, P> facade, P pk,
+    Response put(E entity, AbstractFacade<E, P> facade, P pk,
             Consumer<E> updateAction) {
         try {
             return Optional.ofNullable(facade.find(pk))
@@ -246,7 +246,7 @@ public abstract class AbstractCommonService<E, P> {
         }
     }
 
-    protected Response delete(AbstractFacade<E, P> facade, P pk,
+    Response delete(AbstractFacade<E, P> facade, P pk,
             Consumer<E> prepareDelete) {
         try {
             return Optional.ofNullable(facade.find(pk))
@@ -278,7 +278,7 @@ public abstract class AbstractCommonService<E, P> {
         }
     }
 
-    protected <A, U> Response manageAssociation(
+    <A, U> Response manageAssociation(
             AssociationManagementEnum option,
             AbstractFacade<E, P> entityFacade,
             P entityPk,
@@ -381,7 +381,7 @@ public abstract class AbstractCommonService<E, P> {
         }
     }
 
-    protected String stringify(E entity) {
+    String stringify(E entity) {
         String jsonString = entity.toString();
         try {
             jsonString = om.writeValueAsString(entity);
@@ -392,7 +392,7 @@ public abstract class AbstractCommonService<E, P> {
         return jsonString;
     }
 
-    protected String getProEmail(SecurityContext sec, String professional) {
+    String getProEmail(SecurityContext sec, String professional) {
         return (sec.isSecure() && sec.isUserInRole("Professional"))
                 ? sec.getUserPrincipal().getName() : professional;
     }
