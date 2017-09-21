@@ -50,6 +50,8 @@ public class CollectiveGroupTest {
         assert instance.getClients() != null;
         assert instance.getClients().isEmpty();
         assert instance.getProfessional() == null;
+        assert instance.getCollectiveGroupBills() != null;
+        assert instance.getCollectiveGroupBills().isEmpty() == true;
 
         String groupName = "Collective Group";
 
@@ -63,6 +65,8 @@ public class CollectiveGroupTest {
         assert instance.getClients() != null;
         assert instance.getClients().isEmpty();
         assert instance.getProfessional() != null;
+        assert instance.getCollectiveGroupBills() != null;
+        assert instance.getCollectiveGroupBills().isEmpty() == true;
 
         Address address = new Address();
 
@@ -76,5 +80,7 @@ public class CollectiveGroupTest {
         assert instance.getClients() != null;
         assert instance.getClients().isEmpty();
         assert instance.getProfessional() != null;
+        assert instance.getCollectiveGroupBills() != null;
+        assert instance.getCollectiveGroupBills().isEmpty() == true;
     }
 }

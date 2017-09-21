@@ -21,9 +21,9 @@ import org.junit.Test;
  *
  * @author jsie
  */
-public class ClientBillTest {
+public class CollectiveGroupBillTest {
 
-    public ClientBillTest() {
+    public CollectiveGroupBillTest() {
     }
 
     @BeforeClass
@@ -44,7 +44,7 @@ public class ClientBillTest {
 
     @Test
     public void testConstructors() {
-        ClientBill instance = new ClientBill();
+        CollectiveGroupBill instance = new CollectiveGroupBill();
 
         assert instance.getReference() == null;
         assert instance.getDeliveryDate() == null;
@@ -58,7 +58,7 @@ public class ClientBillTest {
         assert instance.getPayments().isEmpty();
         assert instance.getOfferings() != null;
         assert instance.getOfferings().isEmpty();
-        assert instance.getClient() == null;
+        assert instance.getCollectiveGroup() == null;
 
         String reference = "Ref-123456";
         Date deliveryDate = new Date();
@@ -79,9 +79,11 @@ public class ClientBillTest {
                         professional))
                 .collect(Collectors.toList());
 
-        instance = new ClientBill(reference, deliveryDate, amount, discount,
+        instance = new CollectiveGroupBill(reference, deliveryDate, amount,
+                discount,
                 paymentDate,
-                comments, professional, payments, offerings, new Client());
+                comments, professional, payments, offerings,
+                new CollectiveGroup());
 
         assert instance.getReference().equals(reference);
         assert instance.getDeliveryDate() != null;
@@ -105,7 +107,7 @@ public class ClientBillTest {
 
         assert amount == (totalAmount - (discount * totalAmount / 100));
 
-        assert instance.getClient() != null;
+        assert instance.getCollectiveGroup() != null;
     }
 
 }

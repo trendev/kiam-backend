@@ -12,29 +12,29 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class ClientBill extends Bill {
+public class CollectiveGroupBill extends Bill {
 
-    @ManyToOne(targetEntity = Client.class)
-    private Client client;
+    @ManyToOne(targetEntity = CollectiveGroup.class)
+    private CollectiveGroup collectiveGroup;
 
-    public ClientBill(String reference, Date deliveryDate, int amount,
+    public CollectiveGroupBill(String reference, Date deliveryDate, int amount,
             int discount, Date paymentDate, List comments,
             Professional professional, List payments, List offerings,
-            Client client) {
+            CollectiveGroup collectiveGroup) {
         super(reference, deliveryDate, amount, discount, paymentDate, comments,
                 professional, payments, offerings);
-        this.client = client;
+        this.collectiveGroup = collectiveGroup;
     }
 
-    public ClientBill() {
+    public CollectiveGroupBill() {
     }
 
-    public Client getClient() {
-        return this.client;
+    public CollectiveGroup getCollectiveGroup() {
+        return this.collectiveGroup;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setCollectiveGroup(CollectiveGroup collectiveGroup) {
+        this.collectiveGroup = collectiveGroup;
     }
 
 }

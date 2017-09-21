@@ -16,6 +16,7 @@ import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -50,6 +51,12 @@ public class CollectiveGroup {
             referencedColumnName = "EMAIL")
     @JsonIgnore
     private Professional professional;
+
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
+        CascadeType.REFRESH}, targetEntity = CollectiveGroupBill.class,
+            mappedBy = "collectiveGroup")
+    @JsonIgnore
+    private List<CollectiveGroupBill> collectiveGroupBills = new LinkedList<>();
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
         CascadeType.REFRESH}, targetEntity = Client.class)
@@ -114,6 +121,15 @@ public class CollectiveGroup {
 
     public void setProfessional(Professional professional) {
         this.professional = professional;
+    }
+
+    public List<CollectiveGroupBill> getCollectiveGroupBills() {
+        return this.collectiveGroupBills;
+    }
+
+    public void setCollectiveGroupBills(
+            List<CollectiveGroupBill> collectiveGroupBills) {
+        this.collectiveGroupBills = collectiveGroupBills;
     }
 
     public List<Client> getClients() {

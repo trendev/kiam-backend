@@ -213,4 +213,18 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
                 pk,
                 CollectiveGroup::getClients);
     }
+
+    @Path("{id}/collectiveGroupBills")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCollectiveGroupBills(@PathParam("id") Long id,
+            @QueryParam("professional") String professional) {
+        CollectiveGroupPK pk = new CollectiveGroupPK(id, professional);
+        LOG.log(Level.INFO,
+                "REST request to get CollectiveGroupBills of CollectiveGroup : {0}",
+                collectiveGroupFacade.prettyPrintPK(pk));
+        return super.provideRelation(collectiveGroupFacade,
+                pk,
+                CollectiveGroup::getCollectiveGroupBills);
+    }
 }
