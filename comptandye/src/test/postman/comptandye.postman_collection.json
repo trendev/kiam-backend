@@ -4193,13 +4193,19 @@
 									"",
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"id is defined\"] = jsonData.id !== undefined;",
-									"//created_offering_id environment variable is stored as a string...",
-									"tests[\"id is \"+pm.environment.get(\"created_offering_id\")] = jsonData.id == pm.environment.get(\"created_offering_id\");",
-									"tests[\"name is \\\"beauty service\\\"\"] = jsonData.name === \"beauty service\";",
-									"tests[\"price is 10000\"] = jsonData.price === 10000;",
-									"tests[\"duration is 180\"] = jsonData.duration === 180;",
-									"tests[\"hidden is false\"] = jsonData.hidden === false;",
-									"tests[\"cltype is service\"] = jsonData.cltype === \"service\";"
+									"//created_client_id environment variable is stored as a string...",
+									"tests[\"id is \"+pm.environment.get(\"created_client_id\")] = jsonData.id == pm.environment.get(\"created_client_id\");",
+									"tests[\"email is \\\"newclient@domain.com\\\"\"] = jsonData.email === \"newclient@domain.com\";",
+									"tests[\"customerDetails.firstName is \\\"John\\\"\"] = jsonData.customerDetails.firstName === \"John\";",
+									"tests[\"customerDetails.lastName is \\\"DOE\\\"\"] = jsonData.customerDetails.lastName === \"DOE\";",
+									"tests[\"customerDetails.nickname is \\\"WhoIsHe\\\"\"] = jsonData.customerDetails.nickname === \"WhoIsHe\";",
+									"tests[\"customerDetails.sex is \\\"M\\\"\"] = jsonData.customerDetails.sex === \"M\";",
+									"",
+									"tests[\"address.street is \\\"79 avenue de la jonchère\\\"\"] = jsonData.address.street === \"79 avenue de la jonchère\";",
+									"tests[\"address.optional is \\\"appart A113\\\"\"] = jsonData.address.optional === \"appart A113\";",
+									"tests[\"address.postalCode is \\\"77600\\\"\"] = jsonData.address.postalCode === \"77600\";",
+									"tests[\"address.city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.address.city === \"Chanteloup-en-Brie\";",
+									"tests[\"address.country is \\\"France\\\"\"] = jsonData.address.country === \"France\";"
 								]
 							}
 						},
@@ -4208,7 +4214,35 @@
 							"script": {
 								"type": "text/javascript",
 								"exec": [
-									"pm.environment.set(\"created_client_id\", 48);"
+									"pm.sendRequest({",
+									"    url: \"{{API_URL}}/Client?professional=vanessa.gay@gmail.com\",",
+									"    method: 'POST',",
+									"    header: 'Content-Type:application/json',",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify(",
+									"            {",
+									"                email:\"newclient@domain.com\",",
+									"                address:{",
+									"                    street:\"79 avenue de la jonchère\",",
+									"                    optional:\"appart A113\",",
+									"                    postalCode:\"77600\",",
+									"                    city:\"Chanteloup-en-Brie\"",
+									"                },",
+									"                customerDetails:{",
+									"                    firstName:\"John\",",
+									"                    lastName:\"DOE\",",
+									"                    nickname:\"WhoIsHe\",",
+									"                    sex:'M'",
+									"                }",
+									"            })",
+									"    }",
+									"}, function (err, response) {",
+									"    console.log(response.json());",
+									"   pm.environment.set(\"created_client_id\", response.json().id);",
+									"});",
+									"",
+									""
 								]
 							}
 						}
@@ -4244,6 +4278,17 @@
 				},
 				{
 					"name": "getClients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
 					"request": {
 						"url": {
 							"raw": "{{API_URL}}/Category/{{created_category_id}}/clients?professional=vanessa.gay@gmail.com",
@@ -4282,24 +4327,31 @@
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
+									"pm.sendRequest({",
+									"    url: \"{{API_URL}}/Client/{{created_client_id}}?professional=vanessa.gay@gmail.com\",",
+									"    method: 'DELETE'",
+									"}, function (err, res) {",
+									"    pm.expect(res).to.have.property('code', 200);",
+									"    pm.expect(res).to.have.property('status', 'OK');",
+									"});",
+									"",
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"id is defined\"] = jsonData.id !== undefined;",
-									"//created_offering_id environment variable is stored as a string...",
-									"tests[\"id is \"+pm.environment.get(\"created_offering_id\")] = jsonData.id == pm.environment.get(\"created_offering_id\");",
-									"tests[\"name is \\\"beauty service\\\"\"] = jsonData.name === \"beauty service\";",
-									"tests[\"price is 10000\"] = jsonData.price === 10000;",
-									"tests[\"duration is 180\"] = jsonData.duration === 180;",
-									"tests[\"hidden is false\"] = jsonData.hidden === false;",
-									"tests[\"cltype is service\"] = jsonData.cltype === \"service\";"
-								]
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.environment.set(\"created_client_id\", 48);"
+									"//created_client_id environment variable is stored as a string...",
+									"tests[\"id is \"+pm.environment.get(\"created_client_id\")] = jsonData.id == pm.environment.get(\"created_client_id\");",
+									"tests[\"email is \\\"newclient@domain.com\\\"\"] = jsonData.email === \"newclient@domain.com\";",
+									"tests[\"customerDetails.firstName is \\\"John\\\"\"] = jsonData.customerDetails.firstName === \"John\";",
+									"tests[\"customerDetails.lastName is \\\"DOE\\\"\"] = jsonData.customerDetails.lastName === \"DOE\";",
+									"tests[\"customerDetails.nickname is \\\"WhoIsHe\\\"\"] = jsonData.customerDetails.nickname === \"WhoIsHe\";",
+									"tests[\"customerDetails.sex is \\\"M\\\"\"] = jsonData.customerDetails.sex === \"M\";",
+									"",
+									"tests[\"address.street is \\\"79 avenue de la jonchère\\\"\"] = jsonData.address.street === \"79 avenue de la jonchère\";",
+									"tests[\"address.optional is \\\"appart A113\\\"\"] = jsonData.address.optional === \"appart A113\";",
+									"tests[\"address.postalCode is \\\"77600\\\"\"] = jsonData.address.postalCode === \"77600\";",
+									"tests[\"address.city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.address.city === \"Chanteloup-en-Brie\";",
+									"tests[\"address.country is \\\"France\\\"\"] = jsonData.address.country === \"France\";",
+									"",
+									""
 								]
 							}
 						}
@@ -4624,13 +4676,19 @@
 									"",
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"id is defined\"] = jsonData.id !== undefined;",
-									"//created_offering_id environment variable is stored as a string...",
-									"tests[\"id is \"+pm.environment.get(\"created_offering_id\")] = jsonData.id == pm.environment.get(\"created_offering_id\");",
-									"tests[\"name is \\\"beauty service\\\"\"] = jsonData.name === \"beauty service\";",
-									"tests[\"price is 10000\"] = jsonData.price === 10000;",
-									"tests[\"duration is 180\"] = jsonData.duration === 180;",
-									"tests[\"hidden is false\"] = jsonData.hidden === false;",
-									"tests[\"cltype is service\"] = jsonData.cltype === \"service\";"
+									"//created_client_id environment variable is stored as a string...",
+									"tests[\"id is \"+pm.environment.get(\"created_client_id\")] = jsonData.id == pm.environment.get(\"created_client_id\");",
+									"tests[\"email is \\\"newclient@domain.com\\\"\"] = jsonData.email === \"newclient@domain.com\";",
+									"tests[\"customerDetails.firstName is \\\"John\\\"\"] = jsonData.customerDetails.firstName === \"John\";",
+									"tests[\"customerDetails.lastName is \\\"DOE\\\"\"] = jsonData.customerDetails.lastName === \"DOE\";",
+									"tests[\"customerDetails.nickname is \\\"WhoIsHe\\\"\"] = jsonData.customerDetails.nickname === \"WhoIsHe\";",
+									"tests[\"customerDetails.sex is \\\"M\\\"\"] = jsonData.customerDetails.sex === \"M\";",
+									"",
+									"tests[\"address.street is \\\"79 avenue de la jonchère\\\"\"] = jsonData.address.street === \"79 avenue de la jonchère\";",
+									"tests[\"address.optional is \\\"appart A113\\\"\"] = jsonData.address.optional === \"appart A113\";",
+									"tests[\"address.postalCode is \\\"77600\\\"\"] = jsonData.address.postalCode === \"77600\";",
+									"tests[\"address.city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.address.city === \"Chanteloup-en-Brie\";",
+									"tests[\"address.country is \\\"France\\\"\"] = jsonData.address.country === \"France\";"
 								]
 							}
 						},
@@ -4639,7 +4697,35 @@
 							"script": {
 								"type": "text/javascript",
 								"exec": [
-									"pm.environment.set(\"created_client_id\", 48);"
+									"pm.sendRequest({",
+									"    url: \"{{API_URL}}/Client?professional=vanessa.gay@gmail.com\",",
+									"    method: 'POST',",
+									"    header: 'Content-Type:application/json',",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify(",
+									"            {",
+									"                email:\"newclient@domain.com\",",
+									"                address:{",
+									"                    street:\"79 avenue de la jonchère\",",
+									"                    optional:\"appart A113\",",
+									"                    postalCode:\"77600\",",
+									"                    city:\"Chanteloup-en-Brie\"",
+									"                },",
+									"                customerDetails:{",
+									"                    firstName:\"John\",",
+									"                    lastName:\"DOE\",",
+									"                    nickname:\"WhoIsHe\",",
+									"                    sex:'M'",
+									"                }",
+									"            })",
+									"    }",
+									"}, function (err, response) {",
+									"    console.log(response.json());",
+									"   pm.environment.set(\"created_client_id\", response.json().id);",
+									"});",
+									"",
+									""
 								]
 							}
 						}
@@ -4675,6 +4761,17 @@
 				},
 				{
 					"name": "getClients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
 					"request": {
 						"url": {
 							"raw": "{{API_URL}}/CollectiveGroup/{{created_collectivegroup_id}}/clients?professional=vanessa.gay@gmail.com",
@@ -4713,24 +4810,31 @@
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
+									"pm.sendRequest({",
+									"    url: \"{{API_URL}}/Client/{{created_client_id}}?professional=vanessa.gay@gmail.com\",",
+									"    method: 'DELETE'",
+									"}, function (err, res) {",
+									"    pm.expect(res).to.have.property('code', 200);",
+									"    pm.expect(res).to.have.property('status', 'OK');",
+									"});",
+									"",
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"id is defined\"] = jsonData.id !== undefined;",
-									"//created_offering_id environment variable is stored as a string...",
-									"tests[\"id is \"+pm.environment.get(\"created_offering_id\")] = jsonData.id == pm.environment.get(\"created_offering_id\");",
-									"tests[\"name is \\\"beauty service\\\"\"] = jsonData.name === \"beauty service\";",
-									"tests[\"price is 10000\"] = jsonData.price === 10000;",
-									"tests[\"duration is 180\"] = jsonData.duration === 180;",
-									"tests[\"hidden is false\"] = jsonData.hidden === false;",
-									"tests[\"cltype is service\"] = jsonData.cltype === \"service\";"
-								]
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.environment.set(\"created_client_id\", 48);"
+									"//created_client_id environment variable is stored as a string...",
+									"tests[\"id is \"+pm.environment.get(\"created_client_id\")] = jsonData.id == pm.environment.get(\"created_client_id\");",
+									"tests[\"email is \\\"newclient@domain.com\\\"\"] = jsonData.email === \"newclient@domain.com\";",
+									"tests[\"customerDetails.firstName is \\\"John\\\"\"] = jsonData.customerDetails.firstName === \"John\";",
+									"tests[\"customerDetails.lastName is \\\"DOE\\\"\"] = jsonData.customerDetails.lastName === \"DOE\";",
+									"tests[\"customerDetails.nickname is \\\"WhoIsHe\\\"\"] = jsonData.customerDetails.nickname === \"WhoIsHe\";",
+									"tests[\"customerDetails.sex is \\\"M\\\"\"] = jsonData.customerDetails.sex === \"M\";",
+									"",
+									"tests[\"address.street is \\\"79 avenue de la jonchère\\\"\"] = jsonData.address.street === \"79 avenue de la jonchère\";",
+									"tests[\"address.optional is \\\"appart A113\\\"\"] = jsonData.address.optional === \"appart A113\";",
+									"tests[\"address.postalCode is \\\"77600\\\"\"] = jsonData.address.postalCode === \"77600\";",
+									"tests[\"address.city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.address.city === \"Chanteloup-en-Brie\";",
+									"tests[\"address.country is \\\"France\\\"\"] = jsonData.address.country === \"France\";",
+									"",
+									""
 								]
 							}
 						}
@@ -4805,6 +4909,11 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Client",
+			"description": "",
+			"item": []
 		}
 	]
 }
