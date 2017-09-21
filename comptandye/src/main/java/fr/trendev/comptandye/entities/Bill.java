@@ -36,7 +36,9 @@ import javax.persistence.TemporalType;
         visible = true)
 @JsonSubTypes({
     @JsonSubTypes.Type(value = ClientBill.class, name = "clientbill")
-    ,   @JsonSubTypes.Type(value = IndividualBill.class, name = "individualbill")})
+    ,   @JsonSubTypes.Type(value = IndividualBill.class, name = "individualbill")
+    ,  @JsonSubTypes.Type(value = CollectiveGroupBill.class,
+            name = "collectivegroupbill")})
 public abstract class Bill {
 
     /**
