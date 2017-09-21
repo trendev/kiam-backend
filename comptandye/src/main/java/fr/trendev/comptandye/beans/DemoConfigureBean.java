@@ -363,7 +363,12 @@ public class DemoConfigureBean implements Serializable {
         Service service = new Service("A service for Mrs LAMOME", 1500, 60,
                 vanessa);
 
+        Service service2 = new Service("A service for " + vanessa.
+                getCollectiveGroups().get(0).getGroupName(), 3000, 120,
+                vanessa);
+
         em.persist(service);
+        em.persist(service2);
 
         ClientBill bill = new ClientBill("#C1" + vanessa.getUuid(), new Date(),
                 1500, 0,
@@ -376,9 +381,11 @@ public class DemoConfigureBean implements Serializable {
 
         CollectiveGroupBill cgbill = new CollectiveGroupBill("#CG1" + vanessa.
                 getUuid(), new Date(),
-                1500, 0,
+                3000, 0,
                 new Date(), Arrays.asList("BAU", "Easy but long"), vanessa,
-                Arrays.asList(payment), Arrays.asList(service), vanessa.
+                Arrays.asList(new Payment(3000, "EUR", em.
+                        find(PaymentMode.class,
+                                "Virement"))), Arrays.asList(service2), vanessa.
                 getCollectiveGroups().get(0));
         cgbill.setCltype("collectivegroupbill");
 
