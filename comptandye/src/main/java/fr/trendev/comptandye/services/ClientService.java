@@ -151,12 +151,8 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
                         prettyPrintPK(pk));
         return super.delete(clientFacade, pk,
                 e -> {
-            /**
-             * If there is an existing relationship between Client and
-             * ClientBill, for compliance purposes, the relationship cannot be
-             * broken and the Client cannot be deleted.
-             */
             e.getProfessional().getClients().remove(e);
+            e.getProfessional().getBills().removeAll(e.getClientBills());
             e.getCollectiveGroups().forEach(cg -> cg.getClients().remove(e));
             e.getCategories().forEach(ct -> ct.getClients().remove(e));
         });
