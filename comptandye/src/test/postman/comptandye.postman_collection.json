@@ -4801,6 +4801,47 @@
 					"response": []
 				},
 				{
+					"name": "getCollectiveGroupBills",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{API_URL}}/CollectiveGroup/{{created_collectivegroup_id}}/collectiveGroupBills?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"CollectiveGroup",
+								"{{created_collectivegroup_id}}",
+								"collectiveGroupBills"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
 					"name": "removeClient",
 					"event": [
 						{
@@ -4913,7 +4954,503 @@
 		{
 			"name": "Client",
 			"description": "",
-			"item": []
+			"item": [
+				{
+					"name": "findAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Client table is not empty\"] = jsonData.length >= 1;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{API_URL}}/Client",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "count",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"tests[\"count >= 1\"] = responseBody >= 1;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{API_URL}}/Client/count",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 201\"] = responseCode.code === 201;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"pm.environment.set(\"created_client_id\", jsonData.id);",
+									"",
+									"tests[\"email is \\\"client@domain.com\\\"\"] = jsonData.email === \"client@domain.com\";",
+									"tests[\"socialNetworkAccounts.twitter is \\\"@client_facebook_account\\\"\"] = jsonData.socialNetworkAccounts.twitter === \"@client_facebook_account\";",
+									"",
+									"tests[\"address.street is \\\"Allée de Fontenelle\\\"\"] = jsonData.address.street === \"Allée de Fontenelle\";",
+									"tests[\"address.optional is \\\"Château de Fontenelle\\\"\"] = jsonData.address.optional === \"Château de Fontenelle\";",
+									"tests[\"address.postalCode is \\\"77600\\\"\"] = jsonData.address.postalCode === \"77600\";",
+									"tests[\"address.city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.address.city === \"Chanteloup-en-Brie\";",
+									"",
+									"tests[\"customerDetails.firstName is \\\"Paul\\\"\"] = jsonData.customerDetails.firstName === \"Paul\";",
+									"tests[\"customerDetails.lastName is \\\"Newman\\\"\"] = jsonData.customerDetails.lastName === \"Newman\";",
+									"tests[\"customerDetails.sex is \\\"M\\\"\"] = jsonData.customerDetails.sex === \"M\";",
+									"tests[\"customerDetails.comments.length is 2\"] = jsonData.customerDetails.comments.length === 2;",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{API_URL}}/Client?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Client"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\":\"client@domain.com\",\n\t\"address\":{\n\t\t\"street\":\"Allée de Fontenelle\",\n\t\t\"optional\":\"Château de Fontenelle\",\n\t\t\"postalCode\":\"77600\",\n\t\t\"city\":\"Chanteloup-en-Brie\"\n\t},\n\t\"socialNetworkAccounts\":{\n\t\t\"twitter\":\"@client_facebook_account\"\n\t},\n\t\"customerDetails\":{\n\t\t\"firstName\":\"Paul\",\n\t\t\"lastName\":\"Newman\",\n\t\t\"sex\":\"M\",\n\t\t\"comments\":[\n\t\t\t\"old american actor\",\n\t\t\t\"old shool boy\"\n\t\t]\n\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "find",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"//created_client_id environment variable is stored as a string...",
+									"tests[\"id is \"+pm.environment.get(\"created_client_id\")] = jsonData.id == pm.environment.get(\"created_client_id\");",
+									"",
+									"tests[\"email is \\\"client@domain.com\\\"\"] = jsonData.email === \"client@domain.com\";",
+									"tests[\"socialNetworkAccounts.twitter is \\\"@client_facebook_account\\\"\"] = jsonData.socialNetworkAccounts.twitter === \"@client_facebook_account\";",
+									"",
+									"tests[\"address.street is \\\"Allée de Fontenelle\\\"\"] = jsonData.address.street === \"Allée de Fontenelle\";",
+									"tests[\"address.optional is \\\"Château de Fontenelle\\\"\"] = jsonData.address.optional === \"Château de Fontenelle\";",
+									"tests[\"address.postalCode is \\\"77600\\\"\"] = jsonData.address.postalCode === \"77600\";",
+									"tests[\"address.city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.address.city === \"Chanteloup-en-Brie\";",
+									"",
+									"tests[\"customerDetails.firstName is \\\"Paul\\\"\"] = jsonData.customerDetails.firstName === \"Paul\";",
+									"tests[\"customerDetails.lastName is \\\"Newman\\\"\"] = jsonData.customerDetails.lastName === \"Newman\";",
+									"tests[\"customerDetails.sex is \\\"M\\\"\"] = jsonData.customerDetails.sex === \"M\";",
+									"tests[\"customerDetails.comments.length is 2\"] = jsonData.customerDetails.comments.length === 2;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{API_URL}}/Client/{{created_client_id}}?professional=vanessa.gay@gmail.com&refresh=true",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Client",
+								"{{created_client_id}}"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "refresh",
+									"value": "true",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"//created_client_id environment variable is stored as a string...",
+									"tests[\"id is \"+pm.environment.get(\"created_client_id\")] = jsonData.id == pm.environment.get(\"created_client_id\");",
+									"",
+									"tests[\"email is \\\"client_email02@domain.com\\\"\"] = jsonData.email === \"client_email02@domain.com\";",
+									"tests[\"socialNetworkAccounts.twitter is \\\"@client_facebook_account\\\"\"] = jsonData.socialNetworkAccounts.twitter === \"@client_facebook_account\";",
+									"tests[\"socialNetworkAccounts.facebook is \\\"https://facebook.com/client_account\\\"\"] = jsonData.socialNetworkAccounts.facebook === \"https://facebook.com/client_account\";",
+									"",
+									"tests[\"address.street is \\\"Allée de Fontenelle\\\"\"] = jsonData.address.street === \"Allée de Fontenelle\";",
+									"tests[\"address.optional is \\\"Château de Fontenelle\\\"\"] = jsonData.address.optional === \"Château de Fontenelle\";",
+									"tests[\"address.postalCode is \\\"77600\\\"\"] = jsonData.address.postalCode === \"77600\";",
+									"tests[\"address.city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.address.city === \"Chanteloup-en-Brie\";",
+									"",
+									"tests[\"customerDetails.firstName is \\\"Paul\\\"\"] = jsonData.customerDetails.firstName === \"Paul\";",
+									"tests[\"customerDetails.lastName is \\\"Newman\\\"\"] = jsonData.customerDetails.lastName === \"Newman\";",
+									"tests[\"customerDetails.sex is \\\"M\\\"\"] = jsonData.customerDetails.sex === \"M\";",
+									"tests[\"customerDetails.comments.length is 2\"] = jsonData.customerDetails.comments.length === 2;",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{API_URL}}/Client?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Client"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\":{{created_client_id}},\n\t\"email\":\"client_email02@domain.com\",\n\t\"address\":{\n\t\t\"street\":\"Allée de Fontenelle\",\n\t\t\"optional\":\"Château de Fontenelle\",\n\t\t\"postalCode\":\"77600\",\n\t\t\"city\":\"Chanteloup-en-Brie\"\n\t},\n\t\"socialNetworkAccounts\":{\n\t\t\"twitter\":\"@client_facebook_account\",\n\t\t\"facebook\":\"https://facebook.com/client_account\"\n\t},\n\t\"customerDetails\":{\n\t\t\"firstName\":\"Paul\",\n\t\t\"lastName\":\"Newman\",\n\t\t\"sex\":\"M\",\n\t\t\"comments\":[\n\t\t\t\"old american actor\",\n\t\t\t\"old shool boy\"\n\t\t]\n\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "getClientBills",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{API_URL}}/Client/{{created_client_id}}/clientBills?professional=vanessa.gay@gmail.com&refresh=true",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Client",
+								"{{created_client_id}}",
+								"clientBills"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "refresh",
+									"value": "true",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "getCollectiveGroups",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{API_URL}}/Client/{{created_client_id}}/collectiveGroups?professional=vanessa.gay@gmail.com&refresh=true",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Client",
+								"{{created_client_id}}",
+								"collectiveGroups"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "refresh",
+									"value": "true",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "getCategories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{API_URL}}/Client/{{created_client_id}}/categories?professional=vanessa.gay@gmail.com&refresh=true",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Client",
+								"{{created_client_id}}",
+								"categories"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "refresh",
+									"value": "true",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{API_URL}}/Client/{{created_client_id}}?professional=vanessa.gay@gmail.com&refresh=true",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Client",
+								"{{created_client_id}}"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "refresh",
+									"value": "true",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ClientBill",
+			"description": "",
+			"item": [
+				{
+					"name": "findAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Bill (DTYPE ClientBill) table is not empty\"] = jsonData.length >= 1;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{API_URL}}/ClientBill",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "count",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"tests[\"count >= 1\"] = responseBody >= 1;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{API_URL}}/ClientBill/count",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
