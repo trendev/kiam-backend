@@ -165,7 +165,7 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
     @Path("{id}/clientBills")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getClients(@PathParam("id") Long id,
+    public Response getClientBills(@PathParam("id") Long id,
             @QueryParam("professional") String professional) {
         ClientPK pk = new ClientPK(id, professional);
         LOG.log(Level.INFO,
