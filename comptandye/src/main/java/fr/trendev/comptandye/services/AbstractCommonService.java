@@ -313,7 +313,20 @@ public abstract class AbstractCommonService<E, P> {
                                             status(Response.Status.BAD_REQUEST).
                                             entity(Json.createObjectBuilder().
                                                     add("error",
-                                                            "No existing association").
+                                                            "No existing association between "
+                                                            + entityClass.
+                                                                    getSimpleName()
+                                                            + " "
+                                                            + entityFacade.
+                                                                    prettyPrintPK(
+                                                                            entityPk)
+                                                            + " and "
+                                                            + associationEntityClass.
+                                                                    getSimpleName()
+                                                            + " "
+                                                            + associationFacade.
+                                                                    prettyPrintPK(
+                                                                            associationPk)).
                                                     build()).build();
                                 })
                                 .orElse(Response.status(
