@@ -121,7 +121,7 @@ public class DemoConfigureBean implements Serializable {
          */
         Professional vanessa = new Professional("vanessa.gay@gmail.com",
                 "EUrVrX4nfmYYFxpMyRX93OlkJxNZv9mkMGfirZKbhWI=", "Vaness",
-                UUIDGenerator.generate("PRO-", true));
+                "PRO-825abefc0bb54b12808032ef6695655b");
         Calendar cal = Calendar.getInstance();
         cal.clear();
         cal.set(1983, 9, 25);
@@ -373,7 +373,7 @@ public class DemoConfigureBean implements Serializable {
         em.persist(service2);
 
         ClientBill bill = new ClientBill("C-" + vanessa.getUuid() + "-1",
-                new Date(),
+                new Date(1506070013419l),
                 1500, 0,
                 new Date(), Arrays.asList("Has left her first son"), vanessa,
                 Arrays.asList(payment), Arrays.asList(service), client1);
