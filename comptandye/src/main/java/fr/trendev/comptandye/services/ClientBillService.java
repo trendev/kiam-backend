@@ -10,13 +10,16 @@ import fr.trendev.comptandye.entities.ClientBill;
 import fr.trendev.comptandye.sessions.ClientBillFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.sessions.ServiceFacade;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -63,19 +66,21 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
         return super.count(clientBillFacade);
     }
 
-//    @Path("{id}")
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response find(@PathParam("id") Long id,
-//            @QueryParam("professional") String professional,
-//            @QueryParam("refresh") boolean refresh) {
-//        BillPK pk = new BillPK(id, professional);
-//        LOG.log(Level.INFO, "REST request to get ClientBill : {0}", clientBillFacade.
-//                prettyPrintPK(
-//                        pk));
-//        return super.find(clientBillFacade, pk, refresh);
-//    }
-//
+    @Path("{reference}/{deliverydate}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response find(@PathParam("reference") String reference,
+            @PathParam("deliverydate") long deliverydate,
+            @QueryParam("professional") String professional,
+            @QueryParam("refresh") boolean refresh) {
+        BillPK pk = new BillPK(reference, new Date(deliverydate), professional);
+        LOG.log(Level.INFO, "REST request to get ClientBill : {0}",
+                clientBillFacade.
+                        prettyPrintPK(
+                                pk));
+        return super.find(clientBillFacade, pk, refresh);
+    }
+
 //    @POST
 //    @Consumes(MediaType.APPLICATION_JSON)
 //    @Produces(MediaType.APPLICATION_JSON)
