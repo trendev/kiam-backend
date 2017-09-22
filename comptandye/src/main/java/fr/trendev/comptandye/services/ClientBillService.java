@@ -7,14 +7,17 @@ package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.entities.BillPK;
 import fr.trendev.comptandye.entities.ClientBill;
+import fr.trendev.comptandye.entities.Payment;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.ClientBillFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.sessions.ServiceFacade;
 import java.util.Date;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -120,134 +123,147 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
              * Checks the payments.
              *
              */
+            //Payments are mandatory
             if (e.getPayments().isEmpty()) {
                 throw new WebServiceException(
                         "No payment provided with the Bill");
             }
-        });
 
+            //Currency should be unique
+            Map<String, Long> currencies = e.getPayments().stream().collect(
+                    Collectors.groupingBy(Payment::getCurrency, Collectors.
+                            counting()));
+
+            if (currencies.size() != 1) {
+                String errmgs = "There are multiple currencies in the payments and you should have only one currency: "
+                        + currencies;
+                throw new WebServiceException(errmgs);
+            }
+
+            //Total amount should be equal to the sum of the amount's payment
+        });
     }
-//
-//    @PUT
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response put(@Context SecurityContext sec, ClientBill entity,
-//            @QueryParam("professional") String professional) {
-//
-//        BillPK pk = new BillPK(entity.getId(), this.getProEmail(sec,
-//                professional));
-//
-//        LOG.log(Level.INFO, "Updating ClientBill {0}", clientBillFacade.
-//                prettyPrintPK(pk));
-//        return super.put(entity, clientBillFacade, pk, e -> {
-//            e.setName(entity.getName());
-//            e.setPrice(entity.getPrice());
-//            e.setDuration(entity.getDuration());
-//            e.setHidden(entity.isHidden());
-//            e.setBusinesses(entity.getBusinesses());
-//        });
-//    }
-//
-//    @Path("{id}")
-//    @DELETE
-//    public Response delete(@Context SecurityContext sec,
-//            @PathParam("id") Long id,
-//            @QueryParam("professional") String professional) {
-//
-//        BillPK pk = new BillPK(id, this.getProEmail(sec,
-//                professional));
-//
-//        LOG.log(Level.INFO, "Deleting ClientBill {0}", clientBillFacade.
-//                prettyPrintPK(pk));
-//        return super.delete(clientBillFacade, pk,
-//                e -> e.getProfessional().getOfferings().remove(e));
-//    }
-//
-//    @Path("{packid}/addService/offering/{offeringid}")
-//    @PUT
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response addService(@Context SecurityContext sec,
-//            @PathParam("packid") Long packid,
-//            @PathParam("offeringid") Long offeringid,
-//            @QueryParam("professional") String professional) {
-//
-//        BillPK packPK = new BillPK(packid, this.getProEmail(sec,
-//                professional));
-//
-//        BillPK offeringPK = new BillPK(offeringid, this.getProEmail(sec,
-//                professional));
-//
-//        return super.<Service, BillPK>manageAssociation(
-//                AssociationManagementEnum.INSERT,
-//                clientBillFacade, packPK,
-//                serviceFacade,
-//                offeringPK, Service.class,
-//                (p, o) -> p.getOfferings().add(o));
-//    }
-//
-//    @Path("{packid}/removeService/offering/{offeringid}")
-//    @PUT
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response removeService(@Context SecurityContext sec,
-//            @PathParam("packid") Long packid,
-//            @PathParam("offeringid") Long offeringid,
-//            @QueryParam("professional") String professional) {
-//
-//        BillPK packPK = new BillPK(packid, this.getProEmail(sec,
-//                professional));
-//
-//        BillPK offeringPK = new BillPK(offeringid, this.getProEmail(sec,
-//                professional));
-//
-//        return super.<Service, BillPK>manageAssociation(
-//                AssociationManagementEnum.REMOVE,
-//                clientBillFacade, packPK,
-//                serviceFacade,
-//                offeringPK, Service.class,
-//                (p, o) -> p.getOfferings().remove(o));
-//    }
-//
-//    @Path("{packid}/addClientBill/offering/{offeringid}")
-//    @PUT
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response addClientBill(@Context SecurityContext sec,
-//            @PathParam("packid") Long packid,
-//            @PathParam("offeringid") Long offeringid,
-//            @QueryParam("professional") String professional) {
-//
-//        BillPK packPK = new BillPK(packid, this.getProEmail(sec,
-//                professional));
-//
-//        BillPK offeringPK = new BillPK(offeringid, this.getProEmail(sec,
-//                professional));
-//
-//        return super.<ClientBill, BillPK>manageAssociation(
-//                AssociationManagementEnum.INSERT,
-//                clientBillFacade, packPK,
-//                clientBillFacade,
-//                offeringPK, ClientBill.class,
-//                (p, o) -> p.getOfferings().add(o));
-//    }
-//
-//    @Path("{packid}/removeClientBill/offering/{offeringid}")
-//    @PUT
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response removeClientBill(@Context SecurityContext sec,
-//            @PathParam("packid") Long packid,
-//            @PathParam("offeringid") Long offeringid,
-//            @QueryParam("professional") String professional) {
-//
-//        BillPK packPK = new BillPK(packid, this.getProEmail(sec,
-//                professional));
-//
-//        BillPK offeringPK = new BillPK(offeringid, this.getProEmail(sec,
-//                professional));
-//
-//        return super.<ClientBill, BillPK>manageAssociation(
-//                AssociationManagementEnum.REMOVE,
-//                clientBillFacade, packPK,
-//                clientBillFacade,
-//                offeringPK, ClientBill.class,
-//                (p, o) -> p.getOfferings().remove(o));
-//    }
+    //
+    //    @PUT
+    //    @Consumes(MediaType.APPLICATION_JSON)
+    //    @Produces(MediaType.APPLICATION_JSON)
+    //    public Response put(@Context SecurityContext sec, ClientBill entity,
+    //            @QueryParam("professional") String professional) {
+    //
+    //        BillPK pk = new BillPK(entity.getId(), this.getProEmail(sec,
+    //                professional));
+    //
+    //        LOG.log(Level.INFO, "Updating ClientBill {0}", clientBillFacade.
+    //                prettyPrintPK(pk));
+    //        return super.put(entity, clientBillFacade, pk, e -> {
+    //            e.setName(entity.getName());
+    //            e.setPrice(entity.getPrice());
+    //            e.setDuration(entity.getDuration());
+    //            e.setHidden(entity.isHidden());
+    //            e.setBusinesses(entity.getBusinesses());
+    //        });
+    //    }
+    //
+    //    @Path("{id}")
+    //    @DELETE
+    //    public Response delete(@Context SecurityContext sec,
+    //            @PathParam("id") Long id,
+    //            @QueryParam("professional") String professional) {
+    //
+    //        BillPK pk = new BillPK(id, this.getProEmail(sec,
+    //                professional));
+    //
+    //        LOG.log(Level.INFO, "Deleting ClientBill {0}", clientBillFacade.
+    //                prettyPrintPK(pk));
+    //        return super.delete(clientBillFacade, pk,
+    //                e -> e.getProfessional().getOfferings().remove(e));
+    //    }
+    //
+    //    @Path("{packid}/addService/offering/{offeringid}")
+    //    @PUT
+    //    @Produces(MediaType.APPLICATION_JSON)
+    //    public Response addService(@Context SecurityContext sec,
+    //            @PathParam("packid") Long packid,
+    //            @PathParam("offeringid") Long offeringid,
+    //            @QueryParam("professional") String professional) {
+    //
+    //        BillPK packPK = new BillPK(packid, this.getProEmail(sec,
+    //                professional));
+    //
+    //        BillPK offeringPK = new BillPK(offeringid, this.getProEmail(sec,
+    //                professional));
+    //
+    //        return super.<Service, BillPK>manageAssociation(
+    //                AssociationManagementEnum.INSERT,
+    //                clientBillFacade, packPK,
+    //                serviceFacade,
+    //                offeringPK, Service.class,
+    //                (p, o) -> p.getOfferings().add(o));
+    //    }
+    //
+    //    @Path("{packid}/removeService/offering/{offeringid}")
+    //    @PUT
+    //    @Produces(MediaType.APPLICATION_JSON)
+    //    public Response removeService(@Context SecurityContext sec,
+    //            @PathParam("packid") Long packid,
+    //            @PathParam("offeringid") Long offeringid,
+    //            @QueryParam("professional") String professional) {
+    //
+    //        BillPK packPK = new BillPK(packid, this.getProEmail(sec,
+    //                professional));
+    //
+    //        BillPK offeringPK = new BillPK(offeringid, this.getProEmail(sec,
+    //                professional));
+    //
+    //        return super.<Service, BillPK>manageAssociation(
+    //                AssociationManagementEnum.REMOVE,
+    //                clientBillFacade, packPK,
+    //                serviceFacade,
+    //                offeringPK, Service.class,
+    //                (p, o) -> p.getOfferings().remove(o));
+    //    }
+    //
+    //    @Path("{packid}/addClientBill/offering/{offeringid}")
+    //    @PUT
+    //    @Produces(MediaType.APPLICATION_JSON)
+    //    public Response addClientBill(@Context SecurityContext sec,
+    //            @PathParam("packid") Long packid,
+    //            @PathParam("offeringid") Long offeringid,
+    //            @QueryParam("professional") String professional) {
+    //
+    //        BillPK packPK = new BillPK(packid, this.getProEmail(sec,
+    //                professional));
+    //
+    //        BillPK offeringPK = new BillPK(offeringid, this.getProEmail(sec,
+    //                professional));
+    //
+    //        return super.<ClientBill, BillPK>manageAssociation(
+    //                AssociationManagementEnum.INSERT,
+    //                clientBillFacade, packPK,
+    //                clientBillFacade,
+    //                offeringPK, ClientBill.class,
+    //                (p, o) -> p.getOfferings().add(o));
+    //    }
+    //
+    //    @Path("{packid}/removeClientBill/offering/{offeringid}")
+    //    @PUT
+    //    @Produces(MediaType.APPLICATION_JSON)
+    //    public Response removeClientBill(@Context SecurityContext sec,
+    //            @PathParam("packid") Long packid,
+    //            @PathParam("offeringid") Long offeringid,
+    //            @QueryParam("professional") String professional) {
+    //
+    //        BillPK packPK = new BillPK(packid, this.getProEmail(sec,
+    //                professional));
+    //
+    //        BillPK offeringPK = new BillPK(offeringid, this.getProEmail(sec,
+    //                professional));
+    //
+    //        return super.<ClientBill, BillPK>manageAssociation(
+    //                AssociationManagementEnum.REMOVE,
+    //                clientBillFacade, packPK,
+    //                clientBillFacade,
+    //                offeringPK, ClientBill.class,
+    //                (p, o) -> p.getOfferings().remove(o));
+    //    }
 }
