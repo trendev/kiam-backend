@@ -307,7 +307,8 @@ public class DemoConfigureBean implements Serializable {
             specialPack.getBusinesses().add(esthetique);
             vanessa.getOfferings().add(specialPack);
 
-            IndividualBill bill1 = new IndividualBill("I1" + vanessa.getUuid(),
+            IndividualBill bill1 = new IndividualBill("I-" + vanessa.getUuid()
+                    + "-1",
                     new Date(),
                     5000, 0,
                     new Date(),
@@ -316,7 +317,8 @@ public class DemoConfigureBean implements Serializable {
                     sylvioc);
             bill1.setCltype("individualbill");
 
-            IndividualBill bill2 = new IndividualBill("I2" + vanessa.getUuid(),
+            IndividualBill bill2 = new IndividualBill("I-" + vanessa.getUuid()
+                    + "-2",
                     new Date(),
                     8000, 0,
                     new Date(),
@@ -370,7 +372,8 @@ public class DemoConfigureBean implements Serializable {
         em.persist(service);
         em.persist(service2);
 
-        ClientBill bill = new ClientBill("#C1" + vanessa.getUuid(), new Date(),
+        ClientBill bill = new ClientBill("C-" + vanessa.getUuid() + "-1",
+                new Date(),
                 1500, 0,
                 new Date(), Arrays.asList("Has left her first son"), vanessa,
                 Arrays.asList(payment), Arrays.asList(service), client1);
@@ -379,8 +382,8 @@ public class DemoConfigureBean implements Serializable {
         vanessa.getBills().add(bill);
         client1.getClientBills().add(bill);
 
-        CollectiveGroupBill cgbill = new CollectiveGroupBill("#CG1" + vanessa.
-                getUuid(), new Date(),
+        CollectiveGroupBill cgbill = new CollectiveGroupBill("CG-" + vanessa.
+                getUuid() + "-1", new Date(),
                 3000, 0,
                 new Date(), Arrays.asList("BAU", "Easy but long"), vanessa,
                 Arrays.asList(new Payment(3000, "EUR", em.
