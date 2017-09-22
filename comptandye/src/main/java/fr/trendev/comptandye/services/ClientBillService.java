@@ -7,14 +7,23 @@ package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.entities.BillPK;
 import fr.trendev.comptandye.entities.ClientBill;
+import fr.trendev.comptandye.entities.Offering;
+import fr.trendev.comptandye.entities.OfferingPK;
+import fr.trendev.comptandye.entities.Pack;
 import fr.trendev.comptandye.entities.Payment;
 import fr.trendev.comptandye.entities.Professional;
+import fr.trendev.comptandye.entities.Service;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.ClientBillFacade;
 import fr.trendev.comptandye.sessions.ClientFacade;
+import fr.trendev.comptandye.sessions.PackFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
+import fr.trendev.comptandye.sessions.ServiceFacade;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -50,6 +59,12 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
 
     @Inject
     ClientFacade clientFacade;
+
+    @Inject
+    ServiceFacade serviceFacade;
+
+    @Inject
+    PackFacade packFacade;
 
     private static final Logger LOG = Logger.getLogger(ClientBillService.class.
             getName());
@@ -152,8 +167,37 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
                 e.setAmount(amount);
             }
 
-            //TODO : check the offering
+            List<Offering> offerings = e.getOfferings().stream()
+                    .map(o -> {
+                        return Optional.ofNullable(this.getOfferingFacade(o).
+                                find(new OfferingPK(
+                                        o.getId(),
+                                        e.getProfessional().getEmail())))
+                                .map(Function.identity())
+                                .orElseThrow(() ->
+                                        new WebApplicationException(
+                                                o.getClass().getSimpleName()
+                                                + " " + o.getId()
+                                                + " does not exist"));
+                    }).collect(Collectors.toList());
+
+            e.setOfferings(offerings);
         });
+    }
+
+    //TODO : use a design pattern
+    private AbstractFacade<? extends Offering, OfferingPK> getOfferingFacade(
+            Offering o) {
+        if (o instanceof Service) {
+            return serviceFacade;
+        } else {
+            if (o instanceof Pack) {
+                return packFacade;
+            } else {
+                throw new IllegalStateException(
+                        "Unsupported Offering type : should be Service or Pack");
+            }
+        }
     }
     //
     //    @PUT
