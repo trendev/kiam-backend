@@ -21,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.json.Json;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
@@ -57,9 +58,7 @@ public abstract class AbstractCommonService<E, P> {
                     "Exception occurs providing " + entityClass.getSimpleName()
                     + " list");
             getLogger().log(Level.WARNING, errmsg, ex);
-            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    Json.createObjectBuilder().add("error", errmsg).build()).
-                    build();
+            throw new WebApplicationException(errmsg, ex);
         }
     }
 
@@ -78,9 +77,7 @@ public abstract class AbstractCommonService<E, P> {
                     "Exception occurs providing " + entityClass.getSimpleName()
                     + " count");
             getLogger().log(Level.WARNING, errmsg, ex);
-            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    Json.createObjectBuilder().add("error", errmsg).build()).
-                    build();
+            throw new WebApplicationException(errmsg, ex);
         }
     }
 
@@ -108,9 +105,7 @@ public abstract class AbstractCommonService<E, P> {
                     + " "
                     + facade.prettyPrintPK(pk));
             getLogger().log(Level.WARNING, errmsg, ex);
-            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    Json.createObjectBuilder().add("error", errmsg).build()).
-                    build();
+            throw new WebApplicationException(errmsg, ex);
         }
     }
 
@@ -135,9 +130,7 @@ public abstract class AbstractCommonService<E, P> {
                     + " "
                     + facade.prettyPrintPK(pk));
             getLogger().log(Level.WARNING, errmsg, ex);
-            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    Json.createObjectBuilder().add("error", errmsg).build()).
-                    build();
+            throw new WebApplicationException(errmsg, ex);
         }
     }
 
@@ -166,9 +159,7 @@ public abstract class AbstractCommonService<E, P> {
                     + " "
                     + jsonString);
             getLogger().log(Level.WARNING, errmsg, ex);
-            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    Json.createObjectBuilder().add("error", errmsg).build()).
-                    build();
+            throw new WebApplicationException(errmsg, ex);
         }
     }
 
@@ -206,10 +197,8 @@ public abstract class AbstractCommonService<E, P> {
                     "Exception occurs in subroutine post() creating "
                     + entityClass.getSimpleName() + " "
                     + jsonString);
-            getLogger().log(Level.SEVERE, errmsg, ex);
-            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    Json.createObjectBuilder().add("error", errmsg).build()).
-                    build();
+            getLogger().log(Level.WARNING, errmsg, ex);
+            throw new WebApplicationException(errmsg, ex);
         }
 
     }
@@ -240,9 +229,7 @@ public abstract class AbstractCommonService<E, P> {
                     + " "
                     + facade.prettyPrintPK(pk));
             getLogger().log(Level.WARNING, errmsg, ex);
-            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    Json.createObjectBuilder().add("error", errmsg).build()).
-                    build();
+            throw new WebApplicationException(errmsg, ex);
         }
     }
 
@@ -272,9 +259,7 @@ public abstract class AbstractCommonService<E, P> {
                     + " "
                     + facade.prettyPrintPK(pk));
             getLogger().log(Level.WARNING, errmsg, ex);
-            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    Json.createObjectBuilder().add("error", errmsg).build()).
-                    build();
+            throw new WebApplicationException(errmsg, ex);
         }
     }
 
@@ -375,9 +360,7 @@ public abstract class AbstractCommonService<E, P> {
                     + associationFacade.prettyPrintPK(
                             associationPk));
             getLogger().log(Level.WARNING, errmsg, ex);
-            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    Json.createObjectBuilder().add("error", errmsg).build()).
-                    build();
+            throw new WebApplicationException(errmsg, ex);
         }
     }
 
