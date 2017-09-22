@@ -7,6 +7,8 @@ package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.entities.BillPK;
 import fr.trendev.comptandye.entities.ClientBill;
+import fr.trendev.comptandye.entities.Professional;
+import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.ClientBillFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.sessions.ServiceFacade;
@@ -15,13 +17,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+import javax.xml.ws.WebServiceException;
 
 /**
  *
@@ -81,27 +88,45 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
         return super.find(clientBillFacade, pk, refresh);
     }
 
-//    @POST
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response post(@Context SecurityContext sec, ClientBill entity,
-//            @QueryParam("professional") String professional) {
-//
-//        String email = this.getProEmail(sec, professional);
-//
-//        return super.<Professional, String>post(entity, email,
-//                AbstractFacade::prettyPrintPK,
-//                Professional.class,
-//                clientBillFacade, professionalFacade, ClientBill::setProfessional,
-//                Professional::getOfferings, e -> {
-//            if (!e.getOfferings().isEmpty()) {
-//                LOG.log(Level.WARNING,
-//                        "Services and ClientBills provided during the ClientBill creation will be ignored !");
-//                e.setOfferings(Collections.emptyList());
-//            }
-//        });
-//
-//    }
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response post(@Context SecurityContext sec, ClientBill entity,
+            @QueryParam("professional") String professional) {
+
+        String email = this.getProEmail(sec, professional);
+
+        return super.<Professional, String>post(entity, email,
+                AbstractFacade::prettyPrintPK,
+                Professional.class,
+                clientBillFacade, professionalFacade,
+                ClientBill::setProfessional,
+                Professional::getBills, e -> {
+            /**
+             * Sets the reference. Keep in mind that e is already added to the
+             * Professional Bills list!
+             */
+            e.setReference("C-" + e.getProfessional().getUuid() + "-" + e.
+                    getProfessional().getBills().stream().filter(
+                            b -> b instanceof ClientBill).count());
+            /**
+             * Sets the deliveryDate. Uses the current date if no provided date.
+             */
+            if (e.getDeliveryDate() == null) {
+                e.setDeliveryDate(new Date());
+            }
+
+            /**
+             * Checks the payments.
+             *
+             */
+            if (e.getPayments().isEmpty()) {
+                throw new WebServiceException(
+                        "No payment provided with the Bill");
+            }
+        });
+
+    }
 //
 //    @PUT
 //    @Consumes(MediaType.APPLICATION_JSON)
