@@ -11,8 +11,8 @@ import fr.trendev.comptandye.entities.Payment;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.ClientBillFacade;
+import fr.trendev.comptandye.sessions.ClientFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
-import fr.trendev.comptandye.sessions.ServiceFacade;
 import java.util.Date;
 import java.util.Map;
 import java.util.logging.Level;
@@ -49,7 +49,7 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
     ProfessionalFacade professionalFacade;
 
     @Inject
-    ServiceFacade serviceFacade;
+    ClientFacade clientFacade;
 
     private static final Logger LOG = Logger.getLogger(ClientBillService.class.
             getName());
@@ -151,6 +151,8 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
                         new Object[]{e.getAmount(), amount});
                 e.setAmount(amount);
             }
+
+            //TODO : check the offering
         });
     }
     //
