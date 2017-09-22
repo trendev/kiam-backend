@@ -362,12 +362,13 @@ public class DemoConfigureBean implements Serializable {
         Payment payment = new Payment(1500, "EUR", em.find(PaymentMode.class,
                 "Virement"));
 
-        Service service = new Service("A service for Mrs LAMOME", 1500, 60,
+        Service service = new Service("Classic Haircut", 1500, 60,
                 vanessa);
-
+        service.setCltype("service");
         Service service2 = new Service("A service for " + vanessa.
                 getCollectiveGroups().get(0).getGroupName(), 3000, 120,
                 vanessa);
+        service2.setCltype("service");
 
         em.persist(service);
         em.persist(service2);
