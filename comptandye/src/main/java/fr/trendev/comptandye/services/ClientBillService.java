@@ -27,6 +27,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -112,20 +113,21 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
             e.setReference("C-" + e.getProfessional().getUuid() + "-" + e.
                     getProfessional().getBills().stream().filter(
                             b -> b instanceof ClientBill).count());
-            /**
-             * Sets the deliveryDate. Uses the current date if no provided date.
-             */
+
             if (e.getDeliveryDate() == null) {
-                e.setDeliveryDate(new Date());
+                throw new WebApplicationException(
+                        "A delivery date must be provided");
             }
 
-            /**
-             * Checks the payments.
-             *
-             */
-            //Payments are mandatory
+            if (e.getPaymentDate() != null && e.getPaymentDate().before(e.
+                    getDeliveryDate())) {
+                throw new WebApplicationException("Payment date " + e.
+                        getPaymentDate() + " cannot be before Delivery Date "
+                        + e.getDeliveryDate());
+            }
+
             if (e.getPayments().isEmpty()) {
-                throw new WebServiceException(
+                throw new WebApplicationException(
                         "No payment provided with the Bill");
             }
 
@@ -141,6 +143,14 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
             }
 
             //Total amount should be equal to the sum of the amount's payment
+            int amount = e.getPayments().stream().mapToInt(Payment::getAmount).
+                    sum();
+            if (amount != e.getAmount()) {
+                LOG.log(Level.WARNING,
+                        "Total amount is {0} but the total amount computed is {1}. Amount value is now {1}",
+                        new Object[]{e.getAmount(), amount});
+                e.setAmount(amount);
+            }
         });
     }
     //
