@@ -5449,6 +5449,118 @@
 						"description": ""
 					},
 					"response": []
+				},
+				{
+					"name": "find",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"/*",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"//created_collectivegroup_id environment variable is stored as a string...",
+									"tests[\"id is \"+pm.environment.get(\"created_collectivegroup_id\")] = jsonData.id == pm.environment.get(\"created_collectivegroup_id\");",
+									"tests[\"groupName is \\\"Maison de retraite de Chanteloup-en-Brie\\\"\"] = jsonData.groupName === \"Maison de retraite de Chanteloup-en-Brie\";",
+									"tests[\"phone is \\\"0123456789\\\"\"] = jsonData.phone === \"0123456789\";",
+									"tests[\"Address is defined\"] = jsonData.address !== undefined;",
+									"tests[\"address.id is \"+pm.environment.get(\"created_address_id\")] = jsonData.address.id == pm.environment.get(\"created_address_id\");",
+									"tests[\"address.street is \\\"Allée de Fontenelle\\\"\"] = jsonData.address.street === \"Allée de Fontenelle\";",
+									"tests[\"address.optional is \\\"Château de Fontenelle\\\"\"] = jsonData.address.optional === \"Château de Fontenelle\";",
+									"tests[\"address.postalCode is \\\"77600\\\"\"] = jsonData.address.postalCode === \"77600\";",
+									"tests[\"address.city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.address.city === \"Chanteloup-en-Brie\";",
+									"*/"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{API_URL}}/ClientBill/C-PRO-825abefc0bb54b12808032ef6695655b-1/1506070013419?professional=vanessa.gay@gmail.com&refresh=true",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"ClientBill",
+								"C-PRO-825abefc0bb54b12808032ef6695655b-1",
+								"1506070013419"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "refresh",
+									"value": "true",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 201\"] = responseCode.code === 201;",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": {
+							"raw": "{{API_URL}}/ClientBill?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"ClientBill"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cltype\":\"clientbill\",\n\t\"deliveryDate\":1506085212900,\n\t\"paymentDate\":1506085213900,\n\t\"amount\":5000,\n\t\"discount\":0,\n\t\"comments\":[\n\t\t\"The first one created by a rest api request\"\n\t],\n\t\"payments\":[\n\t\t{\n\t\t\t\"amount\":4000,\n\t\t\t\"paymentMode\": {\n                    \"name\": \"CB\"\n            }\n\t\t},\n\t\t{\n\t\t\t\"amount\":1000,\n\t\t\t\"paymentMode\": {\n                    \"name\": \"Espèces\" \n            }\n\t\t}\n\t],\n\t\"offerings\":[\n\t\t{\n        \"id\": 46,\n        \"cltype\": \"service\",\n        \"name\": \"Classic Haircut\",\n        \"price\": 1500,\n        \"duration\": 60,\n        \"hidden\": false\n    \t}\n\t]\n}"
+						},
+						"description": ""
+					},
+					"response": []
 				}
 			]
 		}
