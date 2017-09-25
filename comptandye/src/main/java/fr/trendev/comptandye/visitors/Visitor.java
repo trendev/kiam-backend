@@ -33,51 +33,51 @@ import fr.trendev.comptandye.entities.UserGroup;
  *
  * @author jsie
  */
-public interface Visitor {
+public interface Visitor<T> {
 
-    public void visit(Address address);
+    public T visit(Address address);
 
-    public void visit(Administrator administrator);
+    public T visit(Administrator administrator);
 
-    public void visit(Bill bill);
+    public T visit(Bill bill);
 
-    public void visit(Business business);
+    public T visit(Business business);
 
-    public void visit(Category category);
+    public T visit(Category category);
 
-    public void visit(Client client);
+    public T visit(Client client);
 
-    public void visit(ClientBill clientBill);
+    public T visit(ClientBill clientBill);
 
-    public void visit(CollectiveGroup collectiveGroup);
+    public T visit(CollectiveGroup collectiveGroup);
 
-    public void visit(CollectiveGroupBill collectiveGroupBill);
+    public T visit(CollectiveGroupBill collectiveGroupBill);
 
-    public void visit(Customer customer);
+    public T visit(Customer customer);
 
-    public void visit(CustomerDetails customerDetails);
+    public T visit(CustomerDetails customerDetails);
 
-    public void visit(Expense expense);
+    public T visit(Expense expense);
 
-    public void visit(Individual individual);
+    public T visit(Individual individual);
 
-    public void visit(IndividualBill individualBill);
+    public T visit(IndividualBill individualBill);
 
-    public void visit(Offering offering);
+    public T visit(Offering offering);
 
-    public void visit(Pack pack);
+    public T visit(Pack pack);
 
-    public void visit(Payment payment);
+    public T visit(Payment payment);
 
-    public void visit(PaymentMode paymentMode);
+    public T visit(PaymentMode paymentMode);
 
-    public void visit(Professional professional);
+    public T visit(Professional professional);
 
-    public void visit(Service service);
+    public T visit(Service service);
 
-    public void visit(SocialNetworkAccounts socialNetworkAccounts);
+    public T visit(SocialNetworkAccounts socialNetworkAccounts);
 
-    public void visit(UserAccount userAccount);
+    public T visit(UserAccount userAccount);
 
-    public void visit(UserGroup userGroup);
+    public T visit(UserGroup userGroup);
 }

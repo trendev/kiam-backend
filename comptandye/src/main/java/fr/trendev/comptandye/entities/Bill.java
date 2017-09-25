@@ -196,8 +196,8 @@ public abstract class Bill {
         this.offerings = offerings;
     }
 
-    public void accept(Visitor v) {
-        v.visit(this);
+    public <T> T accept(Visitor<T> v) {
+        return v.visit(this);
     }
 
 }

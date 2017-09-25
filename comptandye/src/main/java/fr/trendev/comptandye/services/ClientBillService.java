@@ -9,16 +9,15 @@ import fr.trendev.comptandye.entities.BillPK;
 import fr.trendev.comptandye.entities.ClientBill;
 import fr.trendev.comptandye.entities.Offering;
 import fr.trendev.comptandye.entities.OfferingPK;
-import fr.trendev.comptandye.entities.Pack;
 import fr.trendev.comptandye.entities.Payment;
 import fr.trendev.comptandye.entities.Professional;
-import fr.trendev.comptandye.entities.Service;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.ClientBillFacade;
 import fr.trendev.comptandye.sessions.ClientFacade;
 import fr.trendev.comptandye.sessions.PackFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.sessions.ServiceFacade;
+import fr.trendev.comptandye.visitors.ProvideOfferingFacadeVisitor;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +64,9 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
 
     @Inject
     PackFacade packFacade;
+
+    @Inject
+    ProvideOfferingFacadeVisitor v;
 
     private static final Logger LOG = Logger.getLogger(ClientBillService.class.
             getName());
@@ -185,19 +187,9 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
         });
     }
 
-    //TODO : use a design pattern
     private AbstractFacade<? extends Offering, OfferingPK> getOfferingFacade(
             Offering o) {
-        if (o instanceof Service) {
-            return serviceFacade;
-        } else {
-            if (o instanceof Pack) {
-                return packFacade;
-            } else {
-                throw new IllegalStateException(
-                        "Unsupported Offering type : should be Service or Pack");
-            }
-        }
+        return Optional.of(o.accept(v)).get();
     }
     //
     //    @PUT

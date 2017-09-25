@@ -16,8 +16,8 @@
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
             import fr.trendev.comptandye.visitors.Visitor;</jpa:snp>
-        <jpa:snp e="true">public void accept(Visitor v){
-            v.visit(this);
+        <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
             }</jpa:snp>
         <jpa:des>An UserAccount can be an Administrator, a Professional or an Individual. This class is linked to the jdbc-realm authentication.</jpa:des>
         <jpa:ath>jsie</jpa:ath>
@@ -112,8 +112,8 @@
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
             import fr.trendev.comptandye.visitors.Visitor;</jpa:snp>
         <jpa:snp e="true">
-            public void accept(Visitor v){
-            v.visit(this);
+            public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
             }</jpa:snp>
         <jpa:des>User groups should be linked to User Accounts type but it's still possible to create many usergroup. This class is linked to jdbc-realm authentication.</jpa:des>
         <jpa:ath>jsie</jpa:ath>
@@ -180,8 +180,8 @@
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.visitors.Visitor;</jpa:snp>
         <jpa:snp e="true">@Override
-            public void accept(Visitor v){
-            v.visit(this);
+            public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
             }</jpa:snp>
         <jpa:des>Groups common fields between Professional and Individual</jpa:des>
         <jpa:ath>jsie</jpa:ath>
@@ -243,8 +243,8 @@
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
             import fr.trendev.comptandye.visitors.Visitor;</jpa:snp>
         <jpa:snp e="true">@Override
-          public void accept(Visitor v){
-            v.visit(this);
+          public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
             }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -394,8 +394,8 @@
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
             import fr.trendev.comptandye.visitors.Visitor;</jpa:snp>
         <jpa:snp e="true">@Override
-          public void accept(Visitor v){
-            v.visit(this);
+          public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
             }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -432,8 +432,8 @@
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
             import fr.trendev.comptandye.visitors.Visitor;</jpa:snp>
-        <jpa:snp e="true">public void accept(Visitor v){
-            v.visit(this);
+        <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
             }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -546,8 +546,8 @@
         <jpa:annotation e="true" n="@java.lang.SuppressWarnings(&quot;unchecked&quot;)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.ArrayList;
             import fr.trendev.comptandye.visitors.Visitor;</jpa:snp>
-        <jpa:snp e="true">public void accept(Visitor v){
-            v.visit(this);
+        <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
             }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -644,8 +644,8 @@
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.visitors.Visitor;</jpa:snp>
-        <jpa:snp e="true">public void accept(Visitor v){
-            v.visit(this);
+        <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
             }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -704,8 +704,8 @@
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.visitors.Visitor;</jpa:snp>
-        <jpa:snp e="true">public void accept(Visitor v){
-            v.visit(this);
+        <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
             }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -759,8 +759,8 @@
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.visitors.Visitor;</jpa:snp>
         <jpa:snp e="true">@Override
-          public void accept(Visitor v){
-            v.visit(this);
+          public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
             }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes/>
@@ -792,8 +792,8 @@
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
             import fr.trendev.comptandye.visitors.Visitor;</jpa:snp>
         <jpa:snp e="true">@Override
-          public void accept(Visitor v){
-            v.visit(this);
+          public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
             }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -836,8 +836,8 @@
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({&#xA;  @JsonSubTypes.Type(value = Service.class, name = &quot;service&quot;), &#xA;  @JsonSubTypes.Type(value = Pack.class, name = &quot;pack&quot;)&#xA;})"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
             import fr.trendev.comptandye.visitors.Visitor;</jpa:snp>
-        <jpa:snp e="true">public void accept(Visitor v){
-            v.visit(this);
+        <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
             }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -928,8 +928,8 @@
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({&#xA;  @JsonSubTypes.Type(value = ClientBill.class, name = &quot;clientbill&quot;), &#xA;  @JsonSubTypes.Type(value = IndividualBill.class, name = &quot;individualbill&quot;),&#xA;  @JsonSubTypes.Type(value = CollectiveGroupBill.class, name = &quot;collectivegroupbill&quot;)&#xA;})"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
             import fr.trendev.comptandye.visitors.Visitor;</jpa:snp>
-        <jpa:snp e="true">public void accept(Visitor v){
-            v.visit(this);
+        <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
             }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -1044,8 +1044,8 @@
               import java.util.List;
                 import fr.trendev.comptandye.visitors.Visitor;</jpa:snp>
         <jpa:snp e="true">@Override
-              public void accept(Visitor v){
-                v.visit(this);
+              public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+                return v.visit(this);
                 }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -1077,8 +1077,8 @@
           import java.util.List;
             import fr.trendev.comptandye.visitors.Visitor;</jpa:snp>
         <jpa:snp e="true">@Override
-          public void accept(Visitor v){
-            v.visit(this);
+          public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
             }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -1098,8 +1098,8 @@
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.visitors.Visitor;</jpa:snp>
-        <jpa:snp e="true">public void accept(Visitor v){
-            v.visit(this);
+        <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
             }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -1130,8 +1130,8 @@
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.visitors.Visitor;</jpa:snp>
-        <jpa:snp e="true">public void accept(Visitor v){
-            v.visit(this);
+        <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
             }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -1184,8 +1184,8 @@
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
             import fr.trendev.comptandye.visitors.Visitor;</jpa:snp>
-        <jpa:snp e="true">public void accept(Visitor v){
-            v.visit(this);
+        <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
             }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -1271,8 +1271,8 @@
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.visitors.Visitor;</jpa:snp>
         <jpa:snp e="true">@Override
-          public void accept(Visitor v){
-            v.visit(this);
+          public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
             }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes/>
@@ -1290,8 +1290,8 @@
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
             import fr.trendev.comptandye.visitors.Visitor;</jpa:snp>
-        <jpa:snp e="true">public void accept(Visitor v){
-            v.visit(this);
+        <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
             }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -1359,8 +1359,8 @@
         <jpa:annotation e="true" n="@java.lang.SuppressWarnings(&quot;unchecked&quot;)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
             import fr.trendev.comptandye.visitors.Visitor;</jpa:snp>
-        <jpa:snp e="true">public void accept(Visitor v){
-            v.visit(this);
+        <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
             }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -1444,8 +1444,8 @@
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.visitors.Visitor;</jpa:snp>
-        <jpa:snp e="true">public void accept(Visitor v){
-            v.visit(this);
+        <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
             }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -1482,8 +1482,8 @@
           import java.util.List;
             import fr.trendev.comptandye.visitors.Visitor;</jpa:snp>
         <jpa:snp e="true">@Override
-          public void accept(Visitor v){
-            v.visit(this);
+          public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
             }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
