@@ -50,6 +50,7 @@ public class ExpenseTest {
         assert instance.getId() == null;
         assert instance.getName() == null;
         assert instance.getAmount() == 0;
+        assert instance.getCurrency().equals("EUR");
         assert instance.getPaymentDate() == null;
         assert instance.getInvoiceRef() == null;
         assert instance.getCategories() != null;
@@ -62,11 +63,12 @@ public class ExpenseTest {
         int amount = 50000; // 1000 euros
         String invoiceRef = "Invoice12345ABC";
 
-        instance = new Expense(name, amount, new Date(), invoiceRef, Arrays.
-                asList("Partner", "Provider"),
+        instance = new Expense(name, amount, new Date(), invoiceRef,
+                Arrays.
+                        asList("Partner", "Provider"),
                 new Professional(),
-                Arrays.asList(new Payment(30000, "EUR", new PaymentMode("CB")),
-                        new Payment(30000, "EUR", new PaymentMode("Espèces"))),
+                Arrays.asList(new Payment(30000, new PaymentMode("CB")),
+                        new Payment(30000, new PaymentMode("Espèces"))),
                 Arrays.asList(new Business("Buziness")));
 
         int size = 10;
@@ -77,6 +79,7 @@ public class ExpenseTest {
         assert instance.getId() == null;
         assert instance.getName().equals(name);
         assert instance.getAmount() == amount;
+        assert instance.getCurrency().equals("EUR");
         assert instance.getPaymentDate() != null;
         assert instance.getInvoiceRef().equals(invoiceRef);
         assert instance.getCategories() != null;

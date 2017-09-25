@@ -22,33 +22,34 @@ import org.junit.Test;
  * @author jsie
  */
 public class ClientBillTest {
-    
+
     public ClientBillTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
-    
+
     @Test
     public void testConstructors() {
         ClientBill instance = new ClientBill();
-        
+
         assert instance.getReference() == null;
         assert instance.getDeliveryDate() == null;
         assert instance.getAmount() == 0;
+        assert instance.getCurrency().equals("EUR");
         assert instance.getDiscount() == 0;
         assert instance.getPaymentDate() == null;
         assert instance.getComments() != null;
@@ -59,7 +60,7 @@ public class ClientBillTest {
         assert instance.getPurchasedOfferings() != null;
         assert instance.getPurchasedOfferings().isEmpty();
         assert instance.getClient() == null;
-        
+
         String reference = "Ref-123456";
         Date deliveryDate = new Date();
         int totalAmount = 10000;
@@ -70,7 +71,7 @@ public class ClientBillTest {
         Professional professional = new Professional("pro@company.com",
                 "encrypted_pwd", "PRO01",
                 UUIDGenerator.generate());
-        Payment payment = new Payment(9000, "EUR",
+        Payment payment = new Payment(9000,
                 new PaymentMode("Credit Card"));
         List<Payment> payments = Arrays.asList(payment);
         List<PurchasedOffering> purchasedOfferings = IntStream
@@ -79,37 +80,39 @@ public class ClientBillTest {
                         professional))
                 .map(o -> new PurchasedOffering(1, o))
                 .collect(Collectors.toList());
-        
-        instance = new ClientBill(reference, deliveryDate, amount, discount,
+
+        instance = new ClientBill(reference, deliveryDate, amount,
+                discount,
                 paymentDate,
                 comments, professional, payments, purchasedOfferings,
                 new Client());
-        
+
         assert instance.getReference().equals(reference);
         assert instance.getDeliveryDate() != null;
         assert instance.getAmount() == amount;
+        assert instance.getCurrency().equals("EUR");
         assert instance.getDiscount() == discount;
         assert instance.getPaymentDate() != null;
         assert instance.getComments() != null;
         assert instance.getComments().size() == 2;
         assert instance.getProfessional().equals(professional);
         assert instance.getPayments() != null;
-        
+
         assert instance.getPayments().contains(payment);
         assert instance.getPurchasedOfferings() != null;
         assert instance.getPurchasedOfferings().size() == 10;
-        
+
         assert instance.getPurchasedOfferings().stream()
                 .map(po -> po.getOffering())
                 .mapToInt(o -> o.getPrice()).
                 sum() == totalAmount;
-        
+
         assert instance.getPayments().stream().mapToInt(p -> p.getAmount()).
                 sum() == amount;
-        
+
         assert amount == (totalAmount - (discount * totalAmount / 100));
-        
+
         assert instance.getClient() != null;
     }
-    
+
 }

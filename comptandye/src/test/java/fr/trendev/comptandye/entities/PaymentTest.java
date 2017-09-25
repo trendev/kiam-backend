@@ -45,17 +45,15 @@ public class PaymentTest {
 
         assert instance.getId() == null;
         assert instance.getAmount() == 0;
-        assert instance.getCurrency().equals("EUR");
         assert instance.getPaymentMode() == null;
 
         int amount = 1000; // 10 USD
         String currency = "USD";
 
-        instance = new Payment(amount, currency, new PaymentMode());
+        instance = new Payment(amount, new PaymentMode());
 
         assert instance.getId() == null;
         assert instance.getAmount() == amount;
-        assert instance.getCurrency().equals(currency);
         assert instance.getPaymentMode() != null;
 
     }

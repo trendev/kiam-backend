@@ -91,7 +91,6 @@ public class PaymentService extends AbstractCommonService<Payment, Long> {
         return super.put(entity, paymentFacade, entity.getId(),
                 e -> {
             e.setAmount(entity.getAmount());
-            e.setCurrency(entity.getCurrency());
             /**
              * Should not be used:
              * https://bugs.eclipse.org/bugs/show_bug.cgi?id=247662

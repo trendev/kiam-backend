@@ -27,18 +27,11 @@ public class Payment {
     @Basic
     private int amount;
 
-    /**
-     * Default value is Euros (EUR)
-     */
-    @Basic
-    private String currency = "EUR";
-
     @OneToOne(optional = false, targetEntity = PaymentMode.class)
     private PaymentMode paymentMode;
 
-    public Payment(int amount, String currency, PaymentMode paymentMode) {
+    public Payment(int amount, PaymentMode paymentMode) {
         this.amount = amount;
-        this.currency = currency;
         this.paymentMode = paymentMode;
     }
 
@@ -59,14 +52,6 @@ public class Payment {
 
     public void setAmount(int amount) {
         this.amount = amount;
-    }
-
-    public String getCurrency() {
-        return this.currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
     }
 
     public PaymentMode getPaymentMode() {

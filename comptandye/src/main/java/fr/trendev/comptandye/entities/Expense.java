@@ -45,6 +45,12 @@ public class Expense {
     @Basic
     private int amount;
 
+    /**
+     * Default value is Euros (EUR)
+     */
+    @Basic
+    private String currency = "EUR";
+
     @Column(columnDefinition = "DATETIME(3)")
     @Basic
     @Temporal(TemporalType.TIMESTAMP)
@@ -111,6 +117,14 @@ public class Expense {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public String getCurrency() {
+        return this.currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public Date getPaymentDate() {

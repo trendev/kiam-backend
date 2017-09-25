@@ -25,6 +25,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -37,39 +38,39 @@ import javax.ws.rs.core.SecurityContext;
 @Stateless
 @Path("Expense")
 public class ExpenseService extends AbstractCommonService<Expense, ExpensePK> {
-    
+
     @Inject
     ExpenseFacade expenseFacade;
-    
+
     @Inject
     ProfessionalFacade professionalFacade;
-    
+
     private static final Logger LOG = Logger.getLogger(ExpenseService.class.
             getName());
-    
+
     public ExpenseService() {
         super(Expense.class);
     }
-    
+
     @Override
     protected Logger getLogger() {
         return LOG;
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Expense list");
         return super.findAll(expenseFacade);
     }
-    
+
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response count() {
         return super.count(expenseFacade);
     }
-    
+
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -81,15 +82,15 @@ public class ExpenseService extends AbstractCommonService<Expense, ExpensePK> {
                 prettyPrintPK(pk));
         return super.find(expenseFacade, pk, refresh);
     }
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response post(@Context SecurityContext sec, Expense entity,
             @QueryParam("professional") String professional) {
-        
+
         String email = this.getProEmail(sec, professional);
-        
+
         return super.<Professional, String>post(entity, email,
                 AbstractFacade::prettyPrintPK,
                 Professional.class,
@@ -99,31 +100,32 @@ public class ExpenseService extends AbstractCommonService<Expense, ExpensePK> {
                     .mapToInt(Payment::getAmount)
                     .sum();
             if (total != e.getAmount()) {
-                LOG.log(Level.WARNING,
-                        "Total amount is {0} but the total amount computed is {1}. Amount value is now {1}",
-                        new Object[]{e.getAmount(), total});
-                e.setAmount(total);
+                String errmsg = "Total amount is " + e.getAmount()
+                        + " but the total amount computed is " + total
+                        + ". Please fix the total amount!";
+                LOG.log(Level.WARNING, errmsg);
+                throw new WebApplicationException(errmsg);
             }
         });
-        
+
     }
-    
+
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     /**
-     * Amount and Payments can be updated using this method.
+     * Amount, Currency and Payments cannot be updated using this method.
      */
     public Response put(@Context SecurityContext sec, Expense entity,
             @QueryParam("professional") String professional) {
-        
+
         ExpensePK pk = new ExpensePK(entity.getId(), this.getProEmail(sec,
                 professional));
-        
+
         LOG.log(Level.INFO, "Updating Expense {0}", expenseFacade.
                 prettyPrintPK(pk));
         return super.put(entity, expenseFacade, pk, e -> {
-            
+
             e.setName(entity.getName());
             e.setPaymentDate(entity.getPaymentDate());
             e.setInvoiceRef(entity.getInvoiceRef());
@@ -131,16 +133,16 @@ public class ExpenseService extends AbstractCommonService<Expense, ExpensePK> {
             e.setBusinesses(entity.getBusinesses());
         });
     }
-    
+
     @Path("{id}")
     @DELETE
     public Response delete(@Context SecurityContext sec,
             @PathParam("id") Long id,
             @QueryParam("professional") String professional) {
-        
+
         ExpensePK pk = new ExpensePK(id, this.getProEmail(sec,
                 professional));
-        
+
         LOG.log(Level.INFO, "Deleting Expense {0}", expenseFacade.
                 prettyPrintPK(pk));
         return super.delete(expenseFacade, pk,

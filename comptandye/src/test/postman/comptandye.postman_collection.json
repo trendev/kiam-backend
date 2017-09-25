@@ -3738,6 +3738,7 @@
 									"tests[\"id is defined\"] = jsonData.id !== undefined;",
 									"pm.environment.set(\"created_expense_id\", jsonData.id);",
 									"tests[\"name is \\\"Purple Color\\\"\"] = jsonData.name === \"Purple Color\";",
+									"tests[\"currency is \\\"EUR\\\"\"] = jsonData.currency === \"EUR\";",
 									"tests[\"amount is 1000\"] = jsonData.amount === 1000;",
 									"tests[\"paymentDate is \"+new Date(1505707896023)] = jsonData.paymentDate === 1505707896023;",
 									"tests[\"categories length is 2\"] = jsonData.categories.length === 2;",
@@ -3783,7 +3784,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\":\"Purple Color\",\n\t\"amount\":1000,\n\t\"paymentDate\":1505707896023,\n\t\"categories\": [\n            \"Provider\",\n            \"Color Broker in Paris\"\n    ],\n    \"payments\": [\n            {\n\t\t\t\t\"amount\": 900,\n                \"currency\": \"EUR\",\n                \"paymentMode\": {\n                    \"name\": \"CB\"\n                }\n            },\n            {\n                \"amount\": 100,\n                \"currency\": \"EUR\",\n                \"paymentMode\": {\n                    \"name\": \"Espèces\"\n                }\n            }\n        ],\n        \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n        ]\n}"
+							"raw": "{\n\t\"name\":\"Purple Color\",\n\t\"amount\":1000,\n\t\"paymentDate\":1505707896023,\n\t\"categories\": [\n            \"Provider\",\n            \"Color Broker in Paris\"\n    ],\n    \"payments\": [\n            {\n\t\t\t\t\"amount\": 900,\n                \"paymentMode\": {\n                    \"name\": \"CB\"\n                }\n            },\n            {\n                \"amount\": 100,\n                \"paymentMode\": {\n                    \"name\": \"Espèces\"\n                }\n            }\n        ],\n        \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n        ]\n}"
 						},
 						"description": ""
 					},
@@ -3803,6 +3804,7 @@
 									"tests[\"id is defined\"] = jsonData.id !== undefined;",
 									"pm.environment.set(\"created_expense_id\", jsonData.id);",
 									"tests[\"name is \\\"Purple Color\\\"\"] = jsonData.name === \"Purple Color\";",
+									"tests[\"currency is \\\"EUR\\\"\"] = jsonData.currency === \"EUR\";",
 									"tests[\"amount is 1000\"] = jsonData.amount === 1000;",
 									"tests[\"paymentDate is \"+new Date(1505707896023)] = jsonData.paymentDate === 1505707896023;",
 									"tests[\"invoiceRef is \\\"invoice#2\\\"\"] = jsonData.invoiceRef === \"invoice#2\";",
@@ -3873,6 +3875,7 @@
 									"",
 									"tests[\"name is \\\"Purple Color\\\"\"] = jsonData.name === \"Purple Color\";",
 									"tests[\"amount is 1000\"] = jsonData.amount === 1000;",
+									"tests[\"currency is \\\"EUR\\\"\"] = jsonData.currency === \"EUR\";",
 									"tests[\"paymentDate is \"+new Date(1505707896023)] = jsonData.paymentDate === 1505707896023;",
 									"tests[\"categories length is 2\"] = jsonData.categories.length === 2;",
 									"",

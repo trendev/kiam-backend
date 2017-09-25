@@ -51,6 +51,7 @@ public class InvidualBillTest {
         assert instance.getReference() == null;
         assert instance.getDeliveryDate() == null;
         assert instance.getAmount() == 0;
+        assert instance.getCurrency().equals("EUR");
         assert instance.getDiscount() == 0;
         assert instance.getPaymentDate() == null;
         assert instance.getComments() != null;
@@ -72,7 +73,7 @@ public class InvidualBillTest {
         Professional professional = new Professional("pro@company.com",
                 "encrypted_pwd", "PRO01",
                 UUIDGenerator.generate());
-        Payment payment = new Payment(9000, "EUR",
+        Payment payment = new Payment(9000,
                 new PaymentMode("Credit Card"));
         List<Payment> payments = Arrays.asList(payment);
         List<PurchasedOffering> purchasedOfferings = IntStream
@@ -82,7 +83,8 @@ public class InvidualBillTest {
                         professional)))
                 .collect(Collectors.toList());
 
-        instance = new IndividualBill(reference, deliveryDate, amount, discount,
+        instance = new IndividualBill(reference, deliveryDate, amount,
+                discount,
                 paymentDate,
                 comments, professional, payments, purchasedOfferings,
                 new Individual());
@@ -90,6 +92,7 @@ public class InvidualBillTest {
         assert instance.getReference().equals(reference);
         assert instance.getDeliveryDate() != null;
         assert instance.getAmount() == amount;
+        assert instance.getCurrency().equals("EUR");
         assert instance.getDiscount() == discount;
         assert instance.getPaymentDate() != null;
         assert instance.getComments() != null;

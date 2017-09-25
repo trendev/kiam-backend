@@ -63,6 +63,12 @@ public abstract class Bill {
     private int amount;
 
     /**
+     * Default value is Euros (EUR)
+     */
+    @Basic
+    private String currency = "EUR";
+
+    /**
      * a percentage discount
      */
     @Basic
@@ -141,6 +147,14 @@ public abstract class Bill {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public String getCurrency() {
+        return this.currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public int getDiscount() {

@@ -151,8 +151,8 @@ public class DemoConfigureBean implements Serializable {
         vanessa.getExpenses().add(new Expense("Material", 100000,
                 new Date(), "invoice#1", Arrays.
                         asList("Partner", "Provider"), vanessa, Arrays.asList(
-                new Payment(30000, "EUR", em.find(PaymentMode.class, "CB")),
-                new Payment(70000, "EUR", em.find(PaymentMode.class, "Espèces"))),
+                new Payment(30000, em.find(PaymentMode.class, "CB")),
+                new Payment(70000, em.find(PaymentMode.class, "Espèces"))),
                 Arrays.asList(em.find(Business.class, "Coiffure"))));
 
         vanessa.getCollectiveGroups().add(
@@ -330,9 +330,9 @@ public class DemoConfigureBean implements Serializable {
                     sylvioc);
             bill2.setCltype("individualbill");
 
-            Payment pm = new Payment(5000, "EUR", em.find(PaymentMode.class,
+            Payment pm = new Payment(5000, em.find(PaymentMode.class,
                     "CB"));
-            Payment pm2 = new Payment(8000, "EUR", em.find(PaymentMode.class,
+            Payment pm2 = new Payment(8000, em.find(PaymentMode.class,
                     "Espèces"));
             bill1.getPayments().add(pm);
             vanessa.getBills().add(bill1);
@@ -362,7 +362,7 @@ public class DemoConfigureBean implements Serializable {
 
         vanessa.getCategories().add(cat1);
 
-        Payment payment = new Payment(1500, "EUR", em.find(PaymentMode.class,
+        Payment payment = new Payment(1500, em.find(PaymentMode.class,
                 "Virement"));
 
         Service service = new Service("Classic Haircut", 1500, 60,
@@ -391,7 +391,7 @@ public class DemoConfigureBean implements Serializable {
                 getUuid() + "-1", new Date(),
                 3000, 0,
                 new Date(), Arrays.asList("BAU", "Easy but long"), vanessa,
-                Arrays.asList(new Payment(3000, "EUR", em.
+                Arrays.asList(new Payment(3000, em.
                         find(PaymentMode.class,
                                 "Virement"))), Arrays.asList(
                 new PurchasedOffering(1, service2)), vanessa.
