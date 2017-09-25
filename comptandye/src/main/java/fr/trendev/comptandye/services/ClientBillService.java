@@ -142,22 +142,34 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
             }
 
             if (!e.getPayments().isEmpty()) {
-
-                //Total amount should be equal to the sum of the amount's payment
-                int amount = e.getPayments().stream().mapToInt(
-                        Payment::getAmount).
-                        sum();
-
-                if (amount != e.getAmount()) {
-                    LOG.log(Level.WARNING,
-                            "Total amount is {0} but the total amount computed is {1}",
-                            new Object[]{e.getAmount(), amount});
+                if (e.getPaymentDate() != null) {
+                    //Total amount should be equal to the sum of the amount's payment
+                    int total = e.getPayments().stream()
+                            .mapToInt(Payment::getAmount)
+                            .sum();
+                    if (total != e.getAmount()) {
+                        String errmsg = "Total amount is " + e.getAmount()
+                                + " but the total amount computed is " + total
+                                + ". Please, fix the total amount!";
+                        LOG.log(Level.WARNING, errmsg);
+                        throw new WebApplicationException(errmsg);
+                    }
+                } else {
+                    LOG.log(Level.INFO,
+                            "ClientBill {0} delivered on {1} has not been paid : payments recorded but no payment date provided yet!",
+                            new Object[]{e.getReference(), e.
+                                getDeliveryDate()});
                 }
             } else {
-                LOG.log(Level.INFO,
-                        "ClientBill {0} delivered on {1} has not been paid : no payment provided during the Bill creation",
-                        new Object[]{e.getReference(), e.
-                            getDeliveryDate()});
+                if (e.getPaymentDate() != null) {
+                    throw new WebApplicationException(
+                            "A payment date is provided but there is no payment yet!");
+                } else {
+                    LOG.log(Level.INFO,
+                            "ClientBill {0} delivered on {1} has not been paid : no payment provided during the Bill creation and no payment date provided yet!",
+                            new Object[]{e.getReference(), e.
+                                getDeliveryDate()});
+                }
             }
 
             List<PurchasedOffering> purchasedOfferings = e.
