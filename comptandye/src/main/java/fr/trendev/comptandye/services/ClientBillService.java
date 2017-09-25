@@ -21,7 +21,6 @@ import fr.trendev.comptandye.sessions.ServiceFacade;
 import fr.trendev.comptandye.visitors.ProvideOfferingFacadeVisitor;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,7 +39,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
-import javax.xml.ws.WebServiceException;
 
 /**
  *
@@ -143,51 +141,49 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
                         + e.getDeliveryDate());
             }
 
-            if (e.getPayments().isEmpty()) {
-                throw new WebApplicationException(
-                        "No payment provided with the Bill");
+            if (!e.getPayments().isEmpty()) {
+
+                //Total amount should be equal to the sum of the amount's payment
+                int amount = e.getPayments().stream().mapToInt(
+                        Payment::getAmount).
+                        sum();
+
+                if (amount != e.getAmount()) {
+                    LOG.log(Level.WARNING,
+                            "Total amount is {0} but the total amount computed is {1}",
+                            new Object[]{e.getAmount(), amount});
+                }
+            } else {
+                LOG.log(Level.INFO,
+                        "ClientBill {0} delivered on {1} has not been paid : no payment provided during the Bill creation",
+                        new Object[]{e.getReference(), e.
+                            getDeliveryDate()});
             }
 
-            //Currency should be unique
-            Map<String, Long> currencies = e.getPayments().stream().collect(
-                    Collectors.groupingBy(Payment::getCurrency, Collectors.
-                            counting()));
-
-            if (currencies.size() != 1) {
-                String errmgs = "There are multiple currencies in the payments and you should have only one currency: "
-                        + currencies;
-                throw new WebServiceException(errmgs);
-            }
-
-            //Total amount should be equal to the sum of the amount's payment
-            int amount = e.getPayments().stream().mapToInt(Payment::getAmount).
-                    sum();
-            if (amount != e.getAmount()) {
-                LOG.log(Level.WARNING,
-                        "Total amount is {0} but the total amount computed is {1}. Amount value is now {1}",
-                        new Object[]{e.getAmount(), amount});
-                e.setAmount(amount);
-            }
-
-            List<PurchasedOffering> offerings = e.getPurchasedOfferings().
+            List<PurchasedOffering> purchasedOfferings = e.
+                    getPurchasedOfferings().
                     stream()
-                    .map(po -> {
-                        return Optional.ofNullable(this.getOfferingFacade(po.
-                                getOffering()).
-                                find(new OfferingPK(
-                                        po.getOffering().getId(),
-                                        e.getProfessional().getEmail())))
-                                .map(o ->
-                                        new PurchasedOffering(po.getQty(), o))
-                                .orElseThrow(() ->
-                                        new WebApplicationException(
-                                                po.getOffering().getClass().
-                                                        getSimpleName()
-                                                + " " + po.getOffering().getId()
-                                                + " does not exist"));
-                    }).collect(Collectors.toList());
+                    .map(po -> Optional.ofNullable(this.getOfferingFacade(po.
+                            getOffering()).find(new OfferingPK(
+                                    po.getOffering().getId(),
+                                    e.getProfessional().getEmail())))
+                            .map(o ->
+                                    new PurchasedOffering(po.getQty(), o))
+                            .orElseThrow(() ->
+                                    new WebApplicationException(
+                                            po.getOffering().getClass().
+                                                    getSimpleName()
+                                            + " " + po.getOffering().getId()
+                                            + " does not exist"))
+                    ).collect(Collectors.toList());
 
-            e.setPurchasedOfferings(offerings);
+            int total = purchasedOfferings.stream()
+                    .mapToInt(po -> po.getQty() * po.getOffering().getPrice())
+                    .sum();
+
+//            LOG.log(Level.INFO, "Total price = {0} {1}", new Object[]{total, e.
+//                getPayments().get(0)});
+            e.setPurchasedOfferings(purchasedOfferings);
         });
     }
 
