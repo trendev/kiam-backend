@@ -5,11 +5,11 @@
  */
 package fr.trendev.comptandye.services;
 
-import fr.trendev.comptandye.utils.AssociationManagementEnum;
 import fr.trendev.comptandye.entities.Administrator;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.sessions.AdministratorFacade;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
+import fr.trendev.comptandye.utils.AssociationManagementEnum;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import java.util.logging.Level;
@@ -99,7 +99,7 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
                 e -> {
             //generates an UUID if no one is provided
             if (e.getUuid() == null || e.getUuid().isEmpty()) {
-                String uuid = UUIDGenerator.generate("ADMIN_", true);
+                String uuid = UUIDGenerator.generate("ADMIN-", true);
                 LOG.log(Level.WARNING,
                         "No UUID provided for new Administrator {0}. Generated UUID = {1}",
                         new Object[]{e.getEmail(), uuid});
@@ -133,7 +133,6 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
             }
 
             e.setUsername(entity.getUsername());
-            e.setUuid(entity.getUuid());
             e.setRegistrationDate(entity.getRegistrationDate());
         });
     }
