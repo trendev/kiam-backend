@@ -829,7 +829,6 @@
 									"pm.environment.set(\"created_payment_id\", jsonData.id);",
 									"",
 									"tests[\"amount is 100\"] = jsonData.amount === 100;",
-									"tests[\"currency is \\\"EUR\\\"\"] = jsonData.currency === \"EUR\";",
 									"tests[\"paymentMode.name is \\\"CB\\\"\"] = jsonData.paymentMode.name === \"CB\";",
 									"",
 									""
@@ -868,7 +867,6 @@
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"id is \"+pm.environment.get(\"created_payment_id\")] = jsonData.id == pm.environment.get(\"created_payment_id\");",
 									"tests[\"amount is 100\"] = jsonData.amount === 100;",
-									"tests[\"currency is \\\"EUR\\\"\"] = jsonData.currency === \"EUR\";",
 									"tests[\"paymentMode.name is \\\"CB\\\"\"] = jsonData.paymentMode.name === \"CB\";"
 								]
 							}
@@ -914,7 +912,6 @@
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"id is \"+pm.environment.get(\"created_payment_id\")] = jsonData.id == pm.environment.get(\"created_payment_id\");",
 									"tests[\"amount is 200\"] = jsonData.amount === 200;",
-									"tests[\"currency is \\\"EUR\\\"\"] = jsonData.currency === \"EUR\";",
 									"tests[\"paymentMode.name is \\\"Chèque\\\"\"] = jsonData.paymentMode.name === \"Chèque\";"
 								]
 							}

@@ -102,7 +102,7 @@ public class ExpenseService extends AbstractCommonService<Expense, ExpensePK> {
             if (total != e.getAmount()) {
                 String errmsg = "Total amount is " + e.getAmount()
                         + " but the total amount computed is " + total
-                        + ". Please fix the total amount!";
+                        + ". Please, fix the total amount!";
                 LOG.log(Level.WARNING, errmsg);
                 throw new WebApplicationException(errmsg);
             }
