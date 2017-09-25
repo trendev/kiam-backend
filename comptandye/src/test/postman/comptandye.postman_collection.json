@@ -5556,7 +5556,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"cltype\":\"clientbill\",\n\t\"deliveryDate\":1506085212900,\n\t\"paymentDate\":1506085213900,\n\t\"amount\":5000,\n\t\"discount\":0,\n\t\"comments\":[\n\t\t\"The first one created by a rest api request\"\n\t],\n\t\"payments\":[\n\t\t{\n\t\t\t\"amount\":4000,\n\t\t\t\"paymentMode\": {\n                    \"name\": \"CB\"\n            }\n\t\t},\n\t\t{\n\t\t\t\"amount\":1000,\n\t\t\t\"paymentMode\": {\n                    \"name\": \"Espèces\" \n            }\n\t\t}\n\t],\n\t\"purchasedOfferings\":[\n\t\t{\n\t\t\t\"qty\":4,\n\t\t\t\"offering\":\n\t\t\t\t{\n        \t\t\t\"id\": 46,\n        \t\t\t\"cltype\": \"service\",\n        \t\t\t\"name\": \"Classic Haircut\",\n\t\t\t        \"price\": 1500,\n        \t\t\t\"duration\": 60,\n        \t\t\t\"hidden\": false\n    \t\t\t}\n\t\t}\n\t]\n}"
+							"raw": "{\n\t\"cltype\":\"clientbill\",\n\t\"deliveryDate\":1506085212900,\n\t\"paymentDate\":1506085213900,\n\t\"amount\":5000,\n\t\"discount\":1000,\n\t\"comments\":[\n\t\t\"The first one created by a rest api request\"\n\t],\n\t\"payments\":[\n\t\t{\n\t\t\t\"amount\":4000,\n\t\t\t\"paymentMode\": {\n                    \"name\": \"CB\"\n            }\n\t\t},\n\t\t{\n\t\t\t\"amount\":1000,\n\t\t\t\"paymentMode\": {\n                    \"name\": \"Espèces\" \n            }\n\t\t}\n\t],\n\t\"purchasedOfferings\":[\n\t\t{\n\t\t\t\"qty\":4,\n\t\t\t\"offering\":\n\t\t\t\t{\n        \t\t\t\"id\": 46,\n        \t\t\t\"cltype\": \"service\",\n        \t\t\t\"name\": \"Classic Haircut\",\n\t\t\t        \"price\": 1500,\n        \t\t\t\"duration\": 60,\n        \t\t\t\"hidden\": false\n    \t\t\t}\n\t\t}\n\t]\n}"
 						},
 						"description": ""
 					},

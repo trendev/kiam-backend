@@ -69,7 +69,7 @@ public abstract class Bill {
     private String currency = "EUR";
 
     /**
-     * a percentage discount
+     * the discount amount
      */
     @Basic
     private int discount;

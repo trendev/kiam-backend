@@ -148,9 +148,13 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
                             .mapToInt(Payment::getAmount)
                             .sum();
                     if (total != e.getAmount()) {
-                        String errmsg = "Total amount is " + e.getAmount()
-                                + " but the total amount computed is " + total
-                                + ". Please, fix the total amount!";
+                        String errmsg = "Amount is " + e.getAmount()
+                                + " "
+                                + e.getCurrency()
+                                + " but the total amount computed (based on the payments) is "
+                                + total
+                                + " "
+                                + e.getCurrency();
                         LOG.log(Level.WARNING, errmsg);
                         throw new WebApplicationException(errmsg);
                     }
@@ -193,8 +197,18 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
                     .mapToInt(po -> po.getQty() * po.getOffering().getPrice())
                     .sum();
 
-//            LOG.log(Level.INFO, "Total price = {0} {1}", new Object[]{total, e.
-//                getPayments().get(0)});
+            if (e.getAmount() != (total - e.getDiscount())) {
+                String errmsg = "Amount is " + e.getAmount() + " "
+                        + e.getCurrency()
+                        + " but the total amount computed (based on the purchased offerings prices and the discount) is "
+                        + "(" + total + "-" + e.getDiscount() + ") = "
+                        + (total - e.getDiscount())
+                        + " "
+                        + e.getCurrency();
+                LOG.log(Level.WARNING, errmsg);
+                throw new WebApplicationException(errmsg);
+            }
+
             e.setPurchasedOfferings(purchasedOfferings);
         });
     }

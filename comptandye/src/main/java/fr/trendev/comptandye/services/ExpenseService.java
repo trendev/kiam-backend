@@ -100,9 +100,8 @@ public class ExpenseService extends AbstractCommonService<Expense, ExpensePK> {
                     .mapToInt(Payment::getAmount)
                     .sum();
             if (total != e.getAmount()) {
-                String errmsg = "Total amount is " + e.getAmount()
-                        + " but the total amount computed is " + total
-                        + ". Please, fix the total amount!";
+                String errmsg = "Amount is " + e.getAmount()
+                        + " but the total amount computed is " + total;
                 LOG.log(Level.WARNING, errmsg);
                 throw new WebApplicationException(errmsg);
             }
