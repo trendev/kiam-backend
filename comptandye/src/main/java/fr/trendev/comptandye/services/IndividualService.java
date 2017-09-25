@@ -5,13 +5,13 @@
  */
 package fr.trendev.comptandye.services;
 
-import fr.trendev.comptandye.utils.AssociationManagementEnum;
 import fr.trendev.comptandye.entities.Individual;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.sessions.IndividualFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
+import fr.trendev.comptandye.utils.AssociationManagementEnum;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import java.util.logging.Level;
@@ -92,7 +92,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
                 e -> {
             //generates an UUID if no one is provided
             if (e.getUuid() == null || e.getUuid().isEmpty()) {
-                String uuid = UUIDGenerator.generate("IND_", true);
+                String uuid = UUIDGenerator.generate("IND-", true);
                 LOG.log(Level.WARNING,
                         "No UUID provided for new Individual {0}. Generated UUID = {1}",
                         new Object[]{e.getEmail(), uuid});
@@ -132,7 +132,6 @@ public class IndividualService extends AbstractCommonService<Individual, String>
             /**
              * TODO : Should only be performed by an Administrator
              */
-            e.setUuid(entity.getUuid());
             e.setRegistrationDate(entity.getRegistrationDate());
 
             /**
