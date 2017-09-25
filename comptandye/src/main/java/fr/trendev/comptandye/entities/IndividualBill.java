@@ -2,6 +2,7 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import fr.trendev.comptandye.visitors.Visitor;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
@@ -35,6 +36,11 @@ public class IndividualBill extends Bill {
 
     public void setIndividual(Individual individual) {
         this.individual = individual;
+    }
+
+    @Override
+    public void accept(Visitor v) {
+        v.visit(this);
     }
 
 }

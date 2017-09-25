@@ -3,6 +3,7 @@ package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import fr.trendev.comptandye.visitors.Visitor;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -210,6 +211,11 @@ public class Professional extends Customer {
 
     public void setPaymentModes(List<PaymentMode> paymentModes) {
         this.paymentModes = paymentModes;
+    }
+
+    @Override
+    public void accept(Visitor v) {
+        v.visit(this);
     }
 
 }

@@ -2,6 +2,7 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import fr.trendev.comptandye.visitors.Visitor;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -28,6 +29,10 @@ public class PaymentMode {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void accept(Visitor v) {
+        v.visit(this);
     }
 
 }

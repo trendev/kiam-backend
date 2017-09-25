@@ -2,6 +2,7 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import fr.trendev.comptandye.visitors.Visitor;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -43,6 +44,11 @@ public class Pack extends Offering {
 
     public void setOfferings(List<Offering> offerings) {
         this.offerings = offerings;
+    }
+
+    @Override
+    public void accept(Visitor v) {
+        v.visit(this);
     }
 
 }

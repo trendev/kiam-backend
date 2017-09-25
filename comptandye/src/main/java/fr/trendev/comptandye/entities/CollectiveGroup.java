@@ -3,6 +3,7 @@ package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import fr.trendev.comptandye.visitors.Visitor;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
@@ -138,6 +139,10 @@ public class CollectiveGroup {
 
     public void setClients(List<Client> clients) {
         this.clients = clients;
+    }
+
+    public void accept(Visitor v) {
+        v.visit(this);
     }
 
 }

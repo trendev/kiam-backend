@@ -3,12 +3,11 @@ package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import fr.trendev.comptandye.visitors.Visitor;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-
-;
 
 /**
  * @author jsie
@@ -43,6 +42,11 @@ public class Individual extends Customer {
 
     public void setProfessionals(List<Professional> professionals) {
         this.professionals = professionals;
+    }
+
+    @Override
+    public void accept(Visitor v) {
+        v.visit(this);
     }
 
 }

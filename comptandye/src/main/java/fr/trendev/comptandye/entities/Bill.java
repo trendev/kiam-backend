@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import fr.trendev.comptandye.visitors.Visitor;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -193,6 +194,10 @@ public abstract class Bill {
 
     public void setOfferings(List<Offering> offerings) {
         this.offerings = offerings;
+    }
+
+    public void accept(Visitor v) {
+        v.visit(this);
     }
 
 }

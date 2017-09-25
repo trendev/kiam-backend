@@ -2,6 +2,7 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import fr.trendev.comptandye.visitors.Visitor;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -100,6 +101,10 @@ public class Address {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public void accept(Visitor v) {
+        v.visit(this);
     }
 
 }
