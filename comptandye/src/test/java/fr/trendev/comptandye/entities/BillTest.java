@@ -22,30 +22,30 @@ import org.junit.Test;
  * @author jsie
  */
 public class BillTest {
-
+    
     public BillTest() {
     }
-
+    
     @BeforeClass
     public static void setUpClass() {
     }
-
+    
     @AfterClass
     public static void tearDownClass() {
     }
-
+    
     @Before
     public void setUp() {
     }
-
+    
     @After
     public void tearDown() {
     }
-
+    
     @Test
     public void testConstructors() {
         Bill instance = new BillImpl();
-
+        
         assert instance.getReference() == null;
         assert instance.getDeliveryDate() == null;
         assert instance.getAmount() == 0;
@@ -56,9 +56,9 @@ public class BillTest {
         assert instance.getProfessional() == null;
         assert instance.getPayments() != null;
         assert instance.getPayments().isEmpty();
-        assert instance.getOfferings() != null;
-        assert instance.getOfferings().isEmpty();
-
+        assert instance.getPurchasedOfferings() != null;
+        assert instance.getPurchasedOfferings().isEmpty();
+        
         String reference = "Ref-123456";
         Date deliveryDate = new Date();
         int totalAmount = 10000;
@@ -72,17 +72,18 @@ public class BillTest {
         Payment payment = new Payment(9000, "EUR",
                 new PaymentMode("Credit Card"));
         List<Payment> payments = Arrays.asList(payment);
-        List<Offering> offerings = IntStream
+        List<PurchasedOffering> purchasedOfferings = IntStream
                 .range(0, 10)
                 .mapToObj(i -> new Service("Service #" + i, 1000, 10,
                         professional))
+                .map(o -> new PurchasedOffering(1, o))
                 .collect(Collectors.toList());
-
+        
         instance = new BillImpl(reference, deliveryDate, amount, discount,
                 paymentDate,
                 comments,
-                professional, payments, offerings);
-
+                professional, payments, purchasedOfferings);
+        
         assert instance.getReference().equals(reference);
         assert instance.getDeliveryDate() != null;
         assert instance.getAmount() == amount;
@@ -92,33 +93,35 @@ public class BillTest {
         assert instance.getComments().size() == 2;
         assert instance.getProfessional().equals(professional);
         assert instance.getPayments() != null;
-
+        
         assert instance.getPayments().contains(payment);
-        assert instance.getOfferings() != null;
-        assert instance.getOfferings().size() == 10;
-
-        assert instance.getOfferings().stream().mapToInt(o -> o.getPrice()).
-                sum() == totalAmount;
-
+        assert instance.getPurchasedOfferings() != null;
+        assert instance.getPurchasedOfferings().size() == 10;
+        
+        assert instance.getPurchasedOfferings().stream()
+                .map(po -> po.getOffering())
+                .mapToInt(o -> o.getPrice())
+                .sum() == totalAmount;
+        
         assert instance.getPayments().stream().mapToInt(p -> p.getAmount()).
                 sum() == amount;
-
+        
         assert amount == (totalAmount - (discount * totalAmount / 100));
-
+        
     }
-
+    
     public class BillImpl extends Bill {
-
+        
         public BillImpl(String reference, Date deliveryDate, int amount,
                 int discount, Date paymentDate, List comments,
                 Professional professional, List payments, List offerings) {
             super(reference, deliveryDate, amount, discount, paymentDate,
                     comments, professional, payments, offerings);
         }
-
+        
         public BillImpl() {
         }
-
+        
     }
-
+    
 }

@@ -21,6 +21,7 @@ import fr.trendev.comptandye.entities.Pack;
 import fr.trendev.comptandye.entities.Payment;
 import fr.trendev.comptandye.entities.PaymentMode;
 import fr.trendev.comptandye.entities.Professional;
+import fr.trendev.comptandye.entities.PurchasedOffering;
 import fr.trendev.comptandye.entities.Service;
 import fr.trendev.comptandye.entities.SocialNetworkAccounts;
 import fr.trendev.comptandye.entities.UserGroup;
@@ -313,7 +314,8 @@ public class DemoConfigureBean implements Serializable {
                     5000, 0,
                     new Date(),
                     Arrays.asList("Cool", "sympa"),
-                    vanessa, new LinkedList<>(), Arrays.asList(service1),
+                    vanessa, new LinkedList<>(), Arrays.asList(
+                            new PurchasedOffering(1, service1)),
                     sylvioc);
             bill1.setCltype("individualbill");
 
@@ -323,7 +325,8 @@ public class DemoConfigureBean implements Serializable {
                     8000, 0,
                     new Date(),
                     Arrays.asList("Long", "Pffff"),
-                    vanessa, new LinkedList<>(), Arrays.asList(specialPack),
+                    vanessa, new LinkedList<>(), Arrays.asList(
+                            new PurchasedOffering(1, specialPack)),
                     sylvioc);
             bill2.setCltype("individualbill");
 
@@ -377,7 +380,8 @@ public class DemoConfigureBean implements Serializable {
                 new Date(1506070013419l),
                 1500, 0,
                 new Date(), Arrays.asList("Has left her first son"), vanessa,
-                Arrays.asList(payment), Arrays.asList(service), client1);
+                Arrays.asList(payment), Arrays.asList(new PurchasedOffering(1,
+                service)), client1);
         bill.setCltype("clientbill");
 
         vanessa.getBills().add(bill);
@@ -389,8 +393,9 @@ public class DemoConfigureBean implements Serializable {
                 new Date(), Arrays.asList("BAU", "Easy but long"), vanessa,
                 Arrays.asList(new Payment(3000, "EUR", em.
                         find(PaymentMode.class,
-                                "Virement"))), Arrays.asList(service2), vanessa.
-                getCollectiveGroups().get(0));
+                                "Virement"))), Arrays.asList(
+                new PurchasedOffering(1, service2)), vanessa.
+                        getCollectiveGroups().get(0));
         cgbill.setCltype("collectivegroupbill");
 
         vanessa.getBills().add(cgbill);

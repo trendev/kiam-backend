@@ -56,8 +56,8 @@ public class CollectiveGroupBillTest {
         assert instance.getProfessional() == null;
         assert instance.getPayments() != null;
         assert instance.getPayments().isEmpty();
-        assert instance.getOfferings() != null;
-        assert instance.getOfferings().isEmpty();
+        assert instance.getPurchasedOfferings() != null;
+        assert instance.getPurchasedOfferings().isEmpty();
         assert instance.getCollectiveGroup() == null;
 
         String reference = "Ref-123456";
@@ -73,16 +73,17 @@ public class CollectiveGroupBillTest {
         Payment payment = new Payment(9000, "EUR",
                 new PaymentMode("Credit Card"));
         List<Payment> payments = Arrays.asList(payment);
-        List<Offering> offerings = IntStream
+        List<PurchasedOffering> purchasedOffering = IntStream
                 .range(0, 10)
                 .mapToObj(i -> new Service("Service #" + i, 1000, 10,
                         professional))
+                .map(o -> new PurchasedOffering(1, o))
                 .collect(Collectors.toList());
 
         instance = new CollectiveGroupBill(reference, deliveryDate, amount,
                 discount,
                 paymentDate,
-                comments, professional, payments, offerings,
+                comments, professional, payments, purchasedOffering,
                 new CollectiveGroup());
 
         assert instance.getReference().equals(reference);
@@ -96,10 +97,12 @@ public class CollectiveGroupBillTest {
         assert instance.getPayments() != null;
 
         assert instance.getPayments().contains(payment);
-        assert instance.getOfferings() != null;
-        assert instance.getOfferings().size() == 10;
+        assert instance.getPurchasedOfferings() != null;
+        assert instance.getPurchasedOfferings().size() == 10;
 
-        assert instance.getOfferings().stream().mapToInt(o -> o.getPrice()).
+        assert instance.getPurchasedOfferings().stream()
+                .map(po -> po.getOffering())
+                .mapToInt(o -> o.getPrice()).
                 sum() == totalAmount;
 
         assert instance.getPayments().stream().mapToInt(p -> p.getAmount()).

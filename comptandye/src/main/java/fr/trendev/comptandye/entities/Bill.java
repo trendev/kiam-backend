@@ -18,7 +18,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -91,17 +90,13 @@ public abstract class Bill {
             orphanRemoval = true)
     private List<Payment> payments = new LinkedList<>();
 
-    /**
-     * Should be ignored during a PUT and cannot be used to create Offerings
-     * during a POST (No PERSIST on the relation).
-     */
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH,
-        CascadeType.REMOVE}, targetEntity = Offering.class)
-    private List<Offering> offerings = new LinkedList<>();
+    @OneToMany(cascade = {CascadeType.ALL},
+            targetEntity = PurchasedOffering.class, orphanRemoval = true)
+    private List<PurchasedOffering> purchasedOfferings = new LinkedList<>();
 
     public Bill(String reference, Date deliveryDate, int amount, int discount,
             Date paymentDate, List comments, Professional professional,
-            List payments, List offerings) {
+            List payments, List purchasedOfferings) {
         this.reference = reference;
         this.deliveryDate = deliveryDate;
         this.amount = amount;
@@ -110,7 +105,7 @@ public abstract class Bill {
         this.comments = comments;
         this.professional = professional;
         this.payments = payments;
-        this.offerings = offerings;
+        this.purchasedOfferings = purchasedOfferings;
     }
 
     public Bill() {
@@ -188,12 +183,12 @@ public abstract class Bill {
         this.payments = payments;
     }
 
-    public List<Offering> getOfferings() {
-        return this.offerings;
+    public List<PurchasedOffering> getPurchasedOfferings() {
+        return this.purchasedOfferings;
     }
 
-    public void setOfferings(List<Offering> offerings) {
-        this.offerings = offerings;
+    public void setPurchasedOfferings(List<PurchasedOffering> purchasedOfferings) {
+        this.purchasedOfferings = purchasedOfferings;
     }
 
     public <T> T accept(Visitor<T> v) {

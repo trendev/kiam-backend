@@ -25,6 +25,7 @@
     <class>fr.trendev.comptandye.entities.IndividualBill</class>
     <class>fr.trendev.comptandye.entities.Pack</class>
     <class>fr.trendev.comptandye.entities.CollectiveGroupBill</class>
+    <class>fr.trendev.comptandye.entities.PurchasedOffering</class>
     <properties>
       <!--Enable SQL Logging-->
       <property name="eclipselink.logging.level" value="FINER"/>

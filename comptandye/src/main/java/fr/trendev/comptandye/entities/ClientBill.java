@@ -20,10 +20,10 @@ public class ClientBill extends Bill {
 
     public ClientBill(String reference, Date deliveryDate, int amount,
             int discount, Date paymentDate, List comments,
-            Professional professional, List payments, List offerings,
+            Professional professional, List payments, List purchasedOfferings,
             Client client) {
         super(reference, deliveryDate, amount, discount, paymentDate, comments,
-                professional, payments, offerings);
+                professional, payments, purchasedOfferings);
         this.client = client;
     }
 

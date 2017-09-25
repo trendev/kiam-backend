@@ -19,10 +19,8 @@ import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.sessions.ServiceFacade;
 import fr.trendev.comptandye.visitors.ProvideOfferingFacadeVisitor;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -169,21 +167,21 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
                 e.setAmount(amount);
             }
 
-            List<Offering> offerings = e.getOfferings().stream()
-                    .map(o -> {
-                        return Optional.ofNullable(this.getOfferingFacade(o).
-                                find(new OfferingPK(
-                                        o.getId(),
-                                        e.getProfessional().getEmail())))
-                                .map(Function.identity())
-                                .orElseThrow(() ->
-                                        new WebApplicationException(
-                                                o.getClass().getSimpleName()
-                                                + " " + o.getId()
-                                                + " does not exist"));
-                    }).collect(Collectors.toList());
-
-            e.setOfferings(offerings);
+//            List<Offering> offerings = e.getOfferings().stream()
+//                    .map(o -> {
+//                        return Optional.ofNullable(this.getOfferingFacade(o).
+//                                find(new OfferingPK(
+//                                        o.getId(),
+//                                        e.getProfessional().getEmail())))
+//                                .map(Function.identity())
+//                                .orElseThrow(() ->
+//                                        new WebApplicationException(
+//                                                o.getClass().getSimpleName()
+//                                                + " " + o.getId()
+//                                                + " does not exist"));
+//                    }).collect(Collectors.toList());
+//
+//            e.setOfferings(offerings);
         });
     }
 
