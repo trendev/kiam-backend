@@ -93,7 +93,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 e -> {
             //generates an UUID if no one is provided
             if (e.getUuid() == null || e.getUuid().isEmpty()) {
-                String uuid = UUIDGenerator.generate("PRO_", true);
+                String uuid = UUIDGenerator.generate("PRO-", true);
                 LOG.log(Level.WARNING,
                         "No UUID provided for new Professional {0}. Generated UUID = {1}",
                         new Object[]{e.getEmail(), uuid});
@@ -133,7 +133,6 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
             /**
              * TODO : Should only be performed by an Administrator
              */
-            e.setUuid(entity.getUuid());
             e.setRegistrationDate(entity.getRegistrationDate());
 
             /**

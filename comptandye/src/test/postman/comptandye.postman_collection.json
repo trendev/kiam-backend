@@ -159,7 +159,7 @@
 									"tests[\"email is \\\"newadmin@trendev.fr\\\"\"] = jsonData.email === \"newadmin@trendev.fr\"",
 									"tests[\"password is \\\"ANOTHER_PASSWORD\\\"\"] = jsonData.password === \"eVgyxb4vqO/zASQ7SkHckVGO7km4zUXxgevZwRdXzlM=\";",
 									"tests[\"username is \\\"LewAshby\\\"\"] = jsonData.username === \"LewAshby\";",
-									"tests[\"uuid is undefined\"] = jsonData.uuid === undefined;",
+									"tests[\"uuid is defined\"] = jsonData.uuid !== undefined;",
 									"tests[\"registrationDate is defined\"] = jsonData.registrationDate !== undefined;",
 									"tests[\"userGroups should be undefined\"] = jsonData.userGroups === undefined;",
 									""
@@ -172,14 +172,14 @@
 						"method": "PUT",
 						"header": [
 							{
-								"description": "",
 								"key": "Content-Type",
-								"value": "application/json"
+								"value": "application/json",
+								"description": ""
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"newadmin@trendev.fr\",\n    \"password\": \"ANOTHER_PASSWORD\",\n    \"username\": \"LewAshby\"\n}"
+							"raw": "{\n    \"email\": \"newadmin@trendev.fr\",\n    \"password\": \"ANOTHER_PASSWORD\",\n    \"username\": \"LewAshby\",\n    \"uuid\":\"another_one\"\n}"
 						},
 						"description": ""
 					},
@@ -2622,14 +2622,14 @@
 						"method": "PUT",
 						"header": [
 							{
-								"description": "",
 								"key": "Content-Type",
-								"value": "application/json"
+								"value": "application/json",
+								"description": ""
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"individual@gmail.com\",\n    \"password\": \"ANOTHER_PASSWORD\",\n    \"username\": \"ind_test\",\n    \"uuid\": \"IND_d7d1b42c88b8450c96236d0a0f5b8294\",\n    \"registrationDate\": 1504361329000,\n    \"customerDetails\": {\n        \"id\": {{created_customer_details_id}},\n        \"firstName\": \"Hank\",\n        \"lastName\": \"Moody\",\n        \"nickname\": \"Hanky\",\n        \"phone\": \"0102030405\",\n        \"birthdate\": -296697600000,\n        \"sex\": \"M\",\n        \"comments\": [\n            \"Fun\",\n            \"Book Author\",\n            \"Smokes and drinks a lot\",\n            \"Also Weed and Sex addicted\",\n            \"Driving a Porsche 911\"\n        ]\n    },\n    \"address\": {\n        \"id\": {{created_address_id}},\n        \"street\": \"26 Brooks Avenue\",\n        \"postalCode\": \"90291\",\n        \"city\": \"Venice, Ca\",\n        \"country\": \"USA\"\n    },\n    \"socialNetworkAccounts\": {\n        \"id\": {{created_socialnetworkaccounts_id}},\n        \"facebook\": \"https://www.facebook.com/hankmoody\",\n        \"twitter\": \"@hankfuckinmoody\",\n        \"pinterest\": \"https://www.pinterest.com/californication123/\"\n    }\n}"
+							"raw": "{\n    \"email\": \"individual@gmail.com\",\n    \"password\": \"ANOTHER_PASSWORD\",\n    \"username\": \"ind_test\",\n    \"registrationDate\": 1504361329000,\n    \"customerDetails\": {\n        \"id\": {{created_customer_details_id}},\n        \"firstName\": \"Hank\",\n        \"lastName\": \"Moody\",\n        \"nickname\": \"Hanky\",\n        \"phone\": \"0102030405\",\n        \"birthdate\": -296697600000,\n        \"sex\": \"M\",\n        \"comments\": [\n            \"Fun\",\n            \"Book Author\",\n            \"Smokes and drinks a lot\",\n            \"Also Weed and Sex addicted\",\n            \"Driving a Porsche 911\"\n        ]\n    },\n    \"address\": {\n        \"id\": {{created_address_id}},\n        \"street\": \"26 Brooks Avenue\",\n        \"postalCode\": \"90291\",\n        \"city\": \"Venice, Ca\",\n        \"country\": \"USA\"\n    },\n    \"socialNetworkAccounts\": {\n        \"id\": {{created_socialnetworkaccounts_id}},\n        \"facebook\": \"https://www.facebook.com/hankmoody\",\n        \"twitter\": \"@hankfuckinmoody\",\n        \"pinterest\": \"https://www.pinterest.com/californication123/\"\n    }\n}"
 						},
 						"description": ""
 					},
