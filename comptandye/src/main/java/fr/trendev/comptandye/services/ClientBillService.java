@@ -11,6 +11,7 @@ import fr.trendev.comptandye.entities.Offering;
 import fr.trendev.comptandye.entities.OfferingPK;
 import fr.trendev.comptandye.entities.Payment;
 import fr.trendev.comptandye.entities.Professional;
+import fr.trendev.comptandye.entities.PurchasedOffering;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.ClientBillFacade;
 import fr.trendev.comptandye.sessions.ClientFacade;
@@ -19,6 +20,7 @@ import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.sessions.ServiceFacade;
 import fr.trendev.comptandye.visitors.ProvideOfferingFacadeVisitor;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -167,21 +169,25 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
                 e.setAmount(amount);
             }
 
-//            List<Offering> offerings = e.getOfferings().stream()
-//                    .map(o -> {
-//                        return Optional.ofNullable(this.getOfferingFacade(o).
-//                                find(new OfferingPK(
-//                                        o.getId(),
-//                                        e.getProfessional().getEmail())))
-//                                .map(Function.identity())
-//                                .orElseThrow(() ->
-//                                        new WebApplicationException(
-//                                                o.getClass().getSimpleName()
-//                                                + " " + o.getId()
-//                                                + " does not exist"));
-//                    }).collect(Collectors.toList());
-//
-//            e.setOfferings(offerings);
+            List<PurchasedOffering> offerings = e.getPurchasedOfferings().
+                    stream()
+                    .map(po -> {
+                        return Optional.ofNullable(this.getOfferingFacade(po.
+                                getOffering()).
+                                find(new OfferingPK(
+                                        po.getOffering().getId(),
+                                        e.getProfessional().getEmail())))
+                                .map(o ->
+                                        new PurchasedOffering(po.getQty(), o))
+                                .orElseThrow(() ->
+                                        new WebApplicationException(
+                                                po.getOffering().getClass().
+                                                        getSimpleName()
+                                                + " " + po.getOffering().getId()
+                                                + " does not exist"));
+                    }).collect(Collectors.toList());
+
+            e.setPurchasedOfferings(offerings);
         });
     }
 
