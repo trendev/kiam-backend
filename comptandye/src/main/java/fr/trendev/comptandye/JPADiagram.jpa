@@ -1040,10 +1040,10 @@
         </jpa:con>
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-            <jpa:snp loc="IMPORT" e="true">import java.util.Date;
+        <jpa:snp loc="IMPORT" e="true">import java.util.Date;
               import java.util.List;
                 import fr.trendev.comptandye.visitors.Visitor;</jpa:snp>
-            <jpa:snp e="true">@Override
+        <jpa:snp e="true">@Override
               public void accept(Visitor v){
                 v.visit(this);
                 }</jpa:snp>
@@ -1479,7 +1479,12 @@
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.Date;
-            import java.util.List;</jpa:snp>
+          import java.util.List;
+            import fr.trendev.comptandye.visitors.Visitor;</jpa:snp>
+        <jpa:snp e="true">@Override
+          public void accept(Visitor v){
+            v.visit(this);
+            }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490281931338" connected-attribute-id="_1506010011241531" v="true" xvt="" name="collectiveGroup" id="_1506010011239530">
@@ -1507,7 +1512,7 @@
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1490172966686" x="-604" y="720">
+            <i ref="_1490172966686" x="-606" y="718">
                 <el>
                     <e ref="_150537690133858">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1517,39 +1522,39 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490180671085" x="961" y="409">
+            <i ref="_1490180671085" x="959" y="407">
                 <el>
                     <e ref="_1503073892988616">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490704123469" x="-106" y="121"/>
-            <i ref="_1503060694288" x="-462" y="310"/>
-            <i ref="_1490101578444" x="423" y="121"/>
-            <i ref="_1490100852900" x="423" y="-115">
+            <i ref="_1490704123469" x="-108" y="119"/>
+            <i ref="_1503060694288" x="-464" y="308"/>
+            <i ref="_1490101578444" x="421" y="119"/>
+            <i ref="_1490100852900" x="421" y="-117">
                 <el>
                     <e ref="_14901160469883436">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101520286" x="303" y="409">
+            <i ref="_1490101520286" x="301" y="407">
                 <el>
                     <e ref="_1490180547173493">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490104062170" x="-341" y="465"/>
-            <i ref="_1490113906035" x="-316" y="962">
+            <i ref="_1490104062170" x="-343" y="463"/>
+            <i ref="_1490113906035" x="-318" y="960">
                 <el>
                     <e ref="_150489073375385">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490704206844" x="-14" y="923">
+            <i ref="_1490704206844" x="-16" y="921">
                 <el>
                     <e ref="_15049038294552105">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1559,7 +1564,7 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490101376664" x="132" y="121">
+            <i ref="_1490101376664" x="130" y="119">
                 <el>
                     <e ref="_14901093969381510">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1572,15 +1577,15 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490113751330" x="-624" y="1086"/>
-            <i ref="_1490206901623" x="365" y="1307">
+            <i ref="_1490113751330" x="-626" y="1084"/>
+            <i ref="_1490206901623" x="363" y="1305">
                 <el>
                     <e ref="_1503081214518630">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490178979567" x="778" y="1307">
+            <i ref="_1490178979567" x="776" y="1305">
                 <el>
                     <e ref="_150365567487858">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1593,7 +1598,7 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1499512549878" x="-188" y="1257">
+            <i ref="_1499512549878" x="-190" y="1255">
                 <el>
                     <e ref="_1505144351224341">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1606,8 +1611,8 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490101737208" x="-354" y="74"/>
-            <i ref="_1490281931338" x="477" y="1037">
+            <i ref="_1490101737208" x="-356" y="72"/>
+            <i ref="_1490281931338" x="475" y="1035">
                 <el>
                     <e ref="_1490283543806197">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1623,7 +1628,7 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490101456632" x="11" y="310">
+            <i ref="_1490101456632" x="9" y="308">
                 <el>
                     <e ref="_1490179812678394">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1654,22 +1659,22 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490184243036" x="65" y="1307"/>
-            <i ref="_1490100823157" x="113" y="-145">
+            <i ref="_1490184243036" x="63" y="1305"/>
+            <i ref="_1490100823157" x="111" y="-147">
                 <el>
                     <e ref="_14901160469863435">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490180682743" x="867" y="532">
+            <i ref="_1490180682743" x="865" y="530">
                 <el>
                     <e ref="_1490181195212606">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101555530" x="281" y="645">
+            <i ref="_1490101555530" x="279" y="643">
                 <el>
                     <e ref="_149028166301044">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1694,7 +1699,7 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1506009883340" x="686" y="710">
+            <i ref="_1506009883340" x="684" y="708">
                 <el>
                     <e ref="_1506010011239530">
                         <v st="1" si="12.0" cl="#00ff00"/>
