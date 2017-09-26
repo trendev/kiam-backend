@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -258,22 +259,20 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
 //        });
 //    }
 //    
-//    @Path("{reference}/{deliverydate}")
-//    @DELETE
-//    public Response delete(@Context SecurityContext sec,
-//            @PathParam("reference") String reference,
-//            @PathParam("deliverydate") long deliverydate,
-//            @QueryParam("professional") String professional) {
-//
-//        BillPK pk = new BillPK(reference, new Date(deliverydate), this.
-//                getProEmail(sec, professional));
-//
-//        LOG.log(Level.INFO, "Deleting ClientBill {0}", clientBillFacade.
-//                prettyPrintPK(pk));
-//        return super.delete(clientBillFacade, pk,
-//                e -> {
-//            e.getProfessional().getBills().remove(e);
-//            e.getClient().getClientBills().remove(e);
-//        });
-//    }
+    @Path("{reference}/{deliverydate}")
+    @DELETE
+    public Response delete(@PathParam("reference") String reference,
+            @PathParam("deliverydate") long deliverydate,
+            @QueryParam("professional") String professional) {
+
+        BillPK pk = new BillPK(reference, new Date(deliverydate), professional);
+
+        LOG.log(Level.INFO, "Deleting ClientBill {0}", clientBillFacade.
+                prettyPrintPK(pk));
+        return super.delete(clientBillFacade, pk,
+                e -> {
+            e.getProfessional().getBills().remove(e);
+            e.getClient().getClientBills().remove(e);
+        });
+    }
 }
