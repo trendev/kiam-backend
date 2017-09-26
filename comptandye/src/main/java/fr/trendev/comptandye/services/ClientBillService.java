@@ -15,9 +15,7 @@ import fr.trendev.comptandye.entities.PurchasedOffering;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.ClientBillFacade;
 import fr.trendev.comptandye.sessions.ClientFacade;
-import fr.trendev.comptandye.sessions.PackFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
-import fr.trendev.comptandye.sessions.ServiceFacade;
 import fr.trendev.comptandye.visitors.ProvideOfferingFacadeVisitor;
 import java.util.Date;
 import java.util.List;
@@ -59,12 +57,6 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
 
     @Inject
     ClientFacade clientFacade;
-
-    @Inject
-    ServiceFacade serviceFacade;
-
-    @Inject
-    PackFacade packFacade;
 
     @Inject
     ProvideOfferingFacadeVisitor visitor;
@@ -142,7 +134,8 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
             List<PurchasedOffering> purchasedOfferings = e.
                     getPurchasedOfferings().
                     stream()
-                    .map(po -> Optional.ofNullable(po.getOffering().accept(visitor).find(new OfferingPK(
+                    .map(po -> Optional.ofNullable(po.getOffering().accept(
+                            visitor).find(new OfferingPK(
                                     po.getOffering().getId(),
                                     e.getProfessional().getEmail())))
                             .map(o ->
