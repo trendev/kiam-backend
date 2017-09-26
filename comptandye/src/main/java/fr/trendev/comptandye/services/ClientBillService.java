@@ -58,6 +58,11 @@ public class ClientBillService extends AbstractBillService<ClientBill> {
         return LOG;
     }
 
+    @Override
+    protected ClientBillFacade getFacade() {
+        return clientBillFacade;
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
@@ -95,7 +100,7 @@ public class ClientBillService extends AbstractBillService<ClientBill> {
 
         String proEmail = this.getProEmail(sec, professional);
 
-        return super.post(clientBillFacade,
+        return super.post(
                 e -> {
             if (e.getClient() == null) {
                 throw new WebApplicationException(
@@ -122,7 +127,7 @@ public class ClientBillService extends AbstractBillService<ClientBill> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(@Context SecurityContext sec, ClientBill entity,
             @QueryParam("professional") String professional) {
-        return super.put(clientBillFacade, sec, entity, professional);
+        return super.put(sec, entity, professional);
     }
 
     @Path("{reference}/{deliverydate}")
@@ -131,7 +136,7 @@ public class ClientBillService extends AbstractBillService<ClientBill> {
             @PathParam("deliverydate") long deliverydate,
             @QueryParam("professional") String professional) {
 
-        return super.delete(clientBillFacade,
+        return super.delete(
                 ClientBill.class,
                 e -> e.getClient().getClientBills().remove(e),
                 reference,

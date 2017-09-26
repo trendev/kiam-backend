@@ -52,7 +52,9 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         return LOG;
     }
 
-    public Response post(AbstractFacade<T, BillPK> facade,
+    protected abstract AbstractFacade<T, BillPK> getFacade();
+
+    public Response post(
             Consumer<T> prepareAction,
             SecurityContext sec, T entity,
             String professional) {
@@ -62,7 +64,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         return super.<Professional, String>post(entity, proEmail,
                 AbstractFacade::prettyPrintPK,
                 Professional.class,
-                facade, professionalFacade,
+                getFacade(), professionalFacade,
                 T::setProfessional,
                 Professional::getBills, e -> {
             /**
@@ -164,7 +166,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         }
     }
 
-    public Response put(AbstractFacade<T, BillPK> facade,
+    public Response put(
             SecurityContext sec, T entity,
             String professional) {
 
@@ -172,9 +174,9 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                 this.getProEmail(sec,
                         professional));
 
-        LOG.log(Level.INFO, "Updating {1} {0}", new Object[]{facade.
+        LOG.log(Level.INFO, "Updating {1} {0}", new Object[]{getFacade().
             prettyPrintPK(pk), entity.getClass().getSimpleName()});
-        return super.put(entity, facade, pk, e -> {
+        return super.put(entity, getFacade(), pk, e -> {
             e.setComments(entity.getComments());
 
             if (e.getPaymentDate() == null) {
@@ -185,7 +187,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         });
     }
 
-    public Response delete(AbstractFacade<T, BillPK> facade,
+    public Response delete(
             Class<T> entityClass,
             Function<T, Boolean> deleteAction,
             String reference,
@@ -195,9 +197,9 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         BillPK pk = new BillPK(reference, new Date(deliverydate), professional);
 
         LOG.log(Level.INFO, "Deleting {1} {0}",
-                new Object[]{facade.prettyPrintPK(pk),
+                new Object[]{getFacade().prettyPrintPK(pk),
                     entityClass.getSimpleName()});
-        return super.delete(facade, pk,
+        return super.delete(getFacade(), pk,
                 e -> {
             e.getProfessional().getBills().remove(e);
             deleteAction.apply(e);
