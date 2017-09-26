@@ -1,0 +1,276 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package fr.trendev.comptandye.services;
+
+import fr.trendev.comptandye.entities.Bill;
+import fr.trendev.comptandye.entities.BillPK;
+import fr.trendev.comptandye.entities.ClientBill;
+import fr.trendev.comptandye.entities.OfferingPK;
+import fr.trendev.comptandye.entities.Payment;
+import fr.trendev.comptandye.entities.Professional;
+import fr.trendev.comptandye.entities.PurchasedOffering;
+import fr.trendev.comptandye.sessions.AbstractFacade;
+import fr.trendev.comptandye.sessions.ProfessionalFacade;
+import fr.trendev.comptandye.visitors.ProvideOfferingFacadeVisitor;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import javax.inject.Inject;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+
+/**
+ *
+ * @author jsie
+ */
+public abstract class AbstractBillService<T extends Bill> extends AbstractCommonService<T, BillPK> {
+    
+    @Inject
+    ProfessionalFacade professionalFacade;
+    
+    @Inject
+    ProvideOfferingFacadeVisitor visitor;
+    
+    private static final Logger LOG = Logger.getLogger(
+            AbstractBillService.class.
+                    getName());
+    
+    public AbstractBillService(Class<T> entityClass) {
+        super(entityClass);
+    }
+    
+    @Override
+    protected Logger getLogger() {
+        return LOG;
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Override
+    public Response findAll(AbstractFacade<T, BillPK> facade) {
+        LOG.log(Level.INFO, "Providing the ClientBill list");
+        return super.findAll(facade);
+    }
+    
+    @Path("count")
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    @Override
+    public Response count(AbstractFacade<T, BillPK> facade) {
+        return super.count(facade);
+    }
+    
+    @Path("{reference}/{deliverydate}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response find(AbstractFacade<T, BillPK> facade,
+            @PathParam("reference") String reference,
+            @PathParam("deliverydate") long deliverydate,
+            @QueryParam("professional") String professional,
+            @QueryParam("refresh") boolean refresh) {
+        BillPK pk = new BillPK(reference, new Date(deliverydate), professional);
+        LOG.log(Level.INFO, "REST request to get ClientBill : {0}",
+                facade.
+                        prettyPrintPK(
+                                pk));
+        return super.find(facade, pk, refresh);
+    }
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response post(AbstractFacade<T, BillPK> facade,
+            Consumer<T> prepareAction,
+            BiConsumer<T, Professional> setter,
+            @Context SecurityContext sec, T entity,
+            @QueryParam("professional") String professional) {
+        
+        String proEmail = this.getProEmail(sec, professional);
+        
+        return super.<Professional, String>post(entity, proEmail,
+                AbstractFacade::prettyPrintPK,
+                Professional.class,
+                facade, professionalFacade,
+                setter,
+                Professional::getBills, e -> {
+            /**
+             * Sets the reference. Keep in mind that e is already added to the
+             * Professional Bills list!
+             */
+            e.setReference("C-" + e.getProfessional().getUuid() + "-" + e.
+                    getProfessional().getBills().stream().filter(
+                            b -> b instanceof ClientBill).count());
+            
+            if (e.getDeliveryDate() == null) {
+                throw new WebApplicationException(
+                        "A delivery date must be provided !");
+            }
+            
+            this.checkPayment(e);
+            
+            List<PurchasedOffering> purchasedOfferings = e.
+                    getPurchasedOfferings().
+                    stream()
+                    .map(po -> Optional.ofNullable(po.getOffering().accept(
+                            visitor).find(new OfferingPK(
+                                    po.getOffering().getId(),
+                                    e.getProfessional().getEmail())))
+                            .map(o ->
+                                    new PurchasedOffering(po.getQty(), o))
+                            .orElseThrow(() ->
+                                    new WebApplicationException(
+                                            po.getOffering().getClass().
+                                                    getSimpleName()
+                                            + " " + po.getOffering().getId()
+                                            + " does not exist !"))
+                    ).collect(Collectors.toList());
+            
+            int total = purchasedOfferings.stream()
+                    .mapToInt(po -> po.getQty() * po.getOffering().getPrice())
+                    .sum();
+            
+            if (e.getAmount() != (total - e.getDiscount())) {
+                String errmsg = "Amount is " + e.getAmount() + " "
+                        + e.getCurrency()
+                        + " but the total amount computed (based on the purchased offerings prices and the discount) is "
+                        + "(" + total + "-" + e.getDiscount() + ") = "
+                        + (total - e.getDiscount())
+                        + " "
+                        + e.getCurrency();
+                LOG.log(Level.WARNING, errmsg);
+                throw new WebApplicationException(errmsg);
+            }
+            
+            e.setPurchasedOfferings(purchasedOfferings);
+            
+            prepareAction.accept(e);
+
+//            if (e.getClient() == null) {
+//                throw new WebApplicationException(
+//                        "A valid Client must be provided !");
+//            }
+//
+//            ClientPK clientPK = new ClientPK(e.getClient().getId(), proEmail);
+//
+//            e.setClient(
+//                    Optional.ofNullable(clientFacade.find(clientPK))
+//                            .map(Function.identity()).orElseThrow(() ->
+//                            new WebApplicationException(
+//                                    "Client " + clientFacade.prettyPrintPK(
+//                                            clientPK) + " doesn't exist !"
+//                            )));
+//
+//            e.getClient().getClientBills().add(e);
+        });
+    }
+    
+    private void checkPayment(T bill) {
+        
+        if (bill.getPaymentDate() != null && bill.getPaymentDate().before(bill.
+                getDeliveryDate())) {
+            throw new WebApplicationException("Payment date " + bill.
+                    getPaymentDate() + " cannot be before Delivery Date "
+                    + bill.getDeliveryDate());
+        }
+        
+        if (!bill.getPayments().isEmpty()) {
+            if (bill.getPaymentDate() != null) {
+                //Total amount should be equal to the sum of the amount's payment
+                int total = bill.getPayments().stream()
+                        .mapToInt(Payment::getAmount)
+                        .sum();
+                if (total != bill.getAmount()) {
+                    String errmsg = "Amount is " + bill.getAmount()
+                            + " "
+                            + bill.getCurrency()
+                            + " but the total amount computed (based on the payments) is "
+                            + total
+                            + " "
+                            + bill.getCurrency();
+                    LOG.log(Level.WARNING, errmsg);
+                    throw new WebApplicationException(errmsg);
+                }
+            } else {
+                LOG.log(Level.INFO,
+                        "{2} {0} delivered on {1} has not been paid : payments recorded but no payment date provided yet !",
+                        new Object[]{bill.getReference(), bill.
+                            getDeliveryDate(), bill.getClass().getSimpleName()});
+            }
+        } else {
+            if (bill.getPaymentDate() != null) {
+                throw new WebApplicationException(
+                        "A payment date is provided but there is no payment yet !");
+            } else {
+                LOG.log(Level.INFO,
+                        "{2} {0} delivered on {1} has not been paid : no payment provided during the Bill and no payment date provided yet !",
+                        new Object[]{bill.getReference(), bill.
+                            getDeliveryDate(), bill.getClass().getSimpleName()});
+            }
+        }
+    }
+    
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response put(AbstractFacade<T, BillPK> facade,
+            @Context SecurityContext sec, T entity,
+            @QueryParam("professional") String professional) {
+        
+        BillPK pk = new BillPK(entity.getReference(), entity.getDeliveryDate(),
+                this.getProEmail(sec,
+                        professional));
+        
+        LOG.log(Level.INFO, "Updating ClientBill {0}", facade.
+                prettyPrintPK(pk));
+        return super.put(entity, facade, pk, e -> {
+            e.setComments(entity.getComments());
+            
+            if (e.getPaymentDate() == null) {
+                checkPayment(entity);
+                e.setPaymentDate(entity.getPaymentDate());
+                e.setPayments(entity.getPayments());
+            }
+        });
+    }
+    
+    @Path("{reference}/{deliverydate}")
+    @DELETE
+    public Response delete(AbstractFacade<T, BillPK> facade,
+            Function<T, Boolean> deleteAction,
+            @PathParam("reference") String reference,
+            @PathParam("deliverydate") long deliverydate,
+            @QueryParam("professional") String professional) {
+        
+        BillPK pk = new BillPK(reference, new Date(deliverydate), professional);
+        
+        LOG.log(Level.INFO, "Deleting ClientBill {0}", facade.
+                prettyPrintPK(pk));
+        return super.delete(facade, pk,
+                e -> {
+            e.getProfessional().getBills().remove(e);
+            deleteAction.apply(e);
+            //e.getClient().getClientBills().remove(e);
+        });
+    }
+}
