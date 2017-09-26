@@ -8,22 +8,14 @@ package fr.trendev.comptandye.services;
 import fr.trendev.comptandye.entities.BillPK;
 import fr.trendev.comptandye.entities.ClientBill;
 import fr.trendev.comptandye.entities.ClientPK;
-import fr.trendev.comptandye.entities.OfferingPK;
 import fr.trendev.comptandye.entities.Payment;
-import fr.trendev.comptandye.entities.Professional;
-import fr.trendev.comptandye.entities.PurchasedOffering;
-import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.ClientBillFacade;
 import fr.trendev.comptandye.sessions.ClientFacade;
-import fr.trendev.comptandye.sessions.ProfessionalFacade;
-import fr.trendev.comptandye.visitors.ProvideOfferingFacadeVisitor;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -47,19 +39,13 @@ import javax.ws.rs.core.SecurityContext;
  */
 @Stateless
 @Path("ClientBill")
-public class ClientBillService extends AbstractCommonService<ClientBill, BillPK> {
+public class ClientBillService extends AbstractBillService<ClientBill> {
 
     @Inject
     ClientBillFacade clientBillFacade;
 
     @Inject
-    ProfessionalFacade professionalFacade;
-
-    @Inject
     ClientFacade clientFacade;
-
-    @Inject
-    ProvideOfferingFacadeVisitor visitor;
 
     private static final Logger LOG = Logger.getLogger(ClientBillService.class.
             getName());
@@ -110,62 +96,8 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
 
         String proEmail = this.getProEmail(sec, professional);
 
-        return super.<Professional, String>post(entity, proEmail,
-                AbstractFacade::prettyPrintPK,
-                Professional.class,
-                clientBillFacade, professionalFacade,
-                ClientBill::setProfessional,
-                Professional::getBills, e -> {
-            /**
-             * Sets the reference. Keep in mind that e is already added to the
-             * Professional Bills list!
-             */
-            e.setReference("C-" + e.getProfessional().getUuid() + "-" + e.
-                    getProfessional().getBills().stream().filter(
-                            b -> b instanceof ClientBill).count());
-
-            if (e.getDeliveryDate() == null) {
-                throw new WebApplicationException(
-                        "A delivery date must be provided !");
-            }
-
-            this.checkPayment(e);
-
-            List<PurchasedOffering> purchasedOfferings = e.
-                    getPurchasedOfferings().
-                    stream()
-                    .map(po -> Optional.ofNullable(po.getOffering().accept(
-                            visitor).find(new OfferingPK(
-                                    po.getOffering().getId(),
-                                    e.getProfessional().getEmail())))
-                            .map(o ->
-                                    new PurchasedOffering(po.getQty(), o))
-                            .orElseThrow(() ->
-                                    new WebApplicationException(
-                                            po.getOffering().getClass().
-                                                    getSimpleName()
-                                            + " " + po.getOffering().getId()
-                                            + " does not exist !"))
-                    ).collect(Collectors.toList());
-
-            int total = purchasedOfferings.stream()
-                    .mapToInt(po -> po.getQty() * po.getOffering().getPrice())
-                    .sum();
-
-            if (e.getAmount() != (total - e.getDiscount())) {
-                String errmsg = "Amount is " + e.getAmount() + " "
-                        + e.getCurrency()
-                        + " but the total amount computed (based on the purchased offerings prices and the discount) is "
-                        + "(" + total + "-" + e.getDiscount() + ") = "
-                        + (total - e.getDiscount())
-                        + " "
-                        + e.getCurrency();
-                LOG.log(Level.WARNING, errmsg);
-                throw new WebApplicationException(errmsg);
-            }
-
-            e.setPurchasedOfferings(purchasedOfferings);
-
+        return super.post(clientBillFacade,
+                e -> {
             if (e.getClient() == null) {
                 throw new WebApplicationException(
                         "A valid Client must be provided !");
@@ -182,7 +114,9 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
                             )));
 
             e.getClient().getClientBills().add(e);
-        });
+        },
+                ClientBill::setProfessional,
+                sec, entity, professional);
     }
 
     private void checkPayment(ClientBill bill) {

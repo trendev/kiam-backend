@@ -7,7 +7,6 @@ package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.entities.Bill;
 import fr.trendev.comptandye.entities.BillPK;
-import fr.trendev.comptandye.entities.ClientBill;
 import fr.trendev.comptandye.entities.OfferingPK;
 import fr.trendev.comptandye.entities.Payment;
 import fr.trendev.comptandye.entities.Professional;
@@ -25,17 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
@@ -64,14 +53,11 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         return LOG;
     }
 
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     public Response post(AbstractFacade<T, BillPK> facade,
             Consumer<T> prepareAction,
             BiConsumer<T, Professional> setter,
-            @Context SecurityContext sec, T entity,
-            @QueryParam("professional") String professional) {
+            SecurityContext sec, T entity,
+            String professional) {
 
         String proEmail = this.getProEmail(sec, professional);
 
@@ -87,7 +73,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
              */
             e.setReference("C-" + e.getProfessional().getUuid() + "-" + e.
                     getProfessional().getBills().stream().filter(
-                            b -> b instanceof ClientBill).count());
+                            b -> (b.getClass().equals(e.getClass()))).count());
 
             if (e.getDeliveryDate() == null) {
                 throw new WebApplicationException(
@@ -132,23 +118,6 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
             e.setPurchasedOfferings(purchasedOfferings);
 
             prepareAction.accept(e);
-
-//            if (e.getClient() == null) {
-//                throw new WebApplicationException(
-//                        "A valid Client must be provided !");
-//            }
-//
-//            ClientPK clientPK = new ClientPK(e.getClient().getId(), proEmail);
-//
-//            e.setClient(
-//                    Optional.ofNullable(clientFacade.find(clientPK))
-//                            .map(Function.identity()).orElseThrow(() ->
-//                            new WebApplicationException(
-//                                    "Client " + clientFacade.prettyPrintPK(
-//                                            clientPK) + " doesn't exist !"
-//                            )));
-//
-//            e.getClient().getClientBills().add(e);
         });
     }
 
@@ -197,12 +166,9 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         }
     }
 
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     public Response put(AbstractFacade<T, BillPK> facade,
-            @Context SecurityContext sec, T entity,
-            @QueryParam("professional") String professional) {
+            SecurityContext sec, T entity,
+            String professional) {
 
         BillPK pk = new BillPK(entity.getReference(), entity.getDeliveryDate(),
                 this.getProEmail(sec,
@@ -221,13 +187,11 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         });
     }
 
-    @Path("{reference}/{deliverydate}")
-    @DELETE
     public Response delete(AbstractFacade<T, BillPK> facade,
             Function<T, Boolean> deleteAction,
-            @PathParam("reference") String reference,
-            @PathParam("deliverydate") long deliverydate,
-            @QueryParam("professional") String professional) {
+            String reference,
+            long deliverydate,
+            String professional) {
 
         BillPK pk = new BillPK(reference, new Date(deliverydate), professional);
 
