@@ -131,14 +131,11 @@ public class ClientBillService extends AbstractBillService<ClientBill> {
             @PathParam("deliverydate") long deliverydate,
             @QueryParam("professional") String professional) {
 
-        BillPK pk = new BillPK(reference, new Date(deliverydate), professional);
-
-        LOG.log(Level.INFO, "Deleting ClientBill {0}", clientBillFacade.
-                prettyPrintPK(pk));
-        return super.delete(clientBillFacade, pk,
-                e -> {
-            e.getProfessional().getBills().remove(e);
-            e.getClient().getClientBills().remove(e);
-        });
+        return super.delete(clientBillFacade,
+                ClientBill.class,
+                e -> e.getClient().getClientBills().remove(e),
+                reference,
+                deliverydate,
+                professional);
     }
 }
