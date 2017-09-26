@@ -263,7 +263,6 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
                 checkPayment(entity);
                 e.setPaymentDate(entity.getPaymentDate());
                 e.setPayments(entity.getPayments());
-                //clientBillFacade.flush();
             }
         });
     }
