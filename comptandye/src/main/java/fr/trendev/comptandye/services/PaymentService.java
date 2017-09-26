@@ -91,23 +91,7 @@ public class PaymentService extends AbstractCommonService<Payment, Long> {
         return super.put(entity, paymentFacade, entity.getId(),
                 e -> {
             e.setAmount(entity.getAmount());
-            /**
-             * Should not be used:
-             * https://bugs.eclipse.org/bugs/show_bug.cgi?id=247662
-             *
-             * e.setPaymentMode(entity.getPaymentMode());
-             */
-
-            if (paymentModeFacade.
-                    find(entity.getPaymentMode().getName())
-                    != null) {
-                e.setPaymentMode(entity.getPaymentMode());
-            } else {
-                String msg = "PaymentMode " + entity.getPaymentMode().
-                        getName()
-                        + " doesn't exist !";
-                throw new IllegalArgumentException(msg);
-            }
+            e.setPaymentMode(entity.getPaymentMode());
         });
     }
 
