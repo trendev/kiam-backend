@@ -17,7 +17,6 @@ import fr.trendev.comptandye.visitors.ProvideOfferingFacadeVisitor;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.logging.Level;
@@ -55,7 +54,6 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
 
     public Response post(AbstractFacade<T, BillPK> facade,
             Consumer<T> prepareAction,
-            BiConsumer<T, Professional> setter,
             SecurityContext sec, T entity,
             String professional) {
 
@@ -65,7 +63,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                 AbstractFacade::prettyPrintPK,
                 Professional.class,
                 facade, professionalFacade,
-                setter,
+                T::setProfessional,
                 Professional::getBills, e -> {
             /**
              * Sets the reference. Keep in mind that e is already added to the
@@ -174,8 +172,8 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                 this.getProEmail(sec,
                         professional));
 
-        LOG.log(Level.INFO, "Updating ClientBill {0}", facade.
-                prettyPrintPK(pk));
+        LOG.log(Level.INFO, "Updating {1} {0}", new Object[]{facade.
+            prettyPrintPK(pk), entity.getClass().getSimpleName()});
         return super.put(entity, facade, pk, e -> {
             e.setComments(entity.getComments());
 

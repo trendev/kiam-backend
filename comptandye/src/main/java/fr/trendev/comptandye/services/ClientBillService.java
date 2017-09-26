@@ -8,7 +8,6 @@ package fr.trendev.comptandye.services;
 import fr.trendev.comptandye.entities.BillPK;
 import fr.trendev.comptandye.entities.ClientBill;
 import fr.trendev.comptandye.entities.ClientPK;
-import fr.trendev.comptandye.entities.Payment;
 import fr.trendev.comptandye.sessions.ClientBillFacade;
 import fr.trendev.comptandye.sessions.ClientFacade;
 import java.util.Date;
@@ -115,53 +114,7 @@ public class ClientBillService extends AbstractBillService<ClientBill> {
 
             e.getClient().getClientBills().add(e);
         },
-                ClientBill::setProfessional,
                 sec, entity, professional);
-    }
-
-    private void checkPayment(ClientBill bill) {
-
-        if (bill.getPaymentDate() != null && bill.getPaymentDate().before(bill.
-                getDeliveryDate())) {
-            throw new WebApplicationException("Payment date " + bill.
-                    getPaymentDate() + " cannot be before Delivery Date "
-                    + bill.getDeliveryDate());
-        }
-
-        if (!bill.getPayments().isEmpty()) {
-            if (bill.getPaymentDate() != null) {
-                //Total amount should be equal to the sum of the amount's payment
-                int total = bill.getPayments().stream()
-                        .mapToInt(Payment::getAmount)
-                        .sum();
-                if (total != bill.getAmount()) {
-                    String errmsg = "Amount is " + bill.getAmount()
-                            + " "
-                            + bill.getCurrency()
-                            + " but the total amount computed (based on the payments) is "
-                            + total
-                            + " "
-                            + bill.getCurrency();
-                    LOG.log(Level.WARNING, errmsg);
-                    throw new WebApplicationException(errmsg);
-                }
-            } else {
-                LOG.log(Level.INFO,
-                        "ClientBill {0} delivered on {1} has not been paid : payments recorded but no payment date provided yet !",
-                        new Object[]{bill.getReference(), bill.
-                            getDeliveryDate()});
-            }
-        } else {
-            if (bill.getPaymentDate() != null) {
-                throw new WebApplicationException(
-                        "A payment date is provided but there is no payment yet !");
-            } else {
-                LOG.log(Level.INFO,
-                        "ClientBill {0} delivered on {1} has not been paid : no payment provided during the Bill and no payment date provided yet !",
-                        new Object[]{bill.getReference(), bill.
-                            getDeliveryDate()});
-            }
-        }
     }
 
     @PUT
@@ -169,22 +122,7 @@ public class ClientBillService extends AbstractBillService<ClientBill> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(@Context SecurityContext sec, ClientBill entity,
             @QueryParam("professional") String professional) {
-
-        BillPK pk = new BillPK(entity.getReference(), entity.getDeliveryDate(),
-                this.getProEmail(sec,
-                        professional));
-
-        LOG.log(Level.INFO, "Updating ClientBill {0}", clientBillFacade.
-                prettyPrintPK(pk));
-        return super.put(entity, clientBillFacade, pk, e -> {
-            e.setComments(entity.getComments());
-
-            if (e.getPaymentDate() == null) {
-                checkPayment(entity);
-                e.setPaymentDate(entity.getPaymentDate());
-                e.setPayments(entity.getPayments());
-            }
-        });
+        return super.put(clientBillFacade, sec, entity, professional);
     }
 
     @Path("{reference}/{deliverydate}")
