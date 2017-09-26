@@ -7,7 +7,6 @@ package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.entities.Payment;
 import fr.trendev.comptandye.sessions.PaymentFacade;
-import fr.trendev.comptandye.sessions.PaymentModeFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -34,9 +33,6 @@ public class PaymentService extends AbstractCommonService<Payment, Long> {
 
     @Inject
     PaymentFacade paymentFacade;
-
-    @Inject
-    PaymentModeFacade paymentModeFacade;
 
     private static final Logger LOG = Logger.getLogger(PaymentService.class.
             getName());
