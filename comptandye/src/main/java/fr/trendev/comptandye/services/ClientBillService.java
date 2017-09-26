@@ -33,6 +33,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -142,47 +143,7 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
                         "A delivery date must be provided !");
             }
 
-            if (e.getPaymentDate() != null && e.getPaymentDate().before(e.
-                    getDeliveryDate())) {
-                throw new WebApplicationException("Payment date " + e.
-                        getPaymentDate() + " cannot be before Delivery Date "
-                        + e.getDeliveryDate());
-            }
-
-            if (!e.getPayments().isEmpty()) {
-                if (e.getPaymentDate() != null) {
-                    //Total amount should be equal to the sum of the amount's payment
-                    int total = e.getPayments().stream()
-                            .mapToInt(Payment::getAmount)
-                            .sum();
-                    if (total != e.getAmount()) {
-                        String errmsg = "Amount is " + e.getAmount()
-                                + " "
-                                + e.getCurrency()
-                                + " but the total amount computed (based on the payments) is "
-                                + total
-                                + " "
-                                + e.getCurrency();
-                        LOG.log(Level.WARNING, errmsg);
-                        throw new WebApplicationException(errmsg);
-                    }
-                } else {
-                    LOG.log(Level.INFO,
-                            "ClientBill {0} delivered on {1} has not been paid : payments recorded but no payment date provided yet !",
-                            new Object[]{e.getReference(), e.
-                                getDeliveryDate()});
-                }
-            } else {
-                if (e.getPaymentDate() != null) {
-                    throw new WebApplicationException(
-                            "A payment date is provided but there is no payment yet !");
-                } else {
-                    LOG.log(Level.INFO,
-                            "ClientBill {0} delivered on {1} has not been paid : no payment provided during the Bill creation and no payment date provided yet !",
-                            new Object[]{e.getReference(), e.
-                                getDeliveryDate()});
-                }
-            }
+            this.checkPayment(e);
 
             List<PurchasedOffering> purchasedOfferings = e.
                     getPurchasedOfferings().
@@ -238,27 +199,75 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
         });
     }
 
-//    @PUT
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response put(@Context SecurityContext sec, ClientBill entity,
-//            @QueryParam("professional") String professional) {
-//        
-//        BillPK pk = new BillPK(entity.getReference(), entity.getDeliveryDate(),
-//                this.getProEmail(sec,
-//                        professional));
-//        
-//        LOG.log(Level.INFO, "Updating ClientBill {0}", clientBillFacade.
-//                prettyPrintPK(pk));
-//        return super.put(entity, clientBillFacade, pk, e -> {
-//            e.setName(entity.getName());
-//            e.setPrice(entity.getPrice());
-//            e.setDuration(entity.getDuration());
-//            e.setHidden(entity.isHidden());
-//            e.setBusinesses(entity.getBusinesses());
-//        });
-//    }
-//    
+    private void checkPayment(ClientBill bill) {
+
+        if (bill.getPaymentDate() != null && bill.getPaymentDate().before(bill.
+                getDeliveryDate())) {
+            throw new WebApplicationException("Payment date " + bill.
+                    getPaymentDate() + " cannot be before Delivery Date "
+                    + bill.getDeliveryDate());
+        }
+
+        if (!bill.getPayments().isEmpty()) {
+            if (bill.getPaymentDate() != null) {
+                //Total amount should be equal to the sum of the amount's payment
+                int total = bill.getPayments().stream()
+                        .mapToInt(Payment::getAmount)
+                        .sum();
+                if (total != bill.getAmount()) {
+                    String errmsg = "Amount is " + bill.getAmount()
+                            + " "
+                            + bill.getCurrency()
+                            + " but the total amount computed (based on the payments) is "
+                            + total
+                            + " "
+                            + bill.getCurrency();
+                    LOG.log(Level.WARNING, errmsg);
+                    throw new WebApplicationException(errmsg);
+                }
+            } else {
+                LOG.log(Level.INFO,
+                        "ClientBill {0} delivered on {1} has not been paid : payments recorded but no payment date provided yet !",
+                        new Object[]{bill.getReference(), bill.
+                            getDeliveryDate()});
+            }
+        } else {
+            if (bill.getPaymentDate() != null) {
+                throw new WebApplicationException(
+                        "A payment date is provided but there is no payment yet !");
+            } else {
+                LOG.log(Level.INFO,
+                        "ClientBill {0} delivered on {1} has not been paid : no payment provided during the Bill and no payment date provided yet !",
+                        new Object[]{bill.getReference(), bill.
+                            getDeliveryDate()});
+            }
+        }
+    }
+
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response put(@Context SecurityContext sec, ClientBill entity,
+            @QueryParam("professional") String professional) {
+
+        BillPK pk = new BillPK(entity.getReference(), entity.getDeliveryDate(),
+                this.getProEmail(sec,
+                        professional));
+
+        LOG.log(Level.INFO, "Updating ClientBill {0}", clientBillFacade.
+                prettyPrintPK(pk));
+        return super.put(entity, clientBillFacade, pk, e -> {
+            e.setComments(entity.getComments());
+
+            if (e.getPaymentDate() == null) {
+                checkPayment(entity);
+                e.setPaymentDate(entity.getPaymentDate());
+                e.setPayments(entity.getPayments());
+                //clientBillFacade.flush();
+            }
+        });
+    }
+
     @Path("{reference}/{deliverydate}")
     @DELETE
     public Response delete(@PathParam("reference") String reference,

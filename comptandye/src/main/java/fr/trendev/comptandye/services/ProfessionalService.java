@@ -140,10 +140,9 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
              * to hack another object swapping the current saved (or not) object
              * by an existing one.
              */
-            entity.getCustomerDetails().setId(e.getCustomerDetails().getId());
-            entity.getAddress().setId(e.getAddress().getId());
-            entity.getSocialNetworkAccounts().setId(
-                    e.getSocialNetworkAccounts().getId());
+            entity.getCustomerDetails().setId(null);
+            entity.getAddress().setId(null);
+            entity.getSocialNetworkAccounts().setId(null);
 
             e.setCustomerDetails(entity.getCustomerDetails());
             e.setAddress(entity.getAddress());

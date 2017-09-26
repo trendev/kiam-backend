@@ -209,7 +209,7 @@ public abstract class AbstractCommonService<E, P> {
             return Optional.ofNullable(facade.find(pk))
                     .map(result -> {
                         updateAction.accept(result);
-                        facade.edit(result);
+                        //facade.edit(result);
                         getLogger().log(Level.INFO, entityClass.getSimpleName()
                                 + " {0} updated", facade.prettyPrintPK(pk));
                         return Response.status(Response.Status.OK).entity(

@@ -123,7 +123,7 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
                 collectiveGroupFacade.
                         prettyPrintPK(pk));
         return super.put(entity, collectiveGroupFacade, pk, e -> {
-            entity.getAddress().setId(e.getAddress().getId());
+            entity.getAddress().setId(null);
             e.setAddress(entity.getAddress());
 
             e.setGroupName(entity.getGroupName());
