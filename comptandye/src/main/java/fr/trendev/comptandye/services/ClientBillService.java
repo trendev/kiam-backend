@@ -8,7 +8,6 @@ package fr.trendev.comptandye.services;
 import fr.trendev.comptandye.entities.BillPK;
 import fr.trendev.comptandye.entities.ClientBill;
 import fr.trendev.comptandye.entities.ClientPK;
-import fr.trendev.comptandye.entities.Offering;
 import fr.trendev.comptandye.entities.OfferingPK;
 import fr.trendev.comptandye.entities.Payment;
 import fr.trendev.comptandye.entities.Professional;
@@ -68,7 +67,7 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
     PackFacade packFacade;
 
     @Inject
-    ProvideOfferingFacadeVisitor v;
+    ProvideOfferingFacadeVisitor visitor;
 
     private static final Logger LOG = Logger.getLogger(ClientBillService.class.
             getName());
@@ -111,11 +110,6 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
         return super.find(clientBillFacade, pk, refresh);
     }
 
-    private AbstractFacade<? extends Offering, OfferingPK> getOfferingFacade(
-            Offering o) {
-        return Optional.of(o.accept(v)).get();
-    }
-
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -148,8 +142,7 @@ public class ClientBillService extends AbstractCommonService<ClientBill, BillPK>
             List<PurchasedOffering> purchasedOfferings = e.
                     getPurchasedOfferings().
                     stream()
-                    .map(po -> Optional.ofNullable(this.getOfferingFacade(po.
-                            getOffering()).find(new OfferingPK(
+                    .map(po -> Optional.ofNullable(po.getOffering().accept(visitor).find(new OfferingPK(
                                     po.getOffering().getId(),
                                     e.getProfessional().getEmail())))
                             .map(o ->
