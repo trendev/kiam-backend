@@ -8,6 +8,7 @@ package fr.trendev.comptandye.services;
 import fr.trendev.comptandye.entities.Individual;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.UserGroup;
+import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.IndividualFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
@@ -60,18 +61,23 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
         return LOG;
     }
 
+    @Override
+    protected AbstractFacade<Professional, String> getFacade() {
+        return professionalFacade;
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Professional list");
-        return super.findAll(professionalFacade);
+        return super.findAll();
     }
 
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response count() {
-        return super.count(professionalFacade);
+        return super.count();
     }
 
     @Path("{email}")
@@ -80,7 +86,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     public Response find(@PathParam("email") String email,
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get Professional : {0}", email);
-        return super.find(professionalFacade, email, refresh);
+        return super.find(email, refresh);
     }
 
     @POST
@@ -89,8 +95,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     public Response post(Professional entity) {
         LOG.log(Level.INFO, "Creating Professional {0}", entity.getEmail());
 
-        return super.post(entity, professionalFacade,
-                e -> {
+        return super.post(entity, e -> {
             //generates an UUID if no one is provided
             if (e.getUuid() == null || e.getUuid().isEmpty()) {
                 String uuid = UUIDGenerator.generate("PRO-", true);
@@ -117,7 +122,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(Professional entity) {
         LOG.log(Level.INFO, "Updating Professional {0}", entity.getEmail());
-        return super.put(entity, professionalFacade, entity.getEmail(), e ->
+        return super.put(entity, entity.getEmail(), e ->
         {
             /**
              * encrypts the provided password
@@ -165,7 +170,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     public Response delete(@PathParam("email") String email) {
         LOG.log(Level.INFO, "Deleting Professional {0}", email);
 
-        return super.delete(professionalFacade, email, e -> {
+        return super.delete(email, e -> {
 
             e.getUserGroups().forEach(grp -> {
                 grp.getUserAccounts().remove(e);
@@ -195,8 +200,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     public Response getUserGroups(@PathParam("email") String email) {
         LOG.log(Level.INFO,
                 "REST request to get userGroups of Professional : {0}", email);
-        return super.provideRelation(professionalFacade,
-                email,
+        return super.provideRelation(email,
                 Professional::getUserGroups);
     }
 
@@ -210,7 +214,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
 
         return super.<UserGroup, String>manageAssociation(
                 AssociationManagementEnum.INSERT,
-                professionalFacade, email,
+                email,
                 userGroupFacade,
                 name, UserGroup.class,
                 (e, a) ->
@@ -227,7 +231,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
 
         return super.<UserGroup, String>manageAssociation(
                 AssociationManagementEnum.REMOVE,
-                professionalFacade, email,
+                email,
                 userGroupFacade,
                 name, UserGroup.class,
                 (e, a) ->
@@ -240,8 +244,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     public Response getBills(@PathParam("email") String email) {
         LOG.log(Level.INFO,
                 "REST request to get bills of Professional : {0}", email);
-        return super.provideRelation(professionalFacade,
-                email,
+        return super.provideRelation(email,
                 Professional::getBills);
     }
 
@@ -251,8 +254,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     public Response getClients(@PathParam("email") String email) {
         LOG.log(Level.INFO,
                 "REST request to get clients of Professional : {0}", email);
-        return super.provideRelation(professionalFacade,
-                email,
+        return super.provideRelation(email,
                 Professional::getClients);
     }
 
@@ -262,8 +264,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     public Response getOfferings(@PathParam("email") String email) {
         LOG.log(Level.INFO,
                 "REST request to get offerings of Professional : {0}", email);
-        return super.provideRelation(professionalFacade,
-                email,
+        return super.provideRelation(email,
                 Professional::getOfferings);
     }
 
@@ -273,8 +274,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     public Response getCategories(@PathParam("email") String email) {
         LOG.log(Level.INFO,
                 "REST request to get categories of Professional : {0}", email);
-        return super.provideRelation(professionalFacade,
-                email,
+        return super.provideRelation(email,
                 Professional::getCategories);
     }
 
@@ -285,8 +285,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
         LOG.log(Level.INFO,
                 "REST request to get collectiveGroups of Professional : {0}",
                 email);
-        return super.provideRelation(professionalFacade,
-                email,
+        return super.provideRelation(email,
                 Professional::getCollectiveGroups);
     }
 
@@ -297,8 +296,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
         LOG.log(Level.INFO,
                 "REST request to get expenses of Professional : {0}",
                 email);
-        return super.provideRelation(professionalFacade,
-                email,
+        return super.provideRelation(email,
                 Professional::getExpenses);
     }
 
@@ -309,8 +307,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
         LOG.log(Level.INFO,
                 "REST request to get individuals of Professional : {0}",
                 email);
-        return super.provideRelation(professionalFacade,
-                email,
+        return super.provideRelation(email,
                 Professional::getIndividuals);
     }
 
@@ -326,7 +323,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
 
         return super.<Individual, String>manageAssociation(
                 AssociationManagementEnum.INSERT,
-                professionalFacade, proEmail,
+                proEmail,
                 individualFacade,
                 indEmail, Individual.class,
                 (p, i) ->
@@ -345,7 +342,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
 
         return super.<Individual, String>manageAssociation(
                 AssociationManagementEnum.REMOVE,
-                professionalFacade, proEmail,
+                proEmail,
                 individualFacade,
                 indEmail, Individual.class,
                 (p, i) ->

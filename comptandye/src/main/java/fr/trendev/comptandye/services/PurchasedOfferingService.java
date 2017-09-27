@@ -7,6 +7,7 @@ package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.entities.OfferingPK;
 import fr.trendev.comptandye.entities.PurchasedOffering;
+import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.PurchasedOfferingFacade;
 import fr.trendev.comptandye.visitors.ProvideOfferingFacadeVisitor;
 import java.util.Optional;
@@ -55,18 +56,23 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
         return LOG;
     }
 
+    @Override
+    protected AbstractFacade<PurchasedOffering, Long> getFacade() {
+        return purchasedOfferingFacade;
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the PurchasedOffering list");
-        return super.findAll(purchasedOfferingFacade);
+        return super.findAll();
     }
 
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response count() {
-        return super.count(purchasedOfferingFacade);
+        return super.count();
     }
 
     @Path("{id}")
@@ -75,7 +81,7 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
     public Response find(@PathParam("id") Long id,
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get PurchasedOffering : {0}", id);
-        return super.find(purchasedOfferingFacade, id, refresh);
+        return super.find(id, refresh);
     }
 
     @POST
@@ -91,7 +97,7 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
                     "Profession email is not provided !");
         }
 
-        return super.post(entity, purchasedOfferingFacade, e -> {
+        return super.post(entity, e -> {
 
             if (e.getOffering() == null) {
                 throw new WebApplicationException("No Offering provided !");
@@ -116,7 +122,7 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
                     "Profession email is not provided !");
         }
 
-        return super.put(entity, purchasedOfferingFacade, entity.getId(),
+        return super.put(entity, entity.getId(),
                 e -> {
 
             if (e.getOffering() == null) {
@@ -135,7 +141,7 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
     @DELETE
     public Response delete(@PathParam("id") Long id) {
         LOG.log(Level.INFO, "Deleting PurchasedOffering {0}", id);
-        return super.delete(purchasedOfferingFacade, id, e -> {
+        return super.delete(id, e -> {
         });
     }
 }

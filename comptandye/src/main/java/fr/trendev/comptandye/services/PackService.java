@@ -62,18 +62,23 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
         return LOG;
     }
 
+    @Override
+    protected AbstractFacade<Pack, OfferingPK> getFacade() {
+        return packFacade;
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Pack list");
-        return super.findAll(packFacade);
+        return super.findAll();
     }
 
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response count() {
-        return super.count(packFacade);
+        return super.count();
     }
 
     @Path("{id}")
@@ -84,9 +89,8 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
             @QueryParam("refresh") boolean refresh) {
         OfferingPK pk = new OfferingPK(id, professional);
         LOG.log(Level.INFO, "REST request to get Pack : {0}", packFacade.
-                prettyPrintPK(
-                        pk));
-        return super.find(packFacade, pk, refresh);
+                prettyPrintPK(pk));
+        return super.find(pk, refresh);
     }
 
     @POST
@@ -100,7 +104,7 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
         return super.<Professional, String>post(entity, email,
                 AbstractFacade::prettyPrintPK,
                 Professional.class,
-                packFacade, professionalFacade, Pack::setProfessional,
+                professionalFacade, Pack::setProfessional,
                 Professional::getOfferings, e -> {
             if (!e.getOfferings().isEmpty()) {
                 LOG.log(Level.WARNING,
@@ -122,7 +126,7 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
 
         LOG.log(Level.INFO, "Updating Pack {0}", packFacade.
                 prettyPrintPK(pk));
-        return super.put(entity, packFacade, pk, e -> {
+        return super.put(entity, pk, e -> {
             e.setName(entity.getName());
             e.setPrice(entity.getPrice());
             e.setDuration(entity.getDuration());
@@ -142,8 +146,8 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
 
         LOG.log(Level.INFO, "Deleting Pack {0}", packFacade.
                 prettyPrintPK(pk));
-        return super.delete(packFacade, pk,
-                e -> e.getProfessional().getOfferings().remove(e));
+        return super.delete(pk, e -> e.getProfessional().getOfferings().
+                remove(e));
     }
 
     @Path("{packid}/addService/offering/{offeringid}")
@@ -162,7 +166,7 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
 
         return super.<Service, OfferingPK>manageAssociation(
                 AssociationManagementEnum.INSERT,
-                packFacade, packPK,
+                packPK,
                 serviceFacade,
                 offeringPK, Service.class,
                 (p, o) -> p.getOfferings().add(o));
@@ -184,7 +188,7 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
 
         return super.<Service, OfferingPK>manageAssociation(
                 AssociationManagementEnum.REMOVE,
-                packFacade, packPK,
+                packPK,
                 serviceFacade,
                 offeringPK, Service.class,
                 (p, o) -> p.getOfferings().remove(o));
@@ -206,7 +210,7 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
 
         return super.<Pack, OfferingPK>manageAssociation(
                 AssociationManagementEnum.INSERT,
-                packFacade, packPK,
+                packPK,
                 packFacade,
                 offeringPK, Pack.class,
                 (p, o) -> p.getOfferings().add(o));
@@ -228,7 +232,7 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
 
         return super.<Pack, OfferingPK>manageAssociation(
                 AssociationManagementEnum.REMOVE,
-                packFacade, packPK,
+                packPK,
                 packFacade,
                 offeringPK, Pack.class,
                 (p, o) -> p.getOfferings().remove(o));

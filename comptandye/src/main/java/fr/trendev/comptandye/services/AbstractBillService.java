@@ -52,8 +52,6 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         return LOG;
     }
 
-    protected abstract AbstractFacade<T, BillPK> getFacade();
-
     public Response post(
             Consumer<T> prepareAction,
             SecurityContext sec, T entity,
@@ -64,7 +62,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         return super.<Professional, String>post(entity, proEmail,
                 AbstractFacade::prettyPrintPK,
                 Professional.class,
-                getFacade(), professionalFacade,
+                professionalFacade,
                 T::setProfessional,
                 Professional::getBills, e -> {
             /**
@@ -176,7 +174,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
 
         LOG.log(Level.INFO, "Updating {1} {0}", new Object[]{getFacade().
             prettyPrintPK(pk), entity.getClass().getSimpleName()});
-        return super.put(entity, getFacade(), pk, e -> {
+        return super.put(entity, pk, e -> {
             e.setComments(entity.getComments());
 
             if (e.getPaymentDate() == null) {
@@ -199,8 +197,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         LOG.log(Level.INFO, "Deleting {1} {0}",
                 new Object[]{getFacade().prettyPrintPK(pk),
                     entityClass.getSimpleName()});
-        return super.delete(getFacade(), pk,
-                e -> {
+        return super.delete(pk, e -> {
             e.getProfessional().getBills().remove(e);
             deleteAction.apply(e);
         });

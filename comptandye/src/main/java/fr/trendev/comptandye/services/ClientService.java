@@ -59,18 +59,23 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
         return LOG;
     }
 
+    @Override
+    protected AbstractFacade<Client, ClientPK> getFacade() {
+        return clientFacade;
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Client list");
-        return super.findAll(clientFacade);
+        return super.findAll();
     }
 
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response count() {
-        return super.count(clientFacade);
+        return super.count();
     }
 
     @Path("{id}")
@@ -84,7 +89,7 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
                 clientFacade.
                         prettyPrintPK(
                                 pk));
-        return super.find(clientFacade, pk, refresh);
+        return super.find(pk, refresh);
     }
 
     @POST
@@ -98,7 +103,7 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
         return super.<Professional, String>post(entity, email,
                 AbstractFacade::prettyPrintPK,
                 Professional.class,
-                clientFacade, professionalFacade,
+                professionalFacade,
                 Client::setProfessional,
                 Professional::getClients, e -> {
         });
@@ -118,7 +123,7 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
         LOG.log(Level.INFO, "Updating Client {0}",
                 clientFacade.
                         prettyPrintPK(pk));
-        return super.put(entity, clientFacade, pk, e -> {
+        return super.put(entity, pk, e -> {
             /**
              * Will automatically ignore the id of the provided object : avoid
              * to hack another object swapping the current saved (or not) object
@@ -148,7 +153,7 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
         LOG.log(Level.INFO, "Deleting Client {0}",
                 clientFacade.
                         prettyPrintPK(pk));
-        return super.delete(clientFacade, pk,
+        return super.delete(pk,
                 e -> {
             e.getProfessional().getClients().remove(e);
             e.getProfessional().getBills().removeAll(e.getClientBills());
@@ -166,8 +171,7 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
         LOG.log(Level.INFO,
                 "REST request to get ClientBills of Client : {0}",
                 clientFacade.prettyPrintPK(pk));
-        return super.provideRelation(clientFacade,
-                pk, Client::getClientBills);
+        return super.provideRelation(pk, Client::getClientBills);
     }
 
     @Path("{id}/collectiveGroups")
@@ -179,8 +183,7 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
         LOG.log(Level.INFO,
                 "REST request to get CollectiveGroups of Client : {0}",
                 clientFacade.prettyPrintPK(pk));
-        return super.provideRelation(clientFacade,
-                pk, Client::getCollectiveGroups);
+        return super.provideRelation(pk, Client::getCollectiveGroups);
     }
 
     @Path("{id}/categories")
@@ -192,7 +195,6 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
         LOG.log(Level.INFO,
                 "REST request to get Categories of Client : {0}",
                 clientFacade.prettyPrintPK(pk));
-        return super.provideRelation(clientFacade,
-                pk, Client::getCategories);
+        return super.provideRelation(pk, Client::getCategories);
     }
 }

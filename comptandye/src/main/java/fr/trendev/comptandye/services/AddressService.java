@@ -6,6 +6,7 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.entities.Address;
+import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.AddressFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,18 +48,23 @@ public class AddressService extends AbstractCommonService<Address, Long> {
         return LOG;
     }
 
+    @Override
+    protected AbstractFacade<Address, Long> getFacade() {
+        return addressFacade;
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Address list");
-        return super.findAll(addressFacade);
+        return super.findAll();
     }
 
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response count() {
-        return super.count(addressFacade);
+        return super.count();
     }
 
     @Path("{id}")
@@ -67,7 +73,7 @@ public class AddressService extends AbstractCommonService<Address, Long> {
     public Response find(@PathParam("id") Long id,
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get Address : {0}", id);
-        return super.find(addressFacade, id, refresh);
+        return super.find(id, refresh);
     }
 
     @POST
@@ -76,7 +82,7 @@ public class AddressService extends AbstractCommonService<Address, Long> {
     public Response post(Address entity) {
         LOG.log(Level.INFO, "Creating Address {0}", super.stringify(entity));
 
-        return super.post(entity, addressFacade, e -> {
+        return super.post(entity, e -> {
         });
     }
 
@@ -85,7 +91,7 @@ public class AddressService extends AbstractCommonService<Address, Long> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(Address entity) {
         LOG.log(Level.INFO, "Updating Address {0}", entity.getId());
-        return super.put(entity, addressFacade, entity.getId(),
+        return super.put(entity, entity.getId(),
                 e -> {
             e.setStreet(entity.getStreet());
             e.setOptional(entity.getOptional());
@@ -99,7 +105,8 @@ public class AddressService extends AbstractCommonService<Address, Long> {
     @DELETE
     public Response delete(@PathParam("id") Long id) {
         LOG.log(Level.INFO, "Deleting Address {0}", id);
-        return super.delete(addressFacade, id, e -> {
+        return super.delete(id, e -> {
         });
     }
+
 }

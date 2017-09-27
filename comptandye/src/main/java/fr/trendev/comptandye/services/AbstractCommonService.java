@@ -32,7 +32,7 @@ import javax.ws.rs.core.SecurityContext;
 public abstract class AbstractCommonService<E, P> {
 
     @Inject
-    ObjectMapper om;
+    private ObjectMapper om;
 
     private final Class<E> entityClass;
 
@@ -40,11 +40,13 @@ public abstract class AbstractCommonService<E, P> {
         this.entityClass = entityClass;
     }
 
-    abstract Logger getLogger();
+    protected abstract Logger getLogger();
 
-    Response findAll(AbstractFacade<E, P> facade) {
+    protected abstract AbstractFacade<E, P> getFacade();
+
+    protected Response findAll() {
         try {
-            List<E> list = facade.findAll();
+            List<E> list = getFacade().findAll();
             getLogger().log(Level.INFO, "{0} list size = {1}", new Object[]{
                 entityClass.getSimpleName(), list.
                 size()});
@@ -62,9 +64,9 @@ public abstract class AbstractCommonService<E, P> {
         }
     }
 
-    Response count(AbstractFacade<E, P> facade) {
+    protected Response count() {
         try {
-            Long count = facade.count();
+            Long count = getFacade().count();
             getLogger().log(Level.INFO, "Total Count of {0} = {1}",
                     new Object[]{entityClass.getSimpleName(), count});
 
@@ -81,13 +83,12 @@ public abstract class AbstractCommonService<E, P> {
         }
     }
 
-    Response find(AbstractFacade<E, P> facade,
-            P pk, boolean refresh) {
+    protected Response find(P pk, boolean refresh) {
         try {
-            return Optional.ofNullable(facade.find(pk))
+            return Optional.ofNullable(getFacade().find(pk))
                     .map(result -> {
                         if (refresh) {
-                            facade.refresh(result);
+                            getFacade().refresh(result);
                         }
                         return Response.status(Response.Status.OK).
                                 entity(result).build();
@@ -95,7 +96,8 @@ public abstract class AbstractCommonService<E, P> {
                     .orElse(Response.status(Response.Status.NOT_FOUND).entity(
                             Json.createObjectBuilder().add("error",
                                     entityClass.getSimpleName() + " "
-                                    + facade.prettyPrintPK(pk) + " not found").
+                                    + getFacade().prettyPrintPK(pk)
+                                    + " not found").
                                     build()).
                             build());
         } catch (Exception ex) {
@@ -103,23 +105,23 @@ public abstract class AbstractCommonService<E, P> {
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs providing " + entityClass.getSimpleName()
                     + " "
-                    + facade.prettyPrintPK(pk));
+                    + getFacade().prettyPrintPK(pk));
             getLogger().log(Level.WARNING, errmsg, ex);
             throw new WebApplicationException(errmsg, ex);
         }
     }
 
-    <R> Response provideRelation(AbstractFacade<E, P> facade,
-            P pk, Function<E, R> getFunction) {
+    protected <R> Response provideRelation(P pk, Function<E, R> getFunction) {
         try {
 
-            return Optional.ofNullable(facade.find(pk))
+            return Optional.ofNullable(getFacade().find(pk))
                     .map(result -> Response.status(Response.Status.OK).entity(
                             getFunction.apply(result)).build())
                     .orElse(Response.status(Response.Status.NOT_FOUND).entity(
                             Json.createObjectBuilder().add("error",
                                     entityClass.getSimpleName() + " "
-                                    + facade.prettyPrintPK(pk) + " not found").
+                                    + getFacade().prettyPrintPK(pk)
+                                    + " not found").
                                     build()).
                             build());
         } catch (Exception ex) {
@@ -128,28 +130,28 @@ public abstract class AbstractCommonService<E, P> {
                     "Exception occurs providing a relationship of "
                     + entityClass.getSimpleName()
                     + " "
-                    + facade.prettyPrintPK(pk));
+                    + getFacade().prettyPrintPK(pk));
             getLogger().log(Level.WARNING, errmsg, ex);
             throw new WebApplicationException(errmsg, ex);
         }
     }
 
-    Response post(E entity, AbstractFacade<E, P> facade,
-            Consumer<E> initAction) {
+    protected Response post(E entity, Consumer<E> initAction) {
 
         String jsonString = this.stringify(entity);
 
         try {
             initAction.accept(entity);
-            facade.create(entity);
-            facade.flush();
-            facade.refresh(entity);
-            P pk = facade.getIdentifier(entity);
+            getFacade().create(entity);
+            getFacade().flush();
+            getFacade().refresh(entity);
+            P pk = getFacade().getIdentifier(entity);
             getLogger().log(Level.INFO, entityClass.getSimpleName()
-                    + " {0} created", facade.prettyPrintPK(pk));
+                    + " {0} created", getFacade().prettyPrintPK(pk));
             return Response.created(new URI("/restapi/" + entityClass.
-                    getSimpleName() + "/" + facade.prettyPrintPK(pk))).entity(
-                    entity).
+                    getSimpleName() + "/" + getFacade().prettyPrintPK(pk))).
+                    entity(
+                            entity).
                     build();
         } catch (Exception ex) {
 
@@ -163,10 +165,9 @@ public abstract class AbstractCommonService<E, P> {
         }
     }
 
-    <O, K> Response post(E entity, K ownerPK,
+    protected <O, K> Response post(E entity, K ownerPK,
             BiFunction<AbstractFacade<O, K>, K, String> ownerPrettyPrintFunction,
-            Class<O> ownerClass,
-            AbstractFacade<E, P> facade, AbstractFacade<O, K> ownerFacade,
+            Class<O> ownerClass, AbstractFacade<O, K> ownerFacade,
             BiConsumer<E, O> setFunction,
             Function<O, List<? super E>> getFunction,
             Consumer<E> initAction) {
@@ -178,7 +179,7 @@ public abstract class AbstractCommonService<E, P> {
                     .map(o -> {
                         setFunction.accept(entity, o);
                         getFunction.apply(o).add(entity);
-                        return this.post(entity, facade, initAction);
+                        return this.post(entity, initAction);
                     })
                     .orElse(Response.status(Response.Status.NOT_FOUND).entity(
                             Json.createObjectBuilder().add("error",
@@ -203,22 +204,22 @@ public abstract class AbstractCommonService<E, P> {
 
     }
 
-    Response put(E entity, AbstractFacade<E, P> facade, P pk,
-            Consumer<E> updateAction) {
+    protected Response put(E entity, P pk, Consumer<E> updateAction) {
         try {
-            return Optional.ofNullable(facade.find(pk))
+            return Optional.ofNullable(getFacade().find(pk))
                     .map(result -> {
                         updateAction.accept(result);
                         //facade.edit(result);
                         getLogger().log(Level.INFO, entityClass.getSimpleName()
-                                + " {0} updated", facade.prettyPrintPK(pk));
+                                + " {0} updated", getFacade().prettyPrintPK(pk));
                         return Response.status(Response.Status.OK).entity(
                                 result).build();
                     })
                     .orElse(Response.status(Response.Status.NOT_FOUND).entity(
                             Json.createObjectBuilder().add("error",
                                     entityClass.getSimpleName() + " "
-                                    + facade.prettyPrintPK(pk) + " not found").
+                                    + getFacade().prettyPrintPK(pk)
+                                    + " not found").
                                     build()).
                             build());
         } catch (Exception ex) {
@@ -227,28 +228,28 @@ public abstract class AbstractCommonService<E, P> {
                     "Exception occurs updating "
                     + entityClass.getSimpleName()
                     + " "
-                    + facade.prettyPrintPK(pk));
+                    + getFacade().prettyPrintPK(pk));
             getLogger().log(Level.WARNING, errmsg, ex);
             throw new WebApplicationException(errmsg, ex);
         }
     }
 
-    Response delete(AbstractFacade<E, P> facade, P pk,
-            Consumer<E> prepareDelete) {
+    protected Response delete(P pk, Consumer<E> prepareDelete) {
         try {
-            return Optional.ofNullable(facade.find(pk))
+            return Optional.ofNullable(getFacade().find(pk))
                     .map(result -> {
                         prepareDelete.accept(result);
-                        facade.flush();
-                        facade.remove(result);
+                        getFacade().flush();
+                        getFacade().remove(result);
                         getLogger().log(Level.INFO, entityClass.getSimpleName()
-                                + " {0} deleted", facade.prettyPrintPK(pk));
+                                + " {0} deleted", getFacade().prettyPrintPK(pk));
                         return Response.ok().build();
                     })
                     .orElse(Response.status(Response.Status.NOT_FOUND).entity(
                             Json.createObjectBuilder().add("error",
                                     entityClass.getSimpleName() + " "
-                                    + facade.prettyPrintPK(pk) + " not found").
+                                    + getFacade().prettyPrintPK(pk)
+                                    + " not found").
                                     build()).
                             build());
         } catch (Exception ex) {
@@ -257,35 +258,34 @@ public abstract class AbstractCommonService<E, P> {
                     "Exception occurs deleting "
                     + entityClass.getSimpleName()
                     + " "
-                    + facade.prettyPrintPK(pk));
+                    + getFacade().prettyPrintPK(pk));
             getLogger().log(Level.WARNING, errmsg, ex);
             throw new WebApplicationException(errmsg, ex);
         }
     }
 
-    <A, U> Response manageAssociation(
+    protected <A, U> Response manageAssociation(
             AssociationManagementEnum option,
-            AbstractFacade<E, P> entityFacade,
             P entityPk,
             AbstractFacade<A, U> associationFacade,
             U associationPk,
             Class<A> associationEntityClass,
             BiFunction<E, A, Boolean> associationFunction) {
         try {
-            return Optional.ofNullable(entityFacade.find(entityPk))
+            return Optional.ofNullable(getFacade().find(entityPk))
                     .map(e -> {
                         return Optional.ofNullable(associationFacade.find(
                                 associationPk))
                                 .map(a -> {
                                     boolean result = associationFunction.
                                             apply(e, a);
-                                    entityFacade.edit(e);
+                                    getFacade().edit(e);
                                     associationFacade.edit(a);
                                     getLogger().log(Level.INFO,
                                             "{0} {1} {2} {3} {4} : {5}",
                                             new Object[]{entityClass.
                                                         getSimpleName(),
-                                                entityFacade.prettyPrintPK(
+                                                getFacade().prettyPrintPK(
                                                         entityPk),
                                                 option.equals(
                                                         AssociationManagementEnum.INSERT) ? "associated to " : "unassociated with",
@@ -302,7 +302,7 @@ public abstract class AbstractCommonService<E, P> {
                                                             + entityClass.
                                                                     getSimpleName()
                                                             + " "
-                                                            + entityFacade.
+                                                            + getFacade().
                                                                     prettyPrintPK(
                                                                             entityPk)
                                                             + " and "
@@ -321,7 +321,7 @@ public abstract class AbstractCommonService<E, P> {
                                                         entityClass.
                                                                 getSimpleName()
                                                         + " "
-                                                        + entityFacade.
+                                                        + getFacade().
                                                                 prettyPrintPK(
                                                                         entityPk)
                                                         + " cannot be "
@@ -340,7 +340,7 @@ public abstract class AbstractCommonService<E, P> {
                     .orElse(Response.status(Response.Status.NOT_FOUND).entity(
                             Json.createObjectBuilder().add("error",
                                     entityClass.getSimpleName() + " "
-                                    + entityFacade.prettyPrintPK(
+                                    + getFacade().prettyPrintPK(
                                             entityPk)
                                     + " not found and cannot be " + (option.
                                             equals(
@@ -354,7 +354,7 @@ public abstract class AbstractCommonService<E, P> {
                     "Exception occurs " + (option.equals(
                             AssociationManagementEnum.INSERT) ? "associating" : "unassociated")
                     + " " + entityClass.getSimpleName()
-                    + " " + entityFacade.prettyPrintPK(
+                    + " " + getFacade().prettyPrintPK(
                             entityPk)
                     + " with " + associationEntityClass.getSimpleName() + " "
                     + associationFacade.prettyPrintPK(
@@ -364,7 +364,7 @@ public abstract class AbstractCommonService<E, P> {
         }
     }
 
-    String stringify(E entity) {
+    protected String stringify(E entity) {
         String jsonString = entity.toString();
         try {
             jsonString = om.writeValueAsString(entity);
@@ -375,7 +375,7 @@ public abstract class AbstractCommonService<E, P> {
         return jsonString;
     }
 
-    String getProEmail(SecurityContext sec, String professional) {
+    protected String getProEmail(SecurityContext sec, String professional) {
         return (sec.isSecure() && sec.isUserInRole("Professional"))
                 ? sec.getUserPrincipal().getName() : professional;
     }

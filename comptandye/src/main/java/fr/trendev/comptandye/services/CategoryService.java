@@ -62,18 +62,23 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
         return LOG;
     }
 
+    @Override
+    protected AbstractFacade<Category, CategoryPK> getFacade() {
+        return categoryFacade;
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Category list");
-        return super.findAll(categoryFacade);
+        return super.findAll();
     }
 
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response count() {
-        return super.count(categoryFacade);
+        return super.count();
     }
 
     @Path("{id}")
@@ -87,7 +92,7 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
                 categoryFacade.
                         prettyPrintPK(
                                 pk));
-        return super.find(categoryFacade, pk, refresh);
+        return super.find(pk, refresh);
     }
 
     @POST
@@ -101,7 +106,7 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
         return super.<Professional, String>post(entity, email,
                 AbstractFacade::prettyPrintPK,
                 Professional.class,
-                categoryFacade, professionalFacade, Category::setProfessional,
+                professionalFacade, Category::setProfessional,
                 Professional::getCategories, e -> {
         });
 
@@ -118,7 +123,7 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
 
         LOG.log(Level.INFO, "Updating Category {0}", categoryFacade.
                 prettyPrintPK(pk));
-        return super.put(entity, categoryFacade, pk, e -> {
+        return super.put(entity, pk, e -> {
             e.setDescription(entity.getDescription());
             e.setName(entity.getName());
         });
@@ -135,7 +140,7 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
 
         LOG.log(Level.INFO, "Deleting Category {0}", categoryFacade.
                 prettyPrintPK(pk));
-        return super.delete(categoryFacade, pk,
+        return super.delete(pk,
                 e -> {
             e.getProfessional().getCategories().remove(e);
             e.getClients().forEach(cl -> cl.getCategories().remove(e));
@@ -158,7 +163,7 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
 
         return super.<Client, ClientPK>manageAssociation(
                 AssociationManagementEnum.INSERT,
-                categoryFacade, categoryPK,
+                categoryPK,
                 clientFacade,
                 clientPK, Client.class,
                 (cat, cl) -> cat.getClients().add(cl) & cl.getCategories().
@@ -181,7 +186,7 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
 
         return super.<Client, ClientPK>manageAssociation(
                 AssociationManagementEnum.REMOVE,
-                categoryFacade, categoryPK,
+                categoryPK,
                 clientFacade,
                 clientPK, Client.class,
                 (cat, cl) -> cat.getClients().remove(cl) & cl.getCategories().
@@ -196,8 +201,6 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
         CategoryPK pk = new CategoryPK(id, professional);
         LOG.log(Level.INFO, "REST request to get Clients of Category : {0}",
                 categoryFacade.prettyPrintPK(pk));
-        return super.provideRelation(categoryFacade,
-                pk,
-                Category::getClients);
+        return super.provideRelation(pk, Category::getClients);
     }
 }

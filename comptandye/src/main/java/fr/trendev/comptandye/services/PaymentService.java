@@ -6,6 +6,7 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.entities.Payment;
+import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.PaymentFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,18 +47,23 @@ public class PaymentService extends AbstractCommonService<Payment, Long> {
         return LOG;
     }
 
+    @Override
+    protected AbstractFacade<Payment, Long> getFacade() {
+        return paymentFacade;
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Payment list");
-        return super.findAll(paymentFacade);
+        return super.findAll();
     }
 
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response count() {
-        return super.count(paymentFacade);
+        return super.count();
     }
 
     @Path("{id}")
@@ -66,7 +72,7 @@ public class PaymentService extends AbstractCommonService<Payment, Long> {
     public Response find(@PathParam("id") Long id,
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get Payment : {0}", id);
-        return super.find(paymentFacade, id, refresh);
+        return super.find(id, refresh);
     }
 
     @POST
@@ -75,7 +81,7 @@ public class PaymentService extends AbstractCommonService<Payment, Long> {
     public Response post(Payment entity) {
         LOG.log(Level.INFO, "Creating Payment {0}", super.stringify(entity));
 
-        return super.post(entity, paymentFacade, e -> {
+        return super.post(entity, e -> {
         });
     }
 
@@ -84,7 +90,7 @@ public class PaymentService extends AbstractCommonService<Payment, Long> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(Payment entity) {
         LOG.log(Level.INFO, "Updating Payment {0}", entity.getId());
-        return super.put(entity, paymentFacade, entity.getId(),
+        return super.put(entity, entity.getId(),
                 e -> {
             e.setAmount(entity.getAmount());
             e.setPaymentMode(entity.getPaymentMode());
@@ -95,7 +101,7 @@ public class PaymentService extends AbstractCommonService<Payment, Long> {
     @DELETE
     public Response delete(@PathParam("id") Long id) {
         LOG.log(Level.INFO, "Deleting Payment {0}", id);
-        return super.delete(paymentFacade, id, e -> {
+        return super.delete(id, e -> {
         });
     }
 }

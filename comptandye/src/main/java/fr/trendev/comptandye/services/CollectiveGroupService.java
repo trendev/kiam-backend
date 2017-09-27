@@ -63,18 +63,23 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
         return LOG;
     }
 
+    @Override
+    protected AbstractFacade<CollectiveGroup, CollectiveGroupPK> getFacade() {
+        return collectiveGroupFacade;
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the CollectiveGroup list");
-        return super.findAll(collectiveGroupFacade);
+        return super.findAll();
     }
 
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response count() {
-        return super.count(collectiveGroupFacade);
+        return super.count();
     }
 
     @Path("{id}")
@@ -88,7 +93,7 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
                 collectiveGroupFacade.
                         prettyPrintPK(
                                 pk));
-        return super.find(collectiveGroupFacade, pk, refresh);
+        return super.find(pk, refresh);
     }
 
     @POST
@@ -102,7 +107,7 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
         return super.<Professional, String>post(entity, email,
                 AbstractFacade::prettyPrintPK,
                 Professional.class,
-                collectiveGroupFacade, professionalFacade,
+                professionalFacade,
                 CollectiveGroup::setProfessional,
                 Professional::getCollectiveGroups, e -> {
         });
@@ -122,7 +127,7 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
         LOG.log(Level.INFO, "Updating CollectiveGroup {0}",
                 collectiveGroupFacade.
                         prettyPrintPK(pk));
-        return super.put(entity, collectiveGroupFacade, pk, e -> {
+        return super.put(entity, pk, e -> {
             entity.getAddress().setId(null);
             e.setAddress(entity.getAddress());
 
@@ -143,7 +148,7 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
         LOG.log(Level.INFO, "Deleting CollectiveGroup {0}",
                 collectiveGroupFacade.
                         prettyPrintPK(pk));
-        return super.delete(collectiveGroupFacade, pk,
+        return super.delete(pk,
                 e -> {
             e.getProfessional().getCollectiveGroups().remove(e);
             e.getClients().forEach(cl -> cl.getCollectiveGroups().remove(e));
@@ -167,7 +172,7 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
 
         return super.<Client, ClientPK>manageAssociation(
                 AssociationManagementEnum.INSERT,
-                collectiveGroupFacade, collectiveGroupPK,
+                collectiveGroupPK,
                 clientFacade,
                 clientPK, Client.class,
                 (cg, cl) -> cg.getClients().add(cl)
@@ -192,7 +197,7 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
 
         return super.<Client, ClientPK>manageAssociation(
                 AssociationManagementEnum.REMOVE,
-                collectiveGroupFacade, collectiveGroupPK,
+                collectiveGroupPK,
                 clientFacade,
                 clientPK, Client.class,
                 (cg, cl) -> cg.getClients().remove(cl) & cl.
@@ -209,9 +214,7 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
         LOG.log(Level.INFO,
                 "REST request to get Clients of CollectiveGroup : {0}",
                 collectiveGroupFacade.prettyPrintPK(pk));
-        return super.provideRelation(collectiveGroupFacade,
-                pk,
-                CollectiveGroup::getClients);
+        return super.provideRelation(pk, CollectiveGroup::getClients);
     }
 
     @Path("{id}/collectiveGroupBills")
@@ -223,8 +226,7 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
         LOG.log(Level.INFO,
                 "REST request to get CollectiveGroupBills of CollectiveGroup : {0}",
                 collectiveGroupFacade.prettyPrintPK(pk));
-        return super.provideRelation(collectiveGroupFacade,
-                pk,
+        return super.provideRelation(pk,
                 CollectiveGroup::getCollectiveGroupBills);
     }
 }

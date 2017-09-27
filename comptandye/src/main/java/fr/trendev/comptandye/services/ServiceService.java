@@ -55,18 +55,23 @@ public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
         return LOG;
     }
 
+    @Override
+    protected AbstractFacade<Service, OfferingPK> getFacade() {
+        return serviceFacade;
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Service list");
-        return super.findAll(serviceFacade);
+        return super.findAll();
     }
 
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response count() {
-        return super.count(serviceFacade);
+        return super.count();
     }
 
     @Path("{id}")
@@ -79,7 +84,7 @@ public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
         LOG.log(Level.INFO, "REST request to get Service : {0}", serviceFacade.
                 prettyPrintPK(
                         pk));
-        return super.find(serviceFacade, pk, refresh);
+        return super.find(pk, refresh);
     }
 
     @POST
@@ -93,7 +98,7 @@ public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
         return super.<Professional, String>post(entity, email,
                 AbstractFacade::prettyPrintPK,
                 Professional.class,
-                serviceFacade, professionalFacade, Service::setProfessional,
+                professionalFacade, Service::setProfessional,
                 Professional::getOfferings, e -> {
         });
 
@@ -110,7 +115,7 @@ public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
 
         LOG.log(Level.INFO, "Updating Service {0}", serviceFacade.
                 prettyPrintPK(pk));
-        return super.put(entity, serviceFacade, pk, e -> {
+        return super.put(entity, pk, e -> {
             e.setName(entity.getName());
             e.setPrice(entity.getPrice());
             e.setDuration(entity.getDuration());
@@ -129,7 +134,7 @@ public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
 
         LOG.log(Level.INFO, "Deleting Service {0}", serviceFacade.
                 prettyPrintPK(pk));
-        return super.delete(serviceFacade, pk,
+        return super.delete(pk,
                 e -> e.getProfessional().getOfferings().remove(e));
     }
 }

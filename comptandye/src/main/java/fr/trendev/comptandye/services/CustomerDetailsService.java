@@ -6,6 +6,7 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.entities.CustomerDetails;
+import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.CustomerDetailsFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,19 +48,23 @@ public class CustomerDetailsService extends AbstractCommonService<CustomerDetail
         return LOG;
     }
 
+    @Override
+    protected AbstractFacade<CustomerDetails, Long> getFacade() {
+        return customerDetailsFacade;
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the CustomerDetails list");
-        return super.
-                findAll(customerDetailsFacade);
+        return super.findAll();
     }
 
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response count() {
-        return super.count(customerDetailsFacade);
+        return super.count();
     }
 
     @Path("{id}")
@@ -68,7 +73,7 @@ public class CustomerDetailsService extends AbstractCommonService<CustomerDetail
     public Response find(@PathParam("id") Long id,
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get CustomerDetails : {0}", id);
-        return super.find(customerDetailsFacade, id, refresh);
+        return super.find(id, refresh);
     }
 
     @POST
@@ -78,7 +83,7 @@ public class CustomerDetailsService extends AbstractCommonService<CustomerDetail
         LOG.log(Level.INFO, "Creating CustomerDetails {0}", super.stringify(
                 entity));
 
-        return super.post(entity, customerDetailsFacade, e -> {
+        return super.post(entity, e -> {
         });
     }
 
@@ -87,7 +92,7 @@ public class CustomerDetailsService extends AbstractCommonService<CustomerDetail
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(CustomerDetails entity) {
         LOG.log(Level.INFO, "Updating CustomerDetails {0}", entity.getId());
-        return super.put(entity, customerDetailsFacade, entity.getId(),
+        return super.put(entity, entity.getId(),
                 e -> {
             e.setFirstName(entity.getFirstName());
             e.setLastName(entity.getLastName());
@@ -104,7 +109,7 @@ public class CustomerDetailsService extends AbstractCommonService<CustomerDetail
     @DELETE
     public Response delete(@PathParam("id") Long id) {
         LOG.log(Level.INFO, "Deleting CustomerDetails {0}", id);
-        return super.delete(customerDetailsFacade, id, e -> {
+        return super.delete(id, e -> {
         });
     }
 

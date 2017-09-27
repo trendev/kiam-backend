@@ -8,6 +8,7 @@ package fr.trendev.comptandye.services;
 import fr.trendev.comptandye.entities.BillPK;
 import fr.trendev.comptandye.entities.ClientBill;
 import fr.trendev.comptandye.entities.ClientPK;
+import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.ClientBillFacade;
 import fr.trendev.comptandye.sessions.ClientFacade;
 import java.util.Date;
@@ -59,7 +60,7 @@ public class ClientBillService extends AbstractBillService<ClientBill> {
     }
 
     @Override
-    protected ClientBillFacade getFacade() {
+    protected AbstractFacade<ClientBill, BillPK> getFacade() {
         return clientBillFacade;
     }
 
@@ -67,14 +68,14 @@ public class ClientBillService extends AbstractBillService<ClientBill> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the ClientBill list");
-        return super.findAll(clientBillFacade);
+        return super.findAll();
     }
 
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response count() {
-        return super.count(clientBillFacade);
+        return super.count();
     }
 
     @Path("{reference}/{deliverydate}")
@@ -89,7 +90,7 @@ public class ClientBillService extends AbstractBillService<ClientBill> {
                 clientBillFacade.
                         prettyPrintPK(
                                 pk));
-        return super.find(clientBillFacade, pk, refresh);
+        return super.find(pk, refresh);
     }
 
     @POST

@@ -7,6 +7,7 @@ package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.entities.Administrator;
 import fr.trendev.comptandye.entities.UserGroup;
+import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.AdministratorFacade;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;
@@ -55,18 +56,23 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
         return LOG;
     }
 
+    @Override
+    protected AbstractFacade<Administrator, String> getFacade() {
+        return administratorFacade;
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Administrator list");
-        return super.findAll(administratorFacade);
+        return super.findAll();
     }
 
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response count() {
-        return super.count(administratorFacade);
+        return super.count();
     }
 
     @Path("{email}")
@@ -75,7 +81,7 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
     public Response find(@PathParam("email") String email,
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get Administrator : {0}", email);
-        return super.find(administratorFacade, email, refresh);
+        return super.find(email, refresh);
     }
 
     @Path("{email}/userGroups")
@@ -84,9 +90,7 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
     public Response getUserGroups(@PathParam("email") String email) {
         LOG.log(Level.INFO,
                 "REST request to get userGroups of Administrator : {0}", email);
-        return super.provideRelation(administratorFacade,
-                email,
-                Administrator::getUserGroups);
+        return super.provideRelation(email, Administrator::getUserGroups);
     }
 
     @POST
@@ -95,8 +99,7 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
     public Response post(Administrator entity) {
         LOG.log(Level.INFO, "Creating Administrator {0}", entity.getEmail());
 
-        return super.post(entity, administratorFacade,
-                e -> {
+        return super.post(entity, e -> {
             //generates an UUID if no one is provided
             if (e.getUuid() == null || e.getUuid().isEmpty()) {
                 String uuid = UUIDGenerator.generate("ADMIN-", true);
@@ -123,7 +126,7 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(Administrator entity) {
         LOG.log(Level.INFO, "Updating Administrator {0}", entity.getEmail());
-        return super.put(entity, administratorFacade, entity.getEmail(), e ->
+        return super.put(entity, entity.getEmail(), e ->
         {
             //encrypts the provided password
             if (entity.getPassword() != null && !entity.getPassword().isEmpty()) {
@@ -141,7 +144,7 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
     @DELETE
     public Response delete(@PathParam("email") String email) {
         LOG.log(Level.INFO, "Deleting Administrator {0}", email);
-        return super.delete(administratorFacade, email, e -> {
+        return super.delete(email, e -> {
             e.getUserGroups().forEach(grp -> {
                 grp.getUserAccounts().remove(e);
                 LOG.log(Level.INFO,
@@ -161,7 +164,7 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
 
         return super.<UserGroup, String>manageAssociation(
                 AssociationManagementEnum.INSERT,
-                administratorFacade, email,
+                email,
                 userGroupFacade,
                 name, UserGroup.class,
                 (e, a) ->
@@ -178,7 +181,7 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
 
         return super.<UserGroup, String>manageAssociation(
                 AssociationManagementEnum.REMOVE,
-                administratorFacade, email,
+                email,
                 userGroupFacade,
                 name, UserGroup.class,
                 (e, a) ->

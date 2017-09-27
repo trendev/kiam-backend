@@ -6,6 +6,7 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.entities.Business;
+import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.BusinessFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,19 +46,24 @@ public class BusinessService extends AbstractCommonService<Business, String> {
         return LOG;
     }
 
+    @Override
+    protected AbstractFacade<Business, String> getFacade() {
+        return businessFacade;
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Business list");
         return super.
-                findAll(businessFacade);
+                findAll();
     }
 
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response count() {
-        return super.count(businessFacade);
+        return super.count();
     }
 
     @Path("{designation}")
@@ -66,7 +72,7 @@ public class BusinessService extends AbstractCommonService<Business, String> {
     public Response find(@PathParam("designation") String designation,
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get Business : {0}", designation);
-        return super.find(businessFacade, designation, refresh);
+        return super.find(designation, refresh);
     }
 
     @POST
@@ -76,7 +82,7 @@ public class BusinessService extends AbstractCommonService<Business, String> {
         LOG.log(Level.INFO, "Creating Business {0}", super.stringify(
                 entity));
 
-        return super.post(entity, businessFacade, e -> {
+        return super.post(entity, e -> {
         });
     }
 
@@ -84,7 +90,7 @@ public class BusinessService extends AbstractCommonService<Business, String> {
     @DELETE
     public Response delete(@PathParam("designation") String designation) {
         LOG.log(Level.INFO, "Deleting Business {0}", designation);
-        return super.delete(businessFacade, designation, e -> {
+        return super.delete(designation, e -> {
         });
     }
 

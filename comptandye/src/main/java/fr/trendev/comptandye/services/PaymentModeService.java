@@ -6,6 +6,7 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.entities.PaymentMode;
+import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.PaymentModeFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,19 +46,23 @@ public class PaymentModeService extends AbstractCommonService<PaymentMode, Strin
         return LOG;
     }
 
+    @Override
+    protected AbstractFacade<PaymentMode, String> getFacade() {
+        return paymentModeFacade;
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the PaymentMode list");
-        return super.
-                findAll(paymentModeFacade);
+        return super.findAll();
     }
 
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response count() {
-        return super.count(paymentModeFacade);
+        return super.count();
     }
 
     @Path("{name}")
@@ -68,7 +73,7 @@ public class PaymentModeService extends AbstractCommonService<PaymentMode, Strin
         LOG.
                 log(Level.INFO, "REST request to get PaymentMode : {0}",
                         name);
-        return super.find(paymentModeFacade, name, refresh);
+        return super.find(name, refresh);
     }
 
     @POST
@@ -78,7 +83,7 @@ public class PaymentModeService extends AbstractCommonService<PaymentMode, Strin
         LOG.log(Level.INFO, "Creating PaymentMode {0}", super.stringify(
                 entity));
 
-        return super.post(entity, paymentModeFacade, e -> {
+        return super.post(entity, e -> {
         });
     }
 
@@ -86,7 +91,7 @@ public class PaymentModeService extends AbstractCommonService<PaymentMode, Strin
     @DELETE
     public Response delete(@PathParam("name") String name) {
         LOG.log(Level.INFO, "Deleting PaymentMode {0}", name);
-        return super.delete(paymentModeFacade, name, e -> {
+        return super.delete(name, e -> {
         });
     }
 

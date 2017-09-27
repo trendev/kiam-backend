@@ -6,6 +6,7 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.entities.UserGroup;
+import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,18 +47,23 @@ public class UserGroupService extends AbstractCommonService<UserGroup, String> {
         return LOG;
     }
 
+    @Override
+    protected AbstractFacade<UserGroup, String> getFacade() {
+        return userGroupFacade;
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the UserGroup list");
-        return super.findAll(userGroupFacade);
+        return super.findAll();
     }
 
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response count() {
-        return super.count(userGroupFacade);
+        return super.count();
     }
 
     @Path("{name}")
@@ -66,7 +72,7 @@ public class UserGroupService extends AbstractCommonService<UserGroup, String> {
     public Response find(@PathParam("name") String name,
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get UserGroup : {0}", name);
-        return super.find(userGroupFacade, name, refresh);
+        return super.find(name, refresh);
     }
 
     @Path("{name}/userAccounts")
@@ -75,7 +81,7 @@ public class UserGroupService extends AbstractCommonService<UserGroup, String> {
     public Response getUserAccounts(@PathParam("name") String name) {
         LOG.log(Level.INFO,
                 "REST request to get userAccounts of UserGroup : {0}", name);
-        return super.provideRelation(userGroupFacade, name,
+        return super.provideRelation(name,
                 UserGroup::getUserAccounts);
     }
 
@@ -84,7 +90,7 @@ public class UserGroupService extends AbstractCommonService<UserGroup, String> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response post(UserGroup entity) {
         LOG.log(Level.INFO, "Creating UserGroup {0}", entity.getName());
-        return super.post(entity, userGroupFacade, e -> {
+        return super.post(entity, e -> {
         });
     }
 
@@ -93,7 +99,7 @@ public class UserGroupService extends AbstractCommonService<UserGroup, String> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(UserGroup entity) {
         LOG.log(Level.INFO, "Updating UserGroup {0}", entity.getName());
-        return super.put(entity, userGroupFacade, entity.getName(), e -> {
+        return super.put(entity, entity.getName(), e -> {
             e.setDescription(entity.getDescription());
         });
     }
@@ -102,7 +108,7 @@ public class UserGroupService extends AbstractCommonService<UserGroup, String> {
     @DELETE
     public Response delete(@PathParam("name") String name) {
         LOG.log(Level.INFO, "Deleting UserGroup {0}", name);
-        return super.delete(userGroupFacade, name, e -> {
+        return super.delete(name, e -> {
             e.getUserAccounts().forEach(u -> {
                 u.getUserGroups().remove(e);
                 LOG.log(Level.INFO,

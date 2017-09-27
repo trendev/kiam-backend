@@ -8,6 +8,7 @@ package fr.trendev.comptandye.services;
 import fr.trendev.comptandye.entities.Individual;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.UserGroup;
+import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.IndividualFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
@@ -59,18 +60,23 @@ public class IndividualService extends AbstractCommonService<Individual, String>
         return LOG;
     }
 
+    @Override
+    protected AbstractFacade<Individual, String> getFacade() {
+        return individualFacade;
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Individual list");
-        return super.findAll(individualFacade);
+        return super.findAll();
     }
 
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response count() {
-        return super.count(individualFacade);
+        return super.count();
     }
 
     @Path("{email}")
@@ -79,7 +85,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
     public Response find(@PathParam("email") String email,
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get Individual : {0}", email);
-        return super.find(individualFacade, email, refresh);
+        return super.find(email, refresh);
     }
 
     @POST
@@ -88,7 +94,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
     public Response post(Individual entity) {
         LOG.log(Level.INFO, "Creating Individual {0}", entity.getEmail());
 
-        return super.post(entity, individualFacade,
+        return super.post(entity,
                 e -> {
             //generates an UUID if no one is provided
             if (e.getUuid() == null || e.getUuid().isEmpty()) {
@@ -116,7 +122,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(Individual entity) {
         LOG.log(Level.INFO, "Updating Individual {0}", entity.getEmail());
-        return super.put(entity, individualFacade, entity.getEmail(), e ->
+        return super.put(entity, entity.getEmail(), e ->
         {
             /**
              * encrypts the provided password
@@ -154,7 +160,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
     public Response delete(@PathParam("email") String email) {
         LOG.log(Level.INFO, "Deleting Individual {0}", email);
 
-        return super.delete(individualFacade, email, e -> {
+        return super.delete(email, e -> {
 
             e.getUserGroups().forEach(grp -> {
                 grp.getUserAccounts().remove(e);
@@ -178,9 +184,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
     public Response getUserGroups(@PathParam("email") String email) {
         LOG.log(Level.INFO,
                 "REST request to get userGroups of Individual : {0}", email);
-        return super.provideRelation(individualFacade,
-                email,
-                Individual::getUserGroups);
+        return super.provideRelation(email, Individual::getUserGroups);
     }
 
     @Path("{email}/insertToUserGroup/{name}")
@@ -193,7 +197,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
 
         return super.<UserGroup, String>manageAssociation(
                 AssociationManagementEnum.INSERT,
-                individualFacade, email,
+                email,
                 userGroupFacade,
                 name, UserGroup.class,
                 (e, a) ->
@@ -210,7 +214,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
 
         return super.<UserGroup, String>manageAssociation(
                 AssociationManagementEnum.REMOVE,
-                individualFacade, email,
+                email,
                 userGroupFacade,
                 name, UserGroup.class,
                 (e, a) ->
@@ -224,8 +228,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
         LOG.log(Level.INFO,
                 "REST request to get professionals of Individual : {0}",
                 email);
-        return super.provideRelation(individualFacade,
-                email,
+        return super.provideRelation(email,
                 Individual::getProfessionals);
     }
 
@@ -241,7 +244,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
 
         return super.<Professional, String>manageAssociation(
                 AssociationManagementEnum.INSERT,
-                individualFacade, indEmail,
+                indEmail,
                 professionalFacade,
                 proEmail, Professional.class,
                 (i, p) ->
@@ -260,7 +263,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
 
         return super.<Professional, String>manageAssociation(
                 AssociationManagementEnum.REMOVE,
-                individualFacade, indEmail,
+                indEmail,
                 professionalFacade,
                 proEmail, Professional.class,
                 (i, p) ->

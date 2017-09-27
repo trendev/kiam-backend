@@ -6,6 +6,7 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.entities.SocialNetworkAccounts;
+import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.SocialNetworkAccountsFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,18 +48,23 @@ public class SocialNetworkAccountsService extends AbstractCommonService<SocialNe
         return LOG;
     }
 
+    @Override
+    protected AbstractFacade<SocialNetworkAccounts, Long> getFacade() {
+        return socialNetworkAccountsFacade;
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the SocialNetworkAccounts list");
-        return super.findAll(socialNetworkAccountsFacade);
+        return super.findAll();
     }
 
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response count() {
-        return super.count(socialNetworkAccountsFacade);
+        return super.count();
     }
 
     @Path("{id}")
@@ -68,7 +74,7 @@ public class SocialNetworkAccountsService extends AbstractCommonService<SocialNe
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get SocialNetworkAccounts : {0}",
                 id);
-        return super.find(socialNetworkAccountsFacade, id, refresh);
+        return super.find(id, refresh);
     }
 
     @POST
@@ -78,7 +84,7 @@ public class SocialNetworkAccountsService extends AbstractCommonService<SocialNe
         LOG.log(Level.INFO, "Creating SocialNetworkAccounts {0}", super.
                 stringify(entity));
 
-        return super.post(entity, socialNetworkAccountsFacade, e -> {
+        return super.post(entity, e -> {
         });
     }
 
@@ -89,7 +95,7 @@ public class SocialNetworkAccountsService extends AbstractCommonService<SocialNe
         LOG.
                 log(Level.INFO, "Updating SocialNetworkAccounts {0}", entity.
                         getId());
-        return super.put(entity, socialNetworkAccountsFacade, entity.getId(),
+        return super.put(entity, entity.getId(),
                 e -> {
             e.setFacebook(entity.getFacebook());
             e.setTwitter(entity.getTwitter());
@@ -102,7 +108,7 @@ public class SocialNetworkAccountsService extends AbstractCommonService<SocialNe
     @DELETE
     public Response delete(@PathParam("id") Long id) {
         LOG.log(Level.INFO, "Deleting SocialNetworkAccounts {0}", id);
-        return super.delete(socialNetworkAccountsFacade, id, e -> {
+        return super.delete(id, e -> {
         });
     }
 }

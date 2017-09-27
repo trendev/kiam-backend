@@ -57,18 +57,23 @@ public class ExpenseService extends AbstractCommonService<Expense, ExpensePK> {
         return LOG;
     }
 
+    @Override
+    protected AbstractFacade<Expense, ExpensePK> getFacade() {
+        return expenseFacade;
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Expense list");
-        return super.findAll(expenseFacade);
+        return super.findAll();
     }
 
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response count() {
-        return super.count(expenseFacade);
+        return super.count();
     }
 
     @Path("{id}")
@@ -80,7 +85,7 @@ public class ExpenseService extends AbstractCommonService<Expense, ExpensePK> {
         ExpensePK pk = new ExpensePK(id, professional);
         LOG.log(Level.INFO, "REST request to get Expense : {0}", expenseFacade.
                 prettyPrintPK(pk));
-        return super.find(expenseFacade, pk, refresh);
+        return super.find(pk, refresh);
     }
 
     @POST
@@ -94,7 +99,7 @@ public class ExpenseService extends AbstractCommonService<Expense, ExpensePK> {
         return super.<Professional, String>post(entity, email,
                 AbstractFacade::prettyPrintPK,
                 Professional.class,
-                expenseFacade, professionalFacade, Expense::setProfessional,
+                professionalFacade, Expense::setProfessional,
                 Professional::getExpenses, e -> {
             int total = e.getPayments().stream()
                     .mapToInt(Payment::getAmount)
@@ -123,7 +128,7 @@ public class ExpenseService extends AbstractCommonService<Expense, ExpensePK> {
 
         LOG.log(Level.INFO, "Updating Expense {0}", expenseFacade.
                 prettyPrintPK(pk));
-        return super.put(entity, expenseFacade, pk, e -> {
+        return super.put(entity, pk, e -> {
 
             e.setName(entity.getName());
             e.setPaymentDate(entity.getPaymentDate());
@@ -144,7 +149,7 @@ public class ExpenseService extends AbstractCommonService<Expense, ExpensePK> {
 
         LOG.log(Level.INFO, "Deleting Expense {0}", expenseFacade.
                 prettyPrintPK(pk));
-        return super.delete(expenseFacade, pk,
-                e -> e.getProfessional().getExpenses().remove(e));
+        return super.delete(pk, e -> e.getProfessional().getExpenses().remove(
+                e));
     }
 }
