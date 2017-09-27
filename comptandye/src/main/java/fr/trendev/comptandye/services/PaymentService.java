@@ -54,6 +54,7 @@ public class PaymentService extends AbstractCommonService<Payment, Long> {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Payment list");
         return super.findAll();
@@ -62,6 +63,7 @@ public class PaymentService extends AbstractCommonService<Payment, Long> {
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
+    @Override
     public Response count() {
         return super.count();
     }
@@ -69,6 +71,7 @@ public class PaymentService extends AbstractCommonService<Payment, Long> {
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public Response find(@PathParam("id") Long id,
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get Payment : {0}", id);

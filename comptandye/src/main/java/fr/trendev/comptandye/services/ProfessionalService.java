@@ -68,6 +68,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Professional list");
         return super.findAll();
@@ -76,6 +77,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
+    @Override
     public Response count() {
         return super.count();
     }
@@ -83,6 +85,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     @Path("{email}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public Response find(@PathParam("email") String email,
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get Professional : {0}", email);

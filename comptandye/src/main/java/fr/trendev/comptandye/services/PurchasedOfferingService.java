@@ -63,6 +63,7 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the PurchasedOffering list");
         return super.findAll();
@@ -71,6 +72,7 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
+    @Override
     public Response count() {
         return super.count();
     }
@@ -78,6 +80,7 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public Response find(@PathParam("id") Long id,
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get PurchasedOffering : {0}", id);

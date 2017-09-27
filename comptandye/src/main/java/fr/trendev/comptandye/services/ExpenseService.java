@@ -64,6 +64,7 @@ public class ExpenseService extends AbstractCommonService<Expense, ExpensePK> {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Expense list");
         return super.findAll();
@@ -72,6 +73,7 @@ public class ExpenseService extends AbstractCommonService<Expense, ExpensePK> {
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
+    @Override
     public Response count() {
         return super.count();
     }

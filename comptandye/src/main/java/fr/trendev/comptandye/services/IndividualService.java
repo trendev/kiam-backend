@@ -67,6 +67,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Individual list");
         return super.findAll();
@@ -75,6 +76,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
+    @Override
     public Response count() {
         return super.count();
     }
@@ -82,6 +84,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
     @Path("{email}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public Response find(@PathParam("email") String email,
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get Individual : {0}", email);

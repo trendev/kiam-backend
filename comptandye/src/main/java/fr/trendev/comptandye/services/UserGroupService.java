@@ -54,6 +54,7 @@ public class UserGroupService extends AbstractCommonService<UserGroup, String> {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the UserGroup list");
         return super.findAll();
@@ -62,6 +63,7 @@ public class UserGroupService extends AbstractCommonService<UserGroup, String> {
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
+    @Override
     public Response count() {
         return super.count();
     }
@@ -69,6 +71,7 @@ public class UserGroupService extends AbstractCommonService<UserGroup, String> {
     @Path("{name}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public Response find(@PathParam("name") String name,
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get UserGroup : {0}", name);

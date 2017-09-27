@@ -69,6 +69,7 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Category list");
         return super.findAll();
@@ -77,6 +78,7 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
+    @Override
     public Response count() {
         return super.count();
     }

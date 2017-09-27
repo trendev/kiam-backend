@@ -53,6 +53,7 @@ public class BusinessService extends AbstractCommonService<Business, String> {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Business list");
         return super.
@@ -62,6 +63,7 @@ public class BusinessService extends AbstractCommonService<Business, String> {
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
+    @Override
     public Response count() {
         return super.count();
     }
@@ -69,6 +71,7 @@ public class BusinessService extends AbstractCommonService<Business, String> {
     @Path("{designation}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public Response find(@PathParam("designation") String designation,
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get Business : {0}", designation);

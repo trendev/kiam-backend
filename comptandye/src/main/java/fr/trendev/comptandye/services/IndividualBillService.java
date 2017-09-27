@@ -66,6 +66,7 @@ public class IndividualBillService extends AbstractBillService<IndividualBill> {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the IndividualBill list");
         return super.findAll();
@@ -74,6 +75,7 @@ public class IndividualBillService extends AbstractBillService<IndividualBill> {
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
+    @Override
     public Response count() {
         return super.count();
     }
@@ -125,6 +127,7 @@ public class IndividualBillService extends AbstractBillService<IndividualBill> {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public Response put(@Context SecurityContext sec, IndividualBill entity,
             @QueryParam("professional") String professional) {
         return super.put(sec, entity, professional);

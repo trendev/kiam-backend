@@ -53,6 +53,7 @@ public class PaymentModeService extends AbstractCommonService<PaymentMode, Strin
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the PaymentMode list");
         return super.findAll();
@@ -61,6 +62,7 @@ public class PaymentModeService extends AbstractCommonService<PaymentMode, Strin
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
+    @Override
     public Response count() {
         return super.count();
     }
@@ -68,6 +70,7 @@ public class PaymentModeService extends AbstractCommonService<PaymentMode, Strin
     @Path("{name}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public Response find(@PathParam("name") String name,
             @QueryParam("refresh") boolean refresh) {
         LOG.

@@ -55,6 +55,7 @@ public class SocialNetworkAccountsService extends AbstractCommonService<SocialNe
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the SocialNetworkAccounts list");
         return super.findAll();
@@ -63,6 +64,7 @@ public class SocialNetworkAccountsService extends AbstractCommonService<SocialNe
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
+    @Override
     public Response count() {
         return super.count();
     }
@@ -70,6 +72,7 @@ public class SocialNetworkAccountsService extends AbstractCommonService<SocialNe
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public Response find(@PathParam("id") Long id,
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get SocialNetworkAccounts : {0}",

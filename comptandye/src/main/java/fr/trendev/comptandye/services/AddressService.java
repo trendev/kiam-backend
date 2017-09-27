@@ -55,6 +55,7 @@ public class AddressService extends AbstractCommonService<Address, Long> {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Address list");
         return super.findAll();
@@ -63,6 +64,7 @@ public class AddressService extends AbstractCommonService<Address, Long> {
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
+    @Override
     public Response count() {
         return super.count();
     }
@@ -70,6 +72,7 @@ public class AddressService extends AbstractCommonService<Address, Long> {
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public Response find(@PathParam("id") Long id,
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get Address : {0}", id);
@@ -81,7 +84,6 @@ public class AddressService extends AbstractCommonService<Address, Long> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response post(Address entity) {
         LOG.log(Level.INFO, "Creating Address {0}", super.stringify(entity));
-
         return super.post(entity, e -> {
         });
     }

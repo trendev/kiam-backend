@@ -6,11 +6,11 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.entities.BillPK;
-import fr.trendev.comptandye.entities.ClientBill;
-import fr.trendev.comptandye.entities.ClientPK;
+import fr.trendev.comptandye.entities.CollectiveGroupBill;
+import fr.trendev.comptandye.entities.CollectiveGroupPK;
 import fr.trendev.comptandye.sessions.AbstractFacade;
-import fr.trendev.comptandye.sessions.ClientBillFacade;
-import fr.trendev.comptandye.sessions.ClientFacade;
+import fr.trendev.comptandye.sessions.CollectiveGroupBillFacade;
+import fr.trendev.comptandye.sessions.CollectiveGroupFacade;
 import java.util.Date;
 import java.util.Optional;
 import java.util.function.Function;
@@ -38,20 +38,21 @@ import javax.ws.rs.core.SecurityContext;
  * @author jsie
  */
 @Stateless
-@Path("ClientBill")
-public class ClientBillService extends AbstractBillService<ClientBill> {
+@Path("CollectiveGroupBill")
+public class CollectiveGroupBillService extends AbstractBillService<CollectiveGroupBill> {
 
     @Inject
-    ClientBillFacade clientBillFacade;
+    CollectiveGroupBillFacade collectiveGroupBillFacade;
 
     @Inject
-    ClientFacade clientFacade;
+    CollectiveGroupFacade collectiveGroupFacade;
 
-    private static final Logger LOG = Logger.getLogger(ClientBillService.class.
-            getName());
+    private static final Logger LOG = Logger.getLogger(
+            CollectiveGroupBillService.class.
+                    getName());
 
-    public ClientBillService() {
-        super(ClientBill.class);
+    public CollectiveGroupBillService() {
+        super(CollectiveGroupBill.class);
     }
 
     @Override
@@ -60,20 +61,22 @@ public class ClientBillService extends AbstractBillService<ClientBill> {
     }
 
     @Override
-    protected AbstractFacade<ClientBill, BillPK> getFacade() {
-        return clientBillFacade;
+    protected AbstractFacade<CollectiveGroupBill, BillPK> getFacade() {
+        return collectiveGroupBillFacade;
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public Response findAll() {
-        LOG.log(Level.INFO, "Providing the ClientBill list");
+        LOG.log(Level.INFO, "Providing the CollectiveGroupBill list");
         return super.findAll();
     }
 
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
+    @Override
     public Response count() {
         return super.count();
     }
@@ -86,8 +89,8 @@ public class ClientBillService extends AbstractBillService<ClientBill> {
             @QueryParam("professional") String professional,
             @QueryParam("refresh") boolean refresh) {
         BillPK pk = new BillPK(reference, new Date(deliverydate), professional);
-        LOG.log(Level.INFO, "REST request to get ClientBill : {0}",
-                clientBillFacade.
+        LOG.log(Level.INFO, "REST request to get CollectiveGroupBill : {0}",
+                collectiveGroupBillFacade.
                         prettyPrintPK(
                                 pk));
         return super.find(pk, refresh);
@@ -96,34 +99,39 @@ public class ClientBillService extends AbstractBillService<ClientBill> {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response post(@Context SecurityContext sec, ClientBill entity,
+    public Response post(@Context SecurityContext sec,
+            CollectiveGroupBill entity,
             @QueryParam("professional") String professional) {
 
         String proEmail = this.getProEmail(sec, professional);
 
         return super.post(
                 e -> {
-            if (e.getClient() == null) {
+            if (e.getCollectiveGroup() == null) {
                 throw new WebApplicationException(
-                        "A valid Client must be provided !");
+                        "A valid CollectiveGroup must be provided !");
             }
 
             /**
-             * The ClientBill must have the same professional than the Client of
-             * the Bill. This is why we use proEmail instead of
-             * e.getClient().getProfessional().getEmail()
+             * The CollectiveGroupBill must have the same professional than the
+             * CollectiveGroup of the Bill. This is why we use proEmail instead
+             * of e.getCollectiveGroup().getProfessional().getEmail()
              */
-            ClientPK clientPK = new ClientPK(e.getClient().getId(), proEmail);
+            CollectiveGroupPK collectiveGroupPK = new CollectiveGroupPK(e.
+                    getCollectiveGroup().getId(), proEmail);
 
-            e.setClient(
-                    Optional.ofNullable(clientFacade.find(clientPK))
+            e.setCollectiveGroup(
+                    Optional.ofNullable(collectiveGroupFacade.find(
+                            collectiveGroupPK))
                             .map(Function.identity()).orElseThrow(() ->
                             new WebApplicationException(
-                                    "Client " + clientFacade.prettyPrintPK(
-                                            clientPK) + " doesn't exist !"
+                                    "CollectiveGroup " + collectiveGroupFacade.
+                                            prettyPrintPK(
+                                                    collectiveGroupPK)
+                                    + " doesn't exist !"
                             )));
 
-            e.getClient().getClientBills().add(e);
+            e.getCollectiveGroup().getCollectiveGroupBills().add(e);
         },
                 sec, entity, professional);
     }
@@ -132,7 +140,7 @@ public class ClientBillService extends AbstractBillService<ClientBill> {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public Response put(@Context SecurityContext sec, ClientBill entity,
+    public Response put(@Context SecurityContext sec, CollectiveGroupBill entity,
             @QueryParam("professional") String professional) {
         return super.put(sec, entity, professional);
     }
@@ -144,8 +152,9 @@ public class ClientBillService extends AbstractBillService<ClientBill> {
             @QueryParam("professional") String professional) {
 
         return super.delete(
-                ClientBill.class,
-                e -> e.getClient().getClientBills().remove(e),
+                CollectiveGroupBill.class,
+                e -> e.getCollectiveGroup().getCollectiveGroupBills().
+                        remove(e),
                 reference,
                 deliverydate,
                 professional);

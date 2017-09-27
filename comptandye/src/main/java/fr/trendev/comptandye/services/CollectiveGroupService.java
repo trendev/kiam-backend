@@ -70,6 +70,7 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the CollectiveGroup list");
         return super.findAll();
@@ -78,6 +79,7 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
+    @Override
     public Response count() {
         return super.count();
     }

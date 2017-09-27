@@ -66,6 +66,7 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public Response findAll() {
         LOG.log(Level.INFO, "Providing the Client list");
         return super.findAll();
@@ -74,6 +75,7 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
     @Path("count")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
+    @Override
     public Response count() {
         return super.count();
     }
