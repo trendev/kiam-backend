@@ -2114,7 +2114,7 @@
 			]
 		},
 		{
-			"name": "ClientBill - IN PROGRESS",
+			"name": "ClientBill",
 			"description": "",
 			"item": [
 				{
@@ -2179,6 +2179,106 @@
 								"exec": [
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
 									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"reference is defined\"] = jsonData.reference !== undefined;",
+									"pm.environment.set(\"created_clientbill_reference\", jsonData.reference);",
+									"tests[\"deliveryDate is defined\"] = jsonData.deliveryDate !== undefined;",
+									"pm.environment.set(\"created_clientbill_deliveryDate\", jsonData.deliveryDate);",
+									"",
+									"tests[\"client.email is \\\"client@domain.com\\\"\"] = jsonData.client.email === \"client@domain.com\";",
+									"tests[\"client.socialNetworkAccounts.twitter is \\\"@client_facebook_account\\\"\"] = jsonData.client.socialNetworkAccounts.twitter === \"@client_facebook_account\";",
+									"",
+									"tests[\"client.address.street is \\\"Allée de Fontenelle\\\"\"] = jsonData.client.address.street === \"Allée de Fontenelle\";",
+									"tests[\"client.address.optional is \\\"Château de Fontenelle\\\"\"] = jsonData.client.address.optional === \"Château de Fontenelle\";",
+									"tests[\"client.address.postalCode is \\\"77600\\\"\"] = jsonData.client.address.postalCode === \"77600\";",
+									"tests[\"client.address.city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.client.address.city === \"Chanteloup-en-Brie\";",
+									"",
+									"tests[\"client.customerDetails.firstName is \\\"Paul\\\"\"] = jsonData.client.customerDetails.firstName === \"Paul\";",
+									"tests[\"client.customerDetails.lastName is \\\"Newman\\\"\"] = jsonData.client.customerDetails.lastName === \"Newman\";",
+									"tests[\"client.customerDetails.sex is \\\"M\\\"\"] = jsonData.client.customerDetails.sex === \"M\";",
+									"tests[\"client.customerDetails.comments.length is 2\"] = jsonData.client.customerDetails.comments.length === 2;",
+									"",
+									"tests[\"purchasedOfferings[0].id is defined\"] = jsonData.purchasedOfferings[0].id !== undefined;",
+									"pm.environment.set(\"created_purchasedoffering_id\", jsonData.purchasedOfferings[0].id);",
+									"",
+									"tests[\"purchasedOfferings[0].qty is 4\"] = jsonData.purchasedOfferings[0].qty === 4;",
+									"",
+									"tests[\"purchasedOfferings[0].offering is defined\"] = jsonData.purchasedOfferings[0].offering !== undefined;",
+									"tests[\"purchasedOfferings[0].offering.cltype = service\"] = jsonData.purchasedOfferings[0].offering.cltype === \"service\";",
+									"tests[\"purchasedOfferings[0].offering.name = beauty service\"] = jsonData.purchasedOfferings[0].offering.name === \"beauty service\";",
+									"tests[\"purchasedOfferings[0].offering.price = 1500\"] = jsonData.purchasedOfferings[0].offering.price === 1500;",
+									"tests[\"purchasedOfferings[0].offering.duration = 180\"] = jsonData.purchasedOfferings[0].offering.duration === 180;",
+									"tests[\"purchasedOfferings[0].offering.hidden = false\"] = jsonData.purchasedOfferings[0].offering.hidden === false;",
+									"tests[\"purchasedOfferings[0].offering.businesses[0].designation = Esthétique\"] = jsonData.purchasedOfferings[0].offering.businesses[0].designation === \"Esthétique\";",
+									"",
+									""
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest({",
+									"    url: \"{{API_URL}}/Client?professional=vanessa.gay@gmail.com\",",
+									"    method: 'POST',",
+									"    header: 'Content-Type:application/json',",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify(",
+									"            {",
+									"            \"email\": \"client@domain.com\",",
+									"            \"socialNetworkAccounts\": {",
+									"                \"twitter\": \"@client_facebook_account\"",
+									"            },",
+									"            \"customerDetails\": {",
+									"                \"firstName\": \"Paul\",",
+									"                \"lastName\": \"Newman\",",
+									"                \"sex\": \"M\",",
+									"                \"comments\": [",
+									"                    \"old american actor\",",
+									"                    \"old shool boy\"",
+									"                ]",
+									"            },",
+									"            \"address\": {",
+									"                \"street\": \"Allée de Fontenelle\",",
+									"                \"optional\": \"Château de Fontenelle\",",
+									"                \"postalCode\": \"77600\",",
+									"                \"city\": \"Chanteloup-en-Brie\",",
+									"                \"country\": \"France\"",
+									"            }",
+									"})",
+									"    }",
+									"}, function (err, response) {",
+									"    console.log(response.json());",
+									"   pm.environment.set(\"created_client_id\", response.json().id);",
+									"});",
+									"",
+									"",
+									"pm.sendRequest({",
+									"    url: \"{{API_URL}}/Service?professional=vanessa.gay@gmail.com\",",
+									"    method: 'POST',",
+									"    header: 'Content-Type:application/json',",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify(",
+									"            {",
+									"                name:\"beauty service\",",
+									"              price:1500,",
+									"              duration:180,",
+									"              businesses: [",
+									"                {",
+									"                    designation: \"Esthétique\"",
+									"                }",
+									"                ],",
+									"                cltype:\"service\"",
+									"            })",
+									"    }",
+									"}, function (err, response) {",
+									"    console.log(response.json());",
+									"   pm.environment.set(\"created_offering_id\", response.json().id);",
+									"});",
 									""
 								]
 							}
@@ -2213,7 +2313,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"cltype\":\"clientbill\",\n  \"deliveryDate\":1506085212900,\n  \"amount\":5000,\n  \"discount\":1000,\n  \"comments\":[\n    \"The first one created by a rest api request\"\n  ],\n  \"payments\":[\n    {\n      \"amount\":4000,\n      \"paymentMode\": {\n                    \"name\": \"CB\"\n            }\n    },\n    {\n      \"amount\":1000,\n      \"paymentMode\": {\n                    \"name\": \"Espèces\" \n            }\n    }\n  ],\n  \"purchasedOfferings\":[\n    {\n      \"qty\":4,\n      \"offering\":\n        {\n              \"id\": 46,\n              \"cltype\": \"service\",\n              \"name\": \"Classic Haircut\",\n              \"price\": 1500,\n              \"duration\": 60,\n              \"hidden\": false\n          }\n    }\n  ],\n  \"client\":{\n    \"id\":48\n  }\n}"
+							"raw": "{\n  \"cltype\":\"clientbill\",\n  \"deliveryDate\":1506085212900,\n  \"amount\":5000,\n  \"discount\":1000,\n  \"comments\":[\n    \"The first one created by a rest api request\"\n  ],\n  \"payments\":[\n    {\n      \"amount\":4000,\n      \"paymentMode\": {\n                    \"name\": \"CB\"\n            }\n    },\n    {\n      \"amount\":1000,\n      \"paymentMode\": {\n                    \"name\": \"Espèces\" \n            }\n    }\n  ],\n  \"purchasedOfferings\":[\n    {\n      \"qty\":4,\n      \"offering\": {\n        \"id\": {{created_offering_id}},\n        \"cltype\": \"service\",\n        \"name\": \"beauty service\",\n        \"price\": 1500,\n        \"duration\": 180,\n        \"hidden\": false,\n        \"businesses\": [\n            {\n                \"designation\": \"Esthétique\"\n            }\n        ]\n    }\n    }\n  ],\n  \"client\":{\n    \"id\":{{created_client_id}}\n  }\n}"
 						},
 						"description": ""
 					},
@@ -2227,21 +2327,53 @@
 							"script": {
 								"type": "text/javascript",
 								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"reference is \"+pm.environment.get(\"created_clientbill_reference\")] = jsonData.reference == pm.environment.get(\"created_clientbill_reference\");",
+									"tests[\"deliveryDate is \"+pm.environment.get(\"created_clientbill_deliveryDate\")] = jsonData.deliveryDate == pm.environment.get(\"created_clientbill_deliveryDate\");",
+									"",
+									"tests[\"client.email is \\\"client@domain.com\\\"\"] = jsonData.client.email === \"client@domain.com\";",
+									"tests[\"client.socialNetworkAccounts.twitter is \\\"@client_facebook_account\\\"\"] = jsonData.client.socialNetworkAccounts.twitter === \"@client_facebook_account\";",
+									"",
+									"tests[\"client.address.street is \\\"Allée de Fontenelle\\\"\"] = jsonData.client.address.street === \"Allée de Fontenelle\";",
+									"tests[\"client.address.optional is \\\"Château de Fontenelle\\\"\"] = jsonData.client.address.optional === \"Château de Fontenelle\";",
+									"tests[\"client.address.postalCode is \\\"77600\\\"\"] = jsonData.client.address.postalCode === \"77600\";",
+									"tests[\"client.address.city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.client.address.city === \"Chanteloup-en-Brie\";",
+									"",
+									"tests[\"client.customerDetails.firstName is \\\"Paul\\\"\"] = jsonData.client.customerDetails.firstName === \"Paul\";",
+									"tests[\"client.customerDetails.lastName is \\\"Newman\\\"\"] = jsonData.client.customerDetails.lastName === \"Newman\";",
+									"tests[\"client.customerDetails.sex is \\\"M\\\"\"] = jsonData.client.customerDetails.sex === \"M\";",
+									"tests[\"client.customerDetails.comments.length is 2\"] = jsonData.client.customerDetails.comments.length === 2;",
+									"",
+									"tests[\"purchasedOfferings[0].id is defined\"] = jsonData.purchasedOfferings[0].id !== undefined;",
+									"pm.environment.set(\"created_purchasedoffering_id\", jsonData.purchasedOfferings[0].id);",
+									"",
+									"tests[\"purchasedOfferings[0].qty is 4\"] = jsonData.purchasedOfferings[0].qty === 4;",
+									"",
+									"tests[\"purchasedOfferings[0].offering is defined\"] = jsonData.purchasedOfferings[0].offering !== undefined;",
+									"tests[\"purchasedOfferings[0].offering.cltype = service\"] = jsonData.purchasedOfferings[0].offering.cltype === \"service\";",
+									"tests[\"purchasedOfferings[0].offering.name = beauty service\"] = jsonData.purchasedOfferings[0].offering.name === \"beauty service\";",
+									"tests[\"purchasedOfferings[0].offering.price = 1500\"] = jsonData.purchasedOfferings[0].offering.price === 1500;",
+									"tests[\"purchasedOfferings[0].offering.duration = 180\"] = jsonData.purchasedOfferings[0].offering.duration === 180;",
+									"tests[\"purchasedOfferings[0].offering.hidden = false\"] = jsonData.purchasedOfferings[0].offering.hidden === false;",
+									"tests[\"purchasedOfferings[0].offering.businesses[0].designation = Esthétique\"] = jsonData.purchasedOfferings[0].offering.businesses[0].designation === \"Esthétique\";",
+									"",
+									""
 								]
 							}
 						}
 					],
 					"request": {
 						"url": {
-							"raw": "{{API_URL}}/ClientBill/C-PRO-825abefc0bb54b12808032ef6695655b-2/1506085212900?professional=vanessa.gay@gmail.com",
+							"raw": "{{API_URL}}/ClientBill/{{created_clientbill_reference}}/{{created_clientbill_deliveryDate}}?professional=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"ClientBill",
-								"C-PRO-825abefc0bb54b12808032ef6695655b-2",
-								"1506085212900"
+								"{{created_clientbill_reference}}",
+								"{{created_clientbill_deliveryDate}}"
 							],
 							"query": [
 								{
@@ -2269,6 +2401,46 @@
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"reference is \"+pm.environment.get(\"created_clientbill_reference\")] = jsonData.reference == pm.environment.get(\"created_clientbill_reference\");",
+									"tests[\"deliveryDate is \"+pm.environment.get(\"created_clientbill_deliveryDate\")] = jsonData.deliveryDate == pm.environment.get(\"created_clientbill_deliveryDate\");",
+									"",
+									"tests[\"cltype is clientbill\"] = jsonData.cltype === \"clientbill\";",
+									"tests[\"amount is 5000\"] = jsonData.amount === 5000;",
+									"tests[\"currency is EUR\"] = jsonData.currency === \"EUR\";",
+									"tests[\"discount is 1000\"] = jsonData.discount === 1000;",
+									"tests[\"paymentDate is \"+new Date(jsonData.paymentDate)] = jsonData.paymentDate !== undefined;",
+									"tests[\"comments.length is 2\"] = jsonData.comments.length === 2;",
+									"tests[\"payments.length is 2\"] = jsonData.payments.length === 2;",
+									"",
+									"tests[\"client.id is \"+pm.environment.get(\"created_client_id\")] = jsonData.client.id == pm.environment.get(\"created_client_id\");",
+									"tests[\"client.email is \\\"client@domain.com\\\"\"] = jsonData.client.email === \"client@domain.com\";",
+									"tests[\"client.socialNetworkAccounts.twitter is \\\"@client_facebook_account\\\"\"] = jsonData.client.socialNetworkAccounts.twitter === \"@client_facebook_account\";",
+									"",
+									"tests[\"client.address.street is \\\"Allée de Fontenelle\\\"\"] = jsonData.client.address.street === \"Allée de Fontenelle\";",
+									"tests[\"client.address.optional is \\\"Château de Fontenelle\\\"\"] = jsonData.client.address.optional === \"Château de Fontenelle\";",
+									"tests[\"client.address.postalCode is \\\"77600\\\"\"] = jsonData.client.address.postalCode === \"77600\";",
+									"tests[\"client.address.city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.client.address.city === \"Chanteloup-en-Brie\";",
+									"",
+									"tests[\"client.customerDetails.firstName is \\\"Paul\\\"\"] = jsonData.client.customerDetails.firstName === \"Paul\";",
+									"tests[\"client.customerDetails.lastName is \\\"Newman\\\"\"] = jsonData.client.customerDetails.lastName === \"Newman\";",
+									"tests[\"client.customerDetails.sex is \\\"M\\\"\"] = jsonData.client.customerDetails.sex === \"M\";",
+									"tests[\"client.customerDetails.comments.length is 2\"] = jsonData.client.customerDetails.comments.length === 2;",
+									"",
+									"tests[\"purchasedOfferings[0].id is defined\"] = jsonData.purchasedOfferings[0].id !== undefined;",
+									"pm.environment.set(\"created_purchasedoffering_id\", jsonData.purchasedOfferings[0].id);",
+									"",
+									"tests[\"purchasedOfferings[0].qty is 4\"] = jsonData.purchasedOfferings[0].qty === 4;",
+									"",
+									"tests[\"purchasedOfferings[0].offering is defined\"] = jsonData.purchasedOfferings[0].offering !== undefined;",
+									"tests[\"purchasedOfferings[0].offering.id is \"+pm.environment.get(\"created_offering_id\")] = jsonData.purchasedOfferings[0].offering.id == pm.environment.get(\"created_offering_id\");",
+									"tests[\"purchasedOfferings[0].offering.cltype = service\"] = jsonData.purchasedOfferings[0].offering.cltype === \"service\";",
+									"tests[\"purchasedOfferings[0].offering.name = beauty service\"] = jsonData.purchasedOfferings[0].offering.name === \"beauty service\";",
+									"tests[\"purchasedOfferings[0].offering.price = 1500\"] = jsonData.purchasedOfferings[0].offering.price === 1500;",
+									"tests[\"purchasedOfferings[0].offering.duration = 180\"] = jsonData.purchasedOfferings[0].offering.duration === 180;",
+									"tests[\"purchasedOfferings[0].offering.hidden = false\"] = jsonData.purchasedOfferings[0].offering.hidden === false;",
+									"tests[\"purchasedOfferings[0].offering.businesses[0].designation = Esthétique\"] = jsonData.purchasedOfferings[0].offering.businesses[0].designation === \"Esthétique\";",
 									"",
 									""
 								]
@@ -2304,7 +2476,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"cltype\":\"clientbill\",\n  \"reference\": \"C-PRO-825abefc0bb54b12808032ef6695655b-2\",\n    \"deliveryDate\": 1506085212900,\n  \"paymentDate\":1506085213900,\n  \"amount\":5000,\n  \"discount\":1000,\n  \"comments\":[\n    \"Let the color applying\",\"Hair used to be darker than expected\"\n  ],\n  \"payments\":[\n    {\n      \"amount\":4000,\n      \"paymentMode\": {\n                    \"name\": \"CB\"\n            }\n    },\n    {\n      \"amount\":1000,\n      \"paymentMode\": {\n                    \"name\": \"Paypal\" \n            }\n    }\n  ],\n  \"purchasedOfferings\":[\n    {\n      \"qty\":4,\n      \"offering\":\n        {\n              \"id\": 46,\n              \"cltype\": \"service\",\n              \"name\": \"Classic Haircut\",\n              \"price\": 1500,\n              \"duration\": 60,\n              \"hidden\": false\n          }\n    }\n  ],\n  \"client\":{\n    \"id\":48\n  }\n}"
+							"raw": "{\n    \"reference\": \"{{created_clientbill_reference}}\",\n    \"deliveryDate\": {{created_clientbill_deliveryDate}},\n    \"paymentDate\": 1506085213900,\n    \"cltype\": \"clientbill\",\n    \"amount\": 5000,\n    \"currency\": \"EUR\",\n    \"discount\": 1000,\n    \"comments\": [\n        \"Let the color applying\",\n        \"Hair used to be darker than expected\"\n    ],\n    \"payments\": [\n        {\n            \"amount\": 4000,\n            \"paymentMode\": {\n                \"name\": \"CB\"\n            }\n        },\n        {\n            \"amount\": 1000,\n            \"paymentMode\": {\n                \"name\": \"Espèces\"\n            }\n        }\n    ],\n    \"purchasedOfferings\": [\n        {\n            \"qty\": 4,\n            \"offering\": {\n                \"id\": {{created_offering_id}},\n                \"cltype\": \"service\",\n                \"name\": \"beauty service\",\n                \"price\": 1500,\n                \"duration\": 180,\n                \"hidden\": false,\n                \"businesses\": [\n                    {\n                        \"designation\": \"Esthétique\"\n                    }\n                ]\n            }\n        }\n    ],\n    \"client\": {\n        \"id\": {{created_client_id}}\n    }\n}"
 						},
 						"description": ""
 					},
@@ -2318,36 +2490,37 @@
 							"script": {
 								"type": "text/javascript",
 								"exec": [
-									"/*",
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
-									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"id is defined\"] = jsonData.id !== undefined;",
-									"//created_collectivegroup_id environment variable is stored as a string...",
-									"tests[\"id is \"+pm.environment.get(\"created_collectivegroup_id\")] = jsonData.id == pm.environment.get(\"created_collectivegroup_id\");",
-									"tests[\"groupName is \\\"Maison de retraite de Chanteloup-en-Brie\\\"\"] = jsonData.groupName === \"Maison de retraite de Chanteloup-en-Brie\";",
-									"tests[\"phone is \\\"0123456789\\\"\"] = jsonData.phone === \"0123456789\";",
-									"tests[\"Address is defined\"] = jsonData.address !== undefined;",
-									"tests[\"address.id is \"+pm.environment.get(\"created_address_id\")] = jsonData.address.id == pm.environment.get(\"created_address_id\");",
-									"tests[\"address.street is \\\"Allée de Fontenelle\\\"\"] = jsonData.address.street === \"Allée de Fontenelle\";",
-									"tests[\"address.optional is \\\"Château de Fontenelle\\\"\"] = jsonData.address.optional === \"Château de Fontenelle\";",
-									"tests[\"address.postalCode is \\\"77600\\\"\"] = jsonData.address.postalCode === \"77600\";",
-									"tests[\"address.city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.address.city === \"Chanteloup-en-Brie\";",
-									"*/"
+									"pm.sendRequest({",
+									"    url: \"{{API_URL}}/Service/{{created_offering_id}}?professional=vanessa.gay@gmail.com\",",
+									"    method: 'DELETE'",
+									"}, function (err, res) {",
+									"    pm.expect(res).to.have.property('code', 200);",
+									"    pm.expect(res).to.have.property('status', 'OK');",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: \"{{API_URL}}/Client/{{created_client_id}}?professional=vanessa.gay@gmail.com\",",
+									"    method: 'DELETE'",
+									"}, function (err, res) {",
+									"    pm.expect(res).to.have.property('code', 200);",
+									"    pm.expect(res).to.have.property('status', 'OK');",
+									"});"
 								]
 							}
 						}
 					],
 					"request": {
 						"url": {
-							"raw": "{{API_URL}}/ClientBill/C-PRO-825abefc0bb54b12808032ef6695655b-2/1506085212900?professional=vanessa.gay@gmail.com",
+							"raw": "{{API_URL}}/ClientBill/{{created_clientbill_reference}}/{{created_clientbill_deliveryDate}}?professional=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"ClientBill",
-								"C-PRO-825abefc0bb54b12808032ef6695655b-2",
-								"1506085212900"
+								"{{created_clientbill_reference}}",
+								"{{created_clientbill_deliveryDate}}"
 							],
 							"query": [
 								{
