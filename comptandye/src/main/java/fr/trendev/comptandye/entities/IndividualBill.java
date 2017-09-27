@@ -6,7 +6,7 @@ import fr.trendev.comptandye.visitors.Visitor;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 
 /**
  * @author jsie
@@ -15,7 +15,7 @@ import javax.persistence.OneToOne;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class IndividualBill extends Bill {
 
-    @OneToOne(targetEntity = Individual.class)
+    @ManyToOne(targetEntity = Individual.class)
     private Individual individual;
 
     public IndividualBill(String reference, Date deliveryDate, int amount,

@@ -6,8 +6,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.trendev.comptandye.visitors.Visitor;
 import java.util.LinkedList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 /**
  * @author jsie
@@ -15,6 +17,11 @@ import javax.persistence.ManyToMany;
 @Entity
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Individual extends Customer {
+
+    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = IndividualBill.class,
+            mappedBy = "individual")
+    @JsonIgnore
+    private List<IndividualBill> individualBills = new LinkedList<>();
 
     @ManyToMany(targetEntity = Professional.class)
     @JsonIgnore
@@ -34,6 +41,14 @@ public class Individual extends Customer {
             SocialNetworkAccounts socialNetworkAccounts) {
         super(email, password, username, uuid, customerDetails, address,
                 socialNetworkAccounts);
+    }
+
+    public List<IndividualBill> getIndividualBills() {
+        return this.individualBills;
+    }
+
+    public void setIndividualBills(List<IndividualBill> individualBills) {
+        this.individualBills = individualBills;
     }
 
     public List<Professional> getProfessionals() {

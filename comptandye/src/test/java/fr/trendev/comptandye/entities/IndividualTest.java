@@ -59,6 +59,8 @@ public class IndividualTest {
         assert instance.getSocialNetworkAccounts() != null;
         assert instance.getProfessionals() != null;
         assert instance.getProfessionals().isEmpty();
+        assert instance.getIndividualBills() != null;
+        assert instance.getIndividualBills().isEmpty();
 
         String email = "individual@procompany.com";
         String password = "encrypted_pwd";
@@ -78,6 +80,8 @@ public class IndividualTest {
         assert instance.getSocialNetworkAccounts() != null;
         assert instance.getProfessionals() != null;
         assert instance.getProfessionals().isEmpty();
+        assert instance.getIndividualBills() != null;
+        assert instance.getIndividualBills().isEmpty();
 
         instance = new Individual(email, password, username, uuid,
                 new CustomerDetails(), new Address(),
@@ -95,6 +99,8 @@ public class IndividualTest {
         assert instance.getSocialNetworkAccounts() != null;
         assert instance.getProfessionals() != null;
         assert instance.getProfessionals().isEmpty();
+        assert instance.getIndividualBills() != null;
+        assert instance.getIndividualBills().isEmpty();
 
     }
 

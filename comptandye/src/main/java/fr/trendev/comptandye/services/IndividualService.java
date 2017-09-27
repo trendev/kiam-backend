@@ -232,6 +232,17 @@ public class IndividualService extends AbstractCommonService<Individual, String>
                 Individual::getProfessionals);
     }
 
+    @Path("{email}/individualBills")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getIndividualBills(@PathParam("email") String email) {
+        LOG.log(Level.INFO,
+                "REST request to get individualBills of Individual : {0}",
+                email);
+        return super.provideRelation(email,
+                Individual::getIndividualBills);
+    }
+
     @Path("{indEmail}/buildBusinessRelationship/{proEmail}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)

@@ -3384,6 +3384,31 @@
 					"response": []
 				},
 				{
+					"name": "getIndividualBills",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{API_URL}}/Individual/individual@gmail.com/individualBills",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
 					"name": "insertToUserGroup",
 					"event": [
 						{
