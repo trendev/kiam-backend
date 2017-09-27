@@ -317,6 +317,7 @@ public class DemoConfigureBean implements Serializable {
                     vanessa, new LinkedList<>(), Arrays.asList(
                             new PurchasedOffering(1, service1)),
                     sylvioc);
+
             bill1.setCltype("individualbill");
 
             IndividualBill bill2 = new IndividualBill("I-" + vanessa.getUuid()
@@ -329,6 +330,9 @@ public class DemoConfigureBean implements Serializable {
                             new PurchasedOffering(1, specialPack)),
                     sylvioc);
             bill2.setCltype("individualbill");
+
+            sylvioc.getIndividualBills().add(bill1);
+            sylvioc.getIndividualBills().add(bill2);
 
             Payment pm = new Payment(5000, em.find(PaymentMode.class,
                     "CB"));
