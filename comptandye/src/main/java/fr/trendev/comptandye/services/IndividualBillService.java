@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -98,8 +99,6 @@ public class IndividualBillService extends AbstractBillService<IndividualBill> {
     public Response post(@Context SecurityContext sec, IndividualBill entity,
             @QueryParam("professional") String professional) {
 
-        String proEmail = this.getProEmail(sec, professional);
-
         return super.post(
                 e -> {
             if (e.getIndividual() == null) {
@@ -118,7 +117,7 @@ public class IndividualBillService extends AbstractBillService<IndividualBill> {
                                     + " doesn't exist !"
                             )));
 
-//            e.getIndividual().getIndividualBills().add(e);
+            e.getIndividual().getIndividualBills().add(e);
         },
                 sec, entity, professional);
     }
@@ -131,17 +130,17 @@ public class IndividualBillService extends AbstractBillService<IndividualBill> {
         return super.put(sec, entity, professional);
     }
 
-//    @Path("{reference}/{deliverydate}")
-//    @DELETE
-//    public Response delete(@PathParam("reference") String reference,
-//            @PathParam("deliverydate") long deliverydate,
-//            @QueryParam("professional") String professional) {
-//
-//        return super.delete(
-//                IndividualBill.class,
-//                e -> e.getIndividual().getIndividualBills().remove(e),
-//                reference,
-//                deliverydate,
-//                professional);
-//    }
+    @Path("{reference}/{deliverydate}")
+    @DELETE
+    public Response delete(@PathParam("reference") String reference,
+            @PathParam("deliverydate") long deliverydate,
+            @QueryParam("professional") String professional) {
+
+        return super.delete(
+                IndividualBill.class,
+                e -> e.getIndividual().getIndividualBills().remove(e),
+                reference,
+                deliverydate,
+                professional);
+    }
 }

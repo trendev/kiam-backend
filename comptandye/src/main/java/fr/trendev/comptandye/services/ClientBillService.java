@@ -108,6 +108,11 @@ public class ClientBillService extends AbstractBillService<ClientBill> {
                         "A valid Client must be provided !");
             }
 
+            /**
+             * The ClientBill must have the same professional than the Client of
+             * the Bill. This is why we use proEmail instead of
+             * e.getClient().getProfessional().getEmail()
+             */
             ClientPK clientPK = new ClientPK(e.getClient().getId(), proEmail);
 
             e.setClient(
