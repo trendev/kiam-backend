@@ -59,6 +59,9 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
 
         String proEmail = this.getProEmail(sec, professional);
 
+        final long count = getFacade().count();
+        getFacade().flush();
+
         return super.<Professional, String>post(entity, proEmail,
                 AbstractFacade::prettyPrintPK,
                 Professional.class,
@@ -70,10 +73,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
              * Professional Bills list!
              */
             e.setReference(prefix + "-" + e.getProfessional().getUuid() + "-"
-                    + e.
-                            getProfessional().getBills().stream().filter(
-                                    b -> (b.getClass().equals(e.getClass()))).
-                            count());
+                    + (count + 1));
 
             if (e.getDeliveryDate() == null) {
                 throw new WebApplicationException(
