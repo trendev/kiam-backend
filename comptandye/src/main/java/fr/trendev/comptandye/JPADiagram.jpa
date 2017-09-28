@@ -971,12 +971,6 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:cascade>
-                    <jpa:cascade-persist/>
-                    <jpa:cascade-merge/>
-                    <jpa:cascade-refresh/>
-                    <jpa:cascade-detach/>
-                </jpa:cascade>
                 <jpa:join-column name="PROFESSIONAL_EMAIL" rc="EMAIL" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table=""/>
             </jpa:many-to-one>
             <jpa:one-to-many orp="true" own="true" collection-type="java.util.List" connected-entity-id="_1490206901623" v="true" xvt="" name="payments" dv="new LinkedList&lt;&gt;()" id="_150365567487858">
@@ -984,14 +978,20 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:cascade>
-                    <jpa:cascade-all/>
+                    <jpa:cascade-persist/>
+                    <jpa:cascade-merge/>
+                    <jpa:cascade-remove/>
+                    <jpa:cascade-detach/>
                 </jpa:cascade>
             </jpa:one-to-many>
             <jpa:one-to-many orp="true" own="true" collection-type="java.util.List" connected-entity-id="_1506344869339" v="true" xvt="" name="purchasedOfferings" dv="new LinkedList&lt;&gt;()" id="_15063449426451264">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:cascade>
-                    <jpa:cascade-all/>
+                    <jpa:cascade-persist/>
+                    <jpa:cascade-merge/>
+                    <jpa:cascade-remove/>
+                    <jpa:cascade-detach/>
                 </jpa:cascade>
             </jpa:one-to-many>
             <jpa:element-collection target-class="java.lang.String" collection-type="java.util.List" v="true" xvt="" name="comments" dv="new LinkedList&lt;&gt;()" id="_1503066002122403">
@@ -1558,7 +1558,7 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1490172966686" x="-620" y="704">
+            <i ref="_1490172966686" x="-622" y="702">
                 <el>
                     <e ref="_150537690133858">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1568,31 +1568,31 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                     </e>
                 </el>
             </i>
-            <i ref="_1490180671085" x="698" y="393">
+            <i ref="_1490180671085" x="696" y="391">
                 <el>
                     <e ref="_150652336702164">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490704123469" x="-122" y="105"/>
-            <i ref="_1503060694288" x="-478" y="294"/>
-            <i ref="_1506344869339" x="538" y="1581">
+            <i ref="_1490704123469" x="-124" y="103"/>
+            <i ref="_1503060694288" x="-480" y="292"/>
+            <i ref="_1506344869339" x="536" y="1579">
                 <el>
                     <e ref="_15063449702561265">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101578444" x="407" y="105"/>
-            <i ref="_1490100852900" x="407" y="-131">
+            <i ref="_1490101578444" x="405" y="103"/>
+            <i ref="_1490100852900" x="405" y="-133">
                 <el>
                     <e ref="_14901160469883436">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101520286" x="287" y="393">
+            <i ref="_1490101520286" x="285" y="391">
                 <el>
                     <e ref="_150652336703465">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1602,15 +1602,15 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                     </e>
                 </el>
             </i>
-            <i ref="_1490104062170" x="-357" y="449"/>
-            <i ref="_1490113906035" x="-332" y="946">
+            <i ref="_1490104062170" x="-359" y="447"/>
+            <i ref="_1490113906035" x="-334" y="944">
                 <el>
                     <e ref="_150489073375385">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490704206844" x="-30" y="907">
+            <i ref="_1490704206844" x="-32" y="905">
                 <el>
                     <e ref="_15049038294552105">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1620,7 +1620,7 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                     </e>
                 </el>
             </i>
-            <i ref="_1490101376664" x="116" y="105">
+            <i ref="_1490101376664" x="114" y="103">
                 <el>
                     <e ref="_14901093969381510">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1633,15 +1633,15 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                     </e>
                 </el>
             </i>
-            <i ref="_1490113751330" x="-640" y="1070"/>
-            <i ref="_1490206901623" x="350" y="1291">
+            <i ref="_1490113751330" x="-642" y="1068"/>
+            <i ref="_1490206901623" x="348" y="1289">
                 <el>
                     <e ref="_1503081214518630">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490178979567" x="771" y="1291">
+            <i ref="_1490178979567" x="769" y="1289">
                 <el>
                     <e ref="_150365567487858">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1654,7 +1654,7 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                     </e>
                 </el>
             </i>
-            <i ref="_1499512549878" x="-204" y="1241">
+            <i ref="_1499512549878" x="-206" y="1239">
                 <el>
                     <e ref="_1505144351224341">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1667,8 +1667,8 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                     </e>
                 </el>
             </i>
-            <i ref="_1490101737208" x="-370" y="58"/>
-            <i ref="_1490281931338" x="461" y="1021">
+            <i ref="_1490101737208" x="-372" y="56"/>
+            <i ref="_1490281931338" x="459" y="1019">
                 <el>
                     <e ref="_1490283543806197">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1684,7 +1684,7 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                     </e>
                 </el>
             </i>
-            <i ref="_1490101456632" x="-5" y="294">
+            <i ref="_1490101456632" x="-7" y="292">
                 <el>
                     <e ref="_1490179812678394">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1715,22 +1715,22 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                     </e>
                 </el>
             </i>
-            <i ref="_1490184243036" x="49" y="1291"/>
-            <i ref="_1490100823157" x="97" y="-161">
+            <i ref="_1490184243036" x="47" y="1289"/>
+            <i ref="_1490100823157" x="95" y="-163">
                 <el>
                     <e ref="_14901160469863435">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490180682743" x="698" y="629">
+            <i ref="_1490180682743" x="696" y="627">
                 <el>
                     <e ref="_1490181195212606">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101555530" x="265" y="629">
+            <i ref="_1490101555530" x="263" y="627">
                 <el>
                     <e ref="_149028166301044">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1755,7 +1755,7 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                     </e>
                 </el>
             </i>
-            <i ref="_1506009883340" x="698" y="1021">
+            <i ref="_1506009883340" x="696" y="1019">
                 <el>
                     <e ref="_1506010011239530">
                         <v st="1" si="12.0" cl="#00ff00"/>
