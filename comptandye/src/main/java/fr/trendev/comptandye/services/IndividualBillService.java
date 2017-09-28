@@ -101,7 +101,7 @@ public class IndividualBillService extends AbstractBillService<IndividualBill> {
     public Response post(@Context SecurityContext sec, IndividualBill entity,
             @QueryParam("professional") String professional) {
 
-        return super.post(
+        return super.post("I",
                 e -> {
             if (e.getIndividual() == null) {
                 throw new WebApplicationException(

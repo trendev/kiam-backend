@@ -105,7 +105,7 @@ public class CollectiveGroupBillService extends AbstractBillService<CollectiveGr
 
         String proEmail = this.getProEmail(sec, professional);
 
-        return super.post(
+        return super.post("CG",
                 e -> {
             if (e.getCollectiveGroup() == null) {
                 throw new WebApplicationException(
@@ -133,7 +133,8 @@ public class CollectiveGroupBillService extends AbstractBillService<CollectiveGr
 
             e.getCollectiveGroup().getCollectiveGroupBills().add(e);
         },
-                sec, entity, professional);
+                sec, entity, professional
+        );
     }
 
     @PUT

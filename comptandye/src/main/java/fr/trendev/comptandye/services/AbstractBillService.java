@@ -52,7 +52,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         return LOG;
     }
 
-    public Response post(
+    public Response post(String prefix,
             Consumer<T> prepareAction,
             SecurityContext sec, T entity,
             String professional) {
@@ -69,9 +69,11 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
              * Sets the reference. Keep in mind that e is already added to the
              * Professional Bills list!
              */
-            e.setReference("C-" + e.getProfessional().getUuid() + "-" + e.
-                    getProfessional().getBills().stream().filter(
-                            b -> (b.getClass().equals(e.getClass()))).count());
+            e.setReference(prefix + "-" + e.getProfessional().getUuid() + "-"
+                    + e.
+                            getProfessional().getBills().stream().filter(
+                                    b -> (b.getClass().equals(e.getClass()))).
+                            count());
 
             if (e.getDeliveryDate() == null) {
                 throw new WebApplicationException(

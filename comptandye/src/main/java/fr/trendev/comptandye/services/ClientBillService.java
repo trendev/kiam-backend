@@ -101,7 +101,7 @@ public class ClientBillService extends AbstractBillService<ClientBill> {
 
         String proEmail = this.getProEmail(sec, professional);
 
-        return super.post(
+        return super.post("C",
                 e -> {
             if (e.getClient() == null) {
                 throw new WebApplicationException(
