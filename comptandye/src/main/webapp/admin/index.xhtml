@@ -11,8 +11,7 @@
     </h:head>
     <h:body>
         <p:notificationBar position="top" effect="slide" styleClass="top" widgetVar="bar" autoDisplay="true">
-            <p>Bonjour Administrateur, vous voilà connecté sur la session 
-                <h:outputText value="#{session.id}" style="font-weight: bold"></h:outputText>
+            <p>Bonjour <h:outputText value="Administrator #{request.userPrincipal.name}" style="font-weight: bold"/>, vous voilà connecté sur la session <h:outputText value="#{session.id}" style="font-weight: bold"/>
             </p>
             <p><a href="../index.html">Welcome Page</a></p>
         </p:notificationBar>
