@@ -143,8 +143,8 @@ public abstract class AbstractCommonService<E, P> {
         try {
             initAction.accept(entity);
             getFacade().create(entity);
-            getFacade().flush();
-            getFacade().refresh(entity);
+//            getFacade().flush();
+//            getFacade().refresh(entity);
             P pk = getFacade().getIdentifier(entity);
             getLogger().log(Level.INFO, entityClass.getSimpleName()
                     + " {0} created", getFacade().prettyPrintPK(pk));
