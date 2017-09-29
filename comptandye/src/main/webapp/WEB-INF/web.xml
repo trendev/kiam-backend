@@ -14,7 +14,7 @@
     </context-param>
     <servlet>
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
-        <!--disable MoxyJson and use Jackson instead (auto providing)-->
+        <!--disable MoxyJson and use Jackson instead -->
         <init-param>
             <param-name>jersey.config.server.disableMoxyJson</param-name>
             <param-value>true</param-value>
@@ -92,17 +92,8 @@
             <url-pattern>/admin/*</url-pattern>
         </web-resource-collection>
         <!--don't forget to add security on /restapi/admin/* and /api/*-->
-    </security-constraint>
-    <security-constraint>
-        <display-name>PRO_secured_access</display-name>
-        <web-resource-collection>
-            <web-resource-name>Professional secured pages</web-resource-name>
-            <description>Professional resources</description>
-            <url-pattern>/restapi/pro/*</url-pattern>
-        </web-resource-collection>
         <auth-constraint>
             <description/>
-            <role-name>Professional</role-name>
             <role-name>Administrator</role-name>
         </auth-constraint>
     </security-constraint>
