@@ -9,7 +9,6 @@ import fr.trendev.comptandye.visitors.Visitor;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
@@ -63,8 +62,7 @@ public abstract class Offering {
     private boolean hidden = false;
 
     @Id
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
-        CascadeType.REFRESH}, targetEntity = Professional.class)
+    @ManyToOne(targetEntity = Professional.class)
     @JoinColumn(name = "OFFERING_PRO_EMAIL", referencedColumnName = "EMAIL",
             nullable = false, updatable = false)
     @JsonIgnore

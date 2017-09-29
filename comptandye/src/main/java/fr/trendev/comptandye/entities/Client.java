@@ -49,8 +49,7 @@ public class Client {
     private Address address;
 
     @Id
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
-        CascadeType.REFRESH}, targetEntity = Professional.class)
+    @ManyToOne(targetEntity = Professional.class)
     @JoinColumn(name = "CLIENT_PRO_EMAIL", referencedColumnName = "EMAIL")
     @JsonIgnore
     private Professional professional;
@@ -60,14 +59,11 @@ public class Client {
     @JsonIgnore
     private List<ClientBill> clientBills = new LinkedList<>();
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
-        CascadeType.REFRESH}, targetEntity = CollectiveGroup.class,
-            mappedBy = "clients")
+    @ManyToMany(targetEntity = CollectiveGroup.class, mappedBy = "clients")
     @JsonIgnore
     private List<CollectiveGroup> collectiveGroups = new LinkedList<>();
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
-        CascadeType.REFRESH}, targetEntity = Category.class)
+    @ManyToMany(targetEntity = Category.class)
     @JsonIgnore
     private List<Category> categories = new LinkedList<>();
 

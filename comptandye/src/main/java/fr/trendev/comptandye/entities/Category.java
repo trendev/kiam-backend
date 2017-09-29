@@ -7,7 +7,6 @@ import fr.trendev.comptandye.visitors.Visitor;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -38,15 +37,12 @@ public class Category {
     private String name;
 
     @Id
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
-        CascadeType.REFRESH}, targetEntity = Professional.class)
+    @ManyToOne(targetEntity = Professional.class)
     @JoinColumn(name = "CATEGORY_PRO_EMAIL", referencedColumnName = "EMAIL")
     @JsonIgnore
     private Professional professional;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
-        CascadeType.REFRESH}, targetEntity = Client.class,
-            mappedBy = "categories")
+    @ManyToMany(targetEntity = Client.class, mappedBy = "categories")
     @JsonIgnore
     private List<Client> clients = new LinkedList<>();
 

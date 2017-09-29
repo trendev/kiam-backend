@@ -67,8 +67,8 @@ public abstract class UserAccount {
     @Temporal(TemporalType.TIMESTAMP)
     private Date registrationDate = new Date();
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
-        CascadeType.REFRESH}, targetEntity = UserGroup.class)
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST},
+            targetEntity = UserGroup.class)
     @JsonIgnore
     private List<UserGroup> userGroups = new LinkedList<>();
 

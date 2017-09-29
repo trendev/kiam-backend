@@ -51,7 +51,6 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                 <jpa:cascade>
                     <jpa:cascade-persist/>
                     <jpa:cascade-merge/>
-                    <jpa:cascade-refresh/>
                     <jpa:cascade-detach/>
                 </jpa:cascade>
             </jpa:many-to-many>
@@ -130,7 +129,6 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                 <jpa:cascade>
                     <jpa:cascade-persist/>
                     <jpa:cascade-merge/>
-                    <jpa:cascade-refresh/>
                     <jpa:cascade-detach/>
                 </jpa:cascade>
             </jpa:many-to-many>
@@ -454,12 +452,6 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:cascade>
-                    <jpa:cascade-persist/>
-                    <jpa:cascade-merge/>
-                    <jpa:cascade-refresh/>
-                    <jpa:cascade-detach/>
-                </jpa:cascade>
                 <jpa:join-column name="CLIENT_PRO_EMAIL" rc="EMAIL" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table=""/>
             </jpa:many-to-one>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490180682743" connected-attribute-id="_1490181195212606" v="true" xvt="" name="clientBills" dv="new LinkedList&lt;&gt;()" id="_1490181195213607">
@@ -495,23 +487,11 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:cascade>
-                    <jpa:cascade-persist/>
-                    <jpa:cascade-merge/>
-                    <jpa:cascade-refresh/>
-                    <jpa:cascade-detach/>
-                </jpa:cascade>
             </jpa:many-to-many>
             <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490704206844" connected-attribute-id="_1503077170376625" v="true" xvt="" name="categories" dv="new LinkedList&lt;&gt;()" id="_1503077170356624">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:cascade>
-                    <jpa:cascade-persist/>
-                    <jpa:cascade-merge/>
-                    <jpa:cascade-refresh/>
-                    <jpa:cascade-detach/>
-                </jpa:cascade>
             </jpa:many-to-many>
             <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_149010155553255">
                 <jpa:xwm nil="false" req="false"/>
@@ -814,12 +794,6 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                     <jpa:join-column name="PACK_ID" rc="OFFERING_ID" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table="OFFERING"/>
                     <jpa:join-column name="PACK_PROFESSIONAL_EMAIL" rc="OFFERING_PRO_EMAIL" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table="OFFERING"/>
                 </jpa:join-table>
-                <jpa:cascade>
-                    <jpa:cascade-persist/>
-                    <jpa:cascade-merge/>
-                    <jpa:cascade-refresh/>
-                    <jpa:cascade-detach/>
-                </jpa:cascade>
             </jpa:one-to-many>
         </jpa:attributes>
         <jpa:nq e="false" name="Pack.findAll">
@@ -876,12 +850,6 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:cascade>
-                    <jpa:cascade-persist/>
-                    <jpa:cascade-merge/>
-                    <jpa:cascade-refresh/>
-                    <jpa:cascade-detach/>
-                </jpa:cascade>
                 <jpa:join-column name="OFFERING_PRO_EMAIL" rc="EMAIL" unique="false" nullable="false" insertable="true" updatable="false" column-definition="" table=""/>
             </jpa:many-to-one>
             <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1503060694288" v="true" xvt="" name="businesses" dv="new LinkedList&lt;&gt;()" id="_150537690133858">
@@ -1208,12 +1176,6 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:cascade>
-                    <jpa:cascade-persist/>
-                    <jpa:cascade-merge/>
-                    <jpa:cascade-refresh/>
-                    <jpa:cascade-detach/>
-                </jpa:cascade>
                 <jpa:join-column name="COLLECTIVE_GROUP_PRO_EMAIL" rc="EMAIL" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table=""/>
             </jpa:many-to-one>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1506009883340" connected-attribute-id="_1506010011239530" v="true" xvt="" name="collectiveGroupBills" dv="new LinkedList&lt;&gt;()" id="_1506010011241531">
@@ -1221,10 +1183,7 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:cascade>
-                    <jpa:cascade-persist/>
-                    <jpa:cascade-merge/>
-                    <jpa:cascade-refresh/>
-                    <jpa:cascade-detach/>
+                    <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-many>
             <jpa:one-to-one own="true" orp="true" optional="true" primaryKey="false" connected-entity-id="_1490101737208" v="true" xvt="" name="address" id="_1490283543806197">
@@ -1238,12 +1197,6 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:cascade>
-                    <jpa:cascade-persist/>
-                    <jpa:cascade-merge/>
-                    <jpa:cascade-refresh/>
-                    <jpa:cascade-detach/>
-                </jpa:cascade>
             </jpa:many-to-many>
             <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_1490283461395196">
                 <jpa:xwm nil="false" req="false"/>
@@ -1314,24 +1267,12 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:cascade>
-                    <jpa:cascade-persist/>
-                    <jpa:cascade-merge/>
-                    <jpa:cascade-refresh/>
-                    <jpa:cascade-detach/>
-                </jpa:cascade>
                 <jpa:join-column name="CATEGORY_PRO_EMAIL" rc="EMAIL" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table=""/>
             </jpa:many-to-one>
             <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490101555530" connected-attribute-id="_1503077170356624" v="true" xvt="" name="clients" dv="new LinkedList&lt;&gt;()" id="_1503077170376625">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:cascade>
-                    <jpa:cascade-persist/>
-                    <jpa:cascade-merge/>
-                    <jpa:cascade-refresh/>
-                    <jpa:cascade-detach/>
-                </jpa:cascade>
             </jpa:many-to-many>
             <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_1490704207066109">
                 <jpa:xwm nil="false" req="false"/>
@@ -1399,12 +1340,6 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:cascade>
-                    <jpa:cascade-persist/>
-                    <jpa:cascade-merge/>
-                    <jpa:cascade-refresh/>
-                    <jpa:cascade-detach/>
-                </jpa:cascade>
                 <jpa:join-column name="EXPENSE_PRO_EMAIL" rc="EMAIL" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table=""/>
             </jpa:many-to-one>
             <jpa:one-to-many orp="true" own="true" collection-type="java.util.List" connected-entity-id="_1490206901623" v="true" xvt="" name="payments" dv="new LinkedList&lt;&gt;()" id="_1505144351224341">
@@ -1412,7 +1347,10 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:cascade>
-                    <jpa:cascade-all/>
+                    <jpa:cascade-persist/>
+                    <jpa:cascade-merge/>
+                    <jpa:cascade-remove/>
+                    <jpa:cascade-detach/>
                 </jpa:cascade>
             </jpa:one-to-many>
             <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1503060694288" v="true" xvt="" name="businesses" dv="new LinkedList&lt;&gt;()" id="_150549566057859">
@@ -1558,7 +1496,7 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1490172966686" x="-622" y="702">
+            <i ref="_1490172966686" x="-626" y="698">
                 <el>
                     <e ref="_150537690133858">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1568,31 +1506,31 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                     </e>
                 </el>
             </i>
-            <i ref="_1490180671085" x="696" y="391">
+            <i ref="_1490180671085" x="692" y="387">
                 <el>
                     <e ref="_150652336702164">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490704123469" x="-124" y="103"/>
-            <i ref="_1503060694288" x="-480" y="292"/>
-            <i ref="_1506344869339" x="536" y="1579">
+            <i ref="_1490704123469" x="-128" y="99"/>
+            <i ref="_1503060694288" x="-484" y="288"/>
+            <i ref="_1506344869339" x="532" y="1575">
                 <el>
                     <e ref="_15063449702561265">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101578444" x="405" y="103"/>
-            <i ref="_1490100852900" x="405" y="-133">
+            <i ref="_1490101578444" x="401" y="99"/>
+            <i ref="_1490100852900" x="401" y="-137">
                 <el>
                     <e ref="_14901160469883436">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101520286" x="285" y="391">
+            <i ref="_1490101520286" x="281" y="387">
                 <el>
                     <e ref="_150652336703465">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1602,15 +1540,15 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                     </e>
                 </el>
             </i>
-            <i ref="_1490104062170" x="-359" y="447"/>
-            <i ref="_1490113906035" x="-334" y="944">
+            <i ref="_1490104062170" x="-363" y="443"/>
+            <i ref="_1490113906035" x="-338" y="940">
                 <el>
                     <e ref="_150489073375385">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490704206844" x="-32" y="905">
+            <i ref="_1490704206844" x="-36" y="901">
                 <el>
                     <e ref="_15049038294552105">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1620,7 +1558,7 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                     </e>
                 </el>
             </i>
-            <i ref="_1490101376664" x="114" y="103">
+            <i ref="_1490101376664" x="110" y="99">
                 <el>
                     <e ref="_14901093969381510">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1633,15 +1571,15 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                     </e>
                 </el>
             </i>
-            <i ref="_1490113751330" x="-642" y="1068"/>
-            <i ref="_1490206901623" x="348" y="1289">
+            <i ref="_1490113751330" x="-646" y="1064"/>
+            <i ref="_1490206901623" x="344" y="1285">
                 <el>
                     <e ref="_1503081214518630">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490178979567" x="769" y="1289">
+            <i ref="_1490178979567" x="765" y="1285">
                 <el>
                     <e ref="_150365567487858">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1654,7 +1592,7 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                     </e>
                 </el>
             </i>
-            <i ref="_1499512549878" x="-206" y="1239">
+            <i ref="_1499512549878" x="-210" y="1235">
                 <el>
                     <e ref="_1505144351224341">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1667,8 +1605,8 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                     </e>
                 </el>
             </i>
-            <i ref="_1490101737208" x="-372" y="56"/>
-            <i ref="_1490281931338" x="459" y="1019">
+            <i ref="_1490101737208" x="-376" y="52"/>
+            <i ref="_1490281931338" x="455" y="1015">
                 <el>
                     <e ref="_1490283543806197">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1684,7 +1622,7 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                     </e>
                 </el>
             </i>
-            <i ref="_1490101456632" x="-7" y="292">
+            <i ref="_1490101456632" x="-11" y="288">
                 <el>
                     <e ref="_1490179812678394">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1715,22 +1653,22 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                     </e>
                 </el>
             </i>
-            <i ref="_1490184243036" x="47" y="1289"/>
-            <i ref="_1490100823157" x="95" y="-163">
+            <i ref="_1490184243036" x="43" y="1285"/>
+            <i ref="_1490100823157" x="91" y="-167">
                 <el>
                     <e ref="_14901160469863435">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490180682743" x="696" y="627">
+            <i ref="_1490180682743" x="692" y="623">
                 <el>
                     <e ref="_1490181195212606">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101555530" x="263" y="627">
+            <i ref="_1490101555530" x="259" y="623">
                 <el>
                     <e ref="_149028166301044">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1755,7 +1693,7 @@ UUID is fixed during UserAccount creation and cannot be modified using restapi.<
                     </e>
                 </el>
             </i>
-            <i ref="_1506009883340" x="696" y="1019">
+            <i ref="_1506009883340" x="692" y="1015">
                 <el>
                     <e ref="_1506010011239530">
                         <v st="1" si="12.0" cl="#00ff00"/>

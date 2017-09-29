@@ -46,21 +46,19 @@ public class CollectiveGroup {
     private Address address;
 
     @Id
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
-        CascadeType.REFRESH}, targetEntity = Professional.class)
+    @ManyToOne(targetEntity = Professional.class)
     @JoinColumn(name = "COLLECTIVE_GROUP_PRO_EMAIL",
             referencedColumnName = "EMAIL")
     @JsonIgnore
     private Professional professional;
 
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
-        CascadeType.REFRESH}, targetEntity = CollectiveGroupBill.class,
+    @OneToMany(cascade = {CascadeType.ALL},
+            targetEntity = CollectiveGroupBill.class,
             mappedBy = "collectiveGroup")
     @JsonIgnore
     private List<CollectiveGroupBill> collectiveGroupBills = new LinkedList<>();
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
-        CascadeType.REFRESH}, targetEntity = Client.class)
+    @ManyToMany(targetEntity = Client.class)
     @JsonIgnore
     private List<Client> clients = new LinkedList<>();
 

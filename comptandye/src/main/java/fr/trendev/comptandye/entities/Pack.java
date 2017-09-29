@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.trendev.comptandye.visitors.Visitor;
 import java.util.LinkedList;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -22,8 +21,7 @@ public class Pack extends Offering {
      * TODO : recursively check that all services and packs are owned by the
      * same Professional.
      */
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
-        CascadeType.REFRESH}, targetEntity = Offering.class)
+    @OneToMany(targetEntity = Offering.class)
     @JoinTable(name = "PACK", joinColumns = {
         @JoinColumn(name = "PACK_ID", referencedColumnName = "OFFERING_ID",
                 table = "OFFERING")

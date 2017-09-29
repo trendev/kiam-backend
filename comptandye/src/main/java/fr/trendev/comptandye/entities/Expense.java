@@ -63,8 +63,7 @@ public class Expense {
     private List<String> categories = new LinkedList<>();
 
     @Id
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
-        CascadeType.REFRESH}, targetEntity = Professional.class)
+    @ManyToOne(targetEntity = Professional.class)
     @JoinColumn(name = "EXPENSE_PRO_EMAIL", referencedColumnName = "EMAIL")
     @JsonIgnore
     private Professional professional;
@@ -72,8 +71,8 @@ public class Expense {
     /**
      * Should be ignored during a PUT
      */
-    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Payment.class,
-            orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
+        CascadeType.REMOVE}, targetEntity = Payment.class, orphanRemoval = true)
     private List<Payment> payments = new LinkedList<>();
 
     @OneToMany(targetEntity = Business.class)
