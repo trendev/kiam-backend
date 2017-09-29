@@ -1,3 +1,4 @@
 .DS_Store
 comptandye/target
 comptandye/src/main/webapp/WEB-INF/glassfish-resources.xml
+comptandye/src/test/postman/
