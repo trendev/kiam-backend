@@ -40,7 +40,7 @@ public class CrossOriginResourceSharingFilter implements Filter {
 
         LOG.log(Level.INFO, "[{1}] has requested {2} {0} and we add CORS",
                 new Object[]{req.getRequestURL(), (user != null) ? user.
-                    getName() : "ANONYMOUS user", req.getMethod()});
+                    getName() : "an ANONYMOUS user", req.getMethod()});
 
         resp.addHeader("Access-Control-Allow-Origin", "*");
         resp.addHeader("Access-Control-Allow-Methods",
