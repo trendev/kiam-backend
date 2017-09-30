@@ -74,7 +74,7 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
 
     @Path("count")
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     @Override
     public Response count() {
         return super.count();

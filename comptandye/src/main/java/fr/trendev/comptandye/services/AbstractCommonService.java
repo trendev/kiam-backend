@@ -71,7 +71,8 @@ public abstract class AbstractCommonService<E, P> {
                     new Object[]{entityClass.getSimpleName(), count});
 
             return Response.status(Response.Status.OK)
-                    .entity(count).
+                    .entity(Json.createObjectBuilder().add("count", count).
+                            build()).
                     build();
         } catch (Exception ex) {
 

@@ -71,7 +71,7 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
 
     @Path("count")
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     @Override
     public Response count() {
         return super.count();

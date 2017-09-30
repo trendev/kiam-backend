@@ -75,7 +75,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
 
     @Path("count")
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     @Override
     public Response count() {
         return super.count();
