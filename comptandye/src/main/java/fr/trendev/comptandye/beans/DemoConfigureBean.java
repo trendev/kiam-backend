@@ -26,7 +26,7 @@ import fr.trendev.comptandye.entities.Service;
 import fr.trendev.comptandye.entities.SocialNetworkAccounts;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
-import fr.trendev.comptandye.utils.BillTypeEnum;
+import fr.trendev.comptandye.visitors.BillTypeVisitor;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import java.io.Serializable;
@@ -296,8 +296,8 @@ public class DemoConfigureBean implements Serializable {
                             new PurchasedOffering(1, service1)),
                     sylvioc);
 
-            bill1.setCltype(BillTypeEnum.INDIVIDUAL_CLTYPE);
-            bill1.setReference(BillTypeEnum.INDIVIDUAL_PREFIX + "-" + vanessa.
+            bill1.setCltype(BillTypeVisitor.INDIVIDUAL_CLTYPE);
+            bill1.setReference(BillTypeVisitor.INDIVIDUAL_PREFIX + "-" + vanessa.
                     getUuid()
                     + "-1-" + bill1.hashCode());
 
@@ -310,8 +310,8 @@ public class DemoConfigureBean implements Serializable {
                     vanessa, new LinkedList<>(), Arrays.asList(
                             new PurchasedOffering(1, specialPack)),
                     sylvioc);
-            bill2.setCltype(BillTypeEnum.INDIVIDUAL_CLTYPE);
-            bill2.setReference(BillTypeEnum.INDIVIDUAL_PREFIX + "-" + vanessa.
+            bill2.setCltype(BillTypeVisitor.INDIVIDUAL_CLTYPE);
+            bill2.setReference(BillTypeVisitor.INDIVIDUAL_PREFIX + "-" + vanessa.
                     getUuid()
                     + "-2-" + bill2.hashCode());
 
@@ -370,8 +370,8 @@ public class DemoConfigureBean implements Serializable {
                 new Date(), Arrays.asList("Has left her first son"), vanessa,
                 Arrays.asList(payment), Arrays.asList(new PurchasedOffering(1,
                 service)), client1);
-        bill.setCltype(BillTypeEnum.CLIENT_CLTYPE);
-        bill.setReference(BillTypeEnum.CLIENT_PREFIX + "-" + vanessa.
+        bill.setCltype(BillTypeVisitor.CLIENT_CLTYPE);
+        bill.setReference(BillTypeVisitor.CLIENT_PREFIX + "-" + vanessa.
                 getUuid()
                 + "-1-" + bill.hashCode());
 
@@ -387,8 +387,8 @@ public class DemoConfigureBean implements Serializable {
                                 "Virement"))), Arrays.asList(
                 new PurchasedOffering(1, service2)), vanessa.
                         getCollectiveGroups().get(0));
-        cgbill.setCltype(BillTypeEnum.COLLECTIVEGROUP_CLTYPE);
-        cgbill.setReference(BillTypeEnum.COLLECTIVEGROUP_PREFIX + "-" + vanessa.
+        cgbill.setCltype(BillTypeVisitor.COLLECTIVEGROUP_CLTYPE);
+        cgbill.setReference(BillTypeVisitor.COLLECTIVEGROUP_PREFIX + "-" + vanessa.
                 getUuid()
                 + "-1-" + cgbill.hashCode());
 

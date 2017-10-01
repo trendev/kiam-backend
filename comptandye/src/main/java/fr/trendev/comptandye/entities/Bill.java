@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import fr.trendev.comptandye.utils.BillTypeEnum;
+import fr.trendev.comptandye.visitors.BillTypeVisitor;
 import fr.trendev.comptandye.visitors.Visitor;
 import java.util.Date;
 import java.util.LinkedList;
@@ -37,11 +37,11 @@ import javax.persistence.TemporalType;
         visible = true)
 @JsonSubTypes({
     @JsonSubTypes.Type(value = ClientBill.class,
-            name = BillTypeEnum.CLIENT_CLTYPE)
+            name = BillTypeVisitor.CLIENT_CLTYPE)
     ,   @JsonSubTypes.Type(value = IndividualBill.class,
-            name = BillTypeEnum.INDIVIDUAL_CLTYPE)
+            name = BillTypeVisitor.INDIVIDUAL_CLTYPE)
     ,  @JsonSubTypes.Type(value = CollectiveGroupBill.class,
-            name = BillTypeEnum.COLLECTIVEGROUP_CLTYPE)})
+            name = BillTypeVisitor.COLLECTIVEGROUP_CLTYPE)})
 public abstract class Bill {
 
     /**

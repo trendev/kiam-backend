@@ -11,7 +11,7 @@ import fr.trendev.comptandye.entities.CollectiveGroupPK;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.CollectiveGroupBillFacade;
 import fr.trendev.comptandye.sessions.CollectiveGroupFacade;
-import fr.trendev.comptandye.utils.BillTypeEnum;
+import fr.trendev.comptandye.visitors.BillTypeVisitor;
 import java.util.Date;
 import java.util.Optional;
 import java.util.function.Function;
@@ -106,7 +106,7 @@ public class CollectiveGroupBillService extends AbstractBillService<CollectiveGr
 
         String proEmail = this.getProEmail(sec, professional);
 
-        return super.post(BillTypeEnum.COLLECTIVEGROUP_PREFIX,
+        return super.post(BillTypeVisitor.COLLECTIVEGROUP_PREFIX,
                 e -> {
             if (e.getCollectiveGroup() == null) {
                 throw new WebApplicationException(

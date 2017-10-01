@@ -14,6 +14,7 @@ import fr.trendev.comptandye.entities.PurchasedOffering;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.visitors.ProvideOfferingFacadeVisitor;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -207,7 +208,8 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
 
     private void setBillReference(T e, String prefix, long count) {
         e.setReference(prefix + "-" + e.getProfessional().getUuid() + "-"
-                + (count + 1) + "-" + e.hashCode());
+                + new SimpleDateFormat("yyyyMMddHHmmss").format(e.
+                        getDeliveryDate()) + "-" + e.hashCode());
 
     }
 }
