@@ -816,9 +816,10 @@
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonTypeInfo(use = JsonTypeInfo.Id.NAME,&#xA;        include = JsonTypeInfo.As.EXISTING_PROPERTY,&#xA;        property = &quot;cltype&quot;,&#xA;        visible = true)"/>
-        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({&#xA;  @JsonSubTypes.Type(value = Service.class, name = &quot;service&quot;), &#xA;  @JsonSubTypes.Type(value = Pack.class, name = &quot;pack&quot;)&#xA;})"/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({&#xA;  @JsonSubTypes.Type(value = Service.class, name = OfferingType.SERVICE), &#xA;  @JsonSubTypes.Type(value = Pack.class, name = OfferingType.PACK)&#xA;})"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
-            import fr.trendev.comptandye.visitors.Visitor;</jpa:snp>
+import fr.trendev.comptandye.visitors.Visitor;
+import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -1497,7 +1498,7 @@ import fr.trendev.comptandye.visitors.BillTypeVisitor;</jpa:snp>
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1490172966686" x="-630" y="694">
+            <i ref="_1490172966686" x="-632" y="691">
                 <el>
                     <e ref="_150537690133858">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1507,31 +1508,31 @@ import fr.trendev.comptandye.visitors.BillTypeVisitor;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490180671085" x="688" y="383">
+            <i ref="_1490180671085" x="686" y="381">
                 <el>
                     <e ref="_150652336702164">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490704123469" x="-132" y="95"/>
-            <i ref="_1503060694288" x="-488" y="284"/>
-            <i ref="_1506344869339" x="528" y="1571">
+            <i ref="_1490704123469" x="-134" y="93"/>
+            <i ref="_1503060694288" x="-490" y="282"/>
+            <i ref="_1506344869339" x="526" y="1569">
                 <el>
                     <e ref="_15063449702561265">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101578444" x="397" y="95"/>
-            <i ref="_1490100852900" x="397" y="-141">
+            <i ref="_1490101578444" x="395" y="93"/>
+            <i ref="_1490100852900" x="395" y="-143">
                 <el>
                     <e ref="_14901160469883436">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101520286" x="277" y="383">
+            <i ref="_1490101520286" x="275" y="381">
                 <el>
                     <e ref="_150652336703465">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1541,15 +1542,15 @@ import fr.trendev.comptandye.visitors.BillTypeVisitor;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490104062170" x="-367" y="439"/>
-            <i ref="_1490113906035" x="-342" y="936">
+            <i ref="_1490104062170" x="-369" y="437"/>
+            <i ref="_1490113906035" x="-344" y="934">
                 <el>
                     <e ref="_150489073375385">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490704206844" x="-40" y="897">
+            <i ref="_1490704206844" x="-42" y="895">
                 <el>
                     <e ref="_15049038294552105">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1559,7 +1560,7 @@ import fr.trendev.comptandye.visitors.BillTypeVisitor;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101376664" x="106" y="95">
+            <i ref="_1490101376664" x="104" y="93">
                 <el>
                     <e ref="_14901093969381510">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1572,15 +1573,15 @@ import fr.trendev.comptandye.visitors.BillTypeVisitor;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490113751330" x="-650" y="1060"/>
-            <i ref="_1490206901623" x="340" y="1281">
+            <i ref="_1490113751330" x="-652" y="1058"/>
+            <i ref="_1490206901623" x="338" y="1279">
                 <el>
                     <e ref="_1503081214518630">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490178979567" x="760" y="1281">
+            <i ref="_1490178979567" x="758" y="1279">
                 <el>
                     <e ref="_150365567487858">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1593,7 +1594,7 @@ import fr.trendev.comptandye.visitors.BillTypeVisitor;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1499512549878" x="-214" y="1231">
+            <i ref="_1499512549878" x="-216" y="1229">
                 <el>
                     <e ref="_1505144351224341">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1606,8 +1607,8 @@ import fr.trendev.comptandye.visitors.BillTypeVisitor;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101737208" x="-380" y="48"/>
-            <i ref="_1490281931338" x="451" y="1011">
+            <i ref="_1490101737208" x="-382" y="46"/>
+            <i ref="_1490281931338" x="449" y="1009">
                 <el>
                     <e ref="_1490283543806197">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1623,7 +1624,7 @@ import fr.trendev.comptandye.visitors.BillTypeVisitor;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101456632" x="-15" y="284">
+            <i ref="_1490101456632" x="-17" y="282">
                 <el>
                     <e ref="_1490179812678394">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1654,22 +1655,22 @@ import fr.trendev.comptandye.visitors.BillTypeVisitor;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490184243036" x="39" y="1281"/>
-            <i ref="_1490100823157" x="87" y="-171">
+            <i ref="_1490184243036" x="37" y="1279"/>
+            <i ref="_1490100823157" x="85" y="-173">
                 <el>
                     <e ref="_14901160469863435">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490180682743" x="688" y="619">
+            <i ref="_1490180682743" x="686" y="617">
                 <el>
                     <e ref="_1490181195212606">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101555530" x="255" y="619">
+            <i ref="_1490101555530" x="253" y="617">
                 <el>
                     <e ref="_149028166301044">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1694,7 +1695,7 @@ import fr.trendev.comptandye.visitors.BillTypeVisitor;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1506009883340" x="688" y="1011">
+            <i ref="_1506009883340" x="686" y="1009">
                 <el>
                     <e ref="_1506010011239530">
                         <v st="1" si="12.0" cl="#00ff00"/>

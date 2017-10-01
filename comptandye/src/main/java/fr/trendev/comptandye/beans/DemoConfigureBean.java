@@ -27,6 +27,7 @@ import fr.trendev.comptandye.entities.SocialNetworkAccounts;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.services.AbstractBillService;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
+import fr.trendev.comptandye.utils.OfferingType;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import fr.trendev.comptandye.visitors.BillTypeVisitor;
@@ -270,19 +271,19 @@ public class DemoConfigureBean implements Serializable {
             Business coiffure = em.find(Business.class, "Coiffure");
             Business esthetique = em.find(Business.class, "Esthétique");
             Service service1 = new Service("Fashion color", 5000, 60, vanessa);
-            service1.setCltype("service");
+            service1.setCltype(OfferingType.SERVICE);
             service1.getBusinesses().add(coiffure);
 
             Service service2 = new Service("Exclusive service for dark skin",
                     5000, 60,
                     vanessa);
-            service2.setCltype("service");
+            service2.setCltype(OfferingType.SERVICE);
             service2.getBusinesses().add(esthetique);
 
             vanessa.getOfferings().add(service1);
             vanessa.getOfferings().add(service2);
             Pack specialPack = new Pack("Supreme Pack", 8000, 120, vanessa);
-            specialPack.setCltype("pack");
+            specialPack.setCltype(OfferingType.PACK);
             specialPack.getOfferings().add(service1);
             specialPack.getOfferings().add(service2);
             specialPack.getBusinesses().add(coiffure);
@@ -354,11 +355,11 @@ public class DemoConfigureBean implements Serializable {
 
         Service service = new Service("Classic Haircut", 1500, 60,
                 vanessa);
-        service.setCltype("service");
+        service.setCltype(OfferingType.SERVICE);
         Service service2 = new Service("A service for " + vanessa.
                 getCollectiveGroups().get(0).getGroupName(), 3000, 120,
                 vanessa);
-        service2.setCltype("service");
+        service2.setCltype(OfferingType.SERVICE);
 
         em.persist(service);
         em.persist(service2);

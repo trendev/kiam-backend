@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import fr.trendev.comptandye.utils.OfferingType;
 import fr.trendev.comptandye.visitors.Visitor;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,8 +32,8 @@ import javax.persistence.OneToMany;
         include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "cltype",
         visible = true)
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = Service.class, name = "service")
-    ,   @JsonSubTypes.Type(value = Pack.class, name = "pack")})
+    @JsonSubTypes.Type(value = Service.class, name = OfferingType.SERVICE)
+    ,   @JsonSubTypes.Type(value = Pack.class, name = OfferingType.PACK)})
 public abstract class Offering {
 
     @Column(name = "OFFERING_ID")
