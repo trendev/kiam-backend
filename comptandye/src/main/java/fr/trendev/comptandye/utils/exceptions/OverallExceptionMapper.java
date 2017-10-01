@@ -12,20 +12,21 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-//Uncomment in order to provide this ExceptionMapper
 @Provider
-public class DebugExceptionMapper implements ExceptionMapper<Exception> {
+public class OverallExceptionMapper implements ExceptionMapper<Exception> {
 
     private static final Logger logger = Logger.getLogger(
-            DebugExceptionMapper.class.getName());
+            OverallExceptionMapper.class.getName());
 
     @Override
     public Response toResponse(Exception ex) {
         logger.
-                log(Level.WARNING, "DebugExceptionMapper: " + ex.getMessage(),
+                log(Level.WARNING, OverallExceptionMapper.class.getSimpleName()
+                        + ": " + ex.getMessage(),
                         ex);
         String errmsg = ExceptionHelper.handleException(ex,
-                "DebugExceptionMapper caught an Exception");
+                OverallExceptionMapper.class.getSimpleName()
+                + " caught an Exception");
         return Response.status(Response.Status.EXPECTATION_FAILED).entity(Json.
                 createObjectBuilder().add(
                         "error", errmsg).build()).build();
