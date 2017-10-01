@@ -65,7 +65,7 @@ public class AddressService extends AbstractCommonService<Address, Long> {
 
     @Path("count")
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON,})
     @Override
     @RolesAllowed("Administrator")
     public Response count() {

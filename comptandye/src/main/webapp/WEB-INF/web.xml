@@ -104,11 +104,11 @@
             <description>REST-API services</description>
             <url-pattern>/restapi/*</url-pattern>
         </web-resource-collection>
-        <auth-constraint>
+        <!--        <auth-constraint>
             <description/>
             <role-name>Administrator</role-name>
             <role-name>Professional</role-name>
-        </auth-constraint>
+        </auth-constraint>-->
         <user-data-constraint>
             <description/>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>

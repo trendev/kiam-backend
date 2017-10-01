@@ -61,7 +61,7 @@ public class PaymentModeService extends AbstractCommonService<PaymentMode, Strin
 
     @Path("count")
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON,})
     @Override
     public Response count() {
         return super.count();

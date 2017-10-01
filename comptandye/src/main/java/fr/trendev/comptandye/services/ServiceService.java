@@ -70,7 +70,7 @@ public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
 
     @Path("count")
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON,})
     @Override
     public Response count() {
         return super.count();
