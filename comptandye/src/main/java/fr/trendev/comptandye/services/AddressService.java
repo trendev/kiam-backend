@@ -31,7 +31,7 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 @Path("Address")
-@RolesAllowed({"Administrator", "Professional"})
+@RolesAllowed({"Administrator"})
 public class AddressService extends AbstractCommonService<Address, Long> {
 
     @Inject
@@ -67,7 +67,6 @@ public class AddressService extends AbstractCommonService<Address, Long> {
     @GET
     @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON,})
     @Override
-    @RolesAllowed("Administrator")
     public Response count() {
         return super.count();
     }
