@@ -28,12 +28,13 @@ import fr.trendev.comptandye.entities.Service;
 import fr.trendev.comptandye.entities.SocialNetworkAccounts;
 import fr.trendev.comptandye.entities.UserAccount;
 import fr.trendev.comptandye.entities.UserGroup;
-import fr.trendev.comptandye.visitors.Visitor;
+import javax.inject.Singleton;
 
 /**
  *
  * @author jsie
  */
+@Singleton
 public class BillTypeVisitor implements Visitor<String> {
 
     public static final String INDIVIDUAL_PREFIX = "IX";
@@ -76,7 +77,7 @@ public class BillTypeVisitor implements Visitor<String> {
 
     @Override
     public String visit(ClientBill clientBill) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return CLIENT_PREFIX;
     }
 
     @Override
@@ -86,7 +87,7 @@ public class BillTypeVisitor implements Visitor<String> {
 
     @Override
     public String visit(CollectiveGroupBill collectiveGroupBill) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return COLLECTIVEGROUP_PREFIX;
     }
 
     @Override
@@ -111,7 +112,7 @@ public class BillTypeVisitor implements Visitor<String> {
 
     @Override
     public String visit(IndividualBill individualBill) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return INDIVIDUAL_PREFIX;
     }
 
     @Override

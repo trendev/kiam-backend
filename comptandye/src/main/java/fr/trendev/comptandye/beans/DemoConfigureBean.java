@@ -25,10 +25,11 @@ import fr.trendev.comptandye.entities.PurchasedOffering;
 import fr.trendev.comptandye.entities.Service;
 import fr.trendev.comptandye.entities.SocialNetworkAccounts;
 import fr.trendev.comptandye.entities.UserGroup;
+import fr.trendev.comptandye.services.AbstractBillService;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
-import fr.trendev.comptandye.visitors.BillTypeVisitor;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UUIDGenerator;
+import fr.trendev.comptandye.visitors.BillTypeVisitor;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -64,6 +65,9 @@ public class DemoConfigureBean implements Serializable {
 
     @Inject
     UserGroupFacade userGroupFacade;
+
+    @Inject
+    BillTypeVisitor billTypeVisitor;
 
     @PostConstruct
     public void init() {
@@ -297,11 +301,8 @@ public class DemoConfigureBean implements Serializable {
                     sylvioc);
 
             bill1.setCltype(BillTypeVisitor.INDIVIDUAL_CLTYPE);
-            bill1.setReference(BillTypeVisitor.INDIVIDUAL_PREFIX + "-" + vanessa.
-                    getUuid()
-                    + "-1-" + bill1.hashCode());
+            AbstractBillService.setBillReference(bill1, billTypeVisitor);
 
-//            deliveryDate = new Date(System.currentTimeMillis() + 1);
             IndividualBill bill2 = new IndividualBill(null,
                     deliveryDate,
                     8000, 0,
@@ -311,9 +312,7 @@ public class DemoConfigureBean implements Serializable {
                             new PurchasedOffering(1, specialPack)),
                     sylvioc);
             bill2.setCltype(BillTypeVisitor.INDIVIDUAL_CLTYPE);
-            bill2.setReference(BillTypeVisitor.INDIVIDUAL_PREFIX + "-" + vanessa.
-                    getUuid()
-                    + "-2-" + bill2.hashCode());
+            AbstractBillService.setBillReference(bill2, billTypeVisitor);
 
             sylvioc.getIndividualBills().add(bill1);
             sylvioc.getIndividualBills().add(bill2);
@@ -364,19 +363,17 @@ public class DemoConfigureBean implements Serializable {
         em.persist(service);
         em.persist(service2);
 
-        ClientBill bill = new ClientBill(null,
-                new Date(1506070013419l),
+        ClientBill cbill = new ClientBill(null,
+                new Date(),
                 1500, 0,
                 new Date(), Arrays.asList("Has left her first son"), vanessa,
                 Arrays.asList(payment), Arrays.asList(new PurchasedOffering(1,
                 service)), client1);
-        bill.setCltype(BillTypeVisitor.CLIENT_CLTYPE);
-        bill.setReference(BillTypeVisitor.CLIENT_PREFIX + "-" + vanessa.
-                getUuid()
-                + "-1-" + bill.hashCode());
+        cbill.setCltype(BillTypeVisitor.CLIENT_CLTYPE);
+        AbstractBillService.setBillReference(cbill, billTypeVisitor);
 
-        vanessa.getBills().add(bill);
-        client1.getClientBills().add(bill);
+        vanessa.getBills().add(cbill);
+        client1.getClientBills().add(cbill);
 
         CollectiveGroupBill cgbill = new CollectiveGroupBill("CG-" + vanessa.
                 getUuid() + "-1", new Date(),
@@ -388,9 +385,7 @@ public class DemoConfigureBean implements Serializable {
                 new PurchasedOffering(1, service2)), vanessa.
                         getCollectiveGroups().get(0));
         cgbill.setCltype(BillTypeVisitor.COLLECTIVEGROUP_CLTYPE);
-        cgbill.setReference(BillTypeVisitor.COLLECTIVEGROUP_PREFIX + "-" + vanessa.
-                getUuid()
-                + "-1-" + cgbill.hashCode());
+        AbstractBillService.setBillReference(cgbill, billTypeVisitor);
 
         vanessa.getBills().add(cgbill);
         vanessa.getCollectiveGroups().get(0).getCollectiveGroupBills().add(

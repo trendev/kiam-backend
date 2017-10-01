@@ -13,6 +13,7 @@ import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.PurchasedOffering;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
+import fr.trendev.comptandye.visitors.BillTypeVisitor;
 import fr.trendev.comptandye.visitors.ProvideOfferingFacadeVisitor;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,7 +39,10 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
     ProfessionalFacade professionalFacade;
 
     @Inject
-    ProvideOfferingFacadeVisitor visitor;
+    ProvideOfferingFacadeVisitor provideOfferingFacadeVisitor;
+
+    @Inject
+    BillTypeVisitor billTypeVisitor;
 
     private static final Logger LOG = Logger.getLogger(
             AbstractBillService.class.
@@ -79,7 +83,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                         "A delivery date must be provided !");
             }
 
-            this.setBillReference(e, prefix, count);
+            setBillReference(e, billTypeVisitor);
 
             this.checkPayment(e);
 
@@ -87,7 +91,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                     getPurchasedOfferings().
                     stream()
                     .map(po -> Optional.ofNullable(po.getOffering().accept(
-                            visitor).find(new OfferingPK(
+                            provideOfferingFacadeVisitor).find(new OfferingPK(
                                     po.getOffering().getId(),
                                     e.getProfessional().getEmail())))
                             .map(o ->
@@ -206,10 +210,11 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         });
     }
 
-    private void setBillReference(T e, String prefix, long count) {
-        e.setReference(prefix + "-" + e.getProfessional().getUuid() + "-"
+    public static <T extends Bill> void setBillReference(T e,
+            BillTypeVisitor visitor) {
+        e.setReference(e.accept(visitor) + "-" + e.getProfessional().
+                getUuid() + "-"
                 + new SimpleDateFormat("yyyyMMddHHmmss").format(e.
                         getDeliveryDate()) + "-" + e.hashCode());
-
     }
 }
