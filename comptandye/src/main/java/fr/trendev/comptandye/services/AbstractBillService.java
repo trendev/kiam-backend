@@ -69,16 +69,16 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                 T::setProfessional,
                 Professional::getBills, e -> {
             /**
-             * Sets the reference. Keep in mind that e is already added to the
-             * Professional Bills list!
+             * Keep in mind that e is already added to the Professional Bills
+             * list.
+             *
              */
-            e.setReference(prefix + "-" + e.getProfessional().getUuid() + "-"
-                    + (count + 1));
-
             if (e.getDeliveryDate() == null) {
                 throw new WebApplicationException(
                         "A delivery date must be provided !");
             }
+
+            this.setBillReference(e, prefix, count);
 
             this.checkPayment(e);
 
@@ -203,5 +203,11 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
             e.getProfessional().getBills().remove(e);
             deleteAction.apply(e);
         });
+    }
+
+    private void setBillReference(T e, String prefix, long count) {
+        e.setReference(prefix + "-" + e.getProfessional().getUuid() + "-"
+                + (count + 1) + "-" + e.hashCode());
+
     }
 }

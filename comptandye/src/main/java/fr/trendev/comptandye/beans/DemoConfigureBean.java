@@ -26,6 +26,7 @@ import fr.trendev.comptandye.entities.Service;
 import fr.trendev.comptandye.entities.SocialNetworkAccounts;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
+import fr.trendev.comptandye.utils.BillTypeEnum;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import java.io.Serializable;
@@ -66,8 +67,6 @@ public class DemoConfigureBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        this.clean();
-
         this.initPaymentModes();
         this.initBusinesses();
 
@@ -168,10 +167,6 @@ public class DemoConfigureBean implements Serializable {
                 new PaymentMode("Virement")
         ));
 
-        LOG.log(Level.INFO, "Vaness's birthdate is "
-                + vanessa.
-                        getCustomerDetails().getBirthdate());
-
         /**
          * Creates the Professional user group
          */
@@ -241,24 +236,6 @@ public class DemoConfigureBean implements Serializable {
 
     }
 
-    private void clean() {
-        userGroupFacade.findAll().forEach(g -> em.remove(g));
-
-        if (em.isJoinedToTransaction()) {
-            try {
-                em.flush();
-                LOG.log(Level.INFO, "clean() : OK");
-            } catch (Exception e) {
-                LOG.log(Level.WARNING, "clean() : FAILED ==> {0}", e.
-                        getMessage());
-            }
-        }
-        LOG.log(Level.INFO, "EntityManager is{0} joined to transaction", em.
-                isJoinedToTransaction() ? "" : " not");
-        LOG.log(Level.INFO, "EntityManager is{0} opened",
-                em.isOpen() ? "" : " not");
-    }
-
     private void initPaymentModes() {
         Arrays.
                 asList("CB", "Chèque", "Paylib", "Paypal",
@@ -308,9 +285,10 @@ public class DemoConfigureBean implements Serializable {
             specialPack.getBusinesses().add(esthetique);
             vanessa.getOfferings().add(specialPack);
 
-            IndividualBill bill1 = new IndividualBill("I-" + vanessa.getUuid()
-                    + "-1",
-                    new Date(),
+            Date deliveryDate = new Date();
+
+            IndividualBill bill1 = new IndividualBill(null,
+                    deliveryDate,
                     5000, 0,
                     new Date(),
                     Arrays.asList("Cool", "sympa"),
@@ -318,18 +296,24 @@ public class DemoConfigureBean implements Serializable {
                             new PurchasedOffering(1, service1)),
                     sylvioc);
 
-            bill1.setCltype("individualbill");
+            bill1.setCltype(BillTypeEnum.INDIVIDUAL_CLTYPE);
+            bill1.setReference(BillTypeEnum.INDIVIDUAL_PREFIX + "-" + vanessa.
+                    getUuid()
+                    + "-1-" + bill1.hashCode());
 
-            IndividualBill bill2 = new IndividualBill("I-" + vanessa.getUuid()
-                    + "-2",
-                    new Date(),
+//            deliveryDate = new Date(System.currentTimeMillis() + 1);
+            IndividualBill bill2 = new IndividualBill(null,
+                    deliveryDate,
                     8000, 0,
                     new Date(),
                     Arrays.asList("Long", "Pffff"),
                     vanessa, new LinkedList<>(), Arrays.asList(
                             new PurchasedOffering(1, specialPack)),
                     sylvioc);
-            bill2.setCltype("individualbill");
+            bill2.setCltype(BillTypeEnum.INDIVIDUAL_CLTYPE);
+            bill2.setReference(BillTypeEnum.INDIVIDUAL_PREFIX + "-" + vanessa.
+                    getUuid()
+                    + "-2-" + bill2.hashCode());
 
             sylvioc.getIndividualBills().add(bill1);
             sylvioc.getIndividualBills().add(bill2);
@@ -380,13 +364,16 @@ public class DemoConfigureBean implements Serializable {
         em.persist(service);
         em.persist(service2);
 
-        ClientBill bill = new ClientBill("C-" + vanessa.getUuid() + "-1",
+        ClientBill bill = new ClientBill(null,
                 new Date(1506070013419l),
                 1500, 0,
                 new Date(), Arrays.asList("Has left her first son"), vanessa,
                 Arrays.asList(payment), Arrays.asList(new PurchasedOffering(1,
                 service)), client1);
-        bill.setCltype("clientbill");
+        bill.setCltype(BillTypeEnum.CLIENT_CLTYPE);
+        bill.setReference(BillTypeEnum.CLIENT_PREFIX + "-" + vanessa.
+                getUuid()
+                + "-1-" + bill.hashCode());
 
         vanessa.getBills().add(bill);
         client1.getClientBills().add(bill);
@@ -400,7 +387,10 @@ public class DemoConfigureBean implements Serializable {
                                 "Virement"))), Arrays.asList(
                 new PurchasedOffering(1, service2)), vanessa.
                         getCollectiveGroups().get(0));
-        cgbill.setCltype("collectivegroupbill");
+        cgbill.setCltype(BillTypeEnum.COLLECTIVEGROUP_CLTYPE);
+        cgbill.setReference(BillTypeEnum.COLLECTIVEGROUP_PREFIX + "-" + vanessa.
+                getUuid()
+                + "-1-" + cgbill.hashCode());
 
         vanessa.getBills().add(cgbill);
         vanessa.getCollectiveGroups().get(0).getCollectiveGroupBills().add(

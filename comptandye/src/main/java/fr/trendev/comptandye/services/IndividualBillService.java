@@ -10,6 +10,7 @@ import fr.trendev.comptandye.entities.IndividualBill;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.IndividualBillFacade;
 import fr.trendev.comptandye.sessions.IndividualFacade;
+import fr.trendev.comptandye.utils.BillTypeEnum;
 import java.util.Date;
 import java.util.Optional;
 import java.util.function.Function;
@@ -101,7 +102,7 @@ public class IndividualBillService extends AbstractBillService<IndividualBill> {
     public Response post(@Context SecurityContext sec, IndividualBill entity,
             @QueryParam("professional") String professional) {
 
-        return super.post("I",
+        return super.post(BillTypeEnum.INDIVIDUAL_PREFIX,
                 e -> {
             if (e.getIndividual() == null) {
                 throw new WebApplicationException(
