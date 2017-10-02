@@ -119,6 +119,12 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
 
             this.checkPayment(e);
 
+            if (e.getPurchasedOfferings() == null || e.getPurchasedOfferings().
+                    isEmpty()) {
+                throw new WebApplicationException(
+                        "PurchasedOffering(s) must be provided !");
+            }
+
             List<PurchasedOffering> purchasedOfferings = e.
                     getPurchasedOfferings().
                     stream()
