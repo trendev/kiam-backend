@@ -14,6 +14,7 @@ import fr.trendev.comptandye.sessions.ClientFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -36,6 +37,7 @@ import javax.ws.rs.core.SecurityContext;
  */
 @Stateless
 @Path("Client")
+@RolesAllowed({"Administrator", "Professional"})
 public class ClientService extends AbstractCommonService<Client, ClientPK> {
 
     @Inject
@@ -64,6 +66,7 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
         return clientFacade;
     }
 
+    @RolesAllowed({"Administrator"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
@@ -72,6 +75,7 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
         return super.findAll();
     }
 
+    @RolesAllowed({"Administrator"})
     @Path("count")
     @GET
     @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON,})
@@ -80,6 +84,7 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
         return super.count();
     }
 
+    @RolesAllowed({"Administrator"})
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -144,6 +149,7 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
         });
     }
 
+    @RolesAllowed({"Administrator"})
     @Path("{id}")
     @DELETE
     public Response delete(@Context SecurityContext sec,

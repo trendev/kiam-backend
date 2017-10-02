@@ -10,6 +10,7 @@ import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.BusinessFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -29,6 +30,7 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 @Path("Business")
+@RolesAllowed({"Administrator"})
 public class BusinessService extends AbstractCommonService<Business, String> {
 
     @Inject
@@ -51,6 +53,7 @@ public class BusinessService extends AbstractCommonService<Business, String> {
         return businessFacade;
     }
 
+    @RolesAllowed({"Administrator", "Professional"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
