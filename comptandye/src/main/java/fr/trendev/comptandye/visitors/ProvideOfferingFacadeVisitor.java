@@ -36,7 +36,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
- * Only two methods are supported : @visit(Service) & @visit(Pack)
  *
  * @author jsie
  */

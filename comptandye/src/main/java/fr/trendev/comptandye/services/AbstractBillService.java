@@ -65,6 +65,20 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         return LOG;
     }
 
+    /**
+     * Prepare and persist a Bill. Before calling
+     * {@link AbstractCommonService#post} A bill is owned by a Professional. Its
+     * email can be provided as a QueryParam or picked up from the Security
+     * Context.
+     *
+     * @param prepareAction operations to performed before persisting the entity
+     * @param sec the injected security context
+     * @param entity the json deserialized Bill
+     * @param professional the professional's email, owner of the Bill (can be
+     * null if Principal of Security Context is used).
+     * @return the json serialized persisted Bill or a json object with a field
+     * "error" if an error occurs.
+     */
     public Response post(Consumer<T> prepareAction,
             SecurityContext sec, T entity,
             String professional) {

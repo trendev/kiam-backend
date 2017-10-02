@@ -22,7 +22,6 @@ import java.util.logging.Logger;
 /**
  *
  * @author jsie
- * @param <T>
  */
 public class UserGroupDeserializer extends StdDeserializer<UserGroup> {
 
