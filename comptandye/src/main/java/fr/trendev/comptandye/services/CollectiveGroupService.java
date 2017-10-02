@@ -17,6 +17,7 @@ import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -39,6 +40,7 @@ import javax.ws.rs.core.SecurityContext;
  */
 @Stateless
 @Path("CollectiveGroup")
+@RolesAllowed({"Administrator", "Professional"})
 public class CollectiveGroupService extends AbstractCommonService<CollectiveGroup, CollectiveGroupPK> {
 
     @Inject
@@ -68,6 +70,7 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
         return collectiveGroupFacade;
     }
 
+    @RolesAllowed({"Administrator"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
@@ -76,6 +79,7 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
         return super.findAll();
     }
 
+    @RolesAllowed({"Administrator"})
     @Path("count")
     @GET
     @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON,})
@@ -84,6 +88,7 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
         return super.count();
     }
 
+    @RolesAllowed({"Administrator"})
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -139,6 +144,7 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
         });
     }
 
+    @RolesAllowed({"Administrator"})
     @Path("{id}")
     @DELETE
     public Response delete(@Context SecurityContext sec,

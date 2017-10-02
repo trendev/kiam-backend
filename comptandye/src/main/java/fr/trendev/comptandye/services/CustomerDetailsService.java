@@ -10,6 +10,7 @@ import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.CustomerDetailsFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -30,6 +31,7 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 @Path("CustomerDetails")
+@RolesAllowed({"Administrator"})
 public class CustomerDetailsService extends AbstractCommonService<CustomerDetails, Long> {
 
     @Inject

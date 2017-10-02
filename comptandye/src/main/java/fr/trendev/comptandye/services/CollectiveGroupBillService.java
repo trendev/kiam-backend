@@ -16,6 +16,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -39,6 +40,7 @@ import javax.ws.rs.core.SecurityContext;
  */
 @Stateless
 @Path("CollectiveGroupBill")
+@RolesAllowed({"Administrator", "Professional"})
 public class CollectiveGroupBillService extends AbstractBillService<CollectiveGroupBill> {
 
     @Inject
@@ -65,6 +67,7 @@ public class CollectiveGroupBillService extends AbstractBillService<CollectiveGr
         return collectiveGroupBillFacade;
     }
 
+    @RolesAllowed({"Administrator"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
@@ -73,6 +76,7 @@ public class CollectiveGroupBillService extends AbstractBillService<CollectiveGr
         return super.findAll();
     }
 
+    @RolesAllowed({"Administrator"})
     @Path("count")
     @GET
     @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON,})
@@ -81,6 +85,7 @@ public class CollectiveGroupBillService extends AbstractBillService<CollectiveGr
         return super.count();
     }
 
+    @RolesAllowed({"Administrator"})
     @Path("{reference}/{deliverydate}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -145,6 +150,7 @@ public class CollectiveGroupBillService extends AbstractBillService<CollectiveGr
         return super.put(sec, entity, professional);
     }
 
+    @RolesAllowed({"Administrator"})
     @Path("{reference}/{deliverydate}")
     @DELETE
     public Response delete(@PathParam("reference") String reference,
