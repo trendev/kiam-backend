@@ -112,6 +112,7 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
                 professionalFacade,
                 CollectiveGroup::setProfessional,
                 Professional::getCollectiveGroups, e -> {
+            e.setId(null);
         });
 
     }

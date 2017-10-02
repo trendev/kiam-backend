@@ -103,6 +103,7 @@ public class ExpenseService extends AbstractCommonService<Expense, ExpensePK> {
                 Professional.class,
                 professionalFacade, Expense::setProfessional,
                 Professional::getExpenses, e -> {
+            e.setId(null);
             int total = e.getPayments().stream()
                     .mapToInt(Payment::getAmount)
                     .sum();

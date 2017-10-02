@@ -101,6 +101,7 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
         }
 
         return super.post(entity, e -> {
+            e.setId(null);
 
             if (e.getOffering() == null) {
                 throw new WebApplicationException("No Offering provided !");

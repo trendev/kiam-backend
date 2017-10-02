@@ -108,6 +108,7 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
                 professionalFacade,
                 Client::setProfessional,
                 Professional::getClients, e -> {
+            e.setId(null);
         });
 
     }

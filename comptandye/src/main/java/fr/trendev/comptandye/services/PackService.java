@@ -108,6 +108,8 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
                 Professional.class,
                 professionalFacade, Pack::setProfessional,
                 Professional::getOfferings, e -> {
+            e.setId(null);
+
             if (!e.getOfferings().isEmpty()) {
                 LOG.log(Level.WARNING,
                         "Services and Packs provided during the Pack creation will be ignored !");

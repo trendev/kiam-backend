@@ -88,6 +88,7 @@ public class SocialNetworkAccountsService extends AbstractCommonService<SocialNe
                 stringify(entity));
 
         return super.post(entity, e -> {
+            e.setId(null);
         });
     }
 

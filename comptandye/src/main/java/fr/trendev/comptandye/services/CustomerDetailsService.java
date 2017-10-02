@@ -87,6 +87,7 @@ public class CustomerDetailsService extends AbstractCommonService<CustomerDetail
                 entity));
 
         return super.post(entity, e -> {
+            e.setId(null);
         });
     }
 

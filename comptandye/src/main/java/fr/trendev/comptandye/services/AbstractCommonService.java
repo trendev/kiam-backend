@@ -168,7 +168,10 @@ public abstract class AbstractCommonService<E, P> {
 
     /**
      * Prepares and Persists an Entity which is not owned by a Professional (an
-     * Entity without professional's email in primary key).
+     * Entity without professional's email in primary key). If the primary key
+     * of the entity is an auto-generated id, the id field is reset to null in
+     * initAction and will be generated when the entity will be persist on the
+     * DB.
      *
      * @param entity the entity to persist
      * @param initAction the operations used to prepare the persist (ex: add the
@@ -225,7 +228,7 @@ public abstract class AbstractCommonService<E, P> {
      * @param getFunction the getter function from the owner used to create the
      * other side of the previous link
      * @param initAction operations to perform before persisting the entity,
-     * provided to AbstractCommonService#post
+     * provided to {@link AbstractCommonService#post}
      * @return the persisted entity
      */
     protected <O, K> Response post(E entity, K ownerPK,

@@ -110,6 +110,7 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
                 Professional.class,
                 professionalFacade, Category::setProfessional,
                 Professional::getCategories, e -> {
+            e.setId(null);
         });
 
     }

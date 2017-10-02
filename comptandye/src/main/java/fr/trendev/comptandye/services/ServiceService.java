@@ -102,6 +102,7 @@ public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
                 Professional.class,
                 professionalFacade, Service::setProfessional,
                 Professional::getOfferings, e -> {
+            e.setId(null);
         });
 
     }
