@@ -21,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.json.Json;
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
@@ -375,8 +376,20 @@ public abstract class AbstractCommonService<E, P> {
         return jsonString;
     }
 
+    /**
+     * Extracts the email of professional from the SecurityContext or provides
+     * the email found in the query.
+     *
+     * @param sec the security context
+     * @param professional the owner's email provided in the query parameters
+     * @return the professional's email
+     */
     protected String getProEmail(SecurityContext sec, String professional) {
-        return (sec.isSecure() && sec.isUserInRole("Professional"))
-                ? sec.getUserPrincipal().getName() : professional;
+        return Optional.ofNullable(
+                sec.isSecure() && sec.isUserInRole("Professional")
+                ? sec.getUserPrincipal().getName() : professional)
+                .map(Function.identity())
+                .orElseThrow(() -> new BadRequestException(
+                        "Impossible to find the professional's email from the SecurityContext or from the Query Parameters"));
     }
 }
