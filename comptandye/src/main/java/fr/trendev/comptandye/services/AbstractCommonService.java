@@ -32,6 +32,9 @@ import javax.ws.rs.core.SecurityContext;
  */
 public abstract class AbstractCommonService<E, P> {
 
+    /**
+     * Used only in stringify. Easiest than creating/parsing Json Objects.
+     */
     @Inject
     private ObjectMapper om;
 
@@ -41,8 +44,16 @@ public abstract class AbstractCommonService<E, P> {
         this.entityClass = entityClass;
     }
 
+    /**
+     *
+     * @return the logger of the Service
+     */
     protected abstract Logger getLogger();
 
+    /**
+     *
+     * @return the facade (EJB session) associated to the Service
+     */
     protected abstract AbstractFacade<E, P> getFacade();
 
     protected Response findAll() {
@@ -84,6 +95,15 @@ public abstract class AbstractCommonService<E, P> {
         }
     }
 
+    /**
+     * Finds an entity or refreshes it from the DB.
+     *
+     * @param pk the primary key of the entity
+     * @param refresh a boolean which will indicate if refresh must be
+     * performed. Default is false.
+     * @return the entity find in the persistent context or refreshed from the
+     * DB.
+     */
     protected Response find(P pk, boolean refresh) {
         try {
             return Optional.ofNullable(getFacade().find(pk))
@@ -112,6 +132,15 @@ public abstract class AbstractCommonService<E, P> {
         }
     }
 
+    /**
+     * Provides a specific relation from an Entity.
+     *
+     * @param <R> the type of the entity in the relation
+     * @param pk the primary key of the entity
+     * @param getFunction the getter in the entity which will provide the
+     * relation
+     * @return usually, a Collection
+     */
     protected <R> Response provideRelation(P pk, Function<E, R> getFunction) {
         try {
 
@@ -137,6 +166,15 @@ public abstract class AbstractCommonService<E, P> {
         }
     }
 
+    /**
+     * Prepares and Persists an Entity which is not owned by a Professional (an
+     * Entity without professional's email in primary key).
+     *
+     * @param entity the entity to persist
+     * @param initAction the operations used to prepare the persist (ex: add the
+     * entity to a relation, set fields like passwords, uuid...)
+     * @return the persisted entity
+     */
     protected Response post(E entity, Consumer<E> initAction) {
 
         String jsonString = this.stringify(entity);
@@ -166,6 +204,30 @@ public abstract class AbstractCommonService<E, P> {
         }
     }
 
+    /**
+     * Prepares and Persists an Entity which is owned by a Professional (an
+     * Entity with professional's email in primary key). These entities require
+     * to first find the owner and to add the entity to the Professional's
+     * entity list. Ex: persisting a Client requires to find the Professional
+     * and add the Client to the Professional's Client list. If an error occurs,
+     * a Rollback is performed by the JPA provider.
+     *
+     * @param <O> the owner's type, usually Professional
+     * @param <K> the owner's primary key type, usually String
+     * @param entity the entity to persist
+     * @param ownerPK the primary key of the owner
+     * @param ownerPrettyPrintFunction the method used to pretty print the
+     * primary key of the owner, should be located in an AbstractFacade.
+     * @param ownerClass the Class of the owner
+     * @param ownerFacade the facade (EJB session) used with the owner
+     * @param setFunction the setter function from the Entity used to set is
+     * link with the owner, ex: Category::setProfessional
+     * @param getFunction the getter function from the owner used to create the
+     * other side of the previous link
+     * @param initAction operations to perform before persisting the entity,
+     * provided to AbstractCommonService#post
+     * @return the persisted entity
+     */
     protected <O, K> Response post(E entity, K ownerPK,
             BiFunction<AbstractFacade<O, K>, K, String> ownerPrettyPrintFunction,
             Class<O> ownerClass, AbstractFacade<O, K> ownerFacade,
@@ -205,6 +267,15 @@ public abstract class AbstractCommonService<E, P> {
 
     }
 
+    /**
+     * Prepares and Updates an Entity.
+     *
+     * @param entity the entity to update
+     * @param pk the primary key of the entity
+     * @param updateAction operations to perform before the update (additional
+     * checks and so on)
+     * @return the updated entity
+     */
     protected Response put(E entity, P pk, Consumer<E> updateAction) {
         try {
             return Optional.ofNullable(getFacade().find(pk))
@@ -235,6 +306,15 @@ public abstract class AbstractCommonService<E, P> {
         }
     }
 
+    /**
+     * Prepares and Deletes an Entity. Additional operations required to remove
+     * the entity from a relationship should be provided in the prepareDelete
+     * consumer.
+     *
+     * @param pk the primary key of the Entity
+     * @param prepareDelete operations to perform before deleting the entity
+     * @return HTTP OK if no error occurs
+     */
     protected Response delete(P pk, Consumer<E> prepareDelete) {
         try {
             return Optional.ofNullable(getFacade().find(pk))
@@ -265,6 +345,22 @@ public abstract class AbstractCommonService<E, P> {
         }
     }
 
+    /**
+     * Adds or Removes an Entity from a Relationship.
+     *
+     * @param <A> type of the entity on the other side of the relationship,
+     * called the target
+     * @param <U> the type of the primary key of the target
+     * @param option INSERT or REMOVE
+     * @param entityPk the primary key of the entity
+     * @param associationFacade the facade (EJB session) used to manipulate the
+     * target
+     * @param associationPk the primary key of the target
+     * @param associationEntityClass the Class of the target
+     * @param associationFunction the operations to perform manipulate the
+     * relationship (add on both sides or remove from both sides)
+     * @return the target of the relationship
+     */
     protected <A, U> Response manageAssociation(
             AssociationManagementEnum option,
             P entityPk,
@@ -365,15 +461,24 @@ public abstract class AbstractCommonService<E, P> {
         }
     }
 
+    /**
+     * Represents an Entity as a Json String.
+     *
+     * @param entity the entity to stringify (serialize)
+     * @return the serialized entity
+     * @throws BadRequestException if an error occurs during the serialization
+     */
     protected String stringify(E entity) {
-        String jsonString = entity.toString();
         try {
-            jsonString = om.writeValueAsString(entity);
+            String jsonString = om.writeValueAsString(entity);
+            return jsonString;
         } catch (JsonProcessingException ex) {
+            String errmsg = "Entity " + entity
+                    + " can not be produced as a String";
             getLogger().log(Level.WARNING,
-                    "Entity " + entity + " can not be produced as a String", ex);
+                    errmsg, ex);
+            throw new BadRequestException(errmsg);
         }
-        return jsonString;
     }
 
     /**
