@@ -30,6 +30,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
 /**
+ * Create or update a Bill is more specific than the other object and requires
+ * additional operations. This class is used to perform those operations/checks.
  *
  * @author jsie
  */
@@ -66,18 +68,34 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
     }
 
     /**
-     * Prepare and persist a Bill. Before calling
-     * {@link AbstractCommonService#post} A bill is owned by a Professional. Its
-     * email can be provided as a QueryParam or picked up from the Security
-     * Context.
+     * Prepares and persists a Bill.
+     *
+     * Before calling
+     * {@link AbstractCommonService#post(java.lang.Object, java.lang.Object, java.util.function.BiFunction, java.lang.Class, fr.trendev.comptandye.sessions.AbstractFacade, java.util.function.BiConsumer, java.util.function.Function, java.util.function.Consumer)},
+     * this method will:
+     * <ul>
+     * <li>check if a deliveryDate is provided (mandatory), </li>
+     * <li>set the Bill's reference </li>
+     * <li>and check the total amount from the payments amounts, the discount
+     * and the purchased offering prices</li>
+     * </ul>
+     *
+     * Before performing the prepareAction, the entity is added to the
+     * Professional's bills list! A bill is owned by a Professional. Its email
+     * (primary key) can be provided as a QueryParam or pulled up from the
+     * Security Context.
      *
      * @param prepareAction operations to performed before persisting the entity
      * @param sec the injected security context
      * @param entity the json deserialized Bill
      * @param professional the professional's email, owner of the Bill (can be
      * null if Principal of Security Context is used).
-     * @return the json serialized persisted Bill or a json object with a field
-     * "error" if an error occurs.
+     * @return the json serialized persisted Bill
+     * @see AbstractCommonService#post(java.lang.Object, java.lang.Object,
+     * java.util.function.BiFunction, java.lang.Class,
+     * fr.trendev.comptandye.sessions.AbstractFacade,
+     * java.util.function.BiConsumer, java.util.function.Function,
+     * java.util.function.Consumer)
      */
     public Response post(Consumer<T> prepareAction,
             SecurityContext sec, T entity,
@@ -91,11 +109,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                 professionalFacade,
                 T::setProfessional,
                 Professional::getBills, e -> {
-            /**
-             * Keep in mind that e is already added to the Professional Bills
-             * list.
-             *
-             */
+
             if (e.getDeliveryDate() == null) {
                 throw new WebApplicationException(
                         "A delivery date must be provided !");
@@ -144,6 +158,19 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         });
     }
 
+    /**
+     * Checks the payments provided during the Bill creation. This method is
+     * used during a POST and a PUT. The paymentDate cannot be before the
+     * deliveryDate.
+     *
+     * @param bill the Bill to check
+     * @throws WebApplicationException if :
+     * <ul>
+     * <li>paymentDate is before the deliveryDate</li>
+     * <li>payments are empty and deliveryDate is provided</li>
+     * <li>payments are provided but deliveryDate is not provided (null)</li>
+     * </ul>
+     */
     private void checkPayment(T bill) {
 
         if (bill.getPaymentDate() != null && bill.getPaymentDate().before(bill.
@@ -189,6 +216,22 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         }
     }
 
+    /**
+     * Updates a Bill. The composed primary key is based on the Bill's
+     * reference, its deliveryData and the owner's email extracted from the
+     * SecurityContext or provided in a QueryParam. If a paymentDate is provided
+     * to an unpaid (Bill without a payment date), a check of the dates
+     * (deliveryDate/paymentDate) and the amounts will be performed and if
+     * successful the Bill will be paid (paymentDate set and futur modification
+     * will be ignored).
+     *
+     * @param sec the security context
+     * @param entity the entity to update
+     * @param professional the owner's email of the Bill
+     * @return the updated Bill
+     * @see AbstractCommonService#put(java.lang.Object, java.lang.Object,
+     * java.util.function.Consumer)
+     */
     public Response put(
             SecurityContext sec, T entity,
             String professional) {
@@ -210,6 +253,17 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         });
     }
 
+    /**
+     * Finds a Bill and removes it from its owner (Professional) and authors
+     * (Client, CollectiveGroup and Individual bills list).
+     *
+     * @param entityClass the Bill's class, used for logging purposes
+     * @param deleteAction the actions to perform before deletion
+     * @param reference the Bill's reference
+     * @param deliverydate the Bill's deliveryDate
+     * @param professional the owner's email of the Bill.
+     * @return HTTP OK if deletion is done without exceptions
+     */
     public Response delete(
             Class<T> entityClass,
             Function<T, Boolean> deleteAction,
@@ -228,6 +282,17 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         });
     }
 
+    /**
+     * Sets the the Bill's reference.
+     *
+     * [CX|CG|IX]-[PRO-UUID]-[deliveryDate: yyyyMMddHHmmss]-[hashcode]
+     *
+     * @param <T> the Bill's type ClientBill or CollectiveGroupBill or
+     * IndividualBill
+     * @param e the Bill to create
+     * @param visitor a {@link BillTypeVisitor} visitor which will provide the
+     * prefix from the Bill's type.
+     */
     public static <T extends Bill> void setBillReference(T e,
             BillTypeVisitor visitor) {
         e.setReference(e.accept(visitor) + "-" + e.getProfessional().
