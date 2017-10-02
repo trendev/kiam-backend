@@ -11,7 +11,6 @@ import fr.trendev.comptandye.entities.ClientPK;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.ClientBillFacade;
 import fr.trendev.comptandye.sessions.ClientFacade;
-import fr.trendev.comptandye.visitors.BillTypeVisitor;
 import java.util.Date;
 import java.util.Optional;
 import java.util.function.Function;
@@ -102,8 +101,7 @@ public class ClientBillService extends AbstractBillService<ClientBill> {
 
         String proEmail = this.getProEmail(sec, professional);
 
-        return super.post(BillTypeVisitor.CLIENT_PREFIX,
-                e -> {
+        return super.post(e -> {
             if (e.getClient() == null) {
                 throw new WebApplicationException(
                         "A valid Client must be provided !");

@@ -10,7 +10,6 @@ import fr.trendev.comptandye.entities.IndividualBill;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.IndividualBillFacade;
 import fr.trendev.comptandye.sessions.IndividualFacade;
-import fr.trendev.comptandye.visitors.BillTypeVisitor;
 import java.util.Date;
 import java.util.Optional;
 import java.util.function.Function;
@@ -102,8 +101,7 @@ public class IndividualBillService extends AbstractBillService<IndividualBill> {
     public Response post(@Context SecurityContext sec, IndividualBill entity,
             @QueryParam("professional") String professional) {
 
-        return super.post(BillTypeVisitor.INDIVIDUAL_PREFIX,
-                e -> {
+        return super.post(e -> {
             if (e.getIndividual() == null) {
                 throw new WebApplicationException(
                         "A valid Individual must be provided !");

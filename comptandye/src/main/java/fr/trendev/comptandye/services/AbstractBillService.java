@@ -38,9 +38,17 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
     @Inject
     ProfessionalFacade professionalFacade;
 
+    /**
+     * Used to gather a ServiceFacade or a PackFacade from an Offering.
+     *
+     */
     @Inject
     ProvideOfferingFacadeVisitor provideOfferingFacadeVisitor;
 
+    /**
+     * Used to gather a Bill prefix from a Bill type.
+     *
+     */
     @Inject
     BillTypeVisitor billTypeVisitor;
 
@@ -57,8 +65,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         return LOG;
     }
 
-    public Response post(String prefix,
-            Consumer<T> prepareAction,
+    public Response post(Consumer<T> prepareAction,
             SecurityContext sec, T entity,
             String professional) {
 

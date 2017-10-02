@@ -15,6 +15,7 @@ import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -35,6 +36,7 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 @Path("Administrator")
+@RolesAllowed({"Administrator"})
 public class AdministratorService extends AbstractCommonService<Administrator, String> {
 
     @Inject
