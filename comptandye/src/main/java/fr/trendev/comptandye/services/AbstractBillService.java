@@ -71,9 +71,6 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
 
         String proEmail = this.getProEmail(sec, professional);
 
-        final long count = getFacade().count();
-        getFacade().flush();
-
         return super.<Professional, String>post(entity, proEmail,
                 AbstractFacade::prettyPrintPK,
                 Professional.class,
