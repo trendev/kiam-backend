@@ -141,6 +141,14 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
         });
     }
 
+    /**
+     * Deletes a free PurchasedOffering (not yet associated with a bill). If a
+     * PurchasedOffering is associated with a Bill, delete the Bill first (this
+     * operation is only allowed for Administrator)
+     *
+     * @param id the Entity's id
+     * @return HTTP OK if no error occurs
+     */
     @Path("{id}")
     @DELETE
     public Response delete(@PathParam("id") Long id) {

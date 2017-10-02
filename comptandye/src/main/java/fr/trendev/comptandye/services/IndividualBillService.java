@@ -15,6 +15,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -38,6 +39,7 @@ import javax.ws.rs.core.SecurityContext;
  */
 @Stateless
 @Path("IndividualBill")
+@RolesAllowed({"Administrator"})
 public class IndividualBillService extends AbstractBillService<IndividualBill> {
 
     @Inject
