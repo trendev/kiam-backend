@@ -101,14 +101,8 @@ public class IndividualService extends AbstractCommonService<Individual, String>
 
         return super.post(entity,
                 e -> {
-            //generates an UUID if no one is provided
-            if (e.getUuid() == null || e.getUuid().isEmpty()) {
-                String uuid = UUIDGenerator.generate("IND-", true);
-                LOG.log(Level.WARNING,
-                        "No UUID provided for new Individual {0}. Generated UUID = {1}",
-                        new Object[]{e.getEmail(), uuid});
-                e.setUuid(uuid);
-            }
+
+            e.setUuid(UUIDGenerator.generate("IND-", true));
 
             //encrypts the provided password
             String encrypted_pwd = PasswordGenerator.encrypt_SHA256(e.

@@ -15,6 +15,8 @@ import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UUIDGenerator;
+import java.util.Collection;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
@@ -29,8 +31,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
 /**
  *
@@ -68,6 +72,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
         return professionalFacade;
     }
 
+    @RolesAllowed({"Administrator"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
@@ -76,6 +81,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
         return super.findAll();
     }
 
+    @RolesAllowed({"Administrator"})
     @Path("count")
     @GET
     @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON,})
@@ -84,6 +90,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
         return super.count();
     }
 
+    @RolesAllowed({"Administrator"})
     @Path("{email}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -94,40 +101,78 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
         return super.find(email, refresh);
     }
 
+    @RolesAllowed({"Professional"})
+    @Path("profile")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response profile(@Context SecurityContext sec,
+            @QueryParam("refresh") boolean refresh) {
+        String proEmail = this.getProEmail(sec, null);
+        LOG.log(Level.INFO, "REST request to get Professional : {0}", proEmail);
+        return super.find(proEmail, refresh);
+    }
+
+    /**
+     * Prepares and Persists a Professional. This service is only accessible by
+     * Administrator's group member.
+     *
+     * UUID is auto-generated (UUID provided are ignored), Password is
+     * encrypted. All relationships are initialized and empty - except
+     * userGroups if inactivate is not specified or false.
+     *
+     * @param entity the Professional to persist
+     * @param inactivate grant the Professional or not. If true, the persisted
+     * professional won't be added in the Professional's group. This QueryParam
+     * is optional.
+     * @return
+     */
+    @RolesAllowed({"Administrator"})
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response post(Professional entity) {
+    public Response post(Professional entity,
+            @QueryParam("inactivate") boolean inactivate) {
         LOG.log(Level.INFO, "Creating Professional {0}", entity.getEmail());
 
         return super.post(entity, e -> {
-            //generates an UUID if no one is provided
-            if (e.getUuid() == null || e.getUuid().isEmpty()) {
-                String uuid = UUIDGenerator.generate("PRO-", true);
-                LOG.log(Level.WARNING,
-                        "No UUID provided for new Professional {0}. Generated UUID = {1}",
-                        new Object[]{e.getEmail(), uuid});
-                e.setUuid(uuid);
-            }
+
+            e.setUuid(UUIDGenerator.generate("PRO-", true));
 
             //encrypts the provided password
             String encrypted_pwd = PasswordGenerator.encrypt_SHA256(e.
                     getPassword());
             e.setPassword(encrypted_pwd);
 
-            //adds the new professional to the group and the group to the new pro
-            UserGroup proGroup = userGroupFacade.find("Professional");
-            proGroup.getUserAccounts().add(e);
-            e.getUserGroups().add(proGroup);
+            if (!inactivate) {
+                this.grantAsProfessional(e);
+            }
         });
     }
 
+    private boolean grantAsProfessional(Professional pro) {
+        UserGroup proGroup = userGroupFacade.find("Professional");
+        return proGroup.getUserAccounts().add(pro) & pro.getUserGroups().add(
+                proGroup);
+    }
+
+    /**
+     * Prepares and Updates a Professional. Email, UUID and registrationDate
+     * fields will be ignored and should not be changed by the way...
+     *
+     * @param sec the security context (use if a Professional has initiated the
+     * request)
+     * @param entity the entity to update
+     * @return the updated entity
+     */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response put(Professional entity) {
-        LOG.log(Level.INFO, "Updating Professional {0}", entity.getEmail());
-        return super.put(entity, entity.getEmail(), e ->
+    public Response put(@Context SecurityContext sec, Professional entity) {
+        String proEmail = this.getProEmail(sec, entity.getEmail());
+
+        LOG.log(Level.INFO, "Updating Professional {0}", proEmail);
+
+        return super.put(entity, proEmail, e ->
         {
             /**
              * encrypts the provided password
@@ -140,16 +185,8 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
             }
 
             e.setUsername(entity.getUsername());
-            /**
-             * TODO : Should only be performed by an Administrator
-             */
-            e.setRegistrationDate(entity.getRegistrationDate());
 
-            /**
-             * Will automatically ignore the id of the provided object : avoid
-             * to hack another object swapping the current saved (or not) object
-             * by an existing one.
-             */
+            //Reset the id (if provided) and create new object
             entity.getCustomerDetails().setId(null);
             entity.getAddress().setId(null);
             entity.getSocialNetworkAccounts().setId(null);
@@ -170,6 +207,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
         });
     }
 
+    @RolesAllowed({"Administrator"})
     @Path("{email}")
     @DELETE
     public Response delete(@PathParam("email") String email) {
@@ -190,15 +228,10 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                         "Professional {0} and Individual {1} association deleted",
                         new Object[]{email, i.getEmail()});
             });
-
-//            e.getBills().stream()
-//                    .map(Bill::getOfferings)
-//                    .flatMap(List<Offering>::stream)
-//                    .filter(o -> e.getOfferings().contains(o))
-//                    .forEach(o -> e.getOfferings().remove(o));
         });
     }
 
+    @RolesAllowed({"Administrator"})
     @Path("{email}/userGroups")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -209,6 +242,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 Professional::getUserGroups);
     }
 
+    @RolesAllowed({"Administrator"})
     @Path("{email}/insertToUserGroup/{name}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -226,6 +260,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 e.getUserGroups().add(a) & a.getUserAccounts().add(e));
     }
 
+    @RolesAllowed({"Administrator"})
     @Path("{email}/removeFromUserGroup/{name}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -243,24 +278,37 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 e.getUserGroups().remove(a) & a.getUserAccounts().remove(e));
     }
 
+    private <R> Response provideRelation(SecurityContext sec, String email,
+            Function<Professional, Collection<R>> getter, String type) {
+        String proEmail = this.getProEmail(sec, email);
+
+        if (!proEmail.equals(email)) {
+            LOG.log(Level.WARNING,
+                    "Professional [{0}] has provided an incorrect email [{1}] which will be ignored...",
+                    new Object[]{proEmail, email});
+        }
+
+        LOG.log(Level.INFO,
+                "REST request to {1} of Professional : {0}", new Object[]{
+                    proEmail, type});
+        return super.provideRelation(proEmail, getter);
+    }
+
     @Path("{email}/bills")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getBills(@PathParam("email") String email) {
-        LOG.log(Level.INFO,
-                "REST request to get bills of Professional : {0}", email);
-        return super.provideRelation(email,
-                Professional::getBills);
+    public Response getBills(@Context SecurityContext sec,
+            @PathParam("email") String email) {
+        return this.provideRelation(sec, email, Professional::getBills, "bills");
     }
 
     @Path("{email}/clients")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getClients(@PathParam("email") String email) {
-        LOG.log(Level.INFO,
-                "REST request to get clients of Professional : {0}", email);
-        return super.provideRelation(email,
-                Professional::getClients);
+    public Response getClients(@Context SecurityContext sec,
+            @PathParam("email") String email) {
+        return this.provideRelation(sec, email, Professional::getClients,
+                "clients");
     }
 
     @Path("{email}/offerings")
@@ -316,6 +364,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 Professional::getIndividuals);
     }
 
+    @RolesAllowed({"Administrator"})
     @Path("{proEmail}/buildBusinessRelationship/{indEmail}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -335,6 +384,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 p.getIndividuals().add(i) & i.getProfessionals().add(p));
     }
 
+    @RolesAllowed({"Administrator"})
     @Path("{proEmail}/endBusinessRelationship/{indEmail}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
