@@ -126,7 +126,7 @@ public class DemoConfigureBean implements Serializable {
          */
         Professional vanessa = new Professional("vanessa.gay@gmail.com",
                 "EUrVrX4nfmYYFxpMyRX93OlkJxNZv9mkMGfirZKbhWI=", "Vaness",
-                "PRO-825abefc0bb54b12808032ef6695655b");
+                UUIDGenerator.generate("PRO-", true));
         Calendar cal = Calendar.getInstance();
         cal.clear();
         cal.set(1983, 9, 25);
