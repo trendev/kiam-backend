@@ -11,6 +11,7 @@ import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
 import java.net.URI;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiConsumer;
@@ -139,11 +140,19 @@ public abstract class AbstractCommonService<E, P> {
      * @param pk the primary key of the entity
      * @param getFunction the getter in the entity which will provide the
      * relation
+     * @param elementClass the Class of the element contained in the relation
      * @return usually, a Collection
      */
-    protected <R> Response provideRelation(P pk, Function<E, R> getFunction) {
+    protected <R> Response provideRelation(P pk,
+            Function<E, Collection<R>> getFunction,
+            Class<R> elementClass) {
         try {
-
+            getLogger().log(Level.INFO,
+                    "REST request to get list of {0} from {1} {2}",
+                    new Object[]{
+                        elementClass.getSimpleName(),
+                        entityClass.getSimpleName(),
+                        getFacade().prettyPrintPK(pk)});
             return Optional.ofNullable(getFacade().find(pk))
                     .map(result -> Response.status(Response.Status.OK).entity(
                             getFunction.apply(result)).build())

@@ -6,6 +6,7 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.entities.Individual;
+import fr.trendev.comptandye.entities.IndividualBill;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.sessions.AbstractFacade;
@@ -181,9 +182,8 @@ public class IndividualService extends AbstractCommonService<Individual, String>
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserGroups(@PathParam("email") String email) {
-        LOG.log(Level.INFO,
-                "REST request to get userGroups of Individual : {0}", email);
-        return super.provideRelation(email, Individual::getUserGroups);
+        return super.provideRelation(email, Individual::getUserGroups,
+                UserGroup.class);
     }
 
     @Path("{email}/insertToUserGroup/{name}")
@@ -224,22 +224,16 @@ public class IndividualService extends AbstractCommonService<Individual, String>
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProfessionals(@PathParam("email") String email) {
-        LOG.log(Level.INFO,
-                "REST request to get professionals of Individual : {0}",
-                email);
         return super.provideRelation(email,
-                Individual::getProfessionals);
+                Individual::getProfessionals, Professional.class);
     }
 
     @Path("{email}/individualBills")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getIndividualBills(@PathParam("email") String email) {
-        LOG.log(Level.INFO,
-                "REST request to get individualBills of Individual : {0}",
-                email);
         return super.provideRelation(email,
-                Individual::getIndividualBills);
+                Individual::getIndividualBills, IndividualBill.class);
     }
 
     @Path("{indEmail}/buildBusinessRelationship/{proEmail}")

@@ -5,7 +5,13 @@
  */
 package fr.trendev.comptandye.services;
 
+import fr.trendev.comptandye.entities.Bill;
+import fr.trendev.comptandye.entities.Category;
+import fr.trendev.comptandye.entities.Client;
+import fr.trendev.comptandye.entities.CollectiveGroup;
+import fr.trendev.comptandye.entities.Expense;
 import fr.trendev.comptandye.entities.Individual;
+import fr.trendev.comptandye.entities.Offering;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.sessions.AbstractFacade;
@@ -239,7 +245,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
         LOG.log(Level.INFO,
                 "REST request to get userGroups of Professional : {0}", email);
         return super.provideRelation(email,
-                Professional::getUserGroups);
+                Professional::getUserGroups, UserGroup.class);
     }
 
     @RolesAllowed({"Administrator"})
@@ -278,8 +284,22 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 e.getUserGroups().remove(a) & a.getUserAccounts().remove(e));
     }
 
+    /**
+     * Wraps the provideRelation() call catching the professional's email from
+     * the security context (Request from Professional) or from the parameter
+     * email.
+     *
+     * @param <R> the type of the element contained in the relation
+     * @param sec the security context
+     * @param email the professional's email, usually provided by an
+     * Administrator
+     * @param getter the getter function used to get the elements
+     * @param elementClass The class of the element contained in the relation
+     * @return
+     */
     private <R> Response provideRelation(SecurityContext sec, String email,
-            Function<Professional, Collection<R>> getter, String type) {
+            Function<Professional, Collection<R>> getter,
+            Class<R> elementClass) {
         String proEmail = this.getProEmail(sec, email);
 
         if (!proEmail.equals(email)) {
@@ -288,10 +308,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                     new Object[]{proEmail, email});
         }
 
-        LOG.log(Level.INFO,
-                "REST request to {1} of Professional : {0}", new Object[]{
-                    proEmail, type});
-        return super.provideRelation(proEmail, getter);
+        return super.provideRelation(proEmail, getter, elementClass);
     }
 
     @Path("{email}/bills")
@@ -299,7 +316,8 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBills(@Context SecurityContext sec,
             @PathParam("email") String email) {
-        return this.provideRelation(sec, email, Professional::getBills, "bills");
+        return this.provideRelation(sec, email, Professional::getBills,
+                Bill.class);
     }
 
     @Path("{email}/clients")
@@ -308,60 +326,52 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     public Response getClients(@Context SecurityContext sec,
             @PathParam("email") String email) {
         return this.provideRelation(sec, email, Professional::getClients,
-                "clients");
+                Client.class);
     }
 
     @Path("{email}/offerings")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getOfferings(@PathParam("email") String email) {
-        LOG.log(Level.INFO,
-                "REST request to get offerings of Professional : {0}", email);
-        return super.provideRelation(email,
-                Professional::getOfferings);
+    public Response getOfferings(@Context SecurityContext sec,
+            @PathParam("email") String email) {
+        return this.provideRelation(sec, email, Professional::getOfferings,
+                Offering.class);
     }
 
     @Path("{email}/categories")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCategories(@PathParam("email") String email) {
-        LOG.log(Level.INFO,
-                "REST request to get categories of Professional : {0}", email);
-        return super.provideRelation(email,
-                Professional::getCategories);
+    public Response getCategories(@Context SecurityContext sec,
+            @PathParam("email") String email) {
+        return this.provideRelation(sec, email, Professional::getCategories,
+                Category.class);
     }
 
     @Path("{email}/collectiveGroups")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCollectiveGroups(@PathParam("email") String email) {
-        LOG.log(Level.INFO,
-                "REST request to get collectiveGroups of Professional : {0}",
-                email);
-        return super.provideRelation(email,
-                Professional::getCollectiveGroups);
+    public Response getCollectiveGroups(@Context SecurityContext sec,
+            @PathParam("email") String email) {
+        return this.provideRelation(sec, email,
+                Professional::getCollectiveGroups, CollectiveGroup.class);
     }
 
     @Path("{email}/expenses")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getExpenses(@PathParam("email") String email) {
-        LOG.log(Level.INFO,
-                "REST request to get expenses of Professional : {0}",
-                email);
-        return super.provideRelation(email,
-                Professional::getExpenses);
+    public Response getExpenses(@Context SecurityContext sec,
+            @PathParam("email") String email) {
+        return this.provideRelation(sec, email,
+                Professional::getExpenses, Expense.class);
     }
 
     @Path("{email}/individuals")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getIndividuals(@PathParam("email") String email) {
-        LOG.log(Level.INFO,
-                "REST request to get individuals of Professional : {0}",
-                email);
-        return super.provideRelation(email,
-                Professional::getIndividuals);
+    public Response getIndividuals(@Context SecurityContext sec,
+            @PathParam("email") String email) {
+        return this.provideRelation(sec, email,
+                Professional::getIndividuals, Individual.class);
     }
 
     @RolesAllowed({"Administrator"})

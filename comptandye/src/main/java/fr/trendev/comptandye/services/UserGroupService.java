@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.services;
 
+import fr.trendev.comptandye.entities.UserAccount;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
@@ -84,10 +85,8 @@ public class UserGroupService extends AbstractCommonService<UserGroup, String> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserAccounts(@PathParam("name") String name) {
-        LOG.log(Level.INFO,
-                "REST request to get userAccounts of UserGroup : {0}", name);
         return super.provideRelation(name,
-                UserGroup::getUserAccounts);
+                UserGroup::getUserAccounts, UserAccount.class);
     }
 
     @POST

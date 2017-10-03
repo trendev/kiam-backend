@@ -5,8 +5,11 @@
  */
 package fr.trendev.comptandye.services;
 
+import fr.trendev.comptandye.entities.Category;
 import fr.trendev.comptandye.entities.Client;
+import fr.trendev.comptandye.entities.ClientBill;
 import fr.trendev.comptandye.entities.ClientPK;
+import fr.trendev.comptandye.entities.CollectiveGroup;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.ClientBillFacade;
@@ -177,10 +180,8 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
     public Response getClientBills(@PathParam("id") Long id,
             @QueryParam("professional") String professional) {
         ClientPK pk = new ClientPK(id, professional);
-        LOG.log(Level.INFO,
-                "REST request to get ClientBills of Client : {0}",
-                clientFacade.prettyPrintPK(pk));
-        return super.provideRelation(pk, Client::getClientBills);
+        return super.provideRelation(pk, Client::getClientBills,
+                ClientBill.class);
     }
 
     @Path("{id}/collectiveGroups")
@@ -189,10 +190,8 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
     public Response getCollectiveGroups(@PathParam("id") Long id,
             @QueryParam("professional") String professional) {
         ClientPK pk = new ClientPK(id, professional);
-        LOG.log(Level.INFO,
-                "REST request to get CollectiveGroups of Client : {0}",
-                clientFacade.prettyPrintPK(pk));
-        return super.provideRelation(pk, Client::getCollectiveGroups);
+        return super.provideRelation(pk, Client::getCollectiveGroups,
+                CollectiveGroup.class);
     }
 
     @Path("{id}/categories")
@@ -201,9 +200,6 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
     public Response getCategories(@PathParam("id") Long id,
             @QueryParam("professional") String professional) {
         ClientPK pk = new ClientPK(id, professional);
-        LOG.log(Level.INFO,
-                "REST request to get Categories of Client : {0}",
-                clientFacade.prettyPrintPK(pk));
-        return super.provideRelation(pk, Client::getCategories);
+        return super.provideRelation(pk, Client::getCategories, Category.class);
     }
 }

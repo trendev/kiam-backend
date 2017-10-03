@@ -207,8 +207,6 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
     public Response getClients(@PathParam("id") Long id,
             @QueryParam("professional") String professional) {
         CategoryPK pk = new CategoryPK(id, professional);
-        LOG.log(Level.INFO, "REST request to get Clients of Category : {0}",
-                categoryFacade.prettyPrintPK(pk));
-        return super.provideRelation(pk, Category::getClients);
+        return super.provideRelation(pk, Category::getClients, Client.class);
     }
 }

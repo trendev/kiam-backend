@@ -8,6 +8,7 @@ package fr.trendev.comptandye.services;
 import fr.trendev.comptandye.entities.Client;
 import fr.trendev.comptandye.entities.ClientPK;
 import fr.trendev.comptandye.entities.CollectiveGroup;
+import fr.trendev.comptandye.entities.CollectiveGroupBill;
 import fr.trendev.comptandye.entities.CollectiveGroupPK;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.sessions.AbstractFacade;
@@ -220,10 +221,8 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
     public Response getClients(@PathParam("id") Long id,
             @QueryParam("professional") String professional) {
         CollectiveGroupPK pk = new CollectiveGroupPK(id, professional);
-        LOG.log(Level.INFO,
-                "REST request to get Clients of CollectiveGroup : {0}",
-                collectiveGroupFacade.prettyPrintPK(pk));
-        return super.provideRelation(pk, CollectiveGroup::getClients);
+        return super.provideRelation(pk, CollectiveGroup::getClients,
+                Client.class);
     }
 
     @Path("{id}/collectiveGroupBills")
@@ -232,10 +231,8 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
     public Response getCollectiveGroupBills(@PathParam("id") Long id,
             @QueryParam("professional") String professional) {
         CollectiveGroupPK pk = new CollectiveGroupPK(id, professional);
-        LOG.log(Level.INFO,
-                "REST request to get CollectiveGroupBills of CollectiveGroup : {0}",
-                collectiveGroupFacade.prettyPrintPK(pk));
         return super.provideRelation(pk,
-                CollectiveGroup::getCollectiveGroupBills);
+                CollectiveGroup::getCollectiveGroupBills,
+                CollectiveGroupBill.class);
     }
 }
