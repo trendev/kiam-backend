@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -35,6 +36,7 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 @Path("PurchasedOffering")
+@RolesAllowed({"Administrator"})
 public class PurchasedOfferingService extends AbstractCommonService<PurchasedOffering, Long> {
 
     @Inject

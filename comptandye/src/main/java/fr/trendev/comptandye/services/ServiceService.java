@@ -13,6 +13,7 @@ import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.sessions.ServiceFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -35,6 +36,7 @@ import javax.ws.rs.core.SecurityContext;
  */
 @Stateless
 @Path("Service")
+@RolesAllowed({"Administrator", "Professional"})
 public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
 
     @Inject
@@ -60,6 +62,7 @@ public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
         return serviceFacade;
     }
 
+    @RolesAllowed({"Administrator"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
@@ -68,6 +71,7 @@ public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
         return super.findAll();
     }
 
+    @RolesAllowed({"Administrator"})
     @Path("count")
     @GET
     @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON,})
@@ -76,6 +80,7 @@ public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
         return super.count();
     }
 
+    @RolesAllowed({"Administrator"})
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -127,6 +132,18 @@ public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
         });
     }
 
+    /**
+     * Prepares and deletes a Service.
+     *
+     * If a Service has been purchased, it has been associated to a Bill and
+     * cannot be deleted! Delete the Bill first (this operation is only allowed
+     * for Administrator)
+     *
+     * @param sec the security context
+     * @param id the Entity's id
+     * @param professional the owner's email
+     * @return HTTP OK if no error occurs
+     */
     @Path("{id}")
     @DELETE
     public Response delete(@Context SecurityContext sec,
