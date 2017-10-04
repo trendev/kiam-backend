@@ -47,7 +47,7 @@ public class CrossOriginResourceSharingFilter implements Filter {
         resp.addHeader("Access-Control-Allow-Methods",
                 "OPTIONS, GET, POST, PUT, DELETE");
         resp.addHeader("Access-Control-Allow-Headers",
-                "Content-Type, api_key, Authorization");
+                "Content-Type, Accept");
 
         chain.doFilter(request, response);
 
