@@ -43,6 +43,7 @@ public class CrossOriginResourceSharingFilter implements Filter {
                     getName() : "an ANONYMOUS user", req.getMethod()});
 
         resp.addHeader("Access-Control-Allow-Origin", "*");
+        resp.addHeader("Access-Control-Allow-Credentials", "true");
         resp.addHeader("Access-Control-Allow-Methods",
                 "OPTIONS, GET, POST, PUT, DELETE");
         resp.addHeader("Access-Control-Allow-Headers",
