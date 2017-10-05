@@ -72,16 +72,16 @@ public class DemoConfigureBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        this.initPaymentModes();
-        this.initBusinesses();
 
         //check that the User Group table is empty
         if (userGroupFacade.findAll().isEmpty()) {
+            this.initPaymentModes();
+            this.initBusinesses();
             this.initUsersAndGroups();
+            this.createCategoryAndClient();
+            this.createBillsAndOfferings();
         }
 
-        this.createCategoryAndClient();
-        this.createBillsAndOfferings();
     }
 
     private void initUsersAndGroups() {
