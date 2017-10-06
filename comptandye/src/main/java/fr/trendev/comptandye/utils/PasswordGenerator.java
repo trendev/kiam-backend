@@ -28,7 +28,7 @@ public class PasswordGenerator {
 
     public static String autoGenerate(int s) {
         String pwd = "";
-        int size = (s < default_size) ? default_size : s;
+        int size = (s <= 0 || s > 4096) ? default_size : s;
 
         for (int i = 0; i < size; i++) {
             pwd += sequence.charAt(rand.nextInt(sequence.length()));
