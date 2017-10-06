@@ -36,18 +36,19 @@ public class CrossOriginResourceSharingFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
 
-        Principal user = req.getUserPrincipal();
-
-        LOG.log(Level.INFO, "[{1}] has requested {2} {0} and we add CORS",
-                new Object[]{req.getRequestURL(), (user != null) ? user.
-                    getName() : "an ANONYMOUS user", req.getMethod()});
-
         resp.addHeader("Access-Control-Allow-Origin", "*");
         resp.addHeader("Access-Control-Allow-Credentials", "true");
         resp.addHeader("Access-Control-Allow-Methods",
                 "OPTIONS, GET, POST, PUT, DELETE");
         resp.addHeader("Access-Control-Allow-Headers",
                 "Content-Type, Accept");
+
+        Principal user = req.getUserPrincipal();
+
+        LOG.log(Level.INFO, "{3} / [{1}] has requested {2} {0} and we add CORS",
+                new Object[]{req.getRequestURL(), (user != null) ? user.
+                    getName() : "an ANONYMOUS user", req.getMethod(), req.
+                    getRemoteAddr()});
 
         chain.doFilter(request, response);
 

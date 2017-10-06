@@ -6,8 +6,7 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.utils.PasswordGenerator;
-import java.util.logging.Logger;
-import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -21,11 +20,8 @@ import javax.ws.rs.core.MediaType;
  */
 @Stateless
 @Path("Utils")
-@PermitAll
+@RolesAllowed({"Administrator", "Professional", "Individual"})
 public class UtilsService {
-
-    private static final Logger LOG = Logger.getLogger(UtilsService.class.
-            getName());
 
     @Path("password")
     @GET
