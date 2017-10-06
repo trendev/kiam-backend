@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import fr.trendev.comptandye.utils.OfferingType;
-import fr.trendev.comptandye.visitors.Visitor;
+import fr.trendev.comptandye.utils.visitors.Visitor;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;

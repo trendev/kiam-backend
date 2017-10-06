@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.visitors;
+package fr.trendev.comptandye.utils.visitors;
 
 import fr.trendev.comptandye.entities.Address;
 import fr.trendev.comptandye.entities.Administrator;
@@ -24,6 +24,7 @@ import fr.trendev.comptandye.entities.Pack;
 import fr.trendev.comptandye.entities.Payment;
 import fr.trendev.comptandye.entities.PaymentMode;
 import fr.trendev.comptandye.entities.Professional;
+import fr.trendev.comptandye.entities.PurchasedOffering;
 import fr.trendev.comptandye.entities.Service;
 import fr.trendev.comptandye.entities.SocialNetworkAccounts;
 import fr.trendev.comptandye.entities.UserAccount;
@@ -70,6 +71,8 @@ public interface Visitor<T> {
     public T visit(Payment payment);
 
     public T visit(PaymentMode paymentMode);
+
+    public T visit(PurchasedOffering purchasedOffering);
 
     public T visit(Professional professional);
 

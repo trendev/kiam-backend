@@ -9,7 +9,7 @@ import fr.trendev.comptandye.entities.OfferingPK;
 import fr.trendev.comptandye.entities.PurchasedOffering;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.PurchasedOfferingFacade;
-import fr.trendev.comptandye.visitors.ProvideOfferingFacadeVisitor;
+import fr.trendev.comptandye.utils.visitors.ProvideOfferingFacadeVisitor;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.logging.Level;

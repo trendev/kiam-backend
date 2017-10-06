@@ -30,7 +30,7 @@ import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.utils.OfferingType;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UUIDGenerator;
-import fr.trendev.comptandye.visitors.BillTypeVisitor;
+import fr.trendev.comptandye.utils.visitors.BillTypeVisitor;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Calendar;

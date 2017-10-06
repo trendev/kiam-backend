@@ -2,7 +2,7 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import fr.trendev.comptandye.visitors.Visitor;
+import fr.trendev.comptandye.utils.visitors.Visitor;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
