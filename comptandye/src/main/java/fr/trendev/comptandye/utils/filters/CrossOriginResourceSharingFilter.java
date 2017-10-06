@@ -7,6 +7,7 @@ package fr.trendev.comptandye.utils.filters;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.Filter;
@@ -36,13 +37,21 @@ public class CrossOriginResourceSharingFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
 
-        resp.addHeader("Access-Control-Allow-Origin", "*");
+        String origin = req.getHeader("Origin");
+
+        if (Objects.nonNull(origin) && !origin.isEmpty() && (origin.startsWith(
+                "http://localhost") || origin.startsWith("https://localhost"))) {
+            resp.addHeader("Access-Control-Allow-Origin", origin);
+        } else {
+            resp.addHeader("Access-Control-Allow-Origin",
+                    "https://www.comptandye.fr:443");
+        }
+
         resp.addHeader("Access-Control-Allow-Credentials", "true");
         resp.addHeader("Access-Control-Allow-Methods",
                 "OPTIONS, GET, POST, PUT, DELETE");
         resp.addHeader("Access-Control-Allow-Headers",
                 "Content-Type, Accept");
-
         Principal user = req.getUserPrincipal();
 
         LOG.log(Level.INFO, "{3} / [{1}] has requested {2} {0} and we add CORS",
