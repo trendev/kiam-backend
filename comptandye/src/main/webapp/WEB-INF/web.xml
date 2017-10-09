@@ -17,6 +17,10 @@
         <description>gets notified about the web app lifecycle changes (startup/shutdown) </description>
         <listener-class>fr.trendev.comptandye.utils.listeners.WebAppServletListener</listener-class>
     </listener>
+    <listener>
+        <description>tracks sessions lifecycle</description>
+        <listener-class>fr.trendev.comptandye.utils.listeners.WebAppSessionListener</listener-class>
+    </listener>
     <servlet>
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
         <!--disable MoxyJson and use Jackson instead -->
@@ -83,11 +87,6 @@
             <description>REST-API services</description>
             <url-pattern>/restapi/*</url-pattern>
         </web-resource-collection>
-        <!--        <auth-constraint>
-            <description/>
-            <role-name>Administrator</role-name>
-            <role-name>Professional</role-name>
-        </auth-constraint>-->
         <user-data-constraint>
             <description/>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
