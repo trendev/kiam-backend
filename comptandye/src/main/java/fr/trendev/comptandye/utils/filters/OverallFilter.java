@@ -9,6 +9,7 @@ import fr.trendev.comptandye.beans.ActiveSessionTracker;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
@@ -61,6 +62,14 @@ public class OverallFilter implements Filter {
                                 getSession().
                                 getLastAccessedTime()),
                         req.getSession().getMaxInactiveInterval()});
+
+            for (Enumeration<String> headers = req.getHeaderNames(); headers.
+                    hasMoreElements();) {
+                String header = headers.nextElement();
+                LOG.log(Level.INFO, "### {0} : {1}", new Object[]{header,
+                    req.getHeader(
+                    header)});
+            }
 
         }
 
