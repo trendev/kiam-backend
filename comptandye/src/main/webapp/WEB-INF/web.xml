@@ -13,6 +13,34 @@
         <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
         <param-value>true</param-value>
     </context-param>
+    <filter>
+        <description>Filters all http/https requests and check session validity</description>
+        <filter-name>OverallFilter</filter-name>
+        <filter-class>fr.trendev.comptandye.utils.filters.OverallFilter</filter-class>
+        <async-supported>true</async-supported>
+    </filter>
+    <filter>
+        <description>apply Cross Origin Resource Sharing on restapi requests/responses</description>
+        <filter-name>CORS</filter-name>
+        <filter-class>fr.trendev.comptandye.utils.filters.CrossOriginResourceSharingFilter</filter-class>
+        <async-supported>true</async-supported>
+    </filter>
+    <filter-mapping>
+        <filter-name>OverallFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>CORS</filter-name>
+        <url-pattern>/restapi/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
     <listener>
         <description>gets notified about the web app lifecycle changes (startup/shutdown) </description>
         <listener-class>fr.trendev.comptandye.utils.listeners.WebAppServletListener</listener-class>
