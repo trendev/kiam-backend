@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author jsie
  */
-@WebFilter(urlPatterns = {"/*"}, asyncSupported = true)
+@WebFilter(urlPatterns = {"/restapi/*"}, asyncSupported = true)
 public class CrossOriginResourceSharingFilter implements Filter {
 
     private static final Logger LOG = Logger.getLogger(
