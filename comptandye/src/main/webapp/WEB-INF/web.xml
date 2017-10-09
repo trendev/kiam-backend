@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <display-name>comptandye</display-name>
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
@@ -12,6 +13,10 @@
         <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
         <param-value>true</param-value>
     </context-param>
+    <listener>
+        <description>gets notified about the web app lifecycle changes (startup/shutdown) </description>
+        <listener-class>fr.trendev.comptandye.utils.listeners.WebAppServletListener</listener-class>
+    </listener>
     <servlet>
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
         <!--disable MoxyJson and use Jackson instead -->

@@ -66,12 +66,12 @@ public class CrossOriginResourceSharingFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         LOG.log(Level.INFO,
-                "CrossOriginResourceSharingFilter : init(FilterConfig filterConfig)");
+                "CrossOriginResourceSharingFilter : init in progress...");
     }
 
     @Override
     public void destroy() {
-        LOG.log(Level.INFO, "CrossOriginResourceSharingFilter : destroy()");
+        LOG.log(Level.INFO, "CrossOriginResourceSharingFilter : destroyed...");
     }
 
 }
