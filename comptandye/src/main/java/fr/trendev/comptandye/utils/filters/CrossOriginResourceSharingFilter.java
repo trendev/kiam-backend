@@ -6,7 +6,6 @@
 package fr.trendev.comptandye.utils.filters;
 
 import java.io.IOException;
-import java.security.Principal;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,12 +50,8 @@ public class CrossOriginResourceSharingFilter implements Filter {
                 "OPTIONS, GET, POST, PUT, DELETE");
         resp.addHeader("Access-Control-Allow-Headers",
                 "Content-Type, Accept");
-        Principal user = req.getUserPrincipal();
 
-        LOG.log(Level.INFO, "{3} / [{1}] has requested {2} {0} and we add CORS",
-                new Object[]{req.getRequestURL(), (user != null) ? user.
-                    getName() : "an ANONYMOUS user", req.getMethod(), req.
-                    getRemoteAddr()});
+        LOG.log(Level.INFO, "Adding CORS");
 
         chain.doFilter(request, response);
 
