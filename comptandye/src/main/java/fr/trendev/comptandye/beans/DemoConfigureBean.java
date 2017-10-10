@@ -235,8 +235,6 @@ public class DemoConfigureBean implements Serializable {
         em.flush();
         if (em.contains(skonxAddress)) {
             em.refresh(skonxAddress);
-            LOG.log(Level.INFO, "Id of Skonx Address = " + skonxAddress.
-                    getId());
         }
 
     }
@@ -263,10 +261,6 @@ public class DemoConfigureBean implements Serializable {
                     "vanessa.gay@gmail.com");
             Individual sylvioc = em.find(Individual.class,
                     "sylvie.gay@gmail.com");
-            LOG.log(Level.WARNING, "Creating a bill for {0} / {1} / {2}",
-                    new Object[]{vanessa.
-                                getEmail(), vanessa.getUsername(), vanessa.
-                        getUuid()});
 
             Business coiffure = em.find(Business.class, "Coiffure");
             Business esthetique = em.find(Business.class, "Esthétique");
