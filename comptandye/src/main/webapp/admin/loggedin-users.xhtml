@@ -22,7 +22,7 @@
                     <p:dataTable id="sessions" value="#{adminBean.getSession(user)}" var="s" sortMode="multiple" resizableColumns="true">
                         <p:column headerText="id" sortBy="#{s.id}">
                             <h:outputText value="#{s.id}" style="font-weight: bold; float: right" rendered="#{session.id eq s.id}"/>
-                            <p:commandButton update="@all" actionListener="#{adminBean.remove(user, s)}" value="#{s.id}" id="invalidateButton" icon="ui-icon-close" title="Invalidate session #{s.id}" rendered="#{session.id ne s.id}" style="float: right"/>
+                            <p:commandButton update="@all" actionListener="#{adminBean.remove(user, s)}" value="#{s.id}" id="invalidateButton" icon="ui-icon-circle-close" title="Invalidate session #{s.id}" rendered="#{session.id ne s.id}" style="float: right"/>
                         </p:column>
                         <p:column headerText="Last access" sortBy="#{s.lastAccessedTime}">
                             <h:outputText value="#{s.lastAccessedTime}" style="float: right">
