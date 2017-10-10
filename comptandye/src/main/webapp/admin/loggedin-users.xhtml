@@ -13,21 +13,23 @@
     </h:head>
     <h:body>
         <h:form id="sessionform">
-            <p:growl id="growl" life="2000" />
             <h3>Active Sessions</h3>
-            <p:dataTable var="user" value="#{adminBean.tracker.loggedUsers}">
-                <p:column headerText="UserAccount">
+            <p:dataTable id="users" var="user" value="#{adminBean.loggedUsers}" resizableColumns="true"  tableStyle="width:auto">
+                <p:column headerText="UserAccounts" >
                     <h:outputText value="#{user}" />
                 </p:column>
-                <p:column headerText="Session">
-                    <h:dataTable id="sessions" value="#{adminBean.tracker.getSession(user)}" var="s">
-                        <h:column>
-                            <p:commandButton update="@all" actionListener="#{adminBean.tracker.remove(user, s)}" id="iconOnly" icon="ui-icon-close" title="Invalidate the HTTP session" rendered="#{session.id ne s.id}">
-                            </p:commandButton>
-                            <h:outputText value="#{s.id}" style="font-weight: bold" rendered="#{session.id eq s.id}"/>
-                            <h:outputText value="#{s.id}" rendered="#{session.id ne s.id}"/>
-                        </h:column>
-                    </h:dataTable>
+                <p:column headerText="Sessions">
+                    <p:dataTable id="sessions" value="#{adminBean.getSession(user)}" var="s" sortMode="multiple" resizableColumns="true">
+                        <p:column headerText="id" sortBy="#{s.id}">
+                            <h:outputText value="#{s.id}" style="font-weight: bold; float: right" rendered="#{session.id eq s.id}"/>
+                            <p:commandButton update="@all" actionListener="#{adminBean.remove(user, s)}" value="#{s.id}" id="invalidateButton" icon="ui-icon-close" title="Invalidate session #{s.id}" rendered="#{session.id ne s.id}" style="float: right"/>
+                        </p:column>
+                        <p:column headerText="Last access" sortBy="#{s.lastAccessedTime}">
+                            <h:outputText value="#{s.lastAccessedTime}" style="float: right">
+                                <f:convertDateTime type="both" dateStyle="full" /><!-- type="both" -->
+                            </h:outputText>
+                        </p:column>
+                    </p:dataTable>
                 </p:column>
             </p:dataTable>
             <p>

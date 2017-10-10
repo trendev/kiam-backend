@@ -29,53 +29,49 @@ import javax.servlet.http.HttpSession;
 @Named
 @SessionScoped
 public class AdminBean implements Serializable {
-
+    
     @Inject
     private AdministratorFacade administratorFacade;
-
+    
     @Inject
     private ActiveSessionTracker tracker;
-
+    
     private String adminEmail;
-
+    
     private static final Logger LOG = Logger.
             getLogger(AdminBean.class.getName());
-
+    
     public AdminBean() {
     }
-
-    public ActiveSessionTracker getTracker() {
-        return tracker;
-    }
-
+    
     public Administrator getAdministrator() {
         return administratorFacade.find(adminEmail);
     }
-
+    
     @PostConstruct
     public void init() {
         FacesContext fc = FacesContext.getCurrentInstance();
-
+        
         if (fc == null) {
             String errmsg = "There is no FacesContext creating an AdminBean !";
             LOG.log(Level.SEVERE, errmsg);
             throw new IllegalStateException(errmsg);
         }
-
+        
         HttpServletRequest req = (HttpServletRequest) fc.
                 getExternalContext().getRequest();
-
+        
         Principal user = req.getUserPrincipal();
-
+        
         if (user == null) {
             String errmsg = "An Administrator has requested an AdminBean creation but this is not a logged-in user !";
             LOG.log(Level.SEVERE, errmsg);
             throw new IllegalStateException(errmsg);
         }
-
+        
         this.adminEmail = user.getName();
     }
-
+    
     public void logout() throws IOException {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().
@@ -84,16 +80,32 @@ public class AdminBean implements Serializable {
                 "Logout Administrator [{0}] from sesssion {1}",
                 new Object[]{adminEmail,
                     session.getId()});
-
+        
         tracker.remove(adminEmail, session);
-
+        
         ExternalContext ec = FacesContext.getCurrentInstance().
                 getExternalContext();
         ec.redirect(ec.getRequestContextPath());
     }
-
+    
     public List<HttpSession> getSessions() {
         return tracker.getSession(adminEmail);
     }
-
+    
+    public List<String> getLoggedUsers() {
+        List<String> users = tracker.getLoggedUsers();
+        users.sort(String::compareTo);
+        return users;
+    }
+    
+    public List<HttpSession> getSession(String email) {
+        List<HttpSession> sessions = tracker.getSession(email);
+        sessions.sort((s1, s2) -> s1.getId().compareTo(s2.getId()));
+        return sessions;
+    }
+    
+    public boolean remove(String email, HttpSession session) {
+        return tracker.remove(email, session);
+    }
+    
 }
