@@ -5,11 +5,13 @@
  */
 package fr.trendev.comptandye.beans;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -142,6 +144,19 @@ public class ActiveSessionTracker {
         return Optional.ofNullable(map.get(name))
                 .map(List::size)
                 .orElse(0);
+    }
+
+    /**
+     * Returns the active session List for a specific user
+     *
+     * @param email the user's email
+     * @return the active session list or an empty list if the user is not
+     * logged-in
+     */
+    public List<HttpSession> getSession(String email) {
+        return Optional.ofNullable(map.get(email))
+                .map(Function.identity())
+                .orElse(Collections.emptyList());
     }
 
 }
