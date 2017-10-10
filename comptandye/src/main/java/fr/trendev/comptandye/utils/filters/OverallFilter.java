@@ -8,8 +8,6 @@ package fr.trendev.comptandye.utils.filters;
 import fr.trendev.comptandye.beans.ActiveSessionTracker;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.Date;
-import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
@@ -50,27 +48,14 @@ public class OverallFilter implements Filter {
                     getName() : "an ANONYMOUS user", req.getMethod(), req.
                     getRemoteAddr()});
 
-        if (user != null && req.getSession() != null) {
-            LOG.log(Level.INFO, "New session {0} added to ActiveSessionTracker",
-                    req.getSession().getId());
-            LOG.log(Level.INFO, "creation time : {0}", new Date(
-                    req.getSession().
-                            getCreationTime()));
+        if (user != null && req.getSession() != null
+                && !tracker.contains(user.getName(), req.getSession())) {
+            tracker.put(user.getName(), req.getSession());
+            int count = tracker.count(user.getName());
             LOG.log(Level.INFO,
-                    "last access time : {0} and will be inactive in {1} seconds",
-                    new Object[]{new Date(req.
-                                getSession().
-                                getLastAccessedTime()),
-                        req.getSession().getMaxInactiveInterval()});
-
-            for (Enumeration<String> headers = req.getHeaderNames(); headers.
-                    hasMoreElements();) {
-                String header = headers.nextElement();
-                LOG.log(Level.INFO, "### {0} : {1}", new Object[]{header,
-                    req.getHeader(
-                    header)});
-            }
-
+                    "New session {0} added to ActiveSessionTracker. [{1}] has now {2} active session{3}",
+                    new Object[]{req.getSession().getId(),
+                        user.getName(), count, count > 1 ? "s" : ""});
         }
 
         chain.doFilter(request, response);
