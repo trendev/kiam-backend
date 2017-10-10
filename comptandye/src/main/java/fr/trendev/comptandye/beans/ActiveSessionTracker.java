@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.beans;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -157,6 +158,10 @@ public class ActiveSessionTracker {
         return Optional.ofNullable(map.get(email))
                 .map(Function.identity())
                 .orElse(Collections.emptyList());
+    }
+
+    public List<String> getLoggedUsers() {
+        return new ArrayList<>(map.keySet());
     }
 
 }

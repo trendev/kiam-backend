@@ -5,15 +5,53 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:jsf="http://xmlns.jcp.org/jsf"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
-        <title>comptandye - Console d'Administration</title>
+        <title>Administrator Console</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
-        <p:notificationBar position="top" effect="slide" styleClass="top" widgetVar="bar" autoDisplay="true">
-            <p>Bonjour <h:outputText value="Administrator #{request.userPrincipal.name}" style="font-weight: bold"/>, vous voilà connecté sur la session <h:outputText value="#{session.id}" style="font-weight: bold"/>
+        <h:form id="adminForm" onkeypress="return event.keyCode !== 13;">
+            <p:panelGrid columns="2">
+                <f:facet name="header">
+                    <h:panelGrid  columns="2">
+                        <h:outputText value="#{adminBean.administrator.email}"/>
+                        <h:commandButton id="logout" action="#{adminBean.logout}" value="Déconnexion"/>
+                    </h:panelGrid>
+                </f:facet>
+
+                <h:outputText value="Session:" />
+                <h:dataTable id="adminsessions" value="#{adminBean.sessions}" var="s">
+                    <h:column>
+                        <h:outputText value="#{s.id}" style="font-weight: bold" rendered="#{session.id eq s.id}"/>
+                        <h:outputText value="#{s.id}" rendered="#{session.id ne s.id}"/>
+                    </h:column>
+                </h:dataTable>
+
+                <h:outputText value="Encrypted password:"/>
+                <h:outputText value="#{adminBean.administrator.password}"/>
+
+                <h:outputText value="Username:"/>
+                <h:outputText value="#{adminBean.administrator.username}"/>
+
+                <h:outputText value="UUID:"/>
+                <h:outputText value="#{adminBean.administrator.uuid}"/>
+
+                <h:outputText value="Registation date:"/>
+                <h:outputText value="#{adminBean.administrator.registrationDate}">
+                    <f:convertDateTime type="both" dateStyle="full" /><!-- type="both" -->
+                </h:outputText>
+                <h:outputText value="#{adminBean.administrator.userGroups.size()} UserGroup#{adminBean.administrator.userGroups.size()>1?'s':''}:"/>
+                <h:dataTable id="usergroups" value="#{adminBean.administrator.userGroups}" var="usergroup">
+                    <h:column>
+                        <h:outputText value="#{usergroup.name}"/>
+                    </h:column>
+                </h:dataTable>
+            </p:panelGrid>
+            <p>
+                <h:outputLink value="loggedin-users.xhtml">Active Session Tracker</h:outputLink>
             </p>
-            <p><a href="../index.html">Welcome Page</a></p>
-        </p:notificationBar>
+        </h:form>
     </h:body>
 </html>
