@@ -23,6 +23,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author jsie
@@ -57,6 +58,7 @@ public abstract class Bill {
     private Date deliveryDate;
 
     @Basic
+    @NotNull(message = "cltype cannot be null")
     private String cltype;
 
     /**

@@ -28,6 +28,9 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
             <jpa:basic attribute-type="String" v="true" xvt="" name="cltype" id="_1507709471227127">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:nn m="cltype cannot be null"/>
+                </jpa:bv>
             </jpa:basic>
             <jpa:basic attribute-type="String" v="true" xvt="" name="password" id="_14901008440196">
                 <jpa:des>Password is never provided in clear.</jpa:des>
@@ -837,6 +840,9 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
             <jpa:basic attribute-type="String" v="true" xvt="" name="cltype" id="_1505476643021217">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:nn m="cltype cannot be null"/>
+                </jpa:bv>
             </jpa:basic>
             <jpa:basic attribute-type="String" v="true" xvt="" name="name" id="_1490176760174139">
                 <jpa:xwm nil="false" req="false"/>
@@ -924,6 +930,9 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
             <jpa:basic attribute-type="String" v="true" xvt="" name="cltype" id="_1505479466713230">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:nn m="cltype cannot be null"/>
+                </jpa:bv>
             </jpa:basic>
             <jpa:basic attribute-type="int" v="true" xvt="" name="amount" id="_149017899245630">
                 <jpa:des>Amount in cents (1/100 of the currency)</jpa:des>
@@ -1511,7 +1520,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1490172966686" x="-644" y="679">
+            <i ref="_1490172966686" x="-646" y="677">
                 <el>
                     <e ref="_150537690133858">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1521,31 +1530,31 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490180671085" x="674" y="369">
+            <i ref="_1490180671085" x="672" y="367">
                 <el>
                     <e ref="_150652336702164">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490704123469" x="-146" y="81"/>
-            <i ref="_1503060694288" x="-502" y="270"/>
-            <i ref="_1506344869339" x="514" y="1557">
+            <i ref="_1490704123469" x="-148" y="79"/>
+            <i ref="_1503060694288" x="-504" y="268"/>
+            <i ref="_1506344869339" x="512" y="1555">
                 <el>
                     <e ref="_15063449702561265">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101578444" x="383" y="81"/>
-            <i ref="_1490100852900" x="383" y="-155">
+            <i ref="_1490101578444" x="381" y="79"/>
+            <i ref="_1490100852900" x="381" y="-157">
                 <el>
                     <e ref="_14901160469883436">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101520286" x="263" y="369">
+            <i ref="_1490101520286" x="261" y="367">
                 <el>
                     <e ref="_150652336703465">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1555,15 +1564,15 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490104062170" x="-381" y="425"/>
-            <i ref="_1490113906035" x="-356" y="922">
+            <i ref="_1490104062170" x="-383" y="423"/>
+            <i ref="_1490113906035" x="-358" y="920">
                 <el>
                     <e ref="_150489073375385">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490704206844" x="-54" y="883">
+            <i ref="_1490704206844" x="-56" y="881">
                 <el>
                     <e ref="_15049038294552105">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1573,7 +1582,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101376664" x="92" y="81">
+            <i ref="_1490101376664" x="90" y="79">
                 <el>
                     <e ref="_14901093969381510">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1586,15 +1595,15 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490113751330" x="-664" y="1046"/>
-            <i ref="_1490206901623" x="326" y="1267">
+            <i ref="_1490113751330" x="-666" y="1044"/>
+            <i ref="_1490206901623" x="324" y="1265">
                 <el>
                     <e ref="_1503081214518630">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490178979567" x="745" y="1267">
+            <i ref="_1490178979567" x="743" y="1265">
                 <el>
                     <e ref="_150365567487858">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1607,7 +1616,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1499512549878" x="-228" y="1217">
+            <i ref="_1499512549878" x="-230" y="1215">
                 <el>
                     <e ref="_1505144351224341">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1620,8 +1629,8 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101737208" x="-394" y="33"/>
-            <i ref="_1490281931338" x="437" y="997">
+            <i ref="_1490101737208" x="-396" y="31"/>
+            <i ref="_1490281931338" x="435" y="995">
                 <el>
                     <e ref="_1490283543806197">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1637,7 +1646,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101456632" x="-29" y="270">
+            <i ref="_1490101456632" x="-31" y="268">
                 <el>
                     <e ref="_1490179812678394">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1668,22 +1677,22 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490184243036" x="25" y="1267"/>
-            <i ref="_1490100823157" x="73" y="-183">
+            <i ref="_1490184243036" x="23" y="1265"/>
+            <i ref="_1490100823157" x="71" y="-185">
                 <el>
                     <e ref="_14901160469863435">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490180682743" x="674" y="605">
+            <i ref="_1490180682743" x="672" y="603">
                 <el>
                     <e ref="_1490181195212606">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101555530" x="241" y="605">
+            <i ref="_1490101555530" x="239" y="603">
                 <el>
                     <e ref="_149028166301044">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1708,7 +1717,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1506009883340" x="674" y="997">
+            <i ref="_1506009883340" x="672" y="995">
                 <el>
                     <e ref="_1506010011239530">
                         <v st="1" si="12.0" cl="#00ff00"/>

@@ -18,6 +18,9 @@
                 <p:column headerText="UserAccounts" >
                     <h:outputText value="#{user}" />
                 </p:column>
+                <p:column headerText="Type" >
+                    <h:outputText value="#{adminBean.getTypeOfUser(user)}" />
+                </p:column>
                 <p:column headerText="Sessions">
                     <p:dataTable id="sessions" value="#{adminBean.getSession(user)}" var="s" sortMode="multiple" resizableColumns="true">
                         <p:column headerText="id" sortBy="#{s.id}">

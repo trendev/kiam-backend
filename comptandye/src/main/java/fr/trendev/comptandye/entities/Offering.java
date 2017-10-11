@@ -20,6 +20,7 @@ import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author jsie
@@ -42,6 +43,7 @@ public abstract class Offering {
     private Long id;
 
     @Basic
+    @NotNull(message = "cltype cannot be null")
     private String cltype;
 
     @Basic

@@ -21,6 +21,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 /**
  * An UserAccount can be an Administrator, a Professional or an Individual. This
@@ -51,6 +52,7 @@ public abstract class UserAccount {
     private String email;
 
     @Basic
+    @NotNull(message = "cltype cannot be null")
     private String cltype;
 
     /**
