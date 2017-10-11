@@ -17,6 +17,7 @@
             <h3>Active Session Tracker</h3>
 
             <p:chart type="pie" model="#{loggedInUsersBean.userTypes}" style="width:400px;height:300px" />
+            <p:chart type="line" model="#{loggedInUsersBean.connections}" style="height:300px;"/>
 
             <p:dataTable id="loggedInUsers" var="user" value="#{loggedInUsersBean.loggedInUsers}"  sortMode="multiple" tableStyle="width:auto">
 
