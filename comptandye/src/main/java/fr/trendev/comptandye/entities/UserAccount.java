@@ -3,6 +3,9 @@ package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import fr.trendev.comptandye.utils.UserAccountType;
 import fr.trendev.comptandye.utils.visitors.Visitor;
 import java.util.Date;
 import java.util.LinkedList;
@@ -10,8 +13,6 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -30,9 +31,17 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "USER_ACCOUNT")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "USER_ACCOUNT_TYPE",
-        discriminatorType = DiscriminatorType.STRING)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "cltype",
+        visible = true)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Administrator.class,
+            name = UserAccountType.ADMINISTRATOR)
+    ,   @JsonSubTypes.Type(value = Individual.class,
+            name = UserAccountType.INDIVIDUAL)
+    ,  @JsonSubTypes.Type(value = Professional.class,
+            name = UserAccountType.PROFESSIONAL)})
 public abstract class UserAccount {
 
     /**
@@ -40,6 +49,9 @@ public abstract class UserAccount {
      */
     @Id
     private String email;
+
+    @Basic
+    private String cltype;
 
     /**
      * Password is never provided in clear.
@@ -89,6 +101,14 @@ public abstract class UserAccount {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getCltype() {
+        return this.cltype;
+    }
+
+    public void setCltype(String cltype) {
+        this.cltype = cltype;
     }
 
     public String getPassword() {
