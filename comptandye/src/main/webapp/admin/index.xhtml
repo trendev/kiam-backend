@@ -42,6 +42,10 @@
                 <h:outputText value="#{adminBean.administrator.registrationDate}">
                     <f:convertDateTime type="both" dateStyle="full" /><!-- type="both" -->
                 </h:outputText>
+                <h:outputText value="Session creation time"/>
+                <h:outputText value="#{session.creationTime}">
+                    <f:convertDateTime type="both" dateStyle="full" /><!-- type="both" -->
+                </h:outputText>
                 <h:outputText value="Last access:"/>
                 <h:outputText value="#{session.lastAccessedTime}">
                     <f:convertDateTime type="both" dateStyle="full" /><!-- type="both" -->

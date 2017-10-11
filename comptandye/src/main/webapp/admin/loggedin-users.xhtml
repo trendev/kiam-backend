@@ -13,37 +13,45 @@
     </h:head>
     <h:body>
         <h:form id="sessionform">
-            <h3>Active Sessions</h3>
-            <p:chart type="pie" model="#{adminBean.userTypes}" style="width:400px;height:300px" />
-            <p:dataTable id="users" var="user" value="#{adminBean.loggedUsers}" resizableColumns="true"  tableStyle="width:auto">
-                <p:column headerText="UserAccounts" >
-                    <h:outputText value="#{user}" />
+
+            <h3>Active Session Tracker</h3>
+
+            <p:chart type="pie" model="#{loggedInUsersBean.userTypes}" style="width:400px;height:300px" />
+
+            <p:dataTable id="loggedInUsers" var="user" value="#{loggedInUsersBean.loggedInUsers}"  sortMode="multiple" tableStyle="width:auto">
+
+                <p:column headerText="UserAccounts" sortBy="#{user.email}">
+                    <h:outputText value="#{user.email}" />
                 </p:column>
-                <p:column headerText="Type" >
-                    <h:outputText value="#{adminBean.getTypeOfUser(user)}" />
+
+                <p:column headerText="Type" sortBy="#{user.type}">
+                    <h:outputText value="#{user.type}" />
                 </p:column>
-                <p:column headerText="Sessions">
-                    <p:dataTable id="sessions" value="#{adminBean.getSessions(user)}" var="s" sortMode="multiple" resizableColumns="true" tableStyle="width:auto">
-                        <p:column headerText="id" sortBy="#{s.id}">
-                            <h:outputText value="#{s.id}" style="font-weight: bold; float: right" rendered="#{session.id eq s.id}"/>
-                            <p:commandButton update="@all" actionListener="#{adminBean.remove(user, s)}" value="#{s.id}" id="invalidateButton" icon="ui-icon-circle-close" title="Invalidate session #{s.id}" rendered="#{session.id ne s.id}" style="float: right"/>
-                        </p:column>
-                        <p:column headerText="Last access" sortBy="#{s.lastAccessedTime}">
-                            <h:outputText value="#{s.lastAccessedTime}" style="float: right">
-                                <f:convertDateTime type="both" dateStyle="short" /><!-- type="both" -->
-                            </h:outputText>
-                        </p:column>
-                        <p:column headerText="Creation time" sortBy="#{s.creationTime}">
-                            <h:outputText value="#{s.creationTime}" style="float: right">
-                                <f:convertDateTime type="both" dateStyle="short" /><!-- type="both" -->
-                            </h:outputText>
-                        </p:column>
-                    </p:dataTable>
+
+                <p:column headerText="Session id" sortBy="#{user.httpSession.id}">
+                    <h:outputText value="#{user.httpSession.id}" style="font-weight: bold; float: right" rendered="#{session.id eq user.httpSession.id}"/>
+                    <p:commandButton update="@all" actionListener="#{loggedInUsersBean.remove(user.email, user.httpSession)}" value="#{user.httpSession.id}" id="invalidateButton" icon="ui-icon-circle-close" title="Invalidate session #{user.httpSession.id}" rendered="#{session.id ne user.httpSession.id}" style="float: right"/>
+
+                </p:column>
+
+                <p:column headerText="Session creation time" sortBy="#{user.httpSession.creationTime}">
+                    <h:outputText value="#{user.httpSession.creationTime}">
+                        <f:convertDateTime type="both" dateStyle="short" />
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="Session last access" sortBy="#{user.httpSession.lastAccessedTime}">
+                    <h:outputText value="#{user.httpSession.lastAccessedTime}">
+                        <f:convertDateTime type="both" dateStyle="short" />
+                    </h:outputText>
                 </p:column>
             </p:dataTable>
+
             <p>
                 <h:outputLink value="index.xhtml">Administration Console</h:outputLink>
             </p>
         </h:form>
     </h:body>
 </html>
+
+

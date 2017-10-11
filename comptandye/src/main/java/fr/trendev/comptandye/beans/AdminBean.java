@@ -7,13 +7,10 @@ package fr.trendev.comptandye.beans;
 
 import fr.trendev.comptandye.entities.Administrator;
 import fr.trendev.comptandye.sessions.AdministratorFacade;
-import fr.trendev.comptandye.sessions.UserAccountFacade;
 import java.io.IOException;
 import java.io.Serializable;
 import java.security.Principal;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -24,7 +21,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import org.primefaces.model.chart.PieChartModel;
 
 /**
  *
@@ -38,14 +34,9 @@ public class AdminBean implements Serializable {
     private AdministratorFacade administratorFacade;
 
     @Inject
-    private UserAccountFacade userAccountFacade;
-
-    @Inject
     private ActiveSessionTracker tracker;
 
     private String adminEmail;
-
-    private PieChartModel userTypes;
 
     private static final Logger LOG = Logger.
             getLogger(AdminBean.class.getName());
@@ -99,44 +90,6 @@ public class AdminBean implements Serializable {
 
     public List<HttpSession> getAdminSessions() {
         return tracker.getSession(adminEmail);
-    }
-
-    public List<String> getLoggedUsers() {
-        List<String> users = tracker.getLoggedUsers();
-        users.sort(String::compareTo);
-        return users;
-    }
-
-    public List<HttpSession> getSessions(String email) {
-        List<HttpSession> sessions = tracker.getSession(email);
-        sessions.sort((s1, s2) -> s1.getId().compareTo(s2.getId()));
-        return sessions;
-    }
-
-    public boolean remove(String email, HttpSession session) {
-        return tracker.remove(email, session);
-    }
-
-    public String getTypeOfUser(String email) {
-        return userAccountFacade.getUserAccountType(email);
-    }
-
-    public PieChartModel getUserTypes() {
-
-        Map<String, Number> map = new TreeMap<>();
-        this.getLoggedUsers().forEach(u -> this.getSessions(u).forEach(
-                s -> {
-            String type = this.getTypeOfUser(u);
-            map.computeIfAbsent(type, t -> 0);
-            map.put(type, map.get(type).intValue() + 1);
-        })
-        );
-
-        userTypes = new PieChartModel(map);
-        userTypes.setTitle("Users");
-        userTypes.setLegendPosition("e");
-        userTypes.setShowDataLabels(true);
-        return userTypes;
     }
 
 }
