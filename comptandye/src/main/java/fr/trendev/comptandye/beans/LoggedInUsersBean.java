@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -104,7 +103,7 @@ public class LoggedInUsersBean implements Serializable {
     }
 
     public LineChartModel getConnections() {
-        connections = this.initConnectionModel(1800, 1);
+        connections = this.initConnectionModel(/*1800*/2 * 60, 1);
         connections.setTitle("Connections");
         connections.setLegendPosition("e");
         connections.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
@@ -125,33 +124,34 @@ public class LoggedInUsersBean implements Serializable {
 
         LineChartModel model = new LineChartModel();
 
-        List<String> types = this.loggedInUsers.stream().map(
-                LoggedInUser::getType).distinct().
-                collect(Collectors.toList());
-
         long now = System.currentTimeMillis();
 
-        types.forEach((type) -> {
-            ChartSeries serie = new ChartSeries();
-            serie.setLabel(type);
+        this.getLoggedInUsers().stream().map(
+                LoggedInUser::getType)
+                .distinct()
+                .forEach((type) -> {
+                    ChartSeries serie = new ChartSeries();
+                    serie.setLabel(type);
 
-            for (int i = stripes; i > 0; i--) {
+                    for (int i = stripes; i > 0; i--) {
 
-                long tl = now - (duration * i);
-                long tr = now - (duration * (i - 1));
+                        long tl = now - (duration * i);
+                        long tr = now - (duration * (i - 1));
 
-                long count = this.loggedInUsers.stream()
-                        .filter(u -> u.getType().equals(type))
-                        .filter(u -> u.httpSession.getLastAccessedTime() >= tl
-                                && u.httpSession.getLastAccessedTime() < tr)
-                        .count();
+                        long count = this.loggedInUsers.stream()
+                                .filter(u -> u.getType().equals(type))
+                                .filter(u -> u.httpSession.
+                                        getLastAccessedTime() >= tl
+                                        && u.httpSession.getLastAccessedTime()
+                                        < tr)
+                                .count();
 
-                serie.set("t" + (-d * i), count);
-            }
+                        serie.set("t" + (-d * i), count);
+                    }
 
-            model.addSeries(serie);
+                    model.addSeries(serie);
 
-        });
+                });
 
         return model;
     }

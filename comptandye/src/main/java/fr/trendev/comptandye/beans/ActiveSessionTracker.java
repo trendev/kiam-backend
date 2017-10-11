@@ -30,11 +30,15 @@ import javax.servlet.http.HttpSession;
 public class ActiveSessionTracker {
 
     private final Map<String, List<HttpSession>> map;
+
+    private final Map<String, String> index;
+
     private static final Logger LOG = Logger.getLogger(
             ActiveSessionTracker.class.getName());
 
     public ActiveSessionTracker() {
         map = new ConcurrentHashMap<>();
+        index = new ConcurrentHashMap<>();
     }
 
     @PostConstruct
@@ -62,8 +66,7 @@ public class ActiveSessionTracker {
 
             map.entrySet().forEach(e -> {
                 LOG.log(Level.WARNING, "{0}: {1} session{2}", new Object[]{
-                    e.
-                    getKey(),
+                    e.getKey(),
                     e.getValue().size(), e.getValue().size() > 1 ? "s" : ""});
             });
         }
@@ -85,8 +88,12 @@ public class ActiveSessionTracker {
      * @param session the session to add
      */
     public void put(String email, HttpSession session) {
+        LOG.log(Level.INFO, "Linking session {0} with email {1}", new Object[]{
+            session.getId(),
+            email});
         map.computeIfAbsent(email, k -> new LinkedList<>());
         map.get(email).add(session);
+        index.put(session.getId(), email);
     }
 
     public boolean contains(String email, HttpSession session) {
@@ -114,6 +121,7 @@ public class ActiveSessionTracker {
                                 email});
 
                     boolean result = s.remove(session);
+                    this.drop(session.getId());
                     session.invalidate();
                     LOG.log(Level.INFO,
                             "Session {0} removed from {1} and invalidated",
@@ -123,7 +131,7 @@ public class ActiveSessionTracker {
                     if (s.isEmpty()) {
                         map.remove(email);
                         LOG.log(Level.INFO,
-                                "user [{0}] has no active session and is now removed from {1}",
+                                "[{0}] has no active session and is now removed from {1}",
                                 new Object[]{email,
                                     ActiveSessionTracker.class.getSimpleName()});
                     }
@@ -162,6 +170,14 @@ public class ActiveSessionTracker {
 
     public List<String> getLoggedUsers() {
         return new ArrayList<>(map.keySet());
+    }
+
+    public String insert(String sid, String email) {
+        return index.put(sid, email);
+    }
+
+    public String drop(String sid) {
+        return index.remove(sid);
     }
 
 }
