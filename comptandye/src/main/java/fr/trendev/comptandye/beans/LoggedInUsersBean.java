@@ -7,11 +7,9 @@ package fr.trendev.comptandye.beans;
 
 import fr.trendev.comptandye.sessions.UserAccountFacade;
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.TreeMap;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -105,7 +103,7 @@ public class LoggedInUsersBean implements Serializable {
     }
 
     public LineChartModel getConnections() {
-        connections = this.initConnectionModel();
+        connections = this.initConnectionModel(1800, 1);
         connections.setTitle("Connections");
         connections.setLegendPosition("e");
         connections.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
@@ -118,25 +116,36 @@ public class LoggedInUsersBean implements Serializable {
         return connections;
     }
 
-    private LineChartModel initConnectionModel() {
-        LineChartModel model = new LineChartModel();
+    private LineChartModel initConnectionModel(int t, int d) {
+        long timeout = t * 1000l;
+        long duration = d * 60 * 1000l;
 
-        int timeout = 1800;//30 min = 1800s
-        int stripe = 6;//cuts in 5 min stripe
+        int stripes = (t / 60) / d;
+
+        LineChartModel model = new LineChartModel();
 
         List<String> types = this.loggedInUsers.stream().map(
                 LoggedInUser::getType).distinct().
                 collect(Collectors.toList());
 
+        long now = System.currentTimeMillis();
+
         types.forEach((type) -> {
             ChartSeries serie = new ChartSeries();
             serie.setLabel(type);
 
-            Calendar cal = Calendar.getInstance();
-            Random r = new Random();
-            for (int i = 12; i > 0; i--) {
-                cal.add(Calendar.MINUTE, -5 * i);
-                serie.set("t(" + (-5 * i) + ")", r.nextInt(20));
+            for (int i = stripes; i > 0; i--) {
+
+                long tl = now - (duration * i);
+                long tr = now - (duration * (i - 1));
+
+                long count = this.loggedInUsers.stream()
+                        .filter(u -> u.getType().equals(type))
+                        .filter(u -> u.httpSession.getLastAccessedTime() >= tl
+                                && u.httpSession.getLastAccessedTime() < tr)
+                        .count();
+
+                serie.set("t" + (-d * i), count);
             }
 
             model.addSeries(serie);
