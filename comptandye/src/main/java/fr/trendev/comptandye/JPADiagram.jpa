@@ -14,14 +14,21 @@
             <jpa:post></jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonTypeInfo(use = JsonTypeInfo.Id.NAME,&#xA;        include = JsonTypeInfo.As.EXISTING_PROPERTY,&#xA;        property = &quot;cltype&quot;,&#xA;        visible = true)"/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({&#xA;  @JsonSubTypes.Type(value = Administrator.class, name = UserAccountType.ADMINISTRATOR), &#xA;  @JsonSubTypes.Type(value = Individual.class, name = UserAccountType.INDIVIDUAL),&#xA;  @JsonSubTypes.Type(value = Professional.class, name = UserAccountType.PROFESSIONAL)&#xA;})"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
-            import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
+            import fr.trendev.comptandye.utils.visitors.Visitor;
+import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
         <jpa:des>An UserAccount can be an Administrator, a Professional or an Individual. This class is linked to the jdbc-realm authentication.</jpa:des>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" xvt="" name="cltype" id="_1507709471227127">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
             <jpa:basic attribute-type="String" v="true" xvt="" name="password" id="_14901008440196">
                 <jpa:des>Password is never provided in clear.</jpa:des>
                 <jpa:xwm nil="false" req="false"/>
@@ -94,9 +101,11 @@
         <jpa:nq e="false" name="UserAccount.findByToken">
             <jpa:query>Select u from UserAccount u where u.token=:token</jpa:query>
         </jpa:nq>
+        <jpa:nq e="false" name="UserAccount.findByCltype">
+            <jpa:query>Select u from UserAccount u where u.cltype=:cltype</jpa:query>
+        </jpa:nq>
         <jpa:table name="USER_ACCOUNT"/>
         <jpa:inheritance strategy="SINGLE_TABLE"/>
-        <jpa:discriminator-column name="USER_ACCOUNT_TYPE" discriminator-type="STRING" column-definition="" length="30"/>
     </jpa:entity>
     <jpa:entity lbl-ref="_14901008529027" compositePrimaryKeyClass="UserGroupPK" abs="false" class="UserGroup" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490100852900">
         <jpa:con am="PUBLIC" e="true">
@@ -1502,7 +1511,7 @@
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1490172966686" x="-640" y="683">
+            <i ref="_1490172966686" x="-644" y="679">
                 <el>
                     <e ref="_150537690133858">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1512,31 +1521,31 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490180671085" x="678" y="373">
+            <i ref="_1490180671085" x="674" y="369">
                 <el>
                     <e ref="_150652336702164">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490704123469" x="-142" y="85"/>
-            <i ref="_1503060694288" x="-498" y="274"/>
-            <i ref="_1506344869339" x="518" y="1561">
+            <i ref="_1490704123469" x="-146" y="81"/>
+            <i ref="_1503060694288" x="-502" y="270"/>
+            <i ref="_1506344869339" x="514" y="1557">
                 <el>
                     <e ref="_15063449702561265">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101578444" x="387" y="85"/>
-            <i ref="_1490100852900" x="387" y="-151">
+            <i ref="_1490101578444" x="383" y="81"/>
+            <i ref="_1490100852900" x="383" y="-155">
                 <el>
                     <e ref="_14901160469883436">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101520286" x="267" y="373">
+            <i ref="_1490101520286" x="263" y="369">
                 <el>
                     <e ref="_150652336703465">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1546,15 +1555,15 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490104062170" x="-377" y="429"/>
-            <i ref="_1490113906035" x="-352" y="926">
+            <i ref="_1490104062170" x="-381" y="425"/>
+            <i ref="_1490113906035" x="-356" y="922">
                 <el>
                     <e ref="_150489073375385">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490704206844" x="-50" y="887">
+            <i ref="_1490704206844" x="-54" y="883">
                 <el>
                     <e ref="_15049038294552105">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1564,7 +1573,7 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490101376664" x="96" y="85">
+            <i ref="_1490101376664" x="92" y="81">
                 <el>
                     <e ref="_14901093969381510">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1577,15 +1586,15 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490113751330" x="-660" y="1050"/>
-            <i ref="_1490206901623" x="330" y="1271">
+            <i ref="_1490113751330" x="-664" y="1046"/>
+            <i ref="_1490206901623" x="326" y="1267">
                 <el>
                     <e ref="_1503081214518630">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490178979567" x="750" y="1271">
+            <i ref="_1490178979567" x="745" y="1267">
                 <el>
                     <e ref="_150365567487858">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1598,7 +1607,7 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1499512549878" x="-224" y="1221">
+            <i ref="_1499512549878" x="-228" y="1217">
                 <el>
                     <e ref="_1505144351224341">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1611,8 +1620,8 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490101737208" x="-390" y="37"/>
-            <i ref="_1490281931338" x="441" y="1001">
+            <i ref="_1490101737208" x="-394" y="33"/>
+            <i ref="_1490281931338" x="437" y="997">
                 <el>
                     <e ref="_1490283543806197">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1628,7 +1637,7 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490101456632" x="-25" y="274">
+            <i ref="_1490101456632" x="-29" y="270">
                 <el>
                     <e ref="_1490179812678394">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1659,22 +1668,22 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490184243036" x="29" y="1271"/>
-            <i ref="_1490100823157" x="77" y="-181">
+            <i ref="_1490184243036" x="25" y="1267"/>
+            <i ref="_1490100823157" x="73" y="-183">
                 <el>
                     <e ref="_14901160469863435">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490180682743" x="678" y="609">
+            <i ref="_1490180682743" x="674" y="605">
                 <el>
                     <e ref="_1490181195212606">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101555530" x="245" y="609">
+            <i ref="_1490101555530" x="241" y="605">
                 <el>
                     <e ref="_149028166301044">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1699,7 +1708,7 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1506009883340" x="678" y="1001">
+            <i ref="_1506009883340" x="674" y="997">
                 <el>
                     <e ref="_1506010011239530">
                         <v st="1" si="12.0" cl="#00ff00"/>
