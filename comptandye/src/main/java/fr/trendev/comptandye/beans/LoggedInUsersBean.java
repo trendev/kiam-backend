@@ -84,6 +84,7 @@ public class LoggedInUsersBean implements Serializable {
     }
 
     public List<LoggedInUser> getLoggedInUsers() {
+        this.init();
         return loggedInUsers;
     }
 
