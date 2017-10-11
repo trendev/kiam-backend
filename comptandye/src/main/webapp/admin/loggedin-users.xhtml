@@ -12,10 +12,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
+        <p>
+            <h:outputLink value="index.xhtml">Administration Console</h:outputLink>
+        </p>
         <h:form id="sessionform">
-            <p:poll interval="3" update="sessionform:usertypes sessionform:connections"/>
+            <p:poll interval="#{loggedInUsersBean.refresh}" update="sessionform:usertypes sessionform:connections sessionform:loggedInUsers"/>
 
-            <h3>Active Session Tracker</h3>
+            <h3>Active Session Tracker - <h:outputText value="#{loggedInUsersBean.userAccounts.size()}"/></h3>
 
             <p:chart id="usertypes" type="pie" model="#{loggedInUsersBean.userTypes}" style="width:400px;height:300px" />
             <p:chart id="connections" type="line" model="#{loggedInUsersBean.connections}" style="height:300px;"/>
@@ -48,10 +51,6 @@
                     </h:outputText>
                 </p:column>
             </p:dataTable>
-
-            <p>
-                <h:outputLink value="index.xhtml">Administration Console</h:outputLink>
-            </p>
         </h:form>
     </h:body>
 </html>

@@ -12,6 +12,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
+        <p>
+            <h:outputLink value="loggedin-users.xhtml">Active Session Tracker</h:outputLink>
+        </p>
         <h:form id="adminForm" onkeypress="return event.keyCode !== 13;">
             <p:panelGrid columns="2">
                 <f:facet name="header">
@@ -58,9 +61,6 @@
                     </h:column>
                 </h:dataTable>
             </p:panelGrid>
-            <p>
-                <h:outputLink value="loggedin-users.xhtml">Active Session Tracker</h:outputLink>
-            </p>
         </h:form>
     </h:body>
 </html>

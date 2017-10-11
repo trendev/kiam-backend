@@ -52,6 +52,12 @@ public class LoggedInUsersBean implements Serializable {
     private static final Logger LOG = Logger.getLogger(LoggedInUsersBean.class.
             getName());
 
+    private int refresh = 5;
+
+    public int getRefresh() {
+        return this.refresh;
+    }
+
     @PostConstruct
     public void init() {
         this.loggedInUsers = new LinkedList<>();
@@ -62,7 +68,7 @@ public class LoggedInUsersBean implements Serializable {
         ));
     }
 
-    private List<String> getUserAccounts() {
+    public List<String> getUserAccounts() {
         List<String> users = tracker.getLoggedUsers();
         users.sort(String::compareTo);
         return users;
@@ -103,7 +109,7 @@ public class LoggedInUsersBean implements Serializable {
     }
 
     public LineChartModel getConnections() {
-        connections = this.initConnectionModel(/*1800*/2 * 60, 1);
+        connections = this.initConnectionModel(/*1800*/10 * 60, 1);
         connections.setTitle("Connections");
         connections.setLegendPosition("e");
         connections.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
@@ -135,15 +141,24 @@ public class LoggedInUsersBean implements Serializable {
 
                     for (int i = stripes; i > 0; i--) {
 
-                        long tl = now - (duration * i);
+                        long tl = now - (duration * i) + (this.refresh * 1000);
                         long tr = now - (duration * (i - 1));
 
                         long count = this.loggedInUsers.stream()
                                 .filter(u -> u.getType().equals(type))
-                                .filter(u -> u.httpSession.
-                                        getLastAccessedTime() >= tl
-                                        && u.httpSession.getLastAccessedTime()
-                                        < tr)
+                                .filter(u -> {
+                                    boolean validity = false;
+                                    try {
+                                        validity = u.httpSession.
+                                                getLastAccessedTime() >= tl
+                                                & u.httpSession.
+                                                        getLastAccessedTime()
+                                                < tr;
+                                    } catch (IllegalStateException ex) {
+                                        //ignores invalidated session
+                                    }
+                                    return validity;
+                                })
                                 .count();
 
                         serie.set("t" + (-d * i), count);
