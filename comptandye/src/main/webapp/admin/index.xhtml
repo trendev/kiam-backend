@@ -22,7 +22,7 @@
                 </f:facet>
 
                 <h:outputText value="Session:" />
-                <h:dataTable id="adminsessions" value="#{adminBean.sessions}" var="s">
+                <h:dataTable id="adminsessions" value="#{adminBean.adminSessions}" var="s">
                     <h:column>
                         <h:outputText value="#{s.id}" style="font-weight: bold" rendered="#{session.id eq s.id}"/>
                         <h:outputText value="#{s.id}" rendered="#{session.id ne s.id}"/>

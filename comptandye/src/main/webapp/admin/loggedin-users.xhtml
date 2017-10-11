@@ -14,6 +14,7 @@
     <h:body>
         <h:form id="sessionform">
             <h3>Active Sessions</h3>
+            <p:chart type="pie" model="#{adminBean.userTypes}" style="width:400px;height:300px" />
             <p:dataTable id="users" var="user" value="#{adminBean.loggedUsers}" resizableColumns="true"  tableStyle="width:auto">
                 <p:column headerText="UserAccounts" >
                     <h:outputText value="#{user}" />
@@ -22,14 +23,19 @@
                     <h:outputText value="#{adminBean.getTypeOfUser(user)}" />
                 </p:column>
                 <p:column headerText="Sessions">
-                    <p:dataTable id="sessions" value="#{adminBean.getSession(user)}" var="s" sortMode="multiple" resizableColumns="true">
+                    <p:dataTable id="sessions" value="#{adminBean.getSessions(user)}" var="s" sortMode="multiple" resizableColumns="true" tableStyle="width:auto">
                         <p:column headerText="id" sortBy="#{s.id}">
                             <h:outputText value="#{s.id}" style="font-weight: bold; float: right" rendered="#{session.id eq s.id}"/>
                             <p:commandButton update="@all" actionListener="#{adminBean.remove(user, s)}" value="#{s.id}" id="invalidateButton" icon="ui-icon-circle-close" title="Invalidate session #{s.id}" rendered="#{session.id ne s.id}" style="float: right"/>
                         </p:column>
                         <p:column headerText="Last access" sortBy="#{s.lastAccessedTime}">
                             <h:outputText value="#{s.lastAccessedTime}" style="float: right">
-                                <f:convertDateTime type="both" dateStyle="full" /><!-- type="both" -->
+                                <f:convertDateTime type="both" dateStyle="short" /><!-- type="both" -->
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Creation time" sortBy="#{s.creationTime}">
+                            <h:outputText value="#{s.creationTime}" style="float: right">
+                                <f:convertDateTime type="both" dateStyle="short" /><!-- type="both" -->
                             </h:outputText>
                         </p:column>
                     </p:dataTable>
