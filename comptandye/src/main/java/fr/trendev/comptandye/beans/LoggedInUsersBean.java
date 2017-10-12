@@ -155,7 +155,7 @@ public class LoggedInUsersBean implements Serializable {
         });
 
         userTypes = new PieChartModel(map);
-        userTypes.setTitle("Distribution of Sessions");
+        userTypes.setTitle("Distribution of Sessions by Type");
         userTypes.setLegendPosition("nw");
         userTypes.setShowDataLabels(true);
         return userTypes;
@@ -167,11 +167,11 @@ public class LoggedInUsersBean implements Serializable {
         connections.setLegendPosition("e");
         connections.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
         connections.getAxes().put(AxisType.X, new CategoryAxis(
-                "Last Access Time (in seconds)"));
+                "Last Accessed Time (in seconds)"));
         Axis yAxis = connections.getAxis(AxisType.Y);
         yAxis.setLabel("Connections");
         yAxis.setMin(0);
-        yAxis.setMax(25);
+//        yAxis.setMax(25);
 
         return connections;
     }
@@ -211,7 +211,7 @@ public class LoggedInUsersBean implements Serializable {
                                 })
                                 .count();
 
-                        serie.set(((-d * i) + 1), count);
+                        serie.set((d * i) - 1, count);
                     }
 
                     model.addSeries(serie);
