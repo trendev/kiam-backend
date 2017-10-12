@@ -47,6 +47,9 @@ public class LoggedInUsersBean implements Serializable {
     @Inject
     private ActiveSessionTracker tracker;
 
+    /**
+     * The datamodel, a flat snapshot of the tracker
+     */
     private List<LoggedInUser> loggedInUsers;
 
     private PieChartModel userTypes;
@@ -56,17 +59,44 @@ public class LoggedInUsersBean implements Serializable {
     private static final Logger LOG = Logger.getLogger(LoggedInUsersBean.class.
             getName());
 
+    /**
+     * Refresh delay
+     */
     private int refresh = 5;
 
+    /**
+     * The session timeout in seconds
+     */
     private int session_timeout;
+
+    /**
+     * The duration of a track record, usually 1 minute
+     */
     private int d;
+
+    /**
+     * The duration of a track record in milliseconds
+     */
     private long duration;
+
+    /**
+     * The number of track records / stripes
+     */
     private int stripes;
 
+    /**
+     * Returns the refresh delay
+     *
+     * @return the refresh value
+     */
     public int getRefresh() {
         return this.refresh;
     }
 
+    /**
+     * Computes and sets the timeout, durations and stripes and initializes
+     * (loads) the data model.
+     */
     @PostConstruct
     public void init() {
         FacesContext fc = FacesContext.getCurrentInstance();
@@ -83,11 +113,14 @@ public class LoggedInUsersBean implements Serializable {
         this.initLoggedInUsers();
     }
 
+    /**
+     * Loads/Refreshes the data model. Filters and ignores the sessions which
+     * will be invalidated during the refreshed JSF session.
+     */
     public void initLoggedInUsers() {
-        LOG.log(Level.SEVERE, "GO FOR A REFRESH !!!!!");
         long now = System.currentTimeMillis();
-        //will limit the last accessed time to sessions which won't be invalidated after the refresh
-        //sessions with a last accessed time in the last XX(refresh value) seconds will be ignored
+
+        //sessions older than overdue will be ignored
         long overdue = now - (session_timeout * 1000l) + (this.refresh
                 * 1000l);
 
@@ -100,53 +133,49 @@ public class LoggedInUsersBean implements Serializable {
                     if (s.getLastAccessedTime() > overdue) {
                         list.add(
                                 new LoggedInUser(u, this.getTypeOfUser(u), s));
-                        LOG.log(Level.INFO, "Session [{0}] added in datamodel",
-                                s.getId());
                     }
                 } catch (IllegalStateException ex) {
                     //ignores invalidated sessions
-                    LOG.log(Level.SEVERE, "Session [{0}] is invalidated???", s.
-                            getId());
                 }
             }));
             //updates the logged in user list
             this.loggedInUsers = list;
-            LOG.log(Level.INFO, "list is done");
         } catch (ConcurrentModificationException ex) {
             //cannot update the model because the tracker is locked
-            //use the remaining datamodel instead but clean the potential invalidated session
-            LOG.log(Level.SEVERE,
-                    "Well something happens on the Tracker... "
-                    + "We should clean&use the previous data model");
+            //uses the previous version of the data model instead 
+            //but cleans the potential invalidated session
             this.loggedInUsers = this.loggedInUsers.stream()
                     .filter(u -> {
                         boolean validity = false;
                         try {
                             validity = u.getHttpSession().getLastAccessedTime()
                                     > overdue;
-                            LOG.log(Level.INFO,
-                                    "Re-use DATAMODEL : Session [{0}] added in datamodel",
-                                    u.getHttpSession().getId());
                         } catch (IllegalStateException ise) {
                             //ignores invalidated session
-                            LOG.log(Level.SEVERE,
-                                    "Re-use DATAMODEL : Session [{0}] is invalidated???",
-                                    u.
-                                            getHttpSession().getId());
                         }
                         return validity;
                     })
                     .collect(Collectors.toList());
-
         }
     }
 
+    /**
+     * Gets the emails of the logged-in users
+     *
+     * @return the emails of the users
+     */
     public List<String> getUserAccounts() {
         List<String> users = tracker.getLoggedUsers();
         users.sort(String::compareTo);
         return users;
     }
 
+    /**
+     * Returns the sessions of the specified user.
+     *
+     * @param email the user's email
+     * @return the http session list
+     */
     private List<HttpSession> getSessions(String email) {
         List<HttpSession> sessions = tracker.getSession(email);
         sessions.sort((s1, s2) -> s1.getId().compareTo(s2.getId()));
@@ -171,10 +200,20 @@ public class LoggedInUsersBean implements Serializable {
         return userAccountFacade.getUserAccountType(email);
     }
 
+    /**
+     * Returns the datamodel (a flat snapshot of the tracker)
+     *
+     * @return the datamodel, the list of the logged-in user
+     */
     public List<LoggedInUser> getLoggedInUsers() {
         return loggedInUsers;
     }
 
+    /**
+     * Inits the Pie Chart "Distribution of Sessions by Type"
+     *
+     * @return the data model of the Pie Chart
+     */
     public PieChartModel getUserTypes() {
 
         Map<String, Number> map = new TreeMap<>();
@@ -190,6 +229,11 @@ public class LoggedInUsersBean implements Serializable {
         return userTypes;
     }
 
+    /**
+     * Sets the Line Chart "Active Sessions Record"
+     *
+     * @return the data model of the Line Chart
+     */
     public LineChartModel getConnections() {
         connections = this.initConnectionModel();
         connections.setTitle("Active Sessions Record");
@@ -205,6 +249,14 @@ public class LoggedInUsersBean implements Serializable {
         return connections;
     }
 
+    /**
+     * Organizes and groups the sessions by last accessed time. Session closed
+     * to be invalidated should be filtered first.
+     *
+     * @see LoggedInUsersBean#initLoggedInUsers()
+     * @see LoggedInUsersBean#getConnections()
+     * @return the data model of the Line Chart
+     */
     private LineChartModel initConnectionModel() {
 
         LineChartModel model = new LineChartModel();
@@ -220,7 +272,9 @@ public class LoggedInUsersBean implements Serializable {
 
                     for (int i = stripes; i > 0; i--) {
 
+                        //low bound limit of the stripe
                         long tl = now - (duration * i);
+                        //high bound limit of the stripe
                         long tr = now - (duration * (i - 1));
 
                         long count = this.loggedInUsers.stream()
@@ -240,6 +294,7 @@ public class LoggedInUsersBean implements Serializable {
                                 })
                                 .count();
 
+                        //most recent sessions will be at left of the chart
                         serie.set((d * i) - 1, count);
                     }
 
@@ -250,6 +305,10 @@ public class LoggedInUsersBean implements Serializable {
         return model;
     }
 
+    /**
+     * Entry which will represent a logged-in user. Used to flap the tracker
+     * contain
+     */
     public static class LoggedInUser {
 
         private String email;

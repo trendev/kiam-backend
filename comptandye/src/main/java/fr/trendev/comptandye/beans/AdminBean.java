@@ -48,6 +48,10 @@ public class AdminBean implements Serializable {
         return administratorFacade.find(adminEmail);
     }
 
+    /**
+     * Inits the bean. Set the user's email address of the current
+     * Administrator.
+     */
     @PostConstruct
     public void init() {
         FacesContext fc = FacesContext.getCurrentInstance();
@@ -72,6 +76,13 @@ public class AdminBean implements Serializable {
         this.adminEmail = user.getName();
     }
 
+    /**
+     * Logs-out the current Administrator.
+     *
+     * @see ActiveSessionTracker#remove(java.lang.String,
+     * javax.servlet.http.HttpSession)
+     * @throws IOException
+     */
     public void logout() throws IOException {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().
@@ -88,6 +99,11 @@ public class AdminBean implements Serializable {
         ec.redirect(ec.getRequestContextPath());
     }
 
+    /**
+     * Returns the sessions associated to the current Administrator
+     *
+     * @return the session list
+     */
     public List<HttpSession> getAdminSessions() {
         return tracker.getSession(adminEmail);
     }

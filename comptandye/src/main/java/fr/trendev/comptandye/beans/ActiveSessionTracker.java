@@ -29,8 +29,14 @@ import javax.servlet.http.HttpSession;
 @Singleton
 public class ActiveSessionTracker {
 
+    /**
+     * User / Sessions map
+     */
     private final Map<String, List<HttpSession>> map;
 
+    /**
+     * Index used a Reverse map
+     */
     private final Map<String, String> index;
 
     private static final Logger LOG = Logger.getLogger(
@@ -56,11 +62,13 @@ public class ActiveSessionTracker {
         LOG.log(Level.INFO, "{0} will be destroyed",
                 ActiveSessionTracker.class.getSimpleName());
 
+        //should be also true
         if (map.isEmpty()) {
             LOG.log(Level.INFO,
                     "NO ACTIVE SESSION in {0}",
                     ActiveSessionTracker.class.getSimpleName());
         } else {
+            //if sessions are not well managed before overall shutdown 
             LOG.log(Level.WARNING, "{0} still contains active sessions !!!",
                     ActiveSessionTracker.class.getSimpleName());
 
@@ -82,7 +90,8 @@ public class ActiveSessionTracker {
     }
 
     /**
-     * Associates a session with a logged-in user in the tracker.
+     * Associates a session with a logged-in user in the tracker. Initiates the
+     * session list at first insert.
      *
      * @param email the user associated to the session
      * @param session the session to add
@@ -96,6 +105,13 @@ public class ActiveSessionTracker {
         index.put(session.getId(), email);
     }
 
+    /**
+     * Tests if the session is contained in the user's sessions list.
+     *
+     * @param email the user's email
+     * @param session the http session to search
+     * @return true if the tracker contains the session for the specified user
+     */
     public boolean contains(String email, HttpSession session) {
         return Optional.ofNullable(map.get(email))
                 .map(s -> s.contains(session))
@@ -104,7 +120,8 @@ public class ActiveSessionTracker {
 
     /**
      * Removes and invalidates a session for a logged in user. Removes the user
-     * from the tracker when no session. Used for logout process.
+     * from the tracker when no session. Used for logout process. The session is
+     * removed from the map and from the index.
      *
      * @param email the user to disconnect
      * @param session the session to remove/invalidate
@@ -168,14 +185,32 @@ public class ActiveSessionTracker {
                 .orElse(Collections.emptyList());
     }
 
+    /**
+     * Returns the Logged-in users list
+     *
+     * @return a list of the logged-in users
+     */
     public List<String> getLoggedUsers() {
         return new ArrayList<>(map.keySet());
     }
 
+    /**
+     * Inserts a session in the index
+     *
+     * @param sid the session id
+     * @param email the user's email
+     * @return null or the previous value contained in the index
+     */
     public String insert(String sid, String email) {
         return index.put(sid, email);
     }
 
+    /**
+     * Removes a session from the index.
+     *
+     * @param sid the session id
+     * @return null or the previous value contained in the index
+     */
     public String drop(String sid) {
         return index.remove(sid);
     }
