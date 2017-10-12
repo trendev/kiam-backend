@@ -16,7 +16,7 @@
             <h:outputLink value="index.xhtml">Administration Console</h:outputLink>
         </p>
         <h:form id="sessionform">
-            <p:poll interval="#{loggedInUsersBean.refresh}" listener="#{loggedInUsersBean.initLoggedInUsers}" update="sessionform:tabs"/>
+            <p:poll interval="#{loggedInUsersBean.refresh}" listener="#{loggedInUsersBean.initLoggedInUsers}" update="sessionform:tabs sessionform:count"/>
 
             <h3>Active Session Tracker - <h:outputText id="count" value="#{loggedInUsersBean.userAccounts.size()}  User#{loggedInUsersBean.userAccounts.size()>1?'s':''} Logged"/> </h3>
 
@@ -35,7 +35,7 @@
 
                         <p:column headerText="Session id" sortBy="#{user.httpSession.id}">
                             <h:outputText value="#{user.httpSession.id}" style="font-weight: bold; float: right" rendered="#{session.id eq user.httpSession.id}"/>
-                            <p:commandButton update="@all" actionListener="#{loggedInUsersBean.remove(user.email, user.httpSession)}" value="#{user.httpSession.id}" id="invalidateButton" icon="ui-icon-circle-close" title="Invalidate session #{user.httpSession.id}" rendered="#{session.id ne user.httpSession.id}" style="float: right"/>
+                            <p:commandButton update="sessionform" actionListener="#{loggedInUsersBean.remove(user.email, user.httpSession)}" value="#{user.httpSession.id}" id="invalidateButton" icon="ui-icon-circle-close" title="Invalidate session #{user.httpSession.id}" rendered="#{session.id ne user.httpSession.id}" style="float: right"/>
 
                         </p:column>
 
