@@ -144,6 +144,7 @@ public class ActiveSessionTracker {
                         session.invalidate();
                         result &= true;
                     } catch (IllegalStateException ex) {
+                        // should happens if the session is already invalidated (concurrent remove)
                         result = false;
                     }
 
