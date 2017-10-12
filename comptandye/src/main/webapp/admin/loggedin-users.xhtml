@@ -16,41 +16,53 @@
             <h:outputLink value="index.xhtml">Administration Console</h:outputLink>
         </p>
         <h:form id="sessionform">
-            <p:poll interval="#{loggedInUsersBean.refresh}" listener="#{loggedInUsersBean.initLoggedInUsers}" update="sessionform:usertypes sessionform:connections sessionform:loggedInUsers sessionform:count"/>
+            <p:poll interval="#{loggedInUsersBean.refresh}" listener="#{loggedInUsersBean.initLoggedInUsers}" update="sessionform:tabs"/>
 
             <h3>Active Session Tracker - <h:outputText id="count" value="#{loggedInUsersBean.userAccounts.size()}  User#{loggedInUsersBean.userAccounts.size()>1?'s':''} Logged"/> </h3>
 
-            <p:chart id="usertypes" type="pie" model="#{loggedInUsersBean.userTypes}" style="width:400px;height:300px" />
-            <p:chart id="connections" type="line" model="#{loggedInUsersBean.connections}" style="height:300px;"/>
+            <p:tabView id="tabs">
 
-            <p:dataTable id="loggedInUsers" var="user" value="#{loggedInUsersBean.loggedInUsers}"  sortMode="multiple" tableStyle="width:auto">
+                <p:tab title="Tracker Content">
+                    <p:dataTable id="loggedInUsers" var="user" value="#{loggedInUsersBean.loggedInUsers}"  sortMode="multiple" tableStyle="width:auto">
 
-                <p:column headerText="UserAccounts" sortBy="#{user.email}">
-                    <h:outputText value="#{user.email}" />
-                </p:column>
+                        <p:column headerText="UserAccounts" sortBy="#{user.email}">
+                            <h:outputText value="#{user.email}" />
+                        </p:column>
 
-                <p:column headerText="Type" sortBy="#{user.type}">
-                    <h:outputText value="#{user.type}" />
-                </p:column>
+                        <p:column headerText="Type" sortBy="#{user.type}">
+                            <h:outputText value="#{user.type}" />
+                        </p:column>
 
-                <p:column headerText="Session id" sortBy="#{user.httpSession.id}">
-                    <h:outputText value="#{user.httpSession.id}" style="font-weight: bold; float: right" rendered="#{session.id eq user.httpSession.id}"/>
-                    <p:commandButton update="@all" actionListener="#{loggedInUsersBean.remove(user.email, user.httpSession)}" value="#{user.httpSession.id}" id="invalidateButton" icon="ui-icon-circle-close" title="Invalidate session #{user.httpSession.id}" rendered="#{session.id ne user.httpSession.id}" style="float: right"/>
+                        <p:column headerText="Session id" sortBy="#{user.httpSession.id}">
+                            <h:outputText value="#{user.httpSession.id}" style="font-weight: bold; float: right" rendered="#{session.id eq user.httpSession.id}"/>
+                            <p:commandButton update="@all" actionListener="#{loggedInUsersBean.remove(user.email, user.httpSession)}" value="#{user.httpSession.id}" id="invalidateButton" icon="ui-icon-circle-close" title="Invalidate session #{user.httpSession.id}" rendered="#{session.id ne user.httpSession.id}" style="float: right"/>
 
-                </p:column>
+                        </p:column>
 
-                <p:column headerText="Session creation time" sortBy="#{user.httpSession.creationTime}">
-                    <h:outputText value="#{user.httpSession.creationTime}">
-                        <f:convertDateTime type="both" dateStyle="short" />
-                    </h:outputText>
-                </p:column>
+                        <p:column headerText="Session creation time" sortBy="#{user.httpSession.creationTime}">
+                            <h:outputText value="#{user.httpSession.creationTime}">
+                                <f:convertDateTime type="both" dateStyle="short" />
+                            </h:outputText>
+                        </p:column>
 
-                <p:column headerText="Session last access" sortBy="#{user.httpSession.lastAccessedTime}">
-                    <h:outputText value="#{user.httpSession.lastAccessedTime}">
-                        <f:convertDateTime type="both" dateStyle="short" />
-                    </h:outputText>
-                </p:column>
-            </p:dataTable>
+                        <p:column headerText="Session last access" sortBy="#{user.httpSession.lastAccessedTime}">
+                            <h:outputText value="#{user.httpSession.lastAccessedTime}">
+                                <f:convertDateTime type="both" dateStyle="short" />
+                            </h:outputText>
+                        </p:column>
+                    </p:dataTable>
+                </p:tab>
+
+                <p:tab title="Distribution">
+                    <p:chart id="usertypes" type="pie" model="#{loggedInUsersBean.userTypes}" style="width:400px;height:300px" />
+                </p:tab>
+
+                <p:tab title="Live Sessions">
+                    <p:chart id="connections" type="line" model="#{loggedInUsersBean.connections}" style="height:300px;"/>
+                </p:tab>
+
+            </p:tabView>
+
         </h:form>
     </h:body>
 </html>
