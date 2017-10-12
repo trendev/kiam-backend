@@ -6,6 +6,7 @@
 package fr.trendev.comptandye.utils.listeners;
 
 import fr.trendev.comptandye.beans.ActiveSessionTracker;
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,6 +29,9 @@ public class WebAppSessionListener implements HttpSessionListener,
     private static final Logger LOG = Logger.getLogger(
             WebAppSessionListener.class.getName());
 
+    private static final DateFormat df = DateFormat.getDateTimeInstance(
+            DateFormat.FULL, DateFormat.FULL);
+
     @Override
     public void sessionCreated(HttpSessionEvent se) {
         HttpSession hs = se.getSession();
@@ -35,7 +39,7 @@ public class WebAppSessionListener implements HttpSessionListener,
         LOG.log(Level.INFO, "Session [{0}] has been created on {1}",
                 new Object[]{
                     hs.getId(),
-                    new Date(hs.getCreationTime())
+                    df.format(new Date(hs.getCreationTime()))
                 });
     }
 
@@ -51,7 +55,7 @@ public class WebAppSessionListener implements HttpSessionListener,
         LOG.log(Level.INFO, "Session [{0}] has been destroyed on {1}",
                 new Object[]{
                     hs.getId(),
-                    new Date()
+                    df.format(new Date())
                 });
     }
 
@@ -61,11 +65,12 @@ public class WebAppSessionListener implements HttpSessionListener,
         String email = tracker.drop(oldSessionId);
         tracker.insert(hs.getId(), email);
         LOG.log(Level.INFO,
-                "Session [{0}] has been changed to [{1}] and email [{2}] has been inserted in the tracker index]",
+                "Session [{0}] has been changed to [{1}] and email [{2}] has been inserted in the tracker index on {3}",
                 new Object[]{
                     oldSessionId,
                     hs.getId(),
-                    email
+                    email,
+                    df.format(new Date())
                 });
     }
 

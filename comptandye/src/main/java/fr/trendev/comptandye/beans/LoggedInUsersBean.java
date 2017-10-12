@@ -7,13 +7,17 @@ package fr.trendev.comptandye.beans;
 
 import fr.trendev.comptandye.sessions.UserAccountFacade;
 import java.io.Serializable;
+import java.util.ConcurrentModificationException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
@@ -34,7 +38,7 @@ import org.primefaces.model.chart.PieChartModel;
  * @author jsie
  */
 @Named
-@RequestScoped
+@SessionScoped
 public class LoggedInUsersBean implements Serializable {
 
     @Inject
@@ -54,18 +58,67 @@ public class LoggedInUsersBean implements Serializable {
 
     private int refresh = 5;
 
+    private int session_timeout = 180;
+    private final int d = 1;
+
+    private final long duration = d * 60 * 1000l;
+
+    private int stripes = (session_timeout / 60) / d;
+
     public int getRefresh() {
         return this.refresh;
     }
 
     @PostConstruct
     public void init() {
-        this.loggedInUsers = new LinkedList<>();
-        this.getUserAccounts().forEach(u -> this.getSessions(u).forEach(
-                s ->
-                this.loggedInUsers.add(
-                        new LoggedInUser(u, this.getTypeOfUser(u), s))
-        ));
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().
+                getSession(false);
+
+        this.session_timeout = session.getMaxInactiveInterval();
+        LOG.log(Level.INFO, "Session timeout = {0} seconds",
+                this.session_timeout);
+
+        this.initLoggedInUsers();
+    }
+
+    public void initLoggedInUsers() {
+
+        long now = System.currentTimeMillis();
+        long overdue = now - (session_timeout * 1000l) + (this.refresh
+                * 1000l);
+
+        try {
+            List<LoggedInUser> list = new LinkedList<>();
+            this.getUserAccounts().forEach(u -> this.getSessions(u).forEach(
+                    s -> {
+                try {
+                    if (s.getLastAccessedTime() > overdue) {
+                        list.add(
+                                new LoggedInUser(u, this.getTypeOfUser(u), s));
+                    }
+                } catch (IllegalStateException ex) {
+                    //ignores invalidated sessions
+                }
+            }));
+            this.loggedInUsers = list;
+        } catch (ConcurrentModificationException ex) {
+            LOG.log(Level.SEVERE,
+                    "==============>>>>> Modifications in progress ==============>>>>>");
+            this.loggedInUsers = this.loggedInUsers.stream()
+                    .filter(u -> {
+                        boolean validity = false;
+                        try {
+                            validity = u.getHttpSession().getLastAccessedTime()
+                                    > overdue;
+                        } catch (IllegalStateException ise) {
+                            //ignores invalidated session
+                        }
+                        return validity;
+                    })
+                    .collect(Collectors.toList());
+
+        }
     }
 
     public List<String> getUserAccounts() {
@@ -89,7 +142,6 @@ public class LoggedInUsersBean implements Serializable {
     }
 
     public List<LoggedInUser> getLoggedInUsers() {
-        this.init();
         return loggedInUsers;
     }
 
@@ -102,31 +154,28 @@ public class LoggedInUsersBean implements Serializable {
         });
 
         userTypes = new PieChartModel(map);
-        userTypes.setTitle("Distribution of users");
+        userTypes.setTitle("Distribution of Sessions");
         userTypes.setLegendPosition("nw");
         userTypes.setShowDataLabels(true);
         return userTypes;
     }
 
     public LineChartModel getConnections() {
-        connections = this.initConnectionModel(/*1800*/10 * 60, 1);
-        connections.setTitle("Connections");
+        connections = this.initConnectionModel();
+        connections.setTitle("Active Sessions");
         connections.setLegendPosition("e");
         connections.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
-        connections.getAxes().put(AxisType.X, new CategoryAxis("Time"));
+        connections.getAxes().put(AxisType.X, new CategoryAxis(
+                "Last Access Time"));
         Axis yAxis = connections.getAxis(AxisType.Y);
-        yAxis.setLabel("Number of Connections");
+        yAxis.setLabel("Connections");
         yAxis.setMin(0);
         yAxis.setMax(25);
 
         return connections;
     }
 
-    private LineChartModel initConnectionModel(int t, int d) {
-        long timeout = t * 1000l;
-        long duration = d * 60 * 1000l;
-
-        int stripes = (t / 60) / d;
+    private LineChartModel initConnectionModel() {
 
         LineChartModel model = new LineChartModel();
 
@@ -141,7 +190,7 @@ public class LoggedInUsersBean implements Serializable {
 
                     for (int i = stripes; i > 0; i--) {
 
-                        long tl = now - (duration * i) + (this.refresh * 1000);
+                        long tl = now - (duration * i);
                         long tr = now - (duration * (i - 1));
 
                         long count = this.loggedInUsers.stream()
@@ -161,7 +210,7 @@ public class LoggedInUsersBean implements Serializable {
                                 })
                                 .count();
 
-                        serie.set("t" + (-d * i), count);
+                        serie.set("t" + ((-d * i) + 1), count);
                     }
 
                     model.addSeries(serie);
