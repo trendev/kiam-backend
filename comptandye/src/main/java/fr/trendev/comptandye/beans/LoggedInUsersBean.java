@@ -167,7 +167,7 @@ public class LoggedInUsersBean implements Serializable {
 
     public LineChartModel getConnections() {
         connections = this.initConnectionModel();
-        connections.setTitle("Active Sessions");
+        connections.setTitle("Active Sessions Record");
         connections.setLegendPosition("e");
         connections.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
         connections.getAxes().put(AxisType.X, new CategoryAxis(
