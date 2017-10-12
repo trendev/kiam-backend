@@ -18,7 +18,7 @@
         <h:form id="sessionform">
             <p:poll interval="#{loggedInUsersBean.refresh}" listener="#{loggedInUsersBean.initLoggedInUsers}" update="sessionform:usertypes sessionform:connections sessionform:loggedInUsers sessionform:count"/>
 
-            <h3>Active Session Tracker - <h:outputText id="count" value="#{loggedInUsersBean.userAccounts.size()} Logged User#{loggedInUsersBean.userAccounts.size()>1?'s':''}"/> </h3>
+            <h3>Active Session Tracker - <h:outputText id="count" value="#{loggedInUsersBean.userAccounts.size()}  User#{loggedInUsersBean.userAccounts.size()>1?'s':''} Logged"/> </h3>
 
             <p:chart id="usertypes" type="pie" model="#{loggedInUsersBean.userTypes}" style="width:400px;height:300px" />
             <p:chart id="connections" type="line" model="#{loggedInUsersBean.connections}" style="height:300px;"/>
