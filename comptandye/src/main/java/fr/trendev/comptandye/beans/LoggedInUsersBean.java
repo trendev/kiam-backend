@@ -59,10 +59,8 @@ public class LoggedInUsersBean implements Serializable {
     private int refresh = 5;
 
     private int session_timeout;
-    private final int d = 1;
-
-    private final long duration = d * 60 * 1000l;
-
+    private int d;
+    private long duration;
     private int stripes;
 
     public int getRefresh() {
@@ -76,6 +74,8 @@ public class LoggedInUsersBean implements Serializable {
                 getSession(false);
 
         this.session_timeout = session.getMaxInactiveInterval();
+        this.d = 1;
+        this.duration = d * 60 * 1000l;
         this.stripes = (this.session_timeout / 60) / d;
         LOG.log(Level.INFO, "Session timeout = {0} seconds",
                 this.session_timeout);
@@ -171,7 +171,7 @@ public class LoggedInUsersBean implements Serializable {
         connections.setLegendPosition("e");
         connections.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
         connections.getAxes().put(AxisType.X, new CategoryAxis(
-                "Last Accessed Time (in seconds)"));
+                "Last Accessed Time (in minutes)"));
         Axis yAxis = connections.getAxis(AxisType.Y);
         yAxis.setLabel("Connections");
         yAxis.setMin(0);
