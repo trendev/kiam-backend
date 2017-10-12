@@ -139,11 +139,21 @@ public class ActiveSessionTracker {
 
                     boolean result = s.remove(session);
                     this.drop(session.getId());
-                    session.invalidate();
+
+                    try {
+                        session.invalidate();
+                        result &= true;
+                    } catch (IllegalStateException ex) {
+                        result = false;
+                    }
+
                     LOG.log(Level.INFO,
-                            "Session {0} removed from {1} and invalidated",
-                            new Object[]{id,
-                                ActiveSessionTracker.class.getSimpleName()});
+                            "Session {0} removed from {1} and invalidated : {2}",
+                            new Object[]{
+                                id,
+                                ActiveSessionTracker.class.getSimpleName(),
+                                result
+                            });
 
                     if (s.isEmpty()) {
                         map.remove(email);
