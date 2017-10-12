@@ -86,6 +86,8 @@ public class LoggedInUsersBean implements Serializable {
     public void initLoggedInUsers() {
 
         long now = System.currentTimeMillis();
+        //will limit the last accessed time to sessions which won't be invalidated after the refresh
+        //sessions with a last accessed time in the last XX(refresh value) seconds will be ignored
         long overdue = now - (session_timeout * 1000l) + (this.refresh
                 * 1000l);
 
@@ -94,6 +96,7 @@ public class LoggedInUsersBean implements Serializable {
             this.getUserAccounts().forEach(u -> this.getSessions(u).forEach(
                     s -> {
                 try {
+                    //ignore session which will be invalidated after this refresh
                     if (s.getLastAccessedTime() > overdue) {
                         list.add(
                                 new LoggedInUser(u, this.getTypeOfUser(u), s));
@@ -102,10 +105,11 @@ public class LoggedInUsersBean implements Serializable {
                     //ignores invalidated sessions
                 }
             }));
+            //updates the logged in user list
             this.loggedInUsers = list;
         } catch (ConcurrentModificationException ex) {
-            LOG.log(Level.SEVERE,
-                    "==============>>>>> Modifications in progress ==============>>>>>");
+            //cannot update the model because the tracker is locked
+            //use the remaining datamodel instead but clean the potential invalidated session
             this.loggedInUsers = this.loggedInUsers.stream()
                     .filter(u -> {
                         boolean validity = false;
