@@ -84,7 +84,7 @@ public class LoggedInUsersBean implements Serializable {
     }
 
     public void initLoggedInUsers() {
-
+        LOG.log(Level.SEVERE, "GO FOR A REFRESH !!!!!");
         long now = System.currentTimeMillis();
         //will limit the last accessed time to sessions which won't be invalidated after the refresh
         //sessions with a last accessed time in the last XX(refresh value) seconds will be ignored
@@ -100,24 +100,39 @@ public class LoggedInUsersBean implements Serializable {
                     if (s.getLastAccessedTime() > overdue) {
                         list.add(
                                 new LoggedInUser(u, this.getTypeOfUser(u), s));
+                        LOG.log(Level.INFO, "Session [{0}] added in datamodel",
+                                s.getId());
                     }
                 } catch (IllegalStateException ex) {
                     //ignores invalidated sessions
+                    LOG.log(Level.SEVERE, "Session [{0}] is invalidated???", s.
+                            getId());
                 }
             }));
             //updates the logged in user list
             this.loggedInUsers = list;
+            LOG.log(Level.INFO, "list is done");
         } catch (ConcurrentModificationException ex) {
             //cannot update the model because the tracker is locked
             //use the remaining datamodel instead but clean the potential invalidated session
+            LOG.log(Level.SEVERE,
+                    "Well something happens on the Tracker... "
+                    + "We should clean&use the previous data model");
             this.loggedInUsers = this.loggedInUsers.stream()
                     .filter(u -> {
                         boolean validity = false;
                         try {
                             validity = u.getHttpSession().getLastAccessedTime()
                                     > overdue;
+                            LOG.log(Level.INFO,
+                                    "Re-use DATAMODEL : Session [{0}] added in datamodel",
+                                    u.getHttpSession().getId());
                         } catch (IllegalStateException ise) {
                             //ignores invalidated session
+                            LOG.log(Level.SEVERE,
+                                    "Re-use DATAMODEL : Session [{0}] is invalidated???",
+                                    u.
+                                            getHttpSession().getId());
                         }
                         return validity;
                     })
@@ -138,8 +153,18 @@ public class LoggedInUsersBean implements Serializable {
         return sessions;
     }
 
+    /**
+     * Removes an active session linked for a specific user and update the data
+     * model used in the form.
+     *
+     * @param email the user's email
+     * @param session the http session to remove from the tracker and invalidate
+     * @return the result of the remove from the tracker
+     */
     public boolean remove(String email, HttpSession session) {
-        return tracker.remove(email, session);
+        boolean result = tracker.remove(email, session);
+        this.initLoggedInUsers();
+        return result;
     }
 
     private String getTypeOfUser(String email) {
