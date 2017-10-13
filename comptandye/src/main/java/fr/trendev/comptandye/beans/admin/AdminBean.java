@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.beans;
+package fr.trendev.comptandye.beans.admin;
 
+import fr.trendev.comptandye.beans.ActiveSessionTracker;
 import fr.trendev.comptandye.entities.Administrator;
 import fr.trendev.comptandye.sessions.AdministratorFacade;
 import java.io.IOException;
