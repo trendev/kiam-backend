@@ -9,11 +9,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
-        <p>
-            <h:outputLink value="loggedin-users.xhtml">Active Session Tracker</h:outputLink>
-        </p>
-        <h:form id="adminForm" onkeypress="return event.keyCode !== 13;">
-            <p:panelGrid columns="2">
+        <p:panelGrid columns="2" style="margin-bottom: 10px;">  
+            <h:outputLink value="loggedin-users.xhtml" style="text-decoration: none">Active Session Tracker</h:outputLink>
+            <h:outputLink value="change-pwd.xhtml" style="text-decoration: none">Change User Password</h:outputLink>
+        </p:panelGrid>
+        <h:form id="adminForm">
+            <p:panelGrid columns="2"  layout="grid">
                 <f:facet name="header">
                     <h:panelGrid  columns="2">
                         <h:outputText value="#{adminBean.administrator.email}"/>
