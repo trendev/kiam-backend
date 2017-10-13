@@ -39,6 +39,9 @@
                         <p:column headerText="Encrypted Password" sortBy="#{ind.password}">
                             <h:outputText value="#{ind.password}" />
                         </p:column>
+                        <p:column>
+                            <p:commandLink value="New Password" action="#{changePwdListBean.npwd(ind)}" style="text-decoration: none"/>
+                        </p:column>
                     </p:dataTable>
                 </p:tab>
                 <p:tab title="Professional">
@@ -48,6 +51,9 @@
                         </p:column>
                         <p:column headerText="Encrypted Password" sortBy="#{pro.password}">
                             <h:outputText value="#{pro.password}" />
+                        </p:column>
+                        <p:column>
+                            <p:commandLink value="New Password" action="#{changePwdListBean.npwd(pro)}" style="text-decoration: none"/>
                         </p:column>
                     </p:dataTable>
                 </p:tab>
