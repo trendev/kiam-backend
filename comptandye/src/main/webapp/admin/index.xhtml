@@ -9,16 +9,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
-        <p:panelGrid columns="2" style="margin-bottom: 10px;">  
+        <p:panelGrid columns="3" style="margin-bottom: 10px;">  
             <h:outputLink value="loggedin-users.xhtml" style="text-decoration: none">Active Session Tracker</h:outputLink>
-            <h:outputLink value="change-pwd.xhtml" style="text-decoration: none">Change User Password</h:outputLink>
+            <h:outputLink value="change-pwd-list.xhtml" style="text-decoration: none">Change User Password</h:outputLink>
         </p:panelGrid>
         <h:form id="adminForm">
             <p:panelGrid columns="2"  layout="grid">
                 <f:facet name="header">
                     <h:panelGrid  columns="2">
                         <h:outputText value="#{adminBean.administrator.email}"/>
-                        <h:commandButton id="logout" action="#{adminBean.logout}" value="Logout"/>
+                        <p:commandButton id="logout" action="#{adminBean.logout}" value="Logout"/>
                     </h:panelGrid>
                 </f:facet>
 
