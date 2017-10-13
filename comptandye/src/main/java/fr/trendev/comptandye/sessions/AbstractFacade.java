@@ -18,6 +18,11 @@ public abstract class AbstractFacade<E, P> {
 
     public abstract String prettyPrintPK(P pk);
 
+    public void clear() {
+        this.flush();
+        getEntityManager().clear();
+    }
+
     public void create(E entity) {
         getEntityManager().persist(entity);
     }
