@@ -15,7 +15,7 @@
         <p>
             <h:outputLink value="change-pwd-list.xhtml">User List</h:outputLink>
         </p>
-        <h:form onkeypress="return event.keyCode !== 13;">
+        <h:form>
             <p:panelGrid columns="2">
                 <f:facet name="header">
                     <h:outputText value="#{changePwdListBean.user.email}"/>
@@ -24,14 +24,14 @@
                 <h:outputText id="epwd" value="#{changePwdListBean.user.password}"/>
                 <h:outputText value="New password"/>
                 <h:inputText id="npwd" value="#{changePwdListBean.password}" style="width:100%">
-                    <f:ajax event="change"/>
+                    <f:ajax event="change" render="save cancel"/>
                 </h:inputText>
             </p:panelGrid>
-            <p:commandButton value="Save" icon="ui-icon-check" action="#{changePwdListBean.encryptPwd}" update="epwd npwd">
+            <p:commandButton id="save" value="Save" icon="ui-icon-check" action="#{changePwdListBean.encryptPwd}" update="epwd npwd cancel @this" disabled="#{empty changePwdListBean.password}">
                 <f:ajax event="click"/>
             </p:commandButton>
-            <p:commandButton value="Cancel" icon="ui-icon-close" action="#{changePwdListBean.clear}" update="npwd"/>
-            <p:commandButton value="Generate"/>
+            <p:commandButton id="cancel" value="Cancel" icon="ui-icon-close" action="#{changePwdListBean.clear}" update="npwd save @this" disabled="#{empty changePwdListBean.password}"/>
+            <p:commandButton id="generate" value="Generate" icon="ui-icon-transferthick-e-w" action="#{changePwdListBean.generate}" update="save cancel npwd" />
         </h:form>
     </h:body>
 </html>

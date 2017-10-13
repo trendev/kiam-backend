@@ -16,7 +16,7 @@ import javax.persistence.criteria.Root;
 
 @Stateless
 @Named("userAccount")
-public class UserAccountFacade {
+public class UserAccountFacade extends AbstractFacade<UserAccount, String> {
 
     @Inject
     private EntityManager em;
@@ -25,7 +25,17 @@ public class UserAccountFacade {
             getName());
 
     public UserAccountFacade() {
-        super();
+        super(UserAccount.class);
+    }
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
+
+    @Override
+    public String prettyPrintPK(String pk) {
+        return pk;
     }
 
     public String getUserAccountType(String email) {

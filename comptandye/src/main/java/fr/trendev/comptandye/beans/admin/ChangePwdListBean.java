@@ -12,6 +12,7 @@ import fr.trendev.comptandye.entities.UserAccount;
 import fr.trendev.comptandye.sessions.AdministratorFacade;
 import fr.trendev.comptandye.sessions.IndividualFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
+import fr.trendev.comptandye.sessions.UserAccountFacade;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import java.io.Serializable;
 import java.util.List;
@@ -41,6 +42,9 @@ public class ChangePwdListBean implements Serializable {
 
     @Inject
     private ProfessionalFacade professionalFacade;
+
+    @Inject
+    private UserAccountFacade userAccountFacade;
 
     private List<Administrator> administrators;
 
@@ -92,19 +96,25 @@ public class ChangePwdListBean implements Serializable {
         this.password = "";
     }
 
-    public void encryptPwd() {
+    public String encryptPwd() {
         String pwd = this.password;
         LOG.log(Level.WARNING, "password = {0}", pwd);
         LOG.log(Level.WARNING, "Will update {0}", user.getEmail());
         String epwd = PasswordGenerator.encrypt_SHA256(pwd);
         user.setPassword(epwd);
+        userAccountFacade.edit(user);
         this.clear();
         this.init();
+        return "change-pwd-list";
     }
 
     public String npwd(UserAccount user) {
         this.user = user;
         return "change-pwd";
+    }
+
+    public void generate() {
+        this.password = PasswordGenerator.autoGenerate();
     }
 
 }
