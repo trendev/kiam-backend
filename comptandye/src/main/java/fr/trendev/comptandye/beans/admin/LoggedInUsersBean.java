@@ -7,7 +7,7 @@ package fr.trendev.comptandye.beans.admin;
 
 import java.util.Map;
 import java.util.TreeMap;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
@@ -26,7 +26,7 @@ import org.primefaces.model.chart.PieChartModel;
  * @author jsie
  */
 @Named
-@SessionScoped
+@ViewScoped
 public class LoggedInUsersBean extends CommonUsersBean {
 
     private PieChartModel userTypes;
