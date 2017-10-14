@@ -27,6 +27,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -38,31 +39,31 @@ import javax.ws.rs.core.Response;
 @Path("Administrator")
 @RolesAllowed({"Administrator"})
 public class AdministratorService extends AbstractCommonService<Administrator, String> {
-    
+
     @Inject
     AdministratorFacade administratorFacade;
-    
+
     @Inject
     UserGroupFacade userGroupFacade;
-    
+
     private static final Logger LOG = Logger.getLogger(
             AdministratorService.class.
                     getName());
-    
+
     public AdministratorService() {
         super(Administrator.class);
     }
-    
+
     @Override
     protected Logger getLogger() {
         return LOG;
     }
-    
+
     @Override
     protected AbstractFacade<Administrator, String> getFacade() {
         return administratorFacade;
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
@@ -70,7 +71,7 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
         LOG.log(Level.INFO, "Providing the Administrator list");
         return super.findAll();
     }
-    
+
     @Path("count")
     @GET
     @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON,})
@@ -78,7 +79,7 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
     public Response count() {
         return super.count();
     }
-    
+
     @Path("{email}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -88,7 +89,7 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
         LOG.log(Level.INFO, "REST request to get Administrator : {0}", email);
         return super.find(email, refresh);
     }
-    
+
     @Path("{email}/userGroups")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -96,13 +97,13 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
         return super.provideRelation(email, Administrator::getUserGroups,
                 UserGroup.class);
     }
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response post(Administrator entity) {
         LOG.log(Level.INFO, "Creating Administrator {0}", entity.getEmail());
-        
+
         return super.post(entity, e -> {
             //generates an UUID if no one is provided
             if (e.getUuid() == null || e.getUuid().isEmpty()) {
@@ -125,7 +126,7 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
             e.setBlocked(false);
         });
     }
-    
+
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -139,12 +140,12 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
                         entity.getPassword());
                 e.setPassword(encrypted_pwd);
             }
-            
+
             e.setUsername(entity.getUsername());
             e.setRegistrationDate(entity.getRegistrationDate());
         });
     }
-    
+
     @Path("{email}")
     @DELETE
     public Response delete(@PathParam("email") String email) {
@@ -158,7 +159,7 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
             });
         });
     }
-    
+
     @Path("{email}/insertToUserGroup/{name}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -166,7 +167,13 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
             @PathParam("name") String name) {
         LOG.log(Level.INFO, "Inserting Administrator {0} into UserGroup {1}",
                 new Object[]{email, name});
-        
+
+        if (name != null && name.equals("Administrator")) {
+            throw new WebApplicationException("You cannot add the user ["
+                    + email
+                    + "] in the Administrator's user group using this service !!!");
+        }
+
         return super.<UserGroup, String>manageAssociation(
                 AssociationManagementEnum.INSERT,
                 email,
@@ -175,7 +182,7 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
                 (e, a) ->
                 e.getUserGroups().add(a) & a.getUserAccounts().add(e));
     }
-    
+
     @Path("{email}/removeFromUserGroup/{name}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -183,7 +190,13 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
             @PathParam("name") String name) {
         LOG.log(Level.INFO, "Removing Administrator {0} from UserGroup {1}",
                 new Object[]{email, name});
-        
+
+        if (name != null && name.equals("Administrator")) {
+            throw new WebApplicationException("You cannot remove the user ["
+                    + email
+                    + "] from the Administrator's user group using this service !!!");
+        }
+
         return super.<UserGroup, String>manageAssociation(
                 AssociationManagementEnum.REMOVE,
                 email,
@@ -192,5 +205,5 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
                 (e, a) ->
                 e.getUserGroups().remove(a) & a.getUserAccounts().remove(e));
     }
-    
+
 }

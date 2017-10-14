@@ -37,6 +37,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -259,6 +260,12 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
         LOG.log(Level.INFO, "Inserting Professional {0} into UserGroup {1}",
                 new Object[]{email, name});
 
+        if (name != null && name.equals("Professional")) {
+            throw new WebApplicationException("You cannot add the user ["
+                    + email
+                    + "] in the Professional's user group using this service !!!");
+        }
+
         return super.<UserGroup, String>manageAssociation(
                 AssociationManagementEnum.INSERT,
                 email,
@@ -276,6 +283,12 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
             @PathParam("name") String name) {
         LOG.log(Level.INFO, "Removing Professional {0} from UserGroup {1}",
                 new Object[]{email, name});
+
+        if (name != null && name.equals("Professional")) {
+            throw new WebApplicationException("You cannot remove the user ["
+                    + email
+                    + "] from the Professional's user group using this service !!!");
+        }
 
         return super.<UserGroup, String>manageAssociation(
                 AssociationManagementEnum.REMOVE,
