@@ -27,9 +27,14 @@ public class OverallExceptionMapper implements ExceptionMapper<Exception> {
         String errmsg = ExceptionHelper.handleException(ex,
                 OverallExceptionMapper.class.getSimpleName()
                 + " caught an Exception");
+
+        if (!errmsg.contains(ex.getMessage())) {
+            errmsg = ex.getMessage() + " / " + errmsg;
+        }
+
         return Response.status(Response.Status.EXPECTATION_FAILED).entity(Json.
                 createObjectBuilder().add(
-                        "error", ex.getMessage() + " / " + errmsg).build()).
+                        "error", errmsg).build()).
                 build();
     }
 }
