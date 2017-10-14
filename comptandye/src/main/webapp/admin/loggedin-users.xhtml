@@ -18,7 +18,7 @@
         <h:form id="sessionform">
             <p:poll interval="#{loggedInUsersBean.refresh}" listener="#{loggedInUsersBean.initLoggedInUsers}" update="sessionform:tabs sessionform:count"/>
 
-            <h3>Active Session Tracker - <h:outputText id="count" value="#{loggedInUsersBean.userAccounts.size()}  User#{loggedInUsersBean.userAccounts.size()>1?'s':''} Logged"/> </h3>
+            <h3 id="count">Active Session Tracker - <h:outputText value="#{loggedInUsersBean.userAccounts.size()}  User#{loggedInUsersBean.userAccounts.size()>1?'s':''} Logged "/> / <h:outputText id="count" value="#{loggedInUsersBean.loggedInUsers.size()}  Http Session#{loggedInUsersBean.loggedInUsers.size()>1?'s':''}" /></h3>
 
             <p:tabView id="tabs">
 

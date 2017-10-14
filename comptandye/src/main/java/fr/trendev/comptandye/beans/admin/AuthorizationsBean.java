@@ -5,7 +5,6 @@
  */
 package fr.trendev.comptandye.beans.admin;
 
-import fr.trendev.comptandye.beans.ActiveSessionTracker;
 import fr.trendev.comptandye.entities.Administrator;
 import fr.trendev.comptandye.entities.Individual;
 import fr.trendev.comptandye.entities.Professional;
@@ -28,64 +27,65 @@ import javax.inject.Named;
 @Named
 @SessionScoped
 public class AuthorizationsBean extends CommonUsersBean {
-
-    @Inject
-    ActiveSessionTracker tracker;
-
+    
     @Inject
     UserGroupFacade userGroupFacade;
-
+    
     @Inject
     private AdministratorFacade administratorFacade;
-
+    
     @Inject
     private IndividualFacade individualFacade;
-
+    
     @Inject
     private ProfessionalFacade professionalFacade;
-
+    
     @Inject
     private UserAccountFacade userAccountFacade;
-
+    
     private List<Administrator> administrators;
-
+    
     private List<Individual> individuals;
-
+    
     private List<Professional> professionals;
-
+    
     @PostConstruct
     public void init() {
         this.administrators = administratorFacade.findAll();
         this.individuals = individualFacade.findAll();
         this.professionals = professionalFacade.findAll();
     }
-
+    
     public AdministratorFacade getAdministratorFacade() {
         return administratorFacade;
     }
-
+    
     public IndividualFacade getIndividualFacade() {
         return individualFacade;
     }
-
+    
     public ProfessionalFacade getProfessionalFacade() {
         return professionalFacade;
     }
-
+    
     public List<Administrator> getAdministrators() {
         return administrators;
     }
-
+    
     public List<Individual> getIndividuals() {
         return individuals;
     }
-
+    
     public List<Professional> getProfessionals() {
         return professionals;
     }
-
-    public boolean hideDisconnectButton(UserAccount user) {
-        return false;
-//return Optional.ofNullable(tracker.)
+    
+    public boolean renderDisconnectButton(UserAccount user) {
+        return !this.getSessions(user.getEmail()).isEmpty();
+    }
+    
+    public void disconnect(UserAccount user) {
+        this.getSessions(user.getEmail()).forEach(s -> this.remove(user.
+                getEmail(), s));
     }
 }

@@ -15,10 +15,10 @@
         <p>
             <h:outputLink value="index.xhtml">Administration Console</h:outputLink>
         </p>
-        <h:form id="authform">
-            <p:poll interval="#{authorizationsBean.refresh}" listener="#{authorizationsBean.init}" update="authform"/>
+        <h:form id="form">
+            <p:poll interval="#{authorizationsBean.refresh}" listener="#{authorizationsBean.init}" update="form"/>
 
-            <h3>Disconnect or Block/Authorize an User</h3>
+            <h3>Disconnect or Block/Allow an User</h3>
 
             <p:accordionPanel>
                 <p:tab title="Administrator">
@@ -32,7 +32,7 @@
                             </h:outputText>
                         </p:column>
                         <p:column headerText="Disconnect" style="text-align:center">
-                            <p:commandButton icon="ui-icon-circle-close" update="admins"/>
+                            <p:commandButton icon="ui-icon-circle-close" action="#{authorizationsBean.disconnect(admin)}" update="form" rendered="#{authorizationsBean.renderDisconnectButton(admin)}"/>
                         </p:column>
                     </p:dataTable>
                 </p:tab>
