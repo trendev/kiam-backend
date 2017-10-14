@@ -18,7 +18,7 @@
         <h:form id="form">
             <p:poll interval="#{authorizationsBean.refresh}" listener="#{authorizationsBean.init}" update="form"/>
 
-            <h3>Disconnect or Block/Allow an User</h3>
+            <h3>Disconnect or Allow/Block an User</h3>
 
             <p:accordionPanel>
                 <p:tab title="Administrator">
@@ -32,7 +32,12 @@
                             </h:outputText>
                         </p:column>
                         <p:column headerText="Disconnect" style="text-align:center">
-                            <p:commandButton icon="ui-icon-circle-close" action="#{authorizationsBean.disconnect(admin)}" update="form" rendered="#{authorizationsBean.renderDisconnectButton(admin)}"/>
+                            <p:commandButton icon="ui-icon-power" action="#{authorizationsBean.disconnect(admin)}" update="form" rendered="#{authorizationsBean.renderDisconnectButton(admin)}"/>
+                        </p:column>
+                        <p:column headerText="Allow/Block" style="text-align:center">
+                            <p:inputSwitch valueChangeListener="#{authorizationsBean.processAuthorizationChange}">
+                                <p:ajax update="form" />
+                            </p:inputSwitch>
                         </p:column>
                     </p:dataTable>
                 </p:tab>
