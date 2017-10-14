@@ -151,6 +151,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
 
             if (!inactivate) {
                 this.grantAsProfessional(e);
+                e.setBlocked(false);
             }
         });
     }
@@ -162,8 +163,9 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     }
 
     /**
-     * Prepares and Updates a Professional. Email, UUID and registrationDate
-     * fields will be ignored and should not be changed by the way...
+     * Prepares and Updates a Professional. Email, UUID, blocked and
+     * registrationDate fields will be ignored and should not be changed by the
+     * way...
      *
      * @param sec the security context (use if a Professional has initiated the
      * request)

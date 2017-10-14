@@ -76,12 +76,14 @@ public class ProfessionalTest {
         assert instance.getIndividuals().isEmpty();
         assert instance.getPaymentModes() != null;
         assert instance.getPaymentModes().isEmpty();
+        assert instance.isBlocked() == true;
 
         String email = "professional@domain.com";
         String password = "encrypted_pwd";
         String username = "PRO01";
         String uuid = "PRO_0001";
         instance = new Professional(email, password, username, uuid);
+        instance.setBlocked(false);
 
         assert instance.getEmail().equals(email);
         assert instance.getPassword().equals(password);
@@ -116,6 +118,7 @@ public class ProfessionalTest {
         assert instance.getIndividuals().isEmpty();
         assert instance.getPaymentModes() != null;
         assert instance.getPaymentModes().isEmpty();
+        assert instance.isBlocked() == false;
 
         String website = "http://www.mycompany.com";
         String companyName = "MyCompany";
@@ -129,6 +132,7 @@ public class ProfessionalTest {
                 new CustomerDetails(), new Address(),
                 new SocialNetworkAccounts(), website, companyName, companyID,
                 VATcode, creationDate);
+        instance.setBlocked(false);
 
         assert instance.getEmail().equals(email);
         assert instance.getPassword().equals(password);
@@ -164,6 +168,8 @@ public class ProfessionalTest {
         assert instance.getIndividuals().isEmpty();
         assert instance.getPaymentModes() != null;
         assert instance.getPaymentModes().isEmpty();
+        assert instance.isBlocked() == false;
+
     }
 
 }

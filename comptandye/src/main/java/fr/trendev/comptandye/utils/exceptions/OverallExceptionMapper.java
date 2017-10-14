@@ -29,6 +29,7 @@ public class OverallExceptionMapper implements ExceptionMapper<Exception> {
                 + " caught an Exception");
         return Response.status(Response.Status.EXPECTATION_FAILED).entity(Json.
                 createObjectBuilder().add(
-                        "error", errmsg).build()).build();
+                        "error", ex.getMessage() + " / " + errmsg).build()).
+                build();
     }
 }

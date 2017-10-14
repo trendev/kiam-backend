@@ -61,12 +61,14 @@ public class IndividualTest {
         assert instance.getProfessionals().isEmpty();
         assert instance.getIndividualBills() != null;
         assert instance.getIndividualBills().isEmpty();
+        assert instance.isBlocked() == true;
 
         String email = "individual@procompany.com";
         String password = "encrypted_pwd";
         String username = "IND01";
         String uuid = "IND_0001";
         instance = new Individual(email, password, username, uuid);
+        instance.setBlocked(false);
 
         assert instance.getEmail().equals(email);
         assert instance.getPassword().equals(password);
@@ -82,10 +84,12 @@ public class IndividualTest {
         assert instance.getProfessionals().isEmpty();
         assert instance.getIndividualBills() != null;
         assert instance.getIndividualBills().isEmpty();
+        assert instance.isBlocked() == false;
 
         instance = new Individual(email, password, username, uuid,
                 new CustomerDetails(), new Address(),
                 new SocialNetworkAccounts());
+        instance.setBlocked(false);
 
         assert instance.getEmail().equals(email);
         assert instance.getPassword().equals(password);
@@ -101,7 +105,7 @@ public class IndividualTest {
         assert instance.getProfessionals().isEmpty();
         assert instance.getIndividualBills() != null;
         assert instance.getIndividualBills().isEmpty();
-
+        assert instance.isBlocked() == false;
     }
 
 }

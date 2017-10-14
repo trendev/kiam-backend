@@ -403,25 +403,26 @@ public abstract class AbstractCommonService<E, P> {
                                                 associationFacade.prettyPrintPK(
                                                         associationPk),
                                                 result});
-                                    return result ? Response.ok(a).build() : Response.
-                                            status(Response.Status.BAD_REQUEST).
-                                            entity(Json.createObjectBuilder().
-                                                    add("error",
-                                                            "No existing association between "
-                                                            + entityClass.
-                                                                    getSimpleName()
-                                                            + " "
-                                                            + getFacade().
-                                                                    prettyPrintPK(
-                                                                            entityPk)
-                                                            + " and "
-                                                            + associationEntityClass.
-                                                                    getSimpleName()
-                                                            + " "
-                                                            + associationFacade.
-                                                                    prettyPrintPK(
-                                                                            associationPk)).
-                                                    build()).build();
+
+                                    if (!result) {
+                                        String errmsg = "No existing association between "
+                                                + entityClass.
+                                                        getSimpleName()
+                                                + " "
+                                                + getFacade().
+                                                        prettyPrintPK(
+                                                                entityPk)
+                                                + " and "
+                                                + associationEntityClass.
+                                                        getSimpleName()
+                                                + " "
+                                                + associationFacade.
+                                                        prettyPrintPK(
+                                                                associationPk);
+                                        throw new BadRequestException(errmsg);
+                                    } else {
+                                        return Response.ok(a).build();
+                                    }
                                 })
                                 .orElse(Response.status(
                                         Response.Status.NOT_FOUND).entity(

@@ -81,6 +81,9 @@ public abstract class UserAccount {
     @Temporal(TemporalType.TIMESTAMP)
     private Date registrationDate = new Date();
 
+    @Basic
+    private boolean blocked = true;
+
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST},
             targetEntity = UserGroup.class)
     @JsonIgnore
@@ -143,6 +146,14 @@ public abstract class UserAccount {
 
     public void setRegistrationDate(Date registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    public boolean isBlocked() {
+        return this.blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
     }
 
     public List<UserGroup> getUserGroups() {

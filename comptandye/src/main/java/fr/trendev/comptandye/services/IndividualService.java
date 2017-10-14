@@ -41,33 +41,33 @@ import javax.ws.rs.core.Response;
 @Path("Individual")
 @RolesAllowed({"Administrator"})
 public class IndividualService extends AbstractCommonService<Individual, String> {
-
+    
     @Inject
     IndividualFacade individualFacade;
-
+    
     @Inject
     UserGroupFacade userGroupFacade;
-
+    
     @Inject
     ProfessionalFacade professionalFacade;
-
+    
     private static final Logger LOG = Logger.getLogger(IndividualService.class.
             getName());
-
+    
     public IndividualService() {
         super(Individual.class);
     }
-
+    
     @Override
     protected Logger getLogger() {
         return LOG;
     }
-
+    
     @Override
     protected AbstractFacade<Individual, String> getFacade() {
         return individualFacade;
     }
-
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
@@ -75,7 +75,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
         LOG.log(Level.INFO, "Providing the Individual list");
         return super.findAll();
     }
-
+    
     @Path("count")
     @GET
     @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON,})
@@ -83,7 +83,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
     public Response count() {
         return super.count();
     }
-
+    
     @Path("{email}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -93,16 +93,16 @@ public class IndividualService extends AbstractCommonService<Individual, String>
         LOG.log(Level.INFO, "REST request to get Individual : {0}", email);
         return super.find(email, refresh);
     }
-
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response post(Individual entity) {
         LOG.log(Level.INFO, "Creating Individual {0}", entity.getEmail());
-
+        
         return super.post(entity,
                 e -> {
-
+            
             e.setUuid(UUIDGenerator.generate("IND-", true));
 
             //encrypts the provided password
@@ -114,9 +114,10 @@ public class IndividualService extends AbstractCommonService<Individual, String>
             UserGroup indGroup = userGroupFacade.find("Individual");
             indGroup.getUserAccounts().add(e);
             e.getUserGroups().add(indGroup);
+            e.setBlocked(false);
         });
     }
-
+    
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -133,7 +134,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
                         entity.getPassword());
                 e.setPassword(encrypted_pwd);
             }
-
+            
             e.setUsername(entity.getUsername());
             /**
              * TODO : Should only be performed by an Administrator
@@ -148,27 +149,27 @@ public class IndividualService extends AbstractCommonService<Individual, String>
             entity.getCustomerDetails().setId(null);
             entity.getAddress().setId(null);
             entity.getSocialNetworkAccounts().setId(null);
-
+            
             e.setCustomerDetails(entity.getCustomerDetails());
             e.setAddress(entity.getAddress());
             e.setSocialNetworkAccounts(entity.getSocialNetworkAccounts());
         });
     }
-
+    
     @Path("{email}")
     @DELETE
     public Response delete(@PathParam("email") String email) {
         LOG.log(Level.INFO, "Deleting Individual {0}", email);
-
+        
         return super.delete(email, e -> {
-
+            
             e.getUserGroups().forEach(grp -> {
                 grp.getUserAccounts().remove(e);
                 LOG.log(Level.INFO,
                         "Individual {0} removed from UserGroup {1}",
                         new Object[]{email, grp.getName()});
             });
-
+            
             e.getProfessionals().forEach(p -> {
                 p.getIndividuals().remove(e);
                 LOG.log(Level.INFO,
@@ -177,7 +178,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
             });
         });
     }
-
+    
     @Path("{email}/userGroups")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -185,7 +186,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
         return super.provideRelation(email, Individual::getUserGroups,
                 UserGroup.class);
     }
-
+    
     @Path("{email}/insertToUserGroup/{name}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -193,7 +194,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
             @PathParam("name") String name) {
         LOG.log(Level.INFO, "Inserting Individual {0} into UserGroup {1}",
                 new Object[]{email, name});
-
+        
         return super.<UserGroup, String>manageAssociation(
                 AssociationManagementEnum.INSERT,
                 email,
@@ -202,7 +203,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
                 (e, a) ->
                 e.getUserGroups().add(a) & a.getUserAccounts().add(e));
     }
-
+    
     @Path("{email}/removeFromUserGroup/{name}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -210,7 +211,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
             @PathParam("name") String name) {
         LOG.log(Level.INFO, "Removing Individual {0} from UserGroup {1}",
                 new Object[]{email, name});
-
+        
         return super.<UserGroup, String>manageAssociation(
                 AssociationManagementEnum.REMOVE,
                 email,
@@ -219,7 +220,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
                 (e, a) ->
                 e.getUserGroups().remove(a) & a.getUserAccounts().remove(e));
     }
-
+    
     @Path("{email}/professionals")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -227,7 +228,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
         return super.provideRelation(email,
                 Individual::getProfessionals, Professional.class);
     }
-
+    
     @Path("{email}/individualBills")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -235,7 +236,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
         return super.provideRelation(email,
                 Individual::getIndividualBills, IndividualBill.class);
     }
-
+    
     @Path("{indEmail}/buildBusinessRelationship/{proEmail}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -245,7 +246,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
         LOG.log(Level.INFO,
                 "Build business relationship between Individual {0} and Professional {1}",
                 new Object[]{indEmail, proEmail});
-
+        
         return super.<Professional, String>manageAssociation(
                 AssociationManagementEnum.INSERT,
                 indEmail,
@@ -254,7 +255,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
                 (i, p) ->
                 i.getProfessionals().add(p) & p.getIndividuals().add(i));
     }
-
+    
     @Path("{indEmail}/endBusinessRelationship/{proEmail}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -264,7 +265,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
         LOG.log(Level.INFO,
                 "End business relationship between Individual {0} and Professional {1}",
                 new Object[]{indEmail, proEmail});
-
+        
         return super.<Professional, String>manageAssociation(
                 AssociationManagementEnum.REMOVE,
                 indEmail,

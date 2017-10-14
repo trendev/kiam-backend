@@ -46,12 +46,14 @@ public class AdministratorTest {
         assert instance.getRegistrationDate() != null;
         assert instance.getUserGroups() != null;
         assert instance.getUserGroups().isEmpty();
+        assert instance.isBlocked() == true;
 
         String email = "admin@domain.com";
         String password = "encrypted_pwd";
         String username = "Admin01";
         String uuid = "ADMIN_0001";
         instance = new Administrator(email, password, username, uuid);
+        instance.setBlocked(false);
 
         assert instance.getEmail().equals(email);
         assert instance.getPassword().equals(password);
@@ -60,6 +62,7 @@ public class AdministratorTest {
         assert instance.getRegistrationDate() != null;
         assert instance.getUserGroups() != null;
         assert instance.getUserGroups().isEmpty();
+        assert instance.isBlocked() == false;
     }
 
 }
