@@ -12,6 +12,7 @@
         <p:panelGrid columns="3" style="margin-bottom: 10px;">  
             <h:outputLink value="loggedin-users.xhtml" style="text-decoration: none">Active Session Tracker</h:outputLink>
             <h:outputLink value="change-pwd-list.xhtml" style="text-decoration: none">Change User Password</h:outputLink>
+            <h:outputLink value="authorizations.xhtml" style="text-decoration: none">Manage Authorizations</h:outputLink>
         </p:panelGrid>
         <h:form id="adminForm">
             <p:panelGrid columns="2"  layout="grid">
@@ -41,15 +42,15 @@
 
                 <h:outputText value="Registation date:"/>
                 <h:outputText value="#{adminBean.administrator.registrationDate}">
-                    <f:convertDateTime type="both" dateStyle="full" /><!-- type="both" -->
+                    <f:convertDateTime type="both" dateStyle="full" />
                 </h:outputText>
                 <h:outputText value="Session creation time"/>
                 <h:outputText value="#{session.creationTime}">
-                    <f:convertDateTime type="both" dateStyle="full" /><!-- type="both" -->
+                    <f:convertDateTime type="both" dateStyle="full" />
                 </h:outputText>
                 <h:outputText value="Last access:"/>
                 <h:outputText value="#{session.lastAccessedTime}">
-                    <f:convertDateTime type="both" dateStyle="full" /><!-- type="both" -->
+                    <f:convertDateTime type="both" dateStyle="full" />
                 </h:outputText>
 
                 <h:outputText value="#{adminBean.administrator.userGroups.size()} UserGroup#{adminBean.administrator.userGroups.size()>1?'s':''}:"/>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Authorizations</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <p>
+            <h:outputLink value="index.xhtml">Administration Console</h:outputLink>
+        </p>
+        <h:form id="authform">
+            <p:poll interval="#{authorizationsBean.refresh}" listener="#{authorizationsBean.init}" update="authform"/>
+
+            <h3>Disconnect or Block/Authorize an User</h3>
+
+            <p:accordionPanel>
+                <p:tab title="Administrator">
+                    <p:dataTable id="admins" var="admin" value="#{authorizationsBean.administrators}" sortMode="multiple" tableStyle="width:auto">
+                        <p:column headerText="Email" sortBy="#{admin.email}">
+                            <h:outputText value="#{admin.email}" />
+                        </p:column>
+                        <p:column headerText="Registration Date" sortBy="#{admin.registrationDate}">
+                            <h:outputText value="#{admin.registrationDate}">
+                                <f:convertDateTime type="both" dateStyle="full" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Disconnect" style="text-align:center">
+                            <p:commandButton icon="ui-icon-circle-close" update="admins"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:tab>
+                <p:tab title="Individual">
+                    <p:dataTable id="inds" var="ind" value="#{authorizationsBean.individuals}" sortMode="multiple" tableStyle="width:auto">
+                        <p:column headerText="Email" sortBy="#{ind.email}">
+                            <h:outputText value="#{ind.email}" />
+                        </p:column>
+                    </p:dataTable>
+                </p:tab>
+                <p:tab title="Professional">
+                    <p:dataTable id="pros" var="pro" value="#{authorizationsBean.professionals}" sortMode="multiple" tableStyle="width:auto">
+                        <p:column headerText="Email" sortBy="#{pro.email}">
+                            <h:outputText value="#{pro.email}" />
+                        </p:column>
+                    </p:dataTable>
+                </p:tab>
+            </p:accordionPanel>
+        </h:form>
+    </h:body>
+</html>
+
+
