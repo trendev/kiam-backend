@@ -58,6 +58,11 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
+            <jpa:basic attribute-type="long" v="true" xvt="" name="lastAccessedTime" dv="System.currentTimeMillis()" id="_150807874242070">
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
             <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490100852900" connected-attribute-id="_14901160469883436" v="true" xvt="" name="userGroups" dv="new LinkedList&lt;&gt;()" id="_14901160469863435">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
@@ -113,6 +118,9 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         </jpa:nq>
         <jpa:nq e="false" name="UserAccount.findByBlocked">
             <jpa:query>Select u from UserAccount u where u.blocked=:blocked</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="UserAccount.findByLastAccessedTime">
+            <jpa:query>Select u from UserAccount u where u.lastAccessedTime=:lastAccessedTime</jpa:query>
         </jpa:nq>
         <jpa:table name="USER_ACCOUNT"/>
         <jpa:inheritance strategy="SINGLE_TABLE"/>
@@ -1685,7 +1693,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 </el>
             </i>
             <i ref="_1490184243036" x="21" y="1263"/>
-            <i ref="_1490100823157" x="69" y="-187">
+            <i ref="_1490100823157" x="21" y="-236">
                 <el>
                     <e ref="_14901160469863435">
                         <v st="1" si="12.0" cl="#ff0000"/>

@@ -84,6 +84,10 @@ public abstract class UserAccount {
     @Basic
     private boolean blocked = true;
 
+    @Basic
+    @JsonIgnore
+    private long lastAccessedTime = System.currentTimeMillis();
+
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST},
             targetEntity = UserGroup.class)
     @JsonIgnore
@@ -154,6 +158,14 @@ public abstract class UserAccount {
 
     public void setBlocked(boolean blocked) {
         this.blocked = blocked;
+    }
+
+    public long getLastAccessedTime() {
+        return this.lastAccessedTime;
+    }
+
+    public void setLastAccessedTime(long lastAccessedTime) {
+        this.lastAccessedTime = lastAccessedTime;
     }
 
     public List<UserGroup> getUserGroups() {

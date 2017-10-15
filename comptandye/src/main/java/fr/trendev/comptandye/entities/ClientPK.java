@@ -57,8 +57,8 @@ public class ClientPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 47 * hash + (this.getId() != null ? this.getId().hashCode() : 0);
-        hash = 47 * hash + (this.getProfessional() != null ? this.
+        hash = 11 * hash + (this.getId() != null ? this.getId().hashCode() : 0);
+        hash = 11 * hash + (this.getProfessional() != null ? this.
                 getProfessional().hashCode() : 0);
         return hash;
     }
