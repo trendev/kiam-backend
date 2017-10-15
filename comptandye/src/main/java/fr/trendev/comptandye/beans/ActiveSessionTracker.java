@@ -41,18 +41,18 @@ public class ActiveSessionTracker {
      * Index used a Reverse map
      */
     private final Map<String, String> index;
-    
+
     private static final Logger LOG = Logger.getLogger(
             ActiveSessionTracker.class.getName());
-    
+
     @Inject
     UserAccountFacade userAccountFacade;
-    
+
     public ActiveSessionTracker() {
         map = new ConcurrentHashMap<>();
         index = new ConcurrentHashMap<>();
     }
-    
+
     @PostConstruct
     private void init() {
         LOG.log(Level.INFO, "{0} initialized",
@@ -77,7 +77,7 @@ public class ActiveSessionTracker {
             //if sessions are not well managed before overall shutdown 
             LOG.log(Level.WARNING, "{0} still contains active sessions !!!",
                     ActiveSessionTracker.class.getSimpleName());
-            
+
             map.entrySet().forEach(e -> {
                 LOG.log(Level.WARNING, "{0}: {1} session{2}", new Object[]{
                     e.getKey(),
@@ -135,7 +135,7 @@ public class ActiveSessionTracker {
      * if email is null.
      */
     public boolean remove(String email, HttpSession session) {
-        
+
         return Optional.ofNullable(map.get(email))
                 .map(s -> {
                     String id = session.getId();
@@ -143,24 +143,24 @@ public class ActiveSessionTracker {
                             "Removing session {0} associated with user [{1}]",
                             new Object[]{id,
                                 email});
-                    
+
                     boolean result = s.remove(session);
                     this.drop(session.getId());
-                    
+
                     try {
                         //Saves the last accessed time of the User
                         long time = session.getLastAccessedTime();
-                        
+
                         UserAccount user = userAccountFacade.find(email);
                         user.setLastAccessedTime(time);
-                        
+
                         session.invalidate();
                         result &= true;
                     } catch (Exception ex) {
                         // should happens if the session is already invalidated (concurrent remove)
                         result = false;
                     }
-                    
+
                     LOG.log(Level.INFO,
                             "Session {0} removed from {1} and invalidated : {2}",
                             new Object[]{
@@ -168,7 +168,7 @@ public class ActiveSessionTracker {
                                 ActiveSessionTracker.class.getSimpleName(),
                                 result
                             });
-                    
+
                     if (s.isEmpty()) {
                         map.remove(email);
                         LOG.log(Level.INFO,
@@ -176,11 +176,11 @@ public class ActiveSessionTracker {
                                 new Object[]{email,
                                     ActiveSessionTracker.class.getSimpleName()});
                     }
-                    
+
                     return result;
                 })
                 .orElse(false);
-        
+
     }
 
     /**
@@ -233,10 +233,12 @@ public class ActiveSessionTracker {
      * Removes a session from the index.
      *
      * @param sid the session id
-     * @return null or the previous value contained in the index
+     * @return an empty string or the previous value contained in the index
      */
     public String drop(String sid) {
-        return index.remove(sid);
+        return Optional.ofNullable(index.remove(sid))
+                .map(Function.identity())
+                .orElse("");
     }
-    
+
 }
