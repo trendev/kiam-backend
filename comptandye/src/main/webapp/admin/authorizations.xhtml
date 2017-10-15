@@ -34,9 +34,9 @@
                         <p:column headerText="Disconnect" style="text-align:center">
                             <p:commandButton icon="ui-icon-power" action="#{authorizationsBean.disconnect(admin)}" update="form" rendered="#{authorizationsBean.renderDisconnectButton(admin)}"/>
                         </p:column>
-                        <p:column headerText="Allow/Block" style="text-align:center">
-                            <p:inputSwitch valueChangeListener="#{authorizationsBean.processAuthorizationChange}">
-                                <p:ajax update="form" />
+                        <p:column headerText="Lockdown" style="text-align:center">
+                            <p:inputSwitch value="#{admin.blocked}">
+                                <p:ajax listener="#{authorizationsBean.processAuthorizationChange(admin)}" update="form"/>
                             </p:inputSwitch>
                         </p:column>
                     </p:dataTable>

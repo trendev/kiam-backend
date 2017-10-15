@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
 public abstract class CommonUsersBean implements Serializable {
 
     @Inject
-    protected UserAccountFacade userAccountFacade;
+    private UserAccountFacade userAccountFacade;
 
     @Inject
     private ActiveSessionTracker tracker;
@@ -57,7 +57,7 @@ public abstract class CommonUsersBean implements Serializable {
     /**
      * Refresh delay
      */
-    private int refresh = 5;
+    private int refresh = 15;
 
     public UserAccountFacade getUserAccountFacade() {
         return userAccountFacade;

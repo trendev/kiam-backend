@@ -18,6 +18,10 @@ public abstract class AbstractFacade<E, P> {
 
     public abstract String prettyPrintPK(P pk);
 
+    public boolean contains(E entity) {
+        return getEntityManager().contains(entity);
+    }
+
     public void clear() {
         this.flush();
         getEntityManager().clear();
