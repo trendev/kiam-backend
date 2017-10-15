@@ -9,7 +9,9 @@ import fr.trendev.comptandye.entities.Administrator;
 import fr.trendev.comptandye.entities.Individual;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.UserAccount;
+import java.util.ConcurrentModificationException;
 import java.util.List;
+import java.util.OptionalLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -25,19 +27,19 @@ import javax.servlet.http.HttpSession;
 @Named
 @ViewScoped
 public class AuthorizationsBean extends CommonUsersBean {
-    
+
     private static final Logger LOG = Logger.getLogger(AuthorizationsBean.class.
             getName());
-    
+
     @Inject
     private AuthorizationBeanProxy proxy;
-    
+
     private List<Administrator> administrators;
-    
+
     private List<Individual> individuals;
-    
+
     private List<Professional> professionals;
-    
+
     @PostConstruct
     public void init() {
         this.administrators = proxy.getAdministrators();
@@ -45,38 +47,56 @@ public class AuthorizationsBean extends CommonUsersBean {
         this.professionals = proxy.getProfessionals();
         LOG.log(Level.SEVERE, "INIT IN PROGRESS");
     }
-    
+
     public List<Administrator> getAdministrators() {
         return administrators;
     }
-    
+
     public List<Individual> getIndividuals() {
         return individuals;
     }
-    
+
     public List<Professional> getProfessionals() {
         return professionals;
     }
-    
+
     public boolean renderDisconnectButton(UserAccount user) {
         return !this.getSessions(user.getEmail()).isEmpty();
     }
-    
+
     public void disconnect(UserAccount user) {
-        
+
         List<HttpSession> sessions = this.getSessions(user.getEmail());
-        
+
         int size = sessions.size();
         for (int i = 0; i < size; i++) {
             HttpSession s = sessions.get(0);
             this.remove(user.getEmail(), s);
         }
-        
+
     }
-    
+
     public void processAuthorizationChange(UserAccount user) {
         proxy.processAuthorizationChange(user);
         this.disconnect(user);
     }
-    
+
+    public long getLastAccessedTime(UserAccount user) {
+        long time;
+
+        try {
+            OptionalLong max = this.getSessions(user.getEmail()).stream()
+                    .mapToLong(HttpSession::getLastAccessedTime)
+                    .max();
+
+            time = max.orElse(user.getLastAccessedTime());
+
+        } catch (ConcurrentModificationException | IllegalStateException ex) {
+            time = user.getLastAccessedTime();
+        }
+
+        long checkpoint = time;
+        return time;
+    }
+
 }
