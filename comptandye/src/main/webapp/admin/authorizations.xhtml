@@ -39,6 +39,11 @@
                                 <p:ajax listener="#{authorizationsBean.processAuthorizationChange(admin)}" update="form"/>
                             </p:inputSwitch>
                         </p:column>
+                        <p:column headerText="Last Access" sortBy="#{admin.lastAccessedTime}">
+                            <h:outputText value="#{admin.lastAccessedTime}">
+                                <f:convertDateTime type="both" dateStyle="full" />
+                            </h:outputText>
+                        </p:column>
                     </p:dataTable>
                 </p:tab>
                 <p:tab title="Individual">

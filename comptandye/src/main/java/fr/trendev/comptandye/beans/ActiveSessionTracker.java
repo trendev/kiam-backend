@@ -5,6 +5,8 @@
  */
 package fr.trendev.comptandye.beans;
 
+import fr.trendev.comptandye.entities.UserAccount;
+import fr.trendev.comptandye.sessions.UserAccountFacade;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -19,6 +21,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -38,15 +41,18 @@ public class ActiveSessionTracker {
      * Index used a Reverse map
      */
     private final Map<String, String> index;
-
+    
     private static final Logger LOG = Logger.getLogger(
             ActiveSessionTracker.class.getName());
-
+    
+    @Inject
+    UserAccountFacade userAccountFacade;
+    
     public ActiveSessionTracker() {
         map = new ConcurrentHashMap<>();
         index = new ConcurrentHashMap<>();
     }
-
+    
     @PostConstruct
     private void init() {
         LOG.log(Level.INFO, "{0} initialized",
@@ -71,7 +77,7 @@ public class ActiveSessionTracker {
             //if sessions are not well managed before overall shutdown 
             LOG.log(Level.WARNING, "{0} still contains active sessions !!!",
                     ActiveSessionTracker.class.getSimpleName());
-
+            
             map.entrySet().forEach(e -> {
                 LOG.log(Level.WARNING, "{0}: {1} session{2}", new Object[]{
                     e.getKey(),
@@ -125,10 +131,11 @@ public class ActiveSessionTracker {
      *
      * @param email the user to disconnect
      * @param session the session to remove/invalidate
-     * @return true if session has been removed false otherwise
+     * @return true if session has been removed false otherwise. Returns false
+     * if email is null.
      */
     public boolean remove(String email, HttpSession session) {
-
+        
         return Optional.ofNullable(map.get(email))
                 .map(s -> {
                     String id = session.getId();
@@ -136,18 +143,24 @@ public class ActiveSessionTracker {
                             "Removing session {0} associated with user [{1}]",
                             new Object[]{id,
                                 email});
-
+                    
                     boolean result = s.remove(session);
                     this.drop(session.getId());
-
+                    
                     try {
+                        //Saves the last accessed time of the User
+                        long time = session.getLastAccessedTime();
+                        
+                        UserAccount user = userAccountFacade.find(email);
+                        user.setLastAccessedTime(time);
+                        
                         session.invalidate();
                         result &= true;
-                    } catch (IllegalStateException ex) {
+                    } catch (Exception ex) {
                         // should happens if the session is already invalidated (concurrent remove)
                         result = false;
                     }
-
+                    
                     LOG.log(Level.INFO,
                             "Session {0} removed from {1} and invalidated : {2}",
                             new Object[]{
@@ -155,7 +168,7 @@ public class ActiveSessionTracker {
                                 ActiveSessionTracker.class.getSimpleName(),
                                 result
                             });
-
+                    
                     if (s.isEmpty()) {
                         map.remove(email);
                         LOG.log(Level.INFO,
@@ -163,11 +176,11 @@ public class ActiveSessionTracker {
                                 new Object[]{email,
                                     ActiveSessionTracker.class.getSimpleName()});
                     }
-
+                    
                     return result;
                 })
                 .orElse(false);
-
+        
     }
 
     /**
@@ -225,5 +238,5 @@ public class ActiveSessionTracker {
     public String drop(String sid) {
         return index.remove(sid);
     }
-
+    
 }
