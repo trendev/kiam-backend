@@ -64,6 +64,11 @@
                                 <p:ajax listener="#{authorizationsBean.processAuthorizationChange(ind)}" update="form"/>
                             </p:inputSwitch>
                         </p:column>
+                        <p:column headerText="Last Access" sortBy="#{authorizationsBean.getLastAccessedTime(ind)}">
+                            <h:outputText value="#{authorizationsBean.getLastAccessedTime(ind)}">
+                                <f:convertDateTime type="both" dateStyle="full" />
+                            </h:outputText>
+                        </p:column>
                     </p:dataTable>
                 </p:tab>
                 <p:tab title="Professional">
@@ -83,6 +88,11 @@
                             <p:inputSwitch value="#{pro.blocked}">
                                 <p:ajax listener="#{authorizationsBean.processAuthorizationChange(pro)}" update="form"/>
                             </p:inputSwitch>
+                        </p:column>
+                        <p:column headerText="Last Access" sortBy="#{authorizationsBean.getLastAccessedTime(pro)}">
+                            <h:outputText value="#{authorizationsBean.getLastAccessedTime(pro)}">
+                                <f:convertDateTime type="both" dateStyle="full" />
+                            </h:outputText>
                         </p:column>
                     </p:dataTable>
                 </p:tab>
