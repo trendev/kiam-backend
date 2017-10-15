@@ -57,7 +57,7 @@ public abstract class CommonUsersBean implements Serializable {
     /**
      * Refresh delay
      */
-    private int refresh = 15;
+    private int refresh = 5;
 
     public UserAccountFacade getUserAccountFacade() {
         return userAccountFacade;

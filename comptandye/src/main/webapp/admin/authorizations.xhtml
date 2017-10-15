@@ -46,12 +46,38 @@
                         <p:column headerText="Email" sortBy="#{ind.email}">
                             <h:outputText value="#{ind.email}" />
                         </p:column>
+                        <p:column headerText="Registration Date" sortBy="#{ind.registrationDate}">
+                            <h:outputText value="#{ind.registrationDate}">
+                                <f:convertDateTime type="both" dateStyle="full" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Disconnect" style="text-align:center">
+                            <p:commandButton icon="ui-icon-power" action="#{authorizationsBean.disconnect(ind)}" update="form" rendered="#{authorizationsBean.renderDisconnectButton(ind)}"/>
+                        </p:column>
+                        <p:column headerText="Lockdown" style="text-align:center">
+                            <p:inputSwitch value="#{ind.blocked}">
+                                <p:ajax listener="#{authorizationsBean.processAuthorizationChange(ind)}" update="form"/>
+                            </p:inputSwitch>
+                        </p:column>
                     </p:dataTable>
                 </p:tab>
                 <p:tab title="Professional">
                     <p:dataTable id="pros" var="pro" value="#{authorizationsBean.professionals}" sortMode="multiple" tableStyle="width:auto">
                         <p:column headerText="Email" sortBy="#{pro.email}">
                             <h:outputText value="#{pro.email}" />
+                        </p:column>
+                        <p:column headerText="Registration Date" sortBy="#{pro.registrationDate}">
+                            <h:outputText value="#{pro.registrationDate}">
+                                <f:convertDateTime type="both" dateStyle="full" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Disconnect" style="text-align:center">
+                            <p:commandButton icon="ui-icon-power" action="#{authorizationsBean.disconnect(pro)}" update="form" rendered="#{authorizationsBean.renderDisconnectButton(pro)}"/>
+                        </p:column>
+                        <p:column headerText="Lockdown" style="text-align:center">
+                            <p:inputSwitch value="#{pro.blocked}">
+                                <p:ajax listener="#{authorizationsBean.processAuthorizationChange(pro)}" update="form"/>
+                            </p:inputSwitch>
                         </p:column>
                     </p:dataTable>
                 </p:tab>
