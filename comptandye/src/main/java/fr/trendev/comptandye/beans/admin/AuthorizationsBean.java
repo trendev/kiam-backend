@@ -11,7 +11,6 @@ import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.UserAccount;
 import java.util.ConcurrentModificationException;
 import java.util.List;
-import java.util.OptionalLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -82,20 +81,24 @@ public class AuthorizationsBean extends CommonUsersBean {
     }
 
     public long getLastAccessedTime(UserAccount user) {
-        long time;
+        long time = user.getLastAccessedTime();
 
         try {
-            OptionalLong max = this.getSessions(user.getEmail()).stream()
-                    .mapToLong(HttpSession::getLastAccessedTime)
-                    .max();
+            long max = time;
+            List<HttpSession> sessions = this.getSessions(user.getEmail());
+            for (int i = 0; i < sessions.size(); i++) {
+                try {
+                    max = (sessions.get(i).getLastAccessedTime() > max) ? sessions.
+                            get(i).getLastAccessedTime() : max;
+                } catch (IllegalStateException ex) {
+                }
+            }
+            time = max;
 
-            time = max.orElse(user.getLastAccessedTime());
-
-        } catch (ConcurrentModificationException | IllegalStateException ex) {
+        } catch (ConcurrentModificationException ex) {
             time = user.getLastAccessedTime();
         }
 
-        long checkpoint = time;
         return time;
     }
 
