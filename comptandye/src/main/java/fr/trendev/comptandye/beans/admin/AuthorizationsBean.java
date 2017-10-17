@@ -11,7 +11,6 @@ import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.UserAccount;
 import java.util.ConcurrentModificationException;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -44,7 +43,6 @@ public class AuthorizationsBean extends CommonUsersBean {
         this.administrators = proxy.getAdministrators();
         this.individuals = proxy.getIndividuals();
         this.professionals = proxy.getProfessionals();
-        LOG.log(Level.SEVERE, "INIT IN PROGRESS");
     }
 
     public List<Administrator> getAdministrators() {
