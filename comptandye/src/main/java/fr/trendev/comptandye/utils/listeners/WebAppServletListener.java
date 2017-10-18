@@ -54,7 +54,7 @@ public class WebAppServletListener implements ServletContextListener {
                     new Date(), sce.getServletContext().getServletContextName()
                 });
         try {
-            emailSender.sendEmail("julien.sie@gmail.com", "Context is stoping");
+            emailSender.sendEmail("julien.sie@gmail.com", "Context is stopping");
         } catch (MessagingException ex) {
             Logger.getLogger(WebAppServletListener.class.getName()).
                     log(Level.SEVERE, null, ex);

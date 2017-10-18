@@ -6,7 +6,6 @@
 package fr.trendev.comptandye.beans;
 
 import fr.trendev.comptandye.entities.UserAccount;
-import fr.trendev.comptandye.sessions.UserAccountFacade;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -22,6 +21,7 @@ import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -46,7 +46,7 @@ public class ActiveSessionTracker {
             ActiveSessionTracker.class.getName());
 
     @Inject
-    UserAccountFacade userAccountFacade;
+    EntityManager em;
 
     public ActiveSessionTracker() {
         map = new ConcurrentHashMap<>();
@@ -151,7 +151,7 @@ public class ActiveSessionTracker {
                         //Saves the last accessed time of the User
                         long time = session.getLastAccessedTime();
 
-                        UserAccount user = userAccountFacade.find(email);
+                        UserAccount user = em.find(UserAccount.class, email);
                         user.setLastAccessedTime(time);
 
                         session.invalidate();
