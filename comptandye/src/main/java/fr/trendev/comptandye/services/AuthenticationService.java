@@ -40,7 +40,7 @@ public class AuthenticationService {
     @Path("password")
     @GET
     @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON,})
-    public String find(@QueryParam("size") int id) {
+    public String password(@QueryParam("size") int id) {
         return PasswordGenerator.autoGenerate(id);
     }
 

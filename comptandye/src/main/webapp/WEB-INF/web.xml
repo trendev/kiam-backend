@@ -92,9 +92,10 @@
     <security-constraint>
         <display-name>ADMIN_secured_access</display-name>
         <web-resource-collection>
-            <web-resource-name>Administration secured pages</web-resource-name>
-            <description>admin tools and restapi</description>
+            <web-resource-name>Admin secured pages</web-resource-name>
+            <description>admin tools + wadl</description>
             <url-pattern>/admin/*</url-pattern>
+            <url-pattern>/api/application.wadl</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description/>
@@ -108,8 +109,7 @@
     <security-constraint>
         <display-name>Secured REST-API</display-name>
         <web-resource-collection>
-            <web-resource-name>REST-API services</web-resource-name>
-            <description>REST-API services</description>
+            <web-resource-name>api</web-resource-name>
             <url-pattern>/api/*</url-pattern>
         </web-resource-collection>
         <user-data-constraint>
