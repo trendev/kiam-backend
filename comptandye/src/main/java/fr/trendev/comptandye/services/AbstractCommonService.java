@@ -510,4 +510,21 @@ public abstract class AbstractCommonService<E, P> {
                 .orElseThrow(() -> new BadRequestException(
                         "Impossible to find the professional's email from the SecurityContext or from the Query Parameters"));
     }
+
+    /**
+     * Extracts the individual's email from the SecurityContext or provides the
+     * email found in the query.
+     *
+     * @param sec the security context
+     * @param individual the owner's email provided in the query parameters
+     * @return the individual's email
+     */
+    protected String getIndEmail(SecurityContext sec, String individual) {
+        return Optional.ofNullable(
+                sec.isSecure() && sec.isUserInRole("Individual")
+                ? sec.getUserPrincipal().getName() : individual)
+                .map(Function.identity())
+                .orElseThrow(() -> new BadRequestException(
+                        "Impossible to find the individual's email from the SecurityContext or from the Query Parameters"));
+    }
 }

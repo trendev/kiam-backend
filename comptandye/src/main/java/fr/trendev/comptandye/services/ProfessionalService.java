@@ -115,7 +115,8 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     public Response profile(@Context SecurityContext sec,
             @QueryParam("refresh") boolean refresh) {
         String proEmail = this.getProEmail(sec, null);
-        LOG.log(Level.INFO, "REST request to get Professional : {0}", proEmail);
+        LOG.log(Level.INFO,
+                "REST request to get the Professional profile of {0}", proEmail);
         return super.find(proEmail, refresh);
     }
 

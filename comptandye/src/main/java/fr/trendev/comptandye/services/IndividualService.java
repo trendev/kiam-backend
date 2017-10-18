@@ -31,8 +31,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
 /**
  *
@@ -93,6 +95,18 @@ public class IndividualService extends AbstractCommonService<Individual, String>
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get Individual : {0}", email);
         return super.find(email, refresh);
+    }
+
+    @RolesAllowed({"Individual"})
+    @Path("profile")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response profile(@Context SecurityContext sec,
+            @QueryParam("refresh") boolean refresh) {
+        String indEmail = this.getIndEmail(sec, null);
+        LOG.log(Level.INFO, "REST request to get the Individual profile of {0}",
+                indEmail);
+        return super.find(indEmail, refresh);
     }
 
     @POST
