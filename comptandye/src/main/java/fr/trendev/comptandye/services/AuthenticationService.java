@@ -6,6 +6,7 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.utils.PasswordGenerator;
+import fr.trendev.comptandye.utils.UserAccountType;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -44,26 +45,38 @@ public class AuthenticationService {
         return PasswordGenerator.autoGenerate(id);
     }
 
-    @Path("authorized")
+    @Path("authenticated")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response authorized(@Context SecurityContext sec) {
-        if (sec.isSecure() && sec.isUserInRole("Professional")) {
-            return professionalService.profile(sec, false);
+
+        if (sec.isSecure() && sec.isUserInRole(UserAccountType.PROFESSIONAL)) {
+            return this.authenticatedResponse(UserAccountType.PROFESSIONAL);
         }
 
-        if (sec.isSecure() && sec.isUserInRole("Individual")) {
-            return individualService.profile(sec, false);
+        if (sec.isSecure() && sec.isUserInRole(UserAccountType.INDIVIDUAL)) {
+            return this.authenticatedResponse(UserAccountType.INDIVIDUAL);
         }
 
-        if (sec.isSecure() && sec.isUserInRole("Administrator")) {
-            return administratorService.find(sec.getUserPrincipal().getName(),
-                    true);
+        if (sec.isSecure() && sec.isUserInRole(UserAccountType.ADMINISTRATOR)) {
+            return this.authenticatedResponse(UserAccountType.ADMINISTRATOR);
         }
 
         return Response.status(Response.Status.UNAUTHORIZED)
                 .entity(Json.createObjectBuilder().add("error",
                         "Unauthorized User").build())
                 .build();
+    }
+
+    /**
+     * Returns the cltype of the user if the authenticated user
+     *
+     * @param type the UserAccount type
+     * @return the cltype of the user if the authenticated user
+     */
+    private Response authenticatedResponse(String type) {
+        return Response.ok(Json.createObjectBuilder()
+                .add("cltype", type)
+                .build()).build();
     }
 }

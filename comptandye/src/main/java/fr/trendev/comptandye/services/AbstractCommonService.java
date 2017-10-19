@@ -9,6 +9,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;
+import fr.trendev.comptandye.utils.UserAccountType;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
 import java.net.URI;
 import java.util.Collection;
@@ -504,7 +505,7 @@ public abstract class AbstractCommonService<E, P> {
      */
     protected String getProEmail(SecurityContext sec, String professional) {
         return Optional.ofNullable(
-                sec.isSecure() && sec.isUserInRole("Professional")
+                sec.isSecure() && sec.isUserInRole(UserAccountType.PROFESSIONAL)
                 ? sec.getUserPrincipal().getName() : professional)
                 .map(Function.identity())
                 .orElseThrow(() -> new BadRequestException(
@@ -521,7 +522,7 @@ public abstract class AbstractCommonService<E, P> {
      */
     protected String getIndEmail(SecurityContext sec, String individual) {
         return Optional.ofNullable(
-                sec.isSecure() && sec.isUserInRole("Individual")
+                sec.isSecure() && sec.isUserInRole(UserAccountType.INDIVIDUAL)
                 ? sec.getUserPrincipal().getName() : individual)
                 .map(Function.identity())
                 .orElseThrow(() -> new BadRequestException(

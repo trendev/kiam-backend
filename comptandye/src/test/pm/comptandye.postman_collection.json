@@ -106,7 +106,7 @@
 					"response": []
 				},
 				{
-					"name": "authorized",
+					"name": "authenticated",
 					"event": [
 						{
 							"listen": "test",
@@ -114,6 +114,9 @@
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"cltype is Administrator or Professional or Individual ==> \"+jsonData.cltype] = jsonData.cltype === (\"Administrator\" || \"Professional\" || \"Individual\");",
 									""
 								]
 							}
@@ -124,13 +127,13 @@
 						"header": [],
 						"body": {},
 						"url": {
-							"raw": "{{API_URL}}/Authentication/authorized",
+							"raw": "{{API_URL}}/Authentication/authenticated",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"Authentication",
-								"authorized"
+								"authenticated"
 							]
 						},
 						"description": ""
