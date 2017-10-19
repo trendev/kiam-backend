@@ -7,7 +7,8 @@ package fr.trendev.comptandye.beans;
 
 import java.io.UnsupportedEncodingException;
 import javax.annotation.Resource;
-import javax.ejb.Stateless;
+import javax.ejb.Startup;
+import javax.inject.Singleton;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -19,7 +20,8 @@ import javax.mail.internet.MimeMessage;
  *
  * @author jsie
  */
-@Stateless
+@Singleton
+@Startup
 public class EmailSender {
 
     @Resource(name = "java/mail/comptandye")
