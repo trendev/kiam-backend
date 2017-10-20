@@ -8,7 +8,6 @@ package fr.trendev.comptandye.utils.filters;
 import fr.trendev.comptandye.beans.ActiveSessionTracker;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
 import java.io.IOException;
-import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
@@ -49,8 +48,6 @@ public class XSRFFilter implements Filter {
             FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse rsp = (HttpServletResponse) response;
-
-        Principal user = req.getUserPrincipal();
 
         HttpSession session = req.getSession();
 
