@@ -60,8 +60,9 @@ public class XSRFFilter implements Filter {
                 String xxsfrtoken = req.getHeader("X-XSRF-TOKEN");
                 if (xsfrtoken == null || xxsfrtoken == null
                         || !xsfrtoken.equals(xxsfrtoken)) {
-                    LOG.log(Level.WARNING, "XSFR-TOKEN=" + xsfrtoken
-                            + " ; X-XSFR-TOKEN=" + xxsfrtoken);
+                    LOG.log(Level.WARNING,
+                            "Unauthorized Access : XSFR-TOKEN={0} ; X-XSFR-TOKEN={1}",
+                            new Object[]{xsfrtoken, xxsfrtoken});
                     rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
                 } else {
                     chain.doFilter(request, response);
