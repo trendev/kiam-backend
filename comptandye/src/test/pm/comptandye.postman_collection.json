@@ -1,14 +1,13 @@
 {
 	"info": {
 		"name": "comptandye",
-		"_postman_id": "7c000a40-ed1b-debd-a6cf-7552c5dccd81",
+		"_postman_id": "02100dc5-b9df-4c04-a06c-2798c0b57ba4",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Authentication",
-			"description": "",
 			"item": [
 				{
 					"name": "j_security_check",
@@ -18,34 +17,31 @@
 							"script": {
 								"type": "text/javascript",
 								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200 ;"
+									"tests[\"Status code is 302\"] = responseCode.code === 302 ;",
+									"",
+									"if(postman.getResponseHeader(\"Set-Cookie\")){",
+									"    tests[\"Set-Cookie is present\"] = postman.getResponseHeader(\"Set-Cookie\");",
+									"    ",
+									"    postman.setEnvironmentVariable(\"JSESSIONID\",postman.getResponseHeader(\"Set-Cookie\").split(\"; \")[0].split(\"=\")[1]);",
+									"    console.log(postman.getEnvironmentVariable(\"JSESSIONID\"));",
+									"}"
 								]
 							}
 						}
 					],
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "JSESSIONID",
-								"value": "{{JSESSIONID}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/admin/j_security_check?j_username={{username}}&j_password={{password}}",
+							"raw": "{{BASE_URL}}/j_security_check?j_username={{username}}&j_password={{password}}",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"admin",
 								"j_security_check"
 							],
 							"query": [
@@ -62,6 +58,50 @@
 							]
 						},
 						"description": "Sends username/password and stores the JSESSIONID."
+					},
+					"response": []
+				},
+				{
+					"name": "authenticated",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"cltype is Administrator or Professional or Individual ==> \"+jsonData.cltype] = jsonData.cltype === (\"Administrator\" || \"Professional\" || \"Individual\");",
+									"",
+									"if(postman.getResponseHeader(\"Set-Cookie\")){",
+									"    tests[\"Set-Cookie is present\"] = postman.getResponseHeader(\"Set-Cookie\");",
+									"    ",
+									"    postman.setEnvironmentVariable(\"XSRF-TOKEN\",postman.getResponseHeader(\"Set-Cookie\").split(\"; \")[0].split(\"=\")[1]);",
+									"    console.log(postman.getEnvironmentVariable(\"XSRF-TOKEN\"));",
+									"}",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/Authentication/authenticated",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Authentication",
+								"authenticated"
+							]
+						}
 					},
 					"response": []
 				},
@@ -83,7 +123,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Authentication/password?size=100",
 							"host": [
@@ -100,43 +143,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "authenticated",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;",
-									"",
-									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"cltype is Administrator or Professional or Individual ==> \"+jsonData.cltype] = jsonData.cltype === (\"Administrator\" || \"Professional\" || \"Individual\");",
-									""
-								]
-							}
 						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {},
-						"url": {
-							"raw": "{{API_URL}}/Authentication/authenticated",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"Authentication",
-								"authenticated"
-							]
-						},
-						"description": ""
 					},
 					"response": []
 				}
@@ -249,6 +256,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -293,7 +304,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Address/{{created_address_id}}",
 							"host": [
@@ -339,6 +353,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -377,7 +395,12 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -437,8 +460,7 @@
 							"path": [
 								"Administrator"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -473,8 +495,7 @@
 								"Administrator",
 								"count"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -516,8 +537,7 @@
 								"Administrator",
 								"comptandye@gmail.com"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -551,6 +571,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -565,8 +589,7 @@
 							"path": [
 								"Administrator"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -600,6 +623,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -614,8 +641,7 @@
 							"path": [
 								"Administrator"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -635,7 +661,12 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -649,8 +680,7 @@
 								"Administrator",
 								"newadmin@trendev.fr"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -689,8 +719,7 @@
 								"comptandye@gmail.com",
 								"userGroups"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -713,7 +742,12 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -729,8 +763,7 @@
 								"insertToUserGroup",
 								"Individual"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -752,7 +785,12 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -768,8 +806,7 @@
 								"removeFromUserGroup",
 								"Individual"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
@@ -777,7 +814,6 @@
 		},
 		{
 			"name": "Business",
-			"description": "",
 			"item": [
 				{
 					"name": "findAll",
@@ -798,7 +834,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Business",
 							"host": [
@@ -807,8 +846,7 @@
 							"path": [
 								"Business"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -829,7 +867,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Business/count",
 							"host": [
@@ -839,8 +880,7 @@
 								"Business",
 								"count"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -866,6 +906,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -880,8 +924,7 @@
 							"path": [
 								"Business"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -904,7 +947,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Business/{{created_business_designation}}",
 							"host": [
@@ -914,8 +960,7 @@
 								"Business",
 								"{{created_business_designation}}"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -938,8 +983,16 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
-						"body": {},
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Business/{{created_business_designation}}",
 							"host": [
@@ -949,8 +1002,7 @@
 								"Business",
 								"{{created_business_designation}}"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
@@ -958,7 +1010,6 @@
 		},
 		{
 			"name": "Category",
-			"description": "",
 			"item": [
 				{
 					"name": "findAll",
@@ -979,7 +1030,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Category",
 							"host": [
@@ -988,8 +1042,7 @@
 							"path": [
 								"Category"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1024,8 +1077,7 @@
 								"Category",
 								"count"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1054,6 +1106,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -1075,8 +1131,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1103,7 +1158,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Category/{{created_category_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -1120,8 +1178,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1151,6 +1208,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -1172,8 +1233,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1213,7 +1273,10 @@
 									"pm.sendRequest({",
 									"    url: \"{{API_URL}}/Client?professional=vanessa.gay@gmail.com\",",
 									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"    },",
 									"    body:{",
 									"        mode: 'raw',",
 									"        raw: JSON.stringify(",
@@ -1238,6 +1301,8 @@
 									"   pm.environment.set(\"created_client_id\", response.json().id);",
 									"});",
 									"",
+									"",
+									"",
 									""
 								]
 							}
@@ -1245,7 +1310,12 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{API_URL}}/Category/{{created_category_id}}/addClient/{{created_client_id}}?professional=vanessa.gay@gmail.com",
@@ -1265,8 +1335,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1286,7 +1355,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Category/{{created_category_id}}/clients?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -1304,8 +1376,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1350,8 +1421,16 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
-						"body": {},
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Category/{{created_category_id}}/removeClient/{{created_client_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -1370,8 +1449,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1390,8 +1468,16 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
-						"body": {},
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Category/{{created_category_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -1408,8 +1494,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
@@ -1417,7 +1502,6 @@
 		},
 		{
 			"name": "Client",
-			"description": "",
 			"item": [
 				{
 					"name": "findAll",
@@ -1438,7 +1522,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Client",
 							"host": [
@@ -1447,8 +1534,7 @@
 							"path": [
 								"Client"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1483,8 +1569,7 @@
 								"Client",
 								"count"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1525,6 +1610,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -1546,8 +1635,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1585,7 +1673,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Client/{{created_client_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -1602,8 +1693,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1646,6 +1736,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -1667,8 +1761,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1688,7 +1781,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Client/{{created_client_id}}/clientBills?professional=vanessa.gay@gmail.com&refresh=true",
 							"host": [
@@ -1711,8 +1807,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1732,7 +1827,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Client/{{created_client_id}}/collectiveGroups?professional=vanessa.gay@gmail.com&refresh=true",
 							"host": [
@@ -1755,8 +1853,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1776,7 +1873,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Client/{{created_client_id}}/categories?professional=vanessa.gay@gmail.com&refresh=true",
 							"host": [
@@ -1799,8 +1899,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1819,8 +1918,16 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
-						"body": {},
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Client/{{created_client_id}}?professional=vanessa.gay@gmail.com&refresh=true",
 							"host": [
@@ -1842,8 +1949,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
@@ -1851,7 +1957,6 @@
 		},
 		{
 			"name": "ClientBill",
-			"description": "",
 			"item": [
 				{
 					"name": "findAll",
@@ -1872,7 +1977,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/ClientBill",
 							"host": [
@@ -1881,8 +1989,7 @@
 							"path": [
 								"ClientBill"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1917,8 +2024,7 @@
 								"ClientBill",
 								"count"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -1976,7 +2082,10 @@
 									"pm.sendRequest({",
 									"    url: \"{{API_URL}}/Client?professional=vanessa.gay@gmail.com\",",
 									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
+									"   header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"    },",
 									"    body:{",
 									"        mode: 'raw',",
 									"        raw: JSON.stringify(",
@@ -2012,7 +2121,10 @@
 									"pm.sendRequest({",
 									"    url: \"{{API_URL}}/Service?professional=vanessa.gay@gmail.com\",",
 									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"    },",
 									"    body:{",
 									"        mode: 'raw',",
 									"        raw: JSON.stringify(",
@@ -2043,6 +2155,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -2064,8 +2180,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -2117,7 +2232,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/ClientBill/{{created_clientbill_reference}}/{{created_clientbill_deliveryDate}}?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -2135,8 +2253,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -2201,6 +2318,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -2222,8 +2343,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -2239,6 +2359,10 @@
 									"",
 									"pm.sendRequest({",
 									"    url: \"{{API_URL}}/Service/{{created_offering_id}}?professional=vanessa.gay@gmail.com\",",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"    },",
 									"    method: 'DELETE'",
 									"}, function (err, res) {",
 									"    pm.expect(res).to.have.property('code', 200);",
@@ -2247,6 +2371,10 @@
 									"",
 									"pm.sendRequest({",
 									"    url: \"{{API_URL}}/Client/{{created_client_id}}?professional=vanessa.gay@gmail.com\",",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"    },",
 									"    method: 'DELETE'",
 									"}, function (err, res) {",
 									"    pm.expect(res).to.have.property('code', 200);",
@@ -2258,7 +2386,12 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{API_URL}}/ClientBill/{{created_clientbill_reference}}/{{created_clientbill_deliveryDate}}?professional=vanessa.gay@gmail.com",
@@ -2277,8 +2410,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
@@ -2286,7 +2418,6 @@
 		},
 		{
 			"name": "CollectiveGroup",
-			"description": "",
 			"item": [
 				{
 					"name": "findAll",
@@ -2307,7 +2438,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/CollectiveGroup",
 							"host": [
@@ -2316,8 +2450,7 @@
 							"path": [
 								"CollectiveGroup"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -2352,8 +2485,7 @@
 								"CollectiveGroup",
 								"count"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -2389,6 +2521,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -2410,8 +2546,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -2444,7 +2579,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/CollectiveGroup/{{created_collectivegroup_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -2461,8 +2599,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -2498,6 +2635,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -2519,8 +2660,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -2560,7 +2700,10 @@
 									"pm.sendRequest({",
 									"    url: \"{{API_URL}}/Client?professional=vanessa.gay@gmail.com\",",
 									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"    },",
 									"    body:{",
 									"        mode: 'raw',",
 									"        raw: JSON.stringify(",
@@ -2592,7 +2735,12 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{API_URL}}/CollectiveGroup/{{created_collectivegroup_id}}/addClient/{{created_client_id}}?professional=vanessa.gay@gmail.com",
@@ -2612,8 +2760,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -2633,7 +2780,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/CollectiveGroup/{{created_collectivegroup_id}}/clients?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -2651,8 +2801,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -2672,7 +2821,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/CollectiveGroup/{{created_collectivegroup_id}}/collectiveGroupBills?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -2690,8 +2842,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -2707,6 +2858,10 @@
 									"",
 									"pm.sendRequest({",
 									"    url: \"{{API_URL}}/Client/{{created_client_id}}?professional=vanessa.gay@gmail.com\",",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"    },",
 									"    method: 'DELETE'",
 									"}, function (err, res) {",
 									"    pm.expect(res).to.have.property('code', 200);",
@@ -2736,7 +2891,12 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{API_URL}}/CollectiveGroup/{{created_collectivegroup_id}}/removeClient/{{created_client_id}}?professional=vanessa.gay@gmail.com",
@@ -2756,8 +2916,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -2776,8 +2935,16 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
-						"body": {},
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/CollectiveGroup/{{created_collectivegroup_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -2794,8 +2961,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
@@ -2803,7 +2969,6 @@
 		},
 		{
 			"name": "CollectiveGroupBill",
-			"description": "",
 			"item": [
 				{
 					"name": "findAll",
@@ -2824,7 +2989,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/CollectiveGroupBill",
 							"host": [
@@ -2833,8 +3001,7 @@
 							"path": [
 								"CollectiveGroupBill"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -2869,8 +3036,7 @@
 								"CollectiveGroupBill",
 								"count"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -2926,7 +3092,10 @@
 									"pm.sendRequest({",
 									"    url: \"{{API_URL}}/CollectiveGroup?professional=vanessa.gay@gmail.com\",",
 									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
+									"   header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"    },",
 									"    body:{",
 									"        mode: 'raw',",
 									"        raw: JSON.stringify(",
@@ -2950,7 +3119,10 @@
 									"pm.sendRequest({",
 									"    url: \"{{API_URL}}/Service?professional=vanessa.gay@gmail.com\",",
 									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"    },",
 									"    body:{",
 									"        mode: 'raw',",
 									"        raw: JSON.stringify(",
@@ -2981,6 +3153,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -3002,8 +3178,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -3052,7 +3227,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/CollectiveGroupBill/{{created_collectivegroupbill_reference}}/{{created_collectivegroupbill_deliveryDate}}?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -3070,8 +3248,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -3132,6 +3309,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -3153,8 +3334,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -3170,6 +3350,10 @@
 									"",
 									"pm.sendRequest({",
 									"    url: \"{{API_URL}}/Service/{{created_offering_id}}?professional=vanessa.gay@gmail.com\",",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"    },",
 									"    method: 'DELETE'",
 									"}, function (err, res) {",
 									"    pm.expect(res).to.have.property('code', 200);",
@@ -3178,6 +3362,10 @@
 									"",
 									"pm.sendRequest({",
 									"    url: \"{{API_URL}}/CollectiveGroup/{{created_collectivegroup_id}}?professional=vanessa.gay@gmail.com\",",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"    },",
 									"    method: 'DELETE'",
 									"}, function (err, res) {",
 									"    pm.expect(res).to.have.property('code', 200);",
@@ -3189,7 +3377,12 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{API_URL}}/CollectiveGroupBill/{{created_collectivegroupbill_reference}}/{{created_collectivegroupbill_deliveryDate}}?professional=vanessa.gay@gmail.com",
@@ -3208,8 +3401,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
@@ -3217,7 +3409,6 @@
 		},
 		{
 			"name": "CustomerDetails",
-			"description": "",
 			"item": [
 				{
 					"name": "findAll",
@@ -3238,7 +3429,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/CustomerDetails",
 							"host": [
@@ -3247,8 +3441,7 @@
 							"path": [
 								"CustomerDetails"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -3269,7 +3462,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/CustomerDetails/count",
 							"host": [
@@ -3279,8 +3475,7 @@
 								"CustomerDetails",
 								"count"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -3328,6 +3523,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -3342,8 +3541,7 @@
 							"path": [
 								"CustomerDetails"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -3375,7 +3573,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/CustomerDetails/{{created_customer_details_id}}",
 							"host": [
@@ -3385,8 +3586,7 @@
 								"CustomerDetails",
 								"{{created_customer_details_id}}"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -3420,6 +3620,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -3434,8 +3638,7 @@
 							"path": [
 								"CustomerDetails"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -3458,8 +3661,16 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
-						"body": {},
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/CustomerDetails/{{created_customer_details_id}}",
 							"host": [
@@ -3469,8 +3680,7 @@
 								"CustomerDetails",
 								"{{created_customer_details_id}}"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
@@ -3478,7 +3688,6 @@
 		},
 		{
 			"name": "Expense",
-			"description": "",
 			"item": [
 				{
 					"name": "findAll",
@@ -3499,7 +3708,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Expense",
 							"host": [
@@ -3508,8 +3720,7 @@
 							"path": [
 								"Expense"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -3544,8 +3755,7 @@
 								"Expense",
 								"count"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -3586,6 +3796,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -3607,8 +3821,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -3650,6 +3863,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -3671,8 +3888,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -3713,7 +3929,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Expense/{{created_expense_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -3730,8 +3949,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -3750,8 +3968,16 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
-						"body": {},
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Expense/{{created_expense_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -3768,8 +3994,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
@@ -3777,7 +4002,6 @@
 		},
 		{
 			"name": "Individual",
-			"description": "",
 			"item": [
 				{
 					"name": "findAll",
@@ -3810,8 +4034,7 @@
 							"path": [
 								"Individual"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -3846,8 +4069,7 @@
 								"Individual",
 								"count"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -3918,6 +4140,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -3932,8 +4158,7 @@
 							"path": [
 								"Individual"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -4003,8 +4228,7 @@
 								"Individual",
 								"individual@gmail.com"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -4064,6 +4288,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -4078,8 +4306,7 @@
 							"path": [
 								"Individual"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -4118,8 +4345,7 @@
 								"individual@gmail.com",
 								"userGroups"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -4153,8 +4379,7 @@
 								"individual@gmail.com",
 								"individualBills"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -4177,7 +4402,12 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -4193,8 +4423,7 @@
 								"insertToUserGroup",
 								"Professional"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -4216,25 +4445,28 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{API_URL}}//Individual/individual@gmail.com/removeFromUserGroup/Professional",
+							"raw": "{{API_URL}}/Individual/individual@gmail.com/removeFromUserGroup/Professional",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
-								"",
 								"Individual",
 								"individual@gmail.com",
 								"removeFromUserGroup",
 								"Professional"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -4257,7 +4489,12 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -4273,8 +4510,7 @@
 								"buildBusinessRelationship",
 								"vanessa.gay@gmail.com"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -4308,8 +4544,7 @@
 								"individual@gmail.com",
 								"professionals"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -4332,7 +4567,12 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -4348,8 +4588,7 @@
 								"endBusinessRelationship",
 								"vanessa.gay@gmail.com"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -4369,7 +4608,12 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -4383,8 +4627,7 @@
 								"Individual",
 								"individual@gmail.com"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
@@ -4392,7 +4635,6 @@
 		},
 		{
 			"name": "IndividualBill",
-			"description": "",
 			"item": [
 				{
 					"name": "findAll",
@@ -4413,7 +4655,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/IndividualBill",
 							"host": [
@@ -4422,8 +4667,7 @@
 							"path": [
 								"IndividualBill"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -4458,8 +4702,7 @@
 								"IndividualBill",
 								"count"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -4542,7 +4785,10 @@
 									"pm.sendRequest({",
 									"    url: \"{{API_URL}}/Individual\",",
 									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"    },",
 									"    body:{",
 									"        mode: 'raw',",
 									"        raw: JSON.stringify(",
@@ -4587,7 +4833,10 @@
 									"pm.sendRequest({",
 									"    url: \"{{API_URL}}/Service?professional=vanessa.gay@gmail.com\",",
 									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"    },",
 									"    body:{",
 									"        mode: 'raw',",
 									"        raw: JSON.stringify(",
@@ -4618,6 +4867,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -4639,8 +4892,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -4715,7 +4967,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/IndividualBill/{{created_individualbill_reference}}/{{created_individualbill_deliveryDate}}?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -4733,8 +4988,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -4815,6 +5069,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -4836,8 +5094,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -4853,6 +5110,10 @@
 									"",
 									"pm.sendRequest({",
 									"    url: \"{{API_URL}}/Service/{{created_offering_id}}?professional=vanessa.gay@gmail.com\",",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"    },",
 									"    method: 'DELETE'",
 									"}, function (err, res) {",
 									"    pm.expect(res).to.have.property('code', 200);",
@@ -4861,6 +5122,10 @@
 									"",
 									"pm.sendRequest({",
 									"    url: \"{{API_URL}}/Individual/{{created_individual_email}}\",",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"    },",
 									"    method: 'DELETE'",
 									"}, function (err, res) {",
 									"    pm.expect(res).to.have.property('code', 200);",
@@ -4872,7 +5137,12 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{API_URL}}/IndividualBill/{{created_individualbill_reference}}/{{created_individualbill_deliveryDate}}?professional=vanessa.gay@gmail.com",
@@ -4891,8 +5161,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
@@ -4900,7 +5169,6 @@
 		},
 		{
 			"name": "Pack",
-			"description": "",
 			"item": [
 				{
 					"name": "findAll",
@@ -4921,7 +5189,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Pack",
 							"host": [
@@ -4930,8 +5201,7 @@
 							"path": [
 								"Pack"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -4966,8 +5236,7 @@
 								"Pack",
 								"count"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -4999,6 +5268,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -5020,8 +5293,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -5051,7 +5323,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Pack/{{created_pack_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -5068,8 +5343,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -5103,6 +5377,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -5124,8 +5402,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -5159,7 +5436,10 @@
 									"pm.sendRequest({",
 									"    url: \"{{API_URL}}/Service?professional=vanessa.gay@gmail.com\",",
 									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"    },",
 									"    body:{",
 									"        mode: 'raw',",
 									"        raw: JSON.stringify(",
@@ -5187,7 +5467,12 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{API_URL}}/Pack/{{created_pack_id}}/addService/offering/{{created_offering_id}}?professional=vanessa.gay@gmail.com",
@@ -5208,8 +5493,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -5243,7 +5527,10 @@
 									"pm.sendRequest({",
 									"    url: \"{{API_URL}}/Pack?professional=vanessa.gay@gmail.com\",",
 									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"    },",
 									"    body:{",
 									"        mode: 'raw',",
 									"        raw: JSON.stringify(",
@@ -5271,7 +5558,12 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{API_URL}}/Pack/{{created_pack_id}}/addPack/offering/{{created_subpack_id}}?professional=vanessa.gay@gmail.com",
@@ -5292,8 +5584,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -5309,6 +5600,10 @@
 									"",
 									"pm.sendRequest({",
 									"    url: \"{{API_URL}}/Service/{{created_offering_id}}?professional=vanessa.gay@gmail.com\",",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"    },",
 									"    method: 'DELETE'",
 									"}, function (err, res) {",
 									"    pm.expect(res).to.have.property('code', 200);",
@@ -5333,7 +5628,12 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{API_URL}}/Pack/{{created_pack_id}}/removeService/offering/{{created_offering_id}}?professional=vanessa.gay@gmail.com",
@@ -5354,8 +5654,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -5381,6 +5680,10 @@
 									"",
 									"pm.sendRequest({",
 									"    url: \"{{API_URL}}/Pack/{{created_subpack_id}}?professional=vanessa.gay@gmail.com\",",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"    },",
 									"    method: 'DELETE'",
 									"}, function (err, res) {",
 									"    pm.expect(res).to.have.property('code', 200);",
@@ -5393,7 +5696,12 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{API_URL}}/Pack/{{created_pack_id}}/removePack/offering/{{created_subpack_id}}?professional=vanessa.gay@gmail.com",
@@ -5414,8 +5722,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -5434,8 +5741,16 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
-						"body": {},
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Pack/{{created_pack_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -5452,8 +5767,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
@@ -5461,7 +5775,6 @@
 		},
 		{
 			"name": "Payment",
-			"description": "",
 			"item": [
 				{
 					"name": "findAll",
@@ -5482,7 +5795,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Payment",
 							"host": [
@@ -5491,8 +5807,7 @@
 							"path": [
 								"Payment"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -5513,7 +5828,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Payment/count",
 							"host": [
@@ -5523,8 +5841,7 @@
 								"Payment",
 								"count"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -5557,6 +5874,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -5571,8 +5892,7 @@
 							"path": [
 								"Payment"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -5597,7 +5917,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Payment/{{created_payment_id}}",
 							"host": [
@@ -5607,8 +5930,7 @@
 								"Payment",
 								"{{created_payment_id}}"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -5636,6 +5958,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -5650,8 +5976,7 @@
 							"path": [
 								"Payment"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -5674,8 +5999,16 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
-						"body": {},
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Payment/{{created_payment_id}}",
 							"host": [
@@ -5685,8 +6018,7 @@
 								"Payment",
 								"{{created_payment_id}}"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
@@ -5694,7 +6026,6 @@
 		},
 		{
 			"name": "PaymentMode",
-			"description": "",
 			"item": [
 				{
 					"name": "findAll",
@@ -5715,7 +6046,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/PaymentMode",
 							"host": [
@@ -5724,8 +6058,7 @@
 							"path": [
 								"PaymentMode"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -5746,7 +6079,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/PaymentMode/count",
 							"host": [
@@ -5756,8 +6092,7 @@
 								"PaymentMode",
 								"count"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -5783,6 +6118,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -5797,8 +6136,7 @@
 							"path": [
 								"PaymentMode"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -5821,7 +6159,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/PaymentMode/{{created_paymentmode_name}}",
 							"host": [
@@ -5831,8 +6172,7 @@
 								"PaymentMode",
 								"{{created_paymentmode_name}}"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -5855,8 +6195,16 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
-						"body": {},
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/PaymentMode/{{created_paymentmode_name}}",
 							"host": [
@@ -5866,8 +6214,7 @@
 								"PaymentMode",
 								"{{created_paymentmode_name}}"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
@@ -5875,7 +6222,6 @@
 		},
 		{
 			"name": "Professional",
-			"description": "",
 			"item": [
 				{
 					"name": "findAll",
@@ -5910,8 +6256,7 @@
 							"path": [
 								"Professional"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -5946,8 +6291,7 @@
 								"Professional",
 								"count"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -6018,6 +6362,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -6032,8 +6380,7 @@
 							"path": [
 								"Professional"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -6099,8 +6446,7 @@
 								"Professional",
 								"pro@domain.com"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -6161,6 +6507,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -6175,8 +6525,7 @@
 							"path": [
 								"Professional"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -6196,7 +6545,12 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -6210,8 +6564,7 @@
 								"Professional",
 								"pro@domain.com"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -6250,8 +6603,7 @@
 								"vanessa.gay@gmail.com",
 								"userGroups"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -6274,7 +6626,12 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -6290,8 +6647,7 @@
 								"insertToUserGroup",
 								"Individual"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -6313,7 +6669,12 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -6329,8 +6690,7 @@
 								"removeFromUserGroup",
 								"Individual"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -6367,8 +6727,7 @@
 								"vanessa.gay@gmail.com",
 								"bills"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -6402,8 +6761,7 @@
 								"vanessa.gay@gmail.com",
 								"clients"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -6437,8 +6795,7 @@
 								"vanessa.gay@gmail.com",
 								"offerings"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -6472,8 +6829,7 @@
 								"vanessa.gay@gmail.com",
 								"categories"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -6507,8 +6863,7 @@
 								"vanessa.gay@gmail.com",
 								"collectiveGroups"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -6542,8 +6897,7 @@
 								"vanessa.gay@gmail.com",
 								"expenses"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -6577,8 +6931,7 @@
 								"vanessa.gay@gmail.com",
 								"individuals"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -6601,7 +6954,12 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -6617,8 +6975,7 @@
 								"buildBusinessRelationship",
 								"skonx2006@gmail.com"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -6641,7 +6998,12 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -6657,8 +7019,7 @@
 								"endBusinessRelationship",
 								"skonx2006@gmail.com"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
@@ -6666,7 +7027,6 @@
 		},
 		{
 			"name": "PurchasedOffering",
-			"description": "",
 			"item": [
 				{
 					"name": "findAll",
@@ -6687,7 +7047,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/PurchasedOffering",
 							"host": [
@@ -6696,8 +7059,7 @@
 							"path": [
 								"PurchasedOffering"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -6718,7 +7080,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/PurchasedOffering/count",
 							"host": [
@@ -6728,8 +7093,7 @@
 								"PurchasedOffering",
 								"count"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -6771,7 +7135,10 @@
 									"pm.sendRequest({",
 									"    url: \"{{API_URL}}/Service?professional=vanessa.gay@gmail.com\",",
 									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"    },",
 									"    body:{",
 									"        mode: 'raw',",
 									"        raw: JSON.stringify(",
@@ -6802,6 +7169,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -6823,8 +7194,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -6858,7 +7228,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/PurchasedOffering/{{created_purchasedoffering_id}}",
 							"host": [
@@ -6868,8 +7241,7 @@
 								"PurchasedOffering",
 								"{{created_purchasedoffering_id}}"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -6906,6 +7278,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -6927,8 +7303,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -6944,6 +7319,10 @@
 									"",
 									"pm.sendRequest({",
 									"    url: \"{{API_URL}}/Service/{{created_offering_id}}?professional=vanessa.gay@gmail.com\",",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"    },",
 									"    method: 'DELETE'",
 									"}, function (err, res) {",
 									"    pm.expect(res).to.have.property('code', 200);",
@@ -6959,7 +7338,12 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{API_URL}}/PurchasedOffering/{{created_purchasedoffering_id}}",
@@ -6970,8 +7354,7 @@
 								"PurchasedOffering",
 								"{{created_purchasedoffering_id}}"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
@@ -6979,7 +7362,6 @@
 		},
 		{
 			"name": "Service",
-			"description": "",
 			"item": [
 				{
 					"name": "findAll",
@@ -7000,7 +7382,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Service",
 							"host": [
@@ -7009,8 +7394,7 @@
 							"path": [
 								"Service"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -7045,8 +7429,7 @@
 								"Service",
 								"count"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -7078,6 +7461,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -7099,8 +7486,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -7130,7 +7516,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Service/{{created_offering_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -7147,8 +7536,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -7181,6 +7569,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -7202,8 +7594,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -7222,8 +7613,16 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
-						"body": {},
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Service/{{created_offering_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -7240,8 +7639,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
@@ -7249,7 +7647,6 @@
 		},
 		{
 			"name": "SocialNetworkAccounts",
-			"description": "",
 			"item": [
 				{
 					"name": "findAll",
@@ -7267,7 +7664,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/SocialNetworkAccounts",
 							"host": [
@@ -7276,8 +7676,7 @@
 							"path": [
 								"SocialNetworkAccounts"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -7297,7 +7696,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/SocialNetworkAccounts/count",
 							"host": [
@@ -7307,8 +7709,7 @@
 								"SocialNetworkAccounts",
 								"count"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -7343,6 +7744,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -7357,8 +7762,7 @@
 							"path": [
 								"SocialNetworkAccounts"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -7386,7 +7790,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/SocialNetworkAccounts/{{created_socialnetworkaccounts_id}}",
 							"host": [
@@ -7396,8 +7803,7 @@
 								"SocialNetworkAccounts",
 								"{{created_socialnetworkaccounts_id}}"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -7429,6 +7835,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -7443,8 +7853,7 @@
 							"path": [
 								"SocialNetworkAccounts"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -7467,8 +7876,16 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
-						"body": {},
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/SocialNetworkAccounts/{{created_socialnetworkaccounts_id}}",
 							"host": [
@@ -7478,8 +7895,7 @@
 								"SocialNetworkAccounts",
 								"{{created_socialnetworkaccounts_id}}"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
@@ -7487,7 +7903,6 @@
 		},
 		{
 			"name": "UserGroup",
-			"description": "",
 			"item": [
 				{
 					"name": "findAll",
@@ -7524,8 +7939,7 @@
 							"path": [
 								"UserGroup"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -7560,8 +7974,7 @@
 								"UserGroup",
 								"count"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -7599,8 +8012,7 @@
 								"UserGroup",
 								"Administrator"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -7629,6 +8041,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -7643,8 +8059,7 @@
 							"path": [
 								"UserGroup"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -7673,6 +8088,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -7687,8 +8106,7 @@
 							"path": [
 								"UserGroup"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -7708,7 +8126,12 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -7722,8 +8145,7 @@
 								"UserGroup",
 								"TEST_GRP01"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -7773,8 +8195,7 @@
 								"Administrator",
 								"userAccounts"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
