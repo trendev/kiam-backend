@@ -64,14 +64,16 @@ public class OverallFilter implements Filter {
                     new Object[]{session.getId(),
                         user.getName(), count, count > 1 ? "s" : ""});
 
+            /**
+             * Sets the XSRF-TOKEN cookie and add its value in the session's
+             * attributes.
+             */
             String xsrfToken = PasswordGenerator.autoGenerate(128);
             Cookie c = new Cookie("XSRF-TOKEN", xsrfToken);
             c.setPath(req.getContextPath());
             c.setHttpOnly(false);
             c.setSecure(true);
-            /**
-             * Add path, expiration, httponly no etc...
-             */
+
             session.setAttribute("XSRF-TOKEN", xsrfToken);
             rsp.addCookie(c);
 
