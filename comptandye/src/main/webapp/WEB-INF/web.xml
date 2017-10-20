@@ -25,6 +25,11 @@
         <filter-class>fr.trendev.comptandye.utils.filters.CrossOriginResourceSharingFilter</filter-class>
         <async-supported>true</async-supported>
     </filter>
+    <filter>
+        <description>Cross-Site Request Forgery (XSRF) Filter</description>
+        <filter-name>XSRFFilter</filter-name>
+        <filter-class>fr.trendev.comptandye.utils.filters.XSRFFilter</filter-class>
+    </filter>
     <filter-mapping>
         <filter-name>OverallFilter</filter-name>
         <url-pattern>/*</url-pattern>
@@ -35,6 +40,14 @@
     </filter-mapping>
     <filter-mapping>
         <filter-name>CORS</filter-name>
+        <url-pattern>/api/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>XSRFFilter</filter-name>
         <url-pattern>/api/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
