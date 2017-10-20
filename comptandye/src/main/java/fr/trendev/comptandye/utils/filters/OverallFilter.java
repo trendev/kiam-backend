@@ -28,33 +28,33 @@ import javax.servlet.http.HttpSession;
  * @author jsie
  */
 public class OverallFilter implements Filter {
-    
+
     @Inject
     ActiveSessionTracker tracker;
-    
+
     private static final Logger LOG = Logger.getLogger(OverallFilter.class.
             getName());
-    
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         LOG.log(Level.INFO, "OverallFilter: init in progress...");
     }
-    
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse rsp = (HttpServletResponse) response;
-        
+
         Principal user = req.getUserPrincipal();
-        
+
         HttpSession session = req.getSession();
-        
+
         LOG.log(Level.INFO, "{3} / [{1}] has requested {2} {0}",
                 new Object[]{req.getRequestURL(), (user != null) ? user.
                     getName() : "an ANONYMOUS user", req.getMethod(), req.
                     getRemoteAddr()});
-        
+
         if (user != null && session != null
                 && !tracker.contains(user.getName(), session)) {
             tracker.put(user.getName(), session);
@@ -63,20 +63,26 @@ public class OverallFilter implements Filter {
                     "New session {0} added to ActiveSessionTracker. [{1}] has now {2} active session{3}",
                     new Object[]{session.getId(),
                         user.getName(), count, count > 1 ? "s" : ""});
-            
+
             String xsrfToken = PasswordGenerator.autoGenerate(128);
             Cookie c = new Cookie("XSRF-TOKEN", xsrfToken);
+            c.setPath(req.getContextPath());
+            c.setHttpOnly(false);
+            c.setSecure(true);
+            /**
+             * Add path, expiration, httponly no etc...
+             */
             session.setAttribute("XSRF-TOKEN", xsrfToken);
             rsp.addCookie(c);
-            
+
         }
-        
+
         chain.doFilter(request, response);
     }
-    
+
     @Override
     public void destroy() {
         LOG.log(Level.INFO, "OverallFilter: destroyed...");
     }
-    
+
 }
