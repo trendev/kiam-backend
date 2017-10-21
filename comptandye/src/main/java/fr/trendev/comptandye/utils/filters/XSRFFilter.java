@@ -29,19 +29,34 @@ import javax.servlet.http.HttpSession;
 public class XSRFFilter implements Filter {
 
     /**
-     * Side Effect Methods
+     * Side Effect Methods : PUT,POST,DELETE. Other side effects method are not
+     * supported on the REST API Services
      */
     private List<String> sem;
 
     private static final Logger LOG = Logger.getLogger(XSRFFilter.class.
             getName());
 
+    /**
+     * Logs a message when the filter starts
+     *
+     * @param filterConfig the filter configuration
+     * @throws ServletException if an error occurs during the start-up
+     */
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         LOG.log(Level.INFO, "XSRFFilter: init in progress...");
         this.sem = Arrays.asList("POST", "PUT", "DELETE");
     }
 
+    /**
+     * Checks if the cross-origin request is trusted or not.
+     *
+     * @param req the request to check
+     * @return true if the cross-origin is trusted
+     * @see CORSFilter#doFilter(javax.servlet.ServletRequest,
+     * javax.servlet.ServletResponse, javax.servlet.FilterChain)
+     */
     private boolean isTrustedOrigin(HttpServletRequest req) {
         String origin = req.getHeader("Origin");
         return Objects.nonNull(origin) && !origin.isEmpty() && (origin.
@@ -50,6 +65,19 @@ public class XSRFFilter implements Filter {
                         "https://localhost"));
     }
 
+    /**
+     * Filters the REST API requests and protects them against XSRF attacks.
+     * Only supports localhost cross-origin requests.
+     *
+     * @param request the request to check
+     * @param response the expected response or Unauthorized response if the
+     * request is not compliant (block XSFR attacks).
+     * @param chain the filter chain
+     * @throws IOException if an error occurs during the filtering
+     * @throws ServletException if an error occurs during the filtering
+     * @see CORSFilter#doFilter(javax.servlet.ServletRequest,
+     * javax.servlet.ServletResponse, javax.servlet.FilterChain)
+     */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
@@ -60,6 +88,7 @@ public class XSRFFilter implements Filter {
 
         String xxsfrtoken = req.getHeader("X-XSRF-TOKEN");
 
+        //allows access to no side effects methods
         if (sem.contains(req.getMethod())) {
             if (xxsfrtoken != null && !xxsfrtoken.isEmpty()) {
                 try {
@@ -84,6 +113,7 @@ public class XSRFFilter implements Filter {
                     rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
                 }
             } else {
+                // if there is no token, check the cross-origin
                 if (this.isTrustedOrigin(req)) {
                     chain.doFilter(request, response);
                 } else {
@@ -97,6 +127,9 @@ public class XSRFFilter implements Filter {
         }
     }
 
+    /**
+     * Logs a message when the filter is destroyed
+     */
     @Override
     public void destroy() {
         LOG.log(Level.INFO, "XSRFFilter: destroyed...");

@@ -25,9 +25,25 @@ import javax.servlet.http.HttpServletResponse;
 //@WebFilter(urlPatterns = {"/restapi/*"}, asyncSupported = true)
 public class CORSFilter implements Filter {
 
-    private static final Logger LOG = Logger.getLogger(CORSFilter.class.getName());
+    private static final Logger LOG = Logger.getLogger(CORSFilter.class.
+            getName());
 
+    /**
+     *
+     * Checks if the Cross-Origin Request is localhost. Only cross-origin
+     * requests coming from localhost are supported. Supports for development
+     * purposes only. This is not a security issue because it requires a local
+     * running web server (will use the local logged sessions).
+     *
+     * @param request the http request
+     * @param response the http respons
+     * @param chain the filter chain
+     * @throws IOException thrown if an exception occurs during the doFilter
+     * @throws ServletException thrown if an exception occurs during the
+     * doFilter
+     */
     @Override
+
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
 
@@ -56,12 +72,21 @@ public class CORSFilter implements Filter {
 
     }
 
+    /**
+     * Logs a message when the filter starts
+     *
+     * @param filterConfig the filter configuration
+     * @throws ServletException if an error occurs during the start-up
+     */
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         LOG.log(Level.INFO,
                 "CrossOriginResourceSharingFilter : init in progress...");
     }
 
+    /**
+     * Logs a message when the filter is destroyed
+     */
     @Override
     public void destroy() {
         LOG.log(Level.INFO, "CrossOriginResourceSharingFilter : destroyed...");

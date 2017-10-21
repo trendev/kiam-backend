@@ -55,6 +55,11 @@ public class OverallFilter implements Filter {
                     getName() : "an ANONYMOUS user", req.getMethod(), req.
                     getRemoteAddr()});
 
+        /**
+         * If the user is authenticated and the session is not already in the
+         * trackers, adds and associated it in the tracker if the authenticated
+         * user.
+         */
         if (user != null && session != null
                 && !tracker.contains(user.getName(), session)) {
             tracker.put(user.getName(), session);
@@ -71,8 +76,8 @@ public class OverallFilter implements Filter {
             String xsrfToken = PasswordGenerator.autoGenerate(128);
             Cookie c = new Cookie("XSRF-TOKEN", xsrfToken);
             c.setPath("/");
-            c.setHttpOnly(false);
-            c.setSecure(true);
+            c.setHttpOnly(false);//should be used by javascript (Angular) scripts
+            c.setSecure(true);//requires to use HTTPS
 
             session.setAttribute("XSRF-TOKEN", xsrfToken);
             rsp.addCookie(c);
