@@ -5,14 +5,13 @@
  */
 package fr.trendev.comptandye.utils.filters;
 
-import fr.trendev.comptandye.beans.ActiveSessionTracker;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.inject.Inject;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -29,10 +28,10 @@ import javax.servlet.http.HttpSession;
  */
 public class XSRFFilter implements Filter {
 
-    @Inject
-    ActiveSessionTracker tracker;
-
-    private List<String> authorizedMethods;
+    /**
+     * Side Effect Methods
+     */
+    private List<String> sem;
 
     private static final Logger LOG = Logger.getLogger(XSRFFilter.class.
             getName());
@@ -40,7 +39,15 @@ public class XSRFFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         LOG.log(Level.INFO, "XSRFFilter: init in progress...");
-        this.authorizedMethods = Arrays.asList("POST", "PUT", "DELETE");
+        this.sem = Arrays.asList("POST", "PUT", "DELETE");
+    }
+
+    private boolean isTrustedOrigin(HttpServletRequest req) {
+        String origin = req.getHeader("Origin");
+        return Objects.nonNull(origin) && !origin.isEmpty() && (origin.
+                startsWith(
+                        "http://localhost") || origin.startsWith(
+                        "https://localhost"));
     }
 
     @Override
@@ -51,24 +58,39 @@ public class XSRFFilter implements Filter {
 
         HttpSession session = req.getSession();
 
-        if (authorizedMethods.contains(req.getMethod())) {
-            try {
-                String xsfrtoken = (String) session.getAttribute("XSRF-TOKEN");
-                String xxsfrtoken = req.getHeader("X-XSRF-TOKEN");
-                if (xsfrtoken == null || xxsfrtoken == null
-                        || !xsfrtoken.equals(xxsfrtoken)) {
-                    LOG.log(Level.WARNING,
-                            "Unauthorized Access : XSFR-TOKEN={0} ; X-XSFR-TOKEN={1}",
-                            new Object[]{xsfrtoken, xxsfrtoken});
+        String xxsfrtoken = req.getHeader("X-XSRF-TOKEN");
+
+        if (sem.contains(req.getMethod())) {
+            if (xxsfrtoken != null && !xxsfrtoken.isEmpty()) {
+                try {
+                    LOG.log(Level.INFO, "Checking X-XSFR-TOKEN");
+                    String xsfrtoken = (String) session.getAttribute(
+                            "XSRF-TOKEN");
+                    if (xsfrtoken == null
+                            || xsfrtoken.isEmpty()
+                            || !xsfrtoken.equals(xxsfrtoken)) {
+                        LOG.log(Level.WARNING,
+                                "Unauthorized Access : XSFR-TOKEN={0} ; X-XSFR-TOKEN={1}",
+                                new Object[]{xsfrtoken, xxsfrtoken});
+                        rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+                    } else {
+                        chain.doFilter(request, response);
+                    }
+                } catch (Exception ex) {
+                    String errmsg = ExceptionHelper.handleException(ex,
+                            "Error in Filter " + XSRFFilter.class.
+                                    getSimpleName());
+                    LOG.log(Level.WARNING, errmsg);
                     rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-                } else {
-                    chain.doFilter(request, response);
                 }
-            } catch (Exception ex) {
-                String errmsg = ExceptionHelper.handleException(ex,
-                        "Error in Filter " + XSRFFilter.class.getSimpleName());
-                LOG.log(Level.WARNING, errmsg);
-                rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            } else {
+                if (this.isTrustedOrigin(req)) {
+                    chain.doFilter(request, response);
+                } else {
+                    LOG.log(Level.WARNING,
+                            "No X-XSFR-TOKEN specified in the Header and Origin is not trusted !");
+                    rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+                }
             }
         } else {
             chain.doFilter(request, response);
