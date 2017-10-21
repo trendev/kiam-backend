@@ -22,7 +22,7 @@
     <filter>
         <description>apply Cross Origin Resource Sharing on restapi requests/responses</description>
         <filter-name>CORS</filter-name>
-        <filter-class>fr.trendev.comptandye.utils.filters.CrossOriginResourceSharingFilter</filter-class>
+        <filter-class>fr.trendev.comptandye.utils.filters.CORSFilter</filter-class>
         <async-supported>true</async-supported>
     </filter>
     <filter>

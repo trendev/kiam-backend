@@ -23,10 +23,9 @@ import javax.servlet.http.HttpServletResponse;
  * @author jsie
  */
 //@WebFilter(urlPatterns = {"/restapi/*"}, asyncSupported = true)
-public class CrossOriginResourceSharingFilter implements Filter {
+public class CORSFilter implements Filter {
 
-    private static final Logger LOG = Logger.getLogger(
-            CrossOriginResourceSharingFilter.class.getName());
+    private static final Logger LOG = Logger.getLogger(CORSFilter.class.getName());
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
