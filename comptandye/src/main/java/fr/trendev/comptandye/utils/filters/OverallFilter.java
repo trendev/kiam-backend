@@ -70,7 +70,7 @@ public class OverallFilter implements Filter {
              */
             String xsrfToken = PasswordGenerator.autoGenerate(128);
             Cookie c = new Cookie("XSRF-TOKEN", xsrfToken);
-            c.setPath(req.getContextPath());
+            c.setPath("/");
             c.setHttpOnly(false);
             c.setSecure(true);
 
