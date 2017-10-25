@@ -27,6 +27,12 @@ public class PurchasedOffering {
     @Basic
     private int qty = 1;
 
+    /**
+     * Price in cents (1/100 of the currency)
+     */
+    @Basic
+    private int price;
+
     @OneToOne(targetEntity = Offering.class)
     private Offering offering;
 
@@ -52,6 +58,14 @@ public class PurchasedOffering {
 
     public void setQty(int qty) {
         this.qty = qty;
+    }
+
+    public int getPrice() {
+        return this.price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public Offering getOffering() {
