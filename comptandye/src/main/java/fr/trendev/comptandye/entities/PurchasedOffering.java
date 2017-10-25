@@ -39,6 +39,7 @@ public class PurchasedOffering {
     public PurchasedOffering(int qty, Offering offering) {
         this.qty = qty;
         this.offering = offering;
+        this.price = offering.getPrice();
     }
 
     public PurchasedOffering() {
