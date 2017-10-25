@@ -5,13 +5,16 @@
  */
 package fr.trendev.comptandye.services;
 
+import fr.trendev.comptandye.sessions.UserAccountFacade;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UserAccountType;
+import java.util.Optional;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -30,13 +33,7 @@ import javax.ws.rs.core.SecurityContext;
 public class AuthenticationService {
 
     @Inject
-    ProfessionalService professionalService;
-
-    @Inject
-    IndividualService individualService;
-
-    @Inject
-    AdministratorService administratorService;
+    UserAccountFacade userAccountFacade;
 
     @Path("password")
     @GET
@@ -45,38 +42,34 @@ public class AuthenticationService {
         return PasswordGenerator.autoGenerate(id);
     }
 
-    @Path("authenticated")
+    @Path("profile")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response authorized(@Context SecurityContext sec) {
-
-        if (sec.isSecure() && sec.isUserInRole(UserAccountType.PROFESSIONAL)) {
-            return this.authenticatedResponse(UserAccountType.PROFESSIONAL);
-        }
-
-        if (sec.isSecure() && sec.isUserInRole(UserAccountType.INDIVIDUAL)) {
-            return this.authenticatedResponse(UserAccountType.INDIVIDUAL);
-        }
-
-        if (sec.isSecure() && sec.isUserInRole(UserAccountType.ADMINISTRATOR)) {
-            return this.authenticatedResponse(UserAccountType.ADMINISTRATOR);
-        }
-
-        return Response.status(Response.Status.UNAUTHORIZED)
-                .entity(Json.createObjectBuilder().add("error",
-                        "Unauthorized User").build())
-                .build();
+        return this.getEmail(sec)
+                .map(email -> Response.ok(userAccountFacade.find(email)).
+                        build())
+                .orElse(
+                        Response.status(Response.Status.UNAUTHORIZED)
+                                .entity(Json.createObjectBuilder().add("error",
+                                        "Unauthorized User").build())
+                                .build()
+                );
     }
 
-    /**
-     * Returns the cltype of the user if the authenticated user
-     *
-     * @param type the UserAccount type
-     * @return the cltype of the user if the authenticated user
-     */
-    private Response authenticatedResponse(String type) {
-        return Response.ok(Json.createObjectBuilder()
-                .add("cltype", type)
-                .build()).build();
+    private Optional<String> getEmail(SecurityContext sec) {
+        return Optional.ofNullable(
+                sec.isSecure() && (sec.
+                isUserInRole(UserAccountType.PROFESSIONAL)
+                || sec.isUserInRole(UserAccountType.INDIVIDUAL)
+                || sec.isUserInRole(UserAccountType.ADMINISTRATOR))
+                ? sec.getUserPrincipal().getName() : null);
+    }
+
+    @Path("logout")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response logout(@Context SecurityContext sec) {
+        return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
     }
 }

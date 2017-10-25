@@ -127,8 +127,7 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
     public Response put(@Context SecurityContext sec, Client entity,
             @QueryParam("professional") String professional) {
 
-        ClientPK pk = new ClientPK(entity.getId(), this.
-                getProEmail(sec,
+        ClientPK pk = new ClientPK(entity.getId(), this.getProEmail(sec,
                         professional));
 
         LOG.log(Level.INFO, "Updating Client {0}",

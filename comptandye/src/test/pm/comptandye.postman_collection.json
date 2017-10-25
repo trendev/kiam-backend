@@ -88,18 +88,15 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
+						"body": {},
 						"url": {
-							"raw": "{{API_URL}}/Authentication/authenticated",
+							"raw": "{{API_URL}}/Authentication/profile",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"Authentication",
-								"authenticated"
+								"profile"
 							]
 						}
 					},
@@ -8200,6 +8197,41 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 503\"] = responseCode.code === 503;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "X-XSRF-TOKEN",
+						"value": "{{XSRF-TOKEN}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{API_URL}}/Authentication/logout",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"Authentication",
+						"logout"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
