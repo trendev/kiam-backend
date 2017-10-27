@@ -9,11 +9,17 @@ import fr.trendev.comptandye.sessions.UserAccountFacade;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UserAccountType;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.Json;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -64,6 +70,27 @@ public class AuthenticationService {
                 || sec.isUserInRole(UserAccountType.INDIVIDUAL)
                 || sec.isUserInRole(UserAccountType.ADMINISTRATOR))
                 ? sec.getUserPrincipal().getName() : null);
+    }
+
+    @PermitAll
+    @Path("login")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response login(
+            @Context HttpServletRequest req,
+            @QueryParam("username") String username,
+            @QueryParam("password") String password) {
+        try {
+            req.login(username, password);
+            return Response.ok()
+                    .entity(Json.createObjectBuilder()
+                            .add("username", username).build())
+                    .build();
+        } catch (ServletException ex) {
+            Logger.getLogger(AuthenticationService.class.getName()).
+                    log(Level.SEVERE, null, ex);
+        }
+        return Response.status(Response.Status.UNAUTHORIZED).build();
     }
 
     @Path("logout")
