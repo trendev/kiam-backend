@@ -45,7 +45,7 @@ public class AuthenticationService {
     @Path("profile")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response authorized(@Context SecurityContext sec) {
+    public Response profile(@Context SecurityContext sec) {
         return this.getEmail(sec)
                 .map(email -> Response.ok(userAccountFacade.find(email)).
                         build())
