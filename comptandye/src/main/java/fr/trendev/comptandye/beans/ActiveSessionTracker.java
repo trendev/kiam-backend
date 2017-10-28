@@ -42,7 +42,7 @@ public class ActiveSessionTracker {
      */
     private final Map<String, String> index;
 
-    private static final Logger LOG = Logger.getLogger(
+    private final Logger LOG = Logger.getLogger(
             ActiveSessionTracker.class.getName());
 
     @Inject
