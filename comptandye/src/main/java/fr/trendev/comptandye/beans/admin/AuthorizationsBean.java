@@ -26,7 +26,7 @@ import javax.servlet.http.HttpSession;
 @ViewScoped
 public class AuthorizationsBean extends CommonUsersBean {
 
-    private static final Logger LOG = Logger.getLogger(AuthorizationsBean.class.
+    private final Logger LOG = Logger.getLogger(AuthorizationsBean.class.
             getName());
 
     @Inject

@@ -31,7 +31,7 @@ import javax.inject.Named;
 @SessionScoped
 public class ChangePwdListBean implements Serializable {
 
-    private static final Logger LOG = Logger.getLogger(ChangePwdListBean.class.
+    private final Logger LOG = Logger.getLogger(ChangePwdListBean.class.
             getName());
 
     @Inject

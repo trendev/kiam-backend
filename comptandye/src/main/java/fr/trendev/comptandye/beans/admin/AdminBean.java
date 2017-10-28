@@ -39,7 +39,7 @@ public class AdminBean implements Serializable {
 
     private String adminEmail;
 
-    private static final Logger LOG = Logger.
+    private final Logger LOG = Logger.
             getLogger(AdminBean.class.getName());
 
     public AdminBean() {
