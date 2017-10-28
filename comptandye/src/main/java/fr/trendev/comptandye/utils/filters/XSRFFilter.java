@@ -115,6 +115,8 @@ public class XSRFFilter implements Filter {
             } else {
                 // if there is no token, check the cross-origin
                 if (this.isTrustedOrigin(req)) {
+                    LOG.log(Level.INFO,
+                            "No X-XSFR-TOKEN specified in the Header but Origin is trusted !");
                     chain.doFilter(request, response);
                 } else {
                     LOG.log(Level.WARNING,
