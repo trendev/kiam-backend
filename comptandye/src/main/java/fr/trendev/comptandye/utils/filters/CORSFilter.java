@@ -66,7 +66,7 @@ public class CORSFilter implements Filter {
         resp.addHeader("Access-Control-Allow-Headers",
                 "Content-Type, Accept");
 
-        LOG.log(Level.INFO, "Adding CORS");
+        LOG.log(Level.INFO, "- Adding CORS -");
 
         chain.doFilter(request, response);
 
@@ -81,7 +81,7 @@ public class CORSFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         LOG.log(Level.INFO,
-                "CrossOriginResourceSharingFilter : init in progress...");
+                "CORSFilter : init in progress...");
     }
 
     /**
@@ -89,7 +89,7 @@ public class CORSFilter implements Filter {
      */
     @Override
     public void destroy() {
-        LOG.log(Level.INFO, "CrossOriginResourceSharingFilter : destroyed...");
+        LOG.log(Level.INFO, "CORSFilter : destroyed...");
     }
 
 }
