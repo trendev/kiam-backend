@@ -6,7 +6,7 @@
 package fr.trendev.comptandye.utils.filters;
 
 import fr.trendev.comptandye.beans.ActiveSessionTracker;
-import fr.trendev.comptandye.utils.PasswordGenerator;
+import fr.trendev.comptandye.beans.xsrf.XSRFTokenGenerator;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.logging.Level;
@@ -31,6 +31,9 @@ public class OverallFilter implements Filter {
 
     @Inject
     ActiveSessionTracker tracker;
+
+    @Inject
+    XSRFTokenGenerator generator;
 
     private static final Logger LOG = Logger.getLogger(OverallFilter.class.
             getName());
@@ -64,19 +67,12 @@ public class OverallFilter implements Filter {
                 && !tracker.contains(user.getName(), session)) {
             tracker.put(user.getName(), session);
 
-            /**
-             * Sets the XSRF-TOKEN cookie and add its value in the session's
-             * attributes.
-             */
-            String xsrfToken = PasswordGenerator.autoGenerate(128);
-            Cookie c = new Cookie("XSRF-TOKEN", xsrfToken);
+            //sets the XSRF token, JSESSIONID is already pushed
+            Cookie c = new Cookie("XSRF-TOKEN", generator.generate(session));
             c.setPath("/");
             c.setHttpOnly(false);//should be used by javascript (Angular) scripts
             c.setSecure(true);//requires to use HTTPS
-
-            session.setAttribute("XSRF-TOKEN", xsrfToken);
             rsp.addCookie(c);
-
         }
 
         chain.doFilter(request, response);
