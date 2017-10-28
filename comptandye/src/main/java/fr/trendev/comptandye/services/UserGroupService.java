@@ -38,7 +38,7 @@ public class UserGroupService extends AbstractCommonService<UserGroup, String> {
     @Inject
     UserGroupFacade userGroupFacade;
 
-    private static final Logger LOG = Logger.getLogger(UserGroupService.class.
+    private final Logger LOG = Logger.getLogger(UserGroupService.class.
             getName());
 
     public UserGroupService() {

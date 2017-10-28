@@ -45,7 +45,7 @@ public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
     @Inject
     ProfessionalFacade professionalFacade;
 
-    private static final Logger LOG = Logger.getLogger(ServiceService.class.
+    private final Logger LOG = Logger.getLogger(ServiceService.class.
             getName());
 
     public ServiceService() {

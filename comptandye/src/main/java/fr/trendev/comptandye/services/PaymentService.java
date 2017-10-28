@@ -37,7 +37,7 @@ public class PaymentService extends AbstractCommonService<Payment, Long> {
     @Inject
     PaymentFacade paymentFacade;
 
-    private static final Logger LOG = Logger.getLogger(PaymentService.class.
+    private final Logger LOG = Logger.getLogger(PaymentService.class.
             getName());
 
     public PaymentService() {

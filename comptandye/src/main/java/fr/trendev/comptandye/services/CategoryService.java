@@ -52,7 +52,7 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
     @Inject
     ClientFacade clientFacade;
 
-    private static final Logger LOG = Logger.getLogger(CategoryService.class.
+    private final Logger LOG = Logger.getLogger(CategoryService.class.
             getName());
 
     public CategoryService() {

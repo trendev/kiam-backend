@@ -47,7 +47,7 @@ public class ExpenseService extends AbstractCommonService<Expense, ExpensePK> {
     @Inject
     ProfessionalFacade professionalFacade;
 
-    private static final Logger LOG = Logger.getLogger(ExpenseService.class.
+    private final Logger LOG = Logger.getLogger(ExpenseService.class.
             getName());
 
     public ExpenseService() {

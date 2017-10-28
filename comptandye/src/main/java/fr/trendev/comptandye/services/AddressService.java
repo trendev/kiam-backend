@@ -33,28 +33,28 @@ import javax.ws.rs.core.Response;
 @Path("Address")
 @RolesAllowed({"Administrator"})
 public class AddressService extends AbstractCommonService<Address, Long> {
-    
+
     @Inject
     AddressFacade addressFacade;
-    
-    private static final Logger LOG = Logger.getLogger(
+
+    private final Logger LOG = Logger.getLogger(
             AddressService.class.
                     getName());
-    
+
     public AddressService() {
         super(Address.class);
     }
-    
+
     @Override
     protected Logger getLogger() {
         return LOG;
     }
-    
+
     @Override
     protected AbstractFacade<Address, Long> getFacade() {
         return addressFacade;
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
@@ -62,7 +62,7 @@ public class AddressService extends AbstractCommonService<Address, Long> {
         LOG.log(Level.INFO, "Providing the Address list");
         return super.findAll();
     }
-    
+
     @Path("count")
     @GET
     @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON,})
@@ -70,7 +70,7 @@ public class AddressService extends AbstractCommonService<Address, Long> {
     public Response count() {
         return super.count();
     }
-    
+
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -80,7 +80,7 @@ public class AddressService extends AbstractCommonService<Address, Long> {
         LOG.log(Level.INFO, "REST request to get Address : {0}", id);
         return super.find(id, refresh);
     }
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -90,7 +90,7 @@ public class AddressService extends AbstractCommonService<Address, Long> {
             e.setId(null);
         });
     }
-    
+
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -105,7 +105,7 @@ public class AddressService extends AbstractCommonService<Address, Long> {
             e.setCountry(entity.getCountry());
         });
     }
-    
+
     @Path("{id}")
     @DELETE
     public Response delete(@PathParam("id") Long id) {
@@ -113,5 +113,5 @@ public class AddressService extends AbstractCommonService<Address, Long> {
         return super.delete(id, e -> {
         });
     }
-    
+
 }

@@ -37,7 +37,7 @@ public class CustomerDetailsService extends AbstractCommonService<CustomerDetail
     @Inject
     CustomerDetailsFacade customerDetailsFacade;
 
-    private static final Logger LOG = Logger.getLogger(
+    private final Logger LOG = Logger.getLogger(
             CustomerDetailsService.class.
                     getName());
 

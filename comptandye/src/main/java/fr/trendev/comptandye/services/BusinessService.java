@@ -36,7 +36,7 @@ public class BusinessService extends AbstractCommonService<Business, String> {
     @Inject
     BusinessFacade businessFacade;
 
-    private static final Logger LOG = Logger.getLogger(BusinessService.class.
+    private final Logger LOG = Logger.getLogger(BusinessService.class.
             getName());
 
     public BusinessService() {

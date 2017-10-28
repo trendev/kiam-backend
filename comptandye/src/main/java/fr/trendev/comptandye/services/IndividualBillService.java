@@ -48,7 +48,7 @@ public class IndividualBillService extends AbstractBillService<IndividualBill> {
     @Inject
     IndividualFacade individualFacade;
 
-    private static final Logger LOG = Logger.getLogger(
+    private final Logger LOG = Logger.getLogger(
             IndividualBillService.class.
                     getName());
 

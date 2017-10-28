@@ -49,7 +49,7 @@ public class ClientBillService extends AbstractBillService<ClientBill> {
     @Inject
     ClientFacade clientFacade;
 
-    private static final Logger LOG = Logger.getLogger(ClientBillService.class.
+    private final Logger LOG = Logger.getLogger(ClientBillService.class.
             getName());
 
     public ClientBillService() {

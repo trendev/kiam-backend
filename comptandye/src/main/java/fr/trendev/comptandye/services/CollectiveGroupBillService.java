@@ -49,7 +49,7 @@ public class CollectiveGroupBillService extends AbstractBillService<CollectiveGr
     @Inject
     CollectiveGroupFacade collectiveGroupFacade;
 
-    private static final Logger LOG = Logger.getLogger(
+    private final Logger LOG = Logger.getLogger(
             CollectiveGroupBillService.class.
                     getName());
 

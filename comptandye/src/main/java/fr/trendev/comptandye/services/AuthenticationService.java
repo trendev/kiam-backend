@@ -9,7 +9,6 @@ import fr.trendev.comptandye.sessions.UserAccountFacade;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UserAccountType;
 import java.util.Optional;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
@@ -20,7 +19,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -40,6 +38,9 @@ public class AuthenticationService {
 
     @Inject
     UserAccountFacade userAccountFacade;
+
+    private final Logger LOG = Logger.getLogger(AuthenticationService.class.
+            getName());
 
     @Path("password")
     @GET
@@ -74,27 +75,26 @@ public class AuthenticationService {
 
     @PermitAll
     @Path("login")
-    @POST
+    @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(
             @Context HttpServletRequest req,
+            @Context SecurityContext sec,
             @QueryParam("username") String username,
             @QueryParam("password") String password) {
         try {
             req.login(username, password);
-            return Response.ok()
-                    .entity(Json.createObjectBuilder()
-                            .add("username", username).build())
-                    .build();
+            return this.profile(sec);
         } catch (ServletException ex) {
-            Logger.getLogger(AuthenticationService.class.getName()).
-                    log(Level.SEVERE, null, ex);
         }
-        return Response.status(Response.Status.UNAUTHORIZED).build();
+        return Response.status(Response.Status.UNAUTHORIZED)
+                .entity(Json.createObjectBuilder().add("error",
+                        "Unauthorized User").build())
+                .build();
     }
 
     @Path("logout")
-    @PUT
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response logout(@Context SecurityContext sec) {
         return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();

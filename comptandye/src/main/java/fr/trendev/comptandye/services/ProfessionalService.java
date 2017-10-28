@@ -61,7 +61,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     @Inject
     IndividualFacade individualFacade;
 
-    private static final Logger LOG = Logger.getLogger(
+    private final Logger LOG = Logger.getLogger(
             ProfessionalService.class.
                     getName());
 

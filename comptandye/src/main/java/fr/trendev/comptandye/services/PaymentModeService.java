@@ -36,7 +36,7 @@ public class PaymentModeService extends AbstractCommonService<PaymentMode, Strin
     @Inject
     PaymentModeFacade paymentModeFacade;
 
-    private static final Logger LOG = Logger.getLogger(PaymentModeService.class.
+    private final Logger LOG = Logger.getLogger(PaymentModeService.class.
             getName());
 
     public PaymentModeService() {

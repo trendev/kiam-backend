@@ -54,7 +54,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
     @Inject
     BillTypeVisitor billTypeVisitor;
 
-    private static final Logger LOG = Logger.getLogger(
+    private final Logger LOG = Logger.getLogger(
             AbstractBillService.class.
                     getName());
 

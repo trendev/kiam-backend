@@ -52,7 +52,7 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
     @Inject
     ServiceFacade serviceFacade;
 
-    private static final Logger LOG = Logger.getLogger(PackService.class.
+    private final Logger LOG = Logger.getLogger(PackService.class.
             getName());
 
     public PackService() {

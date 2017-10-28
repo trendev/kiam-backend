@@ -52,7 +52,7 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
     @Inject
     ClientBillFacade clientBillFacade;
 
-    private static final Logger LOG = Logger.getLogger(ClientService.class.
+    private final Logger LOG = Logger.getLogger(ClientService.class.
             getName());
 
     public ClientService() {
@@ -128,7 +128,7 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
             @QueryParam("professional") String professional) {
 
         ClientPK pk = new ClientPK(entity.getId(), this.getProEmail(sec,
-                        professional));
+                professional));
 
         LOG.log(Level.INFO, "Updating Client {0}",
                 clientFacade.

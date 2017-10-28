@@ -37,7 +37,7 @@ public class SocialNetworkAccountsService extends AbstractCommonService<SocialNe
     @Inject
     SocialNetworkAccountsFacade socialNetworkAccountsFacade;
 
-    private static final Logger LOG = Logger.getLogger(
+    private final Logger LOG = Logger.getLogger(
             SocialNetworkAccountsService.class.
                     getName());
 

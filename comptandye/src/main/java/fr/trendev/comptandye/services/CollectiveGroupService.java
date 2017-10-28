@@ -53,7 +53,7 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
     @Inject
     ClientFacade clientFacade;
 
-    private static final Logger LOG = Logger.getLogger(
+    private final Logger LOG = Logger.getLogger(
             CollectiveGroupService.class.
                     getName());
 
@@ -129,7 +129,8 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
     public Response put(@Context SecurityContext sec, CollectiveGroup entity,
             @QueryParam("professional") String professional) {
 
-        CollectiveGroupPK pk = new CollectiveGroupPK(entity.getId(), this.getProEmail(sec,
+        CollectiveGroupPK pk = new CollectiveGroupPK(entity.getId(), this.
+                getProEmail(sec,
                         professional));
 
         LOG.log(Level.INFO, "Updating CollectiveGroup {0}",

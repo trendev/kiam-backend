@@ -45,7 +45,7 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
     @Inject
     ProvideOfferingFacadeVisitor visitor;
 
-    private static final Logger LOG = Logger.getLogger(
+    private final Logger LOG = Logger.getLogger(
             PurchasedOfferingService.class.
                     getName());
 

@@ -46,7 +46,7 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
     @Inject
     UserGroupFacade userGroupFacade;
 
-    private static final Logger LOG = Logger.getLogger(
+    private final Logger LOG = Logger.getLogger(
             AdministratorService.class.
                     getName());
 
