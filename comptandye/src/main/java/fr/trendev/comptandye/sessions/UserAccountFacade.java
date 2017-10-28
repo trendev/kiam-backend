@@ -21,7 +21,7 @@ public class UserAccountFacade extends AbstractFacade<UserAccount, String> {
     @Inject
     private EntityManager em;
 
-    private static final Logger LOG = Logger.getLogger(UserAccountFacade.class.
+    private final Logger LOG = Logger.getLogger(UserAccountFacade.class.
             getName());
 
     public UserAccountFacade() {
