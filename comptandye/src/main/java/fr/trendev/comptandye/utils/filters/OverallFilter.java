@@ -63,11 +63,6 @@ public class OverallFilter implements Filter {
         if (user != null && session != null
                 && !tracker.contains(user.getName(), session)) {
             tracker.put(user.getName(), session);
-            int count = tracker.count(user.getName());
-            LOG.log(Level.INFO,
-                    "New session {0} added to ActiveSessionTracker. [{1}] has now {2} active session{3}",
-                    new Object[]{session.getId(),
-                        user.getName(), count, count > 1 ? "s" : ""});
 
             /**
              * Sets the XSRF-TOKEN cookie and add its value in the session's

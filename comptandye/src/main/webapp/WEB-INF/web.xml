@@ -97,7 +97,7 @@
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
     <session-config>
-        <session-timeout>30</session-timeout>
+        <session-timeout>2</session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>tmp-index.html</welcome-file>

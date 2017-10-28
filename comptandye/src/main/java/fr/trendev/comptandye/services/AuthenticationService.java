@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.services;
 
+import fr.trendev.comptandye.beans.ActiveSessionTracker;
 import fr.trendev.comptandye.sessions.UserAccountFacade;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UserAccountType;
@@ -20,6 +21,7 @@ import javax.inject.Inject;
 import javax.json.Json;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -42,6 +44,9 @@ public class AuthenticationService {
     @Inject
     UserAccountFacade userAccountFacade;
 
+    @Inject
+    ActiveSessionTracker tracker;
+
     private final Logger LOG = Logger.getLogger(AuthenticationService.class.
             getName());
 
@@ -57,8 +62,10 @@ public class AuthenticationService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response profile(@Context SecurityContext sec) {
         return this.getEmail(sec)
-                .map(email -> Response.ok(userAccountFacade.find(email)).
-                        build())
+                .map(email -> {
+                    LOG.log(Level.INFO, "Providing the profile of [{0}]", email);
+                    return Response.ok(userAccountFacade.find(email)).build();
+                })
                 .orElse(
                         Response.status(Response.Status.UNAUTHORIZED)
                                 .entity(Json.createObjectBuilder().add("error",
@@ -89,17 +96,23 @@ public class AuthenticationService {
         Principal user = req.getUserPrincipal();
 
         try {
-            req.login(username, password);
+            if (user == null) {
+                req.login(username, password);
+                HttpSession session = req.getSession();
+            } else {// user is authenticated
+                LOG.log(Level.WARNING,
+                        "Login Failed - [{0}] is already logged in",
+                        user.getName());
+            }
             return this.profile(sec);
         } catch (ServletException ex) {
-            LOG.log(Level.WARNING, ExceptionHelper.handleException(ex,
-                    "AuthenticationService#login()"));
-            LOG.log(Level.INFO, "Login REFUSED to Remote Address {0}",
-                    req.getRemoteAddr());
+            LOG.log(Level.SEVERE, ExceptionHelper.handleException(ex,
+                    "Login FAILED - [" + username + "] / [" + req.
+                            getRemoteAddr() + "]"));
         }
         return Response.status(Response.Status.UNAUTHORIZED)
                 .entity(Json.createObjectBuilder().add("error",
-                        "Login REFUSED").build())
+                        "Login FAILED - [" + username + "]").build())
                 .build();
     }
 
