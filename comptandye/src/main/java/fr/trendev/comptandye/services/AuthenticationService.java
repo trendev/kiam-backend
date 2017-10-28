@@ -8,7 +8,10 @@ package fr.trendev.comptandye.services;
 import fr.trendev.comptandye.sessions.UserAccountFacade;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UserAccountType;
+import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
+import java.security.Principal;
 import java.util.Optional;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
@@ -82,14 +85,21 @@ public class AuthenticationService {
             @Context SecurityContext sec,
             @QueryParam("username") String username,
             @QueryParam("password") String password) {
+
+        Principal user = req.getUserPrincipal();
+
         try {
             req.login(username, password);
             return this.profile(sec);
         } catch (ServletException ex) {
+            LOG.log(Level.WARNING, ExceptionHelper.handleException(ex,
+                    "AuthenticationService#login()"));
+            LOG.log(Level.INFO, "Login REFUSED to Remote Address {0}",
+                    req.getRemoteAddr());
         }
         return Response.status(Response.Status.UNAUTHORIZED)
                 .entity(Json.createObjectBuilder().add("error",
-                        "Unauthorized User").build())
+                        "Login REFUSED").build())
                 .build();
     }
 
