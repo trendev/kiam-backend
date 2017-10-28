@@ -109,6 +109,12 @@ public class ActiveSessionTracker {
         map.computeIfAbsent(email, k -> new LinkedList<>());
         map.get(email).add(session);
         index.put(session.getId(), email);
+
+        int count = map.get(email).size();
+        LOG.log(Level.INFO,
+                "Session {0} added to ActiveSessionTracker. [{1}] has now {2} active session{3}",
+                new Object[]{session.getId(),
+                    email, count, count > 1 ? "s" : ""});
     }
 
     /**
