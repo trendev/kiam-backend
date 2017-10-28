@@ -97,7 +97,10 @@
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
     <session-config>
-        <session-timeout>2</session-timeout>
+        <session-timeout>30</session-timeout>
+        <cookie-config>
+            <path>/</path>
+        </cookie-config>
     </session-config>
     <welcome-file-list>
         <welcome-file>tmp-index.html</welcome-file>
