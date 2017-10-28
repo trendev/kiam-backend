@@ -148,10 +148,57 @@ public class AuthenticationService {
                 .build();
     }
 
+    /**
+     * Logs out the user, invalidating the current session and setting the
+     * cookies with null value and 0 timeout.
+     *
+     * @param req the origin request
+     * @param sec the security context
+     * @return 200 if everything is OK or 417 Expectation failed if the session
+     * is invalidated
+     */
     @Path("logout")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response logout(@Context SecurityContext sec) {
-        return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
+    public Response logout(
+            @Context HttpServletRequest req,
+            @Context SecurityContext sec) {
+
+        String username = sec.getUserPrincipal().getName();
+        SessionCookieConfig scc = req.
+                getServletContext().getSessionCookieConfig();
+
+        NewCookie jsessionid = new NewCookie("JSESSIONID",
+                null,
+                scc.getPath(),
+                scc.getDomain(),
+                null,
+                0, true, true);
+
+        NewCookie xsrfCookie = new NewCookie("XSRF-TOKEN",
+                null,
+                scc.getPath(),
+                scc.getDomain(),
+                null,
+                0, true, false);
+
+        try {
+            req.getSession().invalidate();
+        } catch (IllegalStateException ex) {
+            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
+                    Json.createObjectBuilder()
+                            .add("msg", "user " + username + " logged out").
+                            build()
+            )
+                    .cookie(jsessionid, xsrfCookie)
+                    .build();
+        }
+
+        return Response.ok(
+                Json.createObjectBuilder()
+                        .add("msg", "user " + username + " logged out").build()
+        )
+                .cookie(jsessionid, xsrfCookie)
+                .build();
     }
 }
