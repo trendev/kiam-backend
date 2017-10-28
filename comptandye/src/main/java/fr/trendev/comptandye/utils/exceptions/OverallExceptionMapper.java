@@ -15,12 +15,12 @@ import javax.ws.rs.ext.Provider;
 @Provider
 public class OverallExceptionMapper implements ExceptionMapper<Exception> {
 
-    private static final Logger logger = Logger.getLogger(
+    private static final Logger LOG = Logger.getLogger(
             OverallExceptionMapper.class.getName());
 
     @Override
     public Response toResponse(Exception ex) {
-        logger.
+        LOG.
                 log(Level.WARNING, OverallExceptionMapper.class.getSimpleName()
                         + ": " + ex.getMessage(),
                         ex);
