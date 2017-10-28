@@ -6,6 +6,7 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.beans.ActiveSessionTracker;
+import fr.trendev.comptandye.beans.xsrf.XSRFTokenGenerator;
 import fr.trendev.comptandye.sessions.UserAccountFacade;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UserAccountType;
@@ -20,6 +21,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.servlet.ServletException;
+import javax.servlet.SessionCookieConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.GET;
@@ -29,6 +31,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
@@ -46,6 +49,9 @@ public class AuthenticationService {
 
     @Inject
     ActiveSessionTracker tracker;
+
+    @Inject
+    XSRFTokenGenerator generator;
 
     private final Logger LOG = Logger.getLogger(AuthenticationService.class.
             getName());
@@ -96,23 +102,49 @@ public class AuthenticationService {
         Principal user = req.getUserPrincipal();
 
         try {
+            //user is not authenticated
             if (user == null) {
                 req.login(username, password);
                 HttpSession session = req.getSession();
+                //adds the session of the new authenticated user in the tracker
+                tracker.put(username, session);
+
+                SessionCookieConfig scc = req.
+                        getServletContext().getSessionCookieConfig();
+
+                NewCookie jsessionid = new NewCookie("JSESSIONID",
+                        session.getId(),
+                        scc.getPath(),
+                        scc.getDomain(),
+                        null,
+                        scc.getMaxAge(), true, true);
+
+                NewCookie xsrfCookie = new NewCookie("XSRF-TOKEN",
+                        generator.generate(session),
+                        scc.getPath(),
+                        scc.getDomain(),
+                        null,
+                        scc.getMaxAge(), true, false);
+
+                //sends the profile and set the cookies
+                return Response.fromResponse(this.profile(sec))
+                        .cookie(jsessionid, xsrfCookie)
+                        .build();
             } else {// user is authenticated
                 LOG.log(Level.WARNING,
-                        "Login Failed - [{0}] is already logged in",
+                        "Login Failed - user [{0}] is already logged in",
                         user.getName());
             }
+            //just sends the profile if the user is authenticated
             return this.profile(sec);
         } catch (ServletException ex) {
             LOG.log(Level.SEVERE, ExceptionHelper.handleException(ex,
-                    "Login FAILED - [" + username + "] / [" + req.
+                    "Login FAILED - user [" + username + "] / [" + req.
                             getRemoteAddr() + "]"));
         }
         return Response.status(Response.Status.UNAUTHORIZED)
                 .entity(Json.createObjectBuilder().add("error",
-                        "Login FAILED - [" + username + "]").build())
+                        "Login FAILED - user [" + username + "]").build())
                 .build();
     }
 
