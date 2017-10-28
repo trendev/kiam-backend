@@ -100,6 +100,7 @@
         <session-timeout>30</session-timeout>
     </session-config>
     <welcome-file-list>
+        <welcome-file>tmp-index.html</welcome-file>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
     <security-constraint>
