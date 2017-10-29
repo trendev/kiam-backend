@@ -10,48 +10,53 @@
 			"name": "Authentication",
 			"item": [
 				{
-					"name": "j_security_check",
+					"name": "login",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
 								"exec": [
-									"tests[\"Status code is 302\"] = responseCode.code === 302 ;",
+									"tests[\"Status code is 200\"] = responseCode.code === 200 ;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"cltype is Administrator or Professional or Individual ==> \"+jsonData.cltype] = jsonData.cltype === (\"Administrator\" || \"Professional\" || \"Individual\");",
 									"",
 									"if(postman.getResponseHeader(\"Set-Cookie\")){",
 									"    tests[\"Set-Cookie is present\"] = postman.getResponseHeader(\"Set-Cookie\");",
 									"    ",
-									"    postman.setEnvironmentVariable(\"JSESSIONID\",postman.getResponseHeader(\"Set-Cookie\").split(\"; \")[0].split(\"=\")[1]);",
-									"    console.log(postman.getEnvironmentVariable(\"JSESSIONID\"));",
-									"}"
+									"    postman.setEnvironmentVariable(\"XSRF-TOKEN\",postman.getResponseHeader(\"Set-Cookie\").split(\";\")[0].split(\"=\")[1]);",
+									"    console.log(postman.getEnvironmentVariable(\"XSRF-TOKEN\"));",
+									"}",
+									""
 								]
 							}
 						}
 					],
 					"request": {
-						"method": "POST",
+						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/j_security_check?j_username={{username}}&j_password={{password}}",
+							"raw": "{{API_URL}}/Authentication/login?username={{username}}&password={{password}}",
 							"host": [
-								"{{BASE_URL}}"
+								"{{API_URL}}"
 							],
 							"path": [
-								"j_security_check"
+								"Authentication",
+								"login"
 							],
 							"query": [
 								{
-									"key": "j_username",
+									"key": "username",
 									"value": "{{username}}",
 									"equals": true
 								},
 								{
-									"key": "j_password",
+									"key": "password",
 									"value": "{{password}}",
 									"equals": true
 								}
@@ -8206,13 +8211,13 @@
 					"script": {
 						"type": "text/javascript",
 						"exec": [
-							"tests[\"Status code is 503\"] = responseCode.code === 503;"
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
 						]
 					}
 				}
 			],
 			"request": {
-				"method": "PUT",
+				"method": "POST",
 				"header": [
 					{
 						"key": "X-XSRF-TOKEN",
