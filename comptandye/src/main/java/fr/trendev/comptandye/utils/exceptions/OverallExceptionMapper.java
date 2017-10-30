@@ -13,13 +13,13 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 @Provider
-public class OverallExceptionMapper implements ExceptionMapper<Exception> {
+public class OverallExceptionMapper implements ExceptionMapper<Throwable> {
 
     private static final Logger LOG = Logger.getLogger(
             OverallExceptionMapper.class.getName());
 
     @Override
-    public Response toResponse(Exception ex) {
+    public Response toResponse(Throwable ex) {
         LOG.
                 log(Level.WARNING, OverallExceptionMapper.class.getSimpleName()
                         + ": " + ex.getMessage(),

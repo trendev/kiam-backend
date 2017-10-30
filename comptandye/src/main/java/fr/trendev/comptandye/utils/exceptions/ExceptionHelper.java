@@ -14,13 +14,13 @@ import java.text.MessageFormat;
 public class ExceptionHelper {
 
     @SuppressWarnings("empty-statement")
-    private static Throwable findRootCauseException(Exception e) {
+    private static Throwable findRootCauseException(Throwable e) {
         Throwable t = e;
         for (; t.getCause() != null; t = t.getCause());
         return t;
     }
 
-    public final static String handleException(Exception ex, String message) {
+    public final static String handleException(Throwable ex, String message) {
 
         Throwable t = findRootCauseException(ex);
 
