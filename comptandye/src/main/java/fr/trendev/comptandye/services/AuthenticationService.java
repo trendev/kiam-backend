@@ -59,8 +59,8 @@ public class AuthenticationService {
     @Path("password")
     @GET
     @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON,})
-    public String password(@QueryParam("size") int id) {
-        return PasswordGenerator.autoGenerate(id);
+    public String password(@QueryParam("size") int size) {
+        return PasswordGenerator.autoGenerate(size);
     }
 
     @Path("profile")
