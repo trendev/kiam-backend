@@ -132,7 +132,7 @@ public class AuthenticationService {
                         .build();
             } else {// user is authenticated
                 LOG.log(Level.WARNING,
-                        "Login Failed - user [{0}] is already logged in",
+                        "Login cancelled - user [{0}] is already logged in",
                         user.getName());
             }
             //just sends the profile if the user is authenticated
