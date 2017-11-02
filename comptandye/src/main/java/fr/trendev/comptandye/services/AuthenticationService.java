@@ -63,6 +63,7 @@ public class AuthenticationService {
         return PasswordGenerator.autoGenerate(size);
     }
 
+    @PermitAll
     @Path("profile")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
