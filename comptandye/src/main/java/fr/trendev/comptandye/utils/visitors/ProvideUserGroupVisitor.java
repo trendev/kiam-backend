@@ -31,7 +31,6 @@ import fr.trendev.comptandye.entities.UserAccount;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.utils.UserAccountType;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -56,7 +55,6 @@ public class ProvideUserGroupVisitor implements Visitor<UserGroup> {
 
     @Override
     public UserGroup visit(Administrator administrator) {
-        LOG.log(Level.SEVERE, "visit(Administrator)");
         return userGroupFacade.find(UserAccountType.ADMINISTRATOR);
     }
 
@@ -112,7 +110,6 @@ public class ProvideUserGroupVisitor implements Visitor<UserGroup> {
 
     @Override
     public UserGroup visit(Individual individual) {
-        LOG.log(Level.SEVERE, "visit(Individual)");
         return userGroupFacade.find(UserAccountType.INDIVIDUAL);
     }
 
@@ -148,7 +145,6 @@ public class ProvideUserGroupVisitor implements Visitor<UserGroup> {
 
     @Override
     public UserGroup visit(Professional professional) {
-        LOG.log(Level.SEVERE, "visit(Professional)");
         return userGroupFacade.find(UserAccountType.PROFESSIONAL);
     }
 

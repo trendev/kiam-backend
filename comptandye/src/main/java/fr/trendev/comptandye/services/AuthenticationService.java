@@ -75,7 +75,7 @@ public class AuthenticationService {
                 .orElse(
                         Response.status(Response.Status.UNAUTHORIZED)
                                 .entity(Json.createObjectBuilder().add("error",
-                                        "Unauthorized User").build())
+                                        "Unauthorized or Blocked User").build())
                                 .build()
                 );
     }
@@ -87,6 +87,12 @@ public class AuthenticationService {
                 || sec.isUserInRole(UserAccountType.INDIVIDUAL)
                 || sec.isUserInRole(UserAccountType.ADMINISTRATOR))
                 ? sec.getUserPrincipal().getName() : null);
+    }
+
+    private boolean isBlockedUser(SecurityContext sec) {
+        return this.getEmail(sec)
+                .map(u -> false)
+                .orElse(true);
     }
 
     @Path("login")
@@ -105,39 +111,56 @@ public class AuthenticationService {
             if (user == null) {
                 req.login(username, password);
                 HttpSession session = req.getSession();
-                //adds the session of the new authenticated user in the tracker
-                tracker.put(username, session);
 
-                SessionCookieConfig scc = req.
-                        getServletContext().getSessionCookieConfig();
+                // checks first if the user is Blocked or not
+                if (this.isBlockedUser(sec)) {
+                    LOG.log(Level.WARNING,
+                            "Login cancelled - user [{0}] is Blocked",
+                            username);
+                    this.logout(req, sec);
+                    return Response.status(Response.Status.UNAUTHORIZED)
+                            .entity(Json.createObjectBuilder().add("error",
+                                    "Login FAILED - user [" + username
+                                    + "] is Blocked").
+                                    build())
+                            .build();
+                } else {
 
-                NewCookie jsessionid = new NewCookie("JSESSIONID",
-                        session.getId(),
-                        scc.getPath(),
-                        scc.getDomain(),
-                        null,
-                        scc.getMaxAge(), true, true);
+                    //adds the session of the new authenticated user in the tracker
+                    tracker.put(username, session);
 
-                NewCookie xsrfCookie = new NewCookie("XSRF-TOKEN",
-                        generator.generate(session),
-                        scc.getPath(),
-                        scc.getDomain(),
-                        null,
-                        scc.getMaxAge(), true, false);
+                    SessionCookieConfig scc = req.
+                            getServletContext().getSessionCookieConfig();
 
-                //sends the profile and set the cookies
-                return Response.fromResponse(this.profile(sec))
-                        .cookie(jsessionid, xsrfCookie)
-                        .build();
+                    NewCookie jsessionid = new NewCookie("JSESSIONID",
+                            session.getId(),
+                            scc.getPath(),
+                            scc.getDomain(),
+                            null,
+                            scc.getMaxAge(), true, true);
+
+                    NewCookie xsrfCookie = new NewCookie("XSRF-TOKEN",
+                            generator.generate(session),
+                            scc.getPath(),
+                            scc.getDomain(),
+                            null,
+                            scc.getMaxAge(), true, false);
+
+                    //sends the profile and set the cookies
+                    return Response.fromResponse(this.profile(sec))
+                            .cookie(jsessionid, xsrfCookie)
+                            .build();
+                }
             } else {// user is authenticated
                 LOG.log(Level.WARNING,
                         "Login cancelled - user [{0}] is already logged in",
                         user.getName());
+
             }
             //just sends the profile if the user is authenticated
             return this.profile(sec);
         } catch (ServletException ex) {
-            LOG.log(Level.SEVERE, ExceptionHelper.handleException(ex,
+            LOG.log(Level.WARNING, ExceptionHelper.handleException(ex,
                     "Login FAILED - user [" + username + "] / [" + req.
                             getRemoteAddr() + "]"));
         }
