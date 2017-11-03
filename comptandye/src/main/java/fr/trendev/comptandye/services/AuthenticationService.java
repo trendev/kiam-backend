@@ -117,7 +117,11 @@ public class AuthenticationService {
                     LOG.log(Level.WARNING,
                             "Login cancelled - user [{0}] is Blocked",
                             username);
-                    this.logout(req, sec);
+                    try {
+                        session.invalidate();
+                    } catch (IllegalStateException ex) {
+                    }
+
                     return Response.status(Response.Status.UNAUTHORIZED)
                             .entity(Json.createObjectBuilder().add("error",
                                     "Login FAILED - user [" + username
