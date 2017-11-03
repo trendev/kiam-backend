@@ -103,7 +103,6 @@
         </cookie-config>
     </session-config>
     <welcome-file-list>
-        <welcome-file>tmp-index.html</welcome-file>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
     <security-constraint>
