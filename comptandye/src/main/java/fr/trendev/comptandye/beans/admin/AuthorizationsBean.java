@@ -11,6 +11,7 @@ import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.UserAccount;
 import java.util.ConcurrentModificationException;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -76,6 +77,9 @@ public class AuthorizationsBean extends CommonUsersBean {
     public void processAuthorizationChange(UserAccount user) {
         proxy.processAuthorizationChange(user);
         this.disconnect(user);
+        LOG.log(Level.INFO, "[{0}] is now {1}", new Object[]{
+            user.getEmail(), user.isBlocked() ? "BLOCKED" : "GRANTED"
+        });
     }
 
     public long getLastAccessedTime(UserAccount user) {
