@@ -41,7 +41,7 @@ import javax.ws.rs.core.SecurityContext;
  */
 @Stateless
 @Path("Authentication")
-@RolesAllowed({"Administrator", "Professional", "Individual"})
+@PermitAll
 public class AuthenticationService {
 
     @Inject
@@ -63,7 +63,6 @@ public class AuthenticationService {
         return PasswordGenerator.autoGenerate(size);
     }
 
-    @PermitAll
     @Path("profile")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -90,7 +89,6 @@ public class AuthenticationService {
                 ? sec.getUserPrincipal().getName() : null);
     }
 
-    @PermitAll
     @Path("login")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -158,6 +156,7 @@ public class AuthenticationService {
      * @return 200 if everything is OK or 417 Expectation failed if the session
      * is invalidated
      */
+    @RolesAllowed({"Administrator", "Professional", "Individual"})
     @Path("logout")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
