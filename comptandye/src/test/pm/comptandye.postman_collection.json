@@ -67,7 +67,7 @@
 					"response": []
 				},
 				{
-					"name": "authenticated",
+					"name": "profile",
 					"event": [
 						{
 							"listen": "test",
