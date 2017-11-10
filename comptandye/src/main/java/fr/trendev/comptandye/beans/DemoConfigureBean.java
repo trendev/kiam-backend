@@ -32,7 +32,12 @@ import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import fr.trendev.comptandye.utils.UserAccountType;
 import fr.trendev.comptandye.utils.visitors.BillTypeVisitor;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
@@ -49,6 +54,7 @@ import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.ws.rs.WebApplicationException;
 
 /**
  *
@@ -418,6 +424,46 @@ public class DemoConfigureBean implements Serializable {
         try {
             Professional vanessa = em.find(Professional.class,
                     "vanessa.gay@gmail.com");
+
+            ClassLoader classloader = Thread.currentThread().
+                    getContextClassLoader();
+            InputStream is = classloader.getResourceAsStream("csv/clients.csv");
+
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+            try (BufferedReader in = new BufferedReader(
+                    new InputStreamReader(is))) {
+
+                in.lines().skip(1).forEach(l -> {
+                    String[] fields = l.split(",", -1);
+                    if (fields.length != 12) {
+                        throw new WebApplicationException(
+                                "Error during clients import : fields length shoud be 12");
+                    }
+
+                    Date bd = null;
+                    try {
+                        bd = sdf.parse(fields[2]);
+                    } catch (ParseException ex) {
+                    }
+
+                    Client c = new Client(fields[7],
+                            new SocialNetworkAccounts(fields[8], fields[9],
+                                    fields[11], fields[10]),
+                            new CustomerDetails(fields[1], fields[0], null,
+                                    fields[3],
+                                    bd,
+                                    'F',
+                                    null, Collections.<String>emptyList()),
+                            new Address(fields[4], null, fields[5], fields[6]),
+                            vanessa);
+                    vanessa.getClients().add(c);
+                });
+
+            } catch (Exception ex) {
+                LOG.log(Level.SEVERE, "Error during clients import",
+                        ex);
+            }
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Error in createBills()", ex);
         }
