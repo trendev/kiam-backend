@@ -157,10 +157,11 @@ public class DemoConfigureBean implements Serializable {
                 "https://www.facebook.com/gayvanessa",
                 "@VanessCE", null, "https://www.pinterest.com/vanessagay14/"));
 
-        vanessa.setCompanyID("501476154");
+        vanessa.setCompanyID("50147615400023");
         vanessa.setCompanyName("VANESSA ESTHETIQUE ET COIFFURE");
         cal.clear();
-        cal.set(2014, 1, 20);
+//        cal.set(2014, 1, 20);
+        cal.set(2007, 11, 15);
         vanessa.setCreationDate(cal.getTime());
 
         vanessa.getBusinesses().addAll(Arrays.asList(em.find(Business.class,
@@ -187,6 +188,25 @@ public class DemoConfigureBean implements Serializable {
                 new PaymentMode("Virement")
         ));
 
+        Professional audrey = new Professional("audreyheitzmann@gmail.com",
+                PasswordGenerator.encrypt_SHA256(PasswordGenerator.
+                        autoGenerate()),
+                "Audrey", UUIDGenerator.generate("PRO-", true));
+        audrey.setCltype(UserAccountType.PROFESSIONAL);
+
+        audrey.setCustomerDetails(new CustomerDetails("Audrey", "Heitzmann",
+                "Audrey", "0625719477", null, 'F', null, Collections.
+                        <String>emptyList()));
+        audrey.setAddress(new Address("2 rue path", null, "77135",
+                "Pontcarre"));
+        audrey.setSocialNetworkAccounts(new SocialNetworkAccounts());
+        audrey.setCompanyID("81979715000011");
+        audrey.setCompanyName("La nouvelle hair");
+        cal.clear();
+        cal.set(2016, 3, 19);
+        audrey.setCreationDate(cal.getTime());
+        audrey.getBusinesses().add(em.find(Business.class, "Coiffure"));
+
         /**
          * Creates the Professional user group
          */
@@ -196,8 +216,11 @@ public class DemoConfigureBean implements Serializable {
          * Adds the first user to the professional group and vice versa
          */
         vanessa.getUserGroups().add(pro);
+        audrey.getUserGroups().add(pro);
         pro.getUserAccounts().add(vanessa);
+        pro.getUserAccounts().add(audrey);
         vanessa.setBlocked(false);
+        audrey.setBlocked(false);
 
         /**
          * Creates the Individual group, empty on the current version of the
@@ -219,7 +242,7 @@ public class DemoConfigureBean implements Serializable {
                 autoGenerate()));
 
         List<Individual> individuals = IntStream
-                .range(0, 10)
+                .range(0, 2)
                 .mapToObj(i -> new Individual("hank.moody-" + (i + 1)
                         + "@hella.com",
                         PasswordGenerator.encrypt_SHA256("Californication" + i),
