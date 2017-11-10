@@ -121,6 +121,14 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
 
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response importEntity(@Context SecurityContext sec, Client entity,
+            @QueryParam("professional") String professional) {
+        String email = this.getProEmail(sec, professional);
+        return Response.ok().build();
+    }
+
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
