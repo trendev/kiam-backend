@@ -44,9 +44,9 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import javax.annotation.PostConstruct;
+import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -81,6 +81,7 @@ public class DemoConfigureBean implements Serializable {
             this.initUsersAndGroups();
             this.createCategoryAndClient();
             this.createBillsAndOfferings();
+            this.importClients();
         }
 
     }
@@ -349,10 +350,16 @@ public class DemoConfigureBean implements Serializable {
         Professional vanessa = em.find(Professional.class,
                 "vanessa.gay@gmail.com");
         Category cat1 = new Category("long time customers", "Fidelity", vanessa);
-        Client client1 = new Client("valery.lamome@hotmail.fr", vanessa);
+        Client client1 = new Client(null,
+                new SocialNetworkAccounts(),
+                new CustomerDetails("valerie",
+                        "lamome",
+                        null, "0627212271", null, 'F', null,
+                        Collections.<String>emptyList()),
+                new Address("1 rue des gouaix", null,
+                        "77860", "QUINCY VOISINS"),
+                vanessa);
 
-        client1.setAddress(new Address("down town", "water recycling",
-                "77600", "Quincy-Voisins"));
         cat1.getClients().add(client1);
         client1.getCategories().add(cat1);
 
@@ -405,6 +412,16 @@ public class DemoConfigureBean implements Serializable {
         vanessa.getBills().add(cgbill);
         vanessa.getCollectiveGroups().get(0).getCollectiveGroupBills().add(
                 cgbill);
+    }
+
+    private void importClients() {
+        try {
+            Professional vanessa = em.find(Professional.class,
+                    "vanessa.gay@gmail.com");
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Error in createBills()", ex);
+        }
+
     }
 
 }
