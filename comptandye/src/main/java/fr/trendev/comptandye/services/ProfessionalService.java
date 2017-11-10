@@ -328,21 +328,12 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
         return super.provideRelation(proEmail, getter, elementClass);
     }
 
-    @RolesAllowed({"Administrator"})
-    @Path("{email}/bills")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getBills(@PathParam("email") String email) {
-        return super.provideRelation(email, Professional::getBills,
-                Bill.class);
-    }
-
-    @RolesAllowed({"Professional"})
     @Path("bills")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getBills(@Context SecurityContext sec) {
-        return super.provideRelation(this.getProEmail(sec, null),
+    public Response getBills(@Context SecurityContext sec,
+            @QueryParam("email") String email) {
+        return this.provideRelation(sec, email,
                 Professional::getBills,
                 Bill.class);
     }
