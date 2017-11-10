@@ -301,9 +301,10 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     }
 
     /**
-     * Wraps the provideRelation() call catching the professional's email from
-     * the security context (Request from Professional) or from the parameter
-     * email.
+     * Wraps the super.provideRelation() call catching the professional's email
+     * from the security context (Request from Professional) or from the
+     * parameter email. This methods should be considered as the base of the
+     * different getXXX methods in this service.
      *
      * @param <R> the type of the element contained in the relation
      * @param sec the security context
@@ -327,12 +328,22 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
         return super.provideRelation(proEmail, getter, elementClass);
     }
 
+    @RolesAllowed({"Administrator"})
     @Path("{email}/bills")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getBills(@Context SecurityContext sec,
-            @PathParam("email") String email) {
-        return this.provideRelation(sec, email, Professional::getBills,
+    public Response getBills(@PathParam("email") String email) {
+        return super.provideRelation(email, Professional::getBills,
+                Bill.class);
+    }
+
+    @RolesAllowed({"Professional"})
+    @Path("bills")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getBills(@Context SecurityContext sec) {
+        return super.provideRelation(this.getProEmail(sec, null),
+                Professional::getBills,
                 Bill.class);
     }
 
