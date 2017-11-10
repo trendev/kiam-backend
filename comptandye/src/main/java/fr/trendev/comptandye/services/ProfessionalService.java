@@ -338,56 +338,56 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 Bill.class);
     }
 
-    @Path("{email}/clients")
+    @Path("clients")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getClients(@Context SecurityContext sec,
-            @PathParam("email") String email) {
+            @QueryParam("email") String email) {
         return this.provideRelation(sec, email, Professional::getClients,
                 Client.class);
     }
 
-    @Path("{email}/offerings")
+    @Path("offerings")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getOfferings(@Context SecurityContext sec,
-            @PathParam("email") String email) {
+            @QueryParam("email") String email) {
         return this.provideRelation(sec, email, Professional::getOfferings,
                 Offering.class);
     }
 
-    @Path("{email}/categories")
+    @Path("categories")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getCategories(@Context SecurityContext sec,
-            @PathParam("email") String email) {
+            @QueryParam("email") String email) {
         return this.provideRelation(sec, email, Professional::getCategories,
                 Category.class);
     }
 
-    @Path("{email}/collectiveGroups")
+    @Path("collectiveGroups")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getCollectiveGroups(@Context SecurityContext sec,
-            @PathParam("email") String email) {
+            @QueryParam("email") String email) {
         return this.provideRelation(sec, email,
                 Professional::getCollectiveGroups, CollectiveGroup.class);
     }
 
-    @Path("{email}/expenses")
+    @Path("expenses")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getExpenses(@Context SecurityContext sec,
-            @PathParam("email") String email) {
+            @QueryParam("email") String email) {
         return this.provideRelation(sec, email,
                 Professional::getExpenses, Expense.class);
     }
 
-    @Path("{email}/individuals")
+    @Path("individuals")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getIndividuals(@Context SecurityContext sec,
-            @PathParam("email") String email) {
+            @QueryParam("email") String email) {
         return this.provideRelation(sec, email,
                 Professional::getIndividuals, Individual.class);
     }

@@ -6720,14 +6720,20 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{API_URL}}/Professional/vanessa.gay@gmail.com/bills",
+							"raw": "{{API_URL}}/Professional/bills?email=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"Professional",
-								"vanessa.gay@gmail.com",
 								"bills"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true
+								}
 							]
 						}
 					},
@@ -6754,14 +6760,20 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{API_URL}}/Professional/vanessa.gay@gmail.com/clients",
+							"raw": "{{API_URL}}/Professional/clients?email=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"Professional",
-								"vanessa.gay@gmail.com",
 								"clients"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true
+								}
 							]
 						}
 					},
@@ -6788,14 +6800,20 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{API_URL}}/Professional/vanessa.gay@gmail.com/offerings",
+							"raw": "{{API_URL}}/Professional/offerings?email=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"Professional",
-								"vanessa.gay@gmail.com",
 								"offerings"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true
+								}
 							]
 						}
 					},
@@ -6822,14 +6840,20 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{API_URL}}/Professional/vanessa.gay@gmail.com/categories",
+							"raw": "{{API_URL}}/Professional/categories?email=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"Professional",
-								"vanessa.gay@gmail.com",
 								"categories"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true
+								}
 							]
 						}
 					},
@@ -6856,14 +6880,20 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{API_URL}}/Professional/vanessa.gay@gmail.com/collectiveGroups",
+							"raw": "{{API_URL}}/Professional/collectiveGroups?email=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"Professional",
-								"vanessa.gay@gmail.com",
 								"collectiveGroups"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true
+								}
 							]
 						}
 					},
@@ -6890,14 +6920,20 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{API_URL}}/Professional/vanessa.gay@gmail.com/expenses",
+							"raw": "{{API_URL}}/Professional/expenses?email=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"Professional",
-								"vanessa.gay@gmail.com",
 								"expenses"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true
+								}
 							]
 						}
 					},
@@ -6924,14 +6960,20 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{API_URL}}/Professional/vanessa.gay@gmail.com/individuals",
+							"raw": "{{API_URL}}/Professional/individuals?email=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"Professional",
-								"vanessa.gay@gmail.com",
 								"individuals"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true
+								}
 							]
 						}
 					},
