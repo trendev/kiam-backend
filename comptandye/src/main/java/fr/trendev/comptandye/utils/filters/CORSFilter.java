@@ -6,10 +6,8 @@
 package fr.trendev.comptandye.utils.filters;
 
 import java.io.IOException;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -23,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author jsie
  */
 //@WebFilter(urlPatterns = {"/restapi/*"}, asyncSupported = true)
-public class CORSFilter implements Filter {
+public class CORSFilter extends ApiFilter {
 
     private static final Logger LOG = Logger.getLogger(CORSFilter.class.
             getName());
@@ -43,7 +41,6 @@ public class CORSFilter implements Filter {
      * doFilter
      */
     @Override
-
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
 
@@ -52,8 +49,7 @@ public class CORSFilter implements Filter {
 
         String origin = req.getHeader("Origin");
 
-        if (Objects.nonNull(origin) && !origin.isEmpty() && (origin.startsWith(
-                "http://localhost") || origin.startsWith("https://localhost"))) {
+        if (isOriginAllowed(origin)) {
             resp.addHeader("Access-Control-Allow-Origin", origin);
         } else {
             resp.addHeader("Access-Control-Allow-Origin",

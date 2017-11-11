@@ -9,10 +9,8 @@ import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -26,7 +24,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author jsie
  */
-public class XSRFFilter implements Filter {
+public class XSRFFilter extends ApiFilter {
 
     /**
      * Side Effect Methods : PUT,POST,DELETE. Other side effects method are not
@@ -47,22 +45,6 @@ public class XSRFFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         LOG.log(Level.INFO, "XSRFFilter: init in progress...");
         this.sem = Arrays.asList("POST", "PUT", "DELETE");
-    }
-
-    /**
-     * Checks if the cross-origin request is trusted or not.
-     *
-     * @param req the request to check
-     * @return true if the cross-origin is trusted
-     * @see CORSFilter#doFilter(javax.servlet.ServletRequest,
-     * javax.servlet.ServletResponse, javax.servlet.FilterChain)
-     */
-    private boolean isTrustedOrigin(HttpServletRequest req) {
-        String origin = req.getHeader("Origin");
-        return Objects.nonNull(origin) && !origin.isEmpty() && (origin.
-                startsWith(
-                        "http://localhost") || origin.startsWith(
-                        "https://localhost"));
     }
 
     /**
@@ -113,14 +95,15 @@ public class XSRFFilter implements Filter {
                     rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
                 }
             } else {
-                // if there is no token, check the cross-origin
-                if (this.isTrustedOrigin(req)) {
+                String origin = req.getHeader("Origin");
+                if (isOriginAllowed(origin)) {
                     LOG.log(Level.INFO,
                             "No X-XSFR-TOKEN specified in the Header but Origin is trusted !");
                     chain.doFilter(request, response);
                 } else {
                     LOG.log(Level.WARNING,
-                            "No X-XSFR-TOKEN specified in the Header and Origin is not trusted !");
+                            "No X-XSFR-TOKEN specified in the Header and Origin [{0}] is not trusted !",
+                            origin);
                     rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
                 }
             }
