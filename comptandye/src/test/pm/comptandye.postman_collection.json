@@ -1394,6 +1394,10 @@
 									"",
 									"pm.sendRequest({",
 									"    url: \"{{API_URL}}/Client/{{created_client_id}}?professional=vanessa.gay@gmail.com\",",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"    },",
 									"    method: 'DELETE'",
 									"}, function (err, res) {",
 									"    pm.expect(res).to.have.property('code', 200);",
@@ -1429,10 +1433,7 @@
 								"value": "{{XSRF-TOKEN}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
+						"body": {},
 						"url": {
 							"raw": "{{API_URL}}/Category/{{created_category_id}}/removeClient/{{created_client_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
