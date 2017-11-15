@@ -11,6 +11,7 @@ import fr.trendev.comptandye.sessions.UserAccountFacade;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UserAccountType;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
+import java.io.StringReader;
 import java.security.Principal;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -20,15 +21,18 @@ import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.Json;
+import javax.json.JsonReader;
 import javax.servlet.ServletException;
 import javax.servlet.SessionCookieConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
@@ -227,5 +231,60 @@ public class AuthenticationService {
         )
                 .cookie(jsessionid, xsrfCookie)
                 .build();
+    }
+
+    @RolesAllowed({"Administrator", "Professional", "Individual"})
+    @Path("new-password")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response newPassword(@Context SecurityContext sec, String newPassword) {
+
+        String password = this.readNewPassword(newPassword);
+
+        return this.getEmail(sec)
+                .map(email ->
+                        Optional.ofNullable(this.userAccountFacade.find(email))
+                                .map(user -> {
+                                    String epwd = PasswordGenerator.
+                                            encrypt_SHA256(password);
+                                    user.setPassword(epwd);
+                                    String msg = "Password of user ["
+                                            + email
+                                            + "] has been changed !";
+                                    LOG.log(Level.INFO, msg);
+                                    return Response.ok(
+                                            Json.createObjectBuilder().
+                                                    add("password", epwd).
+                                                    build()
+                                    ).build();
+                                })
+                                .orElseThrow(() ->
+                                        new WebApplicationException(
+                                                "the user [" + email
+                                                + "] cannot be found"))
+                ).orElseThrow(() -> new WebApplicationException(
+                        "email of an authenticated user should not be null"));
+    }
+
+    private String readNewPassword(String json) {
+
+        String password = null;
+
+        try (JsonReader reader = Json.createReader(new StringReader(json))) {
+            password = reader.readObject().getString("newpassword");
+
+            if (password.isEmpty() || password == null) {
+                String errmsg = "The new password must not be null or empty";
+                throw new IllegalArgumentException(errmsg);
+            }
+            return password;
+        } catch (Exception ex) {
+            String errmsg = "Impossible to read the new password from json object "
+                    + json;
+            throw new WebApplicationException(
+                    "Impossible to read the new password from json object "
+                    + json + " : " + ex.getMessage());
+        }
     }
 }

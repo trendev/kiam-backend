@@ -148,6 +148,96 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "newPassword",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"encrypted password is the right one\"] = jsonData.password === \"eVgyxb4vqO/zASQ7SkHckVGO7km4zUXxgevZwRdXzlM=\";",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"newpassword\": \"ANOTHER_PASSWORD\"\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/Authentication/new-password",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Authentication",
+								"new-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "newPassword - reset",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"encrypted password is the right one\"] = jsonData.password === \"mZWR4R0bp5EPs9xfOwUPu3n/06LOL+wHK6BuUBsHgQM=\";",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"newpassword\": \"{{password}}\"\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/Authentication/new-password",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Authentication",
+								"new-password"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
