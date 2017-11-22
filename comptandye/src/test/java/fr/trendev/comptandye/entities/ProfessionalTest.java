@@ -56,7 +56,7 @@ public class ProfessionalTest {
         assert instance.getSocialNetworkAccounts() != null;
         assert instance.getWebsite() == null;
         assert instance.getCompanyID() == null;
-        assert instance.getVATcode() == null;
+        assert instance.getVatcode() == null;
         assert instance.getCreationDate() == null;
         assert instance.getBills() != null;
         assert instance.getBills().isEmpty();
@@ -98,7 +98,7 @@ public class ProfessionalTest {
         assert instance.getWebsite() == null;
         assert instance.getCompanyName() == null;
         assert instance.getCompanyID() == null;
-        assert instance.getVATcode() == null;
+        assert instance.getVatcode() == null;
         assert instance.getCreationDate() == null;
         assert instance.getBills() != null;
         assert instance.getBills().isEmpty();
@@ -123,7 +123,7 @@ public class ProfessionalTest {
         String website = "http://www.mycompany.com";
         String companyName = "MyCompany";
         String companyID = "XXXX123456FR";
-        String VATcode = "FRTVA1234564";
+        String vatcode = "FRTVA1234564";
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.YEAR, -2);
         Date creationDate = cal.getTime();
@@ -131,7 +131,7 @@ public class ProfessionalTest {
         instance = new Professional(email, password, username, uuid,
                 new CustomerDetails(), new Address(),
                 new SocialNetworkAccounts(), website, companyName, companyID,
-                VATcode, creationDate);
+                vatcode, creationDate);
         instance.setBlocked(false);
 
         assert instance.getEmail().equals(email);
@@ -147,7 +147,7 @@ public class ProfessionalTest {
         assert instance.getWebsite().equals(website);
         assert instance.getCompanyName().equals(companyName);
         assert instance.getCompanyID().equals(companyID);
-        assert instance.getVATcode().equals(VATcode);
+        assert instance.getVatcode().equals(vatcode);
         assert instance.getCreationDate() != null;
         assert instance.getCreationDate().before(now);
         assert instance.getBills() != null;

@@ -31,8 +31,11 @@ public class Professional extends Customer {
     @Basic
     private String companyID;
 
+    /**
+     * Value Added Tax code
+     */
     @Basic
-    private String VATcode;
+    private String vatcode;
 
     @Basic
     @Temporal(TemporalType.DATE)
@@ -90,14 +93,14 @@ public class Professional extends Customer {
     public Professional(String email, String password, String username,
             String uuid, CustomerDetails customerDetails, Address address,
             SocialNetworkAccounts socialNetworkAccounts, String website,
-            String companyName, String companyID, String VATcode,
+            String companyName, String companyID, String vatcode,
             Date creationDate) {
         super(email, password, username, uuid, customerDetails, address,
                 socialNetworkAccounts);
         this.website = website;
         this.companyName = companyName;
         this.companyID = companyID;
-        this.VATcode = VATcode;
+        this.vatcode = vatcode;
         this.creationDate = creationDate;
     }
 
@@ -125,12 +128,12 @@ public class Professional extends Customer {
         this.companyID = companyID;
     }
 
-    public String getVATcode() {
-        return this.VATcode;
+    public String getVatcode() {
+        return this.vatcode;
     }
 
-    public void setVATcode(String VATcode) {
-        this.VATcode = VATcode;
+    public void setVatcode(String vatcode) {
+        this.vatcode = vatcode;
     }
 
     public Date getCreationDate() {
