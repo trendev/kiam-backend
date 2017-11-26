@@ -1,0 +1,13 @@
+FROM payara/server-full:latest
+
+MAINTAINER TRENDev SASU
+
+ENV AS_ADMIN $PAYARA_PATH/bin/asadmin
+ENV DOMAIN domain1
+
+RUN $AS_ADMIN start-domain $DOMAIN && \
+    $AS_ADMIN version
+
+# COPY ./target/comptandye-1.1.5.war /opt/payara41/glassfish/domains/domain1/autodeploy
+# $AUTODEPLOY_DIR
+# ENTRYPOINT $AS_ADMIN start-domain $DOMAIN

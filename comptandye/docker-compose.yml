@@ -1,0 +1,18 @@
+version: '2'
+services:
+  web:
+    build: .
+    command: /bin/bash -c './asadmin start-domain -v' run
+    ports:
+      - "8080:8080"
+      - "8181:8181"
+      - "4848:4848"
+  mysql:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=7gXf1pwmtW
+      - MYSQL_USER=admin_comptandye_20170328
+      - MYSQL_PASSWORD=SfBuVPRw0S
+      - MYSQL_DATABASE=comptandye_master
+    volumes:
+      - $HOME/mysql:/var/lib/mysql
