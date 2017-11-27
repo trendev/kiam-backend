@@ -1,8 +1,7 @@
-version: '2'
+version: '3'
 services:
   web:
     build: .
-    command: /bin/bash -c './asadmin start-domain -v' run
     ports:
       - "8080:8080"
       - "8181:8181"
@@ -16,3 +15,5 @@ services:
       - MYSQL_DATABASE=comptandye_master
     volumes:
       - $HOME/mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
