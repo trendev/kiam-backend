@@ -7,7 +7,7 @@ ENV DOMAIN domain1
 ENV ADMIN_USER admin
 ENV ADMIN_PASSWORD admin
 ENV NEW_ADMIN_PASSWORD qsec0fr
-ENV COMPTANDYE comptandye-1.1.5
+ENV COMPTANDYE comptandye-1.2.0
 
 # Copy the mysql connector to the Glassfish libs
 COPY ./target/$COMPTANDYE/WEB-INF/lib/mysql-connector-java-5.1.44.jar $PAYARA_PATH/glassfish/domains/domain1/lib
