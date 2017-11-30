@@ -63,19 +63,27 @@ public class OverallFilter implements Filter {
          * trackers, adds and associated it in the tracker if the authenticated
          * user.
          */
-        if (user != null && session != null
-                && !tracker.contains(user.getName(), session)) {
-            tracker.put(user.getName(), session);
+        try {
+            if (user != null
+                    && session != null
+                    && !tracker.contains(user.getName(), session)) {
+                tracker.put(user.getName(), session);
 
-            //sets the XSRF token, JSESSIONID is already pushed
-            Cookie c = new Cookie("XSRF-TOKEN", generator.generate(session));
-            c.setPath("/");
-            c.setHttpOnly(false);//should be used by javascript (Angular) scripts
-            c.setSecure(true);//requires to use HTTPS
-            rsp.addCookie(c);
+                //sets the XSRF token, JSESSIONID is already pushed
+                Cookie c = new Cookie("XSRF-TOKEN", generator.generate(session));
+                c.setPath("/");
+                c.setHttpOnly(false);//should be used by javascript (Angular) scripts
+                c.setSecure(true);//requires to use HTTPS
+                rsp.addCookie(c);
+            }
+            chain.doFilter(request, response);
+        } catch (IllegalStateException ex) {
+            LOG.log(Level.WARNING,
+                    "The request {0} is aborted : Session already invalidated ! ",
+                    req.getRequestURL());
+            rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
         }
 
-        chain.doFilter(request, response);
     }
 
     @Override
