@@ -70,14 +70,16 @@ public class OverallFilter implements Filter {
                 tracker.put(user.getName(), session);
 
                 //sets the XSRF token, JSESSIONID is already pushed
-                Cookie c = new Cookie("XSRF-TOKEN", generator.generate(session));
+                String token = generator.generate();
+                session.setAttribute("XSRF-TOKEN", token);
+                Cookie c = new Cookie("XSRF-TOKEN", token);
                 c.setPath("/");
                 c.setHttpOnly(false);//should be used by javascript (Angular) scripts
                 c.setSecure(true);//requires to use HTTPS
                 rsp.addCookie(c);
             }
             chain.doFilter(request, response);
-        } catch (IllegalStateException ex) {
+        } catch (Exception ex) {
             LOG.log(Level.WARNING,
                     "The request {0} is aborted : Session already invalidated ! ",
                     req.getRequestURL());

@@ -148,8 +148,10 @@ public class AuthenticationService {
                             null,
                             scc.getMaxAge(), true, true);
 
+                    String token = generator.generate();
+                    session.setAttribute("XSRF-TOKEN", token);
                     NewCookie xsrfCookie = new NewCookie("XSRF-TOKEN",
-                            generator.generate(session),
+                            token,
                             scc.getPath(),
                             scc.getDomain(),
                             null,

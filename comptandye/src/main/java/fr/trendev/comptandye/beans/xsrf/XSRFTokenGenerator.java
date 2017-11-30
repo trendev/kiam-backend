@@ -8,7 +8,6 @@ package fr.trendev.comptandye.beans.xsrf;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -19,15 +18,12 @@ import javax.servlet.http.HttpSession;
 public class XSRFTokenGenerator {
 
     /**
-     * Generates a token and add it as an attribute inside the session
+     * Generates a XSRF token
      *
-     * @param session the session which will be set with the XSRF-TOKEN Cookie
      * @return the generated token
      */
-    public String generate(HttpSession session) {
-        String xsrfToken = PasswordGenerator.autoGenerate(128);
-        session.setAttribute("XSRF-TOKEN", xsrfToken);
-        return xsrfToken;
+    public String generate() {
+        return PasswordGenerator.autoGenerate(128);
     }
 
 }
