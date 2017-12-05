@@ -10,12 +10,16 @@ import fr.trendev.comptandye.entities.Client;
 import fr.trendev.comptandye.entities.ClientBill;
 import fr.trendev.comptandye.entities.ClientPK;
 import fr.trendev.comptandye.entities.CollectiveGroup;
+import fr.trendev.comptandye.entities.CollectiveGroupPK;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.ClientBillFacade;
 import fr.trendev.comptandye.sessions.ClientFacade;
+import fr.trendev.comptandye.sessions.CollectiveGroupFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -31,6 +35,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -53,6 +58,9 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
 
     @Inject
     ClientBillFacade clientBillFacade;
+
+    @Inject
+    CollectiveGroupFacade collectiveGroupFacade;
 
     private final Logger LOG = Logger.getLogger(ClientService.class.
             getName());
@@ -120,11 +128,27 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
                 Professional::getClients, e -> {
             e.setId(null); //ignores the id provided
 
+            /**
+             * Merge the collective groups with the existing and throw an
+             * Exception if a collective group is not owned or found
+             */
             List<CollectiveGroup> collectiveGroups =
                     entity.getCollectiveGroups().stream()
-                            .map(cg -> cg)
+                            .map(cg -> Optional.ofNullable(
+                                    collectiveGroupFacade.find(
+                                            new CollectiveGroupPK(cg.getId(),
+                                                    email)))
+                                    .map(Function.identity())
+                                    .orElseThrow(() ->
+                                            new WebApplicationException(
+                                                    "CollectiveGroup " + cg.
+                                                            getId()
+                                                    + " has not been found and cannot be added during Client creation"))
+                            )
                             .collect(Collectors.toList());
 
+            // complete the relationship with CollectiveGroup
+            collectiveGroups.forEach(cg -> cg.getClients().add(e));
             e.setCollectiveGroups(collectiveGroups);
         });
 
@@ -157,6 +181,31 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
             e.setSocialNetworkAccounts(entity.getSocialNetworkAccounts());
 
             e.setEmail(entity.getEmail());
+
+            /**
+             * Merge the collective groups with the existing and throw an
+             * Exception if a collective group is not owned or found
+             */
+            List<CollectiveGroup> collectiveGroups =
+                    entity.getCollectiveGroups().stream()
+                            .map(cg -> Optional.ofNullable(
+                                    collectiveGroupFacade.find(
+                                            new CollectiveGroupPK(cg.getId(),
+                                                    pk.getProfessional())))
+                                    .map(Function.identity())
+                                    .orElseThrow(() ->
+                                            new WebApplicationException(
+                                                    "CollectiveGroup " + cg.
+                                                            getId()
+                                                    + " has not been found and cannot be added during Client modification"))
+                            )
+                            .collect(Collectors.toList());
+
+            //Reset the previous relationship
+            e.getCollectiveGroups().forEach(cg -> cg.getClients().remove(e));
+            //Build a new relationship (faster and exploring/comparing each list)
+            collectiveGroups.forEach(cg -> cg.getClients().add(e));
+            e.setCollectiveGroups(collectiveGroups);
         });
     }
 
