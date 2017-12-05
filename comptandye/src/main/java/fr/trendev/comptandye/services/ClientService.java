@@ -116,7 +116,14 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
                 professionalFacade,
                 Client::setProfessional,
                 Professional::getClients, e -> {
-            e.setId(null);
+            e.setId(null); //ignores the id provided
+
+//            List<CollectiveGroup> collectiveGroups =
+//                    entity.getCollectiveGroups().stream()
+//                            .map(cg -> cg)
+//                            .collect(Collectors.toList());
+//
+//            e.setCollectiveGroups(collectiveGroups);
         });
 
     }
