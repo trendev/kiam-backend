@@ -63,7 +63,6 @@ public class Client {
     private List<CollectiveGroup> collectiveGroups = new LinkedList<>();
 
     @ManyToMany(targetEntity = Category.class)
-    @JsonIgnore
     private List<Category> categories = new LinkedList<>();
 
     public Client(String email, Professional professional) {

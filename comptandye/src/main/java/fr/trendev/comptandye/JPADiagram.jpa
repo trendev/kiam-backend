@@ -516,7 +516,6 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 <jpa:xm nil="false" req="false"/>
             </jpa:many-to-many>
             <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490704206844" connected-attribute-id="_1503077170376625" v="true" xvt="" name="categories" dv="new LinkedList&lt;&gt;()" id="_1503077170356624">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:many-to-many>
@@ -1740,7 +1739,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                     <e ref="_1503077170356624">
-                        <v st="1" si="12.0" cl="#ff0000"/>
+                        <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
