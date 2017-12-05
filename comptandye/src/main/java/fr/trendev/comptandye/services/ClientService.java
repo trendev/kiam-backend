@@ -15,8 +15,10 @@ import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.ClientBillFacade;
 import fr.trendev.comptandye.sessions.ClientFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -118,12 +120,12 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
                 Professional::getClients, e -> {
             e.setId(null); //ignores the id provided
 
-//            List<CollectiveGroup> collectiveGroups =
-//                    entity.getCollectiveGroups().stream()
-//                            .map(cg -> cg)
-//                            .collect(Collectors.toList());
-//
-//            e.setCollectiveGroups(collectiveGroups);
+            List<CollectiveGroup> collectiveGroups =
+                    entity.getCollectiveGroups().stream()
+                            .map(cg -> cg)
+                            .collect(Collectors.toList());
+
+            e.setCollectiveGroups(collectiveGroups);
         });
 
     }
