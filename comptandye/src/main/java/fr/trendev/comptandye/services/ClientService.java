@@ -6,6 +6,7 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.entities.Category;
+import fr.trendev.comptandye.entities.CategoryPK;
 import fr.trendev.comptandye.entities.Client;
 import fr.trendev.comptandye.entities.ClientBill;
 import fr.trendev.comptandye.entities.ClientPK;
@@ -13,6 +14,7 @@ import fr.trendev.comptandye.entities.CollectiveGroup;
 import fr.trendev.comptandye.entities.CollectiveGroupPK;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.sessions.AbstractFacade;
+import fr.trendev.comptandye.sessions.CategoryFacade;
 import fr.trendev.comptandye.sessions.ClientBillFacade;
 import fr.trendev.comptandye.sessions.ClientFacade;
 import fr.trendev.comptandye.sessions.CollectiveGroupFacade;
@@ -61,6 +63,9 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
 
     @Inject
     CollectiveGroupFacade collectiveGroupFacade;
+
+    @Inject
+    CategoryFacade categoryFacade;
 
     private final Logger LOG = Logger.getLogger(ClientService.class.
             getName());
@@ -150,6 +155,29 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
             // complete the relationship with CollectiveGroup
             collectiveGroups.forEach(cg -> cg.getClients().add(e));
             e.setCollectiveGroups(collectiveGroups);
+
+            /**
+             * Merge the categories with the existing and throw an Exception if
+             * a category is not owned or found
+             */
+            List<Category> categories =
+                    entity.getCategories().stream()
+                            .map(ct -> Optional.ofNullable(
+                                    categoryFacade.find(
+                                            new CategoryPK(ct.getId(),
+                                                    email)))
+                                    .map(Function.identity())
+                                    .orElseThrow(() ->
+                                            new WebApplicationException(
+                                                    "Category " + ct.
+                                                            getId()
+                                                    + " has not been found and cannot be added during Client creation"))
+                            )
+                            .collect(Collectors.toList());
+
+            // complete the relationship with Category
+            categories.forEach(ct -> ct.getClients().add(e));
+            e.setCategories(categories);
         });
 
     }
@@ -206,6 +234,31 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
             //Build a new relationship (faster and exploring/comparing each list)
             collectiveGroups.forEach(cg -> cg.getClients().add(e));
             e.setCollectiveGroups(collectiveGroups);
+
+            /**
+             * Merge the categories with the existing and throw an Exception if
+             * a category is not owned or found
+             */
+            List<Category> categories =
+                    entity.getCategories().stream()
+                            .map(ct -> Optional.ofNullable(
+                                    categoryFacade.find(
+                                            new CategoryPK(ct.getId(),
+                                                    pk.getProfessional())))
+                                    .map(Function.identity())
+                                    .orElseThrow(() ->
+                                            new WebApplicationException(
+                                                    "Category " + ct.
+                                                            getId()
+                                                    + " has not been found and cannot be added during Client creation"))
+                            )
+                            .collect(Collectors.toList());
+
+            //Reset the previous relationship
+            e.getCategories().forEach(ct -> ct.getClients().remove(e));
+            // complete the relationship with Category
+            categories.forEach(ct -> ct.getClients().add(e));
+            e.setCategories(categories);
         });
     }
 
