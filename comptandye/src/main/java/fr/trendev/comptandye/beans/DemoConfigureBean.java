@@ -381,8 +381,8 @@ public class DemoConfigureBean implements Serializable {
         Category cat1 = new Category("long time customers", "Fidelity", vanessa);
         Client client1 = new Client(null,
                 new SocialNetworkAccounts(),
-                new CustomerDetails("valerie",
-                        "lamome",
+                new CustomerDetails("Valerie",
+                        "Lamome",
                         null, "0627212271", null, 'F', null,
                         Collections.<String>emptyList()),
                 new Address("1 rue des gouaix", null,
