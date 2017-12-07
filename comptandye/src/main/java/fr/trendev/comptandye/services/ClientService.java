@@ -287,9 +287,10 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
     @Path("{id}/clientBills")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getClientBills(@PathParam("id") Long id,
+    public Response getClientBills(@Context SecurityContext sec,
+            @PathParam("id") Long id,
             @QueryParam("professional") String professional) {
-        ClientPK pk = new ClientPK(id, professional);
+        ClientPK pk = new ClientPK(id, this.getProEmail(sec, professional));
         return super.provideRelation(pk, Client::getClientBills,
                 ClientBill.class);
     }
@@ -297,9 +298,10 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
     @Path("{id}/collectiveGroups")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCollectiveGroups(@PathParam("id") Long id,
+    public Response getCollectiveGroups(@Context SecurityContext sec,
+            @PathParam("id") Long id,
             @QueryParam("professional") String professional) {
-        ClientPK pk = new ClientPK(id, professional);
+        ClientPK pk = new ClientPK(id, this.getProEmail(sec, professional));
         return super.provideRelation(pk, Client::getCollectiveGroups,
                 CollectiveGroup.class);
     }
@@ -307,9 +309,10 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
     @Path("{id}/categories")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCategories(@PathParam("id") Long id,
+    public Response getCategories(@Context SecurityContext sec,
+            @PathParam("id") Long id,
             @QueryParam("professional") String professional) {
-        ClientPK pk = new ClientPK(id, professional);
+        ClientPK pk = new ClientPK(id, this.getProEmail(sec, professional));
         return super.provideRelation(pk, Client::getCategories, Category.class);
     }
 }

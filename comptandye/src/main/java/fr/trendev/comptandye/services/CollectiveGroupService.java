@@ -218,9 +218,11 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
     @Path("{id}/clients")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getClients(@PathParam("id") Long id,
+    public Response getClients(@Context SecurityContext sec,
+            @PathParam("id") Long id,
             @QueryParam("professional") String professional) {
-        CollectiveGroupPK pk = new CollectiveGroupPK(id, professional);
+        CollectiveGroupPK pk = new CollectiveGroupPK(id, this.getProEmail(sec,
+                professional));
         return super.provideRelation(pk, CollectiveGroup::getClients,
                 Client.class);
     }
@@ -228,9 +230,11 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
     @Path("{id}/collectiveGroupBills")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCollectiveGroupBills(@PathParam("id") Long id,
+    public Response getCollectiveGroupBills(@Context SecurityContext sec,
+            @PathParam("id") Long id,
             @QueryParam("professional") String professional) {
-        CollectiveGroupPK pk = new CollectiveGroupPK(id, professional);
+        CollectiveGroupPK pk = new CollectiveGroupPK(id, this.getProEmail(sec,
+                professional));
         return super.provideRelation(pk,
                 CollectiveGroup::getCollectiveGroupBills,
                 CollectiveGroupBill.class);

@@ -21,8 +21,6 @@ import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UUIDGenerator;
-import java.util.Collection;
-import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
@@ -300,40 +298,12 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 e.getUserGroups().remove(a) & a.getUserAccounts().remove(e));
     }
 
-    /**
-     * Wraps the super.provideRelation() call catching the professional's email
-     * from the security context (Request from Professional) or from the
-     * parameter email. This methods should be considered as the base of the
-     * different getXXX methods in this service.
-     *
-     * @param <R> the type of the element contained in the relation
-     * @param sec the security context
-     * @param email the professional's email, usually provided by an
-     * Administrator
-     * @param getter the getter function used to get the elements
-     * @param elementClass The class of the element contained in the relation
-     * @return
-     */
-    private <R> Response provideRelation(SecurityContext sec, String email,
-            Function<Professional, Collection<R>> getter,
-            Class<R> elementClass) {
-        String proEmail = this.getProEmail(sec, email);
-
-        if (!proEmail.equals(email)) {
-            LOG.log(Level.WARNING,
-                    "Professional [{0}] has provided an incorrect email [{1}] which will be ignored...",
-                    new Object[]{proEmail, email});
-        }
-
-        return super.provideRelation(proEmail, getter, elementClass);
-    }
-
     @Path("bills")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBills(@Context SecurityContext sec,
             @QueryParam("email") String email) {
-        return this.provideRelation(sec, email,
+        return this.provideRelation(this.getProEmail(sec, email),
                 Professional::getBills,
                 Bill.class);
     }
@@ -343,7 +313,8 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     @Produces(MediaType.APPLICATION_JSON)
     public Response getClients(@Context SecurityContext sec,
             @QueryParam("email") String email) {
-        return this.provideRelation(sec, email, Professional::getClients,
+        return this.provideRelation(this.getProEmail(sec, email),
+                Professional::getClients,
                 Client.class);
     }
 
@@ -352,7 +323,8 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     @Produces(MediaType.APPLICATION_JSON)
     public Response getOfferings(@Context SecurityContext sec,
             @QueryParam("email") String email) {
-        return this.provideRelation(sec, email, Professional::getOfferings,
+        return this.provideRelation(this.getProEmail(sec, email),
+                Professional::getOfferings,
                 Offering.class);
     }
 
@@ -361,7 +333,8 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     @Produces(MediaType.APPLICATION_JSON)
     public Response getCategories(@Context SecurityContext sec,
             @QueryParam("email") String email) {
-        return this.provideRelation(sec, email, Professional::getCategories,
+        return this.provideRelation(this.getProEmail(sec, email),
+                Professional::getCategories,
                 Category.class);
     }
 
@@ -370,7 +343,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     @Produces(MediaType.APPLICATION_JSON)
     public Response getCollectiveGroups(@Context SecurityContext sec,
             @QueryParam("email") String email) {
-        return this.provideRelation(sec, email,
+        return this.provideRelation(this.getProEmail(sec, email),
                 Professional::getCollectiveGroups, CollectiveGroup.class);
     }
 
@@ -379,7 +352,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     @Produces(MediaType.APPLICATION_JSON)
     public Response getExpenses(@Context SecurityContext sec,
             @QueryParam("email") String email) {
-        return this.provideRelation(sec, email,
+        return this.provideRelation(this.getProEmail(sec, email),
                 Professional::getExpenses, Expense.class);
     }
 
@@ -388,7 +361,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     @Produces(MediaType.APPLICATION_JSON)
     public Response getIndividuals(@Context SecurityContext sec,
             @QueryParam("email") String email) {
-        return this.provideRelation(sec, email,
+        return this.provideRelation(this.getProEmail(sec, email),
                 Professional::getIndividuals, Individual.class);
     }
 
