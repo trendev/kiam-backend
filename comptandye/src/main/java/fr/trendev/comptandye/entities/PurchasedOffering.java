@@ -4,11 +4,12 @@ package fr.trendev.comptandye.entities;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.trendev.comptandye.utils.visitors.Visitor;
 import javax.persistence.Basic;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 
 /**
  * @author jsie
@@ -27,19 +28,15 @@ public class PurchasedOffering {
     @Basic
     private int qty = 1;
 
-    /**
-     * Price in cents (1/100 of the currency)
-     */
-    @Basic
-    private int price;
+    @Embedded
+    private OfferingSnapshot offeringSnapshot;
 
-    @OneToOne(targetEntity = Offering.class)
+    @ManyToOne(targetEntity = Offering.class)
     private Offering offering;
 
     public PurchasedOffering(int qty, Offering offering) {
         this.qty = qty;
         this.offering = offering;
-        this.price = offering.getPrice();
     }
 
     public PurchasedOffering() {
@@ -61,12 +58,12 @@ public class PurchasedOffering {
         this.qty = qty;
     }
 
-    public int getPrice() {
-        return this.price;
+    public OfferingSnapshot getOfferingSnapshot() {
+        return this.offeringSnapshot;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setOfferingSnapshot(OfferingSnapshot offeringSnapshot) {
+        this.offeringSnapshot = offeringSnapshot;
     }
 
     public Offering getOffering() {

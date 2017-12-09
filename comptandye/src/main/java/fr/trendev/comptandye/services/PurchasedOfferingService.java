@@ -114,13 +114,6 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
                     .map(Function.identity())
                     .orElseThrow(() -> new WebApplicationException()));
 
-            if (e.getPrice() != e.getOffering().getPrice()) {
-                LOG.log(Level.WARNING,
-                        "The prices are different: Offering''s price {0} / Price {1}",
-                        new Object[]{
-                            e.getOffering().getPrice(),
-                            entity.getPrice()});
-            }
         });
     }
 
@@ -144,14 +137,7 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
             }
 
             e.setQty(entity.getQty());
-            if (entity.getPrice() != e.getOffering().getPrice()) {
-                LOG.log(Level.WARNING,
-                        "The prices are different: Offering''s price {0} / Price {1}",
-                        new Object[]{
-                            e.getOffering().getPrice(),
-                            entity.getPrice()});
-            }
-            e.setPrice(entity.getPrice());
+
             e.setOffering(Optional.ofNullable(e.getOffering().accept(visitor).
                     find(new OfferingPK(e.getOffering().getId(), professional)))
                     .map(Function.identity())

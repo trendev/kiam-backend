@@ -74,6 +74,9 @@ public abstract class Offering {
     @OneToMany(targetEntity = Business.class)
     private List<Business> businesses = new LinkedList<>();
 
+    @OneToMany(targetEntity = PurchasedOffering.class, mappedBy = "offering")
+    private List<PurchasedOffering> purchasedOfferings;
+
     public Offering(String name, int price, int duration,
             Professional professional) {
         this.name = name;
@@ -147,6 +150,14 @@ public abstract class Offering {
 
     public void setBusinesses(List<Business> businesses) {
         this.businesses = businesses;
+    }
+
+    public List<PurchasedOffering> getPurchasedOfferings() {
+        return this.purchasedOfferings;
+    }
+
+    public void setPurchasedOfferings(List<PurchasedOffering> purchasedOfferings) {
+        this.purchasedOfferings = purchasedOfferings;
     }
 
     public <T> T accept(Visitor<T> v) {
