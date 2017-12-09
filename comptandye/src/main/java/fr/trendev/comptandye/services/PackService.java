@@ -157,6 +157,7 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
      * @param professional the owner's email
      * @return HTTP OK if no error occurs
      */
+    @RolesAllowed({"Administrator"})
     @Path("{id}")
     @DELETE
     public Response delete(@Context SecurityContext sec,
