@@ -6,12 +6,12 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.entities.OfferingPK;
+import fr.trendev.comptandye.entities.OfferingSnapshot;
 import fr.trendev.comptandye.entities.PurchasedOffering;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.PurchasedOfferingFacade;
 import fr.trendev.comptandye.utils.visitors.ProvideOfferingFacadeVisitor;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
@@ -38,31 +38,31 @@ import javax.ws.rs.core.Response;
 @Path("PurchasedOffering")
 @RolesAllowed({"Administrator"})
 public class PurchasedOfferingService extends AbstractCommonService<PurchasedOffering, Long> {
-
+    
     @Inject
     PurchasedOfferingFacade purchasedOfferingFacade;
-
+    
     @Inject
     ProvideOfferingFacadeVisitor visitor;
-
+    
     private final Logger LOG = Logger.getLogger(
             PurchasedOfferingService.class.
                     getName());
-
+    
     public PurchasedOfferingService() {
         super(PurchasedOffering.class);
     }
-
+    
     @Override
     protected Logger getLogger() {
         return LOG;
     }
-
+    
     @Override
     protected AbstractFacade<PurchasedOffering, Long> getFacade() {
         return purchasedOfferingFacade;
     }
-
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
@@ -70,7 +70,7 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
         LOG.log(Level.INFO, "Providing the PurchasedOffering list");
         return super.findAll();
     }
-
+    
     @Path("count")
     @GET
     @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON,})
@@ -78,7 +78,7 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
     public Response count() {
         return super.count();
     }
-
+    
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -88,7 +88,7 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
         LOG.log(Level.INFO, "REST request to get PurchasedOffering : {0}", id);
         return super.find(id, refresh);
     }
-
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -96,52 +96,66 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
             @QueryParam("professional") String professional) {
         LOG.log(Level.INFO, "Creating PurchasedOffering {0}", super.stringify(
                 entity));
-
+        
         if (professional == null) {
             throw new WebApplicationException(
                     "Profession email is not provided !");
         }
-
+        
         return super.post(entity, e -> {
             e.setId(null);
-
+            
             if (e.getOffering() == null) {
                 throw new WebApplicationException("No Offering provided !");
             }
-
+            
             e.setOffering(Optional.ofNullable(e.getOffering().accept(visitor).
                     find(new OfferingPK(e.getOffering().getId(), professional)))
-                    .map(Function.identity())
-                    .orElseThrow(() -> new WebApplicationException()));
-
+                    .map(o -> {
+                        o.getPurchasedOfferings().add(e);
+                        e.setOfferingSnapshot(new OfferingSnapshot(o));
+                        return o;
+                    })
+                    .orElseThrow(() -> new WebApplicationException(
+                            "Create PurchasedOffering : Offering "
+                            + e.getOffering().getId()
+                            + " not found and cannot be linked !")));
+            
         });
     }
-
+    
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(PurchasedOffering entity,
             @QueryParam("professional") String professional) {
         LOG.log(Level.INFO, "Updating PurchasedOffering {0}", entity.getId());
-
+        
         if (professional == null) {
             throw new WebApplicationException(
                     "Profession email is not provided !");
         }
-
+        
         return super.put(entity, entity.getId(),
                 e -> {
-
+            
             if (e.getOffering() == null) {
                 throw new WebApplicationException("No Offering provided !");
             }
-
+            
             e.setQty(entity.getQty());
-
+            
             e.setOffering(Optional.ofNullable(e.getOffering().accept(visitor).
                     find(new OfferingPK(e.getOffering().getId(), professional)))
-                    .map(Function.identity())
-                    .orElseThrow(() -> new WebApplicationException()));
+                    .map(o -> {
+                        o.getPurchasedOfferings().add(e);
+                        e.setOfferingSnapshot(new OfferingSnapshot(o));
+                        return o;
+                    })
+                    .orElseThrow(() -> new WebApplicationException(
+                            "Update PurchasedOffering : Offering "
+                            + e.getOffering().getId()
+                            + " not found and cannot be linked !")));
         });
     }
 
@@ -158,6 +172,8 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
     public Response delete(@PathParam("id") Long id) {
         LOG.log(Level.INFO, "Deleting PurchasedOffering {0}", id);
         return super.delete(id, e -> {
+            e.getOffering().getPurchasedOfferings().remove(e);
+            e.setOffering(null);
         });
     }
 }
