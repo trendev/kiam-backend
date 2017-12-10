@@ -34,6 +34,8 @@ public class OfferingTest {
         assert instance.getBusinesses().isEmpty() == true;
         assert instance.getPurchasedOfferings() != null;
         assert instance.getPurchasedOfferings().isEmpty() == true;
+        assert instance.getParentPacks() != null;
+        assert instance.getParentPacks().isEmpty() == true;
 
         String name = "Offering #1";
         int price = 1000; // 10 euros
@@ -54,6 +56,8 @@ public class OfferingTest {
         assert instance.getBusinesses().isEmpty() == true;
         assert instance.getPurchasedOfferings() != null;
         assert instance.getPurchasedOfferings().isEmpty() == true;
+        assert instance.getParentPacks() != null;
+        assert instance.getParentPacks().isEmpty() == true;
 
     }
 

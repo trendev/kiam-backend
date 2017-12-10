@@ -22,7 +22,7 @@ public class Pack extends Offering {
      * same Professional.
      */
     @OneToMany(targetEntity = Offering.class)
-    @JoinTable(name = "PACK", joinColumns = {
+    @JoinTable(name = "PACK_CONTENT", joinColumns = {
         @JoinColumn(name = "PACK_ID", referencedColumnName = "OFFERING_ID",
                 table = "OFFERING")
         ,@JoinColumn(name = "PACK_PROFESSIONAL_EMAIL",

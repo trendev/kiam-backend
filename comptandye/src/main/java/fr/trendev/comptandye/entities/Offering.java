@@ -18,6 +18,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
@@ -77,6 +78,15 @@ public abstract class Offering {
     @OneToMany(targetEntity = PurchasedOffering.class, mappedBy = "offering")
     @JsonIgnore
     private List<PurchasedOffering> purchasedOfferings = new LinkedList<>();
+
+    @OneToMany(targetEntity = Offering.class)
+    @JoinTable(name = "PARENT_PACKS", joinColumns = {
+        @JoinColumn(name = "PARENT_OFFERING_ID",
+                referencedColumnName = "OFFERING_ID", table = "OFFERING")
+        ,@JoinColumn(name = "PARENT_PROFESSIONAL_EMAIL",
+                referencedColumnName = "OFFERING_PRO_EMAIL", table = "OFFERING")})
+    @JsonIgnore
+    private List<Offering> parentPacks = new LinkedList<>();
 
     public Offering(String name, int price, int duration,
             Professional professional) {
@@ -159,6 +169,14 @@ public abstract class Offering {
 
     public void setPurchasedOfferings(List<PurchasedOffering> purchasedOfferings) {
         this.purchasedOfferings = purchasedOfferings;
+    }
+
+    public List<Offering> getParentPacks() {
+        return this.parentPacks;
+    }
+
+    public void setParentPacks(List<Offering> parentPacks) {
+        this.parentPacks = parentPacks;
     }
 
     public <T> T accept(Visitor<T> v) {
