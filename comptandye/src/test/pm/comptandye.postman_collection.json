@@ -2,6 +2,7 @@
 	"info": {
 		"name": "comptandye",
 		"_postman_id": "609145de-a1a2-83fc-b631-7478baef1da6",
+		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -5505,6 +5506,48 @@
 					"response": []
 				},
 				{
+					"name": "getPurchasedOfferings",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "97610284-ea46-41a1-96e3-4a67ff93f70c",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/Pack/{{created_pack_id}}/purchasedOfferings?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Pack",
+								"{{created_pack_id}}",
+								"purchasedOfferings"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "update",
 					"event": [
 						{
@@ -7742,6 +7785,48 @@
 							"path": [
 								"Service",
 								"{{created_offering_id}}"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com",
+									"equals": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPurchasedOfferings",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d4f6faa1-49cf-4c8a-90dd-05a4b1eaa792",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/Service/{{created_offering_id}}/purchasedOfferings?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Service",
+								"{{created_offering_id}}",
+								"purchasedOfferings"
 							],
 							"query": [
 								{

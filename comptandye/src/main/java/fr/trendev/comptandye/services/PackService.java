@@ -5,11 +5,9 @@
  */
 package fr.trendev.comptandye.services;
 
-import fr.trendev.comptandye.entities.Offering;
 import fr.trendev.comptandye.entities.OfferingPK;
 import fr.trendev.comptandye.entities.Pack;
 import fr.trendev.comptandye.entities.Professional;
-import fr.trendev.comptandye.entities.PurchasedOffering;
 import fr.trendev.comptandye.entities.Service;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.PackFacade;
@@ -44,7 +42,7 @@ import javax.ws.rs.core.SecurityContext;
 @Stateless
 @Path("Pack")
 @RolesAllowed({"Administrator", "Professional"})
-public class PackService extends AbstractCommonService<Pack, OfferingPK> {
+public class PackService extends AbstractOfferingService<Pack> {
 
     @Inject
     PackFacade packFacade;
@@ -171,15 +169,8 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
 
         LOG.log(Level.INFO, "Deleting Pack {0}", packFacade.
                 prettyPrintPK(pk));
-        return super.delete(pk,
-                e -> {
-            //break the link between the offering and the bill's purchasedoffering (if necessary)
-            e.getPurchasedOfferings().forEach(po -> po.setOffering(null));
-            e.setPurchasedOfferings(null);
 
-            //remove the offering from the professional's offering list
-            e.getProfessional().getOfferings().remove(e);
-        });
+        return super.delete(pk);
     }
 
     @Path("{packid}/addService/offering/{offeringid}")
@@ -290,7 +281,6 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
             @QueryParam("professional") String professional) {
         OfferingPK pk = new OfferingPK(id, this.getProEmail(sec,
                 professional));
-        return super.provideRelation(pk, Offering::getPurchasedOfferings,
-                PurchasedOffering.class);
+        return super.getPurchasedOfferings(pk);
     }
 }
