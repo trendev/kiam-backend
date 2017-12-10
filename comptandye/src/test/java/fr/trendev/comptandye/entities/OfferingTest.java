@@ -5,7 +5,6 @@
  */
 package fr.trendev.comptandye.entities;
 
-import java.util.Arrays;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -50,6 +49,11 @@ public class OfferingTest {
         assert instance.getDuration() == 0;
         assert instance.getProfessional() == null;
         assert instance.isHidden() == false;
+        assert instance.getProfessional() == null;
+        assert instance.getBusinesses() != null;
+        assert instance.getBusinesses().isEmpty() == true;
+        assert instance.getPurchasedOfferings() != null;
+        assert instance.getPurchasedOfferings().isEmpty() == true;
 
         String name = "Offering #1";
         int price = 1000; // 10 euros
@@ -65,23 +69,12 @@ public class OfferingTest {
         assert instance.getDuration() == duration;
         assert instance.getProfessional() != null;
         assert instance.isHidden() == true;
-
-    }
-
-    @Test
-    public void testBusinessesGetter() {
-        Offering instance = new OfferingImpl();
+        assert instance.getProfessional() != null;
         assert instance.getBusinesses() != null;
         assert instance.getBusinesses().isEmpty() == true;
-    }
+        assert instance.getPurchasedOfferings() != null;
+        assert instance.getPurchasedOfferings().isEmpty() == true;
 
-    @Test
-    public void testBusinessesSetter() {
-        Offering instance = new OfferingImpl();
-        instance.setBusinesses(Arrays.asList(new Business(), new Business(),
-                new Business()));
-        assert instance.getBusinesses() != null;
-        assert instance.getBusinesses().size() == 3;
     }
 
     public class OfferingImpl extends Offering {

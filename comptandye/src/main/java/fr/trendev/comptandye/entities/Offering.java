@@ -75,7 +75,8 @@ public abstract class Offering {
     private List<Business> businesses = new LinkedList<>();
 
     @OneToMany(targetEntity = PurchasedOffering.class, mappedBy = "offering")
-    private List<PurchasedOffering> purchasedOfferings;
+    @JsonIgnore
+    private List<PurchasedOffering> purchasedOfferings = new LinkedList<>();
 
     public Offering(String name, int price, int duration,
             Professional professional) {

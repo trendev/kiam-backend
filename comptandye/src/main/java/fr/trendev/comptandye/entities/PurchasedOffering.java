@@ -29,7 +29,7 @@ public class PurchasedOffering {
     private int qty = 1;
 
     @Embedded
-    private OfferingSnapshot offeringSnapshot;
+    private OfferingSnapshot offeringSnapshot = new OfferingSnapshot();
 
     @ManyToOne(targetEntity = Offering.class)
     private Offering offering;
