@@ -34,12 +34,13 @@ public class PurchasedOffering {
     @ManyToOne(targetEntity = Offering.class)
     private Offering offering;
 
-    public PurchasedOffering(int qty, Offering offering) {
-        this.qty = qty;
-        this.offering = offering;
+    public PurchasedOffering() {
     }
 
-    public PurchasedOffering() {
+    public PurchasedOffering(int qty, Offering offering) {
+        this.qty = qty;
+        this.offering = null;
+        this.offeringSnapshot = new OfferingSnapshot(offering);
     }
 
     public Long getId() {

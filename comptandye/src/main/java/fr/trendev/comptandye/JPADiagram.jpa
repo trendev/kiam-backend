@@ -1490,17 +1490,17 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="PurchasedOfferingPK" abs="false" class="PurchasedOffering" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1506344869339">
-        <jpa:con am="PUBLIC" e="true">
-            <jpa:a>_15063452150691272</jpa:a>
-            <jpa:a>_1512851997729268</jpa:a>
-            <jpa:post></jpa:post>
-        </jpa:con>
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
         <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
+        <jpa:snp loc="BEFORE_METHOD" e="true">public PurchasedOffering(int qty, Offering offering) {
+        this.qty = qty;
+        this.offering = null;
+        this.offeringSnapshot = new OfferingSnapshot(offering);
+}</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="int" v="true" xvt="" name="qty" dv="1" id="_15063452150691272">
@@ -1533,7 +1533,15 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         </jpa:nq>
     </jpa:entity>
     <jpa:embeddable abs="false" class="OfferingSnapshot" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1512853437669">
+        <jpa:con am="PUBLIC" e="true"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
+        <jpa:snp loc="BEFORE_METHOD" e="true">public OfferingSnapshot(Offering offering) {
+        this.cltype = offering.getCltype();
+        this.name = offering.getName();
+        this.price = offering.getPrice();
+        this.duration = offering.getDuration();
+        this.businesses = offering.getBusinesses();
+}</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="cltype" id="_1512853518502564">
@@ -1590,7 +1598,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 </el>
             </i>
             <i ref="_1490704123469" x="-158" y="69"/>
-            <i ref="_1506344869339" x="-671" y="1541">
+            <i ref="_1506344869339" x="-671" y="1534">
                 <el>
                     <e ref="_1512851997729268">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1761,7 +1769,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 </el>
             </i>
             <i ref="_1490101737208" x="-406" y="21"/>
-            <i ref="_1512853437669" x="-185" y="1546">
+            <i ref="_1512853437669" x="-313" y="1518">
                 <el>
                     <e ref="_151290448762472">
                         <v st="1" si="12.0" cl="#00ff00"/>

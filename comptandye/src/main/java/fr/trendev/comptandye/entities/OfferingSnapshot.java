@@ -34,6 +34,17 @@ public class OfferingSnapshot {
     @OneToMany(targetEntity = Business.class)
     private List<Business> businesses = new LinkedList<>();
 
+    public OfferingSnapshot() {
+    }
+
+    public OfferingSnapshot(Offering offering) {
+        this.cltype = offering.getCltype();
+        this.name = offering.getName();
+        this.price = offering.getPrice();
+        this.duration = offering.getDuration();
+        this.businesses = offering.getBusinesses();
+    }
+
     public String getCltype() {
         return this.cltype;
     }

@@ -11,10 +11,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -24,22 +20,6 @@ import org.junit.Test;
 public class InvidualBillTest {
 
     public InvidualBillTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
     }
 
     /**
@@ -105,7 +85,7 @@ public class InvidualBillTest {
         assert instance.getPurchasedOfferings().size() == 10;
 
         assert instance.getPurchasedOfferings().stream().mapToInt(po -> po.
-                getOffering().getPrice()).
+                getOfferingSnapshot().getPrice()).
                 sum() == totalAmount;
 
         assert instance.getPayments().stream().mapToInt(p -> p.getAmount()).

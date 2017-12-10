@@ -5,10 +5,7 @@
  */
 package fr.trendev.comptandye.entities;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import fr.trendev.comptandye.utils.OfferingType;
 import org.junit.Test;
 
 /**
@@ -20,22 +17,6 @@ public class PurchasedOfferingTest {
     public PurchasedOfferingTest() {
     }
 
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
-
     @Test
     public void testConstructor() {
         PurchasedOffering po = new PurchasedOffering();
@@ -44,10 +25,27 @@ public class PurchasedOfferingTest {
         assert po.getQty() == 1;
         assert po.getOffering() == null;
 
-        po = new PurchasedOffering(5, new Service());
+        Service service = new Service("test_service", 1000, 120,
+                new Professional());
+        service.setCltype(OfferingType.SERVICE);
+        service.getBusinesses().add(new Business("business#1"));
+        service.getBusinesses().add(new Business("business#2"));
+
+        po = new PurchasedOffering(5, service);
         assert po.getId() == null;
         assert po.getQty() == 5;
-        assert po.getOffering() != null;
+        assert po.getOffering() == null;
+        assert po.getOfferingSnapshot() != null;
+        assert po.getOfferingSnapshot().getCltype().equals(service.getCltype());
+        assert po.getOfferingSnapshot().getName().equals(service.getName());
+        assert po.getOfferingSnapshot().getPrice() == service.getPrice();
+        assert po.getOfferingSnapshot().getDuration() == service.getDuration();
+        assert po.getOfferingSnapshot().getBusinesses() != null;
+        assert po.getOfferingSnapshot().getBusinesses().size() == service.
+                getBusinesses().size();
+        assert po.getOfferingSnapshot().getBusinesses().containsAll(service.
+                getBusinesses()) == true;
+
     }
 
 }

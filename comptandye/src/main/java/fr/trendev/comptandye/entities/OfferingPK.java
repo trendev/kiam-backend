@@ -56,7 +56,7 @@ public class OfferingPK implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
+        int hash = 5;
         hash = 37 * hash + (this.getId() != null ? this.getId().hashCode() : 0);
         hash = 37 * hash + (this.getProfessional() != null ? this.
                 getProfessional().hashCode() : 0);
