@@ -5,8 +5,10 @@
  */
 package fr.trendev.comptandye.services;
 
+import fr.trendev.comptandye.entities.Offering;
 import fr.trendev.comptandye.entities.OfferingPK;
 import fr.trendev.comptandye.entities.Professional;
+import fr.trendev.comptandye.entities.PurchasedOffering;
 import fr.trendev.comptandye.entities.Service;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
@@ -164,5 +166,17 @@ public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
             //remove the offering from the professional's offering list
             e.getProfessional().getOfferings().remove(e);
         });
+    }
+
+    @Path("{id}/purchasedOfferings")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getPurchasedOfferings(@Context SecurityContext sec,
+            @PathParam("id") Long id,
+            @QueryParam("professional") String professional) {
+        OfferingPK pk = new OfferingPK(id, this.getProEmail(sec,
+                professional));
+        return super.provideRelation(pk, Offering::getPurchasedOfferings,
+                PurchasedOffering.class);
     }
 }
