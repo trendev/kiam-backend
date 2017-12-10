@@ -103,7 +103,7 @@ public class CollectiveGroupBillTest {
         assert instance.getPurchasedOfferings().size() == 10;
 
         assert instance.getPurchasedOfferings().stream().mapToInt(po -> po.
-                getOfferingSnapshot().getPrice()).
+                getOffering().getPrice()).
                 sum() == totalAmount;
 
         assert instance.getPayments().stream().mapToInt(p -> p.getAmount()).

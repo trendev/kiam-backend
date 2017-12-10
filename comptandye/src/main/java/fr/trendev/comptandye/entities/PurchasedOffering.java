@@ -2,7 +2,6 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import fr.trendev.comptandye.utils.visitors.Visitor;
 import javax.persistence.Basic;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -39,8 +38,9 @@ public class PurchasedOffering {
 
     public PurchasedOffering(int qty, Offering offering) {
         this.qty = qty;
-        this.offering = null;
+        this.offering = offering;
         this.offeringSnapshot = new OfferingSnapshot(offering);
+// this.offering.getPurchasedOfferings().add(this);
     }
 
     public Long getId() {
@@ -73,10 +73,6 @@ public class PurchasedOffering {
 
     public void setOffering(Offering offering) {
         this.offering = offering;
-    }
-
-    public <T> T accept(Visitor<T> v) {
-        return v.visit(this);
     }
 
 }

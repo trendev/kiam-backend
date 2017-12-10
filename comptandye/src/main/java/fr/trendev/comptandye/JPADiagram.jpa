@@ -1491,16 +1491,17 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="PurchasedOfferingPK" abs="false" class="PurchasedOffering" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1506344869339">
         <jpa:con am="PUBLIC" e="true"/>
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_15063452150691272</jpa:a>
+            <jpa:a>_1512851997729268</jpa:a>
+            <jpa:post>this.offeringSnapshot = new OfferingSnapshot(offering);
+// this.offering.getPurchasedOfferings().add(this);</jpa:post>
+        </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+        <jpa:snp e="false">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
-        <jpa:snp loc="BEFORE_METHOD" e="true">public PurchasedOffering(int qty, Offering offering) {
-        this.qty = qty;
-        this.offering = null;
-        this.offeringSnapshot = new OfferingSnapshot(offering);
-}</jpa:snp>
+        <jpa:snp loc="IMPORT" e="false">import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="int" v="true" xvt="" name="qty" dv="1" id="_15063452150691272">
@@ -1598,7 +1599,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 </el>
             </i>
             <i ref="_1490704123469" x="-158" y="69"/>
-            <i ref="_1506344869339" x="-671" y="1534">
+            <i ref="_1506344869339" x="252" y="1534">
                 <el>
                     <e ref="_1512851997729268">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1769,7 +1770,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 </el>
             </i>
             <i ref="_1490101737208" x="-406" y="21"/>
-            <i ref="_1512853437669" x="-313" y="1518">
+            <i ref="_1512853437669" x="535" y="1576">
                 <el>
                     <e ref="_151290448762472">
                         <v st="1" si="12.0" cl="#00ff00"/>
