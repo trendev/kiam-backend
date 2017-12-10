@@ -1,8 +1,7 @@
 {
 	"info": {
 		"name": "comptandye",
-		"_postman_id": "02100dc5-b9df-4c04-a06c-2798c0b57ba4",
-		"description": "",
+		"_postman_id": "609145de-a1a2-83fc-b631-7478baef1da6",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -93,7 +92,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Authentication/profile",
 							"host": [
@@ -1333,41 +1335,16 @@
 					"name": "addClient",
 					"event": [
 						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;",
-									"",
-									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"id is defined\"] = jsonData.id !== undefined;",
-									"//created_client_id environment variable is stored as a string...",
-									"tests[\"id is \"+pm.environment.get(\"created_client_id\")] = jsonData.id == pm.environment.get(\"created_client_id\");",
-									"tests[\"email is \\\"newclient@domain.com\\\"\"] = jsonData.email === \"newclient@domain.com\";",
-									"tests[\"customerDetails.firstName is \\\"John\\\"\"] = jsonData.customerDetails.firstName === \"John\";",
-									"tests[\"customerDetails.lastName is \\\"DOE\\\"\"] = jsonData.customerDetails.lastName === \"DOE\";",
-									"tests[\"customerDetails.nickname is \\\"WhoIsHe\\\"\"] = jsonData.customerDetails.nickname === \"WhoIsHe\";",
-									"tests[\"customerDetails.sex is \\\"M\\\"\"] = jsonData.customerDetails.sex === \"M\";",
-									"",
-									"tests[\"address.street is \\\"79 avenue de la jonchère\\\"\"] = jsonData.address.street === \"79 avenue de la jonchère\";",
-									"tests[\"address.optional is \\\"appart A113\\\"\"] = jsonData.address.optional === \"appart A113\";",
-									"tests[\"address.postalCode is \\\"77600\\\"\"] = jsonData.address.postalCode === \"77600\";",
-									"tests[\"address.city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.address.city === \"Chanteloup-en-Brie\";",
-									"tests[\"address.country is \\\"France\\\"\"] = jsonData.address.country === \"France\";"
-								]
-							}
-						},
-						{
 							"listen": "prerequest",
 							"script": {
 								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
-									"    url: \"{{API_URL}}/Client?professional=vanessa.gay@gmail.com\",",
+									"    url:pm.environment.get('API_URL')+\"/Client?professional=vanessa.gay@gmail.com\",",
 									"    method: 'POST',",
 									"    header: {",
 									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
 									"    },",
 									"    body:{",
 									"        mode: 'raw',",
@@ -1398,6 +1375,31 @@
 									""
 								]
 							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"//created_client_id environment variable is stored as a string...",
+									"tests[\"id is \"+pm.environment.get(\"created_client_id\")] = jsonData.id == pm.environment.get(\"created_client_id\");",
+									"tests[\"email is \\\"newclient@domain.com\\\"\"] = jsonData.email === \"newclient@domain.com\";",
+									"tests[\"customerDetails.firstName is \\\"John\\\"\"] = jsonData.customerDetails.firstName === \"John\";",
+									"tests[\"customerDetails.lastName is \\\"DOE\\\"\"] = jsonData.customerDetails.lastName === \"DOE\";",
+									"tests[\"customerDetails.nickname is \\\"WhoIsHe\\\"\"] = jsonData.customerDetails.nickname === \"WhoIsHe\";",
+									"tests[\"customerDetails.sex is \\\"M\\\"\"] = jsonData.customerDetails.sex === \"M\";",
+									"",
+									"tests[\"address.street is \\\"79 avenue de la jonchère\\\"\"] = jsonData.address.street === \"79 avenue de la jonchère\";",
+									"tests[\"address.optional is \\\"appart A113\\\"\"] = jsonData.address.optional === \"appart A113\";",
+									"tests[\"address.postalCode is \\\"77600\\\"\"] = jsonData.address.postalCode === \"77600\";",
+									"tests[\"address.city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.address.city === \"Chanteloup-en-Brie\";",
+									"tests[\"address.country is \\\"France\\\"\"] = jsonData.address.country === \"France\";"
+								]
+							}
 						}
 					],
 					"request": {
@@ -1408,7 +1410,10 @@
 								"value": "{{XSRF-TOKEN}}"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Category/{{created_category_id}}/addClient/{{created_client_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -1483,10 +1488,10 @@
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"pm.sendRequest({",
-									"    url: \"{{API_URL}}/Client/{{created_client_id}}?professional=vanessa.gay@gmail.com\",",
+									"    url:pm.environment.get('API_URL')+\"/Client/\"+pm.environment.get('created_client_id')+\"?professional=vanessa.gay@gmail.com\",",
 									"    header: {",
 									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
 									"    },",
 									"    method: 'DELETE'",
 									"}, function (err, res) {",
@@ -1523,7 +1528,10 @@
 								"value": "{{XSRF-TOKEN}}"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Category/{{created_category_id}}/removeClient/{{created_client_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -1672,6 +1680,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "d01e323c-a309-4f2c-914b-47bc22bc3795",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
@@ -1695,6 +1704,43 @@
 									""
 								]
 							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "aa737c33-a018-4dd0-bfc9-59f394ccf665",
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest({",
+									"    url:pm.environment.get('API_URL')+\"/CollectiveGroup?professional=vanessa.gay@gmail.com\",",
+									"    method: 'POST',",
+									"   header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"    },",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify(",
+									"            {",
+									"              groupName:\"Maison de retraite de Chanteloup-en-Brie\",",
+									"              phone:\"0123456789\",",
+									"              address:{",
+									"                street:\"Allée de Fontenelle\",",
+									"                optional:\"Château de Fontenelle\",",
+									"                postalCode:\"77600\",",
+									"                city:\"Chanteloup-en-Brie\"",
+									"              }",
+									"            }",
+									"        )",
+									"    }",
+									"}, function (err, response) {",
+									"    console.log(err ? err : response.json());",
+									"   pm.environment.set(\"created_collectivegroup_id\", response.json().id);",
+									"});",
+									"",
+									""
+								]
+							}
 						}
 					],
 					"request": {
@@ -1711,7 +1757,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\":\"client@domain.com\",\n  \"address\":{\n    \"street\":\"Allée de Fontenelle\",\n    \"optional\":\"Château de Fontenelle\",\n    \"postalCode\":\"77600\",\n    \"city\":\"Chanteloup-en-Brie\"\n  },\n  \"socialNetworkAccounts\":{\n    \"twitter\":\"@client_facebook_account\"\n  },\n  \"customerDetails\":{\n    \"firstName\":\"Paul\",\n    \"lastName\":\"Newman\",\n    \"sex\":\"M\",\n    \"comments\":[\n      \"old american actor\",\n      \"old shool boy\"\n    ]\n  }\n}"
+							"raw": "{\n  \"email\":\"client@domain.com\",\n  \"address\":{\n    \"street\":\"Allée de Fontenelle\",\n    \"optional\":\"Château de Fontenelle\",\n    \"postalCode\":\"77600\",\n    \"city\":\"Chanteloup-en-Brie\"\n  },\n  \"socialNetworkAccounts\":{\n    \"twitter\":\"@client_facebook_account\"\n  },\n  \"customerDetails\":{\n    \"firstName\":\"Paul\",\n    \"lastName\":\"Newman\",\n    \"sex\":\"M\",\n    \"comments\":[\n      \"old american actor\",\n      \"old shool boy\"\n    ]\n  },\n  \"collectiveGroups\":[\n  \t{\n  \t\t\"id\":{{created_collectivegroup_id}}\n  \t}\n  ]\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Client?professional=vanessa.gay@gmail.com",
@@ -2002,9 +2048,11 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "d373ba42-13bd-4bb0-bf94-bb5e1f8c2aae",
 								"type": "text/javascript",
 								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									""
 								]
 							}
 						}
@@ -2125,6 +2173,80 @@
 					"name": "create",
 					"event": [
 						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest({",
+									"    url:pm.environment.get('API_URL')+\"/Client?professional=vanessa.gay@gmail.com\",",
+									"    method: 'POST',",
+									"   header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"    },",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify(",
+									"            {",
+									"            \"email\": \"client@domain.com\",",
+									"            \"socialNetworkAccounts\": {",
+									"                \"twitter\": \"@client_facebook_account\"",
+									"            },",
+									"            \"customerDetails\": {",
+									"                \"firstName\": \"Paul\",",
+									"                \"lastName\": \"Newman\",",
+									"                \"sex\": \"M\",",
+									"                \"comments\": [",
+									"                    \"old american actor\",",
+									"                    \"old shool boy\"",
+									"                ]",
+									"            },",
+									"            \"address\": {",
+									"                \"street\": \"Allée de Fontenelle\",",
+									"                \"optional\": \"Château de Fontenelle\",",
+									"                \"postalCode\": \"77600\",",
+									"                \"city\": \"Chanteloup-en-Brie\",",
+									"                \"country\": \"France\"",
+									"            }",
+									"})",
+									"    }",
+									"}, function (err, response) {",
+									"    console.log(response.json());",
+									"   pm.environment.set(\"created_client_id\", response.json().id);",
+									"});",
+									"",
+									"",
+									"pm.sendRequest({",
+									"    url:pm.environment.get('API_URL')+\"/Service?professional=vanessa.gay@gmail.com\",",
+									"    method: 'POST',",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"    },",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify(",
+									"            {",
+									"                name:\"beauty service\",",
+									"              price:1500,",
+									"              duration:180,",
+									"              businesses: [",
+									"                {",
+									"                    designation: \"Esthétique\"",
+									"                }",
+									"                ],",
+									"                cltype:\"service\"",
+									"            })",
+									"    }",
+									"}, function (err, response) {",
+									"    console.log(response.json());",
+									"   pm.environment.set(\"created_offering_id\", response.json().id);",
+									"});",
+									""
+								]
+							}
+						},
+						{
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
@@ -2163,80 +2285,6 @@
 									"tests[\"purchasedOfferings[0].offering.hidden = false\"] = jsonData.purchasedOfferings[0].offering.hidden === false;",
 									"tests[\"purchasedOfferings[0].offering.businesses[0].designation = Esthétique\"] = jsonData.purchasedOfferings[0].offering.businesses[0].designation === \"Esthétique\";",
 									"",
-									""
-								]
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.sendRequest({",
-									"    url: \"{{API_URL}}/Client?professional=vanessa.gay@gmail.com\",",
-									"    method: 'POST',",
-									"   header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
-									"    },",
-									"    body:{",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify(",
-									"            {",
-									"            \"email\": \"client@domain.com\",",
-									"            \"socialNetworkAccounts\": {",
-									"                \"twitter\": \"@client_facebook_account\"",
-									"            },",
-									"            \"customerDetails\": {",
-									"                \"firstName\": \"Paul\",",
-									"                \"lastName\": \"Newman\",",
-									"                \"sex\": \"M\",",
-									"                \"comments\": [",
-									"                    \"old american actor\",",
-									"                    \"old shool boy\"",
-									"                ]",
-									"            },",
-									"            \"address\": {",
-									"                \"street\": \"Allée de Fontenelle\",",
-									"                \"optional\": \"Château de Fontenelle\",",
-									"                \"postalCode\": \"77600\",",
-									"                \"city\": \"Chanteloup-en-Brie\",",
-									"                \"country\": \"France\"",
-									"            }",
-									"})",
-									"    }",
-									"}, function (err, response) {",
-									"    console.log(response.json());",
-									"   pm.environment.set(\"created_client_id\", response.json().id);",
-									"});",
-									"",
-									"",
-									"pm.sendRequest({",
-									"    url: \"{{API_URL}}/Service?professional=vanessa.gay@gmail.com\",",
-									"    method: 'POST',",
-									"    header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
-									"    },",
-									"    body:{",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify(",
-									"            {",
-									"                name:\"beauty service\",",
-									"              price:1500,",
-									"              duration:180,",
-									"              businesses: [",
-									"                {",
-									"                    designation: \"Esthétique\"",
-									"                }",
-									"                ],",
-									"                cltype:\"service\"",
-									"            })",
-									"    }",
-									"}, function (err, response) {",
-									"    console.log(response.json());",
-									"   pm.environment.set(\"created_offering_id\", response.json().id);",
-									"});",
 									""
 								]
 							}
@@ -2451,10 +2499,10 @@
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"pm.sendRequest({",
-									"    url: \"{{API_URL}}/Service/{{created_offering_id}}?professional=vanessa.gay@gmail.com\",",
+									"    url:pm.environment.get('API_URL')+\"/Service/\"+pm.environment.get('created_offering_id')+\"?professional=vanessa.gay@gmail.com\",",
 									"    header: {",
 									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
 									"    },",
 									"    method: 'DELETE'",
 									"}, function (err, res) {",
@@ -2463,10 +2511,10 @@
 									"});",
 									"",
 									"pm.sendRequest({",
-									"    url: \"{{API_URL}}/Client/{{created_client_id}}?professional=vanessa.gay@gmail.com\",",
+									"    url:pm.environment.get('API_URL')+\"/Client/\"+pm.environment.get('created_client_id')+\"?professional=vanessa.gay@gmail.com\",",
 									"    header: {",
 									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
 									"    },",
 									"    method: 'DELETE'",
 									"}, function (err, res) {",
@@ -2485,7 +2533,10 @@
 								"value": "{{XSRF-TOKEN}}"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/ClientBill/{{created_clientbill_reference}}/{{created_clientbill_deliveryDate}}?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -2761,41 +2812,16 @@
 					"name": "addClient",
 					"event": [
 						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;",
-									"",
-									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"id is defined\"] = jsonData.id !== undefined;",
-									"//created_client_id environment variable is stored as a string...",
-									"tests[\"id is \"+pm.environment.get(\"created_client_id\")] = jsonData.id == pm.environment.get(\"created_client_id\");",
-									"tests[\"email is \\\"newclient@domain.com\\\"\"] = jsonData.email === \"newclient@domain.com\";",
-									"tests[\"customerDetails.firstName is \\\"John\\\"\"] = jsonData.customerDetails.firstName === \"John\";",
-									"tests[\"customerDetails.lastName is \\\"DOE\\\"\"] = jsonData.customerDetails.lastName === \"DOE\";",
-									"tests[\"customerDetails.nickname is \\\"WhoIsHe\\\"\"] = jsonData.customerDetails.nickname === \"WhoIsHe\";",
-									"tests[\"customerDetails.sex is \\\"M\\\"\"] = jsonData.customerDetails.sex === \"M\";",
-									"",
-									"tests[\"address.street is \\\"79 avenue de la jonchère\\\"\"] = jsonData.address.street === \"79 avenue de la jonchère\";",
-									"tests[\"address.optional is \\\"appart A113\\\"\"] = jsonData.address.optional === \"appart A113\";",
-									"tests[\"address.postalCode is \\\"77600\\\"\"] = jsonData.address.postalCode === \"77600\";",
-									"tests[\"address.city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.address.city === \"Chanteloup-en-Brie\";",
-									"tests[\"address.country is \\\"France\\\"\"] = jsonData.address.country === \"France\";"
-								]
-							}
-						},
-						{
 							"listen": "prerequest",
 							"script": {
 								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
-									"    url: \"{{API_URL}}/Client?professional=vanessa.gay@gmail.com\",",
+									"    url:pm.environment.get('API_URL')+\"/Client?professional=vanessa.gay@gmail.com\",",
 									"    method: 'POST',",
 									"    header: {",
 									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
 									"    },",
 									"    body:{",
 									"        mode: 'raw',",
@@ -2824,6 +2850,31 @@
 									""
 								]
 							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"//created_client_id environment variable is stored as a string...",
+									"tests[\"id is \"+pm.environment.get(\"created_client_id\")] = jsonData.id == pm.environment.get(\"created_client_id\");",
+									"tests[\"email is \\\"newclient@domain.com\\\"\"] = jsonData.email === \"newclient@domain.com\";",
+									"tests[\"customerDetails.firstName is \\\"John\\\"\"] = jsonData.customerDetails.firstName === \"John\";",
+									"tests[\"customerDetails.lastName is \\\"DOE\\\"\"] = jsonData.customerDetails.lastName === \"DOE\";",
+									"tests[\"customerDetails.nickname is \\\"WhoIsHe\\\"\"] = jsonData.customerDetails.nickname === \"WhoIsHe\";",
+									"tests[\"customerDetails.sex is \\\"M\\\"\"] = jsonData.customerDetails.sex === \"M\";",
+									"",
+									"tests[\"address.street is \\\"79 avenue de la jonchère\\\"\"] = jsonData.address.street === \"79 avenue de la jonchère\";",
+									"tests[\"address.optional is \\\"appart A113\\\"\"] = jsonData.address.optional === \"appart A113\";",
+									"tests[\"address.postalCode is \\\"77600\\\"\"] = jsonData.address.postalCode === \"77600\";",
+									"tests[\"address.city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.address.city === \"Chanteloup-en-Brie\";",
+									"tests[\"address.country is \\\"France\\\"\"] = jsonData.address.country === \"France\";"
+								]
+							}
 						}
 					],
 					"request": {
@@ -2834,7 +2885,10 @@
 								"value": "{{XSRF-TOKEN}}"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/CollectiveGroup/{{created_collectivegroup_id}}/addClient/{{created_client_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -2950,10 +3004,10 @@
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"pm.sendRequest({",
-									"    url: \"{{API_URL}}/Client/{{created_client_id}}?professional=vanessa.gay@gmail.com\",",
+									"    url:pm.environment.get('API_URL')+\"/Client/\"+pm.environment.get('created_client_id')+\"?professional=vanessa.gay@gmail.com\",",
 									"    header: {",
 									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
 									"    },",
 									"    method: 'DELETE'",
 									"}, function (err, res) {",
@@ -2990,7 +3044,10 @@
 								"value": "{{XSRF-TOKEN}}"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/CollectiveGroup/{{created_collectivegroup_id}}/removeClient/{{created_client_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -3137,6 +3194,68 @@
 					"name": "create",
 					"event": [
 						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest({",
+									"    url:pm.environment.get('API_URL')+\"/CollectiveGroup?professional=vanessa.gay@gmail.com\",",
+									"    method: 'POST',",
+									"   header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"    },",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify(",
+									"            {",
+									"              \"groupName\":\"Maison de retraite de Chanteloup-en-Brie\",",
+									"              \"phone\":\"0123456789\",",
+									"              \"address\":{",
+									"                \"street\":\"Allée de Fontenelle\",",
+									"                \"optional\":\"Château de Fontenelle\",",
+									"                \"postalCode\":\"77600\",",
+									"                \"city\":\"Chanteloup-en-Brie\"",
+									"              }",
+									"            })",
+									"    }",
+									"}, function (err, response) {",
+									"    console.log(response.json());",
+									"   pm.environment.set(\"created_collectivegroup_id\", response.json().id);",
+									"});",
+									"",
+									"",
+									"pm.sendRequest({",
+									"    url:pm.environment.get('API_URL')+\"/Service?professional=vanessa.gay@gmail.com\",",
+									"    method: 'POST',",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"    },",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify(",
+									"            {",
+									"                name:\"beauty service\",",
+									"              price:1500,",
+									"              duration:180,",
+									"              businesses: [",
+									"                {",
+									"                    designation: \"Esthétique\"",
+									"                }",
+									"                ],",
+									"                cltype:\"service\"",
+									"            })",
+									"    }",
+									"}, function (err, response) {",
+									"    console.log(response.json());",
+									"   pm.environment.set(\"created_offering_id\", response.json().id);",
+									"});",
+									""
+								]
+							}
+						},
+						{
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
@@ -3173,68 +3292,6 @@
 									"tests[\"purchasedOfferings[0].offering.hidden = false\"] = jsonData.purchasedOfferings[0].offering.hidden === false;",
 									"tests[\"purchasedOfferings[0].offering.businesses[0].designation = Esthétique\"] = jsonData.purchasedOfferings[0].offering.businesses[0].designation === \"Esthétique\";",
 									"",
-									""
-								]
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.sendRequest({",
-									"    url: \"{{API_URL}}/CollectiveGroup?professional=vanessa.gay@gmail.com\",",
-									"    method: 'POST',",
-									"   header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
-									"    },",
-									"    body:{",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify(",
-									"            {",
-									"              \"groupName\":\"Maison de retraite de Chanteloup-en-Brie\",",
-									"              \"phone\":\"0123456789\",",
-									"              \"address\":{",
-									"                \"street\":\"Allée de Fontenelle\",",
-									"                \"optional\":\"Château de Fontenelle\",",
-									"                \"postalCode\":\"77600\",",
-									"                \"city\":\"Chanteloup-en-Brie\"",
-									"              }",
-									"            })",
-									"    }",
-									"}, function (err, response) {",
-									"    console.log(response.json());",
-									"   pm.environment.set(\"created_collectivegroup_id\", response.json().id);",
-									"});",
-									"",
-									"",
-									"pm.sendRequest({",
-									"    url: \"{{API_URL}}/Service?professional=vanessa.gay@gmail.com\",",
-									"    method: 'POST',",
-									"    header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
-									"    },",
-									"    body:{",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify(",
-									"            {",
-									"                name:\"beauty service\",",
-									"              price:1500,",
-									"              duration:180,",
-									"              businesses: [",
-									"                {",
-									"                    designation: \"Esthétique\"",
-									"                }",
-									"                ],",
-									"                cltype:\"service\"",
-									"            })",
-									"    }",
-									"}, function (err, response) {",
-									"    console.log(response.json());",
-									"   pm.environment.set(\"created_offering_id\", response.json().id);",
-									"});",
 									""
 								]
 							}
@@ -3442,10 +3499,10 @@
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"pm.sendRequest({",
-									"    url: \"{{API_URL}}/Service/{{created_offering_id}}?professional=vanessa.gay@gmail.com\",",
+									"    url:pm.environment.get('API_URL')+\"/Service/\"+pm.environment.get('created_offering_id')+\"?professional=vanessa.gay@gmail.com\",",
 									"    header: {",
 									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
 									"    },",
 									"    method: 'DELETE'",
 									"}, function (err, res) {",
@@ -3454,10 +3511,10 @@
 									"});",
 									"",
 									"pm.sendRequest({",
-									"    url: \"{{API_URL}}/CollectiveGroup/{{created_collectivegroup_id}}?professional=vanessa.gay@gmail.com\",",
+									"    url:pm.environment.get('API_URL')+\"/CollectiveGroup/\"+pm.environment.get('created_collectivegroup_id')+\"?professional=vanessa.gay@gmail.com\",",
 									"    header: {",
 									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
 									"    },",
 									"    method: 'DELETE'",
 									"}, function (err, res) {",
@@ -3476,7 +3533,10 @@
 								"value": "{{XSRF-TOKEN}}"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/CollectiveGroupBill/{{created_collectivegroupbill_reference}}/{{created_collectivegroupbill_deliveryDate}}?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -3576,6 +3636,17 @@
 					"name": "create",
 					"event": [
 						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"/*birthdate should be send as UTC format only (avoid javascript GMT+2 and JAVA GMT+1 conversion errors for dates before 1970)*/",
+									"pm.environment.set(\"birthdate\", Date.UTC(1960,7,7));",
+									""
+								]
+							}
+						},
+						{
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
@@ -3594,17 +3665,6 @@
 									"tests[\"sex is \\\"M\\\"\"] = jsonData.sex === \"M\";",
 									"tests[\"picturePath is \\\"C:/Documents and Settings/whateverUwant.png\\\"\"] = jsonData.picturePath === \"C:/Documents and Settings/whateverUwant.png\";",
 									"tests[\"comments contains 4 elements\"] = jsonData.comments.length === 4;",
-									""
-								]
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"/*birthdate should be send as UTC format only (avoid javascript GMT+2 and JAVA GMT+1 conversion errors for dates before 1970)*/",
-									"pm.environment.set(\"birthdate\", Date.UTC(1960,7,7));",
 									""
 								]
 							}
@@ -4170,6 +4230,16 @@
 					"name": "create",
 					"event": [
 						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"/*birthdate should be send as UTC format only (avoid javascript GMT+2 and JAVA GMT+1 conversion errors for dates before 1970)*/",
+									"pm.environment.set(\"birthdate\", Date.UTC(1962,11,25));"
+								]
+							}
+						},
+						{
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
@@ -4213,16 +4283,6 @@
 									"tests[\"twitter is \\\"@individualtwitter\\\"\"] = jsonData.socialNetworkAccounts.twitter === \"@individualtwitter\";",
 									"tests[\"pinterest is \\\"https://www.pinterest.com/javaEEroxxx/\\\"\"] = jsonData.socialNetworkAccounts.pinterest === \"https://www.pinterest.com/javaEEroxxx/\";",
 									""
-								]
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"/*birthdate should be send as UTC format only (avoid javascript GMT+2 and JAVA GMT+1 conversion errors for dates before 1970)*/",
-									"pm.environment.set(\"birthdate\", Date.UTC(1962,11,25));"
 								]
 							}
 						}
@@ -4803,6 +4863,92 @@
 					"name": "create",
 					"event": [
 						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"/*birthdate should be send as UTC format only (avoid javascript GMT+2 and JAVA GMT+1 conversion errors for dates before 1970)*/",
+									"pm.environment.set(\"birthdate\", Date.UTC(1962,11,25));",
+									"",
+									"pm.sendRequest({",
+									"    url:pm.environment.get('API_URL')+\"/Individual\",",
+									"    method: 'POST',",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"    },",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify(",
+									"            {",
+									"              \"email\":\"individual@gmail.com\",",
+									"              \"cltype\":\"Individual\",",
+									"              \"password\":\"PASSWORD\",",
+									"              \"username\":\"individual_test\",",
+									"              \"customerDetails\": {",
+									"                        \"firstName\": \"prenom\",",
+									"                        \"lastName\": \"nom\",",
+									"                        \"nickname\": \"surnom\",",
+									"                        \"phone\": \"0102030405\",",
+									"                        \"birthdate\": pm.environment.get(\"birthdate\"),",
+									"                        \"sex\": \"F\",",
+									"                        \"comments\": [",
+									"                            \"Cool\",",
+									"                            \"Good looking\",",
+									"                            \"Open minded\",",
+									"                            \"Likes art and music\",",
+									"                            \"Nice hair\"",
+									"                        ]",
+									"                    },",
+									"                    \"address\": {",
+									"                      \"street\": \"10 route de la ferme du pavillon\",",
+									"                        \"postalCode\": \"77600\",",
+									"                        \"city\": \"Chanteloup-en-Brie\"",
+									"                    },",
+									"                    \"socialNetworkAccounts\": {",
+									"                      \"facebook\": \"https://www.facebook.com/individual\",",
+									"                        \"twitter\": \"@individualtwitter\",",
+									"                        \"pinterest\": \"https://www.pinterest.com/javaEEroxxx/\"",
+									"                    }",
+									"            })",
+									"    }",
+									"}, function (err, response) {",
+									"    console.log(response.json());",
+									"   pm.environment.set(\"created_individual_email\", response.json().email);",
+									"});",
+									"",
+									"",
+									"pm.sendRequest({",
+									"    url:pm.environment.get('API_URL')+\"/Service?professional=vanessa.gay@gmail.com\",",
+									"    method: 'POST',",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"    },",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify(",
+									"            {",
+									"                name:\"beauty service\",",
+									"              price:1500,",
+									"              duration:180,",
+									"              businesses: [",
+									"                {",
+									"                    designation: \"Esthétique\"",
+									"                }",
+									"                ],",
+									"                cltype:\"service\"",
+									"            })",
+									"    }",
+									"}, function (err, response) {",
+									"    console.log(response.json());",
+									"   pm.environment.set(\"created_offering_id\", response.json().id);",
+									"});",
+									""
+								]
+							}
+						},
+						{
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
@@ -4863,92 +5009,6 @@
 									"tests[\"purchasedOfferings[0].offering.duration = 180\"] = jsonData.purchasedOfferings[0].offering.duration === 180;",
 									"tests[\"purchasedOfferings[0].offering.hidden = false\"] = jsonData.purchasedOfferings[0].offering.hidden === false;",
 									"tests[\"purchasedOfferings[0].offering.businesses[0].designation = Esthétique\"] = jsonData.purchasedOfferings[0].offering.businesses[0].designation === \"Esthétique\";",
-									""
-								]
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"/*birthdate should be send as UTC format only (avoid javascript GMT+2 and JAVA GMT+1 conversion errors for dates before 1970)*/",
-									"pm.environment.set(\"birthdate\", Date.UTC(1962,11,25));",
-									"",
-									"pm.sendRequest({",
-									"    url: \"{{API_URL}}/Individual\",",
-									"    method: 'POST',",
-									"    header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
-									"    },",
-									"    body:{",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify(",
-									"            {",
-									"              \"email\":\"individual@gmail.com\",",
-									"              \"cltype\":\"Individual\",",
-									"              \"password\":\"PASSWORD\",",
-									"              \"username\":\"individual_test\",",
-									"              \"customerDetails\": {",
-									"                        \"firstName\": \"prenom\",",
-									"                        \"lastName\": \"nom\",",
-									"                        \"nickname\": \"surnom\",",
-									"                        \"phone\": \"0102030405\",",
-									"                        \"birthdate\": pm.environment.get(\"birthdate\"),",
-									"                        \"sex\": \"F\",",
-									"                        \"comments\": [",
-									"                            \"Cool\",",
-									"                            \"Good looking\",",
-									"                            \"Open minded\",",
-									"                            \"Likes art and music\",",
-									"                            \"Nice hair\"",
-									"                        ]",
-									"                    },",
-									"                    \"address\": {",
-									"                      \"street\": \"10 route de la ferme du pavillon\",",
-									"                        \"postalCode\": \"77600\",",
-									"                        \"city\": \"Chanteloup-en-Brie\"",
-									"                    },",
-									"                    \"socialNetworkAccounts\": {",
-									"                      \"facebook\": \"https://www.facebook.com/individual\",",
-									"                        \"twitter\": \"@individualtwitter\",",
-									"                        \"pinterest\": \"https://www.pinterest.com/javaEEroxxx/\"",
-									"                    }",
-									"            })",
-									"    }",
-									"}, function (err, response) {",
-									"    console.log(response.json());",
-									"   pm.environment.set(\"created_individual_email\", response.json().email);",
-									"});",
-									"",
-									"",
-									"pm.sendRequest({",
-									"    url: \"{{API_URL}}/Service?professional=vanessa.gay@gmail.com\",",
-									"    method: 'POST',",
-									"    header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
-									"    },",
-									"    body:{",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify(",
-									"            {",
-									"                name:\"beauty service\",",
-									"              price:1500,",
-									"              duration:180,",
-									"              businesses: [",
-									"                {",
-									"                    designation: \"Esthétique\"",
-									"                }",
-									"                ],",
-									"                cltype:\"service\"",
-									"            })",
-									"    }",
-									"}, function (err, response) {",
-									"    console.log(response.json());",
-									"   pm.environment.set(\"created_offering_id\", response.json().id);",
-									"});",
 									""
 								]
 							}
@@ -5197,15 +5257,16 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "8a3135f5-ec7f-4750-ac4e-0b2c16fcde5d",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"pm.sendRequest({",
-									"    url: \"{{API_URL}}/Service/{{created_offering_id}}?professional=vanessa.gay@gmail.com\",",
+									"    url:pm.environment.get('API_URL')+\"/Service/\"+pm.environment.get('created_offering_id')+\"?professional=vanessa.gay@gmail.com\",",
 									"    header: {",
 									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
 									"    },",
 									"    method: 'DELETE'",
 									"}, function (err, res) {",
@@ -5214,10 +5275,10 @@
 									"});",
 									"",
 									"pm.sendRequest({",
-									"    url: \"{{API_URL}}/Individual/{{created_individual_email}}\",",
+									"    url:pm.environment.get('API_URL')+\"/Individual/\"+pm.environment.get('created_individual_email'),",
 									"    header: {",
 									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
 									"    },",
 									"    method: 'DELETE'",
 									"}, function (err, res) {",
@@ -5236,7 +5297,10 @@
 								"value": "{{XSRF-TOKEN}}"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/IndividualBill/{{created_individualbill_reference}}/{{created_individualbill_deliveryDate}}?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -5503,35 +5567,16 @@
 					"name": "addService",
 					"event": [
 						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;",
-									"",
-									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"id is defined\"] = jsonData.id !== undefined;",
-									"//created_offering_id environment variable is stored as a string...",
-									"tests[\"id is \"+pm.environment.get(\"created_offering_id\")] = jsonData.id == pm.environment.get(\"created_offering_id\");",
-									"tests[\"name is \\\"beauty service\\\"\"] = jsonData.name === \"beauty service\";",
-									"tests[\"price is 10000\"] = jsonData.price === 10000;",
-									"tests[\"duration is 180\"] = jsonData.duration === 180;",
-									"tests[\"hidden is false\"] = jsonData.hidden === false;",
-									"tests[\"cltype is service\"] = jsonData.cltype === \"service\";"
-								]
-							}
-						},
-						{
 							"listen": "prerequest",
 							"script": {
 								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
-									"    url: \"{{API_URL}}/Service?professional=vanessa.gay@gmail.com\",",
+									"    url:pm.environment.get('API_URL')+\"/Service?professional=vanessa.gay@gmail.com\",",
 									"    method: 'POST',",
 									"    header: {",
 									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
 									"    },",
 									"    body:{",
 									"        mode: 'raw',",
@@ -5556,6 +5601,25 @@
 									""
 								]
 							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"//created_offering_id environment variable is stored as a string...",
+									"tests[\"id is \"+pm.environment.get(\"created_offering_id\")] = jsonData.id == pm.environment.get(\"created_offering_id\");",
+									"tests[\"name is \\\"beauty service\\\"\"] = jsonData.name === \"beauty service\";",
+									"tests[\"price is 10000\"] = jsonData.price === 10000;",
+									"tests[\"duration is 180\"] = jsonData.duration === 180;",
+									"tests[\"hidden is false\"] = jsonData.hidden === false;",
+									"tests[\"cltype is service\"] = jsonData.cltype === \"service\";"
+								]
+							}
 						}
 					],
 					"request": {
@@ -5566,7 +5630,10 @@
 								"value": "{{XSRF-TOKEN}}"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Pack/{{created_pack_id}}/addService/offering/{{created_offering_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -5594,35 +5661,16 @@
 					"name": "addPack",
 					"event": [
 						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;",
-									"",
-									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"id is defined\"] = jsonData.id !== undefined;",
-									"//created_subpack_id environment variable is stored as a string...",
-									"tests[\"id is \"+pm.environment.get(\"created_subpack_id\")] = jsonData.id == pm.environment.get(\"created_subpack_id\");",
-									"tests[\"name is \\\"SubPack for Winners\\\"\"] = jsonData.name === \"SubPack for Winners\";",
-									"tests[\"price is 5000\"] = jsonData.price === 5000;",
-									"tests[\"duration is 10\"] = jsonData.duration === 10;",
-									"tests[\"hidden is false\"] = jsonData.hidden === false;",
-									"tests[\"cltype is pack\"] = jsonData.cltype === \"pack\";"
-								]
-							}
-						},
-						{
 							"listen": "prerequest",
 							"script": {
 								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
-									"    url: \"{{API_URL}}/Pack?professional=vanessa.gay@gmail.com\",",
+									"    url:pm.environment.get('API_URL')+\"/Pack?professional=vanessa.gay@gmail.com\",",
 									"    method: 'POST',",
 									"    header: {",
 									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
 									"    },",
 									"    body:{",
 									"        mode: 'raw',",
@@ -5647,6 +5695,25 @@
 									""
 								]
 							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"//created_subpack_id environment variable is stored as a string...",
+									"tests[\"id is \"+pm.environment.get(\"created_subpack_id\")] = jsonData.id == pm.environment.get(\"created_subpack_id\");",
+									"tests[\"name is \\\"SubPack for Winners\\\"\"] = jsonData.name === \"SubPack for Winners\";",
+									"tests[\"price is 5000\"] = jsonData.price === 5000;",
+									"tests[\"duration is 10\"] = jsonData.duration === 10;",
+									"tests[\"hidden is false\"] = jsonData.hidden === false;",
+									"tests[\"cltype is pack\"] = jsonData.cltype === \"pack\";"
+								]
+							}
 						}
 					],
 					"request": {
@@ -5657,7 +5724,10 @@
 								"value": "{{XSRF-TOKEN}}"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Pack/{{created_pack_id}}/addPack/offering/{{created_subpack_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -5692,10 +5762,10 @@
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"pm.sendRequest({",
-									"    url: \"{{API_URL}}/Service/{{created_offering_id}}?professional=vanessa.gay@gmail.com\",",
+									"    url:pm.environment.get('API_URL')+\"/Service/\"+pm.environment.get('created_offering_id')+\"?professional=vanessa.gay@gmail.com\",",
 									"    header: {",
 									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
 									"    },",
 									"    method: 'DELETE'",
 									"}, function (err, res) {",
@@ -5727,7 +5797,10 @@
 								"value": "{{XSRF-TOKEN}}"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Pack/{{created_pack_id}}/removeService/offering/{{created_offering_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -5772,10 +5845,10 @@
 									"tests[\"cltype is pack\"] = jsonData.cltype === \"pack\";",
 									"",
 									"pm.sendRequest({",
-									"    url: \"{{API_URL}}/Pack/{{created_subpack_id}}?professional=vanessa.gay@gmail.com\",",
+									"    url:pm.environment.get('API_URL')+\"/Pack/\"+pm.environment.get('created_subpack_id')+\"?professional=vanessa.gay@gmail.com\",",
 									"    header: {",
 									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
 									"    },",
 									"    method: 'DELETE'",
 									"}, function (err, res) {",
@@ -5795,7 +5868,10 @@
 								"value": "{{XSRF-TOKEN}}"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/Pack/{{created_pack_id}}/removePack/offering/{{created_subpack_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
@@ -6392,6 +6468,16 @@
 					"name": "create",
 					"event": [
 						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"/*birthdate should be send as UTC format only (avoid javascript GMT+2 and JAVA GMT+1 conversion errors for dates before 1970)*/",
+									"pm.environment.set(\"birthdate\", Date.UTC(1960,7,7));"
+								]
+							}
+						},
+						{
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
@@ -6435,16 +6521,6 @@
 									"tests[\"twitter is \\\"@hankfuckinmoody\\\"\"] = jsonData.socialNetworkAccounts.twitter === \"@hankfuckinmoody\";",
 									"tests[\"pinterest is \\\"https://www.pinterest.com/californication123/\\\"\"] = jsonData.socialNetworkAccounts.pinterest === \"https://www.pinterest.com/californication123/\";",
 									""
-								]
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"/*birthdate should be send as UTC format only (avoid javascript GMT+2 and JAVA GMT+1 conversion errors for dates before 1970)*/",
-									"pm.environment.set(\"birthdate\", Date.UTC(1960,7,7));"
 								]
 							}
 						}
@@ -7236,6 +7312,41 @@
 					"name": "create",
 					"event": [
 						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest({",
+									"    url:pm.environment.get('API_URL')+\"/Service?professional=vanessa.gay@gmail.com\",",
+									"    method: 'POST',",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"    },",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify(",
+									"            {",
+									"                name:\"beauty service\",",
+									"              price:10000,",
+									"              duration:180,",
+									"              businesses: [",
+									"                {",
+									"                    designation: \"Esthétique\"",
+									"                }",
+									"                ],",
+									"                cltype:\"service\"",
+									"            })",
+									"    }",
+									"}, function (err, response) {",
+									"    console.log(response.json());",
+									"   pm.environment.set(\"created_offering_id\", response.json().id);",
+									"});",
+									""
+								]
+							}
+						},
+						{
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
@@ -7258,41 +7369,6 @@
 									"tests[\"offering.businesses[0].designation = Esthétique\"] = jsonData.offering.businesses[0].designation === \"Esthétique\";",
 									"",
 									"",
-									""
-								]
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.sendRequest({",
-									"    url: \"{{API_URL}}/Service?professional=vanessa.gay@gmail.com\",",
-									"    method: 'POST',",
-									"    header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
-									"    },",
-									"    body:{",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify(",
-									"            {",
-									"                name:\"beauty service\",",
-									"              price:10000,",
-									"              duration:180,",
-									"              businesses: [",
-									"                {",
-									"                    designation: \"Esthétique\"",
-									"                }",
-									"                ],",
-									"                cltype:\"service\"",
-									"            })",
-									"    }",
-									"}, function (err, response) {",
-									"    console.log(response.json());",
-									"   pm.environment.set(\"created_offering_id\", response.json().id);",
-									"});",
 									""
 								]
 							}
@@ -7453,10 +7529,10 @@
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"pm.sendRequest({",
-									"    url: \"{{API_URL}}/Service/{{created_offering_id}}?professional=vanessa.gay@gmail.com\",",
+									"    url:pm.environment.get('API_URL')+\"/Service/\"+pm.environment.get('created_offering_id')+\"?professional=vanessa.gay@gmail.com\",",
 									"    header: {",
 									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':'{{XSRF-TOKEN}}'",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
 									"    },",
 									"    method: 'DELETE'",
 									"}, function (err, res) {",
@@ -7479,7 +7555,10 @@
 								"value": "{{XSRF-TOKEN}}"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{API_URL}}/PurchasedOffering/{{created_purchasedoffering_id}}",
 							"host": [
@@ -8357,7 +8436,10 @@
 						"value": "{{XSRF-TOKEN}}"
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "{{API_URL}}/Authentication/logout",
 					"host": [

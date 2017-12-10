@@ -49,9 +49,9 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import javax.annotation.PostConstruct;
+import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.WebApplicationException;
@@ -61,7 +61,7 @@ import javax.ws.rs.WebApplicationException;
  * @author jsie
  */
 @Singleton
-@Startup
+@Startup //javax.ejb.Startup
 public class DemoConfigureBean implements Serializable {
 
     private final Logger LOG = Logger.getLogger(
