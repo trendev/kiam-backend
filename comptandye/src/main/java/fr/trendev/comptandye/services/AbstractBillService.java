@@ -128,20 +128,28 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
             List<PurchasedOffering> purchasedOfferings = e.
                     getPurchasedOfferings().
                     stream()
-                    .map(po -> Optional.ofNullable(po.getOffering().accept(
+                    // find the Offering for each PurchasedOffering
+                    .map(_po -> Optional.ofNullable(_po.getOffering().accept(
                             provideOfferingFacadeVisitor).find(new OfferingPK(
-                                    po.getOffering().getId(),
+                                    _po.getOffering().getId(),
                                     e.getProfessional().getEmail())))
-                            .map(o ->
-                                    new PurchasedOffering(po.getQty(), o))
+                            .map(o -> {
+                                //create a new PurchasedOffering from the Offering previously found
+                                PurchasedOffering po = new PurchasedOffering(
+                                        _po.getQty(), o);
+                                //link the Offering with the PurchasedOffering
+                                o.getPurchasedOfferings().add(po);
+                                return po;
+                            })
                             .orElseThrow(() ->
                                     new WebApplicationException(
-                                            po.getOffering().getClass().
+                                            _po.getOffering().getClass().
                                                     getSimpleName()
-                                            + " " + po.getOffering().getId()
+                                            + " " + _po.getOffering().getId()
                                             + " does not exist !"))
                     ).collect(Collectors.toList());
 
+            //compute the total amount from the offerings prices and quantities
             int total = purchasedOfferings.stream()
                     .mapToInt(po -> po.getQty() * po.getOffering().getPrice())
                     .sum();
@@ -228,7 +236,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
      * SecurityContext or provided in a QueryParam. If a paymentDate is provided
      * to an unpaid (Bill without a payment date), a check of the dates
      * (deliveryDate/paymentDate) and the amounts will be performed and if
-     * successful the Bill will be paid (paymentDate set and futur modification
+     * successful the Bill will be paid (paymentDate set and other modifications
      * will be ignored).
      *
      * @param sec the security context
@@ -283,7 +291,18 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                 new Object[]{getFacade().prettyPrintPK(pk),
                     entityClass.getSimpleName()});
         return super.delete(pk, e -> {
+            //remove the bill from the professional bill list
             e.getProfessional().getBills().remove(e);
+
+            //break the relation between the bill's purchasedoffering and the offering
+            e.getPurchasedOfferings().forEach(po -> {
+                //delete the relation if the purchasedoffering is linked with an active offering
+                if (po.getOffering() != null) {
+                    po.getOffering().getPurchasedOfferings().remove(po);
+                    po.setOffering(null);
+                }
+                //otherwise, offering has already been deleted and offering should be null
+            });
             deleteAction.apply(e);
         });
     }

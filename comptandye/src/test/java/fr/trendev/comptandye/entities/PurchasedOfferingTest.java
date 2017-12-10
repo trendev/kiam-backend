@@ -13,28 +13,29 @@ import org.junit.Test;
  * @author jsie
  */
 public class PurchasedOfferingTest {
-    
+
     public PurchasedOfferingTest() {
     }
-    
+
     @Test
     public void testConstructor() {
         PurchasedOffering po = new PurchasedOffering();
-        
+
         assert po.getId() == null;
         assert po.getQty() == 1;
         assert po.getOffering() == null;
-        
+
         Service service = new Service("test_service", 1000, 120,
                 new Professional());
         service.setCltype(OfferingType.SERVICE);
         service.getBusinesses().add(new Business("business#1"));
         service.getBusinesses().add(new Business("business#2"));
-        
+
         po = new PurchasedOffering(5, service);
         assert po.getId() == null;
         assert po.getQty() == 5;
         assert po.getOffering().equals(service);
+        assert po.getOffering().getPurchasedOfferings().isEmpty() == true;
         assert po.getOfferingSnapshot() != null;
         assert po.getOfferingSnapshot().getCltype().equals(service.getCltype());
         assert po.getOfferingSnapshot().getName().equals(service.getName());
@@ -45,7 +46,7 @@ public class PurchasedOfferingTest {
                 getBusinesses().size();
         assert po.getOfferingSnapshot().getBusinesses().containsAll(service.
                 getBusinesses()) == true;
-        
+
     }
-    
+
 }
