@@ -156,6 +156,13 @@ public class ServiceService extends AbstractCommonService<Service, OfferingPK> {
         LOG.log(Level.INFO, "Deleting Service {0}", serviceFacade.
                 prettyPrintPK(pk));
         return super.delete(pk,
-                e -> e.getProfessional().getOfferings().remove(e));
+                e -> {
+            //break the link between the offering and the bill's purchasedoffering (if necessary)
+            e.getPurchasedOfferings().forEach(po -> po.setOffering(null));
+            e.setPurchasedOfferings(null);
+
+            //remove the offering from the professional's offering list
+            e.getProfessional().getOfferings().remove(e);
+        });
     }
 }

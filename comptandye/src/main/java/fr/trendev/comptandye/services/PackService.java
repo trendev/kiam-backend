@@ -169,8 +169,15 @@ public class PackService extends AbstractCommonService<Pack, OfferingPK> {
 
         LOG.log(Level.INFO, "Deleting Pack {0}", packFacade.
                 prettyPrintPK(pk));
-        return super.delete(pk, e -> e.getProfessional().getOfferings().
-                remove(e));
+        return super.delete(pk,
+                e -> {
+            //break the link between the offering and the bill's purchasedoffering (if necessary)
+            e.getPurchasedOfferings().forEach(po -> po.setOffering(null));
+            e.setPurchasedOfferings(null);
+
+            //remove the offering from the professional's offering list
+            e.getProfessional().getOfferings().remove(e);
+        });
     }
 
     @Path("{packid}/addService/offering/{offeringid}")
