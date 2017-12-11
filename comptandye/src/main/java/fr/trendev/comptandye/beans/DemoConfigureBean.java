@@ -405,10 +405,12 @@ public class DemoConfigureBean implements Serializable {
 
         Service service = new Service("Classic Haircut", 1500, 60,
                 vanessa);
+        service.getBusinesses().add(em.find(Business.class, "Coiffure"));
         service.setCltype(OfferingType.SERVICE);
         Service service2 = new Service("A service for " + vanessa.
                 getCollectiveGroups().get(0).getGroupName(), 3000, 120,
                 vanessa);
+        service2.getBusinesses().add(em.find(Business.class, "Coiffure"));
         service2.setCltype(OfferingType.SERVICE);
 
         em.persist(service);
