@@ -9,13 +9,10 @@ import fr.trendev.comptandye.entities.OfferingPK;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.Service;
 import fr.trendev.comptandye.sessions.AbstractFacade;
-import fr.trendev.comptandye.sessions.ProfessionalFacade;
-import fr.trendev.comptandye.sessions.ServiceFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -39,12 +36,6 @@ import javax.ws.rs.core.SecurityContext;
 @Path("Service")
 @RolesAllowed({"Administrator", "Professional"})
 public class ServiceService extends AbstractOfferingService<Service> {
-
-    @Inject
-    ServiceFacade serviceFacade;
-
-    @Inject
-    ProfessionalFacade professionalFacade;
 
     private final Logger LOG = Logger.getLogger(ServiceService.class.
             getName());

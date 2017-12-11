@@ -10,16 +10,12 @@ import fr.trendev.comptandye.entities.Pack;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.Service;
 import fr.trendev.comptandye.sessions.AbstractFacade;
-import fr.trendev.comptandye.sessions.PackFacade;
-import fr.trendev.comptandye.sessions.ProfessionalFacade;
-import fr.trendev.comptandye.sessions.ServiceFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;
 import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.json.Json;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -44,15 +40,6 @@ import javax.ws.rs.core.SecurityContext;
 @Path("Pack")
 @RolesAllowed({"Administrator", "Professional"})
 public class PackService extends AbstractOfferingService<Pack> {
-
-    @Inject
-    PackFacade packFacade;
-
-    @Inject
-    ProfessionalFacade professionalFacade;
-
-    @Inject
-    ServiceFacade serviceFacade;
 
     private final Logger LOG = Logger.getLogger(PackService.class.
             getName());
@@ -123,9 +110,9 @@ public class PackService extends AbstractOfferingService<Pack> {
 
             if (!e.getOfferings().isEmpty()) {
                 //checks provided offerings are owned by the professional
-                offeringIntegrityVisitor.setProEmail(email);// init the integrity visitor with the professional's email
                 e.getOfferings().
-                        forEach(o -> checkOfferingIntegrity(o));
+                        forEach(o -> checkOfferingIntegrity(o, email));
+
                 LOG.log(Level.WARNING,
                         "Services and Packs provided during the Pack creation will be ignored !");
                 e.setOfferings(Collections.emptyList());

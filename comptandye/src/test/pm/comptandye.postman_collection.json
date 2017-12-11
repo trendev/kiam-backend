@@ -5434,7 +5434,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":\"MASTER PACK\",\n  \"price\":100000,\n  \"duration\":600,\n  \"cltype\":\"pack\"\n}"
+							"raw": "{\n  \"name\":\"MASTER PACK\",\n  \"price\":100000,\n  \"duration\":600,\n  \"cltype\":\"pack\",\n  \"businesses\": [\n        {\n                \"designation\": \"Coiffure\"\n        }\n  ]\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Pack?professional=vanessa.gay@gmail.com",
@@ -7729,7 +7729,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":\"beauty service\",\n  \"price\":10000,\n  \"duration\":180,\n  \"cltype\":\"service\"\n}"
+							"raw": "{\n  \"name\":\"beauty service\",\n  \"price\":10000,\n  \"duration\":180,\n  \"cltype\":\"service\",\n  \"businesses\": [\n        {\n                \"designation\": \"Coiffure\"\n        }\n  ]\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Service?professional=vanessa.gay@gmail.com",

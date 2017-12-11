@@ -8,7 +8,12 @@ package fr.trendev.comptandye.services;
 import fr.trendev.comptandye.entities.Offering;
 import fr.trendev.comptandye.entities.OfferingPK;
 import fr.trendev.comptandye.entities.PurchasedOffering;
+import fr.trendev.comptandye.sessions.PackFacade;
+import fr.trendev.comptandye.sessions.ProfessionalFacade;
+import fr.trendev.comptandye.sessions.ServiceFacade;
+import fr.trendev.comptandye.utils.visitors.OfferingIntegrityVisitor;
 import java.util.logging.Logger;
+import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 /**
@@ -16,6 +21,15 @@ import javax.ws.rs.core.Response;
  * @author jsie
  */
 public abstract class AbstractOfferingService<T extends Offering> extends AbstractCommonService<T, OfferingPK> {
+
+    @Inject
+    PackFacade packFacade;
+
+    @Inject
+    ProfessionalFacade professionalFacade;
+
+    @Inject
+    ServiceFacade serviceFacade;
 
     private final Logger LOG = Logger.getLogger(
             AbstractBillService.class.
@@ -30,12 +44,12 @@ public abstract class AbstractOfferingService<T extends Offering> extends Abstra
         return LOG;
     }
 
-    public Response getPurchasedOfferings(OfferingPK pk) {
+    protected Response getPurchasedOfferings(OfferingPK pk) {
         return super.provideRelation(pk, Offering::getPurchasedOfferings,
                 PurchasedOffering.class);
     }
 
-    public Response delete(OfferingPK pk) {
+    protected Response delete(OfferingPK pk) {
         return super.delete(pk,
                 e -> {
             //break the link between the offering and the bill's purchasedoffering (if necessary)
@@ -45,6 +59,12 @@ public abstract class AbstractOfferingService<T extends Offering> extends Abstra
             //remove the offering from the professional's offering list
             e.getProfessional().getOfferings().remove(e);
         });
+    }
+
+    protected void checkOfferingIntegrity(Offering o, String proEmail) {
+        OfferingIntegrityVisitor v = new OfferingIntegrityVisitor(packFacade,
+                serviceFacade, proEmail);
+        o.accept(v);
     }
 
 }
