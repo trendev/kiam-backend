@@ -813,15 +813,14 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
             }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
-            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1490172966686" v="true" xvt="" name="offerings" dv="new LinkedList&lt;&gt;()" id="_150489073375385">
-                <jpa:des>TODO : recursively check that all services and packs are owned by the same Professional.</jpa:des>
+            <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490172966686" connected-attribute-id="_1513010994296215" v="true" xvt="" name="offerings" dv="new LinkedList&lt;&gt;()" id="_1513010994290214">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:join-table name="PACK_CONTENT">
                     <jpa:join-column name="PACK_ID" rc="OFFERING_ID" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table="OFFERING"/>
                     <jpa:join-column name="PACK_PROFESSIONAL_EMAIL" rc="OFFERING_PRO_EMAIL" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table="OFFERING"/>
                 </jpa:join-table>
-            </jpa:one-to-many>
+            </jpa:many-to-many>
         </jpa:attributes>
         <jpa:nq e="false" name="Pack.findAll">
             <jpa:query>Select e from Pack e</jpa:query>
@@ -892,15 +891,11 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:one-to-many>
-            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1490172966686" v="true" xvt="" name="parentPacks" dv="new LinkedList&lt;&gt;()" id="_151293150598267">
+            <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490113906035" connected-attribute-id="_1513010994290214" v="true" xvt="" name="parentPacks" dv="new LinkedList&lt;&gt;()" id="_1513010994296215">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:join-table name="PARENT_PACKS">
-                    <jpa:join-column name="PARENT_OFFERING_ID" rc="OFFERING_ID" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table="OFFERING"/>
-                    <jpa:join-column name="PARENT_PROFESSIONAL_EMAIL" rc="OFFERING_PRO_EMAIL" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table="OFFERING"/>
-                </jpa:join-table>
-            </jpa:one-to-many>
+            </jpa:many-to-many>
             <jpa:id attribute-type="Long" v="true" xvt="" name="id" ft="true" id="_149017296671124">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -1602,10 +1597,10 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                     <e ref="_1512851997730269">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
-                    <e ref="_151293150598267">
+                    <e ref="_15049019949221632">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
-                    <e ref="_15049019949221632">
+                    <e ref="_1513010994296215">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
@@ -1719,7 +1714,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
             <i ref="_1490104062170" x="-393" y="413"/>
             <i ref="_1490113906035" x="-343" y="1018">
                 <el>
-                    <e ref="_150489073375385">
+                    <e ref="_1513010994290214">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>

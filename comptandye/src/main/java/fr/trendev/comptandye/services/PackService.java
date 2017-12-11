@@ -42,24 +42,24 @@ import javax.ws.rs.core.SecurityContext;
 @Path("Pack")
 @RolesAllowed({"Administrator", "Professional"})
 public class PackService extends AbstractOfferingService<Pack> {
-
+    
     private final Logger LOG = Logger.getLogger(PackService.class.
             getName());
-
+    
     public PackService() {
         super(Pack.class);
     }
-
+    
     @Override
     protected Logger getLogger() {
         return LOG;
     }
-
+    
     @Override
     protected AbstractFacade<Pack, OfferingPK> getFacade() {
         return packFacade;
     }
-
+    
     @RolesAllowed({"Administrator"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -68,7 +68,7 @@ public class PackService extends AbstractOfferingService<Pack> {
         LOG.log(Level.INFO, "Providing the Pack list");
         return super.findAll();
     }
-
+    
     @RolesAllowed({"Administrator"})
     @Path("count")
     @GET
@@ -77,7 +77,7 @@ public class PackService extends AbstractOfferingService<Pack> {
     public Response count() {
         return super.count();
     }
-
+    
     @RolesAllowed({"Administrator"})
     @Path("{id}")
     @GET
@@ -90,26 +90,26 @@ public class PackService extends AbstractOfferingService<Pack> {
                 prettyPrintPK(pk));
         return super.find(pk, refresh);
     }
-
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response post(@Context SecurityContext sec, Pack entity,
             @QueryParam("professional") String professional) {
-
+        
         String email = this.getProEmail(sec, professional);
-
+        
         if (entity.getBusinesses() == null || entity.getBusinesses().isEmpty()) {
             throw new WebApplicationException("No Business provided !");
         }
-
+        
         return super.<Professional, String>post(entity, email,
                 AbstractFacade::prettyPrintPK,
                 Professional.class,
                 professionalFacade, Pack::setProfessional,
                 Professional::getOfferings, e -> {
             e.setId(null);
-
+            
             if (!e.getOfferings().isEmpty()) {
                 //checks provided offerings are owned by the professional
                 List<Offering> offerings = e.getOfferings().stream()
@@ -119,7 +119,7 @@ public class PackService extends AbstractOfferingService<Pack> {
                             return _o;
                         })
                         .collect(Collectors.toList());
-
+                
                 e.setOfferings(offerings);
 
 //                LOG.log(Level.WARNING,
@@ -127,22 +127,22 @@ public class PackService extends AbstractOfferingService<Pack> {
 //                e.setOfferings(Collections.emptyList());
             }
         });
-
+        
     }
-
+    
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(@Context SecurityContext sec, Pack entity,
             @QueryParam("professional") String professional) {
-
+        
         if (entity.getBusinesses() == null || entity.getBusinesses().isEmpty()) {
             throw new WebApplicationException("No Business provided !");
         }
-
+        
         OfferingPK pk = new OfferingPK(entity.getId(), this.getProEmail(sec,
                 professional));
-
+        
         LOG.log(Level.INFO, "Updating Pack {0}", packFacade.
                 prettyPrintPK(pk));
         return super.put(entity, pk, e -> {
@@ -172,16 +172,18 @@ public class PackService extends AbstractOfferingService<Pack> {
     public Response delete(@Context SecurityContext sec,
             @PathParam("id") Long id,
             @QueryParam("professional") String professional) {
-
+        
         OfferingPK pk = new OfferingPK(id, this.getProEmail(sec,
                 professional));
-
+        
         LOG.log(Level.INFO, "Deleting Pack {0}", packFacade.
                 prettyPrintPK(pk));
-
-        return super.delete(pk);
+        
+        return super.delete(pk, e -> {
+            e.getOfferings().forEach(o -> o.getParentPacks().remove(e));
+        });
     }
-
+    
     @Path("{packid}/addService/offering/{offeringid}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -189,13 +191,13 @@ public class PackService extends AbstractOfferingService<Pack> {
             @PathParam("packid") Long packid,
             @PathParam("offeringid") Long offeringid,
             @QueryParam("professional") String professional) {
-
+        
         OfferingPK packPK = new OfferingPK(packid, this.getProEmail(sec,
                 professional));
-
+        
         OfferingPK offeringPK = new OfferingPK(offeringid, this.getProEmail(sec,
                 professional));
-
+        
         return super.<Service, OfferingPK>manageAssociation(
                 AssociationManagementEnum.INSERT,
                 packPK,
@@ -203,7 +205,7 @@ public class PackService extends AbstractOfferingService<Pack> {
                 offeringPK, Service.class,
                 (p, o) -> p.getOfferings().add(o));
     }
-
+    
     @Path("{packid}/removeService/offering/{offeringid}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -211,13 +213,13 @@ public class PackService extends AbstractOfferingService<Pack> {
             @PathParam("packid") Long packid,
             @PathParam("offeringid") Long offeringid,
             @QueryParam("professional") String professional) {
-
+        
         OfferingPK packPK = new OfferingPK(packid, this.getProEmail(sec,
                 professional));
-
+        
         OfferingPK offeringPK = new OfferingPK(offeringid, this.getProEmail(sec,
                 professional));
-
+        
         return super.<Service, OfferingPK>manageAssociation(
                 AssociationManagementEnum.REMOVE,
                 packPK,
@@ -225,7 +227,7 @@ public class PackService extends AbstractOfferingService<Pack> {
                 offeringPK, Service.class,
                 (p, o) -> p.getOfferings().remove(o));
     }
-
+    
     @Path("{packid}/addPack/offering/{offeringid}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -245,13 +247,13 @@ public class PackService extends AbstractOfferingService<Pack> {
                     )
                     .build();
         }
-
+        
         OfferingPK packPK = new OfferingPK(packid, this.getProEmail(sec,
                 professional));
-
+        
         OfferingPK offeringPK = new OfferingPK(offeringid, this.getProEmail(sec,
                 professional));
-
+        
         return super.<Pack, OfferingPK>manageAssociation(
                 AssociationManagementEnum.INSERT,
                 packPK,
@@ -259,7 +261,7 @@ public class PackService extends AbstractOfferingService<Pack> {
                 offeringPK, Pack.class,
                 (p, o) -> p.getOfferings().add(o));
     }
-
+    
     @Path("{packid}/removePack/offering/{offeringid}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -267,13 +269,13 @@ public class PackService extends AbstractOfferingService<Pack> {
             @PathParam("packid") Long packid,
             @PathParam("offeringid") Long offeringid,
             @QueryParam("professional") String professional) {
-
+        
         OfferingPK packPK = new OfferingPK(packid, this.getProEmail(sec,
                 professional));
-
+        
         OfferingPK offeringPK = new OfferingPK(offeringid, this.getProEmail(sec,
                 professional));
-
+        
         return super.<Pack, OfferingPK>manageAssociation(
                 AssociationManagementEnum.REMOVE,
                 packPK,
@@ -281,7 +283,7 @@ public class PackService extends AbstractOfferingService<Pack> {
                 offeringPK, Pack.class,
                 (p, o) -> p.getOfferings().remove(o));
     }
-
+    
     @Path("{id}/purchasedOfferings")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -291,5 +293,16 @@ public class PackService extends AbstractOfferingService<Pack> {
         OfferingPK pk = new OfferingPK(id, this.getProEmail(sec,
                 professional));
         return super.getPurchasedOfferings(pk);
+    }
+    
+    @Path("{id}/parentPacks")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getParentPacks(@Context SecurityContext sec,
+            @PathParam("id") Long id,
+            @QueryParam("professional") String professional) {
+        OfferingPK pk = new OfferingPK(id, this.getProEmail(sec,
+                professional));
+        return super.getParentPacks(pk);
     }
 }

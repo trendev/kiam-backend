@@ -7,11 +7,13 @@ package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.entities.Offering;
 import fr.trendev.comptandye.entities.OfferingPK;
+import fr.trendev.comptandye.entities.Pack;
 import fr.trendev.comptandye.entities.PurchasedOffering;
 import fr.trendev.comptandye.sessions.PackFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.sessions.ServiceFacade;
 import fr.trendev.comptandye.utils.visitors.OfferingIntegrityVisitor;
+import java.util.function.Consumer;
 import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
@@ -49,12 +51,26 @@ public abstract class AbstractOfferingService<T extends Offering> extends Abstra
                 PurchasedOffering.class);
     }
 
-    protected Response delete(OfferingPK pk) {
+    protected Response getParentPacks(OfferingPK pk) {
+        return super.provideRelation(pk, Offering::getParentPacks,
+                Pack.class);
+    }
+
+    protected Response delete(OfferingPK pk,
+            Consumer<T> removeChildrenDependencies) {
         return super.delete(pk,
                 e -> {
             //break the link between the offering and the bill's purchasedoffering (if necessary)
             e.getPurchasedOfferings().forEach(po -> po.setOffering(null));
             e.setPurchasedOfferings(null);
+
+            //remove itself from the parentPacks
+            e.getParentPacks().forEach(pp -> pp.getOfferings().remove(e));
+            e.setParentPacks(null);
+
+            //remove a pack from its children parentPacks dependencies
+            //useless for services
+            removeChildrenDependencies.accept(e);
 
             //remove the offering from the professional's offering list
             e.getProfessional().getOfferings().remove(e);

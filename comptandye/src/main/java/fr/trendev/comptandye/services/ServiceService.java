@@ -156,7 +156,8 @@ public class ServiceService extends AbstractOfferingService<Service> {
         LOG.log(Level.INFO, "Deleting Service {0}", serviceFacade.
                 prettyPrintPK(pk));
 
-        return super.delete(pk);
+        return super.delete(pk, e -> {
+        });
     }
 
     @Path("{id}/purchasedOfferings")
@@ -168,5 +169,16 @@ public class ServiceService extends AbstractOfferingService<Service> {
         OfferingPK pk = new OfferingPK(id, this.getProEmail(sec,
                 professional));
         return super.getPurchasedOfferings(pk);
+    }
+
+    @Path("{id}/parentPacks")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getParentPacks(@Context SecurityContext sec,
+            @PathParam("id") Long id,
+            @QueryParam("professional") String professional) {
+        OfferingPK pk = new OfferingPK(id, this.getProEmail(sec,
+                professional));
+        return super.getParentPacks(pk);
     }
 }

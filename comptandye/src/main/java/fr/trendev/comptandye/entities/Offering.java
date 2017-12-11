@@ -18,7 +18,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
@@ -79,14 +79,9 @@ public abstract class Offering {
     @JsonIgnore
     private List<PurchasedOffering> purchasedOfferings = new LinkedList<>();
 
-    @OneToMany(targetEntity = Offering.class)
-    @JoinTable(name = "PARENT_PACKS", joinColumns = {
-        @JoinColumn(name = "PARENT_OFFERING_ID",
-                referencedColumnName = "OFFERING_ID", table = "OFFERING")
-        ,@JoinColumn(name = "PARENT_PROFESSIONAL_EMAIL",
-                referencedColumnName = "OFFERING_PRO_EMAIL", table = "OFFERING")})
+    @ManyToMany(targetEntity = Pack.class, mappedBy = "offerings")
     @JsonIgnore
-    private List<Offering> parentPacks = new LinkedList<>();
+    private List<Pack> parentPacks = new LinkedList<>();
 
     public Offering(String name, int price, int duration,
             Professional professional) {
@@ -171,11 +166,11 @@ public abstract class Offering {
         this.purchasedOfferings = purchasedOfferings;
     }
 
-    public List<Offering> getParentPacks() {
+    public List<Pack> getParentPacks() {
         return this.parentPacks;
     }
 
-    public void setParentPacks(List<Offering> parentPacks) {
+    public void setParentPacks(List<Pack> parentPacks) {
         this.parentPacks = parentPacks;
     }
 

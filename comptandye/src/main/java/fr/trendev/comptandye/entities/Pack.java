@@ -8,7 +8,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 
 /**
  * @author jsie
@@ -17,11 +17,7 @@ import javax.persistence.OneToMany;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Pack extends Offering {
 
-    /**
-     * TODO : recursively check that all services and packs are owned by the
-     * same Professional.
-     */
-    @OneToMany(targetEntity = Offering.class)
+    @ManyToMany(targetEntity = Offering.class)
     @JoinTable(name = "PACK_CONTENT", joinColumns = {
         @JoinColumn(name = "PACK_ID", referencedColumnName = "OFFERING_ID",
                 table = "OFFERING")
