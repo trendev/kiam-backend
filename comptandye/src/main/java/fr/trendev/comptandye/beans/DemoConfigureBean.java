@@ -336,17 +336,22 @@ public class DemoConfigureBean implements Serializable {
 
             Date deliveryDate = new Date();
 
+            PurchasedOffering po1 = new PurchasedOffering(1, service1);
+            service1.getPurchasedOfferings().add(po1);
             IndividualBill bill1 = new IndividualBill(null,
                     deliveryDate,
                     5000, 0,
                     new Date(),
                     Arrays.asList("Cool", "sympa"),
                     vanessa, new LinkedList<>(), Arrays.asList(
-                            new PurchasedOffering(1, service1)),
+                            po1),
                     sylvioc);
 
             bill1.setCltype(BillTypeVisitor.INDIVIDUAL_CLTYPE);
             AbstractBillService.setBillReference(bill1, billTypeVisitor);
+
+            PurchasedOffering po2 = new PurchasedOffering(1, specialPack);
+            specialPack.getPurchasedOfferings().add(po2);
 
             IndividualBill bill2 = new IndividualBill(null,
                     deliveryDate,
@@ -354,7 +359,7 @@ public class DemoConfigureBean implements Serializable {
                     new Date(),
                     Arrays.asList("Long", "Pffff"),
                     vanessa, new LinkedList<>(), Arrays.asList(
-                            new PurchasedOffering(1, specialPack)),
+                            po2),
                     sylvioc);
             bill2.setCltype(BillTypeVisitor.INDIVIDUAL_CLTYPE);
             AbstractBillService.setBillReference(bill2, billTypeVisitor);
@@ -416,18 +421,23 @@ public class DemoConfigureBean implements Serializable {
         em.persist(service);
         em.persist(service2);
 
+        PurchasedOffering po1 = new PurchasedOffering(1,
+                service);
+        service.getPurchasedOfferings().add(po1);
+
         ClientBill cbill = new ClientBill(null,
                 new Date(),
                 1500, 0,
                 new Date(), Arrays.asList("Has left her first son"), vanessa,
-                Arrays.asList(payment), Arrays.asList(new PurchasedOffering(1,
-                service)), client1);
+                Arrays.asList(payment), Arrays.asList(po1), client1);
         cbill.setCltype(BillTypeVisitor.CLIENT_CLTYPE);
         AbstractBillService.setBillReference(cbill, billTypeVisitor);
 
         vanessa.getBills().add(cbill);
         client1.getClientBills().add(cbill);
 
+        PurchasedOffering po2 = new PurchasedOffering(1, service2);
+        service2.getPurchasedOfferings().add(po2);
         CollectiveGroupBill cgbill = new CollectiveGroupBill("CG-" + vanessa.
                 getUuid() + "-1", new Date(),
                 3000, 0,
@@ -435,7 +445,7 @@ public class DemoConfigureBean implements Serializable {
                 Arrays.asList(new Payment(3000, em.
                         find(PaymentMode.class,
                                 "Virement"))), Arrays.asList(
-                new PurchasedOffering(1, service2)), vanessa.
+                po2), vanessa.
                         getCollectiveGroups().get(0));
         cgbill.setCltype(BillTypeVisitor.COLLECTIVEGROUP_CLTYPE);
         AbstractBillService.setBillReference(cgbill, billTypeVisitor);
