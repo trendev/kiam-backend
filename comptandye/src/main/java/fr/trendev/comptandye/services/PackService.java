@@ -30,6 +30,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -109,6 +110,10 @@ public class PackService extends AbstractOfferingService<Pack> {
 
         String email = this.getProEmail(sec, professional);
 
+        if (entity.getBusinesses() == null || entity.getBusinesses().isEmpty()) {
+            throw new WebApplicationException("No Business provided !");
+        }
+
         return super.<Professional, String>post(entity, email,
                 AbstractFacade::prettyPrintPK,
                 Professional.class,
@@ -117,6 +122,10 @@ public class PackService extends AbstractOfferingService<Pack> {
             e.setId(null);
 
             if (!e.getOfferings().isEmpty()) {
+                //checks provided offerings are owned by the professional
+                offeringIntegrityVisitor.setProEmail(email);// init the integrity visitor with the professional's email
+                e.getOfferings().
+                        forEach(o -> checkOfferingIntegrity(o));
                 LOG.log(Level.WARNING,
                         "Services and Packs provided during the Pack creation will be ignored !");
                 e.setOfferings(Collections.emptyList());
@@ -130,6 +139,10 @@ public class PackService extends AbstractOfferingService<Pack> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(@Context SecurityContext sec, Pack entity,
             @QueryParam("professional") String professional) {
+
+        if (entity.getBusinesses() == null || entity.getBusinesses().isEmpty()) {
+            throw new WebApplicationException("No Business provided !");
+        }
 
         OfferingPK pk = new OfferingPK(entity.getId(), this.getProEmail(sec,
                 professional));

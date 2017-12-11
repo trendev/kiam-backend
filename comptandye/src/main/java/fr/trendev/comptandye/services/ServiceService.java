@@ -25,6 +25,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -102,6 +103,10 @@ public class ServiceService extends AbstractOfferingService<Service> {
 
         String email = this.getProEmail(sec, professional);
 
+        if (entity.getBusinesses() == null || entity.getBusinesses().isEmpty()) {
+            throw new WebApplicationException("No Business provided !");
+        }
+
         return super.<Professional, String>post(entity, email,
                 AbstractFacade::prettyPrintPK,
                 Professional.class,
@@ -117,6 +122,10 @@ public class ServiceService extends AbstractOfferingService<Service> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(@Context SecurityContext sec, Service entity,
             @QueryParam("professional") String professional) {
+
+        if (entity.getBusinesses() == null || entity.getBusinesses().isEmpty()) {
+            throw new WebApplicationException("No Business provided !");
+        }
 
         OfferingPK pk = new OfferingPK(entity.getId(), this.getProEmail(sec,
                 professional));
