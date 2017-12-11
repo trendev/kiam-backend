@@ -61,10 +61,10 @@ public abstract class AbstractOfferingService<T extends Offering> extends Abstra
         });
     }
 
-    protected void checkOfferingIntegrity(Offering o, String proEmail) {
+    protected Offering checkOfferingIntegrity(Offering o, String proEmail) {
         OfferingIntegrityVisitor v = new OfferingIntegrityVisitor(packFacade,
                 serviceFacade, proEmail);
-        o.accept(v);
+        return o.accept(v);
     }
 
 }

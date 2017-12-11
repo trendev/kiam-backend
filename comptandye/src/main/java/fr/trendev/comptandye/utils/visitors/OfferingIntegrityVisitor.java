@@ -32,13 +32,15 @@ import fr.trendev.comptandye.entities.UserAccount;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.sessions.PackFacade;
 import fr.trendev.comptandye.sessions.ServiceFacade;
+import java.util.Optional;
+import java.util.function.Function;
 import javax.ws.rs.WebApplicationException;
 
 /**
  *
  * @author jsie
  */
-public class OfferingIntegrityVisitor implements Visitor<Void> {
+public class OfferingIntegrityVisitor implements Visitor<Offering> {
 
     private PackFacade packFacade;
 
@@ -54,133 +56,136 @@ public class OfferingIntegrityVisitor implements Visitor<Void> {
     }
 
     @Override
-    public Void visit(Address address) {
+    public Offering visit(Address address) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Void visit(Administrator administrator) {
+    public Offering visit(Administrator administrator) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Void visit(Bill bill) {
+    public Offering visit(Bill bill) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Void visit(Business business) {
+    public Offering visit(Business business) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Void visit(Category category) {
+    public Offering visit(Category category) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Void visit(Client client) {
+    public Offering visit(Client client) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Void visit(ClientBill clientBill) {
+    public Offering visit(ClientBill clientBill) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Void visit(CollectiveGroup collectiveGroup) {
+    public Offering visit(CollectiveGroup collectiveGroup) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Void visit(CollectiveGroupBill collectiveGroupBill) {
+    public Offering visit(CollectiveGroupBill collectiveGroupBill) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Void visit(Customer customer) {
+    public Offering visit(Customer customer) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Void visit(CustomerDetails customerDetails) {
+    public Offering visit(CustomerDetails customerDetails) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Void visit(Expense expense) {
+    public Offering visit(Expense expense) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Void visit(Individual individual) {
+    public Offering visit(Individual individual) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Void visit(IndividualBill individualBill) {
+    public Offering visit(IndividualBill individualBill) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Void visit(Offering offering) {
+    public Offering visit(Offering offering) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Void visit(Pack pack) {
-        if (packFacade.find(new OfferingPK(pack.getId(),
-                proEmail)) == null) {
-            throw new WebApplicationException("Pack [" + pack.getId()
-                    + "] not found !");
-        }
-        pack.getOfferings().forEach(o -> o.accept(this));
-        return null;
+    public Offering visit(Pack pack) {
+        return Optional.ofNullable(packFacade.find(new OfferingPK(pack.getId(),
+                proEmail)))
+                .map(p -> {
+                    pack.getOfferings().forEach(o -> o.accept(this));
+                    return p;
+                })
+                .orElseThrow(() -> new WebApplicationException("Pack ["
+                        + pack.getId()
+                        + "] not found !"));
     }
 
     @Override
-    public Void visit(Payment payment) {
+    public Offering visit(Payment payment) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Void visit(PaymentMode paymentMode) {
+    public Offering visit(PaymentMode paymentMode) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Void visit(PurchasedOffering purchasedOffering) {
+    public Offering visit(PurchasedOffering purchasedOffering) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Void visit(Professional professional) {
+    public Offering visit(Professional professional) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Void visit(Service service) {
-        if (serviceFacade.find(new OfferingPK(service.getId(),
-                proEmail)) == null) {
-            throw new WebApplicationException("Service [" + service.getId()
-                    + "] not found !");
-        }
-        return null;
+    public Offering visit(Service service) {
+        return Optional.ofNullable(serviceFacade.find(
+                new OfferingPK(service.getId(), proEmail)))
+                .map(Function.identity())
+                .orElseThrow(() -> new WebApplicationException("Service ["
+                        + service.getId()
+                        + "] not found !"));
+
     }
 
     @Override
-    public Void visit(SocialNetworkAccounts socialNetworkAccounts) {
+    public Offering visit(SocialNetworkAccounts socialNetworkAccounts) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Void visit(UserAccount userAccount) {
+    public Offering visit(UserAccount userAccount) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Void visit(UserGroup userGroup) {
+    public Offering visit(UserGroup userGroup) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

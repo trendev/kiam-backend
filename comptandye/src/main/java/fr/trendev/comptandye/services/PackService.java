@@ -5,15 +5,17 @@
  */
 package fr.trendev.comptandye.services;
 
+import fr.trendev.comptandye.entities.Offering;
 import fr.trendev.comptandye.entities.OfferingPK;
 import fr.trendev.comptandye.entities.Pack;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.Service;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;
-import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.json.Json;
@@ -110,12 +112,19 @@ public class PackService extends AbstractOfferingService<Pack> {
 
             if (!e.getOfferings().isEmpty()) {
                 //checks provided offerings are owned by the professional
-                e.getOfferings().
-                        forEach(o -> checkOfferingIntegrity(o, email));
+                List<Offering> offerings = e.getOfferings().stream()
+                        .map(o -> {
+                            Offering _o = checkOfferingIntegrity(o, email);
+                            // _o.getParentPacks().add(e);
+                            return _o;
+                        })
+                        .collect(Collectors.toList());
 
-                LOG.log(Level.WARNING,
-                        "Services and Packs provided during the Pack creation will be ignored !");
-                e.setOfferings(Collections.emptyList());
+                e.setOfferings(offerings);
+
+//                LOG.log(Level.WARNING,
+//                        "Services and Packs provided during the Pack creation will be ignored !");
+//                e.setOfferings(Collections.emptyList());
             }
         });
 

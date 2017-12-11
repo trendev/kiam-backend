@@ -128,7 +128,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
             List<PurchasedOffering> purchasedOfferings = e.
                     getPurchasedOfferings().
                     stream()
-                    // find the Offering for each PurchasedOffering
+                    // control the Offering for each PurchasedOffering
                     .map(_po -> Optional.ofNullable(_po.getOffering().accept(
                             provideOfferingFacadeVisitor).find(new OfferingPK(
                                     _po.getOffering().getId(),
