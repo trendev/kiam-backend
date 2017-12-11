@@ -32,7 +32,7 @@ import fr.trendev.comptandye.entities.UserAccount;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.sessions.PackFacade;
 import fr.trendev.comptandye.sessions.ServiceFacade;
-import javax.ws.rs.BadRequestException;
+import javax.ws.rs.WebApplicationException;
 
 /**
  *
@@ -132,7 +132,7 @@ public class OfferingIntegrityVisitor implements Visitor<Void> {
     public Void visit(Pack pack) {
         if (packFacade.find(new OfferingPK(pack.getId(),
                 proEmail)) == null) {
-            throw new BadRequestException("Pack [" + pack.getId()
+            throw new WebApplicationException("Pack [" + pack.getId()
                     + "] not found !");
         }
         pack.getOfferings().forEach(o -> o.accept(this));
@@ -163,7 +163,7 @@ public class OfferingIntegrityVisitor implements Visitor<Void> {
     public Void visit(Service service) {
         if (serviceFacade.find(new OfferingPK(service.getId(),
                 proEmail)) == null) {
-            throw new BadRequestException("Service [" + service.getId()
+            throw new WebApplicationException("Service [" + service.getId()
                     + "] not found !");
         }
         return null;
