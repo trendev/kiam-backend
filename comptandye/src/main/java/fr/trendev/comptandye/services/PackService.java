@@ -115,7 +115,7 @@ public class PackService extends AbstractOfferingService<Pack> {
                 List<Offering> offerings = e.getOfferings().stream()
                         .map(o -> {
                             Offering _o = checkOfferingIntegrity(o, email);
-                            // _o.getParentPacks().add(e);
+                            _o.getParentPacks().add(e);
                             return _o;
                         })
                         .collect(Collectors.toList());
