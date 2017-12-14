@@ -209,7 +209,6 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
             e.setVatcode(entity.getVatcode());
             e.setCreationDate(entity.getCreationDate());
             e.setBusinesses(entity.getBusinesses());
-            e.setCategories(entity.getCategories());
             e.setPaymentModes(entity.getPaymentModes());
 
         });
