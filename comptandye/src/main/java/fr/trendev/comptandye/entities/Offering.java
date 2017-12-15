@@ -51,7 +51,7 @@ public abstract class Offering {
     private String name;
 
     /**
-     * Price in cents (1/100 of the currency)
+     * reference price, based on Euro cents
      */
     @Basic
     private int price;
