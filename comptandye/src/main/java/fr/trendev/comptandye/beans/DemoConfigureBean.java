@@ -420,6 +420,8 @@ public class DemoConfigureBean implements Serializable {
 
         em.persist(service);
         em.persist(service2);
+        vanessa.getOfferings().add(service);
+        vanessa.getOfferings().add(service2);
 
         PurchasedOffering po1 = new PurchasedOffering(1,
                 service);

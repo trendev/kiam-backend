@@ -62,9 +62,6 @@ public abstract class Offering {
     @Basic
     private int duration;
 
-    @Basic
-    private boolean hidden = false;
-
     @Id
     @ManyToOne(targetEntity = Professional.class)
     @JoinColumn(name = "OFFERING_PRO_EMAIL", referencedColumnName = "EMAIL",
@@ -132,14 +129,6 @@ public abstract class Offering {
 
     public void setDuration(int duration) {
         this.duration = duration;
-    }
-
-    public boolean isHidden() {
-        return this.hidden;
-    }
-
-    public void setHidden(boolean hidden) {
-        this.hidden = hidden;
     }
 
     public Professional getProfessional() {

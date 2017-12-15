@@ -127,7 +127,6 @@ public class ServiceService extends AbstractOfferingService<Service> {
             e.setName(entity.getName());
             e.setPrice(entity.getPrice());
             e.setDuration(entity.getDuration());
-            e.setHidden(entity.isHidden());
             e.setBusinesses(entity.getBusinesses());
         });
     }

@@ -147,7 +147,6 @@ public class PackService extends AbstractOfferingService<Pack> {
             e.setName(entity.getName());
             e.setPrice(entity.getPrice());
             e.setDuration(entity.getDuration());
-            e.setHidden(entity.isHidden());
             e.setBusinesses(entity.getBusinesses());
 
             //remove previous parentPacks dependencies and reset the offerings
