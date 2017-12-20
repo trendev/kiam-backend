@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
-import javax.json.Json;
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -160,6 +160,7 @@ public class PackService extends AbstractOfferingService<Pack> {
                 List<Offering> offerings = entity.getOfferings().stream()
                         .map(o -> {
                             Offering _o = checkOfferingIntegrity(o, email);
+                            this.checkPackCyclicDependencies(e, _o);
                             _o.getParentPacks().add(e);
                             return _o;
                         })
@@ -254,18 +255,6 @@ public class PackService extends AbstractOfferingService<Pack> {
             @PathParam("offeringid") Long offeringid,
             @QueryParam("professional") String professional) {
 
-        //avoid to add a pack in itself (infinite loop)
-        if (packid == offeringid) {
-            LOG.log(Level.WARNING, "Pack {0} cannot be added in itself", packid);
-            return Response.status(Response.Status.EXPECTATION_FAILED)
-                    .entity(Json.createObjectBuilder()
-                            .add("error", "Pack " + packid
-                                    + " cannot be added in itself")
-                            .build()
-                    )
-                    .build();
-        }
-
         OfferingPK packPK = new OfferingPK(packid, this.getProEmail(sec,
                 professional));
 
@@ -277,8 +266,27 @@ public class PackService extends AbstractOfferingService<Pack> {
                 packPK,
                 packFacade,
                 offeringPK, Pack.class,
-                (p, o) ->
-                p.getOfferings().add(o) && o.getParentPacks().add(p));
+                (p, o) -> {
+            this.checkPackCyclicDependencies(p, o);
+            return p.getOfferings().add(o) && o.getParentPacks().add(p);
+        }
+        );
+    }
+
+    private void checkPackCyclicDependencies(Pack container, Offering offering) {
+        //avoid to add a pack in itself (infinite loop)
+        if (container.getId() == offering.getId()) {
+            throw new BadRequestException("Pack " + container.getId()
+                    + " cannot be addded in itself");
+        }
+
+        //avoid to add a pack in another if it is a parent of the other
+        if (container.getParentPacks().contains(offering)) {
+            throw new BadRequestException("Pack " + offering.getId()
+                    + " cannot be added to Pack " + container.getId()
+                    + " because Pack " + offering.getId()
+                    + " already contains Pack " + container.getId() + " !!!");
+        }
     }
 
     @Path("{packid}/removePack/offering/{offeringid}")
