@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.services;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.trendev.comptandye.entities.Offering;
 import fr.trendev.comptandye.entities.OfferingPK;
 import fr.trendev.comptandye.entities.Pack;
@@ -13,14 +14,22 @@ import fr.trendev.comptandye.entities.Service;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.json.Json;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -35,6 +44,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.SecurityContext;
 
 /**
@@ -45,6 +55,9 @@ import javax.ws.rs.core.SecurityContext;
 @Path("Pack")
 @RolesAllowed({"Administrator", "Professional"})
 public class PackService extends AbstractOfferingService<Pack> {
+
+    @Inject
+    ObjectMapper om;
 
     private final Logger LOG = Logger.getLogger(PackService.class.
             getName());
@@ -341,20 +354,55 @@ public class PackService extends AbstractOfferingService<Pack> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response buildOfferings(@Context SecurityContext sec,
             @QueryParam("professional") String professional) {
+
         String email = super.getProEmail(sec, professional);
         LOG.log(Level.INFO,
                 "Generating pre-build Offerings for the professional [{0}]",
                 email);
-        try {
-            return Response.created(new URI("Professional/offerings")).
-                    build();
-        } catch (Exception ex) {
-            String errmsg = ExceptionHelper.handleException(ex,
-                    "Error occurs Generating pre-build Offerings for the professional "
-                    + email);
-            getLogger().log(Level.WARNING, errmsg, ex);
-            throw new WebApplicationException(errmsg, ex);
-        }
 
+        return Optional.ofNullable(professionalFacade.find(email))
+                .map(pro -> {
+                    try {
+                        Map<String, Service> services = this.importServices(pro);
+                        return Response.created(
+                                new URI("Professional/offerings"))
+                                .entity(pro.getOfferings())
+                                .build();
+                    } catch (Exception ex) {
+                        String errmsg = ExceptionHelper.handleException(ex,
+                                "Error occurs Generating pre-build Offerings for the professional "
+                                + email);
+                        getLogger().log(Level.WARNING, errmsg, ex);
+                        throw new WebApplicationException(errmsg, ex);
+                    }
+                })
+                .orElse(Response.status(Status.NOT_FOUND).entity(Json.
+                        createObjectBuilder()
+                        .add("error", "Professional " + email + " not found")
+                        .build())
+                        .build());
+    }
+
+    private Map<String, Service> importServices(Professional pro) throws
+            IOException {
+
+        ClassLoader classloader = Thread.currentThread().
+                getContextClassLoader();
+        InputStream is = classloader.getResourceAsStream("json/services.json");
+
+        Map<String, Service> map = new HashMap<>();
+
+        Arrays.asList(om.readValue(is, Service[].class)).stream()
+                .map(s -> {
+                    s.setProfessional(pro);
+                    pro.getOfferings().add(s);
+                    return s;
+                })
+                .forEach(s -> {
+                    serviceFacade.create(s);
+                    map.put(s.getName(), s);
+                });
+
+        return map;
     }
 }
