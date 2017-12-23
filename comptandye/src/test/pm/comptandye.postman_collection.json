@@ -2049,10 +2049,22 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d373ba42-13bd-4bb0-bf94-bb5e1f8c2aae",
+								"id": "4385db51-123b-4533-9fa1-51b30ea4a01b",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"pm.sendRequest({",
+									"    url:pm.environment.get('API_URL')+\"/CollectiveGroup/\"+pm.environment.get('created_collectivegroup_id')+\"?professional=vanessa.gay@gmail.com\",",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"    },",
+									"    method: 'DELETE'",
+									"}, function (err, res) {",
+									"    pm.expect(res).to.have.property('code', 200);",
+									"    pm.expect(res).to.have.property('status', 'OK');",
+									"});",
 									""
 								]
 							}
