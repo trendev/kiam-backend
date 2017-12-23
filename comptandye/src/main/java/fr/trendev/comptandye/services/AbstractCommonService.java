@@ -200,8 +200,8 @@ public abstract class AbstractCommonService<E, P> {
             P pk = getFacade().getIdentifier(entity);
             getLogger().log(Level.INFO, entityClass.getSimpleName()
                     + " {0} created", getFacade().prettyPrintPK(pk));
-            return Response.created(new URI("/restapi/" + entityClass.
-                    getSimpleName() + "/" + getFacade().prettyPrintPK(pk))).
+            return Response.created(new URI(entityClass.getSimpleName() + "/"
+                    + getFacade().prettyPrintPK(pk))).
                     entity(
                             entity).
                     build();

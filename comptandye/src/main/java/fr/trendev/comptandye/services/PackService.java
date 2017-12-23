@@ -12,6 +12,8 @@ import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.Service;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;
+import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
+import java.net.URI;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -332,5 +334,27 @@ public class PackService extends AbstractOfferingService<Pack> {
         OfferingPK pk = new OfferingPK(id, this.getProEmail(sec,
                 professional));
         return super.getParentPacks(pk);
+    }
+
+    @Path("buildOfferings")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response buildOfferings(@Context SecurityContext sec,
+            @QueryParam("professional") String professional) {
+        String email = super.getProEmail(sec, professional);
+        LOG.log(Level.INFO,
+                "Generating pre-build Offerings for the professional [{0}]",
+                email);
+        try {
+            return Response.created(new URI("Professional/offerings")).
+                    build();
+        } catch (Exception ex) {
+            String errmsg = ExceptionHelper.handleException(ex,
+                    "Error occurs Generating pre-build Offerings for the professional "
+                    + email);
+            getLogger().log(Level.WARNING, errmsg, ex);
+            throw new WebApplicationException(errmsg, ex);
+        }
+
     }
 }
