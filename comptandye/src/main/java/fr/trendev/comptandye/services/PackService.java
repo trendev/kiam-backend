@@ -18,11 +18,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -349,10 +350,10 @@ public class PackService extends AbstractOfferingService<Pack> {
         return super.getParentPacks(pk);
     }
 
-    @Path("buildOfferings")
+    @Path("buildModelOfferings")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response buildOfferings(@Context SecurityContext sec,
+    public Response buildModelOfferings(@Context SecurityContext sec,
             @QueryParam("professional") String professional) {
 
         String email = super.getProEmail(sec, professional);
@@ -364,6 +365,7 @@ public class PackService extends AbstractOfferingService<Pack> {
                 .map(pro -> {
                     try {
                         Map<String, Service> services = this.importServices(pro);
+                        this.importPacks(pro, services);
                         return Response.created(
                                 new URI("Professional/offerings"))
                                 .entity(pro.getOfferings())
@@ -383,6 +385,13 @@ public class PackService extends AbstractOfferingService<Pack> {
                         .build());
     }
 
+    /**
+     * Reads and imports Services from a JSON file
+     *
+     * @param pro the future owner of the services
+     * @return a Map of the newly created Services
+     * @throws IOException if an error occurs reading/parsing the file
+     */
     private Map<String, Service> importServices(Professional pro) throws
             IOException {
 
@@ -390,7 +399,7 @@ public class PackService extends AbstractOfferingService<Pack> {
                 getContextClassLoader();
         InputStream is = classloader.getResourceAsStream("json/services.json");
 
-        Map<String, Service> map = new HashMap<>();
+        Map<String, Service> map = new TreeMap<>();
 
         Arrays.asList(om.readValue(is, Service[].class)).stream()
                 .map(s -> {
@@ -400,9 +409,52 @@ public class PackService extends AbstractOfferingService<Pack> {
                 })
                 .forEach(s -> {
                     serviceFacade.create(s);
+                    //map the managed entity
                     map.put(s.getName(), s);
                 });
 
+        is.close();
+
         return map;
+    }
+
+    /**
+     * Reads and imports Packs from a JSON file
+     *
+     * @param pro the future owner of the Packs
+     * @param services the Services Map, previously imported
+     * @throws IOException if an error occurs reading/parsing the file
+     */
+    private void importPacks(Professional pro, Map<String, Service> services)
+            throws IOException {
+        ClassLoader classloader = Thread.currentThread().
+                getContextClassLoader();
+        InputStream is = classloader.getResourceAsStream("json/packs.json");
+
+        Arrays.asList(om.readValue(is, Pack[].class)).stream()
+                .map(p -> {
+                    List<Offering> offerings = p.getOfferings().stream()
+                            //use the managed entity instead of the provided service
+                            .map(o -> Optional.ofNullable(
+                                    services.get(o.getName()))
+                                    .map(Function.identity())
+                                    //occurs if json file contains errors
+                                    .orElseThrow(() ->
+                                            new WebApplicationException(
+                                                    "Service " + o.getName()
+                                                    + " not found !"))
+                            )
+                            .collect(Collectors.toList());
+
+                    p.setOfferings(offerings);
+
+                    p.setProfessional(pro);
+                    pro.getOfferings().add(p);
+                    return p;
+                })
+                //map the managed entity
+                .forEach(p -> packFacade.create(p));
+
+        is.close();
     }
 }

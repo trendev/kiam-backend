@@ -1,0 +1,77 @@
+[
+  {
+      "name": "Shamp. + Coupe + Brush. Simple - cheveux courts",
+      "price": 2900,
+      "duration": 40,
+      "cltype": "pack",
+      "businesses": [
+          {
+              "designation": "Coiffure"
+          }
+      ],
+      "offerings":[
+        {
+          "name": "Shampoing - cheveux courts",
+          "cltype": "service"
+        },
+        {
+          "name": "Coupe - cheveux courts",
+          "cltype": "service"
+        },
+        {
+          "name": "Brushing Simple - cheveux courts",
+          "cltype": "service"
+        }
+      ]
+  },
+  {
+      "name": "Shamp. + Coupe + Brush. Simple - cheveux mi-longs",
+      "price": 3300,
+      "duration": 50,
+      "cltype": "pack",
+      "businesses": [
+          {
+              "designation": "Coiffure"
+          }
+      ],
+      "offerings":[
+        {
+          "name": "Shampoing - cheveux mi-longs",
+          "cltype": "service"
+        },
+        {
+          "name": "Coupe - cheveux mi-longs",
+          "cltype": "service"
+        },
+        {
+          "name": "Brushing Simple - cheveux mi-longs",
+          "cltype": "service"
+        }
+      ]
+  },
+  {
+      "name": "Shamp. + Coupe + Brush. Simple - cheveux longs",
+      "price": 3800,
+      "duration": 60,
+      "cltype": "pack",
+      "businesses": [
+          {
+              "designation": "Coiffure"
+          }
+      ],
+      "offerings":[
+        {
+          "name": "Shampoing - cheveux longs",
+          "cltype": "service"
+        },
+        {
+          "name": "Coupe - cheveux longs",
+          "cltype": "service"
+        },
+        {
+          "name": "Brushing Simple - cheveux longs",
+          "cltype": "service"
+        }
+      ]
+  }
+]
