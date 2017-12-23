@@ -1,77 +1,481 @@
-[
-  {
-      "name": "Shamp. + Coupe + Brush. Simple - cheveux courts",
-      "price": 2900,
-      "duration": 40,
-      "cltype": "pack",
-      "businesses": [
-          {
-              "designation": "Coiffure"
-          }
-      ],
-      "offerings":[
-        {
-          "name": "Shampoing - cheveux courts",
-          "cltype": "service"
-        },
-        {
-          "name": "Coupe - cheveux courts",
-          "cltype": "service"
-        },
-        {
-          "name": "Brushing Simple - cheveux courts",
-          "cltype": "service"
-        }
-      ]
+[{
+    "name": "Shamp. + Coupe + Brush. Simple - cheveux courts",
+    "price": 2900,
+    "duration": 40,
+    "cltype": "pack",
+    "businesses": [{
+      "designation": "Coiffure"
+    }],
+    "offerings": [{
+        "name": "Shampoing - cheveux courts",
+        "cltype": "service"
+      },
+      {
+        "name": "Coupe - cheveux courts",
+        "cltype": "service"
+      },
+      {
+        "name": "Brushing Simple - cheveux courts",
+        "cltype": "service"
+      }
+    ]
   },
   {
-      "name": "Shamp. + Coupe + Brush. Simple - cheveux mi-longs",
-      "price": 3300,
-      "duration": 50,
-      "cltype": "pack",
-      "businesses": [
-          {
-              "designation": "Coiffure"
-          }
-      ],
-      "offerings":[
-        {
-          "name": "Shampoing - cheveux mi-longs",
-          "cltype": "service"
-        },
-        {
-          "name": "Coupe - cheveux mi-longs",
-          "cltype": "service"
-        },
-        {
-          "name": "Brushing Simple - cheveux mi-longs",
-          "cltype": "service"
-        }
-      ]
+    "name": "Shamp. + Coupe + Brush. Simple - cheveux mi-longs",
+    "price": 3300,
+    "duration": 50,
+    "cltype": "pack",
+    "businesses": [{
+      "designation": "Coiffure"
+    }],
+    "offerings": [{
+        "name": "Shampoing - cheveux mi-longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Coupe - cheveux mi-longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Brushing Simple - cheveux mi-longs",
+        "cltype": "service"
+      }
+    ]
   },
   {
-      "name": "Shamp. + Coupe + Brush. Simple - cheveux longs",
-      "price": 3800,
-      "duration": 60,
-      "cltype": "pack",
-      "businesses": [
-          {
-              "designation": "Coiffure"
-          }
-      ],
-      "offerings":[
-        {
-          "name": "Shampoing - cheveux longs",
-          "cltype": "service"
-        },
-        {
-          "name": "Coupe - cheveux longs",
-          "cltype": "service"
-        },
-        {
-          "name": "Brushing Simple - cheveux longs",
-          "cltype": "service"
-        }
-      ]
+    "name": "Shamp. + Coupe + Brush. Simple - cheveux longs",
+    "price": 3800,
+    "duration": 60,
+    "cltype": "pack",
+    "businesses": [{
+      "designation": "Coiffure"
+    }],
+    "offerings": [{
+        "name": "Shampoing - cheveux longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Coupe - cheveux longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Brushing Simple - cheveux longs",
+        "cltype": "service"
+      }
+    ]
+  },
+  {
+    "name": "Shamp. + Coupe + Brush. Simple + Color. Repousse - cheveux courts",
+    "price": 5000,
+    "duration": 120,
+    "cltype": "pack",
+    "businesses": [{
+      "designation": "Coiffure"
+    }],
+    "offerings": [{
+        "name": "Shampoing - cheveux courts",
+        "cltype": "service"
+      },
+      {
+        "name": "Coupe - cheveux courts",
+        "cltype": "service"
+      },
+      {
+        "name": "Brushing Simple - cheveux courts",
+        "cltype": "service"
+      },
+      {
+        "name": "Coloration Repousse",
+        "cltype": "service"
+      }
+    ]
+  },
+  {
+    "name": "Shamp. + Coupe + Brush. Simple + Color. Repousse - cheveux mi-longs",
+    "price": 5400,
+    "duration": 130,
+    "cltype": "pack",
+    "businesses": [{
+      "designation": "Coiffure"
+    }],
+    "offerings": [{
+        "name": "Shampoing - cheveux mi-longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Coupe - cheveux mi-longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Brushing Simple - cheveux mi-longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Coloration Repousse",
+        "cltype": "service"
+      }
+    ]
+  },
+  {
+    "name": "Shamp. + Coupe + Brush. Simple + Color. Repousse - cheveux longs",
+    "price": 5900,
+    "duration": 140,
+    "cltype": "pack",
+    "businesses": [{
+      "designation": "Coiffure"
+    }],
+    "offerings": [{
+        "name": "Shampoing - cheveux longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Coupe - cheveux longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Brushing Simple - cheveux longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Coloration Repousse",
+        "cltype": "service"
+      }
+    ]
+  },
+  {
+    "name": "Shamp. + Coupe + Brush. Simple + Color. Complète - cheveux courts",
+    "price": 6000,
+    "duration": 130,
+    "cltype": "pack",
+    "businesses": [{
+      "designation": "Coiffure"
+    }],
+    "offerings": [{
+        "name": "Shampoing - cheveux courts",
+        "cltype": "service"
+      },
+      {
+        "name": "Coupe - cheveux courts",
+        "cltype": "service"
+      },
+      {
+        "name": "Brushing Simple - cheveux courts",
+        "cltype": "service"
+      },
+      {
+        "name": "Coloration Complète - cheveux courts",
+        "cltype": "service"
+      }
+    ]
+  },
+  {
+    "name": "Shamp. + Coupe + Brush. Simple + Color. Complète - cheveux mi-longs",
+    "price": 6400,
+    "duration": 140,
+    "cltype": "pack",
+    "businesses": [{
+      "designation": "Coiffure"
+    }],
+    "offerings": [{
+        "name": "Shampoing - cheveux mi-longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Coupe - cheveux mi-longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Brushing Simple - cheveux mi-longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Coloration Complète - cheveux mi-longs",
+        "cltype": "service"
+      }
+    ]
+  },
+  {
+    "name": "Shamp. + Coupe + Brush. Simple + Color. Complète - cheveux longs",
+    "price": 6900,
+    "duration": 150,
+    "cltype": "pack",
+    "businesses": [{
+      "designation": "Coiffure"
+    }],
+    "offerings": [{
+        "name": "Shampoing - cheveux longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Coupe - cheveux longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Brushing Simple - cheveux longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Coloration Complète - cheveux longs",
+        "cltype": "service"
+      }
+    ]
+  },
+  {
+    "name": "Shamp. + Coupe + Brush. Simple + Mèches / Balayage - cheveux courts",
+    "price": 6900,
+    "duration": 120,
+    "cltype": "pack",
+    "businesses": [{
+      "designation": "Coiffure"
+    }],
+    "offerings": [{
+        "name": "Shampoing - cheveux courts",
+        "cltype": "service"
+      },
+      {
+        "name": "Coupe - cheveux courts",
+        "cltype": "service"
+      },
+      {
+        "name": "Brushing Simple - cheveux courts",
+        "cltype": "service"
+      },
+      {
+        "name": "Mèches / Balayage - cheveux courts",
+        "cltype": "service"
+      }
+    ]
+  },
+  {
+    "name": "Shamp. + Coupe + Brush. Simple + Mèches / Balayage - cheveux mi-longs",
+    "price": 7300,
+    "duration": 130,
+    "cltype": "pack",
+    "businesses": [{
+      "designation": "Coiffure"
+    }],
+    "offerings": [{
+        "name": "Shampoing - cheveux mi-longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Coupe - cheveux mi-longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Brushing Simple - cheveux mi-longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Mèches / Balayage - cheveux mi-longs",
+        "cltype": "service"
+      }
+    ]
+  },
+  {
+    "name": "Shamp. + Coupe + Brush. Simple + Mèches / Balayage - cheveux longs",
+    "price": 7800,
+    "duration": 140,
+    "cltype": "pack",
+    "businesses": [{
+      "designation": "Coiffure"
+    }],
+    "offerings": [{
+        "name": "Shampoing - cheveux longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Coupe - cheveux longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Brushing Simple - cheveux longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Mèches / Balayage - cheveux longs",
+        "cltype": "service"
+      }
+    ]
+  },
+  {
+    "name": "Shamp. + Coupe + Brush. Simple + Color. Repousse + Mèches / Balayage - cheveux courts",
+    "price": 8900,
+    "duration": 180,
+    "cltype": "pack",
+    "businesses": [{
+      "designation": "Coiffure"
+    }],
+    "offerings": [{
+        "name": "Shampoing - cheveux courts",
+        "cltype": "service"
+      },
+      {
+        "name": "Coupe - cheveux courts",
+        "cltype": "service"
+      },
+      {
+        "name": "Brushing Simple - cheveux courts",
+        "cltype": "service"
+      },
+      {
+        "name": "Mèches / Balayage - cheveux courts",
+        "cltype": "service"
+      },
+      {
+        "name": "Coloration Repousse",
+        "cltype": "service"
+      }
+    ]
+  },
+  {
+    "name": "Shamp. + Coupe + Brush. Simple + Color. Repousse + Mèches / Balayage - cheveux mi-longs",
+    "price": 9300,
+    "duration": 210,
+    "cltype": "pack",
+    "businesses": [{
+      "designation": "Coiffure"
+    }],
+    "offerings": [{
+        "name": "Shampoing - cheveux mi-longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Coupe - cheveux mi-longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Brushing Simple - cheveux mi-longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Mèches / Balayage - cheveux mi-longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Coloration Repousse",
+        "cltype": "service"
+      }
+    ]
+  },
+  {
+    "name": "Shamp. + Coupe + Brush. Simple + Color. Repousse + Mèches / Balayage - cheveux longs",
+    "price": 9800,
+    "duration": 230,
+    "cltype": "pack",
+    "businesses": [{
+      "designation": "Coiffure"
+    }],
+    "offerings": [{
+        "name": "Shampoing - cheveux longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Coupe - cheveux longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Brushing Simple - cheveux longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Mèches / Balayage - cheveux longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Coloration Repousse",
+        "cltype": "service"
+      }
+    ]
+  },
+  {
+    "name": "Shamp. + Coupe + Brush. Simple + Color. Complète + Mèches / Balayage - cheveux courts",
+    "price": 9900,
+    "duration": 210,
+    "cltype": "pack",
+    "businesses": [{
+      "designation": "Coiffure"
+    }],
+    "offerings": [{
+        "name": "Shampoing - cheveux courts",
+        "cltype": "service"
+      },
+      {
+        "name": "Coupe - cheveux courts",
+        "cltype": "service"
+      },
+      {
+        "name": "Brushing Simple - cheveux courts",
+        "cltype": "service"
+      },
+      {
+        "name": "Mèches / Balayage - cheveux courts",
+        "cltype": "service"
+      },
+      {
+        "name": "Coloration Complète - cheveux courts",
+        "cltype": "service"
+      }
+    ]
+  },
+  {
+    "name": "Shamp. + Coupe + Brush. Simple + Color. Complète + Mèches / Balayage - cheveux mi-longs",
+    "price": 10300,
+    "duration": 220,
+    "cltype": "pack",
+    "businesses": [{
+      "designation": "Coiffure"
+    }],
+    "offerings": [{
+        "name": "Shampoing - cheveux mi-longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Coupe - cheveux mi-longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Brushing Simple - cheveux mi-longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Mèches / Balayage - cheveux mi-longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Coloration Complète - cheveux mi-longs",
+        "cltype": "service"
+      }
+    ]
+  },
+  {
+    "name": "Shamp. + Coupe + Brush. Simple + Color. Complète + Mèches / Balayage - cheveux longs",
+    "price": 10800,
+    "duration": 240,
+    "cltype": "pack",
+    "businesses": [{
+      "designation": "Coiffure"
+    }],
+    "offerings": [{
+        "name": "Shampoing - cheveux longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Coupe - cheveux longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Brushing Simple - cheveux longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Mèches / Balayage - cheveux longs",
+        "cltype": "service"
+      },
+      {
+        "name": "Coloration Complète - cheveux longs",
+        "cltype": "service"
+      }
+    ]
   }
 ]
