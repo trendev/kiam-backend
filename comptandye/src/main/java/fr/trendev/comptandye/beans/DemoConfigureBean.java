@@ -49,8 +49,6 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import javax.annotation.PostConstruct;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -60,8 +58,8 @@ import javax.ws.rs.WebApplicationException;
  *
  * @author jsie
  */
-@Singleton
-@Startup //javax.ejb.Startup
+//@Singleton
+//@Startup //javax.ejb.Startup
 public class DemoConfigureBean implements Serializable {
 
     private final Logger LOG = Logger.getLogger(
@@ -189,8 +187,7 @@ public class DemoConfigureBean implements Serializable {
         ));
 
         Professional audrey = new Professional("audreyheitzmann@gmail.com",
-                PasswordGenerator.encrypt_SHA256(PasswordGenerator.
-                        autoGenerate()),
+                "VvCdf6nrd7ksdB3RlAnAFSuhmyLgzeO/oeZpcPju7Fc=",
                 "Audrey", UUIDGenerator.generate("PRO-", true));
         audrey.setCltype(UserAccountType.PROFESSIONAL);
 
