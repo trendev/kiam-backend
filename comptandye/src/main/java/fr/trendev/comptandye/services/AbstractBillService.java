@@ -219,8 +219,16 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
             }
         } else {
             if (bill.getPaymentDate() != null) {
-                throw new WebApplicationException(
-                        "A payment date is provided but there is no payment yet !");
+                if (bill.getAmount() == 0) {
+                    LOG.log(Level.INFO,
+                            "{2} {0} delivered on {1} has no Amount but might be closed... will check total and discount integrity later.",
+                            new Object[]{bill.getReference(), bill.
+                                getDeliveryDate(), bill.getClass().
+                                        getSimpleName()});
+                } else {
+                    throw new WebApplicationException(
+                            "A payment date is provided but there is no payment yet and Amount is not 0 !");
+                }
             } else {
                 LOG.log(Level.INFO,
                         "{2} {0} delivered on {1} has not been paid : no payment provided during the Bill and no payment date provided yet !",
