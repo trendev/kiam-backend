@@ -187,6 +187,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
      */
     private void checkPayment(T bill) {
 
+        // accept if paymentDate and deliveryDate are the same
         if (bill.getPaymentDate() != null && bill.getPaymentDate().before(bill.
                 getDeliveryDate())) {
             throw new WebApplicationException("Payment date " + bill.
