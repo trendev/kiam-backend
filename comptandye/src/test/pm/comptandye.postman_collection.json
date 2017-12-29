@@ -1112,12 +1112,13 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "21a20227-41f0-46f0-a372-24cdae616789",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"Category table is not empty\"] = jsonData.length >= 1;"
+									"tests[\"Category table exists\"] = jsonData.length >= 0;"
 								]
 							}
 						}
@@ -1147,11 +1148,12 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "2225329f-8a77-4eec-8991-8dd3f1046d2c",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
-									"tests[\"count >= 1\"] = responseBody >= 1;"
+									"tests[\"count >= 0\"] = responseBody >= 0;"
 								]
 							}
 						}
@@ -2118,12 +2120,13 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "39778664-5063-43aa-a83b-92048bb6c39c",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"Bill (DTYPE ClientBill) table is not empty\"] = jsonData.length >= 1;"
+									"tests[\"Bill (DTYPE ClientBill) table exists\"] = jsonData.length >= 0;"
 								]
 							}
 						}
@@ -2153,11 +2156,12 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "d9d3ab20-c3ae-4200-81da-77ff8de4ac13",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
-									"tests[\"count >= 1\"] = responseBody >= 1;"
+									"tests[\"count >= 0\"] = responseBody >= 0;"
 								]
 							}
 						}
@@ -3136,12 +3140,13 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "93a56176-d7e8-42e5-8098-ea7c51f33cb5",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"Bill (DTYPE CollectiveGroupBill) table is not empty\"] = jsonData.length >= 1;"
+									"tests[\"Bill (DTYPE CollectiveGroupBill) table exists\"] = jsonData.length >= 0;"
 								]
 							}
 						}
@@ -3171,11 +3176,12 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "dbe459b4-90c9-4956-8b82-b009357f2a22",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
-									"tests[\"count >= 1\"] = responseBody >= 1;"
+									"tests[\"count >= 0\"] = responseBody >= 0;"
 								]
 							}
 						}
@@ -4802,12 +4808,13 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "332732d5-63dd-4c0d-b2a6-4ff45c83dabe",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"Bill (DTYPE IndividualBill) table is not empty\"] = jsonData.length >= 1;"
+									"tests[\"Bill (DTYPE IndividualBill) table exists\"] = jsonData.length >= 0;"
 								]
 							}
 						}
@@ -4837,11 +4844,12 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "1163cc2f-6962-4289-b768-8ca4c898d6c3",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
-									"tests[\"count >= 1\"] = responseBody >= 1;"
+									"tests[\"count >= 0\"] = responseBody >= 0;"
 								]
 							}
 						}
@@ -5337,12 +5345,13 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "5c953c0c-b1e8-44dd-8974-7989986f01a1",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"Service (Offering) table is not empty\"] = jsonData.length >= 1;"
+									"tests[\"Service (Offering) table exists\"] = jsonData.length >= 0;"
 								]
 							}
 						}
@@ -5372,11 +5381,12 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "33d757b8-d712-4fa4-b2df-30ee4fb2685a",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
-									"tests[\"count >= 1\"] = responseBody >= 1;"
+									"tests[\"count >= 0\"] = responseBody >= 0;"
 								]
 							}
 						}
@@ -7051,12 +7061,11 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "48812e86-95b8-47a5-bf97-28ed391ee312",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
-									"",
-									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"Should be contained in one or more Bills \"] = jsonData.length >= 1;"
+									""
 								]
 							}
 						}
@@ -7387,12 +7396,13 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "981efd3c-83ca-456a-b609-ad7a6353d4fa",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"Payment table is not empty\"] = jsonData.length >= 1;"
+									"tests[\"PurchasedOffering table exists\"] = jsonData.length >= 0;"
 								]
 							}
 						}
@@ -7422,10 +7432,11 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "200c86de-62bc-4409-a9d4-60ece1ed2721",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
-									"tests[\"Total count >= 1\"] = responseBody >= 1;"
+									"tests[\"Total count >= 0\"] = responseBody >= 0;"
 								]
 							}
 						}
@@ -7725,12 +7736,13 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "5e49107f-de06-4b68-b5ce-8db65f753580",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"Service (Offering) table is not empty\"] = jsonData.length >= 1;"
+									"tests[\"Service (Offering) table exists\"] = jsonData.length >= 0;"
 								]
 							}
 						}
@@ -7760,11 +7772,12 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "39a649f9-b514-4402-b741-ab27e2f607c2",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
-									"tests[\"count >= 1\"] = responseBody >= 1;"
+									"tests[\"count >= 0\"] = responseBody >= 0;"
 								]
 							}
 						}

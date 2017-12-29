@@ -8,26 +8,17 @@ package fr.trendev.comptandye.beans;
 import fr.trendev.comptandye.entities.Address;
 import fr.trendev.comptandye.entities.Administrator;
 import fr.trendev.comptandye.entities.Business;
-import fr.trendev.comptandye.entities.Category;
 import fr.trendev.comptandye.entities.Client;
-import fr.trendev.comptandye.entities.ClientBill;
 import fr.trendev.comptandye.entities.CollectiveGroup;
-import fr.trendev.comptandye.entities.CollectiveGroupBill;
 import fr.trendev.comptandye.entities.CustomerDetails;
 import fr.trendev.comptandye.entities.Expense;
 import fr.trendev.comptandye.entities.Individual;
-import fr.trendev.comptandye.entities.IndividualBill;
-import fr.trendev.comptandye.entities.Pack;
 import fr.trendev.comptandye.entities.Payment;
 import fr.trendev.comptandye.entities.PaymentMode;
 import fr.trendev.comptandye.entities.Professional;
-import fr.trendev.comptandye.entities.PurchasedOffering;
-import fr.trendev.comptandye.entities.Service;
 import fr.trendev.comptandye.entities.SocialNetworkAccounts;
 import fr.trendev.comptandye.entities.UserGroup;
-import fr.trendev.comptandye.services.AbstractBillService;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
-import fr.trendev.comptandye.utils.OfferingType;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import fr.trendev.comptandye.utils.UserAccountType;
@@ -42,13 +33,11 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import javax.annotation.PostConstruct;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -58,8 +47,8 @@ import javax.ws.rs.WebApplicationException;
  *
  * @author jsie
  */
-//@Singleton
-//@Startup //javax.ejb.Startup
+@Singleton
+@Startup //javax.ejb.Startup
 public class DemoConfigureBean implements Serializable {
 
     private final Logger LOG = Logger.getLogger(
@@ -83,8 +72,6 @@ public class DemoConfigureBean implements Serializable {
             this.initPaymentModes();
             this.initBusinesses();
             this.initUsersAndGroups();
-            this.createCategoryAndClient();
-            this.createBillsAndOfferings();
             this.importClients();
         }
 
@@ -238,16 +225,6 @@ public class DemoConfigureBean implements Serializable {
         sylvioc.setPassword(PasswordGenerator.encrypt_SHA256(PasswordGenerator.
                 autoGenerate()));
 
-        List<Individual> individuals = IntStream
-                .range(0, 2)
-                .mapToObj(i -> new Individual("hank.moody-" + (i + 1)
-                        + "@hella.com",
-                        PasswordGenerator.encrypt_SHA256("Californication" + i),
-                        "hankmoody_" + (i + 1), UUIDGenerator.
-                                generate("IND-", true)))
-                .peek(i -> i.setCltype(UserAccountType.INDIVIDUAL))
-                .collect(Collectors.toList());
-
         ind.getUserAccounts().add(skonx);
         skonx.getUserGroups().add(ind);
 
@@ -256,12 +233,6 @@ public class DemoConfigureBean implements Serializable {
 
         skonx.setBlocked(false);
         sylvioc.setBlocked(false);
-
-        individuals.forEach(i -> {
-            ind.getUserAccounts().add(i);
-            i.getUserGroups().add(ind);
-            i.setBlocked(false);
-        });
 
         vanessa.getIndividuals().add(sylvioc);
         sylvioc.getProfessionals().add(vanessa);
@@ -300,158 +271,6 @@ public class DemoConfigureBean implements Serializable {
                 b -> {
             em.persist(new Business(b));
         });
-    }
-
-    private void createBillsAndOfferings() {
-        try {
-            Professional vanessa = em.find(Professional.class,
-                    "vanessa.gay@gmail.com");
-            Individual sylvioc = em.find(Individual.class,
-                    "sylvie.gay@gmail.com");
-
-            Business coiffure = em.find(Business.class, "Coiffure");
-            Business esthetique = em.find(Business.class, "Esthétique");
-            Service service1 = new Service("Fashion color", 5000, 60, vanessa);
-            service1.setCltype(OfferingType.SERVICE);
-            service1.getBusinesses().add(coiffure);
-
-            Service service2 = new Service("Exclusive service for dark skin",
-                    5000, 60,
-                    vanessa);
-            service2.setCltype(OfferingType.SERVICE);
-            service2.getBusinesses().add(esthetique);
-
-            vanessa.getOfferings().add(service1);
-            vanessa.getOfferings().add(service2);
-            Pack specialPack = new Pack("Supreme Pack", 8000, 120, vanessa);
-            specialPack.setCltype(OfferingType.PACK);
-            specialPack.getOfferings().add(service1);
-            specialPack.getOfferings().add(service2);
-            specialPack.getBusinesses().add(coiffure);
-            specialPack.getBusinesses().add(esthetique);
-            vanessa.getOfferings().add(specialPack);
-
-            Date deliveryDate = new Date();
-
-            PurchasedOffering po1 = new PurchasedOffering(1, service1);
-            service1.getPurchasedOfferings().add(po1);
-            IndividualBill bill1 = new IndividualBill(null,
-                    deliveryDate,
-                    5000, 0,
-                    new Date(),
-                    Arrays.asList("Cool", "sympa"),
-                    vanessa, new LinkedList<>(), Arrays.asList(
-                            po1),
-                    sylvioc);
-
-            bill1.setCltype(BillTypeVisitor.INDIVIDUAL_CLTYPE);
-            AbstractBillService.setBillReference(bill1, billTypeVisitor);
-
-            PurchasedOffering po2 = new PurchasedOffering(1, specialPack);
-            specialPack.getPurchasedOfferings().add(po2);
-
-            IndividualBill bill2 = new IndividualBill(null,
-                    deliveryDate,
-                    8000, 0,
-                    new Date(),
-                    Arrays.asList("Long", "Pffff"),
-                    vanessa, new LinkedList<>(), Arrays.asList(
-                            po2),
-                    sylvioc);
-            bill2.setCltype(BillTypeVisitor.INDIVIDUAL_CLTYPE);
-            AbstractBillService.setBillReference(bill2, billTypeVisitor);
-
-            sylvioc.getIndividualBills().add(bill1);
-            sylvioc.getIndividualBills().add(bill2);
-
-            Payment pm = new Payment(5000, em.find(PaymentMode.class,
-                    "CB"));
-            Payment pm2 = new Payment(8000, em.find(PaymentMode.class,
-                    "Espèces"));
-            bill1.getPayments().add(pm);
-            vanessa.getBills().add(bill1);
-            bill2.getPayments().add(pm2);
-            vanessa.getBills().add(bill2);
-        } catch (Exception ex) {
-            LOG.log(Level.SEVERE, "Error in createBills()", ex);
-        }
-    }
-
-    private void createCategoryAndClient() {
-        Professional vanessa = em.find(Professional.class,
-                "vanessa.gay@gmail.com");
-        Category cat1 = new Category("long time customers", "Fidelity", vanessa);
-        Client client1 = new Client(null,
-                new SocialNetworkAccounts(),
-                new CustomerDetails("Valerie",
-                        "Lamome",
-                        null, "0627212271", null, 'F', null,
-                        Collections.<String>emptyList()),
-                new Address("1 rue des gouaix", null,
-                        "77860", "QUINCY VOISINS"),
-                vanessa);
-
-        cat1.getClients().add(client1);
-        client1.getCategories().add(cat1);
-
-        vanessa.getClients().add(client1);
-        client1.setProfessional(vanessa);
-
-        client1.getCollectiveGroups().add(vanessa.getCollectiveGroups().get(0));
-        vanessa.getCollectiveGroups().get(0).getClients().add(client1);
-
-        vanessa.getCategories().add(cat1);
-
-        Payment payment = new Payment(1500, em.find(PaymentMode.class,
-                "Virement"));
-
-        Service service = new Service("Classic Haircut", 1500, 60,
-                vanessa);
-        service.getBusinesses().add(em.find(Business.class, "Coiffure"));
-        service.setCltype(OfferingType.SERVICE);
-        Service service2 = new Service("A service for " + vanessa.
-                getCollectiveGroups().get(0).getGroupName(), 3000, 120,
-                vanessa);
-        service2.getBusinesses().add(em.find(Business.class, "Coiffure"));
-        service2.setCltype(OfferingType.SERVICE);
-
-        em.persist(service);
-        em.persist(service2);
-        vanessa.getOfferings().add(service);
-        vanessa.getOfferings().add(service2);
-
-        PurchasedOffering po1 = new PurchasedOffering(1,
-                service);
-        service.getPurchasedOfferings().add(po1);
-
-        ClientBill cbill = new ClientBill(null,
-                new Date(),
-                1500, 0,
-                new Date(), Arrays.asList("Has left her first son"), vanessa,
-                Arrays.asList(payment), Arrays.asList(po1), client1);
-        cbill.setCltype(BillTypeVisitor.CLIENT_CLTYPE);
-        AbstractBillService.setBillReference(cbill, billTypeVisitor);
-
-        vanessa.getBills().add(cbill);
-        client1.getClientBills().add(cbill);
-
-        PurchasedOffering po2 = new PurchasedOffering(1, service2);
-        service2.getPurchasedOfferings().add(po2);
-        CollectiveGroupBill cgbill = new CollectiveGroupBill("CG-" + vanessa.
-                getUuid() + "-1", new Date(),
-                3000, 0,
-                new Date(), Arrays.asList("BAU", "Easy but long"), vanessa,
-                Arrays.asList(new Payment(3000, em.
-                        find(PaymentMode.class,
-                                "Virement"))), Arrays.asList(
-                po2), vanessa.
-                        getCollectiveGroups().get(0));
-        cgbill.setCltype(BillTypeVisitor.COLLECTIVEGROUP_CLTYPE);
-        AbstractBillService.setBillReference(cgbill, billTypeVisitor);
-
-        vanessa.getBills().add(cgbill);
-        vanessa.getCollectiveGroups().get(0).getCollectiveGroupBills().add(
-                cgbill);
     }
 
     private void importClients() {
