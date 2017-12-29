@@ -13,6 +13,7 @@ import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.PurchasedOffering;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
+import fr.trendev.comptandye.utils.exceptions.InvalidDeliveryDateException;
 import fr.trendev.comptandye.utils.visitors.BillTypeVisitor;
 import fr.trendev.comptandye.utils.visitors.ProvideOfferingFacadeVisitor;
 import java.text.SimpleDateFormat;
@@ -25,7 +26,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
-import javax.ws.rs.BadRequestException;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
@@ -123,9 +123,11 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                 //filter bills with a delivery date earlier to the ref
                 if (e.getDeliveryDate().before(e.getProfessional().
                         getBillsRefDate())) {
-                    throw new BadRequestException(
-                            "Bills Reference Date = " + e.getProfessional().
-                                    getBillsRefDate().getTime());
+                    throw new InvalidDeliveryDateException(
+                            String.valueOf(
+                                    e.getProfessional().getBillsRefDate().
+                                            getTime()),
+                            Response.Status.CONFLICT);
                 } else {
                     //set the ref with the current bill
                     e.getProfessional().setBillsRefDate(e.getDeliveryDate());

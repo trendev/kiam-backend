@@ -11,6 +11,7 @@ import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;
 import fr.trendev.comptandye.utils.UserAccountType;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
+import fr.trendev.comptandye.utils.exceptions.InvalidDeliveryDateException;
 import java.net.URI;
 import java.util.Collection;
 import java.util.List;
@@ -205,6 +206,8 @@ public abstract class AbstractCommonService<E, P> {
                     entity(
                             entity).
                     build();
+        } catch (InvalidDeliveryDateException ex) {
+            throw ex;
         } catch (Exception ex) {
 
             String errmsg = ExceptionHelper.handleException(ex,
@@ -268,6 +271,9 @@ public abstract class AbstractCommonService<E, P> {
                                     + " is not found !").
                                     build()).
                             build());
+
+        } catch (InvalidDeliveryDateException ex) {
+            throw ex;
         } catch (Exception ex) {
 
             String errmsg = ExceptionHelper.handleException(ex,
