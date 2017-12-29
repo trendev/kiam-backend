@@ -243,9 +243,9 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
             }
         } else {
             if (bill.getPaymentDate() != null) {
-                if (bill.getAmount() == 0) {
+                if (bill.getAmount() <= 0) {
                     LOG.log(Level.INFO,
-                            "{2} {0} delivered on {1} has no Amount but might be closed... will check total and discount integrity later.",
+                            "{2} {0} delivered on {1} has no Amount but might be closed: Free or Credit. Will check total and discount integrity later.",
                             new Object[]{bill.getReference(), bill.
                                 getDeliveryDate(), bill.getClass().
                                         getSimpleName()});
