@@ -145,8 +145,7 @@ public class DemoConfigureBean implements Serializable {
         vanessa.setCompanyID("50147615400023");
         vanessa.setCompanyName("VANESSA ESTHETIQUE ET COIFFURE");
         cal.clear();
-//        cal.set(2014, 1, 20);
-        cal.set(2007, 11, 15);
+        cal.set(2007, 11, 15); // src infogreffe
         vanessa.setCreationDate(cal.getTime());
 
         vanessa.getBusinesses().addAll(Arrays.asList(em.find(Business.class,
