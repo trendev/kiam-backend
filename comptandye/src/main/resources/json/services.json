@@ -12,7 +12,7 @@
     },
     {
         "name": "Shampoing - cheveux mi-longs",
-        "price": 300,
+        "price": 500,
         "duration": 5,
         "cltype": "service",
         "businesses": [
@@ -24,7 +24,7 @@
     {
         "name": "Shampoing - cheveux longs",
         "price": 500,
-        "duration": 10,
+        "duration": 5,
         "cltype": "service",
         "businesses": [
             {
@@ -100,7 +100,7 @@
     },
     {
         "name": "Brushing Ondulé (ou Bouclé) - cheveux courts",
-        "price": 1700,
+        "price": 1600,
         "duration": 15,
         "cltype": "service",
         "businesses": [
@@ -122,7 +122,7 @@
     },
     {
         "name": "Brushing Ondulé (ou Bouclé) - cheveux longs",
-        "price": 2300,
+        "price": 2400,
         "duration": 25,
         "cltype": "service",
         "businesses": [
@@ -210,7 +210,7 @@
     },
     {
         "name": "Mèches / Balayage - cheveux longs",
-        "price": 5000,
+        "price": 5100,
         "duration": 80,
         "cltype": "service",
         "businesses": [
@@ -253,20 +253,9 @@
         ]
     },
     {
-        "name": "Patine / Gloss - cheveux courts",
-        "price": 1200,
-        "duration": 15,
-        "cltype": "service",
-        "businesses": [
-            {
-                "designation": "Coiffure"
-            }
-        ]
-    },
-    {
-        "name": "Patine / Gloss - cheveux mi-longs",
+        "name": "Patine - cheveux courts",
         "price": 1400,
-        "duration": 15,
+        "duration": 20,
         "cltype": "service",
         "businesses": [
             {
@@ -275,9 +264,20 @@
         ]
     },
     {
-        "name": "Patine / Gloss - cheveux longs",
+        "name": "Patine - cheveux mi-longs",
         "price": 1600,
-        "duration": 15,
+        "duration": 20,
+        "cltype": "service",
+        "businesses": [
+            {
+                "designation": "Coiffure"
+            }
+        ]
+    },
+    {
+        "name": "Patine - cheveux longs",
+        "price": 1800,
+        "duration": 20,
         "cltype": "service",
         "businesses": [
             {
