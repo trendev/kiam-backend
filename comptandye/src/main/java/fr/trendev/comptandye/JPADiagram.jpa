@@ -358,6 +358,11 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:many-to-many>
+            <jpa:version attribute-type="long" v="true" xvt="" name="version" dv="0l" id="_1514559136297133">
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:version>
         </jpa:attributes>
         <jpa:nq e="false" name="Professional.findAll">
             <jpa:query>Select e from Professional e</jpa:query>
@@ -1671,6 +1676,9 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                     </e>
                     <e ref="_149020649962680">
                         <v st="1" si="12.0" cl="#00ff00"/>
+                    </e>
+                    <e ref="_1514559136297133">
+                        <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
