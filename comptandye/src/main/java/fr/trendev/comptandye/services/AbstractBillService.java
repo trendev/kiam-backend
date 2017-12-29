@@ -25,6 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
@@ -114,6 +115,26 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                 throw new WebApplicationException(
                         "A delivery date must be provided !");
             }
+
+            if (e.getProfessional().getBillsRefDate() == null) {
+                //fix the bill reference date with the delivery date of the first bill
+                e.getProfessional().setBillsRefDate(e.getDeliveryDate());
+            } else {
+                //filter bills with a delivery date earlier to the ref
+                if (e.getDeliveryDate().before(e.getProfessional().
+                        getBillsRefDate())) {
+                    throw new BadRequestException(
+                            "Bills Reference Date = " + e.getProfessional().
+                                    getBillsRefDate().getTime());
+                } else {
+                    //set the ref with the current bill
+                    e.getProfessional().setBillsRefDate(e.getDeliveryDate());
+                }
+            }
+
+            //increment the bill count, will be used in concurrency context
+            e.getProfessional().setBillsCount(e.getProfessional().
+                    getBillsCount() + 1);
 
             setBillReference(e, billTypeVisitor);
 
@@ -319,7 +340,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
     /**
      * Sets the the Bill's reference.
      *
-     * [CX|CG|IX]-[PRO-UUID]-[deliveryDate: yyyyMMddHHmmss]-[hashcode]
+     * [PRO-UUID]-[Bill Ref Number]-[CX|CG|IX][deliveryDate: yyyyMMdd]
      *
      * @param <T> the Bill's type ClientBill or CollectiveGroupBill or
      * IndividualBill
@@ -327,11 +348,13 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
      * @param visitor a {@link BillTypeVisitor} visitor which will provide the
      * prefix from the Bill's type.
      */
-    public static <T extends Bill> void setBillReference(T e,
+    public void setBillReference(T e,
             BillTypeVisitor visitor) {
-        e.setReference(e.accept(visitor) + "-" + e.getProfessional().
-                getUuid() + "-"
-                + new SimpleDateFormat("yyyyMMddHHmmss").format(e.
-                        getDeliveryDate()) + "-" + e.hashCode());
+        e.setReference(e.getProfessional().getUuid() + "-"
+                + e.getProfessional().getBillsCount() + "-"
+                + e.accept(visitor)
+                + new SimpleDateFormat("yyyyMMdd").format(e.
+                        getDeliveryDate())
+        );
     }
 }

@@ -153,6 +153,11 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 this.grantAsProfessional(e);
                 e.setBlocked(false);
             }
+
+            //Reset bills count and ref date if provided with the POST
+            //Values ignored in PUT
+            e.setBillsCount(0);
+            e.setBillsRefDate(null);
         });
     }
 

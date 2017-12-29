@@ -297,6 +297,18 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:temporal>DATE</jpa:temporal>
             </jpa:basic>
+            <jpa:basic attribute-type="long" v="true" xvt="" name="billsCount" dv="0" id="_1514560844274158">
+                <jpa:des>Must be only updated when a Bill is persisted. Should be unique and lock during concurent access and preserve Bill Number integrity.</jpa:des>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="java.util.Date" v="true" xvt="" name="billsRefDate" id="_1514567319873171">
+                <jpa:des>The reference date on the Bill timeline. Must be only updated when a Bill is persisted.</jpa:des>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+                <jpa:column unique="false" nullable="true" insertable="true" updatable="true" column-definition="DATETIME(3)"/>
+            </jpa:basic>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490178979567" connected-attribute-id="_1490179812677393" v="true" xvt="" name="bills" dv="new LinkedList&lt;&gt;()" id="_1490179812678394">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
@@ -402,6 +414,12 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         </jpa:nq>
         <jpa:nq e="false" name="Professional.findByAttribute1">
             <jpa:query>Select p from Professional p where p.attribute1=:attribute1</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Professional.findByBillsCount">
+            <jpa:query>Select p from Professional p where p.billsCount=:billsCount</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Professional.findByBillsRefDate">
+            <jpa:query>Select p from Professional p where p.billsRefDate=:billsRefDate</jpa:query>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="IndividualPK" abs="false" class="Individual" superclassId="_1490101376664" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101520286">
@@ -1650,6 +1668,12 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
             </i>
             <i ref="_1490101456632" x="-41" y="258">
                 <el>
+                    <e ref="_1514560844274158">
+                        <v st="1" si="12.0" cl="#000000"/>
+                    </e>
+                    <e ref="_1514567319873171">
+                        <v st="1" si="12.0" cl="#000000"/>
+                    </e>
                     <e ref="_1490179812678394">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>

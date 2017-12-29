@@ -9,11 +9,13 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
 /**
  * @author jsie
@@ -40,6 +42,22 @@ public class Professional extends Customer {
     @Basic
     @Temporal(TemporalType.DATE)
     private Date creationDate;
+
+    /**
+     * Must be only updated when a Bill is persisted. Should be unique and lock
+     * during concurent access and preserve Bill Number integrity.
+     */
+    @Basic
+    private long billsCount = 0;
+
+    /**
+     * The reference date on the Bill timeline. Must be only updated when a Bill
+     * is persisted.
+     */
+    @Column(columnDefinition = "DATETIME(3)")
+    @Basic
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date billsRefDate;
 
     @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Bill.class,
             mappedBy = "professional")
@@ -80,6 +98,10 @@ public class Professional extends Customer {
 
     @ManyToMany(targetEntity = PaymentMode.class)
     private List<PaymentMode> paymentModes = new LinkedList<>();
+
+    @Version
+    @JsonIgnore
+    private long version = 0l;
 
     public Professional(String email, String password, String username,
             String uuid) {
@@ -142,6 +164,22 @@ public class Professional extends Customer {
 
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public long getBillsCount() {
+        return this.billsCount;
+    }
+
+    public void setBillsCount(long billsCount) {
+        this.billsCount = billsCount;
+    }
+
+    public Date getBillsRefDate() {
+        return this.billsRefDate;
+    }
+
+    public void setBillsRefDate(Date billsRefDate) {
+        this.billsRefDate = billsRefDate;
     }
 
     public List<Bill> getBills() {
@@ -214,6 +252,14 @@ public class Professional extends Customer {
 
     public void setPaymentModes(List<PaymentMode> paymentModes) {
         this.paymentModes = paymentModes;
+    }
+
+    public long getVersion() {
+        return this.version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
 
     @Override
