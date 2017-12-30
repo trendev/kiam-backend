@@ -366,6 +366,13 @@ public class PackService extends AbstractOfferingService<Pack> {
                     try {
                         Map<String, Service> services = this.importServices(pro);
                         this.importPacks(pro, services);
+                        // update professional offerings
+                        packFacade.flush();
+                        if (pro.getOfferings().isEmpty()) {
+                            LOG.log(Level.SEVERE,
+                                    "Offerings List of {0} is empty! It should not...",
+                                    email);
+                        }
                         return Response.created(
                                 new URI("Professional/offerings"))
                                 .entity(pro.getOfferings())
