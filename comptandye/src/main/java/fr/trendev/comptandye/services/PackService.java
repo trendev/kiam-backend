@@ -364,18 +364,17 @@ public class PackService extends AbstractOfferingService<Pack> {
         return Optional.ofNullable(professionalFacade.find(email))
                 .map(pro -> {
                     try {
-                        Map<String, Service> services = this.importServices(pro);
-                        this.importPacks(pro, services);
-                        // update professional offerings
-                        packFacade.flush();
-                        if (pro.getOfferings().isEmpty()) {
-                            LOG.log(Level.SEVERE,
-                                    "Offerings List of {0} is empty! It should not...",
-                                    email);
-                        }
+                        Map<String, Offering> services = this.
+                                importServices(pro);
+                        List<Offering> packs = this.importPacks(pro, services);
+
+                        //concat pack and services
+                        packs.addAll(services.values());
+
+                        //avoid to return pro.getOffering(): can be outdated offering!
                         return Response.created(
                                 new URI("Professional/offerings"))
-                                .entity(pro.getOfferings())
+                                .entity(packs)
                                 .build();
                     } catch (Exception ex) {
                         String errmsg = ExceptionHelper.handleException(ex,
@@ -399,14 +398,14 @@ public class PackService extends AbstractOfferingService<Pack> {
      * @return a Map of the newly created Services
      * @throws IOException if an error occurs reading/parsing the file
      */
-    private Map<String, Service> importServices(Professional pro) throws
+    private Map<String, Offering> importServices(Professional pro) throws
             IOException {
 
         ClassLoader classloader = Thread.currentThread().
                 getContextClassLoader();
         InputStream is = classloader.getResourceAsStream("json/services.json");
 
-        Map<String, Service> map = new TreeMap<>();
+        Map<String, Offering> map = new TreeMap<>();
 
         Arrays.asList(om.readValue(is, Service[].class)).stream()
                 .map(s -> {
@@ -432,13 +431,15 @@ public class PackService extends AbstractOfferingService<Pack> {
      * @param services the Services Map, previously imported
      * @throws IOException if an error occurs reading/parsing the file
      */
-    private void importPacks(Professional pro, Map<String, Service> services)
+    private List<Offering> importPacks(Professional pro,
+            Map<String, Offering> services)
             throws IOException {
         ClassLoader classloader = Thread.currentThread().
                 getContextClassLoader();
         InputStream is = classloader.getResourceAsStream("json/packs.json");
 
-        Arrays.asList(om.readValue(is, Pack[].class)).stream()
+        List<Offering> packs = Arrays.asList(om.readValue(is, Pack[].class)).
+                stream()
                 .map(p -> {
                     List<Offering> offerings = p.getOfferings().stream()
                             //use the managed entity instead of the provided service
@@ -457,11 +458,13 @@ public class PackService extends AbstractOfferingService<Pack> {
 
                     p.setProfessional(pro);
                     pro.getOfferings().add(p);
+                    packFacade.create(p);
                     return p;
                 })
-                //map the managed entity
-                .forEach(p -> packFacade.create(p));
+                .collect(Collectors.toList());
 
         is.close();
+
+        return packs;
     }
 }
