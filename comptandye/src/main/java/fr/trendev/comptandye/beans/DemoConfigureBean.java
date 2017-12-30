@@ -166,7 +166,6 @@ public class DemoConfigureBean implements Serializable {
                                 "77600", "Chanteloup-en-Brie"), vanessa));
 
         vanessa.getPaymentModes().addAll(Arrays.asList(
-                new PaymentMode("CB"),
                 new PaymentMode("Chèque"),
                 new PaymentMode("Espèces"),
                 new PaymentMode("Virement")
@@ -189,6 +188,9 @@ public class DemoConfigureBean implements Serializable {
         cal.set(2016, 3, 19);
         audrey.setCreationDate(cal.getTime());
         audrey.getBusinesses().add(em.find(Business.class, "Coiffure"));
+        audrey.getPaymentModes().addAll(Arrays.asList(
+                new PaymentMode("Espèces")
+        ));
 
         /**
          * Creates the Professional user group
