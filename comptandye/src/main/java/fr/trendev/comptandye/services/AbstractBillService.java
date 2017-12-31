@@ -178,13 +178,10 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                     .sum();
 
             if (e.getAmount() != (total - e.getDiscount())) {
-                String errmsg = "Amount is " + e.getAmount() + " "
-                        + e.getCurrency()
+                String errmsg = "Amount is " + e.getAmount()
                         + " but the total amount computed (based on the purchased offerings prices and the discount) is "
                         + "(" + total + "-" + e.getDiscount() + ") = "
-                        + (total - e.getDiscount())
-                        + " "
-                        + e.getCurrency();
+                        + (total - e.getDiscount());
                 LOG.log(Level.WARNING, errmsg);
                 throw new WebApplicationException(errmsg);
             }
@@ -226,12 +223,8 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                         .sum();
                 if (total != bill.getAmount()) {
                     String errmsg = "Amount is " + bill.getAmount()
-                            + " "
-                            + bill.getCurrency()
                             + " but the total amount computed (based on the payments) is "
-                            + total
-                            + " "
-                            + bill.getCurrency();
+                            + total;
                     LOG.log(Level.WARNING, errmsg);
                     throw new WebApplicationException(errmsg);
                 }
