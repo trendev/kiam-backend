@@ -998,6 +998,13 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 <jpa:temporal>TIMESTAMP</jpa:temporal>
                 <jpa:column unique="false" nullable="true" insertable="true" updatable="true" column-definition="DATETIME(3)"/>
             </jpa:basic>
+            <jpa:basic attribute-type="java.util.Date" v="true" xvt="" name="issueDate" dv="new Date()" id="_1514830436839133">
+                <jpa:des>used for audit and sort the bills</jpa:des>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+                <jpa:column unique="false" nullable="true" insertable="true" updatable="true" column-definition="DATETIME(3)"/>
+            </jpa:basic>
             <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_1490179812678394" v="true" xvt="" name="professional" id="_1490179812677393">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
@@ -1066,6 +1073,9 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         </jpa:nq>
         <jpa:nq e="false" name="Bill.findByCurrency">
             <jpa:query>Select b from Bill b where b.currency=:currency</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Bill.findByIssueDate">
+            <jpa:query>Select b from Bill b where b.issueDate=:issueDate</jpa:query>
         </jpa:nq>
         <jpa:discriminator-column/>
     </jpa:entity>

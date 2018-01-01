@@ -52,6 +52,7 @@ public class BillTest {
         assert instance.getCurrency().equals("EUR");
         assert instance.getDiscount() == 0;
         assert instance.getPaymentDate() == null;
+        assert instance.getIssueDate() != null;
         assert instance.getComments() != null;
         assert instance.getComments().isEmpty();
         assert instance.getProfessional() == null;

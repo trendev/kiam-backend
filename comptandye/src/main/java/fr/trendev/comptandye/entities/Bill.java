@@ -84,6 +84,14 @@ public abstract class Bill {
     @Temporal(TemporalType.TIMESTAMP)
     private Date paymentDate;
 
+    /**
+     * used for audit and sort the bills
+     */
+    @Column(columnDefinition = "DATETIME(3)")
+    @Basic
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date issueDate = new Date();
+
     @ElementCollection
     private List<String> comments = new LinkedList<>();
 
@@ -176,6 +184,14 @@ public abstract class Bill {
 
     public void setPaymentDate(Date paymentDate) {
         this.paymentDate = paymentDate;
+    }
+
+    public Date getIssueDate() {
+        return this.issueDate;
+    }
+
+    public void setIssueDate(Date issueDate) {
+        this.issueDate = issueDate;
     }
 
     public List<String> getComments() {

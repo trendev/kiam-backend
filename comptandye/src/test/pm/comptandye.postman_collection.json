@@ -2192,6 +2192,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"id": "2c938d91-0946-4af6-8a59-39a82cdd032b",
 								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
@@ -2266,6 +2267,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "67664deb-2e01-4a25-a65e-9ff3d943d575",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
@@ -2275,6 +2277,8 @@
 									"pm.environment.set(\"created_clientbill_reference\", jsonData.reference);",
 									"tests[\"deliveryDate is defined\"] = jsonData.deliveryDate !== undefined;",
 									"pm.environment.set(\"created_clientbill_deliveryDate\", jsonData.deliveryDate);",
+									"",
+									"tests[\"issueDate is defined\"] = jsonData.issueDate !== undefined;",
 									"",
 									"tests[\"client.email is \\\"client@domain.com\\\"\"] = jsonData.client.email === \"client@domain.com\";",
 									"tests[\"client.socialNetworkAccounts.twitter is \\\"@client_facebook_account\\\"\"] = jsonData.client.socialNetworkAccounts.twitter === \"@client_facebook_account\";",
@@ -3212,6 +3216,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"id": "ed5a488e-507f-4160-86c7-244ce3a8922c",
 								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
@@ -3274,6 +3279,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "9cf1bc26-42ce-4bfa-8411-193ad3b1648a",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
@@ -3283,6 +3289,8 @@
 									"pm.environment.set(\"created_collectivegroupbill_reference\", jsonData.reference);",
 									"tests[\"deliveryDate is defined\"] = jsonData.deliveryDate !== undefined;",
 									"pm.environment.set(\"created_collectivegroupbill_deliveryDate\", jsonData.deliveryDate);",
+									"",
+									"tests[\"issueDate is defined\"] = jsonData.issueDate !== undefined;",
 									"",
 									"tests[\"collectiveGroup is defined\"] = jsonData.collectiveGroup.id !== undefined;",
 									"tests[\"collectiveGroup is \"+pm.environment.get(\"created_collectivegroup_id\")] = jsonData.collectiveGroup.id == pm.environment.get(\"created_collectivegroup_id\");",
@@ -4880,6 +4888,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"id": "3fc1c3fc-b14b-45bd-8f45-5fdab6828212",
 								"type": "text/javascript",
 								"exec": [
 									"/*birthdate should be send as UTC format only (avoid javascript GMT+2 and JAVA GMT+1 conversion errors for dates before 1970)*/",
@@ -4966,6 +4975,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "a4c1da50-5757-475a-bea5-5164eed77def",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
@@ -4975,6 +4985,8 @@
 									"pm.environment.set(\"created_individualbill_reference\", jsonData.reference);",
 									"tests[\"deliveryDate is defined\"] = jsonData.deliveryDate !== undefined;",
 									"pm.environment.set(\"created_individualbill_deliveryDate\", jsonData.deliveryDate);",
+									"",
+									"tests[\"issueDate is defined\"] = jsonData.issueDate !== undefined;",
 									"",
 									"tests[\"cltype is individualbill\"] = jsonData.cltype === \"individualbill\";",
 									"tests[\"amount is 5000\"] = jsonData.amount === 5000;",

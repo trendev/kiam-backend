@@ -188,6 +188,9 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
 
             e.setPurchasedOfferings(purchasedOfferings);
 
+            //fix the issue date
+            e.setIssueDate(new Date());
+
             prepareAction.accept(e);
         });
     }
