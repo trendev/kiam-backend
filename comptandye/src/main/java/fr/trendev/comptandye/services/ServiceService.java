@@ -36,24 +36,24 @@ import javax.ws.rs.core.SecurityContext;
 @Path("Service")
 @RolesAllowed({"Administrator", "Professional"})
 public class ServiceService extends AbstractOfferingService<Service> {
-
+    
     private final Logger LOG = Logger.getLogger(ServiceService.class.
             getName());
-
+    
     public ServiceService() {
         super(Service.class);
     }
-
+    
     @Override
     protected Logger getLogger() {
         return LOG;
     }
-
+    
     @Override
     protected AbstractFacade<Service, OfferingPK> getFacade() {
         return serviceFacade;
     }
-
+    
     @RolesAllowed({"Administrator"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -62,7 +62,7 @@ public class ServiceService extends AbstractOfferingService<Service> {
         LOG.log(Level.INFO, "Providing the Service list");
         return super.findAll();
     }
-
+    
     @RolesAllowed({"Administrator"})
     @Path("count")
     @GET
@@ -71,7 +71,7 @@ public class ServiceService extends AbstractOfferingService<Service> {
     public Response count() {
         return super.count();
     }
-
+    
     @RolesAllowed({"Administrator"})
     @Path("{id}")
     @GET
@@ -85,19 +85,19 @@ public class ServiceService extends AbstractOfferingService<Service> {
                         pk));
         return super.find(pk, refresh);
     }
-
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response post(@Context SecurityContext sec, Service entity,
             @QueryParam("professional") String professional) {
-
+        
         String email = this.getProEmail(sec, professional);
-
+        
         if (entity.getBusinesses() == null || entity.getBusinesses().isEmpty()) {
             throw new WebApplicationException("No Business provided !");
         }
-
+        
         return super.<Professional, String>post(entity, email,
                 AbstractFacade::prettyPrintPK,
                 Professional.class,
@@ -105,26 +105,27 @@ public class ServiceService extends AbstractOfferingService<Service> {
                 Professional::getOfferings, e -> {
             e.setId(null);
         });
-
+        
     }
-
+    
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(@Context SecurityContext sec, Service entity,
             @QueryParam("professional") String professional) {
-
+        
         if (entity.getBusinesses() == null || entity.getBusinesses().isEmpty()) {
             throw new WebApplicationException("No Business provided !");
         }
-
+        
         OfferingPK pk = new OfferingPK(entity.getId(), this.getProEmail(sec,
                 professional));
-
+        
         LOG.log(Level.INFO, "Updating Service {0}", serviceFacade.
                 prettyPrintPK(pk));
         return super.put(entity, pk, e -> {
             e.setName(entity.getName());
+            e.setShortname(entity.getShortname());
             e.setPrice(entity.getPrice());
             e.setDuration(entity.getDuration());
             e.setBusinesses(entity.getBusinesses());
@@ -148,16 +149,16 @@ public class ServiceService extends AbstractOfferingService<Service> {
     public Response delete(@Context SecurityContext sec,
             @PathParam("id") Long id,
             @QueryParam("professional") String professional) {
-
+        
         OfferingPK pk = new OfferingPK(id, this.getProEmail(sec, professional));
-
+        
         LOG.log(Level.INFO, "Deleting Service {0}", serviceFacade.
                 prettyPrintPK(pk));
-
+        
         return super.delete(pk, e -> {
         });
     }
-
+    
     @Path("{id}/purchasedOfferings")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -168,7 +169,7 @@ public class ServiceService extends AbstractOfferingService<Service> {
                 professional));
         return super.getPurchasedOfferings(pk);
     }
-
+    
     @Path("{id}/parentPacks")
     @GET
     @Produces(MediaType.APPLICATION_JSON)

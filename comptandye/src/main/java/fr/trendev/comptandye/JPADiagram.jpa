@@ -885,6 +885,10 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" xvt="" name="shortname" id="_1514998018986206">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
             <jpa:basic attribute-type="int" v="true" xvt="" name="price" id="_1490176780392140">
                 <jpa:des>reference price, based on Euro cents</jpa:des>
                 <jpa:xwm nil="false" req="false"/>
@@ -942,6 +946,9 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         </jpa:nq>
         <jpa:nq e="false" name="Offering.findByCltype">
             <jpa:query>Select o from Offering o where o.cltype=:cltype</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Offering.findByShortname">
+            <jpa:query>Select o from Offering o where o.shortname=:shortname</jpa:query>
         </jpa:nq>
         <jpa:discriminator-column/>
     </jpa:entity>

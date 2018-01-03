@@ -50,6 +50,9 @@ public abstract class Offering {
     @Basic
     private String name;
 
+    @Basic
+    private String shortname;
+
     /**
      * reference price, based on Euro cents
      */
@@ -113,6 +116,14 @@ public abstract class Offering {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getShortname() {
+        return this.shortname;
+    }
+
+    public void setShortname(String shortname) {
+        this.shortname = shortname;
     }
 
     public int getPrice() {

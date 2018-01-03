@@ -25,6 +25,7 @@ public class OfferingTest {
 
         assert instance.getId() == null;
         assert instance.getName() == null;
+        assert instance.getShortname() == null;
         assert instance.getPrice() == 0;
         assert instance.getDuration() == 0;
         assert instance.getProfessional() == null;
@@ -44,6 +45,7 @@ public class OfferingTest {
 
         assert instance.getId() == null;
         assert instance.getName().equals(name);
+        assert instance.getShortname() == null;
         assert instance.getPrice() == price;
         assert instance.getDuration() == duration;
         assert instance.getProfessional() != null;

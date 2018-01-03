@@ -161,6 +161,7 @@ public class PackService extends AbstractOfferingService<Pack> {
                 prettyPrintPK(pk));
         return super.put(entity, pk, e -> {
             e.setName(entity.getName());
+            e.setShortname(entity.getShortname());
             e.setPrice(entity.getPrice());
             e.setDuration(entity.getDuration());
             e.setBusinesses(entity.getBusinesses());
