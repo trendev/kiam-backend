@@ -7820,6 +7820,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "f9461bb2-da79-4289-a4db-bebc864eae24",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
@@ -7828,6 +7829,7 @@
 									"tests[\"id is defined\"] = jsonData.id !== undefined;",
 									"pm.environment.set(\"created_offering_id\", jsonData.id);",
 									"tests[\"name is \\\"beauty service\\\"\"] = jsonData.name === \"beauty service\";",
+									"tests[\"shortname is \\\"bs\\\"\"] = jsonData.shortname === \"bs\";",
 									"tests[\"price is 10000\"] = jsonData.price === 10000;",
 									"tests[\"duration is 180\"] = jsonData.duration === 180;",
 									"tests[\"cltype is service\"] = jsonData.cltype === \"service\";"
@@ -7849,7 +7851,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":\"beauty service\",\n  \"price\":10000,\n  \"duration\":180,\n  \"cltype\":\"service\",\n  \"businesses\": [\n        {\n                \"designation\": \"Coiffure\"\n        }\n  ]\n}"
+							"raw": "{\n  \"name\":\"beauty service\",\n  \"shortname\":\"bs\",\n  \"price\":10000,\n  \"duration\":180,\n  \"cltype\":\"service\",\n  \"businesses\": [\n        {\n                \"designation\": \"Coiffure\"\n        }\n  ]\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Service?professional=vanessa.gay@gmail.com",
