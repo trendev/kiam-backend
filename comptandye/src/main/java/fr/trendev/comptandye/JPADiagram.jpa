@@ -1579,6 +1579,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         <jpa:snp loc="BEFORE_METHOD" e="true">public OfferingSnapshot(Offering offering) {
         this.cltype = offering.getCltype();
         this.name = offering.getName();
+        this.shortname = offering.getShortname();
         this.price = offering.getPrice();
         this.duration = offering.getDuration();
         this.businesses = offering.getBusinesses();
@@ -1590,6 +1591,10 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
             <jpa:basic attribute-type="String" v="true" xvt="" name="name" id="_1512853526669565">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" xvt="" name="shortname" id="_1515170218296265">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
@@ -1822,7 +1827,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 </el>
             </i>
             <i ref="_1490101737208" x="-406" y="21"/>
-            <i ref="_1512853437669" x="535" y="1576">
+            <i ref="_1512853437669" x="535" y="1586">
                 <el>
                     <e ref="_151290448762472">
                         <v st="1" si="12.0" cl="#00ff00"/>

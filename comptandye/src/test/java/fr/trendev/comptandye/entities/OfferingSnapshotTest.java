@@ -31,6 +31,7 @@ public class OfferingSnapshotTest {
         Service service = new Service("test_service", 1000, 120,
                 new Professional());
         service.setCltype(OfferingType.SERVICE);
+        service.setShortname("ts");
         service.getBusinesses().add(new Business("business#1"));
         service.getBusinesses().add(new Business("business#2"));
 
@@ -38,6 +39,7 @@ public class OfferingSnapshotTest {
 
         assert os.getCltype().equals(service.getCltype());
         assert os.getName().equals(service.getName());
+        assert os.getShortname().equals(service.getShortname());
         assert os.getPrice() == service.getPrice();
         assert os.getDuration() == service.getDuration();
         assert os.getBusinesses() != null;

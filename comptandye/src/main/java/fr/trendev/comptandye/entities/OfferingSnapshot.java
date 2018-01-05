@@ -19,6 +19,9 @@ public class OfferingSnapshot {
     @Basic
     private String name;
 
+    @Basic
+    private String shortname;
+
     /**
      * Price in cents (1/100 of the currency)
      */
@@ -40,6 +43,7 @@ public class OfferingSnapshot {
     public OfferingSnapshot(Offering offering) {
         this.cltype = offering.getCltype();
         this.name = offering.getName();
+        this.shortname = offering.getShortname();
         this.price = offering.getPrice();
         this.duration = offering.getDuration();
         this.businesses = offering.getBusinesses();
@@ -59,6 +63,14 @@ public class OfferingSnapshot {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getShortname() {
+        return this.shortname;
+    }
+
+    public void setShortname(String shortname) {
+        this.shortname = shortname;
     }
 
     public int getPrice() {
