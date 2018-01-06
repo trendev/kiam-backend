@@ -1,0 +1,66 @@
+{
+  "configVersion": 1,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "urls": [
+        "/favicon.ico",
+        "/index.html",
+        "/0.c247b354ac89a9353b7d.chunk.js",
+        "/1.448b91e37eb5cfa27234.chunk.js",
+        "/10.f71ba51e7c19aa06aef4.chunk.js",
+        "/11.95a36e9e198aabc6cea1.chunk.js",
+        "/2.7504739b298ffd5667c4.chunk.js",
+        "/3.fc6e1401d8b0d8fd2114.chunk.js",
+        "/4.dcfa07ac916a9f2dc0ca.chunk.js",
+        "/5.b3dbc578d652d967b39f.chunk.js",
+        "/6.a63c25fc5425a9c6c627.chunk.js",
+        "/7.3d7521337d1fe8d49c3f.chunk.js",
+        "/8.01d92c32784aa5b0ca8a.chunk.js",
+        "/9.0ec4333037fa3fb8c36f.chunk.js",
+        "/inline.04bde74b47a42f96daf9.bundle.js",
+        "/main.ee1aa277f64874c73b48.bundle.js",
+        "/polyfills.3988131029a68baf2af3.bundle.js",
+        "/styles.22befee761d9900cd5fe.bundle.css"
+      ],
+      "patterns": [
+        "https:\\/\\/fonts\\.googleapis\\.com\\/icon\\?family=Material\\+Icons",
+        "https:\\/\\/fonts\\.googleapis\\.com\\/css\\?family=Indie\\+Flower",
+        "https:\\/\\/fonts\\.googleapis\\.com\\/css\\?family=Arapey:400,400i",
+        "https:\\/\\/fonts\\.gstatic\\.com\\/s\\/arapey\\/v6\\/2fD9gIinOROmREwVfSHWKnYhjbSpvc47ee6xR_80Hnw\\.woff2",
+        "https:\\/\\/fonts\\.gstatic\\.com\\/s\\/materialicons\\/v32\\/2fcrYFNaTjcS6g4U3t-Y5UEw0lE80llgEseQY3FEmqw\\.woff2"
+      ]
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "urls": [],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/0.c247b354ac89a9353b7d.chunk.js": "2ebb38045b7ca6a9793dcdd8284cfdf7a079bac8",
+    "/1.448b91e37eb5cfa27234.chunk.js": "99df246cc27afccf63a0d276de46782f20511842",
+    "/10.f71ba51e7c19aa06aef4.chunk.js": "c6333ea73e7338ca6cf44e1c554cd98e9221ffa1",
+    "/11.95a36e9e198aabc6cea1.chunk.js": "cdde7acb1b46f7f538c077816ac39be1a1309a50",
+    "/2.7504739b298ffd5667c4.chunk.js": "4be6d6f67987d4746d7d547d2039060483ea47d7",
+    "/3.fc6e1401d8b0d8fd2114.chunk.js": "41040dd6c4f0f075d364b51957219520f8572b74",
+    "/4.dcfa07ac916a9f2dc0ca.chunk.js": "44eda435fa9f3d843de88a459f31a756d6975137",
+    "/5.b3dbc578d652d967b39f.chunk.js": "478db826e86beb7456d4ff9580d2912c2d142423",
+    "/6.a63c25fc5425a9c6c627.chunk.js": "30f4bf34cb1926219fad8222ea1087b5f901c552",
+    "/7.3d7521337d1fe8d49c3f.chunk.js": "def7e867d14ac347b6cb1d3f54adb6ec573f80d6",
+    "/8.01d92c32784aa5b0ca8a.chunk.js": "7f584effc569132b684f7e5cb0fb9da2cf97cfc0",
+    "/9.0ec4333037fa3fb8c36f.chunk.js": "03d179b7c6b1d04a197b97aa2c3d640dbce06e0c",
+    "/inline.04bde74b47a42f96daf9.bundle.js": "8e00feebc1e27e4bcc32960efbdea26b569f134f",
+    "/main.ee1aa277f64874c73b48.bundle.js": "e1cf458612c3580421edfb65ccdad7d1e0a048bb",
+    "/polyfills.3988131029a68baf2af3.bundle.js": "7fb2d3d4a345e08fce6b65ccbc35bef91843ff5d",
+    "/styles.22befee761d9900cd5fe.bundle.css": "158ba98071bd8923a4590ce8e84d46ce4b7c9608",
+    "/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
+    "/index.html": "af450617d2cb6999d925d9b1d87d8528bcdf9286"
+  }
+}
