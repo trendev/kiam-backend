@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
-import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -443,10 +442,14 @@ public class PackService extends AbstractOfferingService<Pack> {
                 stream()
                 .map(p -> {
                     List<Offering> offerings = p.getOfferings().stream()
-                            //use the managed entity instead of the provided service
+                            //use the managed entity instead of the provided offering
                             .map(o -> Optional.ofNullable(
                                     services.get(o.getName()))
-                                    .map(Function.identity())
+                                    .map(_o -> {
+                                        //update the link between the offering and the pack
+                                        _o.getParentPacks().add(p);
+                                        return _o;
+                                    })
                                     //occurs if json file contains errors
                                     .orElseThrow(() ->
                                             new WebApplicationException(
