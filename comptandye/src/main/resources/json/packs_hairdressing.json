@@ -532,5 +532,30 @@
                 "cltype": "service"
             }
         ]
+    },
+    {
+        "name": "Shamp. + Coupe + Coiffage - Homme",
+        "price": 1900,
+        "duration": 30,
+        "cltype": "pack",
+        "businesses": [
+            {
+                "designation": "Coiffure"
+            }
+        ],
+        "offerings": [
+            {
+                "name": "Shampoing Homme",
+                "cltype": "service"
+            },
+            {
+                "name": "Coupe Homme",
+                "cltype": "service"
+            },
+            {
+                "name": "Coiffage Homme",
+                "cltype": "service"
+            }
+        ]
     }
 ]

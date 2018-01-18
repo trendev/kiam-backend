@@ -403,7 +403,8 @@ public class PackService extends AbstractOfferingService<Pack> {
 
         ClassLoader classloader = Thread.currentThread().
                 getContextClassLoader();
-        InputStream is = classloader.getResourceAsStream("json/services.json");
+        InputStream is = classloader.getResourceAsStream(
+                "json/services_hairdressing.json");
 
         Map<String, Offering> map = new TreeMap<>();
 
@@ -436,7 +437,8 @@ public class PackService extends AbstractOfferingService<Pack> {
             throws IOException {
         ClassLoader classloader = Thread.currentThread().
                 getContextClassLoader();
-        InputStream is = classloader.getResourceAsStream("json/packs.json");
+        InputStream is = classloader.getResourceAsStream(
+                "json/packs_hairdressing.json");
 
         List<Offering> packs = Arrays.asList(om.readValue(is, Pack[].class)).
                 stream()

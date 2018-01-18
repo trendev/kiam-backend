@@ -317,6 +317,126 @@
                 "designation": "Coiffure"
             }
         ]
+    },
+    {
+        "name": "Coiffage Homme",
+        "price": 800,
+        "duration": 10,
+        "cltype": "service",
+        "businesses": [
+            {
+                "designation": "Coiffure"
+            }
+        ]
+    },
+    {
+        "name": "Shampoing Homme",
+        "price": 300,
+        "duration": 5,
+        "cltype": "service",
+        "businesses": [
+            {
+                "designation": "Coiffure"
+            }
+        ]
+    },
+    {
+        "name": "Coupe Homme",
+        "price": 1500,
+        "duration": 20,
+        "cltype": "service",
+        "businesses": [
+            {
+                "designation": "Coiffure"
+            }
+        ]
+    },
+    {
+        "name": "Coupe Garçon (-10)",
+        "price": 1200,
+        "duration": 20,
+        "cltype": "service",
+        "businesses": [
+            {
+                "designation": "Coiffure"
+            }
+        ]
+    },
+    {
+        "name": "Coupe Fille (-10)",
+        "price": 1400,
+        "duration": 25,
+        "cltype": "service",
+        "businesses": [
+            {
+                "designation": "Coiffure"
+            }
+        ]
+    },
+    {
+        "name": "Coupe Garçon (-16)",
+        "price": 1400,
+        "duration": 25,
+        "cltype": "service",
+        "businesses": [
+            {
+                "designation": "Coiffure"
+            }
+        ]
+    },
+    {
+        "name": "Coupe Fille (-16)",
+        "price": 1600,
+        "duration": 30,
+        "cltype": "service",
+        "businesses": [
+            {
+                "designation": "Coiffure"
+            }
+        ]
+    },
+    {
+        "name": "Attachés (rapide) ou tresses",
+        "price": 3000,
+        "duration": 30,
+        "cltype": "service",
+        "businesses": [
+            {
+                "designation": "Coiffure"
+            }
+        ]
+    },
+    {
+        "name": "Chignon soirée",
+        "price": 5000,
+        "duration": 60,
+        "cltype": "service",
+        "businesses": [
+            {
+                "designation": "Coiffure"
+            }
+        ]
+    },
+    {
+        "name": "Chignon élégance",
+        "price": 9000,
+        "duration": 75,
+        "cltype": "service",
+        "businesses": [
+            {
+                "designation": "Coiffure"
+            }
+        ]
+    },
+    {
+        "name": "Chignon prestige",
+        "price": 12000,
+        "duration": 90,
+        "cltype": "service",
+        "businesses": [
+            {
+                "designation": "Coiffure"
+            }
+        ]
     }
-
 ]
