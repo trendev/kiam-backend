@@ -1,8 +1,8 @@
-@angular/material@5.0.4
+@angular/material@5.1.0
 MIT
 The MIT License
 
-Copyright (c) 2017 Google LLC.
+Copyright (c) 2018 Google LLC.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -74,15 +74,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-@angular/forms@5.2.0
+@angular/forms@5.2.1
 MIT
 MIT
 
-@angular/cdk@5.0.4
+@angular/cdk@5.1.0
 MIT
 The MIT License
 
-Copyright (c) 2017 Google LLC.
+Copyright (c) 2018 Google LLC.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -102,19 +102,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-@angular/common@5.2.0
+@angular/common@5.2.1
 MIT
 MIT
 
-@angular/core@5.2.0
+@angular/core@5.2.1
 MIT
 MIT
 
-@angular/material-moment-adapter@5.0.4
+@angular/material-moment-adapter@5.1.0
 MIT
 The MIT License
 
-Copyright (c) 2017 Google LLC.
+Copyright (c) 2018 Google LLC.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -134,11 +134,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-@angular/platform-browser@5.2.0
+@angular/platform-browser@5.2.1
 MIT
 MIT
 
-@angular/router@5.2.0
+@angular/router@5.2.1
 MIT
 MIT
 
@@ -165,7 +165,7 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-@angular/animations@5.2.0
+@angular/animations@5.2.1
 MIT
 MIT
 
