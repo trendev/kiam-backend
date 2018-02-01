@@ -60,8 +60,9 @@ public class OverallFilter implements Filter {
 
         /**
          * If the user is authenticated and the session is not already in the
-         * trackers, adds and associated it in the tracker if the authenticated
-         * user.
+         * tracker, adds and links it in the tracker. Usually, this can happen
+         * after a redeployment (DEV purposes) or if an user is logged with the
+         * basic form.
          */
         try {
             if (user != null
@@ -77,6 +78,10 @@ public class OverallFilter implements Filter {
                 c.setHttpOnly(false);//should be used by javascript (Angular) scripts
                 c.setSecure(true);//requires to use HTTPS
                 rsp.addCookie(c);
+                LOG.log(Level.WARNING,
+                        "User [{0}] authenticated but adding the XSRF-Token and the session [{1}] in the Tracker",
+                        new Object[]{user.getName(),
+                            session.getId()});
             }
             chain.doFilter(request, response);
         } catch (Exception ex) {
