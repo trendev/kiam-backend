@@ -1,6 +1,9 @@
 {
   "configVersion": 1,
   "index": "/index.html",
+  "appData": {
+    "version": "1.0.0"
+  },
   "assetGroups": [
     {
       "name": "app",
@@ -12,24 +15,23 @@
         "/0.704d85c5b5c3d8dedae4.chunk.js",
         "/1.fd94f31b2fb533a35adc.chunk.js",
         "/10.8c173e119b58f1aed699.chunk.js",
-        "/11.5ffdd02e9372e8fb60f6.chunk.js",
+        "/11.63854f498ced959f31cc.chunk.js",
         "/2.048e7a068263afdf0c79.chunk.js",
-        "/3.42190f66921405b1bf0a.chunk.js",
-        "/4.222510873952ce2621c8.chunk.js",
+        "/3.d03fb2a1dabc62133195.chunk.js",
+        "/4.294225b23c319d8487a1.chunk.js",
         "/5.2acb26f3905cb73255e5.chunk.js",
         "/6.221faab3f04aa0c4beb0.chunk.js",
         "/7.b70a7e87ce44671fe598.chunk.js",
         "/8.f45c589f4e95342d48e4.chunk.js",
-        "/9.3c4d3024a7eab915e204.chunk.js",
-        "/inline.ce8cbc2f69eddac0e08c.bundle.js",
-        "/main.947e20fc74683639d812.bundle.js",
+        "/9.70404e815998dd8cba7d.chunk.js",
+        "/inline.637bf485798b4b2e75ad.bundle.js",
+        "/main.c88e6740a23a55f97845.bundle.js",
         "/polyfills.10f22a787a722d872fa5.bundle.js",
         "/styles.6d92255be9120f3e9721.bundle.css"
       ],
       "patterns": [
         "https:\\/\\/fonts\\.googleapis\\.com\\/.*",
-        "https:\\/\\/fonts\\.gstatic\\.com\\/s\\/arapey\\/v6\\/2fD9gIinOROmREwVfSHWKnYhjbSpvc47ee6xR_80Hnw\\.woff2",
-        "https:\\/\\/fonts\\.gstatic\\.com\\/s\\/materialicons\\/v32\\/2fcrYFNaTjcS6g4U3t-Y5UEw0lE80llgEseQY3FEmqw\\.woff2"
+        "https:\\/\\/fonts\\.gstatic\\.com\\/.*"
       ]
     },
     {
@@ -45,20 +47,20 @@
     "/0.704d85c5b5c3d8dedae4.chunk.js": "d1c4e68bfa8037c3c01197adb99d8185d906821c",
     "/1.fd94f31b2fb533a35adc.chunk.js": "940c3f90e61f1d74664c569836780a0ce8492938",
     "/10.8c173e119b58f1aed699.chunk.js": "e2ab0450ad42f58b5c39ea90ec93d2daf6a0b626",
-    "/11.5ffdd02e9372e8fb60f6.chunk.js": "e5b9ddebf97e46973c6f10b0d7fc09ba41096b75",
+    "/11.63854f498ced959f31cc.chunk.js": "fb7a9af19a3f550a0567af8a20d1611f0b93a723",
     "/2.048e7a068263afdf0c79.chunk.js": "943b9fff7bcdf118fce9d5e19070c6345a07ecae",
-    "/3.42190f66921405b1bf0a.chunk.js": "f3c56f06ead79334c4da93afc21f48d4d72b4a3e",
-    "/4.222510873952ce2621c8.chunk.js": "e484fb84554c9b1a910d66651432d6c18ef08eb0",
+    "/3.d03fb2a1dabc62133195.chunk.js": "08e17bc17fec7a8922d8bb73c1fc3b0f1748cf9c",
+    "/4.294225b23c319d8487a1.chunk.js": "395be869c1857a9cc8fbe630161db9f50fd08f99",
     "/5.2acb26f3905cb73255e5.chunk.js": "414a16b20770fcf63672c82bf2acbdbc6fc955a2",
     "/6.221faab3f04aa0c4beb0.chunk.js": "dc88273989d572d5271de26e27394137d1a72506",
     "/7.b70a7e87ce44671fe598.chunk.js": "47d3e0f68a9a12c8a233b5ce65832888851e3100",
     "/8.f45c589f4e95342d48e4.chunk.js": "49b77b541c0cdb8d0f7586e3e4e88b43dd6274c5",
-    "/9.3c4d3024a7eab915e204.chunk.js": "2bb759b8479e0f65c884c316a05e0a2ea44afb8f",
-    "/inline.ce8cbc2f69eddac0e08c.bundle.js": "9317892347fe7914fcb2a2b12de0759308c220d9",
-    "/main.947e20fc74683639d812.bundle.js": "289a791a2e50dc347809767790617eb9defb40d8",
+    "/9.70404e815998dd8cba7d.chunk.js": "7a2295d634e1ff1c879a3bca5313f1f07a95fe4b",
+    "/inline.637bf485798b4b2e75ad.bundle.js": "db37a7939bce8238ab4d8cf308a7e96f3e28db31",
+    "/main.c88e6740a23a55f97845.bundle.js": "54d970625c90bd725013280aca12c50f50004d86",
     "/polyfills.10f22a787a722d872fa5.bundle.js": "fd7e3bea2ff85293c62622b9fa8d0b6e95c1ccea",
     "/styles.6d92255be9120f3e9721.bundle.css": "f33fcd76db5ebf308d0be853fd3d9dacc6a10ed4",
     "/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
-    "/index.html": "4364d329f0ed98acbc6845bcf3d433b5f03d3d72"
+    "/index.html": "4c5f155d41b2c13b6925fafac1eefcef02bff4b1"
   }
 }
