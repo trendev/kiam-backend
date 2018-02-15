@@ -2,9 +2,9 @@
     "dir": "ltr",
     "lang": "fr",
     "name": "Comptandye",
-    "scope": "/dist/",
+    "scope": "/",
     "display": "fullscreen",
-    "start_url": "https://www.comptandye.fr/dist/index.html",
+    "start_url": "https://www.comptandye.fr/index.html",
     "short_name": "Comptandye",
     "theme_color": "transparent",
     "description": "L'application web pour la coiffure, l'esthétique et l'onglerie à domicile",
@@ -14,7 +14,7 @@
     "prefer_related_applications": false,
     "icons": [
       {
-        "src": "/dist/favicon.ico",
+        "src": "/favicon.ico",
         "sizes": "16x16 32x32"
       }
     ]
