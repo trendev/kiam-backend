@@ -8,6 +8,7 @@
 	"item": [
 		{
 			"name": "Authentication",
+			"description": null,
 			"item": [
 				{
 					"name": "login",
@@ -106,7 +107,8 @@
 								"Authentication",
 								"profile"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -148,7 +150,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -193,7 +196,8 @@
 								"Authentication",
 								"new-password"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -238,7 +242,8 @@
 								"Authentication",
 								"new-password"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -555,7 +560,8 @@
 							"path": [
 								"Administrator"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -590,7 +596,8 @@
 								"Administrator",
 								"count"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -632,7 +639,8 @@
 								"Administrator",
 								"comptandye@gmail.com"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -684,7 +692,8 @@
 							"path": [
 								"Administrator"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -736,7 +745,8 @@
 							"path": [
 								"Administrator"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -775,7 +785,8 @@
 								"Administrator",
 								"newadmin@trendev.fr"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -814,7 +825,8 @@
 								"comptandye@gmail.com",
 								"userGroups"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -858,7 +870,8 @@
 								"insertToUserGroup",
 								"Individual"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -901,7 +914,8 @@
 								"removeFromUserGroup",
 								"Individual"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -909,6 +923,7 @@
 		},
 		{
 			"name": "Business",
+			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -941,7 +956,8 @@
 							"path": [
 								"Business"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -975,7 +991,8 @@
 								"Business",
 								"count"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -1019,7 +1036,8 @@
 							"path": [
 								"Business"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -1055,7 +1073,8 @@
 								"Business",
 								"{{created_business_designation}}"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -1097,7 +1116,8 @@
 								"Business",
 								"{{created_business_designation}}"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -1105,6 +1125,7 @@
 		},
 		{
 			"name": "Category",
+			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -1138,7 +1159,8 @@
 							"path": [
 								"Category"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -1174,7 +1196,8 @@
 								"Category",
 								"count"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -1228,7 +1251,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -1275,7 +1299,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -1330,7 +1355,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -1435,7 +1461,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -1476,7 +1503,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -1553,7 +1581,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -1598,7 +1627,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -1606,6 +1636,7 @@
 		},
 		{
 			"name": "Client",
+			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -1638,7 +1669,8 @@
 							"path": [
 								"Client"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -1673,7 +1705,8 @@
 								"Client",
 								"count"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -1711,36 +1744,9 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "aa737c33-a018-4dd0-bfc9-59f394ccf665",
+								"id": "39e711d7-c2eb-4f2f-9ab9-b4c5d7eeeaa9",
 								"type": "text/javascript",
 								"exec": [
-									"pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/CollectiveGroup?professional=vanessa.gay@gmail.com\",",
-									"    method: 'POST',",
-									"   header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
-									"    },",
-									"    body:{",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify(",
-									"            {",
-									"              groupName:\"Maison de retraite de Chanteloup-en-Brie\",",
-									"              phone:\"0123456789\",",
-									"              address:{",
-									"                street:\"Allée de Fontenelle\",",
-									"                optional:\"Château de Fontenelle\",",
-									"                postalCode:\"77600\",",
-									"                city:\"Chanteloup-en-Brie\"",
-									"              }",
-									"            }",
-									"        )",
-									"    }",
-									"}, function (err, response) {",
-									"    console.log(err ? err : response.json());",
-									"   pm.environment.set(\"created_collectivegroup_id\", response.json().id);",
-									"});",
-									"",
 									""
 								]
 							}
@@ -1760,7 +1766,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\":\"client@domain.com\",\n  \"address\":{\n    \"street\":\"Allée de Fontenelle\",\n    \"optional\":\"Château de Fontenelle\",\n    \"postalCode\":\"77600\",\n    \"city\":\"Chanteloup-en-Brie\"\n  },\n  \"socialNetworkAccounts\":{\n    \"twitter\":\"@client_facebook_account\"\n  },\n  \"customerDetails\":{\n    \"firstName\":\"Paul\",\n    \"lastName\":\"Newman\",\n    \"sex\":\"M\",\n    \"comments\":[\n      \"old american actor\",\n      \"old shool boy\"\n    ]\n  },\n  \"collectiveGroups\":[\n  \t{\n  \t\t\"id\":{{created_collectivegroup_id}}\n  \t}\n  ]\n}"
+							"raw": "{\n  \"email\":\"client@domain.com\",\n  \"address\":{\n    \"street\":\"Allée de Fontenelle\",\n    \"optional\":\"Château de Fontenelle\",\n    \"postalCode\":\"77600\",\n    \"city\":\"Chanteloup-en-Brie\"\n  },\n  \"socialNetworkAccounts\":{\n    \"twitter\":\"@client_facebook_account\"\n  },\n  \"customerDetails\":{\n    \"firstName\":\"Paul\",\n    \"lastName\":\"Newman\",\n    \"sex\":\"M\",\n    \"comments\":[\n      \"old american actor\",\n      \"old shool boy\"\n    ]\n  }\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Client?professional=vanessa.gay@gmail.com",
@@ -1777,7 +1783,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -1835,7 +1842,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -1903,7 +1911,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -1949,53 +1958,8 @@
 									"equals": true
 								}
 							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getCollectiveGroups",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
 						},
-						"url": {
-							"raw": "{{API_URL}}/Client/{{created_client_id}}/collectiveGroups?professional=vanessa.gay@gmail.com&refresh=true",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"Client",
-								"{{created_client_id}}",
-								"collectiveGroups"
-							],
-							"query": [
-								{
-									"key": "professional",
-									"value": "vanessa.gay@gmail.com",
-									"equals": true
-								},
-								{
-									"key": "refresh",
-									"value": "true",
-									"equals": true
-								}
-							]
-						}
+						"description": null
 					},
 					"response": []
 				},
@@ -2041,7 +2005,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -2051,22 +2016,11 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4385db51-123b-4533-9fa1-51b30ea4a01b",
+								"id": "b72f8191-6b19-431e-aa88-b3dcfdce36c2",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
-									"pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/CollectiveGroup/\"+pm.environment.get('created_collectivegroup_id')+\"?professional=vanessa.gay@gmail.com\",",
-									"    header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
-									"    },",
-									"    method: 'DELETE'",
-									"}, function (err, res) {",
-									"    pm.expect(res).to.have.property('code', 200);",
-									"    pm.expect(res).to.have.property('status', 'OK');",
-									"});",
 									""
 								]
 							}
@@ -2105,7 +2059,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -2113,6 +2068,7 @@
 		},
 		{
 			"name": "ClientBill",
+			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -2146,7 +2102,8 @@
 							"path": [
 								"ClientBill"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -2182,7 +2139,8 @@
 								"ClientBill",
 								"count"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -2341,7 +2299,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -2413,7 +2372,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -2502,7 +2462,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -2572,7 +2533,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -2580,6 +2542,7 @@
 		},
 		{
 			"name": "CollectiveGroup",
+			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -2612,7 +2575,8 @@
 							"path": [
 								"CollectiveGroup"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -2647,7 +2611,8 @@
 								"CollectiveGroup",
 								"count"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -2708,7 +2673,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -2761,7 +2727,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -2822,151 +2789,8 @@
 									"equals": true
 								}
 							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "addClient",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/Client?professional=vanessa.gay@gmail.com\",",
-									"    method: 'POST',",
-									"    header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
-									"    },",
-									"    body:{",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify(",
-									"            {",
-									"                email:\"newclient@domain.com\",",
-									"                address:{",
-									"                    street:\"79 avenue de la jonchère\",",
-									"                    optional:\"appart A113\",",
-									"                    postalCode:\"77600\",",
-									"                    city:\"Chanteloup-en-Brie\"",
-									"                },",
-									"                customerDetails:{",
-									"                    firstName:\"John\",",
-									"                    lastName:\"DOE\",",
-									"                    nickname:\"WhoIsHe\",",
-									"                    sex:'M'",
-									"                }",
-									"            })",
-									"    }",
-									"}, function (err, response) {",
-									"    console.log(response.json());",
-									"   pm.environment.set(\"created_client_id\", response.json().id);",
-									"});",
-									"",
-									""
-								]
-							}
 						},
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;",
-									"",
-									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"id is defined\"] = jsonData.id !== undefined;",
-									"//created_client_id environment variable is stored as a string...",
-									"tests[\"id is \"+pm.environment.get(\"created_client_id\")] = jsonData.id == pm.environment.get(\"created_client_id\");",
-									"tests[\"email is \\\"newclient@domain.com\\\"\"] = jsonData.email === \"newclient@domain.com\";",
-									"tests[\"customerDetails.firstName is \\\"John\\\"\"] = jsonData.customerDetails.firstName === \"John\";",
-									"tests[\"customerDetails.lastName is \\\"DOE\\\"\"] = jsonData.customerDetails.lastName === \"DOE\";",
-									"tests[\"customerDetails.nickname is \\\"WhoIsHe\\\"\"] = jsonData.customerDetails.nickname === \"WhoIsHe\";",
-									"tests[\"customerDetails.sex is \\\"M\\\"\"] = jsonData.customerDetails.sex === \"M\";",
-									"",
-									"tests[\"address.street is \\\"79 avenue de la jonchère\\\"\"] = jsonData.address.street === \"79 avenue de la jonchère\";",
-									"tests[\"address.optional is \\\"appart A113\\\"\"] = jsonData.address.optional === \"appart A113\";",
-									"tests[\"address.postalCode is \\\"77600\\\"\"] = jsonData.address.postalCode === \"77600\";",
-									"tests[\"address.city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.address.city === \"Chanteloup-en-Brie\";",
-									"tests[\"address.country is \\\"France\\\"\"] = jsonData.address.country === \"France\";"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{API_URL}}/CollectiveGroup/{{created_collectivegroup_id}}/addClient/{{created_client_id}}?professional=vanessa.gay@gmail.com",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"CollectiveGroup",
-								"{{created_collectivegroup_id}}",
-								"addClient",
-								"{{created_client_id}}"
-							],
-							"query": [
-								{
-									"key": "professional",
-									"value": "vanessa.gay@gmail.com",
-									"equals": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getClients",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{API_URL}}/CollectiveGroup/{{created_collectivegroup_id}}/clients?professional=vanessa.gay@gmail.com",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"CollectiveGroup",
-								"{{created_collectivegroup_id}}",
-								"clients"
-							],
-							"query": [
-								{
-									"key": "professional",
-									"value": "vanessa.gay@gmail.com",
-									"equals": true
-								}
-							]
-						}
+						"description": null
 					},
 					"response": []
 				},
@@ -3007,84 +2831,8 @@
 									"equals": true
 								}
 							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "removeClient",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;",
-									"",
-									"pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/Client/\"+pm.environment.get('created_client_id')+\"?professional=vanessa.gay@gmail.com\",",
-									"    header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
-									"    },",
-									"    method: 'DELETE'",
-									"}, function (err, res) {",
-									"    pm.expect(res).to.have.property('code', 200);",
-									"    pm.expect(res).to.have.property('status', 'OK');",
-									"});",
-									"",
-									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"id is defined\"] = jsonData.id !== undefined;",
-									"//created_client_id environment variable is stored as a string...",
-									"tests[\"id is \"+pm.environment.get(\"created_client_id\")] = jsonData.id == pm.environment.get(\"created_client_id\");",
-									"tests[\"email is \\\"newclient@domain.com\\\"\"] = jsonData.email === \"newclient@domain.com\";",
-									"tests[\"customerDetails.firstName is \\\"John\\\"\"] = jsonData.customerDetails.firstName === \"John\";",
-									"tests[\"customerDetails.lastName is \\\"DOE\\\"\"] = jsonData.customerDetails.lastName === \"DOE\";",
-									"tests[\"customerDetails.nickname is \\\"WhoIsHe\\\"\"] = jsonData.customerDetails.nickname === \"WhoIsHe\";",
-									"tests[\"customerDetails.sex is \\\"M\\\"\"] = jsonData.customerDetails.sex === \"M\";",
-									"",
-									"tests[\"address.street is \\\"79 avenue de la jonchère\\\"\"] = jsonData.address.street === \"79 avenue de la jonchère\";",
-									"tests[\"address.optional is \\\"appart A113\\\"\"] = jsonData.address.optional === \"appart A113\";",
-									"tests[\"address.postalCode is \\\"77600\\\"\"] = jsonData.address.postalCode === \"77600\";",
-									"tests[\"address.city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.address.city === \"Chanteloup-en-Brie\";",
-									"tests[\"address.country is \\\"France\\\"\"] = jsonData.address.country === \"France\";",
-									"",
-									""
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
 						},
-						"url": {
-							"raw": "{{API_URL}}/CollectiveGroup/{{created_collectivegroup_id}}/removeClient/{{created_client_id}}?professional=vanessa.gay@gmail.com",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"CollectiveGroup",
-								"{{created_collectivegroup_id}}",
-								"removeClient",
-								"{{created_client_id}}"
-							],
-							"query": [
-								{
-									"key": "professional",
-									"value": "vanessa.gay@gmail.com",
-									"equals": true
-								}
-							]
-						}
+						"description": null
 					},
 					"response": []
 				},
@@ -3129,7 +2877,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -3137,6 +2886,7 @@
 		},
 		{
 			"name": "CollectiveGroupBill",
+			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -3170,7 +2920,8 @@
 							"path": [
 								"CollectiveGroupBill"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -3206,7 +2957,8 @@
 								"CollectiveGroupBill",
 								"count"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -3351,7 +3103,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -3420,7 +3173,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -3505,7 +3259,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -3575,7 +3330,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -3583,6 +3339,7 @@
 		},
 		{
 			"name": "CustomerDetails",
+			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -3615,7 +3372,8 @@
 							"path": [
 								"CustomerDetails"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -3649,7 +3407,8 @@
 								"CustomerDetails",
 								"count"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -3715,7 +3474,8 @@
 							"path": [
 								"CustomerDetails"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -3760,7 +3520,8 @@
 								"CustomerDetails",
 								"{{created_customer_details_id}}"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -3812,7 +3573,8 @@
 							"path": [
 								"CustomerDetails"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -3854,7 +3616,8 @@
 								"CustomerDetails",
 								"{{created_customer_details_id}}"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -3862,6 +3625,7 @@
 		},
 		{
 			"name": "Expense",
+			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -3894,7 +3658,8 @@
 							"path": [
 								"Expense"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -3929,7 +3694,8 @@
 								"Expense",
 								"count"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -3995,7 +3761,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -4062,7 +3829,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -4123,7 +3891,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -4168,7 +3937,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -4176,6 +3946,7 @@
 		},
 		{
 			"name": "Individual",
+			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -4208,7 +3979,8 @@
 							"path": [
 								"Individual"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -4243,7 +4015,8 @@
 								"Individual",
 								"count"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -4332,7 +4105,8 @@
 							"path": [
 								"Individual"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -4402,7 +4176,8 @@
 								"Individual",
 								"individual@gmail.com"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -4480,7 +4255,8 @@
 							"path": [
 								"Individual"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -4519,7 +4295,8 @@
 								"individual@gmail.com",
 								"userGroups"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -4553,7 +4330,8 @@
 								"individual@gmail.com",
 								"individualBills"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -4597,7 +4375,8 @@
 								"insertToUserGroup",
 								"Professional"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -4640,7 +4419,8 @@
 								"removeFromUserGroup",
 								"Professional"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -4684,7 +4464,8 @@
 								"buildBusinessRelationship",
 								"vanessa.gay@gmail.com"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -4718,7 +4499,8 @@
 								"individual@gmail.com",
 								"professionals"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -4762,7 +4544,8 @@
 								"endBusinessRelationship",
 								"vanessa.gay@gmail.com"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -4801,7 +4584,8 @@
 								"Individual",
 								"individual@gmail.com"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -4809,6 +4593,7 @@
 		},
 		{
 			"name": "IndividualBill",
+			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -4842,7 +4627,8 @@
 							"path": [
 								"IndividualBill"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -4878,7 +4664,8 @@
 								"IndividualBill",
 								"count"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -5071,7 +4858,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -5166,7 +4954,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -5271,7 +5060,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -5342,7 +5132,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -5350,6 +5141,7 @@
 		},
 		{
 			"name": "Pack",
+			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -5383,7 +5175,8 @@
 							"path": [
 								"Pack"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -5419,7 +5212,8 @@
 								"Pack",
 								"count"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -5475,7 +5269,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -5524,7 +5319,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -5566,7 +5362,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -5608,7 +5405,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -5666,7 +5464,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -5759,7 +5558,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -5852,7 +5652,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -5924,7 +5725,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -5994,7 +5796,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -6039,7 +5842,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -6047,6 +5851,7 @@
 		},
 		{
 			"name": "Payment",
+			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -6079,7 +5884,8 @@
 							"path": [
 								"Payment"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -6113,7 +5919,8 @@
 								"Payment",
 								"count"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -6164,7 +5971,8 @@
 							"path": [
 								"Payment"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -6202,7 +6010,8 @@
 								"Payment",
 								"{{created_payment_id}}"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -6248,7 +6057,8 @@
 							"path": [
 								"Payment"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -6290,7 +6100,8 @@
 								"Payment",
 								"{{created_payment_id}}"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -6298,6 +6109,7 @@
 		},
 		{
 			"name": "PaymentMode",
+			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -6330,7 +6142,8 @@
 							"path": [
 								"PaymentMode"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -6364,7 +6177,8 @@
 								"PaymentMode",
 								"count"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -6408,7 +6222,8 @@
 							"path": [
 								"PaymentMode"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -6444,7 +6259,8 @@
 								"PaymentMode",
 								"{{created_paymentmode_name}}"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -6486,7 +6302,8 @@
 								"PaymentMode",
 								"{{created_paymentmode_name}}"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -6494,6 +6311,7 @@
 		},
 		{
 			"name": "Professional",
+			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -6528,7 +6346,8 @@
 							"path": [
 								"Professional"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -6563,7 +6382,8 @@
 								"Professional",
 								"count"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -6654,7 +6474,8 @@
 							"path": [
 								"Professional"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -6715,7 +6536,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -6755,7 +6577,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -6765,6 +6588,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "ca6a35f7-6816-4c86-b1f8-742c35f5344c",
 								"type": "text/javascript",
 								"exec": [
 									"",
@@ -6783,17 +6607,17 @@
 									"tests[\"firstName is \\\"Hank\\\"\"] = jsonData.customerDetails.firstName === \"Hank\";",
 									"tests[\"lastName is \\\"Moody\\\"\"] = jsonData.customerDetails.lastName === \"Moody\";",
 									"tests[\"nickname is \\\"Author\\\"\"] = jsonData.customerDetails.nickname === \"Author\";",
-									"tests[\"phone is \\\"0102030405\\\"\"] = jsonData.customerDetails.phone === \"0102030405\";",
+									"tests[\"phone is \\\"0132039405\\\"\"] = jsonData.customerDetails.phone === \"0132039405\";",
 									"tests[\"birthdate is -296697600000\"] = jsonData.customerDetails.birthdate === -296697600000;",
 									"tests[\"sex is \\\"M\\\"\"] = jsonData.customerDetails.sex === \"M\";",
-									"tests[\"comments.length is 5\"] = jsonData.customerDetails.comments.length === 5;",
+									"tests[\"comments.length is 5\"] = jsonData.customerDetails.comments.length === 4;",
 									"",
 									"tests[\"address should be defined\"] = jsonData.address !== undefined;",
 									"tests[\"address.id is defined\"] = jsonData.address.id !== undefined;",
-									"tests[\"street is \\\"26 Brooks Avenue\\\"\"] = jsonData.address.street === \"26 Brooks Avenue\";",
-									"tests[\"postalCode is \\\"90291\\\"\"] = jsonData.address.postalCode === \"90291\";",
-									"tests[\"city is \\\"Venice, Ca\\\"\"] = jsonData.address.city === \"Venice, Ca\";",
-									"tests[\"country is \\\"USA\\\"\"] = jsonData.address.country === \"USA\";",
+									"tests[\"street is \\\"79 Avenue de la jonchère\\\"\"] = jsonData.address.street === \"79 Avenue de la jonchère\";",
+									"tests[\"postalCode is \\\"77600\\\"\"] = jsonData.address.postalCode === \"77600\";",
+									"tests[\"city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.address.city === \"Chanteloup-en-Brie\";",
+									"tests[\"country is \\\"France\\\"\"] = jsonData.address.country === \"France\";",
 									"",
 									"tests[\"socialNetworkAccounts should be defined\"] = jsonData.socialNetworkAccounts !== undefined;",
 									"tests[\"socialNetworkAccounts.id is defined\"] = jsonData.socialNetworkAccounts.id !== undefined;",
@@ -6821,7 +6645,8 @@
 								"Professional",
 								"pro@domain.com"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -6900,7 +6725,8 @@
 							"path": [
 								"Professional"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -6939,7 +6765,8 @@
 								"Professional",
 								"pro@domain.com"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -6978,7 +6805,8 @@
 								"vanessa.gay@gmail.com",
 								"userGroups"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -7022,7 +6850,8 @@
 								"insertToUserGroup",
 								"Individual"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -7065,7 +6894,8 @@
 								"removeFromUserGroup",
 								"Individual"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -7107,7 +6937,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -7147,7 +6978,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -7187,7 +7019,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -7227,7 +7060,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -7267,7 +7101,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -7307,7 +7142,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -7351,7 +7187,8 @@
 								"buildBusinessRelationship",
 								"skonx2006@gmail.com"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -7395,7 +7232,8 @@
 								"endBusinessRelationship",
 								"skonx2006@gmail.com"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -7403,6 +7241,7 @@
 		},
 		{
 			"name": "PurchasedOffering",
+			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -7436,7 +7275,8 @@
 							"path": [
 								"PurchasedOffering"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -7471,7 +7311,8 @@
 								"PurchasedOffering",
 								"count"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -7571,7 +7412,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -7620,7 +7462,8 @@
 								"PurchasedOffering",
 								"{{created_purchasedoffering_id}}"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -7681,7 +7524,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -7735,7 +7579,8 @@
 								"PurchasedOffering",
 								"{{created_purchasedoffering_id}}"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -7743,6 +7588,7 @@
 		},
 		{
 			"name": "Service",
+			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -7776,7 +7622,8 @@
 							"path": [
 								"Service"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -7812,7 +7659,8 @@
 								"Service",
 								"count"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -7870,7 +7718,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -7919,7 +7768,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -7961,7 +7811,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -8003,7 +7854,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -8060,7 +7912,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -8105,7 +7958,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -8113,6 +7967,7 @@
 		},
 		{
 			"name": "SocialNetworkAccounts",
+			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -8142,7 +7997,8 @@
 							"path": [
 								"SocialNetworkAccounts"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -8175,7 +8031,8 @@
 								"SocialNetworkAccounts",
 								"count"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -8228,7 +8085,8 @@
 							"path": [
 								"SocialNetworkAccounts"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -8269,7 +8127,8 @@
 								"SocialNetworkAccounts",
 								"{{created_socialnetworkaccounts_id}}"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -8319,7 +8178,8 @@
 							"path": [
 								"SocialNetworkAccounts"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -8361,7 +8221,8 @@
 								"SocialNetworkAccounts",
 								"{{created_socialnetworkaccounts_id}}"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -8369,6 +8230,7 @@
 		},
 		{
 			"name": "UserGroup",
+			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -8405,7 +8267,8 @@
 							"path": [
 								"UserGroup"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -8440,7 +8303,8 @@
 								"UserGroup",
 								"count"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -8478,7 +8342,8 @@
 								"UserGroup",
 								"Administrator"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -8525,7 +8390,8 @@
 							"path": [
 								"UserGroup"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -8572,7 +8438,8 @@
 							"path": [
 								"UserGroup"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -8611,7 +8478,8 @@
 								"UserGroup",
 								"TEST_GRP01"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -8661,7 +8529,8 @@
 								"Administrator",
 								"userAccounts"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -8701,7 +8570,8 @@
 						"Authentication",
 						"logout"
 					]
-				}
+				},
+				"description": null
 			},
 			"response": []
 		}
