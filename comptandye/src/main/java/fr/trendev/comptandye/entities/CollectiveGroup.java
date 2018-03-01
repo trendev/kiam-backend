@@ -15,7 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -57,10 +56,6 @@ public class CollectiveGroup {
             mappedBy = "collectiveGroup")
     @JsonIgnore
     private List<CollectiveGroupBill> collectiveGroupBills = new LinkedList<>();
-
-    @ManyToMany(targetEntity = Client.class)
-    @JsonIgnore
-    private List<Client> clients = new LinkedList<>();
 
     public CollectiveGroup(String groupName, String phone,
             Professional professional) {
@@ -129,14 +124,6 @@ public class CollectiveGroup {
     public void setCollectiveGroupBills(
             List<CollectiveGroupBill> collectiveGroupBills) {
         this.collectiveGroupBills = collectiveGroupBills;
-    }
-
-    public List<Client> getClients() {
-        return this.clients;
-    }
-
-    public void setClients(List<Client> clients) {
-        this.clients = clients;
     }
 
     public <T> T accept(Visitor<T> v) {

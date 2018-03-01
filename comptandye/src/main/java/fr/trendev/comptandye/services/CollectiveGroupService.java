@@ -5,8 +5,6 @@
  */
 package fr.trendev.comptandye.services;
 
-import fr.trendev.comptandye.entities.Client;
-import fr.trendev.comptandye.entities.ClientPK;
 import fr.trendev.comptandye.entities.CollectiveGroup;
 import fr.trendev.comptandye.entities.CollectiveGroupBill;
 import fr.trendev.comptandye.entities.CollectiveGroupPK;
@@ -15,7 +13,6 @@ import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.ClientFacade;
 import fr.trendev.comptandye.sessions.CollectiveGroupFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
-import fr.trendev.comptandye.utils.AssociationManagementEnum;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
@@ -161,70 +158,7 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
         return super.delete(pk,
                 e -> {
             e.getProfessional().getCollectiveGroups().remove(e);
-            e.getClients().forEach(cl -> cl.getCollectiveGroups().remove(e));
         });
-    }
-
-    @Path("{collectiveGroupid}/addClient/{clientid}")
-    @PUT
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response addClient(@Context SecurityContext sec,
-            @PathParam("collectiveGroupid") Long collectiveGroupid,
-            @PathParam("clientid") Long clientid,
-            @QueryParam("professional") String professional) {
-
-        CollectiveGroupPK collectiveGroupPK = new CollectiveGroupPK(
-                collectiveGroupid, this.getProEmail(sec,
-                        professional));
-
-        ClientPK clientPK = new ClientPK(clientid, this.getProEmail(sec,
-                professional));
-
-        return super.<Client, ClientPK>manageAssociation(
-                AssociationManagementEnum.INSERT,
-                collectiveGroupPK,
-                clientFacade,
-                clientPK, Client.class,
-                (cg, cl) -> cg.getClients().add(cl)
-                & cl.getCollectiveGroups().
-                        add(cg));
-    }
-
-    @Path("{collectiveGroupid}/removeClient/{clientid}")
-    @PUT
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response removeClient(@Context SecurityContext sec,
-            @PathParam("collectiveGroupid") Long collectiveGroupid,
-            @PathParam("clientid") Long clientid,
-            @QueryParam("professional") String professional) {
-
-        CollectiveGroupPK collectiveGroupPK = new CollectiveGroupPK(
-                collectiveGroupid, this.getProEmail(sec,
-                        professional));
-
-        ClientPK clientPK = new ClientPK(clientid, this.getProEmail(sec,
-                professional));
-
-        return super.<Client, ClientPK>manageAssociation(
-                AssociationManagementEnum.REMOVE,
-                collectiveGroupPK,
-                clientFacade,
-                clientPK, Client.class,
-                (cg, cl) -> cg.getClients().remove(cl) & cl.
-                getCollectiveGroups().
-                remove(cg));
-    }
-
-    @Path("{id}/clients")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getClients(@Context SecurityContext sec,
-            @PathParam("id") Long id,
-            @QueryParam("professional") String professional) {
-        CollectiveGroupPK pk = new CollectiveGroupPK(id, this.getProEmail(sec,
-                professional));
-        return super.provideRelation(pk, CollectiveGroup::getClients,
-                Client.class);
     }
 
     @Path("{id}/collectiveGroupBills")

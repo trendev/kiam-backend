@@ -47,8 +47,6 @@ public class CollectiveGroupTest {
         assert instance.getGroupName() == null;
         assert instance.getPhone() == null;
         assert instance.getAddress() != null;
-        assert instance.getClients() != null;
-        assert instance.getClients().isEmpty();
         assert instance.getProfessional() == null;
         assert instance.getCollectiveGroupBills() != null;
         assert instance.getCollectiveGroupBills().isEmpty() == true;
@@ -62,8 +60,6 @@ public class CollectiveGroupTest {
         assert instance.getGroupName().equals(groupName);
         assert instance.getPhone().equals("0123456789");
         assert instance.getAddress() != null;
-        assert instance.getClients() != null;
-        assert instance.getClients().isEmpty();
         assert instance.getProfessional() != null;
         assert instance.getCollectiveGroupBills() != null;
         assert instance.getCollectiveGroupBills().isEmpty() == true;
@@ -77,8 +73,6 @@ public class CollectiveGroupTest {
         assert instance.getGroupName().equals(groupName);
         assert instance.getPhone().equals("0123456789");
         assert instance.getAddress().equals(address);
-        assert instance.getClients() != null;
-        assert instance.getClients().isEmpty();
         assert instance.getProfessional() != null;
         assert instance.getCollectiveGroupBills() != null;
         assert instance.getCollectiveGroupBills().isEmpty() == true;

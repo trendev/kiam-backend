@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.trendev.comptandye.utils.visitors.Visitor;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
@@ -14,6 +15,9 @@ import javax.persistence.ManyToOne;
 @Entity
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CollectiveGroupBill extends Bill {
+
+    @Basic
+    private String recipient;
 
     @ManyToOne(targetEntity = CollectiveGroup.class)
     private CollectiveGroup collectiveGroup;
@@ -28,6 +32,14 @@ public class CollectiveGroupBill extends Bill {
     }
 
     public CollectiveGroupBill() {
+    }
+
+    public String getRecipient() {
+        return this.recipient;
+    }
+
+    public void setRecipient(String recipient) {
+        this.recipient = recipient;
     }
 
     public CollectiveGroup getCollectiveGroup() {

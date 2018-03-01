@@ -59,9 +59,6 @@ public class Client {
     @JsonIgnore
     private List<ClientBill> clientBills = new LinkedList<>();
 
-    @ManyToMany(targetEntity = CollectiveGroup.class, mappedBy = "clients")
-    private List<CollectiveGroup> collectiveGroups = new LinkedList<>();
-
     @ManyToMany(targetEntity = Category.class)
     private List<Category> categories = new LinkedList<>();
 
@@ -144,14 +141,6 @@ public class Client {
 
     public void setClientBills(List<ClientBill> clientBills) {
         this.clientBills = clientBills;
-    }
-
-    public List<CollectiveGroup> getCollectiveGroups() {
-        return this.collectiveGroups;
-    }
-
-    public void setCollectiveGroups(List<CollectiveGroup> collectiveGroups) {
-        this.collectiveGroups = collectiveGroups;
     }
 
     public List<Category> getCategories() {

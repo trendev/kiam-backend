@@ -50,8 +50,6 @@ public class ClientTest {
         assert instance.getProfessional() == null;
         assert instance.getClientBills() != null;
         assert instance.getClientBills().isEmpty();
-        assert instance.getCollectiveGroups() != null;
-        assert instance.getCollectiveGroups().isEmpty();
         assert instance.getCategories() != null;
         assert instance.getCategories().isEmpty();
 
@@ -69,8 +67,6 @@ public class ClientTest {
         assert instance.getProfessional() != null;
         assert instance.getClientBills() != null;
         assert instance.getClientBills().isEmpty();
-        assert instance.getCollectiveGroups() != null;
-        assert instance.getCollectiveGroups().isEmpty();
         assert instance.getCategories() != null;
         assert instance.getCategories().isEmpty();
 
@@ -93,8 +89,6 @@ public class ClientTest {
         assert instance.getProfessional() != null;
         assert instance.getClientBills() != null;
         assert instance.getClientBills().isEmpty();
-        assert instance.getCollectiveGroups() != null;
-        assert instance.getCollectiveGroups().isEmpty();
         assert instance.getCategories() != null;
         assert instance.getCategories().size() == size;
 

@@ -10,8 +10,6 @@ import fr.trendev.comptandye.entities.CategoryPK;
 import fr.trendev.comptandye.entities.Client;
 import fr.trendev.comptandye.entities.ClientBill;
 import fr.trendev.comptandye.entities.ClientPK;
-import fr.trendev.comptandye.entities.CollectiveGroup;
-import fr.trendev.comptandye.entities.CollectiveGroupPK;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.CategoryFacade;
@@ -134,29 +132,6 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
             e.setId(null); //ignores the id provided
 
             /**
-             * Merge the collective groups with the existing and throw an
-             * Exception if a collective group is not owned or found
-             */
-            List<CollectiveGroup> collectiveGroups =
-                    entity.getCollectiveGroups().stream()
-                            .map(cg -> Optional.ofNullable(
-                                    collectiveGroupFacade.find(
-                                            new CollectiveGroupPK(cg.getId(),
-                                                    email)))
-                                    .map(Function.identity())
-                                    .orElseThrow(() ->
-                                            new WebApplicationException(
-                                                    "CollectiveGroup " + cg.
-                                                            getId()
-                                                    + " has not been found and cannot be added during Client creation"))
-                            )
-                            .collect(Collectors.toList());
-
-            // complete the relationship with CollectiveGroup
-            collectiveGroups.forEach(cg -> cg.getClients().add(e));
-            e.setCollectiveGroups(collectiveGroups);
-
-            /**
              * Merge the categories with the existing and throw an Exception if
              * a category is not owned or found
              */
@@ -211,31 +186,6 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
             e.setEmail(entity.getEmail());
 
             /**
-             * Merge the collective groups with the existing and throw an
-             * Exception if a collective group is not owned or found
-             */
-            List<CollectiveGroup> collectiveGroups =
-                    entity.getCollectiveGroups().stream()
-                            .map(cg -> Optional.ofNullable(
-                                    collectiveGroupFacade.find(
-                                            new CollectiveGroupPK(cg.getId(),
-                                                    pk.getProfessional())))
-                                    .map(Function.identity())
-                                    .orElseThrow(() ->
-                                            new WebApplicationException(
-                                                    "CollectiveGroup " + cg.
-                                                            getId()
-                                                    + " has not been found and cannot be added during Client modification"))
-                            )
-                            .collect(Collectors.toList());
-
-            //Reset the previous relationship
-            e.getCollectiveGroups().forEach(cg -> cg.getClients().remove(e));
-            //Build a new relationship (faster and exploring/comparing each list)
-            collectiveGroups.forEach(cg -> cg.getClients().add(e));
-            e.setCollectiveGroups(collectiveGroups);
-
-            /**
              * Merge the categories with the existing and throw an Exception if
              * a category is not owned or found
              */
@@ -279,7 +229,6 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
                 e -> {
             e.getProfessional().getClients().remove(e);
             e.getProfessional().getBills().removeAll(e.getClientBills());
-            e.getCollectiveGroups().forEach(cg -> cg.getClients().remove(e));
             e.getCategories().forEach(ct -> ct.getClients().remove(e));
         });
     }
@@ -293,17 +242,6 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
         ClientPK pk = new ClientPK(id, this.getProEmail(sec, professional));
         return super.provideRelation(pk, Client::getClientBills,
                 ClientBill.class);
-    }
-
-    @Path("{id}/collectiveGroups")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getCollectiveGroups(@Context SecurityContext sec,
-            @PathParam("id") Long id,
-            @QueryParam("professional") String professional) {
-        ClientPK pk = new ClientPK(id, this.getProEmail(sec, professional));
-        return super.provideRelation(pk, Client::getCollectiveGroups,
-                CollectiveGroup.class);
     }
 
     @Path("{id}/categories")
