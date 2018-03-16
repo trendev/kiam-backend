@@ -2,7 +2,9 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import java.math.BigDecimal;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,6 +28,10 @@ public class PurchasedOffering {
      */
     @Basic
     private int qty = 1;
+
+    @Column(updatable = false, scale = 2, precision = 5)
+    @Basic
+    private BigDecimal vatRate;
 
     @Embedded
     private OfferingSnapshot offeringSnapshot = new OfferingSnapshot();
@@ -57,6 +63,14 @@ public class PurchasedOffering {
 
     public void setQty(int qty) {
         this.qty = qty;
+    }
+
+    public BigDecimal getVatRate() {
+        return this.vatRate;
+    }
+
+    public void setVatRate(BigDecimal vatRate) {
+        this.vatRate = vatRate;
     }
 
     public OfferingSnapshot getOfferingSnapshot() {

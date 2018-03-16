@@ -12,6 +12,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -58,6 +59,9 @@ public class Professional extends Customer {
     @Basic
     @Temporal(TemporalType.TIMESTAMP)
     private Date billsRefDate;
+
+    @ManyToOne(targetEntity = VatRates.class)
+    private VatRates vatRates;
 
     @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Bill.class,
             mappedBy = "professional")
@@ -180,6 +184,14 @@ public class Professional extends Customer {
 
     public void setBillsRefDate(Date billsRefDate) {
         this.billsRefDate = billsRefDate;
+    }
+
+    public VatRates getVatRates() {
+        return this.vatRates;
+    }
+
+    public void setVatRates(VatRates vatRates) {
+        this.vatRates = vatRates;
     }
 
     public List<Bill> getBills() {

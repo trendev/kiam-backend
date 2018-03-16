@@ -24,6 +24,7 @@ public class PurchasedOfferingTest {
         assert po.getId() == null;
         assert po.getQty() == 1;
         assert po.getOffering() == null;
+        assert po.getVatRate() == null;
 
         Service service = new Service("test_service", 1000, 120,
                 new Professional());
@@ -46,6 +47,7 @@ public class PurchasedOfferingTest {
                 getBusinesses().size();
         assert po.getOfferingSnapshot().getBusinesses().containsAll(service.
                 getBusinesses()) == true;
+        assert po.getVatRate() == null;
 
     }
 

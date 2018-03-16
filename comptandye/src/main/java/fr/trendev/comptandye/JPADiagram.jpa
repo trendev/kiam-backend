@@ -309,6 +309,10 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 <jpa:temporal>TIMESTAMP</jpa:temporal>
                 <jpa:column unique="false" nullable="true" insertable="true" updatable="true" column-definition="DATETIME(3)"/>
             </jpa:basic>
+            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1521215136542" v="true" xvt="" name="vatRates" id="_1521217263508375">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:many-to-one>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490178979567" connected-attribute-id="_1490179812677393" v="true" xvt="" name="bills" dv="new LinkedList&lt;&gt;()" id="_1490179812678394">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
@@ -1008,6 +1012,16 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 <jpa:temporal>TIMESTAMP</jpa:temporal>
                 <jpa:column unique="false" nullable="true" insertable="true" updatable="true" column-definition="DATETIME(3)"/>
             </jpa:basic>
+            <jpa:basic attribute-type="boolean" v="true" xvt="" name="vatInclusive" dv="false" id="_1521217569466382">
+                <jpa:des>mark if the bill is vat inclusive or not</jpa:des>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="boolean" v="true" xvt="" name="cancelled" dv="false" id="_1521218230422384">
+                <jpa:des>mark if a bill is cancelled or not</jpa:des>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
             <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_1490179812678394" v="true" xvt="" name="professional" id="_1490179812677393">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
@@ -1079,6 +1093,12 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         </jpa:nq>
         <jpa:nq e="false" name="Bill.findByIssueDate">
             <jpa:query>Select b from Bill b where b.issueDate=:issueDate</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Bill.findByVatInclusive">
+            <jpa:query>Select b from Bill b where b.vatInclusive=:vatInclusive</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Bill.findByCancelled">
+            <jpa:query>Select b from Bill b where b.cancelled=:cancelled</jpa:query>
         </jpa:nq>
         <jpa:discriminator-column/>
     </jpa:entity>
@@ -1547,6 +1567,11 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
+            <jpa:basic attribute-type="java.math.BigDecimal" v="true" xvt="" name="vatRate" id="_1521217784391383">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:column unique="false" nullable="true" insertable="true" updatable="false" precision="5" scale="2"/>
+            </jpa:basic>
             <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490172966686" connected-attribute-id="_1512851997730269" v="true" xvt="" name="offering" id="_1512851997729268">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -1569,6 +1594,39 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         </jpa:nq>
         <jpa:nq e="false" name="PurchasedOffering.findByPrice">
             <jpa:query>Select p from PurchasedOffering p where p.price=:price</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="PurchasedOffering.findByVatRate">
+            <jpa:query>Select p from PurchasedOffering p where p.vatRate=:vatRate</jpa:query>
+        </jpa:nq>
+    </jpa:entity>
+    <jpa:entity compositePrimaryKeyClass="VatRatesPK" abs="false" class="VatRates" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1521215136542">
+        <jpa:snp loc="IMPORT" e="true">import java.util.ArrayList;</jpa:snp>
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" xvt="" name="country" id="_1521219938937744">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:element-collection target-class="java.math.BigDecimal" collection-type="java.util.List" v="true" xvt="" name="rates" dv="new ArrayList&lt;&gt;()" id="_1521217181971374">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:column unique="false" nullable="true" insertable="true" updatable="true" precision="5" scale="2"/>
+            </jpa:element-collection>
+            <jpa:id attribute-type="String" v="true" xvt="" name="countryId" id="_152121513663966">
+                <jpa:des>the country's id (ex: France -&gt; FR)</jpa:des>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:nq e="false" name="VatRates.findAll">
+            <jpa:query>Select e from VatRates e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="VatRates.findByRate">
+            <jpa:query>Select v from VatRates v where v.rate=:rate</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="VatRates.findByCountry">
+            <jpa:query>Select v from VatRates v where v.country=:country</jpa:query>
         </jpa:nq>
     </jpa:entity>
     <jpa:embeddable abs="false" class="OfferingSnapshot" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1512853437669">
@@ -1628,7 +1686,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1490172966686" x="-654" y="663">
+            <i ref="_1490172966686" x="-658" y="659">
                 <el>
                     <e ref="_150537690133858">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1644,23 +1702,26 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490704123469" x="-162" y="65"/>
-            <i ref="_1506344869339" x="248" y="1530">
+            <i ref="_1490704123469" x="-166" y="61"/>
+            <i ref="_1506344869339" x="244" y="1526">
                 <el>
+                    <e ref="_1521217784391383">
+                        <v st="1" si="12.0" cl="#ff00ff"/>
+                    </e>
                     <e ref="_1512851997729268">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101578444" x="367" y="65"/>
-            <i ref="_1490100852900" x="367" y="-171">
+            <i ref="_1490101578444" x="363" y="61"/>
+            <i ref="_1490100852900" x="363" y="-175">
                 <el>
                     <e ref="_14901160469883436">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101520286" x="247" y="353">
+            <i ref="_1490101520286" x="527" y="347">
                 <el>
                     <e ref="_150652336703465">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1670,7 +1731,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490281931338" x="421" y="981">
+            <i ref="_1490281931338" x="417" y="977">
                 <el>
                     <e ref="_1490283543806197">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1683,7 +1744,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101456632" x="-45" y="254">
+            <i ref="_1490101456632" x="-49" y="250">
                 <el>
                     <e ref="_1514560844274158">
                         <v st="1" si="12.0" cl="#000000"/>
@@ -1712,6 +1773,9 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                     <e ref="_150513719043594">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
+                    <e ref="_1521217263508375">
+                        <v st="1" si="12.0" cl="#ff00ff"/>
+                    </e>
                     <e ref="_1490180547178494">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
@@ -1723,7 +1787,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101555530" x="225" y="589">
+            <i ref="_1490101555530" x="221" y="585">
                 <el>
                     <e ref="_149028166301044">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1745,23 +1809,23 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490180671085" x="658" y="353">
+            <i ref="_1490180671085" x="715" y="347">
                 <el>
                     <e ref="_150652336702164">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1503060694288" x="-518" y="254"/>
-            <i ref="_1490104062170" x="-397" y="409"/>
-            <i ref="_1490113906035" x="-347" y="1014">
+            <i ref="_1503060694288" x="-522" y="250"/>
+            <i ref="_1490104062170" x="-401" y="405"/>
+            <i ref="_1490113906035" x="-351" y="1010">
                 <el>
                     <e ref="_1513010994290214">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490704206844" x="-70" y="867">
+            <i ref="_1490704206844" x="-74" y="863">
                 <el>
                     <e ref="_15049038294552105">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1771,7 +1835,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101376664" x="76" y="65">
+            <i ref="_1490101376664" x="72" y="61">
                 <el>
                     <e ref="_14901093969381510">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1784,16 +1848,22 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490113751330" x="-675" y="1014"/>
-            <i ref="_1490206901623" x="310" y="1251">
+            <i ref="_1490113751330" x="-679" y="1010"/>
+            <i ref="_1490206901623" x="306" y="1247">
                 <el>
                     <e ref="_1503081214518630">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490178979567" x="729" y="1251">
+            <i ref="_1490178979567" x="731" y="1247">
                 <el>
+                    <e ref="_1521217569466382">
+                        <v st="1" si="12.0" cl="#ff00ff"/>
+                    </e>
+                    <e ref="_1521218230422384">
+                        <v st="1" si="12.0" cl="#ff00ff"/>
+                    </e>
                     <e ref="_150365567487858">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
@@ -1805,7 +1875,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1499512549878" x="-244" y="1201">
+            <i ref="_1499512549878" x="-248" y="1197">
                 <el>
                     <e ref="_1505144351224341">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1818,16 +1888,16 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101737208" x="-410" y="17"/>
-            <i ref="_1512853437669" x="531" y="1582">
+            <i ref="_1490101737208" x="-414" y="13"/>
+            <i ref="_1512853437669" x="527" y="1578">
                 <el>
                     <e ref="_151290448762472">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490184243036" x="9" y="1251"/>
-            <i ref="_1490100823157" x="9" y="-248">
+            <i ref="_1490184243036" x="5" y="1247"/>
+            <i ref="_1490100823157" x="5" y="-252">
                 <el>
                     <e ref="_150807874242070">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1837,20 +1907,21 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490180682743" x="658" y="589">
+            <i ref="_1490180682743" x="654" y="585">
                 <el>
                     <e ref="_1490181195212606">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1506009883340" x="658" y="981">
+            <i ref="_1506009883340" x="654" y="977">
                 <el>
                     <e ref="_1506010011239530">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
+            <i ref="_1521215136542" x="162" y="316"/>
         </jpa:ws>
     </jpa:wsl>
 </jpa:entity-mappings>

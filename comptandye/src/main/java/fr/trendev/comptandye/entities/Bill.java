@@ -92,6 +92,18 @@ public abstract class Bill {
     @Temporal(TemporalType.TIMESTAMP)
     private Date issueDate = new Date();
 
+    /**
+     * mark if the bill is vat inclusive or not
+     */
+    @Basic
+    private boolean vatInclusive = false;
+
+    /**
+     * mark if a bill is cancelled or not
+     */
+    @Basic
+    private boolean cancelled = false;
+
     @ElementCollection
     private List<String> comments = new LinkedList<>();
 
@@ -192,6 +204,22 @@ public abstract class Bill {
 
     public void setIssueDate(Date issueDate) {
         this.issueDate = issueDate;
+    }
+
+    public boolean isVatInclusive() {
+        return this.vatInclusive;
+    }
+
+    public void setVatInclusive(boolean vatInclusive) {
+        this.vatInclusive = vatInclusive;
+    }
+
+    public boolean isCancelled() {
+        return this.cancelled;
+    }
+
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
     }
 
     public List<String> getComments() {

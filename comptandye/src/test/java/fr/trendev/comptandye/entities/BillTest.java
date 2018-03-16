@@ -111,6 +111,9 @@ public class BillTest {
 
         assert amount == (totalAmount - (discount * totalAmount / 100));
 
+        assert instance.isVatInclusive() == false;
+        assert instance.isCancelled() == false;
+
     }
 
     public class BillImpl extends Bill {
