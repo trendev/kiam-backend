@@ -300,7 +300,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
      * to an unpaid (Bill without a payment date), a check of the dates
      * (deliveryDate/paymentDate) and the amounts will be performed and if
      * successful the Bill will be paid (paymentDate set and other modifications
-     * will be ignored).
+     * will be ignored). If a bill is canceled, only comments can be updated.
      *
      * @param sec the security context
      * @param entity the entity to update
@@ -322,11 +322,18 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         return super.put(entity, pk, e -> {
             e.setComments(entity.getComments());
 
-            if (e.getPaymentDate() == null) {
-                checkPayment(entity);
-                e.setPaymentDate(entity.getPaymentDate());
-                e.setPayments(entity.getPayments());
-            }
+            if (!e.isCancelled()) {
+                if (entity.isCancelled()) { // avoid further useless checks
+                    e.setCancelled(true);
+                } else {
+                    if (e.getPaymentDate() == null) {
+                        checkPayment(entity);
+                        e.setPaymentDate(entity.getPaymentDate());
+                        e.setPayments(entity.getPayments());
+                    }
+                }
+            } // if the bill is cancelled, do nothing
+
         });
     }
 
