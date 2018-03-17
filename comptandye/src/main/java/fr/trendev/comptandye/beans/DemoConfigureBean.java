@@ -18,6 +18,7 @@ import fr.trendev.comptandye.entities.PaymentMode;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.SocialNetworkAccounts;
 import fr.trendev.comptandye.entities.UserGroup;
+import fr.trendev.comptandye.entities.VatRates;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UUIDGenerator;
@@ -27,6 +28,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -36,6 +38,8 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -45,8 +49,8 @@ import javax.ws.rs.WebApplicationException;
  *
  * @author jsie
  */
-//@Singleton // javax.ejb.Singleton;
-//@Startup //javax.ejb.Startup
+@Singleton // javax.ejb.Singleton;
+@Startup //javax.ejb.Startup
 public class DemoConfigureBean implements Serializable {
 
     private final Logger LOG = Logger.getLogger(
@@ -71,6 +75,7 @@ public class DemoConfigureBean implements Serializable {
             this.initBusinesses();
             this.initUsersAndGroups();
             this.importClients();
+            this.createVatRatesFR();
         }
 
     }
@@ -320,6 +325,23 @@ public class DemoConfigureBean implements Serializable {
             LOG.log(Level.SEVERE, "Error in createBills()", ex);
         }
 
+    }
+
+    private void createVatRatesFR() {
+        Professional vanessa = em.find(Professional.class,
+                "vanessa.gay@gmail.com");
+
+        VatRates vrFR = new VatRates();
+        vrFR.setCountryId("FR");
+        vrFR.setCountry(vanessa.getAddress().getCountry());
+        vrFR.getRates().add(new BigDecimal("20"));
+        vrFR.getRates().add(new BigDecimal("10"));
+        vrFR.getRates().add(new BigDecimal("5.5"));
+        vrFR.getRates().add(new BigDecimal("2.1"));
+
+        em.persist(vrFR);
+
+        vanessa.setVatRates(vrFR);
     }
 
 }
