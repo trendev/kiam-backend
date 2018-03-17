@@ -322,17 +322,15 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         return super.put(entity, pk, e -> {
             e.setComments(entity.getComments());
 
-            if (!e.isCancelled()) {
+            if (!e.isCancelled() && e.getPaymentDate() == null) {
                 if (entity.isCancelled()) { // avoid further useless checks
                     e.setCancelled(true);
                 } else {
-                    if (e.getPaymentDate() == null) {
-                        checkPayment(entity);
-                        e.setPaymentDate(entity.getPaymentDate());
-                        e.setPayments(entity.getPayments());
-                    }
+                    checkPayment(entity);
+                    e.setPaymentDate(entity.getPaymentDate());
+                    e.setPayments(entity.getPayments());
                 }
-            } // if the bill is cancelled, do nothing
+            } // if the bill is cancelled or paid, do nothing
 
         });
     }
