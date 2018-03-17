@@ -178,11 +178,15 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
 
         String vatcode = pro.getVatcode();
         if (vatcode != null) {
-            String countryId = vatcode.substring(0, 2);
-            VatRates vr = this.vatRatesFacade.find(countryId);
-            if (vr != null) {
-                pro.setVatRates(vr);
-            } else {
+            try {
+                String countryId = vatcode.substring(0, 2);
+                VatRates vr = this.vatRatesFacade.find(countryId);
+                if (vr != null) {
+                    pro.setVatRates(vr);
+                } else {
+                    throw new Exception();
+                }
+            } catch (Exception ex) {
                 throw new WebApplicationException(
                         "Cannot find VAT Rates from VAT code " + vatcode);
             }
