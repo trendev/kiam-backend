@@ -14,10 +14,12 @@ import fr.trendev.comptandye.entities.Individual;
 import fr.trendev.comptandye.entities.Offering;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.UserGroup;
+import fr.trendev.comptandye.entities.VatRates;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.IndividualFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
+import fr.trendev.comptandye.sessions.VatRatesFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UUIDGenerator;
@@ -58,6 +60,9 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
 
     @Inject
     IndividualFacade individualFacade;
+
+    @Inject
+    VatRatesFacade vatRatesFacade;
 
     private final Logger LOG = Logger.getLogger(
             ProfessionalService.class.
@@ -158,7 +163,32 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
             //Values ignored in PUT
             e.setBillsCount(0);
             e.setBillsRefDate(null);
+
+            this.checkVatCode(e);
         });
+    }
+
+    /**
+     * Check if a VAT Code is provided. If a VAT Code is provided, the specific
+     * VAT Rates will be linked with the Professional
+     *
+     * @param pro the professional
+     */
+    private void checkVatCode(Professional pro) {
+
+        String vatcode = pro.getVatcode();
+        if (vatcode != null) {
+            String countryId = vatcode.substring(0, 2);
+            VatRates vr = this.vatRatesFacade.find(countryId);
+            if (vr != null) {
+                pro.setVatRates(vr);
+            } else {
+                throw new WebApplicationException(
+                        "Cannot find VAT Rates from VAT code " + vatcode);
+            }
+        } else {
+            pro.setVatRates(null);
+        }
     }
 
     private boolean grantAsProfessional(Professional pro) {
@@ -211,7 +241,15 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
             e.setWebsite(entity.getWebsite());
             e.setCompanyID(entity.getCompanyID());
             e.setCompanyName(entity.getCompanyName());
+
+            /**
+             * Sets the VAT code if specified and links with the corresponding
+             * VAT rates. Sets to null otherwise. Provided VAT Rates are
+             * ignored.
+             */
             e.setVatcode(entity.getVatcode());
+            this.checkVatCode(e);
+
             e.setCreationDate(entity.getCreationDate());
             e.setBusinesses(entity.getBusinesses());
             e.setPaymentModes(entity.getPaymentModes());
