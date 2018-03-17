@@ -13,7 +13,11 @@ import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -77,4 +81,32 @@ public class VatRatesService extends AbstractCommonService<VatRates, String> {
         return super.find(id, refresh);
     }
 
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response post(VatRates entity) {
+        LOG.log(Level.INFO, "Creating VatRates {0}", super.stringify(entity));
+        return super.post(entity, e -> {
+        });
+    }
+
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response put(VatRates entity) {
+        LOG.log(Level.INFO, "Updating VatRates {0}", entity.getCountryId());
+        return super.put(entity, entity.getCountryId(),
+                e -> {
+            e.setCountry(entity.getCountry());
+            e.setRates(entity.getRates());
+        });
+    }
+
+    @Path("{id}")
+    @DELETE
+    public Response delete(@PathParam("id") String id) {
+        LOG.log(Level.INFO, "Deleting VatRates {0}", id);
+        return super.delete(id, e -> {
+        });
+    }
 }
