@@ -15,7 +15,9 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -63,6 +65,16 @@ public class VatRatesService extends AbstractCommonService<VatRates, String> {
     @Override
     public Response count() {
         return super.count();
+    }
+
+    @Path("{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Override
+    public Response find(@PathParam("id") String id,
+            @QueryParam("refresh") boolean refresh) {
+        LOG.log(Level.INFO, "REST request to get VatRates : {0}", id);
+        return super.find(id, refresh);
     }
 
 }
