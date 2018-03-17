@@ -144,6 +144,7 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
             }
             
             e.setQty(entity.getQty());
+            e.setVatRate(entity.getVatRate());
             
             e.setOffering(Optional.ofNullable(e.getOffering().accept(visitor).
                     find(new OfferingPK(e.getOffering().getId(), professional)))
