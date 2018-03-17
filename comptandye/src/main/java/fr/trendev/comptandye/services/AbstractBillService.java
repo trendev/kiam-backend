@@ -16,6 +16,8 @@ import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.utils.exceptions.InvalidDeliveryDateException;
 import fr.trendev.comptandye.utils.visitors.BillTypeVisitor;
 import fr.trendev.comptandye.utils.visitors.ProvideOfferingFacadeVisitor;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -140,6 +142,15 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
 
             setBillReference(e, billTypeVisitor);
 
+            //a new bill can not be cancelled yet
+            e.setCancelled(false);
+
+            // check if the professional has a VAT code before submitting a bill with VAT rates
+            if (e.isVatInclusive() && e.getProfessional().getVatcode() == null) {
+                throw new WebApplicationException(
+                        "Impossible to apply VAT on Bill with a VAT Code !");
+            }
+
             this.checkPayment(e);
 
             if (e.getPurchasedOfferings() == null || e.getPurchasedOfferings().
@@ -148,11 +159,12 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                         "PurchasedOffering(s) must be provided !");
             }
 
+            // Rebuild a purchased offering list from the provided one
             List<PurchasedOffering> purchasedOfferings = e.
                     getPurchasedOfferings().
                     stream()
                     // control the Offering for each PurchasedOffering
-                    .map(_po -> Optional.ofNullable(_po.getOffering().accept(
+                    .map(_po -> Optional.ofNullable(_po.getOffering().accept( // get the service/pack Facade
                             provideOfferingFacadeVisitor).find(new OfferingPK(
                                     _po.getOffering().getId(),
                                     e.getProfessional().getEmail())))
@@ -160,6 +172,19 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                                 //create a new PurchasedOffering from the Offering previously found
                                 PurchasedOffering po = new PurchasedOffering(
                                         _po.getQty(), o);
+
+                                // update the VAT rate if bill is VAT inclusive
+                                if (e.isVatInclusive()) {
+                                    po.setVatRate(Optional.ofNullable(_po.
+                                            getVatRate()).map(Function.
+                                                    identity())
+                                            .orElseThrow(() ->
+                                                    new WebApplicationException(
+                                                            "VAT Rate missing for Offering "
+                                                            + o.getName()))
+                                    );
+                                }
+
                                 //link the Offering with the PurchasedOffering
                                 o.getPurchasedOfferings().add(po);
                                 return po;
@@ -174,7 +199,17 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
 
             //compute the total amount from the offerings prices and quantities
             int total = purchasedOfferings.stream()
-                    .mapToInt(po -> po.getQty() * po.getOffering().getPrice())
+                    .mapToInt(po -> !e.isVatInclusive()
+                            // without a VAT rate
+                            ? po.getQty() * po.getOffering().getPrice()
+                            // with a VAT rate
+                            : po.getQty() * new BigDecimal(po.getOffering().
+                            getPrice()).multiply(
+                            po.getVatRate().add(
+                                    new BigDecimal(100))).divide(new BigDecimal(
+                                    100)).setScale(0,
+                            RoundingMode.HALF_UP).intValue()
+                    )
                     .sum();
 
             if (e.getAmount() != (total - e.getDiscount())) {
