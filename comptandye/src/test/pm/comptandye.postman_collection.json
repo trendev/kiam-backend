@@ -6318,7 +6318,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"pro@domain.com\",\n    \"cltype\": \"Professional\",\n    \"password\": \"PASSWORD\",\n    \"username\": \"pro_test\",\n    \"customerDetails\": {\n        \"firstName\": \"Hank\",\n        \"lastName\": \"Moody\",\n        \"nickname\": \"Author\",\n        \"phone\": \"0132039405\",\n        \"birthdate\": {{birthdate}},\n        \"sex\": \"M\",\n        \"comments\": [\n            \"Fun\",\n            \"Book Author\",\n            \"Smokes and drinks a lot\",\n            \"Driving a Porsche 911\"\n        ]\n    },\n    \"address\": {\n        \"street\": \"79 Avenue de la jonchère\",\n        \"optional\": \"Appart A113\",\n        \"postalCode\": \"77600\",\n        \"city\": \"Chanteloup-en-Brie\"\n    },\n    \"socialNetworkAccounts\": {\n        \"facebook\": \"https://www.facebook.com/hankmoody\",\n        \"twitter\": \"@hankfuckinmoody\",\n        \"pinterest\": \"https://www.pinterest.com/californication123/\"\n    },\n    \"companyName\": \"Californation\",\n    \"companyID\": \"55211846503644\",\n    \"creationDate\": 1483225200000,\n    \"businesses\": [\n        {\n            \"designation\": \"Coiffure\"\n        }\n    ],\n    \"paymentModes\": [\n        {\n            \"name\": \"Espèces\"\n        }\n    ]\n}"
+							"raw": "{\n    \"email\": \"pro@domain.com\",\n    \"cltype\": \"Professional\",\n    \"password\": \"PASSWORD\",\n    \"username\": \"pro_test\",\n    \"customerDetails\": {\n        \"firstName\": \"Hank\",\n        \"lastName\": \"Moody\",\n        \"nickname\": \"Author\",\n        \"phone\": \"0132039405\",\n        \"birthdate\": {{birthdate}},\n        \"sex\": \"M\",\n        \"comments\": [\n            \"Fun\",\n            \"Book Author\",\n            \"Smokes and drinks a lot\",\n            \"Driving a Porsche 911\"\n        ]\n    },\n    \"address\": {\n        \"street\": \"79 Avenue de la jonchère\",\n        \"optional\": \"Appart A113\",\n        \"postalCode\": \"77600\",\n        \"city\": \"Chanteloup-en-Brie\"\n    },\n    \"socialNetworkAccounts\": {\n        \"facebook\": \"https://www.facebook.com/hankmoody\",\n        \"twitter\": \"@hankfuckinmoody\",\n        \"pinterest\": \"https://www.pinterest.com/californication123/\"\n    },\n    \"companyName\": \"Californation\",\n    \"companyID\": \"55211846503644\",\n    \"vatcode\": \"FR91552118465\",\n    \"creationDate\": 1483225200000,\n    \"businesses\": [\n        {\n            \"designation\": \"Coiffure\"\n        }\n    ],\n    \"paymentModes\": [\n        {\n            \"name\": \"Espèces\"\n        }\n    ]\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Professional",
@@ -6563,7 +6563,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"pro@domain.com\",\n    \"cltype\":\"Professional\",\n    \"password\": \"ANOTHER_PASSWORD\",\n    \"username\": \"pro_test\",\n    \"uuid\": \"PRO_d7d1b42c88b8450c96236d0a0f5b8294\",\n    \"registrationDate\": 1504361329000,\n    \"companyName\": \"Boss Company\",\n    \"customerDetails\": {\n        \"id\": {{created_customer_details_id}},\n        \"firstName\": \"Hank\",\n        \"lastName\": \"Moody\",\n        \"nickname\": \"Hanky\",\n        \"phone\": \"0102030405\",\n        \"birthdate\": -296697600000,\n        \"sex\": \"M\",\n        \"comments\": [\n            \"Fun\",\n            \"Book Author\",\n            \"Smokes and drinks a lot\",\n            \"Also Weed and Sex addicted\",\n            \"Driving a Porsche 911\"\n        ]\n    },\n    \"address\": {\n        \"id\": {{created_address_id}},\n        \"street\": \"26 Brooks Avenue\",\n        \"postalCode\": \"90291\",\n        \"city\": \"Venice, Ca\",\n        \"country\": \"USA\"\n    },\n    \"socialNetworkAccounts\": {\n        \"id\": {{created_socialnetworkaccounts_id}},\n        \"facebook\": \"https://www.facebook.com/hankmoody\",\n        \"twitter\": \"@hankfuckinmoody\",\n        \"pinterest\": \"https://www.pinterest.com/californication123/\"\n    },\n    \"businesses\":[\n    \t{\n        \t\"designation\": \"Coiffure\"\n    \t},\n    \t{\n        \t\"designation\": \"Esthétique\"\n    \t}\n\t],\n\t\"paymentModes\":[\n    \t{\n        \t\"name\": \"CB\"\n    \t},\n    \t{\n        \t\"name\": \"Chèque\"\n    \t},\n\t    {\n        \t\"name\": \"Espèces\"\n    \t},\n    \t{\n    \t\t\"name\": \"Virement\"\n    \t}\t\n\t]\n}"
+							"raw": "{\n    \"email\": \"pro@domain.com\",\n    \"cltype\":\"Professional\",\n    \"password\": \"ANOTHER_PASSWORD\",\n    \"username\": \"pro_test\",\n    \"uuid\": \"PRO_d7d1b42c88b8450c96236d0a0f5b8294\",\n    \"registrationDate\": 1504361329000,\n    \"vatcode\": \"FR91552118465\",\n    \"companyName\": \"Boss Company\",\n    \"customerDetails\": {\n        \"id\": {{created_customer_details_id}},\n        \"firstName\": \"Hank\",\n        \"lastName\": \"Moody\",\n        \"nickname\": \"Hanky\",\n        \"phone\": \"0102030405\",\n        \"birthdate\": -296697600000,\n        \"sex\": \"M\",\n        \"comments\": [\n            \"Fun\",\n            \"Book Author\",\n            \"Smokes and drinks a lot\",\n            \"Also Weed and Sex addicted\",\n            \"Driving a Porsche 911\"\n        ]\n    },\n    \"address\": {\n        \"id\": {{created_address_id}},\n        \"street\": \"26 Brooks Avenue\",\n        \"postalCode\": \"90291\",\n        \"city\": \"Venice, Ca\",\n        \"country\": \"USA\"\n    },\n    \"socialNetworkAccounts\": {\n        \"id\": {{created_socialnetworkaccounts_id}},\n        \"facebook\": \"https://www.facebook.com/hankmoody\",\n        \"twitter\": \"@hankfuckinmoody\",\n        \"pinterest\": \"https://www.pinterest.com/californication123/\"\n    },\n    \"businesses\":[\n    \t{\n        \t\"designation\": \"Coiffure\"\n    \t},\n    \t{\n        \t\"designation\": \"Esthétique\"\n    \t}\n\t],\n\t\"paymentModes\":[\n    \t{\n        \t\"name\": \"CB\"\n    \t},\n    \t{\n        \t\"name\": \"Chèque\"\n    \t},\n\t    {\n        \t\"name\": \"Espèces\"\n    \t},\n    \t{\n    \t\t\"name\": \"Virement\"\n    \t}\t\n\t]\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Professional",
@@ -8323,6 +8323,257 @@
 								"UserGroup",
 								"Administrator",
 								"userAccounts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "VatRates",
+			"description": null,
+			"item": [
+				{
+					"name": "findAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2109089f-6db5-45f3-9ae1-7d698c036236",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Should contain more than 1 element\"] = jsonData.length >= 1;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/VatRates",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"VatRates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "count",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fa41defb-7282-47b4-8ff0-afb20d044bce",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"tests[\"Total count >= 1\"] = responseBody >= 1;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/VatRates/count",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"VatRates",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c90ff507-0b5a-45b6-aeb4-118b3a121f57",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"countryId is \\\"FR\\\"\"] = jsonData.countryId === \"FR\";",
+									"tests[\"country is \\\"France\\\"\"] = jsonData.country === \"France\";",
+									"tests[\"rates.length >= 1\"] = jsonData.rates.length >= 1;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/VatRates/FR",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"VatRates",
+								"FR"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b74d9854-ceec-431d-ba75-076cfabf2c10",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 201\"] = responseCode.code === 201;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"countryId is \\\"XX\\\"\"] = jsonData.countryId === \"XX\";",
+									"tests[\"country is \\\"Wonderland\\\"\"] = jsonData.country === \"Wonderland\";",
+									"tests[\"rates.length >= 1\"] = jsonData.rates.length >= 1;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"countryId\": \"XX\",\n        \"country\": \"Wonderland\",\n        \"rates\": [\n            21,\n            12,\n            6\n        ]\n    }"
+						},
+						"url": {
+							"raw": "{{API_URL}}/VatRates",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"VatRates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5a744923-ed0c-4e2e-95b3-074442146ac8",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"countryId is \\\"XX\\\"\"] = jsonData.countryId === \"XX\";",
+									"tests[\"country is \\\"NewCountry\\\"\"] = jsonData.country === \"NewCountry\";",
+									"tests[\"rates.length >= 1\"] = jsonData.rates.length >= 1;",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"countryId\": \"XX\",\n    \"country\": \"NewCountry\",\n    \"rates\": [\n        25,\n        12.5,\n        6,\n        3.4\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/VatRates",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"VatRates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/VatRates/XX",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"VatRates",
+								"XX"
 							]
 						}
 					},
