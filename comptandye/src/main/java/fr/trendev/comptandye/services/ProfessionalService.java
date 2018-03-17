@@ -188,7 +188,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 }
             } catch (Exception ex) {
                 throw new WebApplicationException(
-                        "Cannot find VAT Rates from VAT code " + vatcode);
+                        "Cannot find VAT Rates from VAT code [" + vatcode + "]");
             }
         } else {
             pro.setVatRates(null);
