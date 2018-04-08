@@ -35,7 +35,8 @@ import javax.validation.constraints.NotNull;
         visible = true)
 @JsonSubTypes({
     @JsonSubTypes.Type(value = Service.class, name = OfferingType.SERVICE)
-    ,   @JsonSubTypes.Type(value = Pack.class, name = OfferingType.PACK)})
+    ,   @JsonSubTypes.Type(value = Pack.class, name = OfferingType.PACK)
+    ,  @JsonSubTypes.Type(value = Sale.class, name = OfferingType.SALE)})
 public abstract class Offering {
 
     @Column(name = "OFFERING_ID")

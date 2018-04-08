@@ -25,6 +25,7 @@ import fr.trendev.comptandye.entities.Payment;
 import fr.trendev.comptandye.entities.PaymentMode;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.PurchasedOffering;
+import fr.trendev.comptandye.entities.Sale;
 import fr.trendev.comptandye.entities.Service;
 import fr.trendev.comptandye.entities.SocialNetworkAccounts;
 import fr.trendev.comptandye.entities.UserAccount;
@@ -146,6 +147,11 @@ public class ProvideUserGroupVisitor implements Visitor<UserGroup> {
     @Override
     public UserGroup visit(Professional professional) {
         return userGroupFacade.find(UserAccountType.PROFESSIONAL);
+    }
+
+    @Override
+    public UserGroup visit(Sale sale) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

@@ -13,4 +13,5 @@ public class OfferingType {
 
     public static final String SERVICE = "service";
     public static final String PACK = "pack";
+    public static final String SALE = "sale";
 }

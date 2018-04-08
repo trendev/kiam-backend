@@ -865,7 +865,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonTypeInfo(use = JsonTypeInfo.Id.NAME,&#xA;        include = JsonTypeInfo.As.EXISTING_PROPERTY,&#xA;        property = &quot;cltype&quot;,&#xA;        visible = true)"/>
-        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({&#xA;  @JsonSubTypes.Type(value = Service.class, name = OfferingType.SERVICE), &#xA;  @JsonSubTypes.Type(value = Pack.class, name = OfferingType.PACK)&#xA;})"/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({&#xA;  @JsonSubTypes.Type(value = Service.class, name = OfferingType.SERVICE), &#xA;  @JsonSubTypes.Type(value = Pack.class, name = OfferingType.PACK),&#xA;  @JsonSubTypes.Type(value = Sale.class, name = OfferingType.SALE)&#xA;})"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
             import fr.trendev.comptandye.utils.visitors.Visitor;
             import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
@@ -1495,7 +1495,6 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         <jpa:nq e="false" name="Expense.findByVatRate">
             <jpa:query>Select e from Expense e where e.vatRate=:vatRate</jpa:query>
         </jpa:nq>
-        <jpa:discriminator-column/>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="BusinessPK" abs="false" class="Business" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1503060694288">
         <jpa:con am="PUBLIC" e="true">
@@ -1645,18 +1644,35 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
             <jpa:query>Select v from VatRates v where v.country=:country</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="PurchasePK" abs="false" class="Purchase" superclassId="_1499512549878" v="true" xre="false" m="false" rootElement="_14901008082901" id="_1522936842031">
+    <jpa:entity compositePrimaryKeyClass="SalePK" abs="false" class="Sale" superclassId="_1490172966686" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1522937360932">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_1490176760174139</jpa:a>
+            <jpa:a>_1490176780392140</jpa:a>
+            <jpa:a>_150488904917075</jpa:a>
+            <jpa:a>_15049019949221632</jpa:a>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true"/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
+        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
+        <jpa:snp e="true">@Override
+            public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
+            }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
-        <jpa:attributes/>
-        <jpa:nq e="false" name="Purchase.findAll">
-            <jpa:query>Select e from Purchase e</jpa:query>
+        <jpa:attributes>
+            <jpa:basic attribute-type="int" v="true" xvt="" name="qty" id="_152319956422378">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+        </jpa:attributes>
+        <jpa:nq e="false" name="Sale.findAll">
+            <jpa:query>Select e from Sale e</jpa:query>
         </jpa:nq>
-    </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="ProductSalePK" abs="false" class="ProductSale" superclassId="_1490172966686" v="true" xre="false" m="false" rootElement="_14901008082901" id="_1522937360932">
-        <jpa:ath>jsie</jpa:ath>
-        <jpa:attributes/>
-        <jpa:nq e="false" name="ProductSale.findAll">
-            <jpa:query>Select e from ProductSale e</jpa:query>
+        <jpa:nq e="false" name="Sale.findByQty">
+            <jpa:query>Select s from Sale s where s.qty=:qty</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Sale.findByResellingPrice">
+            <jpa:query>Select s from Sale s where s.resellingPrice=:resellingPrice</jpa:query>
         </jpa:nq>
     </jpa:entity>
     <jpa:embeddable abs="false" class="OfferingSnapshot" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1512853437669">
@@ -1716,7 +1732,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1490172966686" x="-658" y="659">
+            <i ref="_1490172966686" x="-658" y="660">
                 <el>
                     <e ref="_150537690133858">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -1761,7 +1777,6 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1522936842031" x="-252" y="1553"/>
             <i ref="_1490281931338" x="417" y="977">
                 <el>
                     <e ref="_1490283543806197">
@@ -1840,7 +1855,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1522937360932" x="-624" y="1103"/>
+            <i ref="_1522937360932" x="-625" y="1103"/>
             <i ref="_1490180671085" x="715" y="347">
                 <el>
                     <e ref="_150652336702164">
@@ -1880,7 +1895,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1490113751330" x="-679" y="1010"/>
+            <i ref="_1490113751330" x="-678" y="1010"/>
             <i ref="_1490206901623" x="306" y="1247">
                 <el>
                     <e ref="_1503081214518630">

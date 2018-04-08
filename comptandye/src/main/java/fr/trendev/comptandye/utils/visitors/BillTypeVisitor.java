@@ -25,6 +25,7 @@ import fr.trendev.comptandye.entities.Payment;
 import fr.trendev.comptandye.entities.PaymentMode;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.PurchasedOffering;
+import fr.trendev.comptandye.entities.Sale;
 import fr.trendev.comptandye.entities.Service;
 import fr.trendev.comptandye.entities.SocialNetworkAccounts;
 import fr.trendev.comptandye.entities.UserAccount;
@@ -138,6 +139,11 @@ public class BillTypeVisitor implements Visitor<String> {
 
     @Override
     public String visit(Professional professional) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String visit(Sale sale) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

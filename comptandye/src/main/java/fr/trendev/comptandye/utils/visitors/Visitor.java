@@ -25,6 +25,7 @@ import fr.trendev.comptandye.entities.Payment;
 import fr.trendev.comptandye.entities.PaymentMode;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.PurchasedOffering;
+import fr.trendev.comptandye.entities.Sale;
 import fr.trendev.comptandye.entities.Service;
 import fr.trendev.comptandye.entities.SocialNetworkAccounts;
 import fr.trendev.comptandye.entities.UserAccount;
@@ -75,6 +76,8 @@ public interface Visitor<T> {
     public T visit(PurchasedOffering purchasedOffering);
 
     public T visit(Professional professional);
+
+    public T visit(Sale sale);
 
     public T visit(Service service);
 

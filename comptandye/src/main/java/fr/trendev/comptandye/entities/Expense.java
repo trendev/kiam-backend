@@ -4,6 +4,7 @@ package fr.trendev.comptandye.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.trendev.comptandye.utils.visitors.Visitor;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -58,6 +59,13 @@ public class Expense {
 
     @Basic
     private String invoiceRef;
+
+    @Basic
+    private String provider;
+
+    @Column(updatable = false, scale = 2, precision = 5)
+    @Basic
+    private BigDecimal vatRate;
 
     @ElementCollection
     private List<String> categories = new LinkedList<>();
@@ -140,6 +148,22 @@ public class Expense {
 
     public void setInvoiceRef(String invoiceRef) {
         this.invoiceRef = invoiceRef;
+    }
+
+    public String getProvider() {
+        return this.provider;
+    }
+
+    public void setProvider(String provider) {
+        this.provider = provider;
+    }
+
+    public BigDecimal getVatRate() {
+        return this.vatRate;
+    }
+
+    public void setVatRate(BigDecimal vatRate) {
+        this.vatRate = vatRate;
     }
 
     public List<String> getCategories() {
