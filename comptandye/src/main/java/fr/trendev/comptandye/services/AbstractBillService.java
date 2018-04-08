@@ -44,7 +44,8 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
     ProfessionalFacade professionalFacade;
 
     /**
-     * Used to gather a ServiceFacade or a PackFacade from an Offering.
+     * Used to gather a ServiceFacade or a PackFacade or a SaleFacade from an
+     * Offering.
      *
      */
     @Inject
@@ -164,7 +165,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                     getPurchasedOfferings().
                     stream()
                     // control the Offering for each PurchasedOffering
-                    .map(_po -> Optional.ofNullable(_po.getOffering().accept( // get the service/pack Facade
+                    .map(_po -> Optional.ofNullable(_po.getOffering().accept( // get the offering Facade
                             provideOfferingFacadeVisitor).find(new OfferingPK(
                                     _po.getOffering().getId(),
                                     e.getProfessional().getEmail())))

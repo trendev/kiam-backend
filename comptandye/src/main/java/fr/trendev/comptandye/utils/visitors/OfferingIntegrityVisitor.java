@@ -53,9 +53,10 @@ public class OfferingIntegrityVisitor implements Visitor<Offering> {
     private String proEmail;
 
     public OfferingIntegrityVisitor(PackFacade packFacade,
-            ServiceFacade serviceFacade, String proEmail) {
+            ServiceFacade serviceFacade, SaleFacade saleFacade, String proEmail) {
         this.packFacade = packFacade;
         this.serviceFacade = serviceFacade;
+        this.saleFacade = saleFacade;
         this.proEmail = proEmail;
     }
 

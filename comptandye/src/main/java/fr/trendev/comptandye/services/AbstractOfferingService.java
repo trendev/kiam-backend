@@ -11,6 +11,7 @@ import fr.trendev.comptandye.entities.Pack;
 import fr.trendev.comptandye.entities.PurchasedOffering;
 import fr.trendev.comptandye.sessions.PackFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
+import fr.trendev.comptandye.sessions.SaleFacade;
 import fr.trendev.comptandye.sessions.ServiceFacade;
 import fr.trendev.comptandye.utils.visitors.OfferingIntegrityVisitor;
 import java.util.function.Consumer;
@@ -32,6 +33,9 @@ public abstract class AbstractOfferingService<T extends Offering> extends Abstra
 
     @Inject
     ServiceFacade serviceFacade;
+
+    @Inject
+    SaleFacade saleFacade;
 
     private final Logger LOG = Logger.getLogger(
             AbstractBillService.class.
@@ -79,7 +83,7 @@ public abstract class AbstractOfferingService<T extends Offering> extends Abstra
 
     protected Offering checkOfferingIntegrity(Offering o, String proEmail) {
         OfferingIntegrityVisitor v = new OfferingIntegrityVisitor(packFacade,
-                serviceFacade, proEmail);
+                serviceFacade, saleFacade, proEmail);
         return o.accept(v);
     }
 
