@@ -26,12 +26,14 @@ import fr.trendev.comptandye.entities.Payment;
 import fr.trendev.comptandye.entities.PaymentMode;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.PurchasedOffering;
+import fr.trendev.comptandye.entities.Sale;
 import fr.trendev.comptandye.entities.Service;
 import fr.trendev.comptandye.entities.SocialNetworkAccounts;
 import fr.trendev.comptandye.entities.UserAccount;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.PackFacade;
+import fr.trendev.comptandye.sessions.SaleFacade;
 import fr.trendev.comptandye.sessions.ServiceFacade;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -49,6 +51,9 @@ public class ProvideOfferingFacadeVisitor implements
 
     @Inject
     PackFacade packFacade;
+
+    @Inject
+    SaleFacade saleFacade;
 
     @Override
     public AbstractFacade<? extends Offering, OfferingPK> visit(Address address) {
@@ -156,6 +161,11 @@ public class ProvideOfferingFacadeVisitor implements
     public AbstractFacade<? extends Offering, OfferingPK> visit(
             Professional professional) {
         throw new UnsupportedOperationException("Not supported !");
+    }
+
+    @Override
+    public AbstractFacade<? extends Offering, OfferingPK> visit(Sale sale) {
+        return saleFacade;
     }
 
     @Override

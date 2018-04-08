@@ -26,11 +26,13 @@ import fr.trendev.comptandye.entities.Payment;
 import fr.trendev.comptandye.entities.PaymentMode;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.PurchasedOffering;
+import fr.trendev.comptandye.entities.Sale;
 import fr.trendev.comptandye.entities.Service;
 import fr.trendev.comptandye.entities.SocialNetworkAccounts;
 import fr.trendev.comptandye.entities.UserAccount;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.sessions.PackFacade;
+import fr.trendev.comptandye.sessions.SaleFacade;
 import fr.trendev.comptandye.sessions.ServiceFacade;
 import java.util.Optional;
 import java.util.function.Function;
@@ -45,6 +47,8 @@ public class OfferingIntegrityVisitor implements Visitor<Offering> {
     private PackFacade packFacade;
 
     private ServiceFacade serviceFacade;
+
+    private SaleFacade saleFacade;
 
     private String proEmail;
 
@@ -161,6 +165,17 @@ public class OfferingIntegrityVisitor implements Visitor<Offering> {
     @Override
     public Offering visit(Professional professional) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Offering visit(Sale sale) {
+        return Optional.ofNullable(saleFacade.find(
+                new OfferingPK(sale.getId(), proEmail)))
+                .map(Function.identity())
+                .orElseThrow(() -> new WebApplicationException("Sale ["
+                        + sale.getId()
+                        + "] not found !"));
+
     }
 
     @Override
