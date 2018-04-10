@@ -22,7 +22,7 @@ public class ForbiddenExceptionMapper implements
 
     @Override
     public Response toResponse(ForbiddenException ex) {
-        LOG.log(Level.INFO, ex.getMessage());
+        LOG.log(Level.INFO, "UNAUTHORIZED_USER : " + ex.getMessage());
         return Response.status(Response.Status.UNAUTHORIZED).entity(Json.
                 createObjectBuilder().add("error", ex.getMessage()).build()).
                 build();
