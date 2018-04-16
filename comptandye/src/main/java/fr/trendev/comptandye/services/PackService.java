@@ -10,6 +10,7 @@ import fr.trendev.comptandye.entities.Offering;
 import fr.trendev.comptandye.entities.OfferingPK;
 import fr.trendev.comptandye.entities.Pack;
 import fr.trendev.comptandye.entities.Professional;
+import fr.trendev.comptandye.entities.Sale;
 import fr.trendev.comptandye.entities.Service;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;
@@ -324,6 +325,52 @@ public class PackService extends AbstractOfferingService<Pack> {
                 packPK,
                 packFacade,
                 offeringPK, Pack.class,
+                (p, o) ->
+                p.getOfferings().remove(o) && o.getParentPacks().remove(p));
+    }
+
+    @Path("{packid}/addSale/offering/{offeringid}")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addSale(@Context SecurityContext sec,
+            @PathParam("packid") Long packid,
+            @PathParam("offeringid") Long offeringid,
+            @QueryParam("professional") String professional) {
+
+        OfferingPK packPK = new OfferingPK(packid, this.getProEmail(sec,
+                professional));
+
+        OfferingPK offeringPK = new OfferingPK(offeringid, this.getProEmail(sec,
+                professional));
+
+        return super.<Sale, OfferingPK>manageAssociation(
+                AssociationManagementEnum.INSERT,
+                packPK,
+                saleFacade,
+                offeringPK, Sale.class,
+                (p, o) ->
+                p.getOfferings().add(o) && o.getParentPacks().add(p));
+    }
+
+    @Path("{packid}/removeSale/offering/{offeringid}")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response removeSale(@Context SecurityContext sec,
+            @PathParam("packid") Long packid,
+            @PathParam("offeringid") Long offeringid,
+            @QueryParam("professional") String professional) {
+
+        OfferingPK packPK = new OfferingPK(packid, this.getProEmail(sec,
+                professional));
+
+        OfferingPK offeringPK = new OfferingPK(offeringid, this.getProEmail(sec,
+                professional));
+
+        return super.<Sale, OfferingPK>manageAssociation(
+                AssociationManagementEnum.REMOVE,
+                packPK,
+                saleFacade,
+                offeringPK, Sale.class,
                 (p, o) ->
                 p.getOfferings().remove(o) && o.getParentPacks().remove(p));
     }

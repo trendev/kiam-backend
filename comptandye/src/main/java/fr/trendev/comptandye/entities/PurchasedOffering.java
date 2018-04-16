@@ -33,6 +33,18 @@ public class PurchasedOffering {
     @Basic
     private BigDecimal vatRate;
 
+    /**
+     * Extent of the Services
+     */
+    @Basic
+    private int extentServices;
+
+    /**
+     * Extent of the Sales
+     */
+    @Basic
+    private int extentSales;
+
     @Embedded
     private OfferingSnapshot offeringSnapshot = new OfferingSnapshot();
 
@@ -71,6 +83,22 @@ public class PurchasedOffering {
 
     public void setVatRate(BigDecimal vatRate) {
         this.vatRate = vatRate;
+    }
+
+    public int getExtentServices() {
+        return this.extentServices;
+    }
+
+    public void setExtentServices(int extentServices) {
+        this.extentServices = extentServices;
+    }
+
+    public int getExtentSales() {
+        return this.extentSales;
+    }
+
+    public void setExtentSales(int extentSales) {
+        this.extentSales = extentSales;
     }
 
     public OfferingSnapshot getOfferingSnapshot() {

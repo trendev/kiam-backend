@@ -1587,6 +1587,16 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:column unique="false" nullable="true" insertable="true" updatable="false" precision="5" scale="2"/>
             </jpa:basic>
+            <jpa:basic attribute-type="int" v="true" xvt="" name="extentServices" id="_152388873738676">
+                <jpa:des>Extent of the Services</jpa:des>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="int" v="true" xvt="" name="extentSales" id="_152388874525677">
+                <jpa:des>Extent of the Sales</jpa:des>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
             <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490172966686" connected-attribute-id="_1512851997730269" v="true" xvt="" name="offering" id="_1512851997729268">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -1612,6 +1622,12 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         </jpa:nq>
         <jpa:nq e="false" name="PurchasedOffering.findByVatRate">
             <jpa:query>Select p from PurchasedOffering p where p.vatRate=:vatRate</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="PurchasedOffering.findByExtentServices">
+            <jpa:query>Select p from PurchasedOffering p where p.extentServices=:extentServices</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="PurchasedOffering.findByExtentSales">
+            <jpa:query>Select p from PurchasedOffering p where p.extentSales=:extentSales</jpa:query>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="VatRatesPK" abs="false" class="VatRates" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1521215136542">
@@ -1751,9 +1767,6 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
             <i ref="_1490704123469" x="-166" y="61"/>
             <i ref="_1506344869339" x="244" y="1526">
                 <el>
-                    <e ref="_1521217784391383">
-                        <v st="1" si="12.0" cl="#ff00ff"/>
-                    </e>
                     <e ref="_1512851997729268">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
@@ -1820,7 +1833,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                     <e ref="_1521217263508375">
-                        <v st="1" si="12.0" cl="#ff00ff"/>
+                        <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                     <e ref="_1490180547178494">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -1905,12 +1918,6 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
             </i>
             <i ref="_1490178979567" x="731" y="1247">
                 <el>
-                    <e ref="_1521217569466382">
-                        <v st="1" si="12.0" cl="#ff00ff"/>
-                    </e>
-                    <e ref="_1521218230422384">
-                        <v st="1" si="12.0" cl="#ff00ff"/>
-                    </e>
                     <e ref="_150365567487858">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
