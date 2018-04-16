@@ -5352,6 +5352,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"id": "02103225-32d6-4647-8a2a-887d674e45b3",
 								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
@@ -5378,7 +5379,7 @@
 									"    }",
 									"}, function (err, response) {",
 									"    console.log(response.json());",
-									"   pm.environment.set(\"created_offering_id\", response.json().id);",
+									"   pm.environment.set(\"created_service_id\", response.json().id);",
 									"});",
 									"",
 									""
@@ -5388,14 +5389,15 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "77e209e7-c5a0-4f5e-9082-a793d33ee1ec",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"id is defined\"] = jsonData.id !== undefined;",
-									"//created_offering_id environment variable is stored as a string...",
-									"tests[\"id is \"+pm.environment.get(\"created_offering_id\")] = jsonData.id == pm.environment.get(\"created_offering_id\");",
+									"//created_service_id environment variable is stored as a string...",
+									"tests[\"id is \"+pm.environment.get(\"created_service_id\")] = jsonData.id == pm.environment.get(\"created_service_id\");",
 									"tests[\"name is \\\"beauty service\\\"\"] = jsonData.name === \"beauty service\";",
 									"tests[\"price is 10000\"] = jsonData.price === 10000;",
 									"tests[\"duration is 180\"] = jsonData.duration === 180;",
@@ -5417,7 +5419,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{API_URL}}/Pack/{{created_pack_id}}/addService/offering/{{created_offering_id}}?professional=vanessa.gay@gmail.com",
+							"raw": "{{API_URL}}/Pack/{{created_pack_id}}/addService/offering/{{created_service_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
@@ -5426,7 +5428,102 @@
 								"{{created_pack_id}}",
 								"addService",
 								"offering",
-								"{{created_offering_id}}"
+								"{{created_service_id}}"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addSale",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "b6f39b12-32ef-412b-8b0e-6ef77ed3c59d",
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest({",
+									"    url:pm.environment.get('API_URL')+\"/Sale?professional=vanessa.gay@gmail.com\",",
+									"    method: 'POST',",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"    },",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify(",
+									"            {",
+									"                name:\"beauty product\",",
+									"              price:10000,",
+									"              qty:2,",
+									"              businesses: [",
+									"                {",
+									"                    designation: \"Esthétique\"",
+									"                }",
+									"                ],",
+									"                cltype:\"sale\"",
+									"            })",
+									"    }",
+									"}, function (err, response) {",
+									"    console.log(response.json());",
+									"   pm.environment.set(\"created_sale_id\", response.json().id);",
+									"});",
+									"",
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "01a3315f-d206-4295-b4ef-04cb16e3515f",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"//created_sale_id environment variable is stored as a string...",
+									"tests[\"id is \"+pm.environment.get(\"created_sale_id\")] = jsonData.id == pm.environment.get(\"created_sale_id\");",
+									"tests[\"name is \\\"beauty product\\\"\"] = jsonData.name === \"beauty product\";",
+									"tests[\"price is 10000\"] = jsonData.price === 10000;",
+									"tests[\"duration is 0\"] = jsonData.duration === 0;",
+									"tests[\"qty is 2\"] = jsonData.qty === 2;",
+									"tests[\"cltype is sale\"] = jsonData.cltype === \"sale\";"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/Pack/{{created_pack_id}}/addSale/offering/{{created_sale_id}}?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Pack",
+								"{{created_pack_id}}",
+								"addSale",
+								"offering",
+								"{{created_sale_id}}"
 							],
 							"query": [
 								{
@@ -5536,12 +5633,13 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "d0ef14ec-8bc5-4f3d-bc6f-8d443a136733",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/Service/\"+pm.environment.get('created_offering_id')+\"?professional=vanessa.gay@gmail.com\",",
+									"    url:pm.environment.get('API_URL')+\"/Service/\"+pm.environment.get('created_service_id')+\"?professional=vanessa.gay@gmail.com\",",
 									"    header: {",
 									"        'Content-Type':'application/json',",
 									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
@@ -5554,8 +5652,8 @@
 									"",
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"id is defined\"] = jsonData.id !== undefined;",
-									"//created_offering_id environment variable is stored as a string...",
-									"tests[\"id is \"+pm.environment.get(\"created_offering_id\")] = jsonData.id == pm.environment.get(\"created_offering_id\");",
+									"//created_service_id environment variable is stored as a string...",
+									"tests[\"id is \"+pm.environment.get(\"created_service_id\")] = jsonData.id == pm.environment.get(\"created_service_id\");",
 									"tests[\"name is \\\"beauty service\\\"\"] = jsonData.name === \"beauty service\";",
 									"tests[\"price is 10000\"] = jsonData.price === 10000;",
 									"tests[\"duration is 180\"] = jsonData.duration === 180;",
@@ -5580,7 +5678,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{API_URL}}/Pack/{{created_pack_id}}/removeService/offering/{{created_offering_id}}?professional=vanessa.gay@gmail.com",
+							"raw": "{{API_URL}}/Pack/{{created_pack_id}}/removeService/offering/{{created_service_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
@@ -5589,7 +5687,79 @@
 								"{{created_pack_id}}",
 								"removeService",
 								"offering",
-								"{{created_offering_id}}"
+								"{{created_service_id}}"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeSale",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6f7863ef-c816-42e2-a49e-30c42fba6b53",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"pm.sendRequest({",
+									"    url:pm.environment.get('API_URL')+\"/Sale/\"+pm.environment.get('created_sale_id')+\"?professional=vanessa.gay@gmail.com\",",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"    },",
+									"    method: 'DELETE'",
+									"}, function (err, res) {",
+									"    pm.expect(res).to.have.property('code', 200);",
+									"    pm.expect(res).to.have.property('status', 'OK');",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"//created_sale_id environment variable is stored as a string...",
+									"tests[\"id is \"+pm.environment.get(\"created_sale_id\")] = jsonData.id == pm.environment.get(\"created_sale_id\");",
+									"tests[\"name is \\\"beauty product\\\"\"] = jsonData.name === \"beauty product\";",
+									"tests[\"price is 10000\"] = jsonData.price === 10000;",
+									"tests[\"duration is 0\"] = jsonData.duration === 0;",
+									"tests[\"cltype is sale\"] = jsonData.cltype === \"sale\";",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/Pack/{{created_pack_id}}/removeSale/offering/{{created_sale_id}}?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Pack",
+								"{{created_pack_id}}",
+								"removeSale",
+								"offering",
+								"{{created_sale_id}}"
 							],
 							"query": [
 								{
@@ -7489,7 +7659,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d0206247-d8f9-4f02-8079-1448e6cca190",
+								"id": "a0a85bfa-1849-4ede-8121-dabc061760d8",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
@@ -7499,7 +7669,6 @@
 									"pm.environment.set(\"created_offering_id\", jsonData.id);",
 									"tests[\"name is \\\"product sale\\\"\"] = jsonData.name === \"product sale\";",
 									"tests[\"price is 10000\"] = jsonData.price === 10000;",
-									"tests[\"duration is 180\"] = jsonData.duration === 180;",
 									"tests[\"cltype is sale\"] = jsonData.cltype === \"sale\";"
 								]
 							}
@@ -7519,7 +7688,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":\"product sale\",\n  \"price\":10000,\n  \"duration\":180,\n  \"cltype\":\"sale\",\n  \"businesses\": [\n        {\n                \"designation\": \"Coiffure\"\n        }\n  ]\n}"
+							"raw": "{\n\t\"cltype\":\"sale\",\n  \"name\":\"product sale\",\n  \"price\":10000,\n  \"qty\":2,\n  \"businesses\": [\n        {\n                \"designation\": \"Coiffure\"\n        }\n  ]\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Sale?professional=vanessa.gay@gmail.com",
@@ -7545,7 +7714,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d9e876cf-7c93-4d6c-a5e2-f603d8f98ea1",
+								"id": "ce975fc9-223e-4206-b773-ecf68700407e",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -7556,7 +7725,8 @@
 									"tests[\"id is \"+pm.environment.get(\"created_offering_id\")] = jsonData.id == pm.environment.get(\"created_offering_id\");",
 									"tests[\"name is \\\"product sale\\\"\"] = jsonData.name === \"product sale\";",
 									"tests[\"price is 10000\"] = jsonData.price === 10000;",
-									"tests[\"duration is 180\"] = jsonData.duration === 180;",
+									"tests[\"duration is 0\"] = jsonData.duration === 0;",
+									"tests[\"qty is 2\"] = jsonData.qty === 2;",
 									"tests[\"cltype is sale\"] = jsonData.cltype === \"sale\";"
 								]
 							}
@@ -7676,7 +7846,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d62de348-ed34-46e3-ad0b-a31ef4b28340",
+								"id": "791efc62-3c74-4212-b0ab-c67dc6bb9255",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -7686,7 +7856,6 @@
 									"pm.environment.set(\"created_offering_id\", jsonData.id);",
 									"tests[\"name is \\\"new product\\\"\"] = jsonData.name === \"new product\";",
 									"tests[\"price is 100000\"] = jsonData.price === 100000;",
-									"tests[\"duration is 300\"] = jsonData.duration === 300;",
 									"tests[\"first business designation is \\\"Esthétique\\\"\"] = jsonData.businesses[0].designation === \"Esthétique\";",
 									"tests[\"cltype is sale\"] = jsonData.cltype === \"sale\";"
 								]
@@ -7707,7 +7876,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"cltype\": \"sale\",\n  \"id\":{{created_offering_id}},\n  \"name\":\"new product\",\n  \"price\":100000,\n  \"duration\":300,\n  \"businesses\": [\n            {\n                \"designation\": \"Esthétique\"\n            }\n    ]\n}"
+							"raw": "{\n  \"cltype\": \"sale\",\n  \"id\":{{created_offering_id}},\n  \"name\":\"new product\",\n  \"price\":100000,\n  \"businesses\": [\n            {\n                \"designation\": \"Esthétique\"\n            }\n    ]\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Sale?professional=vanessa.gay@gmail.com",
