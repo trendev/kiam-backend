@@ -33,20 +33,11 @@ public class PurchasedOffering {
     @Basic
     private BigDecimal vatRate;
 
-    /**
-     * Extent of the Services
-     */
-    @Basic
-    private int extentServices;
-
-    /**
-     * Extent of the Sales
-     */
-    @Basic
-    private int extentSales;
-
     @Embedded
     private OfferingSnapshot offeringSnapshot = new OfferingSnapshot();
+
+    @Embedded
+    private OfferingExtents offeringExtents;
 
     @ManyToOne(targetEntity = Offering.class)
     private Offering offering;
@@ -58,7 +49,10 @@ public class PurchasedOffering {
         this.qty = qty;
         this.offering = offering;
         this.offeringSnapshot = new OfferingSnapshot(offering);
-// this.offering.getPurchasedOfferings().add(this);
+        this.offeringExtents = new OfferingExtents(offering);
+
+        /* Offering/PurchasedOffering links are set/destroyed in the rest api services */
+// this.offering.getPurchasedOfferings().add(this); */
     }
 
     public Long getId() {
@@ -85,28 +79,20 @@ public class PurchasedOffering {
         this.vatRate = vatRate;
     }
 
-    public int getExtentServices() {
-        return this.extentServices;
-    }
-
-    public void setExtentServices(int extentServices) {
-        this.extentServices = extentServices;
-    }
-
-    public int getExtentSales() {
-        return this.extentSales;
-    }
-
-    public void setExtentSales(int extentSales) {
-        this.extentSales = extentSales;
-    }
-
     public OfferingSnapshot getOfferingSnapshot() {
         return this.offeringSnapshot;
     }
 
     public void setOfferingSnapshot(OfferingSnapshot offeringSnapshot) {
         this.offeringSnapshot = offeringSnapshot;
+    }
+
+    public OfferingExtents getOfferingExtents() {
+        return this.offeringExtents;
+    }
+
+    public void setOfferingExtents(OfferingExtents offeringExtents) {
+        this.offeringExtents = offeringExtents;
     }
 
     public Offering getOffering() {
