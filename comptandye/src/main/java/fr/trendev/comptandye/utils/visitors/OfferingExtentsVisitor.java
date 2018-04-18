@@ -114,9 +114,31 @@ public class OfferingExtentsVisitor implements Visitor<OfferingExtents> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     * Extents are computed from the price of the pack and not the sum of its
+     * offerings prices (graded approach).
+     *
+     * @param pack the pack to visit, may contains services and/or sales
+     * @return
+     */
     @Override
     public OfferingExtents visit(Pack pack) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        OfferingExtents oe = pack.getOfferings()
+                .stream()
+                .map(o -> o.accept(this))
+                .reduce(new OfferingExtents(0, 0), (oe1, oe2) ->
+                        new OfferingExtents(
+                                oe1.getServices() + oe2.getServices(),
+                                oe1.getSales() + oe2.getSales()
+                        )
+                );
+
+        int servicesExtents =
+                (pack.getPrice() * oe.getServices())
+                / (oe.getSales() + oe.getServices());
+        int salesExtents = pack.getPrice() - servicesExtents;
+
+        return new OfferingExtents(servicesExtents, salesExtents);
     }
 
     @Override
@@ -141,12 +163,12 @@ public class OfferingExtentsVisitor implements Visitor<OfferingExtents> {
 
     @Override
     public OfferingExtents visit(Sale sale) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new OfferingExtents(0, sale.getPrice());
     }
 
     @Override
     public OfferingExtents visit(Service service) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new OfferingExtents(service.getPrice(), 0);
     }
 
     @Override
