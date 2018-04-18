@@ -2093,7 +2093,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "55ef797c-6cc1-46f2-aea2-0a831ca0a8ea",
+								"id": "e8b1eddd-2a14-4f73-9e00-a201e4409265",
 								"type": "text/javascript",
 								"exec": [
 									"var billdate = new Date();",
@@ -2166,6 +2166,33 @@
 									"    console.log(response.json());",
 									"   pm.environment.set(\"created_offering_id\", response.json().id);",
 									"});",
+									"",
+									"pm.sendRequest({",
+									"    url:pm.environment.get('API_URL')+\"/Sale?professional=vanessa.gay@gmail.com\",",
+									"    method: 'POST',",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"    },",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify(",
+									"            {",
+									"                name:\"beauty product\",",
+									"                qty:2,",
+									"              price:1000,",
+									"              businesses: [",
+									"                {",
+									"                    designation: \"Esthétique\"",
+									"                }",
+									"                ],",
+									"                cltype:\"sale\"",
+									"            })",
+									"    }",
+									"}, function (err, response) {",
+									"    console.log(response.json());",
+									"   pm.environment.set(\"created_sale_id\", response.json().id);",
+									"});",
 									""
 								]
 							}
@@ -2230,7 +2257,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"cltype\":\"clientbill\",\n  \"deliveryDate\":{{billdate}},\n  \"amount\":5000,\n  \"discount\":1000,\n  \"comments\":[\n    \"The first one created by a rest api request\"\n  ],\n  \"payments\":[\n    {\n      \"amount\":4000,\n      \"paymentMode\": {\n                    \"name\": \"CB\"\n            }\n    },\n    {\n      \"amount\":1000,\n      \"paymentMode\": {\n                    \"name\": \"Espèces\" \n            }\n    }\n  ],\n  \"purchasedOfferings\":[\n    {\n      \"qty\":4,\n      \"offering\": {\n        \"id\": {{created_offering_id}},\n        \"cltype\": \"service\",\n        \"name\": \"beauty service\",\n        \"price\": 1500,\n        \"duration\": 180,\n        \"businesses\": [\n            {\n                \"designation\": \"Esthétique\"\n            }\n        ]\n    }\n    }\n  ],\n  \"client\":{\n    \"id\":{{created_client_id}}\n  }\n}"
+							"raw": "{\n  \"cltype\":\"clientbill\",\n  \"deliveryDate\":{{billdate}},\n  \"amount\":9000,\n  \"discount\":1000,\n  \"comments\":[\n    \"The first one created by a rest api request\"\n  ],\n  \"payments\":[\n    {\n      \"amount\":4000,\n      \"paymentMode\": {\n                    \"name\": \"CB\"\n            }\n    },\n    {\n      \"amount\":1000,\n      \"paymentMode\": {\n                    \"name\": \"Espèces\" \n            }\n    }\n  ],\n  \"purchasedOfferings\":[\n    {\n      \"qty\":4,\n      \"offering\": {\n        \"id\": {{created_offering_id}},\n        \"cltype\": \"service\",\n        \"name\": \"beauty service\",\n        \"price\": 1500,\n        \"duration\": 180,\n        \"businesses\": [\n            {\n                \"designation\": \"Esthétique\"\n            }\n        ]\n    }\n    },\n    {\n      \"qty\":4,\n      \"offering\": {\n        \"id\": {{created_sale_id}},\n        \"cltype\": \"sale\",\n        \"name\": \"beauty service\",\n        \"price\": 1000,\n        \"businesses\": [\n            {\n                \"designation\": \"Esthétique\"\n            }\n        ]\n    }\n    }\n  ],\n  \"client\":{\n    \"id\":{{created_client_id}}\n  }\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/ClientBill?professional=vanessa.gay@gmail.com",
@@ -2327,6 +2354,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "d100ed7e-52bf-4c61-a95f-ff0b1fcfe9c9",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -2336,7 +2364,7 @@
 									"tests[\"deliveryDate is \"+pm.environment.get(\"created_clientbill_deliveryDate\")] = jsonData.deliveryDate == pm.environment.get(\"created_clientbill_deliveryDate\");",
 									"",
 									"tests[\"cltype is clientbill\"] = jsonData.cltype === \"clientbill\";",
-									"tests[\"amount is 5000\"] = jsonData.amount === 5000;",
+									"tests[\"amount is 9000\"] = jsonData.amount === 9000;",
 									"tests[\"currency is EUR\"] = jsonData.currency === \"EUR\";",
 									"tests[\"discount is 1000\"] = jsonData.discount === 1000;",
 									"tests[\"paymentDate is \"+new Date(jsonData.paymentDate)] = jsonData.paymentDate !== undefined;",
@@ -2389,7 +2417,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"reference\": \"{{created_clientbill_reference}}\",\n    \"deliveryDate\": {{created_clientbill_deliveryDate}},\n    \"paymentDate\": {{created_clientbill_deliveryDate}},\n    \"cltype\": \"clientbill\",\n    \"amount\": 5000,\n    \"currency\": \"EUR\",\n    \"discount\": 1000,\n    \"comments\": [\n        \"Let the color applying\",\n        \"Hair used to be darker than expected\"\n    ],\n    \"payments\": [\n        {\n            \"amount\": 4000,\n            \"paymentMode\": {\n                \"name\": \"CB\"\n            }\n        },\n        {\n            \"amount\": 1000,\n            \"paymentMode\": {\n                \"name\": \"Espèces\"\n            }\n        }\n    ],\n    \"purchasedOfferings\": [\n        {\n            \"qty\": 4,\n            \"offering\": {\n                \"id\": {{created_offering_id}},\n                \"cltype\": \"service\",\n                \"name\": \"beauty service\",\n                \"price\": 1500,\n                \"duration\": 180,\n                \"businesses\": [\n                    {\n                        \"designation\": \"Esthétique\"\n                    }\n                ]\n            }\n        }\n    ],\n    \"client\": {\n        \"id\": {{created_client_id}}\n    }\n}"
+							"raw": "{\n    \"reference\": \"{{created_clientbill_reference}}\",\n    \"deliveryDate\": {{created_clientbill_deliveryDate}},\n    \"paymentDate\": {{created_clientbill_deliveryDate}},\n    \"cltype\": \"clientbill\",\n    \"amount\": 9000,\n    \"currency\": \"EUR\",\n    \"discount\": 1000,\n    \"comments\": [\n        \"Let the color applying\",\n        \"Hair used to be darker than expected\"\n    ],\n    \"payments\": [\n        {\n            \"amount\": 8000,\n            \"paymentMode\": {\n                \"name\": \"CB\"\n            }\n        },\n        {\n            \"amount\": 1000,\n            \"paymentMode\": {\n                \"name\": \"Espèces\"\n            }\n        }\n    ],\n    \"client\": {\n        \"id\": {{created_client_id}}\n    }\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/ClientBill?professional=vanessa.gay@gmail.com",
@@ -2415,12 +2443,25 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "1c170ce0-943a-4a7c-8cc1-cc786cd611ed",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"pm.sendRequest({",
 									"    url:pm.environment.get('API_URL')+\"/Service/\"+pm.environment.get('created_offering_id')+\"?professional=vanessa.gay@gmail.com\",",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"    },",
+									"    method: 'DELETE'",
+									"}, function (err, res) {",
+									"    pm.expect(res).to.have.property('code', 200);",
+									"    pm.expect(res).to.have.property('status', 'OK');",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url:pm.environment.get('API_URL')+\"/Sale/\"+pm.environment.get('created_sale_id')+\"?professional=vanessa.gay@gmail.com\",",
 									"    header: {",
 									"        'Content-Type':'application/json',",
 									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
