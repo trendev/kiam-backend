@@ -67,6 +67,17 @@ public class Expense {
     @Basic
     private BigDecimal vatRate;
 
+    /**
+     * mark if an expense is cancelled or not
+     */
+    @Basic
+    private boolean cancelled = false;
+
+    @Column(columnDefinition = "DATETIME(3)")
+    @Basic
+    @Temporal(TemporalType.DATE)
+    private Date cancellationDate;
+
     @ElementCollection
     private List<String> categories = new LinkedList<>();
 
@@ -164,6 +175,22 @@ public class Expense {
 
     public void setVatRate(BigDecimal vatRate) {
         this.vatRate = vatRate;
+    }
+
+    public boolean isCancelled() {
+        return this.cancelled;
+    }
+
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
+    }
+
+    public Date getCancellationDate() {
+        return this.cancellationDate;
+    }
+
+    public void setCancellationDate(Date cancellationDate) {
+        this.cancellationDate = cancellationDate;
     }
 
     public List<String> getCategories() {

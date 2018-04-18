@@ -104,6 +104,11 @@ public abstract class Bill {
     @Basic
     private boolean cancelled = false;
 
+    @Column(columnDefinition = "DATETIME(3)")
+    @Basic
+    @Temporal(TemporalType.DATE)
+    private Date cancellationDate;
+
     @ElementCollection
     private List<String> comments = new LinkedList<>();
 
@@ -220,6 +225,14 @@ public abstract class Bill {
 
     public void setCancelled(boolean cancelled) {
         this.cancelled = cancelled;
+    }
+
+    public Date getCancellationDate() {
+        return this.cancellationDate;
+    }
+
+    public void setCancellationDate(Date cancellationDate) {
+        this.cancellationDate = cancellationDate;
     }
 
     public List<String> getComments() {

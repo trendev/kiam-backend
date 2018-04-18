@@ -1022,6 +1022,12 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
+            <jpa:basic attribute-type="java.util.Date" v="true" xvt="" name="cancellationDate" id="_1524065459077662">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:temporal>DATE</jpa:temporal>
+                <jpa:column unique="false" nullable="true" insertable="true" updatable="true" column-definition="DATETIME(3)"/>
+            </jpa:basic>
             <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_1490179812678394" v="true" xvt="" name="professional" id="_1490179812677393">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
@@ -1099,6 +1105,9 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         </jpa:nq>
         <jpa:nq e="false" name="Bill.findByCancelled">
             <jpa:query>Select b from Bill b where b.cancelled=:cancelled</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Bill.findByCancellationDate">
+            <jpa:query>Select b from Bill b where b.cancellationDate=:cancellationDate</jpa:query>
         </jpa:nq>
         <jpa:discriminator-column/>
     </jpa:entity>
@@ -1436,6 +1445,17 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:column unique="false" nullable="true" insertable="true" updatable="false" precision="5" scale="2"/>
             </jpa:basic>
+            <jpa:basic attribute-type="boolean" v="true" xvt="" name="cancelled" dv="false" id="_1524065311723661">
+                <jpa:des>mark if an expense is cancelled or not</jpa:des>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="java.util.Date" v="true" xvt="" name="cancellationDate" id="_1524065569462663">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:temporal>DATE</jpa:temporal>
+                <jpa:column unique="false" nullable="true" insertable="true" updatable="true" column-definition="DATETIME(3)"/>
+            </jpa:basic>
             <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_150513285566867" v="true" xvt="" name="professional" id="_150513285565066">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
@@ -1494,6 +1514,12 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         </jpa:nq>
         <jpa:nq e="false" name="Expense.findByVatRate">
             <jpa:query>Select e from Expense e where e.vatRate=:vatRate</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Expense.findByCancelled">
+            <jpa:query>Select e from Expense e where e.cancelled=:cancelled</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Expense.findByCancellationDate">
+            <jpa:query>Select e from Expense e where e.cancellationDate=:cancellationDate</jpa:query>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="BusinessPK" abs="false" class="Business" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1503060694288">
@@ -1955,7 +1981,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1499512549878" x="-250" y="1197">
+            <i ref="_1499512549878" x="-250" y="1206">
                 <el>
                     <e ref="_1505144351224341">
                         <v st="1" si="12.0" cl="#00ff00"/>
