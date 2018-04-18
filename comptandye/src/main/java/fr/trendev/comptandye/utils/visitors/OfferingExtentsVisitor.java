@@ -123,6 +123,12 @@ public class OfferingExtentsVisitor implements Visitor<OfferingExtents> {
      */
     @Override
     public OfferingExtents visit(Pack pack) {
+
+        if (pack.getOfferings() == null || pack.getOfferings().size() == 0) {
+            throw new IllegalStateException("Pack \"" + pack.getName()
+                    + "\" has NO offering: you must add an offering in this pack before purchasing it !");
+        }
+
         OfferingExtents oe = pack.getOfferings()
                 .stream()
                 .map(o -> o.accept(this))

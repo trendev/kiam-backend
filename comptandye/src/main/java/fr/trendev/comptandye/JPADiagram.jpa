@@ -1739,7 +1739,11 @@ this.offeringExtents = new OfferingExtents(offering);
         </jpa:con>
         <jpa:snp loc="BEFORE_METHOD" e="true">public OfferingExtents(Offering offering) {
         //computes services/sales extents
+OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
+        this.services = oe.services;
+        this.sales = oe.sales;
 }</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.visitors.OfferingExtentsVisitor;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="int" v="true" xvt="" name="services" id="_152404700574475">

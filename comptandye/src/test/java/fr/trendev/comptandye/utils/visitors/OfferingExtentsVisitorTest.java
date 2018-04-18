@@ -49,7 +49,6 @@ public class OfferingExtentsVisitorTest {
 
         p2.getOfferings().add(sv2);
         p2.getOfferings().add(sl2);
-
         p1.getOfferings().add(sv1);
         p1.getOfferings().add(sl1);
         p1.getOfferings().add(p2);
