@@ -6,6 +6,7 @@
 package fr.trendev.comptandye.utils.filters;
 
 import fr.trendev.comptandye.beans.ActiveSessionTracker;
+import fr.trendev.comptandye.beans.admin.AuthorizationsBean;
 import fr.trendev.comptandye.beans.xsrf.XSRFTokenGenerator;
 import java.io.IOException;
 import java.security.Principal;
@@ -43,6 +44,21 @@ public class OverallFilter implements Filter {
         LOG.log(Level.INFO, "OverallFilter: init in progress...");
     }
 
+    /**
+     * Filters all HTTP requests and logs the request. If the user is
+     * authenticated and the session is valid but not in the
+     * ActiveSessionTracker, the session is added in the tracker, an XSRF-TOKEN
+     * is generated and added in the session. A timestamp is also added in the
+     * session in order to avoid using the lastAccessedTime of the HttpSession.
+     * Session is marked with a specific attribute RQT_TIMESTAMP and the current
+     * timestamp {@link AuthorizationsBean}
+     *
+     * @param request the request to filter
+     * @param response the expected response
+     * @param chain the filters chain
+     * @throws IOException an IOException
+     * @throws ServletException a Servlet Exception
+     */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
@@ -82,6 +98,17 @@ public class OverallFilter implements Filter {
                         "User [{0}] authenticated but adding the XSRF-Token and the session [{1}] in the Tracker",
                         new Object[]{user.getName(),
                             session.getId()});
+            }
+            /**
+             * Adds a timestamp in the current session in order to store the
+             * last access time and not the last access time of the previous
+             * request.
+             *
+             * @see
+             */
+            if (user != null && session != null) {
+                session.
+                        setAttribute("RQT_TIMESTAMP", System.currentTimeMillis());
             }
             chain.doFilter(request, response);
         } catch (Exception ex) {

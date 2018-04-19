@@ -106,10 +106,11 @@ public class LoggedInUsersBean extends CommonUsersBean {
                                 .filter(u -> {
                                     boolean validity = false;
                                     try {
-                                        validity = u.getHttpSession().
-                                                getLastAccessedTime() >= tl
-                                                & u.getHttpSession().
-                                                        getLastAccessedTime()
+                                        long mrat = this.
+                                                getMostRecentAccessTime(
+                                                        u.getHttpSession());
+                                        validity = mrat >= tl
+                                                & mrat
                                                 < tr;
                                     } catch (IllegalStateException ex) {
                                         //ignores invalidated session

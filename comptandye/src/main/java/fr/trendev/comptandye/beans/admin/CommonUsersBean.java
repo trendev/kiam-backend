@@ -6,6 +6,7 @@
 package fr.trendev.comptandye.beans.admin;
 
 import fr.trendev.comptandye.beans.ActiveSessionTracker;
+import fr.trendev.comptandye.entities.UserAccount;
 import fr.trendev.comptandye.sessions.UserAccountFacade;
 import java.io.Serializable;
 import java.util.ConcurrentModificationException;
@@ -118,7 +119,7 @@ public abstract class CommonUsersBean implements Serializable {
                     s -> {
                 try {
                     //ignore session which will be invalidated after this refresh
-                    if (s.getLastAccessedTime() > overdue) {
+                    if (this.getMostRecentAccessTime(s) > overdue) {
                         list.add(
                                 new LoggedInUser(u, this.
                                         getTypeOfUser(u), s));
@@ -137,7 +138,8 @@ public abstract class CommonUsersBean implements Serializable {
                     .filter(u -> {
                         boolean validity = false;
                         try {
-                            validity = u.getHttpSession().getLastAccessedTime()
+                            validity = this.getMostRecentAccessTime(u.
+                                    getHttpSession())
                                     > overdue;
                         } catch (IllegalStateException ise) {
                             //ignores invalidated session
@@ -196,5 +198,52 @@ public abstract class CommonUsersBean implements Serializable {
      */
     public List<LoggedInUser> getLoggedInUsers() {
         return loggedInUsers;
+    }
+
+    /**
+     * Provides the last access time. Can be the disconnection/logout timestamp,
+     * the most recent lastAccessedTime value of its HttpSessions or the most
+     * recent timestamp of its last Http request (using the RQT_TIMESTAMP
+     * attribute added in the session by {@link OverallFilter}.
+     *
+     * @param user the user whose the accessed time is provided
+     * @return the last access time, RQT_TIMESTAMP is the usually favored
+     * option.
+     */
+    public long getLastAccessedTime(UserAccount user) {
+
+        try {
+            long max = user.getLastAccessedTime();
+            List<HttpSession> sessions = this.getSessions(user.getEmail());
+            for (int i = 0; i < sessions.size(); i++) {
+                try {
+                    long mrat = this.getMostRecentAccessTime(sessions.get(i));
+                    max = mrat > max ? mrat : max;
+
+                } catch (IllegalStateException ex) {
+                }
+            }
+
+            return max;
+
+        } catch (ConcurrentModificationException ex) {
+            return user.getLastAccessedTime();
+        }
+
+    }
+
+    public long getMostRecentAccessTime(HttpSession session) throws
+            IllegalStateException {
+        Long rqt_timestamp = (Long) session.getAttribute("RQT_TIMESTAMP");
+        long time;
+
+        if (rqt_timestamp != null && rqt_timestamp > session.
+                getLastAccessedTime()) {
+            time = rqt_timestamp;
+        } else {
+            time = session.getLastAccessedTime();
+        }
+
+        return time;
     }
 }

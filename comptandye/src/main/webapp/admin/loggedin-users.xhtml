@@ -45,8 +45,8 @@
                             </h:outputText>
                         </p:column>
 
-                        <p:column headerText="Session last access" sortBy="#{user.httpSession.lastAccessedTime}">
-                            <h:outputText value="#{user.httpSession.lastAccessedTime}">
+                        <p:column headerText="Session last access" sortBy="#{loggedInUsersBean.getMostRecentAccessTime(user.httpSession)}">
+                            <h:outputText value="#{loggedInUsersBean.getMostRecentAccessTime(user.httpSession)}">
                                 <f:convertDateTime type="both" dateStyle="short" />
                             </h:outputText>
                         </p:column>

@@ -9,7 +9,6 @@ import fr.trendev.comptandye.entities.Administrator;
 import fr.trendev.comptandye.entities.Individual;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.UserAccount;
-import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -80,28 +79,6 @@ public class AuthorizationsBean extends CommonUsersBean {
         LOG.log(Level.INFO, "[{0}] is now {1}", new Object[]{
             user.getEmail(), user.isBlocked() ? "BLOCKED" : "GRANTED"
         });
-    }
-
-    public long getLastAccessedTime(UserAccount user) {
-        long time = user.getLastAccessedTime();
-
-        try {
-            long max = time;
-            List<HttpSession> sessions = this.getSessions(user.getEmail());
-            for (int i = 0; i < sessions.size(); i++) {
-                try {
-                    max = (sessions.get(i).getLastAccessedTime() > max) ? sessions.
-                            get(i).getLastAccessedTime() : max;
-                } catch (IllegalStateException ex) {
-                }
-            }
-            time = max;
-
-        } catch (ConcurrentModificationException ex) {
-            time = user.getLastAccessedTime();
-        }
-
-        return time;
     }
 
 }
