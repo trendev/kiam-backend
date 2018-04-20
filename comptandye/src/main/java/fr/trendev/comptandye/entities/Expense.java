@@ -78,6 +78,12 @@ public class Expense {
     @Temporal(TemporalType.DATE)
     private Date cancellationDate;
 
+    /**
+     * mark if an expense can be cancelled from the Expense REST API Services
+     */
+    @Basic
+    private boolean cancellable = true;
+
     @ElementCollection
     private List<String> categories = new LinkedList<>();
 
@@ -191,6 +197,14 @@ public class Expense {
 
     public void setCancellationDate(Date cancellationDate) {
         this.cancellationDate = cancellationDate;
+    }
+
+    public boolean isCancellable() {
+        return this.cancellable;
+    }
+
+    public void setCancellable(boolean cancellable) {
+        this.cancellable = cancellable;
     }
 
     public List<String> getCategories() {

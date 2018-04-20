@@ -1456,6 +1456,11 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 <jpa:temporal>DATE</jpa:temporal>
                 <jpa:column unique="false" nullable="true" insertable="true" updatable="true" column-definition="DATETIME(3)"/>
             </jpa:basic>
+            <jpa:basic attribute-type="boolean" v="true" xvt="" name="cancellable" dv="true" id="_152421842190372">
+                <jpa:des>mark if an expense can be cancelled from the Expense REST API Services</jpa:des>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
             <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_150513285566867" v="true" xvt="" name="professional" id="_150513285565066">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
@@ -1520,6 +1525,9 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         </jpa:nq>
         <jpa:nq e="false" name="Expense.findByCancellationDate">
             <jpa:query>Select e from Expense e where e.cancellationDate=:cancellationDate</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Expense.findByCancellable">
+            <jpa:query>Select e from Expense e where e.cancellable=:cancellable</jpa:query>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="BusinessPK" abs="false" class="Business" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1503060694288">
