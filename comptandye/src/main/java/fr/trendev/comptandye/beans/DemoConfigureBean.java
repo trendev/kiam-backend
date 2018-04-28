@@ -12,6 +12,7 @@ import fr.trendev.comptandye.entities.Client;
 import fr.trendev.comptandye.entities.CollectiveGroup;
 import fr.trendev.comptandye.entities.CustomerDetails;
 import fr.trendev.comptandye.entities.Expense;
+import fr.trendev.comptandye.entities.ExpensePK;
 import fr.trendev.comptandye.entities.Individual;
 import fr.trendev.comptandye.entities.Payment;
 import fr.trendev.comptandye.entities.PaymentMode;
@@ -19,6 +20,8 @@ import fr.trendev.comptandye.entities.Product;
 import fr.trendev.comptandye.entities.ProductPK;
 import fr.trendev.comptandye.entities.ProductReference;
 import fr.trendev.comptandye.entities.Professional;
+import fr.trendev.comptandye.entities.Purchase;
+import fr.trendev.comptandye.entities.PurchasedItem;
 import fr.trendev.comptandye.entities.Sale;
 import fr.trendev.comptandye.entities.SocialNetworkAccounts;
 import fr.trendev.comptandye.entities.UserGroup;
@@ -26,6 +29,7 @@ import fr.trendev.comptandye.entities.VatRates;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.utils.OfferingType;
 import fr.trendev.comptandye.utils.PasswordGenerator;
+import fr.trendev.comptandye.utils.ProductRecordType;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import fr.trendev.comptandye.utils.UserAccountType;
 import fr.trendev.comptandye.utils.visitors.BillTypeVisitor;
@@ -84,6 +88,7 @@ public class DemoConfigureBean implements Serializable {
             this.createProductReference();
             this.createProduct();
             this.createSale();
+            this.createProductRecord();
         }
 
     }
@@ -166,10 +171,25 @@ public class DemoConfigureBean implements Serializable {
 
         vanessa.getExpenses().add(new Expense("Material", 100000,
                 new Date(), Arrays.
-                        asList("Partner", "Provider"), vanessa, Arrays.asList(
+                        asList("Material", "Haircut"), vanessa, Arrays.asList(
                 new Payment(30000, em.find(PaymentMode.class, "CB")),
                 new Payment(70000, em.find(PaymentMode.class, "Espèces"))),
                 Arrays.asList(em.find(Business.class, "Coiffure"))));
+
+        Purchase purchase = new Purchase();
+        purchase.setDescription("Buy 4x color sticks");
+        purchase.setAmount(1200);
+        purchase.setPaymentDate(new Date());
+        purchase.setProvider("BLEU LIBELLULE");
+        purchase.setCategories(Arrays.asList("color"));
+        purchase.setPayments(Arrays.asList(
+                new Payment(1200, em.find(PaymentMode.class, "CB"))));
+        purchase.setBusinesses(Arrays.
+                asList(em.find(Business.class, "Coiffure")));
+        purchase.setInvoiceRef("facture #2341");
+
+        purchase.setProfessional(vanessa);
+        vanessa.getExpenses().add(purchase);
 
         vanessa.getCollectiveGroups().add(
                 new CollectiveGroup("Senior Residence", "0123456789",
@@ -410,4 +430,24 @@ public class DemoConfigureBean implements Serializable {
 
         em.persist(sale);
     }
+
+    private void createProductRecord() {
+        PurchasedItem pr = new PurchasedItem();
+        pr.setCltype(ProductRecordType.PURCHASED_ITEM);
+//        pr.setRecordDate(new Date());
+        pr.setQty(2);
+
+        Professional vanessa = em.find(Professional.class,
+                "vanessa.gay@gmail.com");
+        Purchase purchase = em.find(Purchase.class, new ExpensePK(vanessa.
+                getExpenses().get(1).
+                getId(), vanessa.getEmail()));
+
+        pr.setPurchase(purchase);
+        purchase.getPurchasedItems().add(pr);
+
+        em.persist(pr);
+
+    }
+
 }

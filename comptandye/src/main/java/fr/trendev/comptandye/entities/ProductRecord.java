@@ -30,7 +30,7 @@ public abstract class ProductRecord {
 
     @Column(columnDefinition = "DATETIME(3)")
     @Basic
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @NotNull(message = "recordDate field in ProductRecard cannot be null")
     private Date recordDate = new Date();
 
