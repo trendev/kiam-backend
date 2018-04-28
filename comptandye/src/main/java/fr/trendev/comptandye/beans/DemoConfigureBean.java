@@ -15,6 +15,8 @@ import fr.trendev.comptandye.entities.Expense;
 import fr.trendev.comptandye.entities.Individual;
 import fr.trendev.comptandye.entities.Payment;
 import fr.trendev.comptandye.entities.PaymentMode;
+import fr.trendev.comptandye.entities.Product;
+import fr.trendev.comptandye.entities.ProductReference;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.SocialNetworkAccounts;
 import fr.trendev.comptandye.entities.UserGroup;
@@ -76,6 +78,8 @@ public class DemoConfigureBean implements Serializable {
             this.initUsersAndGroups();
             this.importClients();
             this.createVatRatesFR();
+            this.createProductReference();
+            this.createProduct();
         }
 
     }
@@ -157,7 +161,7 @@ public class DemoConfigureBean implements Serializable {
                 em.find(Business.class, "Coiffure")));
 
         vanessa.getExpenses().add(new Expense("Material", 100000,
-                new Date(), "invoice#1", Arrays.
+                new Date(), Arrays.
                         asList("Partner", "Provider"), vanessa, Arrays.asList(
                 new Payment(30000, em.find(PaymentMode.class, "CB")),
                 new Payment(70000, em.find(PaymentMode.class, "Espèces"))),
@@ -345,4 +349,35 @@ public class DemoConfigureBean implements Serializable {
         vanessa.setVatRates(vrFR);
     }
 
+    private void createProductReference() {
+        ProductReference ref = new ProductReference();
+        ref.setBarcode("1234567890");
+        ref.setBrand("L'OREAL");
+        ref.setDescription("Color stick - Purple");
+        ref.setBusiness(em.find(Business.class, "Coiffure"));
+
+        em.persist(ref);
+    }
+
+    private void createProduct() {
+
+//        ProductReference ref = em.find(ProductReference.class, "1234567890");
+        ProductReference ref = new ProductReference();
+        ref.setBarcode("1234567891");
+        ref.setBrand("L'OREAL");
+        ref.setDescription("Color stick - Blond");
+        ref.setBusiness(em.find(Business.class, "Coiffure"));
+
+        Professional vanessa = em.find(Professional.class,
+                "vanessa.gay@gmail.com");
+
+        Product product = new Product();
+
+        product.setProfessional(vanessa);
+        product.setProductReference(ref);
+
+        vanessa.setStock(Arrays.asList(product));
+        em.persist(product);
+
+    }
 }

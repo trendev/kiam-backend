@@ -96,6 +96,11 @@ public class Professional extends Customer {
     @JsonIgnore
     private List<CollectiveGroup> collectiveGroups = new LinkedList<>();
 
+    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Product.class,
+            mappedBy = "professional")
+    @JsonIgnore
+    private List<Product> stock = new LinkedList();
+
     @ManyToMany(targetEntity = Individual.class, mappedBy = "professionals")
     @JsonIgnore
     private List<Individual> individuals = new LinkedList<>();
@@ -248,6 +253,14 @@ public class Professional extends Customer {
 
     public void setCollectiveGroups(List<CollectiveGroup> collectiveGroups) {
         this.collectiveGroups = collectiveGroups;
+    }
+
+    public List<Product> getStock() {
+        return this.stock;
+    }
+
+    public void setStock(List<Product> stock) {
+        this.stock = stock;
     }
 
     public List<Individual> getIndividuals() {

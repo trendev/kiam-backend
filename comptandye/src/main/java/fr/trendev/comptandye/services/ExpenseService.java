@@ -138,9 +138,8 @@ public class ExpenseService extends AbstractCommonService<Expense, ExpensePK> {
                 prettyPrintPK(pk));
         return super.put(entity, pk, e -> {
 
-            e.setName(entity.getName());
+            e.setDescription(entity.getDescription());
             e.setPaymentDate(entity.getPaymentDate());
-            e.setInvoiceRef(entity.getInvoiceRef());
             e.setCategories(entity.getCategories());
             e.setBusinesses(entity.getBusinesses());
         });

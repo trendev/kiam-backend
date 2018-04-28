@@ -365,6 +365,14 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-many>
+            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1524841860187" connected-attribute-id="_1524841981057164" v="true" xvt="" name="stock" dv="new LinkedList()" id="_1524841981058165">
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-all/>
+                </jpa:cascade>
+            </jpa:one-to-many>
             <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490101520286" connected-attribute-id="_1490180547173493" v="true" xvt="" name="individuals" dv="new LinkedList&lt;&gt;()" id="_1490180547178494">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
@@ -1396,7 +1404,6 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
             <jpa:a>_149951257358656</jpa:a>
             <jpa:a>_149951257579557</jpa:a>
             <jpa:a>_149951257869758</jpa:a>
-            <jpa:a>_1499513890817845</jpa:a>
             <jpa:a>_149951274256360</jpa:a>
             <jpa:a>_150513285565066</jpa:a>
             <jpa:a>_1505144351224341</jpa:a>
@@ -1412,7 +1419,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
             }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
-            <jpa:basic attribute-type="String" v="true" xvt="" name="name" id="_149951257358656">
+            <jpa:basic attribute-type="String" v="true" xvt="" name="description" id="_149951257358656">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
@@ -1432,18 +1439,9 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 <jpa:temporal>TIMESTAMP</jpa:temporal>
                 <jpa:column unique="false" nullable="true" insertable="true" updatable="true" column-definition="DATETIME(3)"/>
             </jpa:basic>
-            <jpa:basic attribute-type="String" v="true" xvt="" name="invoiceRef" id="_1499513890817845">
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:basic>
             <jpa:basic attribute-type="String" v="true" xvt="" name="provider" id="_1522937121103644">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-            </jpa:basic>
-            <jpa:basic attribute-type="java.math.BigDecimal" v="true" xvt="" name="vatRate" id="_1522937140306645">
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-                <jpa:column unique="false" nullable="true" insertable="true" updatable="false" precision="5" scale="2"/>
             </jpa:basic>
             <jpa:basic attribute-type="boolean" v="true" xvt="" name="cancelled" dv="false" id="_1524065311723661">
                 <jpa:des>mark if an expense is cancelled or not</jpa:des>
@@ -1458,6 +1456,11 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
             </jpa:basic>
             <jpa:basic attribute-type="boolean" v="true" xvt="" name="cancellable" dv="true" id="_152421842190372">
                 <jpa:des>mark if an expense can be cancelled from the Expense REST API Services</jpa:des>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="boolean" v="true" xvt="" name="vatInclusive" dv="false" id="_152483500212072">
+                <jpa:des>mark if the expense is vat inclusive or not</jpa:des>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
@@ -1482,6 +1485,13 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:one-to-many>
+            <jpa:one-to-many orp="true" own="true" collection-type="java.util.List" connected-entity-id="_1524835087412" v="true" xvt="" name="expenseItems" dv="new LinkedList&lt;&gt;()" id="_152483548676279">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-all/>
+                </jpa:cascade>
+            </jpa:one-to-many>
             <jpa:element-collection target-class="java.lang.String" collection-type="java.util.List" v="true" xvt="" name="categories" dv="new LinkedList&lt;&gt;()" id="_149951274256360">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -1496,8 +1506,8 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         <jpa:nq e="false" name="Expense.findAll">
             <jpa:query>Select e from Expense e</jpa:query>
         </jpa:nq>
-        <jpa:nq e="false" name="Expense.findByName">
-            <jpa:query>Select e from Expense e where e.name=:name</jpa:query>
+        <jpa:nq e="false" name="Expense.findByDescription">
+            <jpa:query>Select e from Expense e where e.description=:description</jpa:query>
         </jpa:nq>
         <jpa:nq e="false" name="Expense.findByAmount">
             <jpa:query>Select e from Expense e where e.amount=:amount</jpa:query>
@@ -1529,6 +1539,10 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         <jpa:nq e="false" name="Expense.findByCancellable">
             <jpa:query>Select e from Expense e where e.cancellable=:cancellable</jpa:query>
         </jpa:nq>
+        <jpa:nq e="false" name="Expense.findByVatInclusive">
+            <jpa:query>Select e from Expense e where e.vatInclusive=:vatInclusive</jpa:query>
+        </jpa:nq>
+        <jpa:discriminator-column/>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="BusinessPK" abs="false" class="Business" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1503060694288">
         <jpa:con am="PUBLIC" e="true">
@@ -1713,6 +1727,10 @@ this.offeringExtents = new OfferingExtents(offering);
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
+            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1524841860187" connected-attribute-id="_1524907636328594" v="true" xvt="" name="product" id="_1524907636303593">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:many-to-one>
         </jpa:attributes>
         <jpa:nq e="false" name="Sale.findAll">
             <jpa:query>Select e from Sale e</jpa:query>
@@ -1722,6 +1740,154 @@ this.offeringExtents = new OfferingExtents(offering);
         </jpa:nq>
         <jpa:nq e="false" name="Sale.findByResellingPrice">
             <jpa:query>Select s from Sale s where s.resellingPrice=:resellingPrice</jpa:query>
+        </jpa:nq>
+    </jpa:entity>
+    <jpa:entity compositePrimaryKeyClass="ExpenseItemPK" abs="false" class="ExpenseItem" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524835087412">
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" xvt="" name="description" id="_152483512063475">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="int" v="true" xvt="" name="amount" id="_152483513969976">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="int" v="true" xvt="" name="qty" id="_152483518918977">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="java.math.BigDecimal" v="true" xvt="" name="vatRate" id="_152483521069678">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:column unique="false" nullable="true" insertable="true" updatable="true" precision="5" scale="2"/>
+            </jpa:basic>
+            <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_152483508752773">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:nq e="false" name="ExpenseItem.findAll">
+            <jpa:query>Select e from ExpenseItem e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="ExpenseItem.findByDescription">
+            <jpa:query>Select e from ExpenseItem e where e.description=:description</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="ExpenseItem.findByAmount">
+            <jpa:query>Select e from ExpenseItem e where e.amount=:amount</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="ExpenseItem.findByQty">
+            <jpa:query>Select e from ExpenseItem e where e.qty=:qty</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="ExpenseItem.findByVatRate">
+            <jpa:query>Select e from ExpenseItem e where e.vatRate=:vatRate</jpa:query>
+        </jpa:nq>
+    </jpa:entity>
+    <jpa:entity compositePrimaryKeyClass="PurchasePK" abs="false" class="Purchase" superclassId="_1499512549878" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524836293670">
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" xvt="" name="invoiceRef" id="_1524836395765710">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+        </jpa:attributes>
+        <jpa:nq e="false" name="Purchase.findAll">
+            <jpa:query>Select e from Purchase e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Purchase.findByInvoiceRef">
+            <jpa:query>Select p from Purchase p where p.invoiceRef=:invoiceRef</jpa:query>
+        </jpa:nq>
+    </jpa:entity>
+    <jpa:entity compositePrimaryKeyClass="ProductReferencePK" abs="false" class="ProductReference" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524840332929">
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" xvt="" name="description" id="_1524840963347153">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" xvt="" name="brand" id="_1524841057219154">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1503060694288" v="true" xvt="" name="business" id="_1524841100537155">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:one-to-one>
+            <jpa:id attribute-type="String" v="true" xvt="" name="barcode" ft="false" id="_1524840333044151">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:column unique="false" nullable="false" insertable="true" updatable="false" length="255"/>
+                <jpa:generated-value/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:nq e="false" name="ProductReference.findAll">
+            <jpa:query>Select e from ProductReference e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="ProductReference.findByDescription">
+            <jpa:query>Select p from ProductReference p where p.description=:description</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="ProductReference.findByBrand">
+            <jpa:query>Select p from ProductReference p where p.brand=:brand</jpa:query>
+        </jpa:nq>
+    </jpa:entity>
+    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="ProductPK" abs="false" class="Product" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524841860187">
+        <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes>
+            <jpa:basic attribute-type="int" v="true" xvt="" name="availableQty" id="_1524842384764168">
+                <jpa:des>Quantity of available items</jpa:des>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="int" v="true" xvt="" name="thresholdWarning" id="_1524842511104169">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="int" v="true" xvt="" name="thresholdSevere" id="_1524842543060170">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_1524841981058165" v="true" xvt="" name="professional" id="_1524841981057164">
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:join-column name="PRODUCT_PRO_EMAIL" rc="EMAIL" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table=""/>
+            </jpa:many-to-one>
+            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1524840332929" v="true" xvt="" name="productReference" id="_1524842124874167">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-persist/>
+                </jpa:cascade>
+            </jpa:many-to-one>
+            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1522937360932" connected-attribute-id="_1524907636303593" v="true" xvt="" name="sales" dv="new LinkedList&lt;&gt;()" id="_1524907636328594">
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:one-to-many>
+            <jpa:element-collection target-class="java.lang.String" collection-type="java.util.List" v="true" xvt="" name="comments" dv="new LinkedList&lt;&gt;()" id="_1524842604860171">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:element-collection>
+            <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_1524841860276162">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:column name="PRODUCT_ID" unique="false" nullable="true" insertable="true" updatable="true"/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:nq e="false" name="Product.findAll">
+            <jpa:query>Select e from Product e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Product.findByAvailableQty">
+            <jpa:query>Select p from Product p where p.availableQty=:availableQty</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Product.findByThresholdWarning">
+            <jpa:query>Select p from Product p where p.thresholdWarning=:thresholdWarning</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Product.findByThresholdSevere">
+            <jpa:query>Select p from Product p where p.thresholdSevere=:thresholdSevere</jpa:query>
         </jpa:nq>
     </jpa:entity>
     <jpa:embeddable abs="false" class="OfferingSnapshot" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1512853437669">
@@ -1850,6 +2016,14 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
+            <i ref="_1524836293670" x="-279" y="2039"/>
+            <i ref="_1524840332929" x="-688" y="1274">
+                <el>
+                    <e ref="_1524841100537155">
+                        <v st="1" si="12.0" cl="#00ff00"/>
+                    </e>
+                </el>
+            </i>
             <i ref="_1490281931338" x="417" y="977">
                 <el>
                     <e ref="_1490283543806197">
@@ -1892,6 +2066,9 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     <e ref="_150513719043594">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
+                    <e ref="_1524841981058165">
+                        <v st="1" si="12.0" cl="#ff0000"/>
+                    </e>
                     <e ref="_1521217263508375">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
@@ -1928,7 +2105,13 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1522937360932" x="-625" y="1103"/>
+            <i ref="_1522937360932" x="-625" y="1102">
+                <el>
+                    <e ref="_1524907636303593">
+                        <v st="1" si="12.0" cl="#00ff00"/>
+                    </e>
+                </el>
+            </i>
             <i ref="_1490180671085" x="715" y="347">
                 <el>
                     <e ref="_150652336702164">
@@ -1945,6 +2128,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
+            <i ref="_1524835087412" x="-486" y="1771"/>
             <i ref="_1490704206844" x="-74" y="863">
                 <el>
                     <e ref="_15049038294552105">
@@ -1989,12 +2173,15 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1499512549878" x="-250" y="1206">
+            <i ref="_1499512549878" x="-279" y="1622">
                 <el>
                     <e ref="_1505144351224341">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                     <e ref="_150549566057859">
+                        <v st="1" si="12.0" cl="#00ff00"/>
+                    </e>
+                    <e ref="_152483548676279">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                     <e ref="_150513285565066">
@@ -2003,6 +2190,19 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                 </el>
             </i>
             <i ref="_1490101737208" x="-414" y="13"/>
+            <i ref="_1524841860187" x="-324" y="1234">
+                <el>
+                    <e ref="_1524907636328594">
+                        <v st="1" si="12.0" cl="#ff0000"/>
+                    </e>
+                    <e ref="_1524841981057164">
+                        <v st="1" si="12.0" cl="#ff0000"/>
+                    </e>
+                    <e ref="_1524842124874167">
+                        <v st="1" si="12.0" cl="#00ff00"/>
+                    </e>
+                </el>
+            </i>
             <i ref="_1512853437669" x="533" y="1680">
                 <el>
                     <e ref="_151290448762472">

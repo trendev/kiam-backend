@@ -4,13 +4,13 @@ package fr.trendev.comptandye.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.trendev.comptandye.utils.visitors.Visitor;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,6 +28,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @IdClass(ExpensePK.class)
+@DiscriminatorColumn(length = 31)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @SuppressWarnings("unchecked")
 public class Expense {
@@ -38,7 +39,7 @@ public class Expense {
     private Long id;
 
     @Basic
-    private String name;
+    private String description;
 
     /**
      * Amount in cents (1/100 of the currency)
@@ -58,14 +59,7 @@ public class Expense {
     private Date paymentDate;
 
     @Basic
-    private String invoiceRef;
-
-    @Basic
     private String provider;
-
-    @Column(updatable = false, scale = 2, precision = 5)
-    @Basic
-    private BigDecimal vatRate;
 
     /**
      * mark if an expense is cancelled or not
@@ -83,6 +77,12 @@ public class Expense {
      */
     @Basic
     private boolean cancellable = true;
+
+    /**
+     * mark if the expense is vat inclusive or not
+     */
+    @Basic
+    private boolean vatInclusive = false;
 
     @ElementCollection
     private List<String> categories = new LinkedList<>();
@@ -103,13 +103,16 @@ public class Expense {
     @OneToMany(targetEntity = Business.class)
     private List<Business> businesses = new LinkedList<>();
 
-    public Expense(String name, int amount, Date paymentDate, String invoiceRef,
+    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = ExpenseItem.class,
+            orphanRemoval = true)
+    private List<ExpenseItem> expenseItems = new LinkedList<>();
+
+    public Expense(String description, int amount, Date paymentDate,
             List categories, Professional professional, List payments,
             List businesses) {
-        this.name = name;
+        this.description = description;
         this.amount = amount;
         this.paymentDate = paymentDate;
-        this.invoiceRef = invoiceRef;
         this.categories = categories;
         this.professional = professional;
         this.payments = payments;
@@ -127,12 +130,12 @@ public class Expense {
         this.id = id;
     }
 
-    public String getName() {
-        return this.name;
+    public String getDescription() {
+        return this.description;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getAmount() {
@@ -159,28 +162,12 @@ public class Expense {
         this.paymentDate = paymentDate;
     }
 
-    public String getInvoiceRef() {
-        return this.invoiceRef;
-    }
-
-    public void setInvoiceRef(String invoiceRef) {
-        this.invoiceRef = invoiceRef;
-    }
-
     public String getProvider() {
         return this.provider;
     }
 
     public void setProvider(String provider) {
         this.provider = provider;
-    }
-
-    public BigDecimal getVatRate() {
-        return this.vatRate;
-    }
-
-    public void setVatRate(BigDecimal vatRate) {
-        this.vatRate = vatRate;
     }
 
     public boolean isCancelled() {
@@ -205,6 +192,14 @@ public class Expense {
 
     public void setCancellable(boolean cancellable) {
         this.cancellable = cancellable;
+    }
+
+    public boolean isVatInclusive() {
+        return this.vatInclusive;
+    }
+
+    public void setVatInclusive(boolean vatInclusive) {
+        this.vatInclusive = vatInclusive;
     }
 
     public List<String> getCategories() {
@@ -237,6 +232,14 @@ public class Expense {
 
     public void setBusinesses(List<Business> businesses) {
         this.businesses = businesses;
+    }
+
+    public List<ExpenseItem> getExpenseItems() {
+        return this.expenseItems;
+    }
+
+    public void setExpenseItems(List<ExpenseItem> expenseItems) {
+        this.expenseItems = expenseItems;
     }
 
     public <T> T accept(Visitor<T> v) {
