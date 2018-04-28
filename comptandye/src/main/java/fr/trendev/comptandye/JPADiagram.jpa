@@ -1787,6 +1787,7 @@ this.offeringExtents = new OfferingExtents(offering);
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="PurchasePK" abs="false" class="Purchase" superclassId="_1499512549878" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524836293670">
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -1879,6 +1880,11 @@ this.offeringExtents = new OfferingExtents(offering);
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:one-to-many>
+            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1524923958426" connected-attribute-id="_15249290639991474" v="true" xvt="" name="trackRecord" dv="new LinkedList&lt;&gt;()" id="_15249290640001475">
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:one-to-many>
             <jpa:element-collection target-class="java.lang.String" collection-type="java.util.List" v="true" xvt="" name="comments" dv="new LinkedList&lt;&gt;()" id="_1524842604860171">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -1927,6 +1933,10 @@ this.offeringExtents = new OfferingExtents(offering);
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
+            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1524841860187" connected-attribute-id="_15249290640001475" v="true" xvt="" name="product" id="_15249290639991474">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:many-to-one>
             <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_15249239586001407">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -2045,7 +2055,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1524924325129" x="-777" y="1817">
+            <i ref="_1524924325129" x="-777" y="1818">
                 <el>
                     <e ref="_15249248621511435">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -2204,7 +2214,13 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                 </el>
             </i>
             <i ref="_1503060694288" x="-522" y="250"/>
-            <i ref="_1524923958426" x="-625" y="1537"/>
+            <i ref="_1524923958426" x="-625" y="1538">
+                <el>
+                    <e ref="_15249290639991474">
+                        <v st="1" si="12.0" cl="#00ff00"/>
+                    </e>
+                </el>
+            </i>
             <i ref="_1490104062170" x="-401" y="405"/>
             <i ref="_1490113906035" x="-351" y="1010">
                 <el>
@@ -2278,6 +2294,9 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
             <i ref="_1524841860187" x="-297" y="1274">
                 <el>
                     <e ref="_1524907636328594">
+                        <v st="1" si="12.0" cl="#ff0000"/>
+                    </e>
+                    <e ref="_15249290640001475">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                     <e ref="_1524841981057164">

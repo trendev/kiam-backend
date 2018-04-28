@@ -2,6 +2,7 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotNull;
  * @author jsie
  */
 @Entity
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Purchase extends Expense {
 
     @Basic

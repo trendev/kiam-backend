@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -36,6 +37,9 @@ public abstract class ProductRecord {
 
     @Basic
     private int qty;
+
+    @ManyToOne(targetEntity = Product.class)
+    private Product product;
 
     public ProductRecord(String cltype, Date recordDate, int qty) {
         this.cltype = cltype;
@@ -76,6 +80,14 @@ public abstract class ProductRecord {
 
     public void setQty(int qty) {
         this.qty = qty;
+    }
+
+    public Product getProduct() {
+        return this.product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
 }

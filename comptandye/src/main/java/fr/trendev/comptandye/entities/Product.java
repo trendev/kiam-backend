@@ -53,6 +53,10 @@ public class Product {
     @JsonIgnore
     private List<Sale> sales = new LinkedList<>();
 
+    @OneToMany(targetEntity = ProductRecord.class, mappedBy = "product")
+    @JsonIgnore
+    private List<ProductRecord> trackRecord = new LinkedList<>();
+
     public int getAvailableQty() {
         return this.availableQty;
     }
@@ -107,6 +111,14 @@ public class Product {
 
     public void setSales(List<Sale> sales) {
         this.sales = sales;
+    }
+
+    public List<ProductRecord> getTrackRecord() {
+        return this.trackRecord;
+    }
+
+    public void setTrackRecord(List<ProductRecord> trackRecord) {
+        this.trackRecord = trackRecord;
     }
 
 }
