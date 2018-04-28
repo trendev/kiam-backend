@@ -45,7 +45,7 @@ public abstract class Offering {
     private Long id;
 
     @Basic
-    @NotNull(message = "cltype cannot be null")
+    @NotNull(message = "cltype field in Offering cannot be null")
     private String cltype;
 
     @Basic

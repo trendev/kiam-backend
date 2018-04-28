@@ -54,7 +54,7 @@ public abstract class UserAccount {
     private String email;
 
     @Basic
-    @NotNull(message = "cltype cannot be null")
+    @NotNull(message = "cltype field in UserAccount cannot be null")
     private String cltype;
 
     /**

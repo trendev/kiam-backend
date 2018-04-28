@@ -58,7 +58,7 @@ public abstract class Bill {
     private Date deliveryDate;
 
     @Basic
-    @NotNull(message = "cltype cannot be null")
+    @NotNull(message = "cltype field in Bill cannot be null")
     private String cltype;
 
     /**

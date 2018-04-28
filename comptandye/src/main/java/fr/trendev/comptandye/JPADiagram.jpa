@@ -29,7 +29,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:bv>
-                    <jpa:nn m="cltype cannot be null"/>
+                    <jpa:nn m="cltype field in UserAccount cannot be null"/>
                 </jpa:bv>
             </jpa:basic>
             <jpa:basic attribute-type="String" v="true" xvt="" name="password" id="_14901008440196">
@@ -886,7 +886,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:bv>
-                    <jpa:nn m="cltype cannot be null"/>
+                    <jpa:nn m="cltype field in Offering cannot be null"/>
                 </jpa:bv>
             </jpa:basic>
             <jpa:basic attribute-type="String" v="true" xvt="" name="name" id="_1490176760174139">
@@ -989,7 +989,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:bv>
-                    <jpa:nn m="cltype cannot be null"/>
+                    <jpa:nn m="cltype field in Bill cannot be null"/>
                 </jpa:bv>
             </jpa:basic>
             <jpa:basic attribute-type="int" v="true" xvt="" name="amount" id="_149017899245630">
@@ -1891,6 +1891,63 @@ this.offeringExtents = new OfferingExtents(offering);
             <jpa:query>Select p from Product p where p.thresholdSevere=:thresholdSevere</jpa:query>
         </jpa:nq>
     </jpa:entity>
+    <jpa:entity compositePrimaryKeyClass="ProductRecordPK" abs="true" class="ProductRecord" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524923958426">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_15249240375981409</jpa:a>
+            <jpa:a>_15249241966021417</jpa:a>
+            <jpa:a>_15249242863281418</jpa:a>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true"/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" xvt="" name="cltype" id="_15249240375981409">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:nn m="cltype field in ProductRecord cannot be null"/>
+                </jpa:bv>
+            </jpa:basic>
+            <jpa:basic attribute-type="java.util.Date" v="true" xvt="" name="recordDate" dv="new Date()" id="_15249241966021417">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:nn m="recordDate field in ProductRecard cannot be null"/>
+                </jpa:bv>
+                <jpa:temporal>DATE</jpa:temporal>
+                <jpa:column unique="false" nullable="true" insertable="true" updatable="true" column-definition="DATETIME(3)"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="int" v="true" xvt="" name="qty" id="_15249242863281418">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_15249239586001407">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:nq e="false" name="ProductRecord.findAll">
+            <jpa:query>Select e from ProductRecord e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="ProductRecord.findByCltype">
+            <jpa:query>Select p from ProductRecord p where p.cltype=:cltype</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="ProductRecord.findByRecordDate">
+            <jpa:query>Select p from ProductRecord p where p.recordDate=:recordDate</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="ProductRecord.findByQty">
+            <jpa:query>Select p from ProductRecord p where p.qty=:qty</jpa:query>
+        </jpa:nq>
+    </jpa:entity>
+    <jpa:entity compositePrimaryKeyClass="PurchasedItemPK" abs="false" class="PurchasedItem" superclassId="_1524923958426" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524924325129">
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes/>
+        <jpa:nq e="false" name="PurchasedItem.findAll">
+            <jpa:query>Select e from PurchasedItem e</jpa:query>
+        </jpa:nq>
+    </jpa:entity>
     <jpa:embeddable abs="false" class="OfferingSnapshot" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1512853437669">
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
@@ -1977,6 +2034,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
+            <i ref="_1524924325129" x="-777" y="1816"/>
             <i ref="_1490172966686" x="-658" y="660">
                 <el>
                     <e ref="_150537690133858">
@@ -2019,7 +2077,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1524836293670" x="-279" y="2039"/>
+            <i ref="_1524836293670" x="-277" y="2446"/>
             <i ref="_1524840332929" x="-688" y="1274">
                 <el>
                     <e ref="_1524841100537155">
@@ -2123,6 +2181,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                 </el>
             </i>
             <i ref="_1503060694288" x="-522" y="250"/>
+            <i ref="_1524923958426" x="-602" y="1632"/>
             <i ref="_1490104062170" x="-401" y="405"/>
             <i ref="_1490113906035" x="-351" y="1010">
                 <el>
@@ -2131,7 +2190,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1524835087412" x="-486" y="1771"/>
+            <i ref="_1524835087412" x="-486" y="2192"/>
             <i ref="_1490704206844" x="-74" y="863">
                 <el>
                     <e ref="_15049038294552105">
@@ -2176,7 +2235,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1499512549878" x="-279" y="1624">
+            <i ref="_1499512549878" x="-276" y="2026">
                 <el>
                     <e ref="_1505144351224341">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -2193,7 +2252,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                 </el>
             </i>
             <i ref="_1490101737208" x="-414" y="13"/>
-            <i ref="_1524841860187" x="-300" y="1274">
+            <i ref="_1524841860187" x="-297" y="1274">
                 <el>
                     <e ref="_1524907636328594">
                         <v st="1" si="12.0" cl="#ff0000"/>
