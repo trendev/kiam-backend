@@ -1678,6 +1678,7 @@ this.offeringExtents = new OfferingExtents(offering);
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="VatRatesPK" abs="false" class="VatRates" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1521215136542">
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.ArrayList;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -1743,6 +1744,7 @@ this.offeringExtents = new OfferingExtents(offering);
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="ExpenseItemPK" abs="false" class="ExpenseItem" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524835087412">
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="description" id="_152483512063475">
@@ -1790,6 +1792,9 @@ this.offeringExtents = new OfferingExtents(offering);
             <jpa:basic attribute-type="String" v="true" xvt="" name="invoiceRef" id="_1524836395765710">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:nn m="The invoice reference cannot be null in a Purchase (extending an Expense)"/>
+                </jpa:bv>
             </jpa:basic>
         </jpa:attributes>
         <jpa:nq e="false" name="Purchase.findAll">
@@ -1800,6 +1805,7 @@ this.offeringExtents = new OfferingExtents(offering);
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="ProductReferencePK" abs="false" class="ProductReference" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524840332929">
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="description" id="_1524840963347153">
@@ -1832,6 +1838,7 @@ this.offeringExtents = new OfferingExtents(offering);
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="ProductPK" abs="false" class="Product" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524841860187">
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -1886,6 +1893,7 @@ this.offeringExtents = new OfferingExtents(offering);
     </jpa:entity>
     <jpa:embeddable abs="false" class="OfferingSnapshot" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1512853437669">
         <jpa:con am="PUBLIC" e="true"/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
         <jpa:snp loc="BEFORE_METHOD" e="true">public OfferingSnapshot(Offering offering) {
         this.cltype = offering.getCltype();
@@ -1931,6 +1939,7 @@ this.offeringExtents = new OfferingExtents(offering);
             <jpa:a>_152404700574475</jpa:a>
             <jpa:a>_152404701290576</jpa:a>
         </jpa:con>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="BEFORE_METHOD" e="true">public OfferingExtents(Offering offering) {
         //computes services/sales extents
 OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
@@ -2167,7 +2176,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1499512549878" x="-279" y="1622">
+            <i ref="_1499512549878" x="-279" y="1624">
                 <el>
                     <e ref="_1505144351224341">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -2184,7 +2193,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                 </el>
             </i>
             <i ref="_1490101737208" x="-414" y="13"/>
-            <i ref="_1524841860187" x="-308" y="1274">
+            <i ref="_1524841860187" x="-300" y="1274">
                 <el>
                     <e ref="_1524907636328594">
                         <v st="1" si="12.0" cl="#ff0000"/>

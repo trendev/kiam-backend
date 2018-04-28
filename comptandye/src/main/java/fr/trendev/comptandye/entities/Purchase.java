@@ -3,6 +3,7 @@ package fr.trendev.comptandye.entities;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author jsie
@@ -11,6 +12,8 @@ import javax.persistence.Entity;
 public class Purchase extends Expense {
 
     @Basic
+    @NotNull(
+            message = "The invoice reference cannot be null in a Purchase (extending an Expense)")
     private String invoiceRef;
 
     public String getInvoiceRef() {
