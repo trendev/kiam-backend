@@ -6,11 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -23,11 +20,6 @@ import javax.persistence.OneToMany;
 @Entity
 @IdClass(ProductPK.class)
 public class Product {
-
-    @Column(name = "PRODUCT_ID")
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
 
     /**
      * Quantity of available items
@@ -50,6 +42,7 @@ public class Product {
     @JsonIgnore
     private Professional professional;
 
+    @Id
     @ManyToOne(cascade = {CascadeType.PERSIST},
             targetEntity = ProductReference.class)
     private ProductReference productReference;
@@ -57,14 +50,6 @@ public class Product {
     @OneToMany(targetEntity = Sale.class, mappedBy = "product")
     @JsonIgnore
     private List<Sale> sales = new LinkedList<>();
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public int getAvailableQty() {
         return this.availableQty;

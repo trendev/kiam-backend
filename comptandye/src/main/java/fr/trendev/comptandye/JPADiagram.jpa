@@ -1854,7 +1854,7 @@ this.offeringExtents = new OfferingExtents(offering);
                 <jpa:xm nil="false" req="false"/>
                 <jpa:join-column name="PRODUCT_PRO_EMAIL" rc="EMAIL" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table=""/>
             </jpa:many-to-one>
-            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1524840332929" v="true" xvt="" name="productReference" id="_1524842124874167">
+            <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1524840332929" v="true" xvt="" name="productReference" id="_1524911242644950">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:cascade>
@@ -1870,12 +1870,6 @@ this.offeringExtents = new OfferingExtents(offering);
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:element-collection>
-            <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_1524841860276162">
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-                <jpa:column name="PRODUCT_ID" unique="false" nullable="true" insertable="true" updatable="true"/>
-                <jpa:generated-value strategy="AUTO"/>
-            </jpa:id>
         </jpa:attributes>
         <jpa:nq e="false" name="Product.findAll">
             <jpa:query>Select e from Product e</jpa:query>
@@ -2190,7 +2184,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                 </el>
             </i>
             <i ref="_1490101737208" x="-414" y="13"/>
-            <i ref="_1524841860187" x="-324" y="1234">
+            <i ref="_1524841860187" x="-308" y="1274">
                 <el>
                     <e ref="_1524907636328594">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -2198,7 +2192,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     <e ref="_1524841981057164">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
-                    <e ref="_1524842124874167">
+                    <e ref="_1524911242644950">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>

@@ -7,24 +7,16 @@ import java.io.Serializable;
 
 public class ProductPK implements Serializable {
 
-    private Long id;
-
     private String professional;
+
+    private String productReference;
 
     public ProductPK() {
     }
 
-    public ProductPK(Long id, String professional) {
-        this.id = id;
+    public ProductPK(String professional, String productReference) {
         this.professional = professional;
-    }
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        this.productReference = productReference;
     }
 
     public String getProfessional() {
@@ -33,6 +25,14 @@ public class ProductPK implements Serializable {
 
     public void setProfessional(String professional) {
         this.professional = professional;
+    }
+
+    public String getProductReference() {
+        return this.productReference;
+    }
+
+    public void setProductReference(String productReference) {
+        this.productReference = productReference;
     }
 
     @Override
@@ -44,11 +44,12 @@ public class ProductPK implements Serializable {
             return false;
         }
         final ProductPK other = (ProductPK) obj;
-        if (!java.util.Objects.equals(this.getId(), other.getId())) {
-            return false;
-        }
         if (!java.util.Objects.equals(this.getProfessional(), other.
                 getProfessional())) {
+            return false;
+        }
+        if (!java.util.Objects.equals(this.getProductReference(), other.
+                getProductReference())) {
             return false;
         }
         return true;
@@ -57,16 +58,17 @@ public class ProductPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 43 * hash + (this.getId() != null ? this.getId().hashCode() : 0);
-        hash = 43 * hash + (this.getProfessional() != null ? this.
+        hash = 71 * hash + (this.getProfessional() != null ? this.
                 getProfessional().hashCode() : 0);
+        hash = 71 * hash + (this.getProductReference() != null ? this.
+                getProductReference().hashCode() : 0);
         return hash;
     }
 
     @Override
     public String toString() {
-        return "ProductPK{" + " id=" + id + ", professional=" + professional
-                + '}';
+        return "ProductPK{" + " professional=" + professional
+                + ", productReference=" + productReference + '}';
     }
 
 }
