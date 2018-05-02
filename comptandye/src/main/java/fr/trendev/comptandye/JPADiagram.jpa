@@ -1033,7 +1033,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
             <jpa:basic attribute-type="java.util.Date" v="true" xvt="" name="cancellationDate" id="_1524065459077662">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:temporal>DATE</jpa:temporal>
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
                 <jpa:column unique="false" nullable="true" insertable="true" updatable="true" column-definition="DATETIME(3)"/>
             </jpa:basic>
             <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_1490179812678394" v="true" xvt="" name="professional" id="_1490179812677393">

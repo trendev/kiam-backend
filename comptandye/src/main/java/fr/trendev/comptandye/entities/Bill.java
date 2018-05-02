@@ -106,7 +106,7 @@ public abstract class Bill {
 
     @Column(columnDefinition = "DATETIME(3)")
     @Basic
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date cancellationDate;
 
     @ElementCollection

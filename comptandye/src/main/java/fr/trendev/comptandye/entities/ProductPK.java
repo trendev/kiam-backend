@@ -57,7 +57,7 @@ public class ProductPK implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
+        int hash = 7;
         hash = 29 * hash + (this.getProfessional() != null ? this.
                 getProfessional().hashCode() : 0);
         hash = 29 * hash + (this.getProductReference() != null ? this.
