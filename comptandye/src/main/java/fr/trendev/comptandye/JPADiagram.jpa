@@ -1970,7 +1970,7 @@ this.offeringExtents = new OfferingExtents(offering);
             <jpa:query>Select e from PurchasedItem e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="UsedItemPK" abs="false" class="UsedItem" superclassId="_1524923958426" v="true" xre="false" m="false" rootElement="_14901008082901" id="_1525251875162">
+    <jpa:entity compositePrimaryKeyClass="UsedItemPK" abs="false" class="UsedItem" superclassId="_1524923958426" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1525251875162">
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:des>Item consumed during the delivery</jpa:des>
         <jpa:ath>jsie</jpa:ath>
@@ -2065,7 +2065,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1524924325129" x="-777" y="1818">
+            <i ref="_1524924325129" x="67" y="2175">
                 <el>
                     <e ref="_15249248621511435">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -2114,14 +2114,14 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1524836293670" x="-283" y="2461">
+            <i ref="_1524836293670" x="-289" y="2325">
                 <el>
                     <e ref="_15249248621531436">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1524840332929" x="-688" y="1274">
+            <i ref="_1524840332929" x="-688" y="1465">
                 <el>
                     <e ref="_1524841100537155">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -2224,8 +2224,8 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                 </el>
             </i>
             <i ref="_1503060694288" x="-522" y="250"/>
-            <i ref="_1525251875162" x="-523" y="1818"/>
-            <i ref="_1524923958426" x="-625" y="1543">
+            <i ref="_1525251875162" x="286" y="2208"/>
+            <i ref="_1524923958426" x="242" y="1906">
                 <el>
                     <e ref="_15249290639991474">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -2240,7 +2240,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1524835087412" x="-486" y="2192"/>
+            <i ref="_1524835087412" x="-522" y="2044"/>
             <i ref="_1490704206844" x="-74" y="863">
                 <el>
                     <e ref="_15049038294552105">
@@ -2285,7 +2285,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1499512549878" x="-277" y="2026">
+            <i ref="_1499512549878" x="-283" y="1906">
                 <el>
                     <e ref="_1505144351224341">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -2302,7 +2302,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                 </el>
             </i>
             <i ref="_1490101737208" x="-414" y="13"/>
-            <i ref="_1524841860187" x="-297" y="1274">
+            <i ref="_1524841860187" x="-293" y="1472">
                 <el>
                     <e ref="_1524907636328594">
                         <v st="1" si="12.0" cl="#ff0000"/>
