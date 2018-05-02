@@ -69,7 +69,7 @@ public class Expense {
 
     @Column(columnDefinition = "DATETIME(3)")
     @Basic
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date cancellationDate;
 
     /**

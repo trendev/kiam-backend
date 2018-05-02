@@ -1451,7 +1451,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
             <jpa:basic attribute-type="java.util.Date" v="true" xvt="" name="cancellationDate" id="_1524065569462663">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:temporal>DATE</jpa:temporal>
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
                 <jpa:column unique="false" nullable="true" insertable="true" updatable="true" column-definition="DATETIME(3)"/>
             </jpa:basic>
             <jpa:basic attribute-type="boolean" v="true" xvt="" name="cancellable" dv="true" id="_152421842190372">
