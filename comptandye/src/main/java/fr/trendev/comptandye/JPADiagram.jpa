@@ -1955,10 +1955,11 @@ this.offeringExtents = new OfferingExtents(offering);
         <jpa:nq e="false" name="ProductRecord.findByQty">
             <jpa:query>Select p from ProductRecord p where p.qty=:qty</jpa:query>
         </jpa:nq>
+        <jpa:discriminator-column/>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="PurchasedItemPK" abs="false" class="PurchasedItem" superclassId="_1524923958426" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524924325129">
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:des>Bought item, must be linked it an Expense (Purchase)</jpa:des>
+        <jpa:des>Recored added when an item is purchased(bought by the professional) must be linked to an Expense (Purchase)</jpa:des>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1524836293670" connected-attribute-id="_15249248621531436" v="true" xvt="" name="purchase" id="_15249248621511435">
@@ -1972,11 +1973,45 @@ this.offeringExtents = new OfferingExtents(offering);
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="UsedItemPK" abs="false" class="UsedItem" superclassId="_1524923958426" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1525251875162">
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:des>Item consumed during the delivery</jpa:des>
+        <jpa:des>Record added when an Item is consumed during the delivery</jpa:des>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes/>
         <jpa:nq e="false" name="UsedItem.findAll">
             <jpa:query>Select e from UsedItem e</jpa:query>
+        </jpa:nq>
+    </jpa:entity>
+    <jpa:entity compositePrimaryKeyClass="ReturnedItemPK" abs="false" class="ReturnedItem" superclassId="_1524923958426" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1525253236164">
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
+        <jpa:des>Recorded add when a Bill is cancelled and the product are returned</jpa:des>
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes>
+            <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490178979567" v="true" xvt="" name="cancelledBill" id="_1525257002758119">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:join-table name="RETURNED_ITEM">
+                    <jpa:join-column name="ID" rc="ID" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table="PRODUCTRECORD"/>
+                </jpa:join-table>
+            </jpa:one-to-one>
+        </jpa:attributes>
+        <jpa:nq e="false" name="ReturnedItem.findAll">
+            <jpa:query>Select e from ReturnedItem e</jpa:query>
+        </jpa:nq>
+    </jpa:entity>
+    <jpa:entity compositePrimaryKeyClass="SoldItemPK" abs="false" class="SoldItem" superclassId="_1524923958426" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1525258966197">
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
+        <jpa:des>Record added when an item is sold and linked with an active Bill</jpa:des>
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes>
+            <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1490178979567" v="true" xvt="" name="bill" id="_15252594803214145">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:join-table name="SOLD_ITEM">
+                    <jpa:join-column name="ID" rc="ID" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table="PRODUCTRECORD"/>
+                </jpa:join-table>
+            </jpa:one-to-one>
+        </jpa:attributes>
+        <jpa:nq e="false" name="SoldItem.findAll">
+            <jpa:query>Select e from SoldItem e</jpa:query>
         </jpa:nq>
     </jpa:entity>
     <jpa:embeddable abs="false" class="OfferingSnapshot" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1512853437669">
@@ -2065,7 +2100,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1524924325129" x="67" y="2175">
+            <i ref="_1524924325129" x="32" y="2283">
                 <el>
                     <e ref="_15249248621511435">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -2216,6 +2251,13 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
+            <i ref="_1525253236164" x="432" y="2283">
+                <el>
+                    <e ref="_1525257002758119">
+                        <v st="1" si="12.0" cl="#00ff00"/>
+                    </e>
+                </el>
+            </i>
             <i ref="_1490180671085" x="715" y="347">
                 <el>
                     <e ref="_150652336702164">
@@ -2224,7 +2266,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                 </el>
             </i>
             <i ref="_1503060694288" x="-522" y="250"/>
-            <i ref="_1525251875162" x="286" y="2208"/>
+            <i ref="_1525251875162" x="244" y="2283"/>
             <i ref="_1524923958426" x="242" y="1906">
                 <el>
                     <e ref="_15249290639991474">
@@ -2265,6 +2307,13 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                 </el>
             </i>
             <i ref="_1490113751330" x="-678" y="1010"/>
+            <i ref="_1525258966197" x="654" y="2283">
+                <el>
+                    <e ref="_15252594803214145">
+                        <v st="1" si="12.0" cl="#00ff00"/>
+                    </e>
+                </el>
+            </i>
             <i ref="_1490206901623" x="306" y="1247">
                 <el>
                     <e ref="_1503081214518630">

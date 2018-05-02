@@ -12,7 +12,7 @@ package fr.trendev.comptandye.utils;
 public class ProductRecordType {
 
     public static final String PURCHASED_ITEM = "purchased";
-    public static final String SOLDED_ITEM = "solded";
+    public static final String SOLD_ITEM = "sold";
     public static final String RETURNED_ITEM = "returned";
     public static final String USED_ITEM = "used";
 }

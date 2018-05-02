@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import javax.persistence.Entity;
 
 /**
- * Item consumed during the delivery
+ * Record added when an Item is consumed during the delivery
  *
  * @author jsie
  */

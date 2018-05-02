@@ -6,7 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 /**
- * Bought item, must be linked it an Expense (Purchase)
+ * Recored added when an item is purchased(bought by the professional) must be
+ * linked to an Expense (Purchase)
  *
  * @author jsie
  */
