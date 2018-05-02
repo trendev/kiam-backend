@@ -1958,6 +1958,7 @@ this.offeringExtents = new OfferingExtents(offering);
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="PurchasedItemPK" abs="false" class="PurchasedItem" superclassId="_1524923958426" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524924325129">
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
+        <jpa:des>Bought item, must be linked it an Expense (Purchase)</jpa:des>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1524836293670" connected-attribute-id="_15249248621531436" v="true" xvt="" name="purchase" id="_15249248621511435">
@@ -1967,6 +1968,15 @@ this.offeringExtents = new OfferingExtents(offering);
         </jpa:attributes>
         <jpa:nq e="false" name="PurchasedItem.findAll">
             <jpa:query>Select e from PurchasedItem e</jpa:query>
+        </jpa:nq>
+    </jpa:entity>
+    <jpa:entity compositePrimaryKeyClass="UsedItemPK" abs="false" class="UsedItem" superclassId="_1524923958426" v="true" xre="false" m="false" rootElement="_14901008082901" id="_1525251875162">
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
+        <jpa:des>Item consumed during the delivery</jpa:des>
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes/>
+        <jpa:nq e="false" name="UsedItem.findAll">
+            <jpa:query>Select e from UsedItem e</jpa:query>
         </jpa:nq>
     </jpa:entity>
     <jpa:embeddable abs="false" class="OfferingSnapshot" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1512853437669">
@@ -2214,7 +2224,8 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                 </el>
             </i>
             <i ref="_1503060694288" x="-522" y="250"/>
-            <i ref="_1524923958426" x="-625" y="1538">
+            <i ref="_1525251875162" x="-523" y="1818"/>
+            <i ref="_1524923958426" x="-625" y="1543">
                 <el>
                     <e ref="_15249290639991474">
                         <v st="1" si="12.0" cl="#00ff00"/>

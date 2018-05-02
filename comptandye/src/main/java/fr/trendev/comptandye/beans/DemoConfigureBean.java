@@ -24,6 +24,7 @@ import fr.trendev.comptandye.entities.Purchase;
 import fr.trendev.comptandye.entities.PurchasedItem;
 import fr.trendev.comptandye.entities.Sale;
 import fr.trendev.comptandye.entities.SocialNetworkAccounts;
+import fr.trendev.comptandye.entities.UsedItem;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.entities.VatRates;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
@@ -61,20 +62,20 @@ import javax.ws.rs.WebApplicationException;
 @Singleton // javax.ejb.Singleton;
 @Startup //javax.ejb.Startup
 public class DemoConfigureBean implements Serializable {
-    
+
     private final Logger LOG = Logger.getLogger(
             DemoConfigureBean.class.
                     getName());
-    
+
     @PersistenceContext(unitName = "DEFAULT_PU")
     private EntityManager em;
-    
+
     @Inject
     UserGroupFacade userGroupFacade;
-    
+
     @Inject
     BillTypeVisitor billTypeVisitor;
-    
+
     @PostConstruct
     public void init() {
 
@@ -90,9 +91,9 @@ public class DemoConfigureBean implements Serializable {
             this.createSale();
             this.createProductRecord();
         }
-        
+
     }
-    
+
     private void initUsersAndGroups() {
 
         /**
@@ -105,12 +106,12 @@ public class DemoConfigureBean implements Serializable {
                 "ts15qkBmihdtvmkKXPgVmbPGeyQU6aKd5XNd5HwOzu0=",
                 "trendevfr_admin", UUIDGenerator.generate("ADMIN-", true));
         trendevfr.setCltype(UserAccountType.ADMINISTRATOR);
-        
+
         Administrator comptandye = new Administrator("comptandye@gmail.com",
                 "mZWR4R0bp5EPs9xfOwUPu3n/06LOL+wHK6BuUBsHgQM=",
                 "comptandye_admin", UUIDGenerator.generate("ADMIN-", true));
         comptandye.setCltype(UserAccountType.ADMINISTRATOR);
-        
+
         Administrator jsie = new Administrator("julien.sie@gmail.com",
                 "RrYJsV8xV7fsJkzgrFqGwiZzvIGEFan6e0ANYPcJhrI=", "jsie",
                 UUIDGenerator.generate("ADMIN-", true));
@@ -134,7 +135,7 @@ public class DemoConfigureBean implements Serializable {
         trendevfr.setBlocked(false);
         comptandye.setBlocked(false);
         jsie.setBlocked(false);
-        
+
         em.persist(adminGroup);
         /**
          * Creates the first professional
@@ -150,32 +151,32 @@ public class DemoConfigureBean implements Serializable {
                 "Vaness", "0675295422", cal.getTime(), 'F', null, Arrays.
                 asList(
                         "Fun", "Pro", "Living with a nice guy", "3 children")));
-        
+
         vanessa.setAddress(new Address("47 Rue René Benoist", null, "77860",
                 "Quincy-Voisins"));
-        
+
         vanessa.setSocialNetworkAccounts(new SocialNetworkAccounts(
                 "https://www.facebook.com/gayvanessa",
                 "@VanessCE", null, "https://www.pinterest.com/vanessagay14/"));
-        
+
         vanessa.setCompanyID("50147615400023");
         vanessa.setVatcode("FR87501476154");
         vanessa.setCompanyName("VANESSA ESTHETIQUE ET COIFFURE");
         cal.clear();
         cal.set(2007, 11, 15); // src infogreffe
         vanessa.setCreationDate(cal.getTime());
-        
+
         vanessa.getBusinesses().addAll(Arrays.asList(em.find(Business.class,
                 "Esthétique"),
                 em.find(Business.class, "Coiffure")));
-        
+
         vanessa.getExpenses().add(new Expense("Material", 100000,
                 new Date(), Arrays.
                         asList("Material", "Haircut"), vanessa, Arrays.asList(
                 new Payment(30000, em.find(PaymentMode.class, "CB")),
                 new Payment(70000, em.find(PaymentMode.class, "Espèces"))),
                 Arrays.asList(em.find(Business.class, "Coiffure"))));
-        
+
         Purchase purchase = new Purchase();
         purchase.setDescription("Buy 4x color sticks");
         purchase.setAmount(1200);
@@ -187,27 +188,27 @@ public class DemoConfigureBean implements Serializable {
         purchase.setBusinesses(Arrays.
                 asList(em.find(Business.class, "Coiffure")));
         purchase.setInvoiceRef("facture #2341");
-        
+
         purchase.setProfessional(vanessa);
         vanessa.getExpenses().add(purchase);
-        
+
         vanessa.getCollectiveGroups().add(
                 new CollectiveGroup("Senior Residence", "0123456789",
                         new Address(
                                 "10 route de la ferme du pavillon", "appart 202",
                                 "77600", "Chanteloup-en-Brie"), vanessa));
-        
+
         vanessa.getPaymentModes().addAll(Arrays.asList(
                 new PaymentMode("Chèque"),
                 new PaymentMode("Espèces"),
                 new PaymentMode("Virement")
         ));
-        
+
         Professional audrey = new Professional("audreyheitzmann@gmail.com",
                 "VvCdf6nrd7ksdB3RlAnAFSuhmyLgzeO/oeZpcPju7Fc=",
                 "Audrey", UUIDGenerator.generate("PRO-", true));
         audrey.setCltype(UserAccountType.PROFESSIONAL);
-        
+
         audrey.setCustomerDetails(new CustomerDetails("Audrey", "Heitzmann",
                 "Audrey", "0625719477", null, 'F', null, Collections.
                         <String>emptyList()));
@@ -245,28 +246,28 @@ public class DemoConfigureBean implements Serializable {
          *
          */
         UserGroup ind = new UserGroup("Individual", "Individual User Group");
-        
+
         Individual skonx = new Individual();
         skonx.setEmail("skonx2006@gmail.com");
         skonx.setCltype(UserAccountType.INDIVIDUAL);
         skonx.setPassword(PasswordGenerator.encrypt_SHA256(PasswordGenerator.
                 autoGenerate()));
-        
+
         Individual sylvioc = new Individual();
         sylvioc.setEmail("sylvie.gay@gmail.com");
         sylvioc.setCltype(UserAccountType.INDIVIDUAL);
         sylvioc.setPassword(PasswordGenerator.encrypt_SHA256(PasswordGenerator.
                 autoGenerate()));
-        
+
         ind.getUserAccounts().add(skonx);
         skonx.getUserGroups().add(ind);
-        
+
         ind.getUserAccounts().add(sylvioc);
         sylvioc.getUserGroups().add(ind);
-        
+
         skonx.setBlocked(false);
         sylvioc.setBlocked(false);
-        
+
         vanessa.getIndividuals().add(sylvioc);
         sylvioc.getProfessionals().add(vanessa);
 
@@ -275,21 +276,21 @@ public class DemoConfigureBean implements Serializable {
          */
         em.persist(pro);
         em.persist(ind);
-        
+
         Address skonxAddress = new Address("79 avenue de la jonchere",
                 "Appartement A113",
                 "77600", "Chanteloup-en-Brie");
-        
+
         em.persist(skonxAddress);
         skonx.setAddress(skonxAddress);
-        
+
         em.flush();
         if (em.contains(skonxAddress)) {
             em.refresh(skonxAddress);
         }
-        
+
     }
-    
+
     private void initPaymentModes() {
         Arrays.
                 asList("CB", "Chèque", "Paylib", "Paypal",
@@ -297,7 +298,7 @@ public class DemoConfigureBean implements Serializable {
                     em.persist(new PaymentMode(pm));
                 });
     }
-    
+
     private void initBusinesses() {
         Arrays.
                 asList("Coiffure", "Esthétique", "Onglerie").stream().forEach(
@@ -305,34 +306,34 @@ public class DemoConfigureBean implements Serializable {
             em.persist(new Business(b));
         });
     }
-    
+
     private void importClients() {
         try {
             Professional vanessa = em.find(Professional.class,
                     "vanessa.gay@gmail.com");
-            
+
             ClassLoader classloader = Thread.currentThread().
                     getContextClassLoader();
             InputStream is = classloader.getResourceAsStream("csv/clients.csv");
-            
+
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            
+
             try (BufferedReader in = new BufferedReader(
                     new InputStreamReader(is))) {
-                
+
                 in.lines().skip(1).forEach(l -> {
                     String[] fields = l.split(",", -1);
                     if (fields.length != 12) {
                         throw new WebApplicationException(
                                 "Error during clients import : fields length shoud be 12");
                     }
-                    
+
                     Date bd = null;
                     try {
                         bd = sdf.parse(fields[2]);
                     } catch (ParseException ex) {
                     }
-                    
+
                     Client c = new Client(fields[7],
                             new SocialNetworkAccounts(fields[8], fields[9],
                                     fields[11], fields[10]),
@@ -345,7 +346,7 @@ public class DemoConfigureBean implements Serializable {
                             vanessa);
                     vanessa.getClients().add(c);
                 });
-                
+
             } catch (Exception ex) {
                 LOG.log(Level.SEVERE, "Error during clients import",
                         ex);
@@ -353,13 +354,13 @@ public class DemoConfigureBean implements Serializable {
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Error in createBills()", ex);
         }
-        
+
     }
-    
+
     private void createVatRatesFR() {
         Professional vanessa = em.find(Professional.class,
                 "vanessa.gay@gmail.com");
-        
+
         VatRates vrFR = new VatRates();
         vrFR.setCountryId("FR");
         vrFR.setCountry(vanessa.getAddress().getCountry());
@@ -367,22 +368,22 @@ public class DemoConfigureBean implements Serializable {
         vrFR.getRates().add(new BigDecimal("10"));
         vrFR.getRates().add(new BigDecimal("5.5"));
         vrFR.getRates().add(new BigDecimal("2.1"));
-        
+
         em.persist(vrFR);
-        
+
         vanessa.setVatRates(vrFR);
     }
-    
+
     private void createProductReference() {
         ProductReference ref = new ProductReference();
         ref.setBarcode("1234567890");
         ref.setBrand("L'OREAL");
         ref.setDescription("Color stick - Purple");
         ref.setBusiness(em.find(Business.class, "Coiffure"));
-        
+
         em.persist(ref);
     }
-    
+
     private void createProduct() {
 
 //        ProductReference ref = em.find(ProductReference.class, "1234567890");
@@ -391,22 +392,22 @@ public class DemoConfigureBean implements Serializable {
         ref.setBrand("L'OREAL");
         ref.setDescription("Color stick - Blond");
         ref.setBusiness(em.find(Business.class, "Coiffure"));
-        
+
         Professional vanessa = em.find(Professional.class,
                 "vanessa.gay@gmail.com");
-        
+
         Product product = new Product();
         product.setThresholdWarning(2);
         product.setThresholdSevere(1);
-        
+
         product.setProfessional(vanessa);
         product.setProductReference(ref);
-        
+
         vanessa.setStock(Arrays.asList(product));
         em.persist(product);
-        
+
     }
-    
+
     private void createSale() {
         Sale sale = new Sale();
         sale.setCltype(OfferingType.SALE);
@@ -416,46 +417,55 @@ public class DemoConfigureBean implements Serializable {
         sale.setDuration(0);
         sale.setBusinesses(Arrays.asList(em.find(Business.class, "Coiffure")));
         sale.setQty(2);
-        
+
         Professional vanessa = em.find(Professional.class,
                 "vanessa.gay@gmail.com");
-        
+
         vanessa.getOfferings().add(sale);
         sale.setProfessional(vanessa);
 
 //        Product product = vanessa.getStock().get(0);
         Product product = em.find(Product.class,
                 new ProductPK(vanessa.getEmail(), "1234567891"));
-        
+
         sale.setProduct(product);
         product.getSales().add(sale);
-        
+
         em.persist(sale);
     }
-    
+
     private void createProductRecord() {
         PurchasedItem pr = new PurchasedItem();
         pr.setCltype(ProductRecordType.PURCHASED_ITEM);
         pr.setQty(4);
-        
+
         Professional vanessa = em.find(Professional.class,
                 "vanessa.gay@gmail.com");
         Purchase purchase = em.find(Purchase.class, new ExpensePK(vanessa.
                 getExpenses().get(1).
                 getId(), vanessa.getEmail()));
-        
+
         pr.setPurchase(purchase);
         purchase.getPurchasedItems().add(pr);
-        
+
         Product product = em.find(Product.class,
                 new ProductPK(vanessa.getEmail(), "1234567891"));
-        
+
         product.getTrackRecord().add(pr);
         pr.setProduct(product);
         product.setAvailableQty(product.getAvailableQty() + pr.getQty());
-        
+
+        UsedItem u = new UsedItem();
+        u.setCltype(ProductRecordType.USED_ITEM);
+        u.setQty(1);
+
+        product.getTrackRecord().add(u);
+        u.setProduct(product);
+        product.setAvailableQty(product.getAvailableQty() - u.getQty());
+
         em.persist(pr);
-        
+        em.persist(u);
+
     }
-    
+
 }
