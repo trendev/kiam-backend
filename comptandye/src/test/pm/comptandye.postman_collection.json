@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "bf765d43-0fb5-8343-54f1-e720739798b3",
-		"name": "comptandye",
+		"_postman_id": "0a82d215-1d54-4bc4-b35e-fc94f1301303",
+		"name": "comptandye-v2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -3751,6 +3751,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "bfb5ae9e-c7cf-4f86-8ba1-363f491dbc08",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
@@ -3758,7 +3759,7 @@
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"id is defined\"] = jsonData.id !== undefined;",
 									"pm.environment.set(\"created_expense_id\", jsonData.id);",
-									"tests[\"name is \\\"Purple Color\\\"\"] = jsonData.name === \"Purple Color\";",
+									"tests[\"description is \\\"Purple Color\\\"\"] = jsonData.description === \"Purple Color\";",
 									"tests[\"currency is \\\"EUR\\\"\"] = jsonData.currency === \"EUR\";",
 									"tests[\"amount is 1000\"] = jsonData.amount === 1000;",
 									"tests[\"paymentDate is \"+new Date(1505707896023)] = jsonData.paymentDate === 1505707896023;",
@@ -3790,7 +3791,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":\"Purple Color\",\n  \"amount\":1000,\n  \"paymentDate\":1505707896023,\n  \"categories\": [\n            \"Provider\",\n            \"Color Broker in Paris\"\n    ],\n    \"payments\": [\n            {\n        \"amount\": 900,\n                \"paymentMode\": {\n                    \"name\": \"CB\"\n                }\n            },\n            {\n                \"amount\": 100,\n                \"paymentMode\": {\n                    \"name\": \"Espèces\"\n                }\n            }\n        ],\n        \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n        ]\n}"
+							"raw": "{\n  \"description\":\"Purple Color\",\n  \"amount\":1000,\n  \"paymentDate\":1505707896023,\n  \"categories\": [\n            \"Provider\",\n            \"Color Broker in Paris\"\n    ],\n    \"payments\": [\n            {\n        \"amount\": 900,\n                \"paymentMode\": {\n                    \"name\": \"CB\"\n                }\n            },\n            {\n                \"amount\": 100,\n                \"paymentMode\": {\n                    \"name\": \"Espèces\"\n                }\n            }\n        ],\n    \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n    ]\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Expense?professional=vanessa.gay@gmail.com",
@@ -3816,6 +3817,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "cd0fa083-b3b2-44a8-9cae-99a725f219da",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -3823,11 +3825,10 @@
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"id is defined\"] = jsonData.id !== undefined;",
 									"pm.environment.set(\"created_expense_id\", jsonData.id);",
-									"tests[\"name is \\\"Purple Color\\\"\"] = jsonData.name === \"Purple Color\";",
+									"tests[\"description is \\\"Purple Color\\\"\"] = jsonData.description === \"Purple Color\";",
 									"tests[\"currency is \\\"EUR\\\"\"] = jsonData.currency === \"EUR\";",
 									"tests[\"amount is 1000\"] = jsonData.amount === 1000;",
 									"tests[\"paymentDate is \"+new Date(1505707896023)] = jsonData.paymentDate === 1505707896023;",
-									"tests[\"invoiceRef is \\\"invoice#2\\\"\"] = jsonData.invoiceRef === \"invoice#2\";",
 									"tests[\"categories length is 2\"] = jsonData.categories.length === 2;",
 									"",
 									"var total = 0;",
@@ -3856,7 +3857,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"id\":{{created_expense_id}},\n  \"name\":\"Purple Color\",\n  \"amount\":1000,\n  \"paymentDate\":1505707896023,\n  \"categories\": [\n            \"Provider\",\n            \"Color Broker in Paris\"\n    ],\n    \"invoiceRef\": \"invoice#2\",\n    \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n        ]\n}"
+							"raw": "{\n  \"id\":{{created_expense_id}},\n  \"description\":\"Purple Color\",\n  \"amount\":1000,\n  \"paymentDate\":1505707896023,\n  \"categories\": [\n            \"Provider\",\n            \"Color Broker in Paris\"\n  ],\n  \"provider\": \"Bleu Libellule\",\n  \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n        ]\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Expense?professional=vanessa.gay@gmail.com",
@@ -3882,6 +3883,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "59c3d1dd-1599-418d-8f92-42b3fbd46038",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -3892,7 +3894,7 @@
 									"//created_expense_id environment variable is stored as a string...",
 									"tests[\"id is \"+pm.environment.get(\"created_expense_id\")] = jsonData.id == pm.environment.get(\"created_expense_id\");",
 									"",
-									"tests[\"name is \\\"Purple Color\\\"\"] = jsonData.name === \"Purple Color\";",
+									"tests[\"description is \\\"Purple Color\\\"\"] = jsonData.description === \"Purple Color\";",
 									"tests[\"amount is 1000\"] = jsonData.amount === 1000;",
 									"tests[\"currency is \\\"EUR\\\"\"] = jsonData.currency === \"EUR\";",
 									"tests[\"paymentDate is \"+new Date(1505707896023)] = jsonData.paymentDate === 1505707896023;",
