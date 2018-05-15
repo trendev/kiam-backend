@@ -58,6 +58,14 @@ public class Expense {
     @Temporal(TemporalType.TIMESTAMP)
     private Date paymentDate;
 
+    /**
+     * used for audit and sort the bills
+     */
+    @Column(columnDefinition = "DATETIME(3)")
+    @Basic
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date issueDate = new Date();
+
     @Basic
     private String provider;
 
@@ -160,6 +168,14 @@ public class Expense {
 
     public void setPaymentDate(Date paymentDate) {
         this.paymentDate = paymentDate;
+    }
+
+    public Date getIssueDate() {
+        return this.issueDate;
+    }
+
+    public void setIssueDate(Date issueDate) {
+        this.issueDate = issueDate;
     }
 
     public String getProvider() {

@@ -1439,6 +1439,13 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 <jpa:temporal>TIMESTAMP</jpa:temporal>
                 <jpa:column unique="false" nullable="true" insertable="true" updatable="true" column-definition="DATETIME(3)"/>
             </jpa:basic>
+            <jpa:basic attribute-type="java.util.Date" v="true" xvt="" name="issueDate" dv="new Date()" id="_1526395076737176">
+                <jpa:des>used for audit and sort the bills</jpa:des>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+                <jpa:column unique="false" nullable="true" insertable="true" updatable="true" column-definition="DATETIME(3)"/>
+            </jpa:basic>
             <jpa:basic attribute-type="String" v="true" xvt="" name="provider" id="_1522937121103644">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -1541,6 +1548,9 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         </jpa:nq>
         <jpa:nq e="false" name="Expense.findByVatInclusive">
             <jpa:query>Select e from Expense e where e.vatInclusive=:vatInclusive</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Expense.findByIssueDate">
+            <jpa:query>Select e from Expense e where e.issueDate=:issueDate</jpa:query>
         </jpa:nq>
         <jpa:discriminator-column/>
     </jpa:entity>

@@ -9,10 +9,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -20,24 +16,8 @@ import org.junit.Test;
  * @author jsie
  */
 public class ExpenseTest {
-
+    
     public ExpenseTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
     }
 
     /**
@@ -46,22 +26,27 @@ public class ExpenseTest {
     @Test
     public void testConstructors() {
         Expense instance = new Expense();
-
+        
         assert instance.getId() == null;
         assert instance.getDescription() == null;
         assert instance.getAmount() == 0;
         assert instance.getCurrency().equals("EUR");
         assert instance.getPaymentDate() == null;
+        assert instance.getProvider() == null;
         assert instance.getCategories() != null;
         assert instance.getCategories().isEmpty();
         assert instance.getPayments() != null;
         assert instance.getPayments().isEmpty();
-        assert instance.getProfessional() == null;
-
+        assert instance.getExpenseItems() != null;
+        assert instance.getExpenseItems().isEmpty();
+        assert instance.getBusinesses() != null;
+        assert instance.getBusinesses().isEmpty();
+        assert instance.getIssueDate() != null;
+        
         String name = "Expensive expense";
         int amount = 50000; // 1000 euros
         String invoiceRef = "Invoice12345ABC";
-
+        
         instance = new Expense(name, amount, new Date(),
                 Arrays.
                         asList("Partner", "Provider"),
@@ -69,12 +54,12 @@ public class ExpenseTest {
                 Arrays.asList(new Payment(30000, new PaymentMode("CB")),
                         new Payment(30000, new PaymentMode("Espèces"))),
                 Arrays.asList(new Business("Buziness")));
-
+        
         int size = 10;
         instance.setCategories(IntStream.range(0, size).mapToObj(i ->
                 ("Category #" + i)).collect(
                 Collectors.toList()));
-
+        
         assert instance.getId() == null;
         assert instance.getDescription().equals(name);
         assert instance.getAmount() == amount;
@@ -85,7 +70,12 @@ public class ExpenseTest {
         assert instance.getPayments() != null;
         assert instance.getPayments().size() == 2;
         assert instance.getProfessional() != null;
-
+        assert instance.getExpenseItems() != null;
+        assert instance.getExpenseItems().isEmpty();
+        assert instance.getBusinesses() != null;
+        assert !instance.getBusinesses().isEmpty();
+        assert instance.getIssueDate().equals(instance.getPaymentDate());
+        
     }
-
+    
 }
