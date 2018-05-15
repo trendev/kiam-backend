@@ -52,8 +52,6 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -63,8 +61,8 @@ import javax.ws.rs.WebApplicationException;
  *
  * @author jsie
  */
-@Singleton // javax.ejb.Singleton;
-@Startup //javax.ejb.Startup
+//@Singleton // javax.ejb.Singleton;
+//@Startup //javax.ejb.Startup
 public class DemoConfigureBean implements Serializable {
 
     private final Logger LOG = Logger.getLogger(
