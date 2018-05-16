@@ -1925,6 +1925,9 @@ this.offeringExtents = new OfferingExtents(offering);
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({&#xA;    @JsonSubTypes.Type(value = PurchasedItem.class,&#xA;            name = ProductRecordType.PURCHASED_ITEM)&#xA;    ,   @JsonSubTypes.Type(value = UsedItem.class,&#xA;            name = ProductRecordType.USED_ITEM)&#xA;    ,  @JsonSubTypes.Type(value = ReturnedItem.class,&#xA;            name = ProductRecordType.RETURNED_ITEM)&#xA;    ,  @JsonSubTypes.Type(value = SoldItem.class,&#xA;            name = ProductRecordType.SOLD_ITEM)})&#xA;"/>
         <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.visitors.Visitor;
             import fr.trendev.comptandye.utils.ProductRecordType;</jpa:snp>
+        <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
+            }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" am="PROTECTED" name="cltype" id="_15249240375981409">

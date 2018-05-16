@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import fr.trendev.comptandye.utils.ProductRecordType;
+import fr.trendev.comptandye.utils.visitors.Visitor;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -105,6 +106,10 @@ public abstract class ProductRecord {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public <T> T accept(Visitor<T> v) {
+        return v.visit(this);
     }
 
 }
