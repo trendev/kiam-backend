@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import fr.trendev.comptandye.utils.UserAccountType;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -47,6 +48,7 @@ public class AdministratorTest {
         assert instance.getUserGroups() != null;
         assert instance.getUserGroups().isEmpty();
         assert instance.isBlocked() == true;
+        assert UserAccountType.ADMINISTRATOR.equals(instance.getCltype());
 
         String email = "admin@domain.com";
         String password = "encrypted_pwd";
@@ -63,6 +65,7 @@ public class AdministratorTest {
         assert instance.getUserGroups() != null;
         assert instance.getUserGroups().isEmpty();
         assert instance.isBlocked() == false;
+        assert UserAccountType.ADMINISTRATOR.equals(instance.getCltype());
     }
 
 }

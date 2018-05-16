@@ -55,7 +55,7 @@ public abstract class UserAccount {
 
     @Basic
     @NotNull(message = "cltype field in UserAccount cannot be null")
-    private String cltype;
+    protected String cltype;
 
     /**
      * Password is never provided in clear.

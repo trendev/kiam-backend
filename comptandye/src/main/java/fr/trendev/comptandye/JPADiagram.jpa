@@ -25,7 +25,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         <jpa:des>An UserAccount can be an Administrator, a Professional or an Individual. This class is linked to the jdbc-realm authentication.</jpa:des>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
-            <jpa:basic attribute-type="String" v="true" xvt="" name="cltype" id="_1507709471227127">
+            <jpa:basic attribute-type="String" v="true" xvt="" am="PROTECTED" name="cltype" id="_1507709471227127">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:bv>
@@ -1331,13 +1331,15 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
             <jpa:a>_149087938362378</jpa:a>
             <jpa:a>_149011954705724</jpa:a>
             <jpa:pre></jpa:pre>
-            <jpa:post></jpa:post>
+            <jpa:post>this.cltype = UserAccountType.ADMINISTRATOR;</jpa:post>
         </jpa:con>
         <jpa:con am="PUBLIC" e="true">
             <jpa:pre>super();</jpa:pre>
+            <jpa:post>this.cltype = UserAccountType.ADMINISTRATOR;</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.visitors.Visitor;
+import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
