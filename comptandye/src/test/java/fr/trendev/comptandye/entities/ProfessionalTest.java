@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import fr.trendev.comptandye.utils.UserAccountType;
 import java.util.Calendar;
 import java.util.Date;
 import org.junit.After;
@@ -80,6 +81,7 @@ public class ProfessionalTest {
         assert instance.getVatRates() == null;
         assert instance.getStock() != null;
         assert instance.getStock().isEmpty() == true;
+        assert UserAccountType.PROFESSIONAL.equals(instance.getCltype());
 
         String email = "professional@domain.com";
         String password = "encrypted_pwd";
@@ -125,6 +127,7 @@ public class ProfessionalTest {
         assert instance.getVatRates() == null;
         assert instance.getStock() != null;
         assert instance.getStock().isEmpty() == true;
+        assert UserAccountType.PROFESSIONAL.equals(instance.getCltype());
 
         String website = "http://www.mycompany.com";
         String companyName = "MyCompany";
@@ -178,6 +181,7 @@ public class ProfessionalTest {
         assert instance.getVatRates() == null;
         assert instance.getStock() != null;
         assert instance.getStock().isEmpty() == true;
+        assert UserAccountType.PROFESSIONAL.equals(instance.getCltype());
 
     }
 
