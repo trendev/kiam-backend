@@ -3,6 +3,7 @@ package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import fr.trendev.comptandye.utils.UserAccountType;
 import fr.trendev.comptandye.utils.visitors.Visitor;
 import java.util.Date;
 import java.util.LinkedList;
@@ -115,10 +116,12 @@ public class Professional extends Customer {
     public Professional(String email, String password, String username,
             String uuid) {
         super(email, password, username, uuid);
+        this.cltype = UserAccountType.PROFESSIONAL;
     }
 
     public Professional() {
         super();
+        this.cltype = UserAccountType.PROFESSIONAL;
     }
 
     public Professional(String email, String password, String username,
@@ -133,6 +136,7 @@ public class Professional extends Customer {
         this.companyID = companyID;
         this.vatcode = vatcode;
         this.creationDate = creationDate;
+        this.cltype = UserAccountType.PROFESSIONAL;
     }
 
     public String getWebsite() {

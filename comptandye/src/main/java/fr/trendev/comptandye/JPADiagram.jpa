@@ -248,9 +248,11 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
             <jpa:a>_14901008440196</jpa:a>
             <jpa:a>_149087938362378</jpa:a>
             <jpa:a>_149011954705724</jpa:a>
+            <jpa:post>this.cltype = UserAccountType.PROFESSIONAL;</jpa:post>
         </jpa:con>
         <jpa:con am="PUBLIC" e="true">
-            <jpa:post>super();</jpa:post>
+            <jpa:post>super();
+this.cltype = UserAccountType.PROFESSIONAL;</jpa:post>
         </jpa:con>
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_14901149376313047</jpa:a>
@@ -265,10 +267,12 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
             <jpa:a>_14901093969381510</jpa:a>
             <jpa:a>_1503055153023119</jpa:a>
             <jpa:a>_1503055248950120</jpa:a>
+            <jpa:post>this.cltype = UserAccountType.PROFESSIONAL;</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
-            import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
+            import fr.trendev.comptandye.utils.visitors.Visitor;
+import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
