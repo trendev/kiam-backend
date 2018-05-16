@@ -2,6 +2,9 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import fr.trendev.comptandye.utils.ProductRecordType;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -21,6 +24,18 @@ import javax.validation.constraints.NotNull;
 @Entity
 @DiscriminatorColumn(length = 31)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "cltype",
+        visible = true)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = PurchasedItem.class,
+            name = ProductRecordType.PURCHASED_ITEM)
+    ,   @JsonSubTypes.Type(value = UsedItem.class,
+            name = ProductRecordType.USED_ITEM)
+    ,  @JsonSubTypes.Type(value = ReturnedItem.class,
+            name = ProductRecordType.RETURNED_ITEM)
+    ,  @JsonSubTypes.Type(value = SoldItem.class,
+            name = ProductRecordType.SOLD_ITEM)})
 public abstract class ProductRecord {
 
     @Id
@@ -29,7 +44,7 @@ public abstract class ProductRecord {
 
     @Basic
     @NotNull(message = "cltype field in ProductRecord cannot be null")
-    private String cltype;
+    protected String cltype;
 
     @Column(columnDefinition = "DATETIME(3)")
     @Basic
