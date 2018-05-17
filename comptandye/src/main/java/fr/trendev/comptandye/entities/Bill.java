@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import fr.trendev.comptandye.utils.visitors.BillTypeVisitor;
+import fr.trendev.comptandye.utils.BillType;
 import fr.trendev.comptandye.utils.visitors.Visitor;
 import java.util.Date;
 import java.util.LinkedList;
@@ -37,12 +37,10 @@ import javax.validation.constraints.NotNull;
         include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "cltype",
         visible = true)
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = ClientBill.class,
-            name = BillTypeVisitor.CLIENT_CLTYPE)
-    ,   @JsonSubTypes.Type(value = IndividualBill.class,
-            name = BillTypeVisitor.INDIVIDUAL_CLTYPE)
+    @JsonSubTypes.Type(value = ClientBill.class, name = BillType.CLIENT)
+    ,   @JsonSubTypes.Type(value = IndividualBill.class, name = BillType.INDIVIDUAL)
     ,  @JsonSubTypes.Type(value = CollectiveGroupBill.class,
-            name = BillTypeVisitor.COLLECTIVEGROUP_CLTYPE)})
+            name = BillType.COLLECTIVEGROUP)})
 public abstract class Bill {
 
     /**
@@ -59,7 +57,7 @@ public abstract class Bill {
 
     @Basic
     @NotNull(message = "cltype field in Bill cannot be null")
-    private String cltype;
+    protected String cltype;
 
     /**
      * Amount in cents (1/100 of the currency)

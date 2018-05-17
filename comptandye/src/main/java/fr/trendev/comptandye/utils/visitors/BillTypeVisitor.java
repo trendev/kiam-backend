@@ -52,10 +52,6 @@ public class BillTypeVisitor implements Visitor<String> {
     public static final String CLIENT_PREFIX = "CX";
     public static final String COLLECTIVEGROUP_PREFIX = "CG";
 
-    public static final String INDIVIDUAL_CLTYPE = "individualbill";
-    public static final String CLIENT_CLTYPE = "clientbill";
-    public static final String COLLECTIVEGROUP_CLTYPE = "collectivegroupbill";
-
     @Override
     public String visit(Address address) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

@@ -32,6 +32,7 @@ import fr.trendev.comptandye.entities.UsedItem;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.entities.VatRates;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
+import fr.trendev.comptandye.utils.BillType;
 import fr.trendev.comptandye.utils.OfferingType;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.ProductRecordType;
@@ -466,7 +467,7 @@ public class DemoConfigureBean implements Serializable {
         product.setAvailableQty(product.getAvailableQty() - u.getQty());
 
         Bill bill = new ClientBill();
-        bill.setCltype(BillTypeVisitor.CLIENT_CLTYPE);
+        bill.setCltype(BillType.CLIENT);
         bill.setProfessional(vanessa);
         bill.setReference("CX-SOMETHING");
         bill.setDeliveryDate(new Date());
