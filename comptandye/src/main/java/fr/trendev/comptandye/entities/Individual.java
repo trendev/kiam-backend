@@ -3,6 +3,7 @@ package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import fr.trendev.comptandye.utils.UserAccountType;
 import fr.trendev.comptandye.utils.visitors.Visitor;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,10 +31,12 @@ public class Individual extends Customer {
     public Individual(String email, String password, String username,
             String uuid) {
         super(email, password, username, uuid);
+        this.cltype = UserAccountType.INDIVIDUAL;
     }
 
     public Individual() {
         super();
+        this.cltype = UserAccountType.INDIVIDUAL;
     }
 
     public Individual(String email, String password, String username,
@@ -41,6 +44,7 @@ public class Individual extends Customer {
             SocialNetworkAccounts socialNetworkAccounts) {
         super(email, password, username, uuid, customerDetails, address,
                 socialNetworkAccounts);
+        this.cltype = UserAccountType.INDIVIDUAL;
     }
 
     public List<IndividualBill> getIndividualBills() {

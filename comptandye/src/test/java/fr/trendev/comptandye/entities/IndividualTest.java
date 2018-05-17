@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import fr.trendev.comptandye.utils.UserAccountType;
 import java.util.Date;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -62,6 +63,7 @@ public class IndividualTest {
         assert instance.getIndividualBills() != null;
         assert instance.getIndividualBills().isEmpty();
         assert instance.isBlocked() == true;
+        assert UserAccountType.INDIVIDUAL.equals(instance.getCltype());
 
         String email = "individual@procompany.com";
         String password = "encrypted_pwd";
@@ -85,6 +87,7 @@ public class IndividualTest {
         assert instance.getIndividualBills() != null;
         assert instance.getIndividualBills().isEmpty();
         assert instance.isBlocked() == false;
+        assert UserAccountType.INDIVIDUAL.equals(instance.getCltype());
 
         instance = new Individual(email, password, username, uuid,
                 new CustomerDetails(), new Address(),
@@ -106,6 +109,7 @@ public class IndividualTest {
         assert instance.getIndividualBills() != null;
         assert instance.getIndividualBills().isEmpty();
         assert instance.isBlocked() == false;
+        assert UserAccountType.INDIVIDUAL.equals(instance.getCltype());
     }
 
 }
