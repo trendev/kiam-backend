@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import fr.trendev.comptandye.utils.BillType;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import java.util.Arrays;
 import java.util.Date;
@@ -60,6 +61,7 @@ public class ClientBillTest {
         assert instance.getPurchasedOfferings() != null;
         assert instance.getPurchasedOfferings().isEmpty();
         assert instance.getClient() == null;
+        assert BillType.CLIENT.equals(instance.getCltype());
 
         String reference = "Ref-123456";
         Date deliveryDate = new Date();
@@ -112,6 +114,8 @@ public class ClientBillTest {
         assert amount == (totalAmount - (discount * totalAmount / 100));
 
         assert instance.getClient() != null;
+
+        assert BillType.CLIENT.equals(instance.getCltype());
     }
 
 }

@@ -2,6 +2,7 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import fr.trendev.comptandye.utils.BillType;
 import fr.trendev.comptandye.utils.visitors.Visitor;
 import java.util.Date;
 import java.util.List;
@@ -25,9 +26,11 @@ public class IndividualBill extends Bill {
         super(reference, deliveryDate, amount, discount, paymentDate, comments,
                 professional, payments, purchasedOfferings);
         this.individual = individual;
+        this.cltype = BillType.INDIVIDUAL;
     }
 
     public IndividualBill() {
+        this.cltype = BillType.INDIVIDUAL;
     }
 
     public Individual getIndividual() {

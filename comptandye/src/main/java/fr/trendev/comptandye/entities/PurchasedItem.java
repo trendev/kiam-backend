@@ -2,6 +2,7 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import fr.trendev.comptandye.utils.ProductRecordType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
@@ -17,6 +18,11 @@ public class PurchasedItem extends ProductRecord {
 
     @ManyToOne(targetEntity = Purchase.class)
     private Purchase purchase;
+
+    public PurchasedItem() {
+        super();
+        this.cltype = ProductRecordType.PURCHASED_ITEM;
+    }
 
     public Purchase getPurchase() {
         return this.purchase;

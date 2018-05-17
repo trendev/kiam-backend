@@ -2,6 +2,7 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import fr.trendev.comptandye.utils.ProductRecordType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -21,6 +22,11 @@ public class ReturnedItem extends ProductRecord {
         @JoinColumn(name = "ID", referencedColumnName = "ID",
                 table = "PRODUCTRECORD")})
     private Bill cancelledBill;
+
+    public ReturnedItem() {
+        super();
+        this.cltype = ProductRecordType.RETURNED_ITEM;
+    }
 
     public Bill getCancelledBill() {
         return this.cancelledBill;

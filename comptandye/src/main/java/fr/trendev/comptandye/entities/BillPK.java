@@ -72,7 +72,7 @@ public class BillPK implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
+        int hash = 3;
         hash = 53 * hash + (this.getReference() != null ? this.getReference().
                 hashCode() : 0);
         hash = 53 * hash + (this.getDeliveryDate() != null ? this.

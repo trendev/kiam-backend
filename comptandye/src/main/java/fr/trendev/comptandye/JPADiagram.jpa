@@ -1147,12 +1147,16 @@ import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
             <jpa:a>_150652336702164</jpa:a>
             <jpa:a>_150365567487858</jpa:a>
             <jpa:a>_15063449426451264</jpa:a>
+            <jpa:post>this.cltype = BillType.INDIVIDUAL;</jpa:post>
         </jpa:con>
-        <jpa:con am="PUBLIC" e="true"/>
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:post>this.cltype = BillType.INDIVIDUAL;</jpa:post>
+        </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.Date;
             import java.util.List;
-            import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
+            import fr.trendev.comptandye.utils.visitors.Visitor;
+import fr.trendev.comptandye.utils.BillType;</jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
@@ -1180,12 +1184,16 @@ import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
             <jpa:a>_1490181195212606</jpa:a>
             <jpa:a>_150365567487858</jpa:a>
             <jpa:a>_15063449426451264</jpa:a>
+            <jpa:post>this.cltype = BillType.CLIENT;</jpa:post>
         </jpa:con>
-        <jpa:con am="PUBLIC" e="true"/>
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:post>this.cltype = BillType.CLIENT;</jpa:post>
+        </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.Date;
             import java.util.List;
-            import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
+            import fr.trendev.comptandye.utils.visitors.Visitor;
+import fr.trendev.comptandye.utils.BillType;</jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
@@ -1610,12 +1618,16 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
             <jpa:a>_1506010011239530</jpa:a>
             <jpa:a>_150365567487858</jpa:a>
             <jpa:a>_15063449426451264</jpa:a>
+            <jpa:post>this.cltype = BillType.COLLECTIVEGROUP;</jpa:post>
         </jpa:con>
-        <jpa:con am="PUBLIC" e="true"/>
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:post>this.cltype = BillType.COLLECTIVEGROUP;</jpa:post>
+        </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.Date;
             import java.util.List;
-            import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
+            import fr.trendev.comptandye.utils.visitors.Visitor;
+import fr.trendev.comptandye.utils.BillType;</jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
@@ -1997,7 +2009,12 @@ import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
         <jpa:discriminator-column/>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="PurchasedItemPK" abs="false" class="PurchasedItem" superclassId="_1524923958426" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524924325129">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:pre>super();</jpa:pre>
+            <jpa:post>this.cltype = ProductRecordType.PURCHASED_ITEM;</jpa:post>
+        </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
+        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.ProductRecordType;</jpa:snp>
         <jpa:des>Recored added when an item is purchased(bought by the professional) must be linked to an Expense (Purchase)</jpa:des>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -2011,7 +2028,12 @@ import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="UsedItemPK" abs="false" class="UsedItem" superclassId="_1524923958426" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1525251875162">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:pre>super();</jpa:pre>
+            <jpa:post>this.cltype = ProductRecordType.USED_ITEM;</jpa:post>
+        </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
+        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.ProductRecordType;</jpa:snp>
         <jpa:des>Record added when an Item is consumed during the delivery</jpa:des>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes/>
@@ -2020,7 +2042,12 @@ import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="ReturnedItemPK" abs="false" class="ReturnedItem" superclassId="_1524923958426" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1525253236164">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:pre>super();</jpa:pre>
+            <jpa:post>this.cltype = ProductRecordType.RETURNED_ITEM;</jpa:post>
+        </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
+        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.ProductRecordType;</jpa:snp>
         <jpa:des>Recorded add when a Bill is cancelled and the product are returned</jpa:des>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -2037,7 +2064,12 @@ import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="SoldItemPK" abs="false" class="SoldItem" superclassId="_1524923958426" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1525258966197">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:pre>super();</jpa:pre>
+            <jpa:post>this.cltype = ProductRecordType.SOLD_ITEM;</jpa:post>
+        </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
+        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.ProductRecordType;</jpa:snp>
         <jpa:des>Record added when an item is sold and linked with an active Bill</jpa:des>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -2306,7 +2338,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
             </i>
             <i ref="_1503060694288" x="-526" y="246"/>
             <i ref="_1525251875162" x="240" y="2279"/>
-            <i ref="_1524923958426" x="238" y="1902">
+            <i ref="_1524923958426" x="240" y="1902">
                 <el>
                     <e ref="_15249290639991474">
                         <v st="1" si="12.0" cl="#00ff00"/>

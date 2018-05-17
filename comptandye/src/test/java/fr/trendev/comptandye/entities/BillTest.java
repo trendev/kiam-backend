@@ -60,6 +60,7 @@ public class BillTest {
         assert instance.getPayments().isEmpty();
         assert instance.getPurchasedOfferings() != null;
         assert instance.getPurchasedOfferings().isEmpty();
+        assert instance.getCltype() == null;
 
         String reference = "Ref-123456";
         Date deliveryDate = new Date();
@@ -113,6 +114,7 @@ public class BillTest {
 
         assert instance.isVatInclusive() == false;
         assert instance.isCancelled() == false;
+        assert instance.getCltype() == null;
 
     }
 

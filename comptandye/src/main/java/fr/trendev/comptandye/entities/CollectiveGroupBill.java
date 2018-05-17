@@ -2,6 +2,7 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import fr.trendev.comptandye.utils.BillType;
 import fr.trendev.comptandye.utils.visitors.Visitor;
 import java.util.Date;
 import java.util.List;
@@ -29,9 +30,11 @@ public class CollectiveGroupBill extends Bill {
         super(reference, deliveryDate, amount, discount, paymentDate, comments,
                 professional, payments, purchasedOfferings);
         this.collectiveGroup = collectiveGroup;
+        this.cltype = BillType.COLLECTIVEGROUP;
     }
 
     public CollectiveGroupBill() {
+        this.cltype = BillType.COLLECTIVEGROUP;
     }
 
     public String getRecipient() {

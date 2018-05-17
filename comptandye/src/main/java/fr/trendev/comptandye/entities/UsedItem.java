@@ -2,6 +2,7 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import fr.trendev.comptandye.utils.ProductRecordType;
 import javax.persistence.Entity;
 
 /**
@@ -12,5 +13,10 @@ import javax.persistence.Entity;
 @Entity
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class UsedItem extends ProductRecord {
+
+    public UsedItem() {
+        super();
+        this.cltype = ProductRecordType.USED_ITEM;
+    }
 
 }

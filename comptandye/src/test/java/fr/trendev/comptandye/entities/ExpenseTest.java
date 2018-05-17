@@ -16,7 +16,7 @@ import org.junit.Test;
  * @author jsie
  */
 public class ExpenseTest {
-    
+
     public ExpenseTest() {
     }
 
@@ -26,7 +26,7 @@ public class ExpenseTest {
     @Test
     public void testConstructors() {
         Expense instance = new Expense();
-        
+
         assert instance.getId() == null;
         assert instance.getDescription() == null;
         assert instance.getAmount() == 0;
@@ -42,11 +42,11 @@ public class ExpenseTest {
         assert instance.getBusinesses() != null;
         assert instance.getBusinesses().isEmpty();
         assert instance.getIssueDate() != null;
-        
+
         String name = "Expensive expense";
         int amount = 50000; // 1000 euros
         String invoiceRef = "Invoice12345ABC";
-        
+
         instance = new Expense(name, amount, new Date(),
                 Arrays.
                         asList("Partner", "Provider"),
@@ -54,12 +54,12 @@ public class ExpenseTest {
                 Arrays.asList(new Payment(30000, new PaymentMode("CB")),
                         new Payment(30000, new PaymentMode("Espèces"))),
                 Arrays.asList(new Business("Buziness")));
-        
+
         int size = 10;
         instance.setCategories(IntStream.range(0, size).mapToObj(i ->
                 ("Category #" + i)).collect(
                 Collectors.toList()));
-        
+
         assert instance.getId() == null;
         assert instance.getDescription().equals(name);
         assert instance.getAmount() == amount;
@@ -74,8 +74,8 @@ public class ExpenseTest {
         assert instance.getExpenseItems().isEmpty();
         assert instance.getBusinesses() != null;
         assert !instance.getBusinesses().isEmpty();
-        assert instance.getIssueDate().equals(instance.getPaymentDate());
-        
+        assert instance.getIssueDate() != null;
+
     }
-    
+
 }

@@ -32,12 +32,8 @@ import fr.trendev.comptandye.entities.UsedItem;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.entities.VatRates;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
-import fr.trendev.comptandye.utils.BillType;
-import fr.trendev.comptandye.utils.OfferingType;
 import fr.trendev.comptandye.utils.PasswordGenerator;
-import fr.trendev.comptandye.utils.ProductRecordType;
 import fr.trendev.comptandye.utils.UUIDGenerator;
-import fr.trendev.comptandye.utils.UserAccountType;
 import fr.trendev.comptandye.utils.visitors.BillTypeVisitor;
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -53,6 +49,8 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -62,8 +60,8 @@ import javax.ws.rs.WebApplicationException;
  *
  * @author jsie
  */
-//@Singleton // javax.ejb.Singleton;
-//@Startup //javax.ejb.Startup
+@Singleton // javax.ejb.Singleton;
+@Startup //javax.ejb.Startup
 public class DemoConfigureBean implements Serializable {
 
     private final Logger LOG = Logger.getLogger(
@@ -108,17 +106,14 @@ public class DemoConfigureBean implements Serializable {
         Administrator trendevfr = new Administrator("trendevfr@gmail.com",
                 "ts15qkBmihdtvmkKXPgVmbPGeyQU6aKd5XNd5HwOzu0=",
                 "trendevfr_admin", UUIDGenerator.generate("ADMIN-", true));
-        trendevfr.setCltype(UserAccountType.ADMINISTRATOR);
 
         Administrator comptandye = new Administrator("comptandye@gmail.com",
                 "mZWR4R0bp5EPs9xfOwUPu3n/06LOL+wHK6BuUBsHgQM=",
                 "comptandye_admin", UUIDGenerator.generate("ADMIN-", true));
-        comptandye.setCltype(UserAccountType.ADMINISTRATOR);
 
         Administrator jsie = new Administrator("julien.sie@gmail.com",
                 "RrYJsV8xV7fsJkzgrFqGwiZzvIGEFan6e0ANYPcJhrI=", "jsie",
                 UUIDGenerator.generate("ADMIN-", true));
-        jsie.setCltype(UserAccountType.ADMINISTRATOR);
 
         /**
          * Creates the Administrator Group
@@ -146,7 +141,6 @@ public class DemoConfigureBean implements Serializable {
         Professional vanessa = new Professional("vanessa.gay@gmail.com",
                 "EUrVrX4nfmYYFxpMyRX93OlkJxNZv9mkMGfirZKbhWI=", "Vaness",
                 UUIDGenerator.generate("PRO-", true));
-        vanessa.setCltype(UserAccountType.PROFESSIONAL);
         Calendar cal = Calendar.getInstance();
         cal.clear();
         cal.set(1983, 9, 25);
@@ -210,7 +204,6 @@ public class DemoConfigureBean implements Serializable {
         Professional audrey = new Professional("audreyheitzmann@gmail.com",
                 "VvCdf6nrd7ksdB3RlAnAFSuhmyLgzeO/oeZpcPju7Fc=",
                 "Audrey", UUIDGenerator.generate("PRO-", true));
-        audrey.setCltype(UserAccountType.PROFESSIONAL);
 
         audrey.setCustomerDetails(new CustomerDetails("Audrey", "Heitzmann",
                 "Audrey", "0625719477", null, 'F', null, Collections.
@@ -252,13 +245,11 @@ public class DemoConfigureBean implements Serializable {
 
         Individual skonx = new Individual();
         skonx.setEmail("skonx2006@gmail.com");
-        skonx.setCltype(UserAccountType.INDIVIDUAL);
         skonx.setPassword(PasswordGenerator.encrypt_SHA256(PasswordGenerator.
                 autoGenerate()));
 
         Individual sylvioc = new Individual();
         sylvioc.setEmail("sylvie.gay@gmail.com");
-        sylvioc.setCltype(UserAccountType.INDIVIDUAL);
         sylvioc.setPassword(PasswordGenerator.encrypt_SHA256(PasswordGenerator.
                 autoGenerate()));
 
@@ -413,7 +404,6 @@ public class DemoConfigureBean implements Serializable {
 
     private void createSale() {
         Sale sale = new Sale();
-        sale.setCltype(OfferingType.SALE);
         sale.setName("2x Color stick - Blond - L'OREAL");
         sale.setShortname("2x Bld stick");
         sale.setPrice(1500);
@@ -439,7 +429,6 @@ public class DemoConfigureBean implements Serializable {
 
     private void createProductRecords() {
         PurchasedItem pr = new PurchasedItem();
-        pr.setCltype(ProductRecordType.PURCHASED_ITEM);
         pr.setQty(4);
 
         Professional vanessa = em.find(Professional.class,
@@ -459,7 +448,6 @@ public class DemoConfigureBean implements Serializable {
         product.setAvailableQty(product.getAvailableQty() + pr.getQty());
 
         UsedItem u = new UsedItem();
-        u.setCltype(ProductRecordType.USED_ITEM);
         u.setQty(1);
 
         product.getTrackRecord().add(u);
@@ -467,7 +455,6 @@ public class DemoConfigureBean implements Serializable {
         product.setAvailableQty(product.getAvailableQty() - u.getQty());
 
         Bill bill = new ClientBill();
-        bill.setCltype(BillType.CLIENT);
         bill.setProfessional(vanessa);
         bill.setReference("CX-SOMETHING");
         bill.setDeliveryDate(new Date());
@@ -476,7 +463,6 @@ public class DemoConfigureBean implements Serializable {
         em.persist(bill);
 
         SoldItem si = new SoldItem();
-        si.setCltype(ProductRecordType.SOLD_ITEM);
         si.setQty(2);
         si.setBill(bill);
 
@@ -488,7 +474,6 @@ public class DemoConfigureBean implements Serializable {
         bill.setCancellationDate(new Date());
 
         ReturnedItem ri = new ReturnedItem();
-        ri.setCltype(ProductRecordType.RETURNED_ITEM);
         ri.setQty(si.getQty());
         ri.setCancelledBill(bill);
 
