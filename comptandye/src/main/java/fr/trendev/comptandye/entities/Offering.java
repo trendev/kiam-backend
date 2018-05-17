@@ -46,7 +46,7 @@ public abstract class Offering {
 
     @Basic
     @NotNull(message = "cltype field in Offering cannot be null")
-    private String cltype;
+    protected String cltype;
 
     @Basic
     private String name;

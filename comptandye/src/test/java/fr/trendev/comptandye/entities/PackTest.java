@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import fr.trendev.comptandye.utils.OfferingType;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -47,6 +48,7 @@ public class PackTest {
         assert instance.getOfferings() != null;
         assert instance.getOfferings().isEmpty();
         assert instance.getProfessional() == null;
+        assert OfferingType.PACK.equals(instance.getCltype());
 
         String name = "Service Set #1";
         int price = 10000; // 100 euros
@@ -61,6 +63,7 @@ public class PackTest {
         assert instance.getOfferings() != null;
         assert instance.getOfferings().isEmpty();
         assert instance.getProfessional() != null;
+        assert OfferingType.PACK.equals(instance.getCltype());
 
     }
 

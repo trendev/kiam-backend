@@ -809,10 +809,14 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
             <jpa:a>_1490176780392140</jpa:a>
             <jpa:a>_150488904917075</jpa:a>
             <jpa:a>_15049019949221632</jpa:a>
+            <jpa:post>this.cltype = OfferingType.SERVICE;</jpa:post>
         </jpa:con>
-        <jpa:con am="PUBLIC" e="true"/>
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:post>this.cltype = OfferingType.SERVICE;</jpa:post>
+        </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.visitors.Visitor;
+import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
@@ -841,11 +845,15 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
             <jpa:a>_1490176780392140</jpa:a>
             <jpa:a>_150488904917075</jpa:a>
             <jpa:a>_15049019949221632</jpa:a>
+            <jpa:post>this.cltype = OfferingType.PACK;</jpa:post>
         </jpa:con>
-        <jpa:con am="PUBLIC" e="true"/>
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:post>this.cltype = OfferingType.PACK;</jpa:post>
+        </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
-            import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
+            import fr.trendev.comptandye.utils.visitors.Visitor;
+import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
@@ -890,7 +898,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
             }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
-            <jpa:basic attribute-type="String" v="true" xvt="" name="cltype" id="_1505476643021217">
+            <jpa:basic attribute-type="String" v="true" xvt="" am="PROTECTED" name="cltype" id="_1505476643021217">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:bv>
@@ -1734,10 +1742,14 @@ this.offeringExtents = new OfferingExtents(offering);
             <jpa:a>_1490176780392140</jpa:a>
             <jpa:a>_150488904917075</jpa:a>
             <jpa:a>_15049019949221632</jpa:a>
+            <jpa:post>this.cltype = OfferingType.SALE;</jpa:post>
         </jpa:con>
-        <jpa:con am="PUBLIC" e="true"/>
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:post>this.cltype = OfferingType.SALE;</jpa:post>
+        </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.visitors.Visitor;
+import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
@@ -2271,7 +2283,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1522937360932" x="-629" y="1098">
+            <i ref="_1522937360932" x="-623" y="1098">
                 <el>
                     <e ref="_1524907636303593">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -2302,7 +2314,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                 </el>
             </i>
             <i ref="_1490104062170" x="-405" y="401"/>
-            <i ref="_1490113906035" x="-355" y="1006">
+            <i ref="_1490113906035" x="-357" y="1006">
                 <el>
                     <e ref="_1513010994290214">
                         <v st="1" si="12.0" cl="#00ff00"/>

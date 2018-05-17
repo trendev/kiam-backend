@@ -2,6 +2,7 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import fr.trendev.comptandye.utils.OfferingType;
 import fr.trendev.comptandye.utils.visitors.Visitor;
 import javax.persistence.Entity;
 
@@ -15,9 +16,11 @@ public class Service extends Offering {
     public Service(String name, int price, int duration,
             Professional professional) {
         super(name, price, duration, professional);
+        this.cltype = OfferingType.SERVICE;
     }
 
     public Service() {
+        this.cltype = OfferingType.SERVICE;
     }
 
     @Override

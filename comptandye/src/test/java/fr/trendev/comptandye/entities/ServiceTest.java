@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import fr.trendev.comptandye.utils.OfferingType;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -48,6 +49,7 @@ public class ServiceTest {
         assert instance.getPrice() == 0;
         assert instance.getDuration() == 0;
         assert instance.getProfessional() == null;
+        assert OfferingType.SERVICE.equals(instance.getCltype());
 
         String name = "Service #1";
         int price = 1000; // 10 euros
@@ -60,7 +62,7 @@ public class ServiceTest {
         assert instance.getPrice() == price;
         assert instance.getDuration() == duration;
         assert instance.getProfessional() != null;
-
+        assert OfferingType.SERVICE.equals(instance.getCltype());
     }
 
 }

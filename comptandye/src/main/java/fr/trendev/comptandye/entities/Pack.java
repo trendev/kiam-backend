@@ -2,6 +2,7 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import fr.trendev.comptandye.utils.OfferingType;
 import fr.trendev.comptandye.utils.visitors.Visitor;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,9 +28,11 @@ public class Pack extends Offering {
 
     public Pack(String name, int price, int duration, Professional professional) {
         super(name, price, duration, professional);
+        this.cltype = OfferingType.PACK;
     }
 
     public Pack() {
+        this.cltype = OfferingType.PACK;
     }
 
     public List<Offering> getOfferings() {

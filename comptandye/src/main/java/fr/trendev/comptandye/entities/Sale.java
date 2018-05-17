@@ -2,6 +2,7 @@
 package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import fr.trendev.comptandye.utils.OfferingType;
 import fr.trendev.comptandye.utils.visitors.Visitor;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
@@ -22,9 +23,11 @@ public class Sale extends Offering {
 
     public Sale(String name, int price, int duration, Professional professional) {
         super(name, price, duration, professional);
+        this.cltype = OfferingType.SALE;
     }
 
     public Sale() {
+        this.cltype = OfferingType.SALE;
     }
 
     public int getQty() {
