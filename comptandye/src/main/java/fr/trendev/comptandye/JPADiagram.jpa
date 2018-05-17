@@ -2166,7 +2166,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1490101520286" x="529" y="343">
+            <i ref="_1490101520286" x="498" y="343">
                 <el>
                     <e ref="_150652336703465">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -2333,7 +2333,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1490113751330" x="-682" y="1006"/>
+            <i ref="_1490113751330" x="-692" y="1006"/>
             <i ref="_1525258966197" x="650" y="2279">
                 <el>
                     <e ref="_15252594803214145">
