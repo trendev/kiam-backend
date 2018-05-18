@@ -28,8 +28,8 @@ public class ProductTest {
         assert p.getProductReference() == null;
         assert p.getSales() != null;
         assert p.getSales().isEmpty() == true;
-        assert p.getTrackRecord() != null;
-        assert p.getTrackRecord().isEmpty() == true;
+        assert p.getProductRecords() != null;
+        assert p.getProductRecords().isEmpty() == true;
     }
 
 }

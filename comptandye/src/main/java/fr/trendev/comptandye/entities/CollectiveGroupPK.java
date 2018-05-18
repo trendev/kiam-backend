@@ -57,8 +57,8 @@ public class CollectiveGroupPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 89 * hash + (this.getId() != null ? this.getId().hashCode() : 0);
-        hash = 89 * hash + (this.getProfessional() != null ? this.
+        hash = 23 * hash + (this.getId() != null ? this.getId().hashCode() : 0);
+        hash = 23 * hash + (this.getProfessional() != null ? this.
                 getProfessional().hashCode() : 0);
         return hash;
     }

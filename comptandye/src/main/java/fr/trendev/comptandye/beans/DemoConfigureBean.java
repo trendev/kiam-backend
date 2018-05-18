@@ -441,14 +441,14 @@ public class DemoConfigureBean implements Serializable {
         Product product = em.find(Product.class,
                 new ProductPK(vanessa.getEmail(), "1234567891"));
 
-        product.getTrackRecord().add(pr);
+        product.getProductRecords().add(pr);
         pr.setProduct(product);
         product.setAvailableQty(product.getAvailableQty() + pr.getQty());
 
         UsedItem u = new UsedItem();
         u.setQty(1);
 
-        product.getTrackRecord().add(u);
+        product.getProductRecords().add(u);
         u.setProduct(product);
         product.setAvailableQty(product.getAvailableQty() - u.getQty());
 
@@ -464,7 +464,7 @@ public class DemoConfigureBean implements Serializable {
         si.setQty(2);
         si.setBill(bill);
 
-        product.getTrackRecord().add(si);
+        product.getProductRecords().add(si);
         si.setProduct(product);
         product.setAvailableQty(product.getAvailableQty() - si.getQty());
 
@@ -475,7 +475,7 @@ public class DemoConfigureBean implements Serializable {
         ri.setQty(si.getQty());
         ri.setCancelledBill(bill);
 
-        product.getTrackRecord().add(ri);
+        product.getProductRecords().add(ri);
         ri.setProduct(product);
         product.setAvailableQty(product.getAvailableQty() + ri.getQty());
 

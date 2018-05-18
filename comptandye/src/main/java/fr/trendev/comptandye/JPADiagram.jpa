@@ -1924,7 +1924,7 @@ import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:one-to-many>
-            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1524923958426" connected-attribute-id="_15249290639991474" v="true" xvt="" name="trackRecord" dv="new LinkedList&lt;&gt;()" id="_15249290640001475">
+            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1524923958426" connected-attribute-id="_15249290639991474" v="true" xvt="" name="productRecords" dv="new LinkedList&lt;&gt;()" id="_15249290640001475">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -2171,14 +2171,14 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1524924325129" x="28" y="2279">
+            <i ref="_1524924325129" x="26" y="2277">
                 <el>
                     <e ref="_15249248621511435">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490172966686" x="-662" y="656">
+            <i ref="_1490172966686" x="-664" y="654">
                 <el>
                     <e ref="_150537690133858">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -2194,23 +2194,23 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1490704123469" x="-170" y="57"/>
-            <i ref="_1506344869339" x="240" y="1522">
+            <i ref="_1490704123469" x="-172" y="55"/>
+            <i ref="_1506344869339" x="238" y="1520">
                 <el>
                     <e ref="_1512851997729268">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101578444" x="359" y="57"/>
-            <i ref="_1490100852900" x="359" y="-179">
+            <i ref="_1490101578444" x="357" y="55"/>
+            <i ref="_1490100852900" x="357" y="-181">
                 <el>
                     <e ref="_14901160469883436">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101520286" x="498" y="343">
+            <i ref="_1490101520286" x="496" y="341">
                 <el>
                     <e ref="_150652336703465">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -2220,21 +2220,21 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1524836293670" x="-293" y="2321">
+            <i ref="_1524836293670" x="-295" y="2319">
                 <el>
                     <e ref="_15249248621531436">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1524840332929" x="-692" y="1461">
+            <i ref="_1524840332929" x="-694" y="1459">
                 <el>
                     <e ref="_1524841100537155">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490281931338" x="413" y="973">
+            <i ref="_1490281931338" x="411" y="971">
                 <el>
                     <e ref="_1490283543806197">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -2247,7 +2247,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1490101456632" x="-53" y="246">
+            <i ref="_1490101456632" x="-55" y="244">
                 <el>
                     <e ref="_1514560844274158">
                         <v st="1" si="12.0" cl="#000000"/>
@@ -2293,7 +2293,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1490101555530" x="217" y="581">
+            <i ref="_1490101555530" x="215" y="579">
                 <el>
                     <e ref="_149028166301044">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -2315,46 +2315,46 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1522937360932" x="-623" y="1098">
+            <i ref="_1522937360932" x="-625" y="1096">
                 <el>
                     <e ref="_1524907636303593">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1525253236164" x="428" y="2279">
+            <i ref="_1525253236164" x="426" y="2277">
                 <el>
                     <e ref="_1525257002758119">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490180671085" x="711" y="343">
+            <i ref="_1490180671085" x="709" y="341">
                 <el>
                     <e ref="_150652336702164">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1503060694288" x="-526" y="246"/>
-            <i ref="_1525251875162" x="240" y="2279"/>
-            <i ref="_1524923958426" x="240" y="1902">
+            <i ref="_1503060694288" x="-528" y="244"/>
+            <i ref="_1525251875162" x="238" y="2277"/>
+            <i ref="_1524923958426" x="238" y="1900">
                 <el>
                     <e ref="_15249290639991474">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490104062170" x="-405" y="401"/>
-            <i ref="_1490113906035" x="-357" y="1006">
+            <i ref="_1490104062170" x="-407" y="399"/>
+            <i ref="_1490113906035" x="-359" y="1004">
                 <el>
                     <e ref="_1513010994290214">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1524835087412" x="-526" y="2040"/>
-            <i ref="_1490704206844" x="-78" y="859">
+            <i ref="_1524835087412" x="-528" y="2038"/>
+            <i ref="_1490704206844" x="-80" y="857">
                 <el>
                     <e ref="_15049038294552105">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -2364,7 +2364,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1490101376664" x="68" y="57">
+            <i ref="_1490101376664" x="66" y="55">
                 <el>
                     <e ref="_14901093969381510">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -2377,22 +2377,22 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1490113751330" x="-692" y="1006"/>
-            <i ref="_1525258966197" x="650" y="2279">
+            <i ref="_1490113751330" x="-694" y="1004"/>
+            <i ref="_1525258966197" x="648" y="2277">
                 <el>
                     <e ref="_15252594803214145">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490206901623" x="302" y="1243">
+            <i ref="_1490206901623" x="300" y="1241">
                 <el>
                     <e ref="_1503081214518630">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490178979567" x="733" y="1243">
+            <i ref="_1490178979567" x="731" y="1241">
                 <el>
                     <e ref="_150365567487858">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -2405,7 +2405,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1499512549878" x="-287" y="1902">
+            <i ref="_1499512549878" x="-289" y="1900">
                 <el>
                     <e ref="_1505144351224341">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -2421,8 +2421,8 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1490101737208" x="-418" y="9"/>
-            <i ref="_1524841860187" x="-297" y="1468">
+            <i ref="_1490101737208" x="-420" y="7"/>
+            <i ref="_1524841860187" x="-299" y="1466">
                 <el>
                     <e ref="_1524907636328594">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -2438,15 +2438,15 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1512853437669" x="529" y="1676">
+            <i ref="_1512853437669" x="527" y="1674">
                 <el>
                     <e ref="_151290448762472">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490184243036" x="1" y="1243"/>
-            <i ref="_1490100823157" x="1" y="-256">
+            <i ref="_1490184243036" x="-1" y="1241"/>
+            <i ref="_1490100823157" x="-1" y="-258">
                 <el>
                     <e ref="_150807874242070">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -2456,22 +2456,22 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1490180682743" x="650" y="581">
+            <i ref="_1490180682743" x="648" y="579">
                 <el>
                     <e ref="_1490181195212606">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1506009883340" x="650" y="973">
+            <i ref="_1506009883340" x="648" y="971">
                 <el>
                     <e ref="_1506010011239530">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1524046966670" x="17" y="1522"/>
-            <i ref="_1521215136542" x="158" y="312"/>
+            <i ref="_1524046966670" x="15" y="1520"/>
+            <i ref="_1521215136542" x="156" y="310"/>
         </jpa:ws>
     </jpa:wsl>
 </jpa:entity-mappings>

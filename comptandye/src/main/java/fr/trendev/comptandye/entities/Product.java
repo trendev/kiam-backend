@@ -55,7 +55,7 @@ public class Product {
 
     @OneToMany(targetEntity = ProductRecord.class, mappedBy = "product")
     @JsonIgnore
-    private List<ProductRecord> trackRecord = new LinkedList<>();
+    private List<ProductRecord> productRecords = new LinkedList<>();
 
     public int getAvailableQty() {
         return this.availableQty;
@@ -113,12 +113,12 @@ public class Product {
         this.sales = sales;
     }
 
-    public List<ProductRecord> getTrackRecord() {
-        return this.trackRecord;
+    public List<ProductRecord> getProductRecords() {
+        return this.productRecords;
     }
 
-    public void setTrackRecord(List<ProductRecord> trackRecord) {
-        this.trackRecord = trackRecord;
+    public void setProductRecords(List<ProductRecord> productRecords) {
+        this.productRecords = productRecords;
     }
 
 }
