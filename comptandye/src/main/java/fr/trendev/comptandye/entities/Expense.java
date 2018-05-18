@@ -81,12 +81,6 @@ public class Expense {
     private Date cancellationDate;
 
     /**
-     * mark if an expense can be cancelled from the Expense REST API Services
-     */
-    @Basic
-    private boolean cancellable = true;
-
-    /**
      * mark if the expense is vat inclusive or not
      */
     @Basic
@@ -104,8 +98,8 @@ public class Expense {
     /**
      * Should be ignored during a PUT
      */
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
-        CascadeType.REMOVE}, targetEntity = Payment.class, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Payment.class,
+            orphanRemoval = true)
     private List<Payment> payments = new LinkedList<>();
 
     @OneToMany(targetEntity = Business.class)
@@ -200,14 +194,6 @@ public class Expense {
 
     public void setCancellationDate(Date cancellationDate) {
         this.cancellationDate = cancellationDate;
-    }
-
-    public boolean isCancellable() {
-        return this.cancellable;
-    }
-
-    public void setCancellable(boolean cancellable) {
-        this.cancellable = cancellable;
     }
 
     public boolean isVatInclusive() {

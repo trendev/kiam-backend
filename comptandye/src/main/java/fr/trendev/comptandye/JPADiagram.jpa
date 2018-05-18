@@ -1487,11 +1487,6 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 <jpa:temporal>TIMESTAMP</jpa:temporal>
                 <jpa:column unique="false" nullable="true" insertable="true" updatable="true" column-definition="DATETIME(3)"/>
             </jpa:basic>
-            <jpa:basic attribute-type="boolean" v="true" xvt="" name="cancellable" dv="true" id="_152421842190372">
-                <jpa:des>mark if an expense can be cancelled from the Expense REST API Services</jpa:des>
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:basic>
             <jpa:basic attribute-type="boolean" v="true" xvt="" name="vatInclusive" dv="false" id="_152483500212072">
                 <jpa:des>mark if the expense is vat inclusive or not</jpa:des>
                 <jpa:xwm nil="false" req="false"/>
@@ -1508,10 +1503,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:cascade>
-                    <jpa:cascade-persist/>
-                    <jpa:cascade-merge/>
-                    <jpa:cascade-remove/>
-                    <jpa:cascade-detach/>
+                    <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-many>
             <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1503060694288" v="true" xvt="" name="businesses" dv="new LinkedList&lt;&gt;()" id="_150549566057859">
@@ -1928,6 +1920,9 @@ import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-all/>
+                </jpa:cascade>
             </jpa:one-to-many>
             <jpa:element-collection target-class="java.lang.String" collection-type="java.util.List" v="true" xvt="" name="comments" dv="new LinkedList&lt;&gt;()" id="_1524842604860171">
                 <jpa:xwm nil="false" req="false"/>
@@ -1984,6 +1979,17 @@ import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
+            <jpa:basic attribute-type="boolean" v="true" xvt="" name="cancelled" dv="false" id="_1526639365164203">
+                <jpa:des>mark if a product record is cancelled or not</jpa:des>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="java.util.Date" v="true" xvt="" name="cancellationDate" id="_1526639467613204">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+                <jpa:column unique="false" nullable="true" insertable="true" updatable="true" column-definition="DATETIME(3)"/>
+            </jpa:basic>
             <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1524841860187" connected-attribute-id="_15249290640001475" v="true" xvt="" name="product" id="_15249290639991474">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -2005,6 +2011,12 @@ import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
         </jpa:nq>
         <jpa:nq e="false" name="ProductRecord.findByQty">
             <jpa:query>Select p from ProductRecord p where p.qty=:qty</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="ProductRecord.findByCancelled">
+            <jpa:query>Select p from ProductRecord p where p.cancelled=:cancelled</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="ProductRecord.findByCancellationDate">
+            <jpa:query>Select p from ProductRecord p where p.cancellationDate=:cancellationDate</jpa:query>
         </jpa:nq>
         <jpa:discriminator-column/>
     </jpa:entity>

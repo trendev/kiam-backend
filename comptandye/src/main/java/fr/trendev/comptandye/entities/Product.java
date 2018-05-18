@@ -53,7 +53,8 @@ public class Product {
     @JsonIgnore
     private List<Sale> sales = new LinkedList<>();
 
-    @OneToMany(targetEntity = ProductRecord.class, mappedBy = "product")
+    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = ProductRecord.class,
+            mappedBy = "product")
     @JsonIgnore
     private List<ProductRecord> productRecords = new LinkedList<>();
 

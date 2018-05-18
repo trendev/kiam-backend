@@ -25,6 +25,8 @@ public class ProductRecordTest {
         assert instance.getRecordDate() != null;
         assert instance.getQty() == 0;
         assert instance.getProduct() == null;
+        assert instance.isCancelled() == false;
+        assert instance.getCancellationDate() == null;
     }
 
     public class ProductRecordImpl extends ProductRecord {

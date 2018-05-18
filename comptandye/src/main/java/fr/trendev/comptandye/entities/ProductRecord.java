@@ -56,6 +56,17 @@ public abstract class ProductRecord {
     @Basic
     private int qty;
 
+    /**
+     * mark if a product record is cancelled or not
+     */
+    @Basic
+    private boolean cancelled = false;
+
+    @Column(columnDefinition = "DATETIME(3)")
+    @Basic
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date cancellationDate;
+
     @ManyToOne(targetEntity = Product.class)
     private Product product;
 
@@ -98,6 +109,22 @@ public abstract class ProductRecord {
 
     public void setQty(int qty) {
         this.qty = qty;
+    }
+
+    public boolean isCancelled() {
+        return this.cancelled;
+    }
+
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
+    }
+
+    public Date getCancellationDate() {
+        return this.cancellationDate;
+    }
+
+    public void setCancellationDate(Date cancellationDate) {
+        this.cancellationDate = cancellationDate;
     }
 
     public Product getProduct() {
