@@ -6,8 +6,8 @@
 package fr.trendev.comptandye.utils.exceptions;
 
 import java.text.MessageFormat;
-import java.util.List;
-import java.util.stream.Collectors;
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.core.MediaType;
@@ -39,46 +39,37 @@ public class ExceptionHelper {
     }
 
     final static Response handle(ConstraintViolationException exception) {
-        List<ValidationError> errors = ((ConstraintViolationException) exception).
-                getConstraintViolations().
-                stream()
-                .map(ExceptionHelper::toValidationError)
-                .collect(Collectors.toList());
 
-        return Response.status(Response.Status.BAD_REQUEST).entity(
-                errors)
+        JsonArrayBuilder jab = Json.createArrayBuilder();
+
+        ((ConstraintViolationException) exception).getConstraintViolations()
+                .stream()
+                .forEach(cv -> aggregateViolations(jab, cv));
+
+        return Response.status(Response.Status.BAD_REQUEST)
+                .entity(
+                        Json.createObjectBuilder()
+                                .add("error",
+                                        Json.createObjectBuilder()
+                                                .add("constraint-violations",
+                                                        jab)
+                                )
+                                .build()
+                )
                 .type(MediaType.APPLICATION_JSON).build();
     }
 
-    private static ValidationError toValidationError(
+    private static void aggregateViolations(
+            JsonArrayBuilder jsonArrayBuilder,
             ConstraintViolation constraintViolation) {
-        ValidationError error = new ValidationError();
-        error.setField(constraintViolation.getPropertyPath().toString());
-        error.setMessage(constraintViolation.getMessage());
-        return error;
+
+        jsonArrayBuilder.add(
+                Json.createObjectBuilder()
+                        .add("field", constraintViolation.getPropertyPath().
+                                toString())
+                        .add("message", constraintViolation.getMessage())
+        );
 
     }
 
-    private static class ValidationError {
-
-        public String getField() {
-            return field;
-        }
-
-        public void setField(String field) {
-            this.field = field;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
-
-        private String field;
-        private String message;
-
-    }
 }
