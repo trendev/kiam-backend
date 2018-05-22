@@ -3751,7 +3751,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bfb5ae9e-c7cf-4f86-8ba1-363f491dbc08",
+								"id": "b2efcf42-d8ac-4f3b-a873-b98c8ab335d3",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
@@ -3760,6 +3760,7 @@
 									"tests[\"id is defined\"] = jsonData.id !== undefined;",
 									"pm.environment.set(\"created_expense_id\", jsonData.id);",
 									"tests[\"description is \\\"Purple Color\\\"\"] = jsonData.description === \"Purple Color\";",
+									"tests[\"provider is \\\"L'OREAL\\\"\"] = jsonData.provider === \"L'OREAL\";",
 									"tests[\"currency is \\\"EUR\\\"\"] = jsonData.currency === \"EUR\";",
 									"tests[\"amount is 1000\"] = jsonData.amount === 1000;",
 									"tests[\"paymentDate is \"+new Date(1505707896023)] = jsonData.paymentDate === 1505707896023;",
@@ -3791,7 +3792,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"description\":\"Purple Color\",\n  \"amount\":1000,\n  \"paymentDate\":1505707896023,\n  \"categories\": [\n            \"Provider\",\n            \"Color Broker in Paris\"\n    ],\n    \"payments\": [\n            {\n        \"amount\": 900,\n                \"paymentMode\": {\n                    \"name\": \"CB\"\n                }\n            },\n            {\n                \"amount\": 100,\n                \"paymentMode\": {\n                    \"name\": \"Espèces\"\n                }\n            }\n        ],\n    \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n    ]\n}"
+							"raw": "{\n  \"description\":\"Purple Color\",\n  \"amount\":1000,\n  \"paymentDate\":1505707896023,\n  \"provider\":\"L'OREAL\",\n  \"categories\": [\n            \"Color\",\n            \"Perfect Color from Paris\"\n    ],\n    \"payments\": [\n            {\n        \"amount\": 900,\n                \"paymentMode\": {\n                    \"name\": \"CB\"\n                }\n            },\n            {\n                \"amount\": 100,\n                \"paymentMode\": {\n                    \"name\": \"Espèces\"\n                }\n            }\n        ],\n    \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n    ]\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Expense?professional=vanessa.gay@gmail.com",

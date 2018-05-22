@@ -221,7 +221,8 @@ public class AuthenticationService {
         } catch (IllegalStateException ex) {
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder()
-                            .add("msg", "user " + username + " logged out").
+                            .add("msg", "user " + username
+                                    + " is now logged out").
                             build()
             )
                     .cookie(jsessionid, xsrfCookie)
@@ -230,7 +231,8 @@ public class AuthenticationService {
 
         return Response.ok(
                 Json.createObjectBuilder()
-                        .add("msg", "user " + username + " logged out").build()
+                        .add("msg", "user " + username + " is now logged out").
+                        build()
         )
                 .cookie(jsessionid, xsrfCookie)
                 .build();
