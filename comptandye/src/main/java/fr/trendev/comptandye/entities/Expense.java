@@ -22,6 +22,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 /**
  * @author jsie
@@ -39,6 +41,7 @@ public class Expense {
     private Long id;
 
     @Basic
+    @NotNull(message = "description cannot be null")
     private String description;
 
     /**
@@ -51,11 +54,14 @@ public class Expense {
      * Default value is Euros (EUR)
      */
     @Basic
+    @NotNull(message = "currency cannot be null")
     private String currency = "EUR";
 
     @Column(columnDefinition = "DATETIME(3)")
     @Basic
     @Temporal(TemporalType.TIMESTAMP)
+    @NotNull(message = "payment date cannot be null")
+    @Past(message = "payment date can be a futur date")
     private Date paymentDate;
 
     /**
@@ -64,9 +70,11 @@ public class Expense {
     @Column(columnDefinition = "DATETIME(3)")
     @Basic
     @Temporal(TemporalType.TIMESTAMP)
+    @NotNull
     private Date issueDate = new Date();
 
     @Basic
+    @NotNull(message = "provider cannot be null")
     private String provider;
 
     /**

@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author jsie
@@ -22,16 +24,19 @@ public class ExpenseItem {
     private Long id;
 
     @Basic
+    @NotNull(message = "ExpenseItem description cannot be null")
     private String description;
 
     @Basic
     private int amount;
 
     @Basic
+    @Min(value = 1, message = "A quantity must be provided in the expense item")
     private int qty;
 
     @Column(scale = 2, precision = 5)
     @Basic
+    @NotNull(message = "vatrate of the expenseitem cannot be null")
     private BigDecimal vatRate;
 
     public Long getId() {

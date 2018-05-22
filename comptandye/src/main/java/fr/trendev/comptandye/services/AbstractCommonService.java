@@ -22,6 +22,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.ws.rs.BadRequestException;
@@ -206,7 +207,8 @@ public abstract class AbstractCommonService<E, P> {
                     entity(
                             entity).
                     build();
-        } catch (InvalidDeliveryDateException ex) {
+        } catch (InvalidDeliveryDateException |
+                EJBTransactionRolledbackException ex) {
             throw ex;
         } catch (Exception ex) {
 
@@ -272,7 +274,8 @@ public abstract class AbstractCommonService<E, P> {
                                     build()).
                             build());
 
-        } catch (InvalidDeliveryDateException ex) {
+        } catch (InvalidDeliveryDateException |
+                EJBTransactionRolledbackException ex) {
             throw ex;
         } catch (Exception ex) {
 
@@ -313,6 +316,8 @@ public abstract class AbstractCommonService<E, P> {
                                     + " not found").
                                     build()).
                             build());
+        } catch (EJBTransactionRolledbackException ex) {
+            throw ex;
         } catch (Exception ex) {
 
             String errmsg = ExceptionHelper.handleException(ex,
@@ -465,6 +470,8 @@ public abstract class AbstractCommonService<E, P> {
                                     + " "
                                     + associationFacade.prettyPrintPK(
                                             associationPk)).build()).build());
+        } catch (EJBTransactionRolledbackException ex) {
+            throw ex;
         } catch (Exception ex) {
 
             String errmsg = ExceptionHelper.handleException(ex,

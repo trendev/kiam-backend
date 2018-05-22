@@ -1448,6 +1448,9 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
             <jpa:basic attribute-type="String" v="true" xvt="" name="description" id="_149951257358656">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:nn m="description cannot be null"/>
+                </jpa:bv>
             </jpa:basic>
             <jpa:basic attribute-type="int" v="true" xvt="" name="amount" id="_149951257579557">
                 <jpa:des>Amount in cents (1/100 of the currency)</jpa:des>
@@ -1458,10 +1461,17 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 <jpa:des>Default value is Euros (EUR)</jpa:des>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:nn m="currency cannot be null"/>
+                </jpa:bv>
             </jpa:basic>
             <jpa:basic attribute-type="java.util.Date" v="true" xvt="" name="paymentDate" id="_149951257869758">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:nn m="payment date cannot be null"/>
+                    <jpa:pa m="payment date can be a futur date"/>
+                </jpa:bv>
                 <jpa:temporal>TIMESTAMP</jpa:temporal>
                 <jpa:column unique="false" nullable="true" insertable="true" updatable="true" column-definition="DATETIME(3)"/>
             </jpa:basic>
@@ -1469,12 +1479,18 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 <jpa:des>used for audit and sort the bills</jpa:des>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:nn/>
+                </jpa:bv>
                 <jpa:temporal>TIMESTAMP</jpa:temporal>
                 <jpa:column unique="false" nullable="true" insertable="true" updatable="true" column-definition="DATETIME(3)"/>
             </jpa:basic>
             <jpa:basic attribute-type="String" v="true" xvt="" name="provider" id="_1522937121103644">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:nn m="provider cannot be null"/>
+                </jpa:bv>
             </jpa:basic>
             <jpa:basic attribute-type="boolean" v="true" xvt="" name="cancelled" dv="false" id="_1524065311723661">
                 <jpa:des>mark if an expense is cancelled or not</jpa:des>
@@ -1786,6 +1802,9 @@ import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
             <jpa:basic attribute-type="String" v="true" xvt="" name="description" id="_152483512063475">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:nn m="ExpenseItem description cannot be null"/>
+                </jpa:bv>
             </jpa:basic>
             <jpa:basic attribute-type="int" v="true" xvt="" name="amount" id="_152483513969976">
                 <jpa:xwm nil="false" req="false"/>
@@ -1794,10 +1813,16 @@ import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
             <jpa:basic attribute-type="int" v="true" xvt="" name="qty" id="_152483518918977">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:mi v="1" m="A quantity must be provided in the expense item"/>
+                </jpa:bv>
             </jpa:basic>
             <jpa:basic attribute-type="java.math.BigDecimal" v="true" xvt="" name="vatRate" id="_152483521069678">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:nn m="vatrate of the expenseitem cannot be null"/>
+                </jpa:bv>
                 <jpa:column unique="false" nullable="true" insertable="true" updatable="true" precision="5" scale="2"/>
             </jpa:basic>
             <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_152483508752773">
@@ -2183,14 +2208,14 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_14901008082912">
-            <i ref="_1524924325129" x="26" y="2277">
+            <i ref="_1524924325129" x="24" y="2275">
                 <el>
                     <e ref="_15249248621511435">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490172966686" x="-664" y="654">
+            <i ref="_1490172966686" x="-666" y="652">
                 <el>
                     <e ref="_150537690133858">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -2206,23 +2231,23 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1490704123469" x="-172" y="55"/>
-            <i ref="_1506344869339" x="238" y="1520">
+            <i ref="_1490704123469" x="-174" y="53"/>
+            <i ref="_1506344869339" x="236" y="1518">
                 <el>
                     <e ref="_1512851997729268">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101578444" x="357" y="55"/>
-            <i ref="_1490100852900" x="357" y="-181">
+            <i ref="_1490101578444" x="355" y="53"/>
+            <i ref="_1490100852900" x="355" y="-183">
                 <el>
                     <e ref="_14901160469883436">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490101520286" x="496" y="341">
+            <i ref="_1490101520286" x="494" y="339">
                 <el>
                     <e ref="_150652336703465">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -2232,21 +2257,21 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1524836293670" x="-295" y="2319">
+            <i ref="_1524836293670" x="-297" y="2317">
                 <el>
                     <e ref="_15249248621531436">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1524840332929" x="-694" y="1459">
+            <i ref="_1524840332929" x="-696" y="1457">
                 <el>
                     <e ref="_1524841100537155">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490281931338" x="411" y="971">
+            <i ref="_1490281931338" x="409" y="969">
                 <el>
                     <e ref="_1490283543806197">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -2259,7 +2284,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1490101456632" x="-55" y="244">
+            <i ref="_1490101456632" x="-57" y="242">
                 <el>
                     <e ref="_1514560844274158">
                         <v st="1" si="12.0" cl="#000000"/>
@@ -2305,7 +2330,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1490101555530" x="215" y="579">
+            <i ref="_1490101555530" x="213" y="577">
                 <el>
                     <e ref="_149028166301044">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -2327,46 +2352,46 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1522937360932" x="-625" y="1096">
+            <i ref="_1522937360932" x="-627" y="1094">
                 <el>
                     <e ref="_1524907636303593">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1525253236164" x="426" y="2277">
+            <i ref="_1525253236164" x="424" y="2275">
                 <el>
                     <e ref="_1525257002758119">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490180671085" x="709" y="341">
+            <i ref="_1490180671085" x="707" y="339">
                 <el>
                     <e ref="_150652336702164">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1503060694288" x="-528" y="244"/>
-            <i ref="_1525251875162" x="238" y="2277"/>
-            <i ref="_1524923958426" x="238" y="1900">
+            <i ref="_1503060694288" x="-530" y="242"/>
+            <i ref="_1525251875162" x="236" y="2275"/>
+            <i ref="_1524923958426" x="236" y="1898">
                 <el>
                     <e ref="_15249290639991474">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490104062170" x="-407" y="399"/>
-            <i ref="_1490113906035" x="-359" y="1004">
+            <i ref="_1490104062170" x="-409" y="397"/>
+            <i ref="_1490113906035" x="-361" y="1002">
                 <el>
                     <e ref="_1513010994290214">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1524835087412" x="-528" y="2038"/>
-            <i ref="_1490704206844" x="-80" y="857">
+            <i ref="_1524835087412" x="-530" y="2036"/>
+            <i ref="_1490704206844" x="-82" y="855">
                 <el>
                     <e ref="_15049038294552105">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -2376,7 +2401,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1490101376664" x="66" y="55">
+            <i ref="_1490101376664" x="64" y="53">
                 <el>
                     <e ref="_14901093969381510">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -2389,22 +2414,22 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1490113751330" x="-694" y="1004"/>
-            <i ref="_1525258966197" x="648" y="2277">
+            <i ref="_1490113751330" x="-696" y="1002"/>
+            <i ref="_1525258966197" x="646" y="2275">
                 <el>
                     <e ref="_15252594803214145">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490206901623" x="300" y="1241">
+            <i ref="_1490206901623" x="298" y="1239">
                 <el>
                     <e ref="_1503081214518630">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490178979567" x="731" y="1241">
+            <i ref="_1490178979567" x="729" y="1239">
                 <el>
                     <e ref="_150365567487858">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -2417,7 +2442,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1499512549878" x="-289" y="1900">
+            <i ref="_1499512549878" x="-291" y="1898">
                 <el>
                     <e ref="_1505144351224341">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -2433,8 +2458,8 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1490101737208" x="-420" y="7"/>
-            <i ref="_1524841860187" x="-299" y="1466">
+            <i ref="_1490101737208" x="-422" y="5"/>
+            <i ref="_1524841860187" x="-301" y="1464">
                 <el>
                     <e ref="_1524907636328594">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -2450,15 +2475,15 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1512853437669" x="527" y="1674">
+            <i ref="_1512853437669" x="525" y="1672">
                 <el>
                     <e ref="_151290448762472">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1490184243036" x="-1" y="1241"/>
-            <i ref="_1490100823157" x="-1" y="-258">
+            <i ref="_1490184243036" x="-3" y="1239"/>
+            <i ref="_1490100823157" x="-3" y="-260">
                 <el>
                     <e ref="_150807874242070">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -2468,22 +2493,22 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1490180682743" x="648" y="579">
+            <i ref="_1490180682743" x="646" y="577">
                 <el>
                     <e ref="_1490181195212606">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1506009883340" x="648" y="971">
+            <i ref="_1506009883340" x="646" y="969">
                 <el>
                     <e ref="_1506010011239530">
                         <v st="1" si="12.0" cl="#00ff00"/>
                     </e>
                 </el>
             </i>
-            <i ref="_1524046966670" x="15" y="1520"/>
-            <i ref="_1521215136542" x="156" y="310"/>
+            <i ref="_1524046966670" x="13" y="1518"/>
+            <i ref="_1521215136542" x="154" y="308"/>
         </jpa:ws>
     </jpa:wsl>
 </jpa:entity-mappings>
