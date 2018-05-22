@@ -41,7 +41,7 @@ public class Expense {
     private Long id;
 
     @Basic
-    @NotNull(message = "description cannot be null")
+    @NotNull(message = "description field in Expense must not be null")
     private String description;
 
     /**
@@ -54,14 +54,14 @@ public class Expense {
      * Default value is Euros (EUR)
      */
     @Basic
-    @NotNull(message = "currency cannot be null")
+    @NotNull(message = "currency field in Expense must not be null")
     private String currency = "EUR";
 
     @Column(columnDefinition = "DATETIME(3)")
     @Basic
     @Temporal(TemporalType.TIMESTAMP)
-    @NotNull(message = "payment date cannot be null")
-    @Past(message = "payment date can be a futur date")
+    @NotNull(message = "paymentDate field in Expense must not be null")
+    @Past(message = "paymentDate field in Expense must not be a futur date")
     private Date paymentDate;
 
     /**
@@ -70,11 +70,11 @@ public class Expense {
     @Column(columnDefinition = "DATETIME(3)")
     @Basic
     @Temporal(TemporalType.TIMESTAMP)
-    @NotNull
+    @NotNull(message = "issueDate field in Expense must not be null")
     private Date issueDate = new Date();
 
     @Basic
-    @NotNull(message = "provider cannot be null")
+    @NotNull(message = "provider field in Expense must not be null")
     private String provider;
 
     /**
@@ -95,6 +95,7 @@ public class Expense {
     private boolean vatInclusive = false;
 
     @ElementCollection
+    @NotNull(message = "comments field in Expense must not be null")
     private List<String> categories = new LinkedList<>();
 
     @Id
@@ -108,9 +109,11 @@ public class Expense {
      */
     @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Payment.class,
             orphanRemoval = true)
+    @NotNull(message = "payments field in Expense must not be null")
     private List<Payment> payments = new LinkedList<>();
 
     @OneToMany(targetEntity = Business.class)
+    @NotNull(message = "businesses field in Expense must not be null")
     private List<Business> businesses = new LinkedList<>();
 
     @OneToMany(cascade = {CascadeType.ALL}, targetEntity = ExpenseItem.class,

@@ -24,19 +24,19 @@ public class ExpenseItem {
     private Long id;
 
     @Basic
-    @NotNull(message = "ExpenseItem description cannot be null")
+    @NotNull(message = "description field in ExpenseItem must not be null")
     private String description;
 
     @Basic
     private int amount;
 
     @Basic
-    @Min(value = 1, message = "A quantity must be provided in the expense item")
+    @Min(value = 1, message = "A quantity must be provided in the ExpenseItem")
     private int qty;
 
     @Column(scale = 2, precision = 5)
     @Basic
-    @NotNull(message = "vatrate of the expenseitem cannot be null")
+    @NotNull(message = "vatrate field in ExpenseItem must not be null")
     private BigDecimal vatRate;
 
     public Long getId() {
