@@ -27,6 +27,9 @@ public class ExpenseItem {
     @NotNull(message = "description field in ExpenseItem must not be null")
     private String description;
 
+    /**
+     * unit amount/price
+     */
     @Basic
     private int amount;
 

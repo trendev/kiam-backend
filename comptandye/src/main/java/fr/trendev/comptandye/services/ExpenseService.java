@@ -6,12 +6,16 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.entities.Expense;
+import fr.trendev.comptandye.entities.ExpenseItem;
 import fr.trendev.comptandye.entities.ExpensePK;
 import fr.trendev.comptandye.entities.Payment;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.ExpenseFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
@@ -90,8 +94,8 @@ public class ExpenseService extends AbstractCommonService<Expense, ExpensePK> {
             @QueryParam("professional") String professional,
             @QueryParam("refresh") boolean refresh) {
         ExpensePK pk = new ExpensePK(id, professional);
-        LOG.log(Level.INFO, "REST request to get Expense : {0}", expenseFacade.
-                prettyPrintPK(pk));
+        LOG.log(Level.INFO, "REST request to get Expense : {0}",
+                expenseFacade.prettyPrintPK(pk));
         return super.find(pk, refresh);
     }
 
@@ -109,15 +113,81 @@ public class ExpenseService extends AbstractCommonService<Expense, ExpensePK> {
                 professionalFacade, Expense::setProfessional,
                 Professional::getExpenses, e -> {
             e.setId(null);
+            e.setCancelled(false);
+            e.setCancellationDate(null);
+            e.setIssueDate(new Date());
+
+            if (e.getBusinesses() == null || e.getBusinesses().isEmpty()) {
+                String errmsg = "Businesses in Expense must be provided";
+                LOG.log(Level.WARNING, errmsg);
+                throw new WebApplicationException(errmsg);
+            }
+
+            if (e.getAmount() <= 0) {
+                String errmsg = "Amount in Expense must be greater than 0";
+                LOG.log(Level.WARNING, errmsg);
+                throw new WebApplicationException(errmsg);
+            }
+
+            if (e.getPayments() == null || e.getPayments().isEmpty()) {
+                String errmsg = "Payments in Expense must be provided";
+                LOG.log(Level.WARNING, errmsg);
+                throw new WebApplicationException(errmsg);
+            }
+
             int total = e.getPayments().stream()
                     .mapToInt(Payment::getAmount)
                     .sum();
+
             if (total != e.getAmount()) {
                 String errmsg = "Amount is " + e.getAmount()
                         + " but the total amount computed is " + total;
                 LOG.log(Level.WARNING, errmsg);
                 throw new WebApplicationException(errmsg);
             }
+
+            if (e.isVatInclusive() && (e.getExpenseItems() == null || e.
+                    getExpenseItems().isEmpty())) {
+                LOG.log(Level.INFO,
+                        "vatInclusive field is reset to false in Expense: no ExpenseItem found");
+                e.setVatInclusive(false);
+            }
+
+            /**
+             * Checks accuracy of the provided amount and the total computed
+             * amount from the ExpenseItems. Total computed amount from the
+             * ExpenseItemsProvided amount should be between
+             */
+            if (e.getExpenseItems() != null && !e.getExpenseItems().isEmpty()) {
+                e.setVatInclusive(true);
+                // computes how many items are found in this Expense 
+                int n = e.getExpenseItems().stream()
+                        .mapToInt(ExpenseItem::getQty)
+                        .sum();
+                LOG.log(Level.INFO, "Checking ExpenseItems... n = {0}",
+                        n);
+
+                total = e.getExpenseItems().stream()
+                        .mapToInt(ei ->
+                                ei.getQty() * new BigDecimal(ei.getAmount()).
+                                multiply(ei.getVatRate()
+                                        .add(new BigDecimal(100)))
+                                .divide(new BigDecimal(100))
+                                .setScale(0, RoundingMode.HALF_UP).intValue()
+                        )
+                        .sum();
+
+                LOG.log(Level.INFO, "Computed Total of ExpenseItems = {0}",
+                        total);
+
+                if ((total > e.getAmount() + n) || (total < e.getAmount() - n)) {
+                    String errmsg = "Expense details are not accurate: computed total =  "
+                            + total + " / provided amount = " + e.getAmount();
+                    LOG.log(Level.WARNING, errmsg);
+                    throw new WebApplicationException(errmsg);
+                }
+            }
+
         });
 
     }
