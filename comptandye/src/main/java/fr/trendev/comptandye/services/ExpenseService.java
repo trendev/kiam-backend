@@ -196,7 +196,8 @@ public class ExpenseService extends AbstractCommonService<Expense, ExpensePK> {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     /**
-     * Amount, Currency and Payments cannot be updated using this method.
+     * Amount, Currency, Payments and ExpenseItems/vatInclusive cannot be
+     * updated using this method.
      */
     public Response put(@Context SecurityContext sec, Expense entity,
             @QueryParam("professional") String professional) {
@@ -207,11 +208,19 @@ public class ExpenseService extends AbstractCommonService<Expense, ExpensePK> {
         LOG.log(Level.INFO, "Updating Expense {0}", expenseFacade.
                 prettyPrintPK(pk));
         return super.put(entity, pk, e -> {
+            if (!e.isCancelled()) {
+                e.setDescription(entity.getDescription());
+                e.setPaymentDate(entity.getPaymentDate());
+                e.setProvider(entity.getProvider());
+                e.setCategories(entity.getCategories());
+                e.setBusinesses(entity.getBusinesses());
 
-            e.setDescription(entity.getDescription());
-            e.setPaymentDate(entity.getPaymentDate());
-            e.setCategories(entity.getCategories());
-            e.setBusinesses(entity.getBusinesses());
+                e.setCancelled(entity.isCancelled());
+                if (e.isCancelled()) {
+                    e.setCancellationDate(new Date());
+                }
+
+            }// ignore if expense is cancelled
         });
     }
 
