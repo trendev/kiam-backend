@@ -3751,7 +3751,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b2efcf42-d8ac-4f3b-a873-b98c8ab335d3",
+								"id": "3ef43fcc-a8a0-4bfa-bea4-064c97248277",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
@@ -3760,9 +3760,12 @@
 									"tests[\"id is defined\"] = jsonData.id !== undefined;",
 									"pm.environment.set(\"created_expense_id\", jsonData.id);",
 									"tests[\"description is \\\"Purple Color\\\"\"] = jsonData.description === \"Purple Color\";",
+									"tests[\"issueDate is defined\"] = jsonData.issueDate !== undefined;",
+									"tests[\"cancelled is false\"] = jsonData.cancelled === false;",
+									"tests[\"cancellationDate is undefined\"] = jsonData.cancellationDate === undefined;",
 									"tests[\"provider is \\\"L'OREAL\\\"\"] = jsonData.provider === \"L'OREAL\";",
 									"tests[\"currency is \\\"EUR\\\"\"] = jsonData.currency === \"EUR\";",
-									"tests[\"amount is 1000\"] = jsonData.amount === 1000;",
+									"tests[\"amount is 4050\"] = jsonData.amount === 4050;",
 									"tests[\"paymentDate is \"+new Date(1505707896023)] = jsonData.paymentDate === 1505707896023;",
 									"tests[\"categories length is 2\"] = jsonData.categories.length === 2;",
 									"",
@@ -3773,7 +3776,11 @@
 									"",
 									"tests[\"Total Amount is \"+total] = jsonData.amount === total;",
 									"",
-									"tests[\"businesses[0].designation is \\\"Coiffure\\\"\"] = jsonData.businesses[0].designation === \"Coiffure\";"
+									"tests[\"businesses[0].designation is \\\"Coiffure\\\"\"] = jsonData.businesses[0].designation === \"Coiffure\";",
+									"tests[\"vatInclusive is true\"] = jsonData.vatInclusive === true;",
+									"tests[\"expenseItems length is 2\"] = jsonData.expenseItems.length === 2;",
+									"",
+									""
 								]
 							}
 						}
@@ -3792,7 +3799,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"description\":\"Purple Color\",\n  \"amount\":1000,\n  \"paymentDate\":1505707896023,\n  \"provider\":\"L'OREAL\",\n  \"categories\": [\n            \"Color\",\n            \"Perfect Color from Paris\"\n    ],\n    \"payments\": [\n            {\n        \"amount\": 900,\n                \"paymentMode\": {\n                    \"name\": \"CB\"\n                }\n            },\n            {\n                \"amount\": 100,\n                \"paymentMode\": {\n                    \"name\": \"Espèces\"\n                }\n            }\n        ],\n    \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n    ]\n}"
+							"raw": "{\n  \"description\":\"Purple Color\",\n  \"amount\":4050,\n  \"paymentDate\":1505707896023,\n  \"provider\":\"L'OREAL\",\n  \"vatInclusive\": false,\n  \"categories\": [\n            \"Color\",\n            \"Perfect Color from Paris\"\n    ],\n    \"payments\": [\n            {\n        \"amount\": 4000,\n                \"paymentMode\": {\n                    \"name\": \"CB\"\n                }\n            },\n            {\n                \"amount\": 50,\n                \"paymentMode\": {\n                    \"name\": \"Espèces\"\n                }\n            }\n        ],\n    \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n    ],\n    \"expenseItems\":[\n    \t{\n    \t\"description\":\"Purple #1\",\n    \t\"amount\":1000,\n    \t\"qty\":2,\n    \t\"vatRate\":20\n    \t},\n    \t{\n    \t\"description\":\"Purple #2\",\n    \t\"amount\":500,\n    \t\"qty\":3,\n    \t\"vatRate\":10\n    \t}\n    ]\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Expense?professional=vanessa.gay@gmail.com",
