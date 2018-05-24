@@ -5,10 +5,11 @@
  */
 package fr.trendev.comptandye.services;
 
-import fr.trendev.comptandye.entities.Expense;
 import fr.trendev.comptandye.entities.ExpensePK;
+import fr.trendev.comptandye.entities.Purchase;
+import fr.trendev.comptandye.entities.PurchasedItem;
 import fr.trendev.comptandye.sessions.AbstractFacade;
-import fr.trendev.comptandye.sessions.ExpenseFacade;
+import fr.trendev.comptandye.sessions.PurchaseFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
@@ -33,18 +34,18 @@ import javax.ws.rs.core.SecurityContext;
  * @author jsie
  */
 @Stateless
-@Path("Expense")
+@Path("Purchase")
 @RolesAllowed({"Administrator", "Professional"})
-public class ExpenseService extends AbstractExpenseService<Expense> {
+public class PurchaseService extends AbstractExpenseService<Purchase> {
 
     @Inject
-    private ExpenseFacade expenseFacade;
+    private PurchaseFacade purchaseFacade;
 
-    private final Logger LOG = Logger.getLogger(ExpenseService.class.
+    private final Logger LOG = Logger.getLogger(PurchaseService.class.
             getName());
 
-    public ExpenseService() {
-        super(Expense.class);
+    public PurchaseService() {
+        super(Purchase.class);
     }
 
     @Override
@@ -53,8 +54,8 @@ public class ExpenseService extends AbstractExpenseService<Expense> {
     }
 
     @Override
-    protected AbstractFacade<Expense, ExpensePK> getFacade() {
-        return expenseFacade;
+    protected AbstractFacade<Purchase, ExpensePK> getFacade() {
+        return purchaseFacade;
     }
 
     @RolesAllowed({"Administrator"})
@@ -62,7 +63,7 @@ public class ExpenseService extends AbstractExpenseService<Expense> {
     @Produces(MediaType.APPLICATION_JSON)
     @Override
     public Response findAll() {
-        LOG.log(Level.INFO, "Providing the Expense list");
+        LOG.log(Level.INFO, "Providing the Purchase list");
         return super.findAll();
     }
 
@@ -83,8 +84,8 @@ public class ExpenseService extends AbstractExpenseService<Expense> {
             @QueryParam("professional") String professional,
             @QueryParam("refresh") boolean refresh) {
         ExpensePK pk = new ExpensePK(id, professional);
-        LOG.log(Level.INFO, "REST request to get Expense : {0}",
-                expenseFacade.prettyPrintPK(pk));
+        LOG.log(Level.INFO, "REST request to get Purchase : {0}",
+                purchaseFacade.prettyPrintPK(pk));
         return super.find(pk, refresh);
     }
 
@@ -92,11 +93,9 @@ public class ExpenseService extends AbstractExpenseService<Expense> {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public Response post(@Context SecurityContext sec, Expense entity,
+    public Response post(@Context SecurityContext sec, Purchase entity,
             @QueryParam("professional") String professional) {
-
         return super.post(sec, entity, professional);
-
     }
 
     @PUT
@@ -106,7 +105,7 @@ public class ExpenseService extends AbstractExpenseService<Expense> {
      * Amount, Currency, Payments and ExpenseItems/vatInclusive cannot be
      * updated using this method.
      */
-    public Response put(@Context SecurityContext sec, Expense entity,
+    public Response put(@Context SecurityContext sec, Purchase entity,
             @QueryParam("professional") String professional) {
 
         return super.put(e -> {
@@ -128,9 +127,27 @@ public class ExpenseService extends AbstractExpenseService<Expense> {
         ExpensePK pk = new ExpensePK(id, this.getProEmail(sec,
                 professional));
 
-        LOG.log(Level.INFO, "Deleting Expense {0}", expenseFacade.
+        LOG.log(Level.INFO, "Deleting Purchase {0}", purchaseFacade.
                 prettyPrintPK(pk));
-        return super.delete(pk, e -> e.getProfessional().getExpenses().remove(
-                e));
+        return super.delete(pk, e -> {
+            e.getProfessional().getExpenses().remove(e);
+            e.getPurchasedItems().forEach(pi -> pi.setPurchase(null));
+            e.setPurchasedItems(null);
+        });
     }
+
+    @RolesAllowed({"Administrator"})
+    @Path("{id}/purchasedItems")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getPurchasedItems(@Context SecurityContext sec,
+            @PathParam("id") Long id,
+            @QueryParam("professional") String professional) {
+        ExpensePK pk = new ExpensePK(id, this.getProEmail(sec,
+                professional));
+
+        return this.provideRelation(pk,
+                Purchase::getPurchasedItems, PurchasedItem.class);
+    }
+
 }

@@ -11,7 +11,6 @@ import fr.trendev.comptandye.entities.ExpensePK;
 import fr.trendev.comptandye.entities.Payment;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.sessions.AbstractFacade;
-import fr.trendev.comptandye.sessions.ExpenseFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -29,29 +28,26 @@ import javax.ws.rs.core.SecurityContext;
  * @author jsie
  */
 public abstract class AbstractExpenseService<T extends Expense> extends AbstractCommonService<T, ExpensePK> {
-    
-    @Inject
-    ExpenseFacade expenseFacade;
-    
+
     @Inject
     ProfessionalFacade professionalFacade;
-    
+
     private final Logger LOG = Logger.getLogger(
             AbstractExpenseService.class.
                     getName());
-    
+
     public AbstractExpenseService(Class<T> entityClass) {
         super(entityClass);
     }
-    
+
     @Override
     protected Logger getLogger() {
         return LOG;
     }
-    
+
     public Response post(SecurityContext sec, T entity, String professional) {
         String email = this.getProEmail(sec, professional);
-        
+
         return super.<Professional, String>post(entity, email,
                 AbstractFacade::prettyPrintPK,
                 Professional.class,
@@ -61,39 +57,39 @@ public abstract class AbstractExpenseService<T extends Expense> extends Abstract
             e.setCancelled(false);
             e.setCancellationDate(null);
             e.setIssueDate(new Date());
-            
+
             if (e.getBusinesses() == null || e.getBusinesses().isEmpty()) {
                 String errmsg = "Businesses in " + entity.getClass().
                         getSimpleName() + " must be provided";
                 LOG.log(Level.WARNING, errmsg);
                 throw new WebApplicationException(errmsg);
             }
-            
+
             if (e.getAmount() <= 0) {
                 String errmsg = "Amount in " + entity.getClass().getSimpleName()
                         + " must be greater than 0";
                 LOG.log(Level.WARNING, errmsg);
                 throw new WebApplicationException(errmsg);
             }
-            
+
             if (e.getPayments() == null || e.getPayments().isEmpty()) {
                 String errmsg = "Payments in " + entity.getClass().
                         getSimpleName() + " must be provided";
                 LOG.log(Level.WARNING, errmsg);
                 throw new WebApplicationException(errmsg);
             }
-            
+
             int total = e.getPayments().stream()
                     .mapToInt(Payment::getAmount)
                     .sum();
-            
+
             if (total != e.getAmount()) {
                 String errmsg = "Amount is " + e.getAmount()
                         + " but the total amount computed is " + total;
                 LOG.log(Level.WARNING, errmsg);
                 throw new WebApplicationException(errmsg);
             }
-            
+
             if (e.isVatInclusive() && (e.getExpenseItems() == null || e.
                     getExpenseItems().isEmpty())) {
                 LOG.log(Level.INFO,
@@ -116,7 +112,7 @@ public abstract class AbstractExpenseService<T extends Expense> extends Abstract
                         .sum();
                 LOG.log(Level.INFO, "Checking ExpenseItems... n = {0}",
                         n);
-                
+
                 total = e.getExpenseItems().stream()
                         .mapToInt(ei ->
                                 ei.getQty() * new BigDecimal(ei.getAmount()).
@@ -126,10 +122,10 @@ public abstract class AbstractExpenseService<T extends Expense> extends Abstract
                                 .setScale(0, RoundingMode.HALF_UP).intValue()
                         )
                         .sum();
-                
+
                 LOG.log(Level.INFO, "Computed Total of ExpenseItems = {0}",
                         total);
-                
+
                 if ((total > e.getAmount() + n) || (total < e.getAmount() - n)) {
                     String errmsg = entity.getClass().getSimpleName()
                             + " details are not accurate: computed total =  "
@@ -138,31 +134,31 @@ public abstract class AbstractExpenseService<T extends Expense> extends Abstract
                     throw new WebApplicationException(errmsg);
                 }
             }
-            
+
         });
     }
-    
+
     public Response put(Consumer<T> updateActions, SecurityContext sec, T entity,
             String professional) {
-        
+
         ExpensePK pk = new ExpensePK(entity.getId(), this.getProEmail(sec,
                 professional));
-        
+
         LOG.log(Level.INFO, "Updating {0} {1}",
                 new Object[]{entity.getClass().getSimpleName(),
-                    expenseFacade.prettyPrintPK(pk)});
+                    getFacade().prettyPrintPK(pk)});
         return super.put(entity, pk, e -> {
             if (!e.isCancelled()) {
-                
+
                 updateActions.accept(e);
-                
+
                 e.setCategories(entity.getCategories());
-                
+
                 e.setCancelled(entity.isCancelled());
                 if (e.isCancelled()) {
                     e.setCancellationDate(new Date());
                 }
-                
+
             }// ignore if expense is cancelled
         });
     }
