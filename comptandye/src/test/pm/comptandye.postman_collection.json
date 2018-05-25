@@ -7961,7 +7961,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9c1ade51-864c-4786-a854-ab6a977a6c01",
+								"id": "b28845c3-65f0-49f0-a8f9-a5bde46fc7cc",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -7970,7 +7970,7 @@
 									"tests[\"id is defined\"] = jsonData.id !== undefined;",
 									"pm.environment.set(\"created_expense_id\", jsonData.id);",
 									"tests[\"cltype is \\\"purchase\\\"\"] = jsonData.cltype === \"purchase\";",
-									"tests[\"description is \\\"Purple Color sticks\\\"\"] = jsonData.description === \"Purple Color sticks\";",
+									"tests[\"description is \\\"Purple Color sticks\\\"\"] = jsonData.description !== \"Purple Color sticks\";",
 									"tests[\"issueDate is defined\"] = jsonData.issueDate !== undefined;",
 									"tests[\"cancelled is false\"] = jsonData.cancelled === false;",
 									"tests[\"cancellationDate is undefined\"] = jsonData.cancellationDate === undefined;",
@@ -8036,7 +8036,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "cdc7a51d-e856-4868-9ec1-29e96e119d62",
+								"id": "09290e0e-7de4-441e-b7cd-b5f80d41bf1b",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -8045,7 +8045,7 @@
 									"tests[\"id is defined\"] = jsonData.id !== undefined;",
 									"pm.environment.set(\"created_expense_id\", jsonData.id);",
 									"tests[\"cltype is \\\"purchase\\\"\"] = jsonData.cltype === \"purchase\";",
-									"tests[\"description is \\\"Purple Color sticks\\\"\"] = jsonData.description === \"Purple Color sticks\";",
+									"tests[\"description is \\\"Purple Color sticks\\\"\"] = jsonData.description !== \"Purple Color sticks\";",
 									"tests[\"issueDate is defined\"] = jsonData.issueDate !== undefined;",
 									"tests[\"cancelled is true\"] = jsonData.cancelled === true;",
 									"tests[\"cancellationDate is defined\"] = jsonData.cancellationDate !== undefined;",
@@ -8111,7 +8111,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "34946957-7b28-4080-8d84-ba773b466bf8",
+								"id": "0ca20e16-6e04-46b7-93f4-5a3385a2f8e3",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -8123,7 +8123,7 @@
 									"tests[\"id is \"+pm.environment.get(\"created_expense_id\")] = jsonData.id == pm.environment.get(\"created_expense_id\");",
 									"",
 									"tests[\"cltype is \\\"purchase\\\"\"] = jsonData.cltype === \"purchase\";",
-									"tests[\"description is \\\"Purple Color sticks\\\"\"] = jsonData.description === \"Purple Color sticks\";",
+									"tests[\"description is \\\"Purple Color\\\"\"] = jsonData.description === \"Purple Color\";",
 									"tests[\"amount is 4050\"] = jsonData.amount === 4050;",
 									"tests[\"cancelled is true\"] = jsonData.cancelled === true;",
 									"tests[\"cancellationDate is defined\"] = jsonData.cancellationDate !== undefined;",

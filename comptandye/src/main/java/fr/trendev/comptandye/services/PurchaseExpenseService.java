@@ -102,19 +102,14 @@ public class PurchaseExpenseService extends AbstractExpenseService<PurchaseExpen
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     /**
-     * Amount, Currency, Payments and ExpenseItems/vatInclusive cannot be
-     * updated using this method.
+     * No modification allowed
      */
+    // TODO : cancel purchasedItems if the PurchaseExpense is cancelled
     public Response put(@Context SecurityContext sec, PurchaseExpense entity,
             @QueryParam("professional") String professional) {
 
         return super.put(e -> {
-            e.setDescription(entity.getDescription());
-            e.setPaymentDate(entity.getPaymentDate());
-            e.setProvider(entity.getProvider());
-            e.setBusinesses(entity.getBusinesses());
-        },
-                sec, entity, professional);
+        }, sec, entity, professional);
     }
 
     @RolesAllowed({"Administrator"})
