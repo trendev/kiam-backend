@@ -6,10 +6,10 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.entities.ExpensePK;
-import fr.trendev.comptandye.entities.Purchase;
+import fr.trendev.comptandye.entities.PurchaseExpense;
 import fr.trendev.comptandye.entities.PurchasedItem;
 import fr.trendev.comptandye.sessions.AbstractFacade;
-import fr.trendev.comptandye.sessions.PurchaseFacade;
+import fr.trendev.comptandye.sessions.PurchaseExpenseFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
@@ -34,18 +34,18 @@ import javax.ws.rs.core.SecurityContext;
  * @author jsie
  */
 @Stateless
-@Path("Purchase")
+@Path("PurchaseExpense")
 @RolesAllowed({"Administrator", "Professional"})
-public class PurchaseService extends AbstractExpenseService<Purchase> {
+public class PurchaseExpenseService extends AbstractExpenseService<PurchaseExpense> {
 
     @Inject
-    private PurchaseFacade purchaseFacade;
+    private PurchaseExpenseFacade purchaseFacade;
 
-    private final Logger LOG = Logger.getLogger(PurchaseService.class.
+    private final Logger LOG = Logger.getLogger(PurchaseExpenseService.class.
             getName());
 
-    public PurchaseService() {
-        super(Purchase.class);
+    public PurchaseExpenseService() {
+        super(PurchaseExpense.class);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class PurchaseService extends AbstractExpenseService<Purchase> {
     }
 
     @Override
-    protected AbstractFacade<Purchase, ExpensePK> getFacade() {
+    protected AbstractFacade<PurchaseExpense, ExpensePK> getFacade() {
         return purchaseFacade;
     }
 
@@ -63,7 +63,7 @@ public class PurchaseService extends AbstractExpenseService<Purchase> {
     @Produces(MediaType.APPLICATION_JSON)
     @Override
     public Response findAll() {
-        LOG.log(Level.INFO, "Providing the Purchase list");
+        LOG.log(Level.INFO, "Providing the PurchaseExpense list");
         return super.findAll();
     }
 
@@ -84,7 +84,7 @@ public class PurchaseService extends AbstractExpenseService<Purchase> {
             @QueryParam("professional") String professional,
             @QueryParam("refresh") boolean refresh) {
         ExpensePK pk = new ExpensePK(id, professional);
-        LOG.log(Level.INFO, "REST request to get Purchase : {0}",
+        LOG.log(Level.INFO, "REST request to get PurchaseExpense : {0}",
                 purchaseFacade.prettyPrintPK(pk));
         return super.find(pk, refresh);
     }
@@ -93,7 +93,7 @@ public class PurchaseService extends AbstractExpenseService<Purchase> {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public Response post(@Context SecurityContext sec, Purchase entity,
+    public Response post(@Context SecurityContext sec, PurchaseExpense entity,
             @QueryParam("professional") String professional) {
         return super.post(sec, entity, professional);
     }
@@ -105,7 +105,7 @@ public class PurchaseService extends AbstractExpenseService<Purchase> {
      * Amount, Currency, Payments and ExpenseItems/vatInclusive cannot be
      * updated using this method.
      */
-    public Response put(@Context SecurityContext sec, Purchase entity,
+    public Response put(@Context SecurityContext sec, PurchaseExpense entity,
             @QueryParam("professional") String professional) {
 
         return super.put(e -> {
@@ -127,11 +127,11 @@ public class PurchaseService extends AbstractExpenseService<Purchase> {
         ExpensePK pk = new ExpensePK(id, this.getProEmail(sec,
                 professional));
 
-        LOG.log(Level.INFO, "Deleting Purchase {0}", purchaseFacade.
+        LOG.log(Level.INFO, "Deleting PurchaseExpense {0}", purchaseFacade.
                 prettyPrintPK(pk));
         return super.delete(pk, e -> {
             e.getProfessional().getExpenses().remove(e);
-            e.getPurchasedItems().forEach(pi -> pi.setPurchase(null));
+            e.getPurchasedItems().forEach(pi -> pi.setPurchaseExpense(null));
             e.setPurchasedItems(null);
         });
     }
@@ -147,7 +147,7 @@ public class PurchaseService extends AbstractExpenseService<Purchase> {
                 professional));
 
         return this.provideRelation(pk,
-                Purchase::getPurchasedItems, PurchasedItem.class);
+                PurchaseExpense::getPurchasedItems, PurchasedItem.class);
     }
 
 }

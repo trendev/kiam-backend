@@ -3,6 +3,7 @@ package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import fr.trendev.comptandye.utils.ExpenseType;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
@@ -15,16 +16,20 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class Purchase extends Expense {
+public class PurchaseExpense extends Expense {
 
     @Basic
     @NotNull(
             message = "The invoice reference cannot be null in a Purchase (extending an Expense)")
     private String invoiceRef;
 
-    @OneToMany(targetEntity = PurchasedItem.class, mappedBy = "purchase")
+    @OneToMany(targetEntity = PurchasedItem.class, mappedBy = "purchaseExpense")
     @JsonIgnore
     private List<PurchasedItem> purchasedItems = new LinkedList<>();
+
+    public PurchaseExpense() {
+        this.cltype = ExpenseType.PURCHASE_EXPENSE;
+    }
 
     public String getInvoiceRef() {
         return this.invoiceRef;

@@ -9,11 +9,11 @@ import fr.trendev.comptandye.entities.Address;
 import fr.trendev.comptandye.entities.Administrator;
 import fr.trendev.comptandye.entities.Bill;
 import fr.trendev.comptandye.entities.Business;
+import fr.trendev.comptandye.entities.ClassicExpense;
 import fr.trendev.comptandye.entities.Client;
 import fr.trendev.comptandye.entities.ClientBill;
 import fr.trendev.comptandye.entities.CollectiveGroup;
 import fr.trendev.comptandye.entities.CustomerDetails;
-import fr.trendev.comptandye.entities.Expense;
 import fr.trendev.comptandye.entities.ExpensePK;
 import fr.trendev.comptandye.entities.Individual;
 import fr.trendev.comptandye.entities.Payment;
@@ -22,7 +22,7 @@ import fr.trendev.comptandye.entities.Product;
 import fr.trendev.comptandye.entities.ProductPK;
 import fr.trendev.comptandye.entities.ProductReference;
 import fr.trendev.comptandye.entities.Professional;
-import fr.trendev.comptandye.entities.Purchase;
+import fr.trendev.comptandye.entities.PurchaseExpense;
 import fr.trendev.comptandye.entities.PurchasedItem;
 import fr.trendev.comptandye.entities.ReturnedItem;
 import fr.trendev.comptandye.entities.Sale;
@@ -165,27 +165,33 @@ public class DemoConfigureBean implements Serializable {
                 "Esthétique"),
                 em.find(Business.class, "Coiffure")));
 
-        vanessa.getExpenses().add(new Expense("Material", 100000,
-                new Date(), Arrays.
-                        asList("Material", "Haircut"), vanessa, Arrays.asList(
+        ClassicExpense ce = new ClassicExpense();
+        ce.setDescription("Material");
+        ce.setAmount(100000);
+        ce.setPaymentDate(new Date());
+        ce.setCategories(Arrays.asList("Material", "Haircut"));
+        ce.setProfessional(vanessa);
+        ce.setPayments(Arrays.asList(
                 new Payment(30000, em.find(PaymentMode.class, "CB")),
-                new Payment(70000, em.find(PaymentMode.class, "Espèces"))),
-                Arrays.asList(em.find(Business.class, "Coiffure"))));
+                new Payment(70000, em.find(PaymentMode.class, "Espèces"))));
+        ce.setBusinesses(Arrays.asList(em.find(Business.class, "Coiffure")));
 
-        Purchase purchase = new Purchase();
-        purchase.setDescription("Buy 4x color sticks");
-        purchase.setAmount(1200);
-        purchase.setPaymentDate(new Date());
-        purchase.setProvider("BLEU LIBELLULE");
-        purchase.setCategories(Arrays.asList("color"));
-        purchase.setPayments(Arrays.asList(
+        vanessa.getExpenses().add(ce);
+
+        PurchaseExpense pe = new PurchaseExpense();
+        pe.setDescription("Buy 4x color sticks");
+        pe.setAmount(1200);
+        pe.setPaymentDate(new Date());
+        pe.setProvider("BLEU LIBELLULE");
+        pe.setCategories(Arrays.asList("color"));
+        pe.setPayments(Arrays.asList(
                 new Payment(1200, em.find(PaymentMode.class, "CB"))));
-        purchase.setBusinesses(Arrays.
+        pe.setBusinesses(Arrays.
                 asList(em.find(Business.class, "Coiffure")));
-        purchase.setInvoiceRef("facture #2341");
+        pe.setInvoiceRef("facture #2341");
 
-        purchase.setProfessional(vanessa);
-        vanessa.getExpenses().add(purchase);
+        pe.setProfessional(vanessa);
+        vanessa.getExpenses().add(pe);
 
         vanessa.getCollectiveGroups().add(
                 new CollectiveGroup("Senior Residence", "0123456789",
@@ -431,11 +437,12 @@ public class DemoConfigureBean implements Serializable {
 
         Professional vanessa = em.find(Professional.class,
                 "vanessa.gay@gmail.com");
-        Purchase purchase = em.find(Purchase.class, new ExpensePK(vanessa.
-                getExpenses().get(1).
-                getId(), vanessa.getEmail()));
+        PurchaseExpense purchase = em.find(PurchaseExpense.class, new ExpensePK(
+                vanessa.
+                        getExpenses().get(1).
+                        getId(), vanessa.getEmail()));
 
-        pr.setPurchase(purchase);
+        pr.setPurchaseExpense(purchase);
         purchase.getPurchasedItems().add(pr);
 
         Product product = em.find(Product.class,

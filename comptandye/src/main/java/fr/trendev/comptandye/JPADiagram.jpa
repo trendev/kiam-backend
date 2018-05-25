@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<jpa:entity-mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" pkg="fr.trendev.comptandye.entities" v="3.6" rws="_14901008082912" Pws="_14901008082912" cws="_14901008082912" thm="PNBColorScheme" dbthm="PLightColorScheme" ee="JAVA_EE_7" sm="false" xs="false" id="_14901008082901" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd">
+<jpa:entity-mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" pkg="fr.trendev.comptandye.entities" v="3.6" rws="_14901008082912" Pws="_14901008082912" cws="_14901008082912" thm="PDarkColorScheme" dbthm="PLightColorScheme" ee="JAVA_EE_7" sm="false" xs="false" id="_14901008082901" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd">
     <jpa:entity lbl-ref="_14901008440196" compositePrimaryKeyClass="UserAccountPK" abs="true" class="UserAccount" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490100823157">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_14901149376313047</jpa:a>
@@ -1425,26 +1425,27 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
             <jpa:query>Select c from Category c where c.name=:name</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="ExpensePK" abs="false" class="Expense" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1499512549878">
-        <jpa:con am="PUBLIC" e="true">
-            <jpa:a>_149951257358656</jpa:a>
-            <jpa:a>_149951257579557</jpa:a>
-            <jpa:a>_149951257869758</jpa:a>
-            <jpa:a>_149951274256360</jpa:a>
-            <jpa:a>_150513285565066</jpa:a>
-            <jpa:a>_1505144351224341</jpa:a>
-            <jpa:a>_150549566057859</jpa:a>
-        </jpa:con>
+    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="ExpensePK" abs="true" class="Expense" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1499512549878">
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:annotation e="true" n="@java.lang.SuppressWarnings(&quot;unchecked&quot;)"/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonTypeInfo(use = JsonTypeInfo.Id.NAME,&#xA;        include = JsonTypeInfo.As.EXISTING_PROPERTY,&#xA;        property = &quot;cltype&quot;,&#xA;        visible = true)"/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({&#xA;    @JsonSubTypes.Type(value = ClassicExpense.class,&#xA;            name = ExpenseType.CLASSIC_EXPENSE)&#xA;    ,   @JsonSubTypes.Type(value = PurchaseExpense.class,&#xA;            name = ExpenseType.PURCHASE_EXPENSE)})"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
+import fr.trendev.comptandye.utils.ExpenseType;
             import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" xvt="" am="PROTECTED" name="cltype" id="_152725396888897">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:nn m="cltype field in Expense must not be null"/>
+                </jpa:bv>
+            </jpa:basic>
             <jpa:basic attribute-type="String" v="true" xvt="" name="description" id="_149951257358656">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -1857,9 +1858,13 @@ import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
             <jpa:query>Select e from ExpenseItem e where e.vatRate=:vatRate</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="PurchasePK" abs="false" class="Purchase" superclassId="_1499512549878" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524836293670">
+    <jpa:entity compositePrimaryKeyClass="PurchaseExpensePK" abs="false" class="PurchaseExpense" superclassId="_1499512549878" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524836293670">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:post>this.cltype = ExpenseType.PURCHASE_EXPENSE;</jpa:post>
+        </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
+import fr.trendev.comptandye.utils.ExpenseType;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="invoiceRef" id="_1524836395765710">
@@ -1875,11 +1880,11 @@ import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
                 <jpa:xm nil="false" req="false"/>
             </jpa:one-to-many>
         </jpa:attributes>
-        <jpa:nq e="false" name="Purchase.findAll">
-            <jpa:query>Select e from Purchase e</jpa:query>
+        <jpa:nq e="false" name="PurchaseExpense.findAll">
+            <jpa:query>Select e from PurchaseExpense e</jpa:query>
         </jpa:nq>
-        <jpa:nq e="false" name="Purchase.findByInvoiceRef">
-            <jpa:query>Select p from Purchase p where p.invoiceRef=:invoiceRef</jpa:query>
+        <jpa:nq e="false" name="PurchaseExpense.findByInvoiceRef">
+            <jpa:query>Select p from PurchaseExpense p where p.invoiceRef=:invoiceRef</jpa:query>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="ProductReferencePK" abs="false" class="ProductReference" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524840332929">
@@ -2065,7 +2070,7 @@ import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
         <jpa:des>Recored added when an item is purchased(bought by the professional) must be linked to an Expense (Purchase)</jpa:des>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
-            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1524836293670" connected-attribute-id="_15249248621531436" v="true" xvt="" name="purchase" id="_15249248621511435">
+            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1524836293670" connected-attribute-id="_15249248621531436" v="true" xvt="" name="purchaseExpense" id="_15249248621511435">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:many-to-one>
@@ -2130,6 +2135,18 @@ import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
         </jpa:attributes>
         <jpa:nq e="false" name="SoldItem.findAll">
             <jpa:query>Select e from SoldItem e</jpa:query>
+        </jpa:nq>
+    </jpa:entity>
+    <jpa:entity compositePrimaryKeyClass="ClassicExpensePK" abs="false" class="ClassicExpense" superclassId="_1499512549878" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1527253885059">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:post>this.cltype = ExpenseType.CLASSIC_EXPENSE;</jpa:post>
+        </jpa:con>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
+        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.ExpenseType;</jpa:snp>
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes/>
+        <jpa:nq e="false" name="ClassicExpense.findAll">
+            <jpa:query>Select e from ClassicExpense e</jpa:query>
         </jpa:nq>
     </jpa:entity>
     <jpa:embeddable abs="false" class="OfferingSnapshot" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1512853437669">
@@ -2267,7 +2284,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1524836293670" x="-301" y="2313">
+            <i ref="_1524836293670" x="-276" y="2329">
                 <el>
                     <e ref="_15249248621531436">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -2510,6 +2527,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
+            <i ref="_1527253885059" x="-522" y="2329"/>
             <i ref="_1506009883340" x="642" y="965">
                 <el>
                     <e ref="_1506010011239530">

@@ -5,20 +5,21 @@
  */
 package fr.trendev.comptandye.entities;
 
+import fr.trendev.comptandye.utils.ExpenseType;
 import org.junit.Test;
 
 /**
  *
  * @author jsie
  */
-public class PurchaseTest {
+public class PurchaseExpenseTest {
 
-    public PurchaseTest() {
+    public PurchaseExpenseTest() {
     }
 
     @Test
     public void testConstructor() {
-        Purchase instance = new Purchase();
+        PurchaseExpense instance = new PurchaseExpense();
 
         assert instance.getId() == null;
         assert instance.getDescription() == null;
@@ -39,6 +40,8 @@ public class PurchaseTest {
         assert instance.getInvoiceRef() == null;
         assert instance.getPurchasedItems() != null;
         assert instance.getPurchasedItems().isEmpty();
+
+        assert ExpenseType.PURCHASE_EXPENSE.equals(instance.getCltype());
 
     }
 

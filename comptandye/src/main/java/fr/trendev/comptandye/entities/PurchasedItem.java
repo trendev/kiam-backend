@@ -16,20 +16,20 @@ import javax.persistence.ManyToOne;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class PurchasedItem extends ProductRecord {
 
-    @ManyToOne(targetEntity = Purchase.class)
-    private Purchase purchase;
+    @ManyToOne(targetEntity = PurchaseExpense.class)
+    private PurchaseExpense purchaseExpense;
 
     public PurchasedItem() {
         super();
         this.cltype = ProductRecordType.PURCHASED_ITEM;
     }
 
-    public Purchase getPurchase() {
-        return this.purchase;
+    public PurchaseExpense getPurchaseExpense() {
+        return this.purchaseExpense;
     }
 
-    public void setPurchase(Purchase purchase) {
-        this.purchase = purchase;
+    public void setPurchaseExpense(PurchaseExpense purchaseExpense) {
+        this.purchaseExpense = purchaseExpense;
     }
 
 }

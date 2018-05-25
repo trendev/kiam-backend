@@ -1,21 +1,21 @@
 package fr.trendev.comptandye.sessions;
 
-import fr.trendev.comptandye.entities.Expense;
 import fr.trendev.comptandye.entities.ExpensePK;
+import fr.trendev.comptandye.entities.PurchaseExpense;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 
 @Stateless
-@Named("expense")
-public class ExpenseFacade extends AbstractFacade<Expense, ExpensePK> {
+@Named("purchaseExpense")
+public class PurchaseExpenseFacade extends AbstractFacade<PurchaseExpense, ExpensePK> {
 
     @Inject
     private EntityManager em;
 
-    public ExpenseFacade() {
-        super(Expense.class);
+    public PurchaseExpenseFacade() {
+        super(PurchaseExpense.class);
     }
 
     @Override

@@ -3672,7 +3672,7 @@
 			]
 		},
 		{
-			"name": "Expense",
+			"name": "ClassicExpense",
 			"description": null,
 			"item": [
 				{
@@ -3700,12 +3700,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{API_URL}}/Expense",
+							"raw": "{{API_URL}}/ClassicExpense",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
-								"Expense"
+								"ClassicExpense"
 							]
 						}
 					},
@@ -3734,12 +3734,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{API_URL}}/Expense/count",
+							"raw": "{{API_URL}}/ClassicExpense/count",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
-								"Expense",
+								"ClassicExpense",
 								"count"
 							]
 						}
@@ -3752,7 +3752,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3ef43fcc-a8a0-4bfa-bea4-064c97248277",
+								"id": "38dd6504-df6b-4e0b-9295-e0177f9086bf",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
@@ -3760,6 +3760,7 @@
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"id is defined\"] = jsonData.id !== undefined;",
 									"pm.environment.set(\"created_expense_id\", jsonData.id);",
+									"tests[\"cltype is \\\"classic\\\"\"] = jsonData.cltype === \"classic\";",
 									"tests[\"description is \\\"Purple Color\\\"\"] = jsonData.description === \"Purple Color\";",
 									"tests[\"issueDate is defined\"] = jsonData.issueDate !== undefined;",
 									"tests[\"cancelled is false\"] = jsonData.cancelled === false;",
@@ -3800,15 +3801,15 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"description\":\"Purple Color\",\n  \"amount\":4050,\n  \"paymentDate\":1505707896023,\n  \"provider\":\"L'OREAL\",\n  \"vatInclusive\": false,\n  \"categories\": [\n            \"Color\",\n            \"Perfect Color from Paris\"\n    ],\n    \"payments\": [\n            {\n        \"amount\": 4000,\n                \"paymentMode\": {\n                    \"name\": \"CB\"\n                }\n            },\n            {\n                \"amount\": 50,\n                \"paymentMode\": {\n                    \"name\": \"Espèces\"\n                }\n            }\n        ],\n    \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n    ],\n    \"expenseItems\":[\n    \t{\n    \t\"description\":\"Purple #1\",\n    \t\"amount\":1000,\n    \t\"qty\":2,\n    \t\"vatRate\":20\n    \t},\n    \t{\n    \t\"description\":\"Purple #2\",\n    \t\"amount\":500,\n    \t\"qty\":3,\n    \t\"vatRate\":10\n    \t}\n    ]\n}"
+							"raw": "{\n  \"cltype\": \"classic\",\n  \"description\":\"Purple Color\",\n  \"amount\":4050,\n  \"paymentDate\":1505707896023,\n  \"provider\":\"L'OREAL\",\n  \"vatInclusive\": false,\n  \"categories\": [\n            \"Color\",\n            \"Perfect Color from Paris\"\n    ],\n    \"payments\": [\n            {\n        \"amount\": 4000,\n                \"paymentMode\": {\n                    \"name\": \"CB\"\n                }\n            },\n            {\n                \"amount\": 50,\n                \"paymentMode\": {\n                    \"name\": \"Espèces\"\n                }\n            }\n        ],\n    \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n    ],\n    \"expenseItems\":[\n    \t{\n    \t\"description\":\"Purple #1\",\n    \t\"amount\":1000,\n    \t\"qty\":2,\n    \t\"vatRate\":20\n    \t},\n    \t{\n    \t\"description\":\"Purple #2\",\n    \t\"amount\":500,\n    \t\"qty\":3,\n    \t\"vatRate\":10\n    \t}\n    ]\n}"
 						},
 						"url": {
-							"raw": "{{API_URL}}/Expense?professional=vanessa.gay@gmail.com",
+							"raw": "{{API_URL}}/ClassicExpense?professional=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
-								"Expense"
+								"ClassicExpense"
 							],
 							"query": [
 								{
@@ -3826,7 +3827,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1e3f3741-2358-481b-928e-3f32cfc84038",
+								"id": "2975370c-b6b6-4f90-a030-d33c50d623ec",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -3834,6 +3835,7 @@
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"id is defined\"] = jsonData.id !== undefined;",
 									"pm.environment.set(\"created_expense_id\", jsonData.id);",
+									"tests[\"cltype is \\\"classic\\\"\"] = jsonData.cltype === \"classic\";",
 									"tests[\"description is \\\"Purple Color sticks\\\"\"] = jsonData.description === \"Purple Color sticks\";",
 									"tests[\"issueDate is defined\"] = jsonData.issueDate !== undefined;",
 									"tests[\"cancelled is false\"] = jsonData.cancelled === false;",
@@ -3872,15 +3874,15 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"id\":{{created_expense_id}},\n  \"description\":\"Purple Color sticks\",\n  \"amount\":1000,\n  \"paymentDate\":1505707896023,\n  \"categories\": [\n            \"Provider\",\n            \"Color Broker in Paris\"\n  ],\n  \"provider\": \"Bleu Libellule\",\n  \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n        ]\n}"
+							"raw": "{\n  \"id\":{{created_expense_id}},\n  \"cltype\": \"classic\",\n  \"description\":\"Purple Color sticks\",\n  \"amount\":1000,\n  \"paymentDate\":1505707896023,\n  \"categories\": [\n            \"Provider\",\n            \"Color Broker in Paris\"\n  ],\n  \"provider\": \"Bleu Libellule\",\n  \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n        ]\n}"
 						},
 						"url": {
-							"raw": "{{API_URL}}/Expense?professional=vanessa.gay@gmail.com",
+							"raw": "{{API_URL}}/ClassicExpense?professional=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
-								"Expense"
+								"ClassicExpense"
 							],
 							"query": [
 								{
@@ -3898,7 +3900,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d79b0d24-3d80-4435-a9f9-57b38f8e4258",
+								"id": "8a292cce-f8b1-4e00-b1ac-93ecb66eb5d1",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -3906,6 +3908,7 @@
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"id is defined\"] = jsonData.id !== undefined;",
 									"pm.environment.set(\"created_expense_id\", jsonData.id);",
+									"tests[\"cltype is \\\"classic\\\"\"] = jsonData.cltype === \"classic\";",
 									"tests[\"description is \\\"Purple Color sticks\\\"\"] = jsonData.description === \"Purple Color sticks\";",
 									"tests[\"issueDate is defined\"] = jsonData.issueDate !== undefined;",
 									"tests[\"cancelled is true\"] = jsonData.cancelled === true;",
@@ -3944,15 +3947,15 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"id\":{{created_expense_id}},\n  \"description\":\"Purple Color sticks\",\n  \"amount\":1000,\n  \"paymentDate\":1505707896023,\n  \"categories\": [\n            \"Provider\",\n            \"Color Broker in Paris\"\n  ],\n  \"provider\": \"Bleu Libellule\",\n  \"cancelled\":true,\n  \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n        ]\n}"
+							"raw": "{\n  \"id\":{{created_expense_id}},\n  \"cltype\": \"classic\",\n  \"description\":\"Purple Color sticks\",\n  \"amount\":1000,\n  \"paymentDate\":1505707896023,\n  \"categories\": [\n            \"Provider\",\n            \"Color Broker in Paris\"\n  ],\n  \"provider\": \"Bleu Libellule\",\n  \"cancelled\":true,\n  \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n        ]\n}"
 						},
 						"url": {
-							"raw": "{{API_URL}}/Expense?professional=vanessa.gay@gmail.com",
+							"raw": "{{API_URL}}/ClassicExpense?professional=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
-								"Expense"
+								"ClassicExpense"
 							],
 							"query": [
 								{
@@ -3970,7 +3973,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fcdb120c-858c-44f8-bb12-fee0d7e5a631",
+								"id": "861150bb-2bc8-4ba1-8e35-30ec60d72efb",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -3981,6 +3984,7 @@
 									"//created_expense_id environment variable is stored as a string...",
 									"tests[\"id is \"+pm.environment.get(\"created_expense_id\")] = jsonData.id == pm.environment.get(\"created_expense_id\");",
 									"",
+									"tests[\"cltype is \\\"classic\\\"\"] = jsonData.cltype === \"classic\";",
 									"tests[\"description is \\\"Purple Color sticks\\\"\"] = jsonData.description === \"Purple Color sticks\";",
 									"tests[\"amount is 4050\"] = jsonData.amount === 4050;",
 									"tests[\"cancelled is true\"] = jsonData.cancelled === true;",
@@ -4009,12 +4013,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{API_URL}}/Expense/{{created_expense_id}}?professional=vanessa.gay@gmail.com",
+							"raw": "{{API_URL}}/ClassicExpense/{{created_expense_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
-								"Expense",
+								"ClassicExpense",
 								"{{created_expense_id}}"
 							],
 							"query": [
@@ -4053,12 +4057,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{API_URL}}/Expense/{{created_expense_id}}?professional=vanessa.gay@gmail.com",
+							"raw": "{{API_URL}}/ClassicExpense/{{created_expense_id}}?professional=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
-								"Expense",
+								"ClassicExpense",
 								"{{created_expense_id}}"
 							],
 							"query": [
@@ -7461,455 +7465,6 @@
 			]
 		},
 		{
-			"name": "Purchase",
-			"description": null,
-			"item": [
-				{
-					"name": "findAll",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "3be4307f-f9ef-4502-ab6b-30bfa1dbff83",
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;",
-									"",
-									"/*var jsonData = JSON.parse(responseBody);",
-									"tests[\"Expense table is not empty\"] = jsonData.length >= 1;*/"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{API_URL}}/Purchase",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"Purchase"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "count",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "ce707784-fc39-4820-b0c3-3b7d10da0ccd",
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;",
-									"",
-									"/*tests[\"count >= 1\"] = responseBody >= 1;*/"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{API_URL}}/Purchase/count",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"Purchase",
-								"count"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "create",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "1c62a764-f1f1-4170-8529-28ce0f90a588",
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"Status code is 201\"] = responseCode.code === 201;",
-									"",
-									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"id is defined\"] = jsonData.id !== undefined;",
-									"pm.environment.set(\"created_expense_id\", jsonData.id);",
-									"tests[\"description is \\\"Purple Color\\\"\"] = jsonData.description === \"Purple Color\";",
-									"tests[\"issueDate is defined\"] = jsonData.issueDate !== undefined;",
-									"tests[\"cancelled is false\"] = jsonData.cancelled === false;",
-									"tests[\"cancellationDate is undefined\"] = jsonData.cancellationDate === undefined;",
-									"tests[\"provider is \\\"L'OREAL\\\"\"] = jsonData.provider === \"L'OREAL\";",
-									"tests[\"currency is \\\"EUR\\\"\"] = jsonData.currency === \"EUR\";",
-									"tests[\"amount is 4050\"] = jsonData.amount === 4050;",
-									"tests[\"paymentDate is \"+new Date(1505707896023)] = jsonData.paymentDate === 1505707896023;",
-									"tests[\"categories length is 2\"] = jsonData.categories.length === 2;",
-									"",
-									"var total = 0;",
-									"for(i=0 ; i<jsonData.payments.length ;i++){",
-									"    total+=jsonData.payments[i].amount;",
-									"}",
-									"",
-									"tests[\"Total Amount is \"+total] = jsonData.amount === total;",
-									"",
-									"tests[\"businesses[0].designation is \\\"Coiffure\\\"\"] = jsonData.businesses[0].designation === \"Coiffure\";",
-									"tests[\"vatInclusive is true\"] = jsonData.vatInclusive === true;",
-									"tests[\"expenseItems length is 2\"] = jsonData.expenseItems.length === 2;",
-									"tests[\"invoiceRef is \\\"FR123456XXLOREAL\\\"\"] = jsonData.invoiceRef === \"FR123456XXLOREAL\";",
-									"",
-									""
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"description\":\"Purple Color\",\n  \"amount\":4050,\n  \"paymentDate\":1505707896023,\n  \"provider\":\"L'OREAL\",\n  \"vatInclusive\": false,\n  \"categories\": [\n            \"Color\",\n            \"Perfect Color from Paris\"\n    ],\n    \"payments\": [\n            {\n        \"amount\": 4000,\n                \"paymentMode\": {\n                    \"name\": \"CB\"\n                }\n            },\n            {\n                \"amount\": 50,\n                \"paymentMode\": {\n                    \"name\": \"Espèces\"\n                }\n            }\n        ],\n    \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n    ],\n    \"expenseItems\":[\n    \t{\n    \t\"description\":\"Purple #1\",\n    \t\"amount\":1000,\n    \t\"qty\":2,\n    \t\"vatRate\":20\n    \t},\n    \t{\n    \t\"description\":\"Purple #2\",\n    \t\"amount\":500,\n    \t\"qty\":3,\n    \t\"vatRate\":10\n    \t}\n    ],\n    \"invoiceRef\":\"FR123456XXLOREAL\"\n}"
-						},
-						"url": {
-							"raw": "{{API_URL}}/Purchase?professional=vanessa.gay@gmail.com",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"Purchase"
-							],
-							"query": [
-								{
-									"key": "professional",
-									"value": "vanessa.gay@gmail.com"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "update",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "f44a7904-1e77-4082-929e-d893fab742e7",
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;",
-									"",
-									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"id is defined\"] = jsonData.id !== undefined;",
-									"pm.environment.set(\"created_expense_id\", jsonData.id);",
-									"tests[\"description is \\\"Purple Color sticks\\\"\"] = jsonData.description === \"Purple Color sticks\";",
-									"tests[\"issueDate is defined\"] = jsonData.issueDate !== undefined;",
-									"tests[\"cancelled is false\"] = jsonData.cancelled === false;",
-									"tests[\"cancellationDate is undefined\"] = jsonData.cancellationDate === undefined;",
-									"tests[\"currency is \\\"EUR\\\"\"] = jsonData.currency === \"EUR\";",
-									"tests[\"amount is 4050\"] = jsonData.amount === 4050;",
-									"tests[\"paymentDate is \"+new Date(1505707896023)] = jsonData.paymentDate === 1505707896023;",
-									"tests[\"categories length is 2\"] = jsonData.categories.length === 2;",
-									"",
-									"var total = 0;",
-									"for(i=0 ; i<jsonData.payments.length ;i++){",
-									"    total+=jsonData.payments[i].amount;",
-									"}",
-									"",
-									"tests[\"Total Amount is \"+total] = jsonData.amount === total;",
-									"",
-									"tests[\"businesses[0].designation is \\\"Coiffure\\\"\"] = jsonData.businesses[0].designation === \"Coiffure\";",
-									"tests[\"vatInclusive is true\"] = jsonData.vatInclusive === true;",
-									"tests[\"expenseItems length is 2\"] = jsonData.expenseItems.length === 2;",
-									"",
-									"tests[\"invoiceRef is \\\"FR123456XXLOREAL\\\"\"] = jsonData.invoiceRef === \"FR123456XXLOREAL\";",
-									""
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"id\":{{created_expense_id}},\n  \"description\":\"Purple Color sticks\",\n  \"amount\":1000,\n  \"paymentDate\":1505707896023,\n  \"categories\": [\n            \"Provider\",\n            \"Color Broker in Paris\"\n  ],\n  \"provider\": \"Bleu Libellule\",\n  \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n        ]\n}"
-						},
-						"url": {
-							"raw": "{{API_URL}}/Purchase?professional=vanessa.gay@gmail.com",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"Purchase"
-							],
-							"query": [
-								{
-									"key": "professional",
-									"value": "vanessa.gay@gmail.com"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "update - cancel",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "81856214-b3a5-46e6-9a37-98f50d6dbbc3",
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;",
-									"",
-									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"id is defined\"] = jsonData.id !== undefined;",
-									"pm.environment.set(\"created_expense_id\", jsonData.id);",
-									"tests[\"description is \\\"Purple Color sticks\\\"\"] = jsonData.description === \"Purple Color sticks\";",
-									"tests[\"issueDate is defined\"] = jsonData.issueDate !== undefined;",
-									"tests[\"cancelled is true\"] = jsonData.cancelled === true;",
-									"tests[\"cancellationDate is defined\"] = jsonData.cancellationDate !== undefined;",
-									"tests[\"currency is \\\"EUR\\\"\"] = jsonData.currency === \"EUR\";",
-									"tests[\"amount is 4050\"] = jsonData.amount === 4050;",
-									"tests[\"paymentDate is \"+new Date(1505707896023)] = jsonData.paymentDate === 1505707896023;",
-									"tests[\"categories length is 2\"] = jsonData.categories.length === 2;",
-									"",
-									"var total = 0;",
-									"for(i=0 ; i<jsonData.payments.length ;i++){",
-									"    total+=jsonData.payments[i].amount;",
-									"}",
-									"",
-									"tests[\"Total Amount is \"+total] = jsonData.amount === total;",
-									"",
-									"tests[\"businesses[0].designation is \\\"Coiffure\\\"\"] = jsonData.businesses[0].designation === \"Coiffure\";",
-									"tests[\"vatInclusive is true\"] = jsonData.vatInclusive === true;",
-									"tests[\"expenseItems length is 2\"] = jsonData.expenseItems.length === 2;",
-									"",
-									"tests[\"invoiceRef is \\\"FR123456XXLOREAL\\\"\"] = jsonData.invoiceRef === \"FR123456XXLOREAL\";",
-									""
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"id\":{{created_expense_id}},\n  \"description\":\"Purple Color sticks\",\n  \"amount\":1000,\n  \"paymentDate\":1505707896023,\n  \"categories\": [\n            \"Provider\",\n            \"Color Broker in Paris\"\n  ],\n  \"provider\": \"Bleu Libellule\",\n  \"cancelled\":true,\n  \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n        ]\n}"
-						},
-						"url": {
-							"raw": "{{API_URL}}/Purchase?professional=vanessa.gay@gmail.com",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"Purchase"
-							],
-							"query": [
-								{
-									"key": "professional",
-									"value": "vanessa.gay@gmail.com"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "find",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "b2ee17e7-306c-4e4e-a617-50c4adae04d6",
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;",
-									"",
-									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"id is defined\"] = jsonData.id !== undefined;",
-									"pm.environment.get(\"created_expense_id\");",
-									"//created_expense_id environment variable is stored as a string...",
-									"tests[\"id is \"+pm.environment.get(\"created_expense_id\")] = jsonData.id == pm.environment.get(\"created_expense_id\");",
-									"",
-									"tests[\"description is \\\"Purple Color sticks\\\"\"] = jsonData.description === \"Purple Color sticks\";",
-									"tests[\"amount is 4050\"] = jsonData.amount === 4050;",
-									"tests[\"cancelled is true\"] = jsonData.cancelled === true;",
-									"tests[\"cancellationDate is defined\"] = jsonData.cancellationDate !== undefined;",
-									"tests[\"currency is \\\"EUR\\\"\"] = jsonData.currency === \"EUR\";",
-									"tests[\"paymentDate is \"+new Date(1505707896023)] = jsonData.paymentDate === 1505707896023;",
-									"tests[\"categories length is 2\"] = jsonData.categories.length === 2;",
-									"",
-									"var total = 0;",
-									"for(i=0 ; i<jsonData.payments.length ;i++){",
-									"    total+=jsonData.payments[i].amount;",
-									"}",
-									"",
-									"tests[\"Total Amount is \"+total] = jsonData.amount === total;",
-									"",
-									"tests[\"businesses[0].designation is \\\"Coiffure\\\"\"] = jsonData.businesses[0].designation === \"Coiffure\";",
-									"tests[\"invoiceRef is \\\"FR123456XXLOREAL\\\"\"] = jsonData.invoiceRef === \"FR123456XXLOREAL\";"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{API_URL}}/Purchase/{{created_expense_id}}?professional=vanessa.gay@gmail.com",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"Purchase",
-								"{{created_expense_id}}"
-							],
-							"query": [
-								{
-									"key": "professional",
-									"value": "vanessa.gay@gmail.com"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getPurchasedItems",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{API_URL}}/Purchase/{{created_expense_id}}/purchasedItems?professional=vanessa.gay@gmail.com",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"Purchase",
-								"{{created_expense_id}}",
-								"purchasedItems"
-							],
-							"query": [
-								{
-									"key": "professional",
-									"value": "vanessa.gay@gmail.com"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{API_URL}}/Purchase/{{created_expense_id}}?professional=vanessa.gay@gmail.com",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"Purchase",
-								"{{created_expense_id}}"
-							],
-							"query": [
-								{
-									"key": "professional",
-									"value": "vanessa.gay@gmail.com"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "PurchasedOffering",
 			"description": null,
 			"item": [
@@ -8241,6 +7796,459 @@
 							"path": [
 								"PurchasedOffering",
 								"{{created_purchasedoffering_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PurchaseExpense",
+			"description": null,
+			"item": [
+				{
+					"name": "findAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3be4307f-f9ef-4502-ab6b-30bfa1dbff83",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"/*var jsonData = JSON.parse(responseBody);",
+									"tests[\"Expense table is not empty\"] = jsonData.length >= 1;*/"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/PurchaseExpense",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"PurchaseExpense"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "count",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ce707784-fc39-4820-b0c3-3b7d10da0ccd",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"/*tests[\"count >= 1\"] = responseBody >= 1;*/"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/PurchaseExpense/count",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"PurchaseExpense",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2a862912-f1fa-42bf-a85f-82a8e9da4688",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 201\"] = responseCode.code === 201;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"pm.environment.set(\"created_expense_id\", jsonData.id);",
+									"tests[\"cltype is \\\"purchase\\\"\"] = jsonData.cltype === \"purchase\";",
+									"tests[\"description is \\\"Purple Color\\\"\"] = jsonData.description === \"Purple Color\";",
+									"tests[\"issueDate is defined\"] = jsonData.issueDate !== undefined;",
+									"tests[\"cancelled is false\"] = jsonData.cancelled === false;",
+									"tests[\"cancellationDate is undefined\"] = jsonData.cancellationDate === undefined;",
+									"tests[\"provider is \\\"L'OREAL\\\"\"] = jsonData.provider === \"L'OREAL\";",
+									"tests[\"currency is \\\"EUR\\\"\"] = jsonData.currency === \"EUR\";",
+									"tests[\"amount is 4050\"] = jsonData.amount === 4050;",
+									"tests[\"paymentDate is \"+new Date(1505707896023)] = jsonData.paymentDate === 1505707896023;",
+									"tests[\"categories length is 2\"] = jsonData.categories.length === 2;",
+									"",
+									"var total = 0;",
+									"for(i=0 ; i<jsonData.payments.length ;i++){",
+									"    total+=jsonData.payments[i].amount;",
+									"}",
+									"",
+									"tests[\"Total Amount is \"+total] = jsonData.amount === total;",
+									"",
+									"tests[\"businesses[0].designation is \\\"Coiffure\\\"\"] = jsonData.businesses[0].designation === \"Coiffure\";",
+									"tests[\"vatInclusive is true\"] = jsonData.vatInclusive === true;",
+									"tests[\"expenseItems length is 2\"] = jsonData.expenseItems.length === 2;",
+									"tests[\"invoiceRef is \\\"FR123456XXLOREAL\\\"\"] = jsonData.invoiceRef === \"FR123456XXLOREAL\";",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cltype\": \"purchase\",\n  \"description\":\"Purple Color\",\n  \"amount\":4050,\n  \"paymentDate\":1505707896023,\n  \"provider\":\"L'OREAL\",\n  \"vatInclusive\": false,\n  \"categories\": [\n            \"Color\",\n            \"Perfect Color from Paris\"\n    ],\n    \"payments\": [\n            {\n        \"amount\": 4000,\n                \"paymentMode\": {\n                    \"name\": \"CB\"\n                }\n            },\n            {\n                \"amount\": 50,\n                \"paymentMode\": {\n                    \"name\": \"Espèces\"\n                }\n            }\n        ],\n    \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n    ],\n    \"expenseItems\":[\n    \t{\n    \t\"description\":\"Purple #1\",\n    \t\"amount\":1000,\n    \t\"qty\":2,\n    \t\"vatRate\":20\n    \t},\n    \t{\n    \t\"description\":\"Purple #2\",\n    \t\"amount\":500,\n    \t\"qty\":3,\n    \t\"vatRate\":10\n    \t}\n    ],\n    \"invoiceRef\":\"FR123456XXLOREAL\"\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/PurchaseExpense?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"PurchaseExpense"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9c1ade51-864c-4786-a854-ab6a977a6c01",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"pm.environment.set(\"created_expense_id\", jsonData.id);",
+									"tests[\"cltype is \\\"purchase\\\"\"] = jsonData.cltype === \"purchase\";",
+									"tests[\"description is \\\"Purple Color sticks\\\"\"] = jsonData.description === \"Purple Color sticks\";",
+									"tests[\"issueDate is defined\"] = jsonData.issueDate !== undefined;",
+									"tests[\"cancelled is false\"] = jsonData.cancelled === false;",
+									"tests[\"cancellationDate is undefined\"] = jsonData.cancellationDate === undefined;",
+									"tests[\"currency is \\\"EUR\\\"\"] = jsonData.currency === \"EUR\";",
+									"tests[\"amount is 4050\"] = jsonData.amount === 4050;",
+									"tests[\"paymentDate is \"+new Date(1505707896023)] = jsonData.paymentDate === 1505707896023;",
+									"tests[\"categories length is 2\"] = jsonData.categories.length === 2;",
+									"",
+									"var total = 0;",
+									"for(i=0 ; i<jsonData.payments.length ;i++){",
+									"    total+=jsonData.payments[i].amount;",
+									"}",
+									"",
+									"tests[\"Total Amount is \"+total] = jsonData.amount === total;",
+									"",
+									"tests[\"businesses[0].designation is \\\"Coiffure\\\"\"] = jsonData.businesses[0].designation === \"Coiffure\";",
+									"tests[\"vatInclusive is true\"] = jsonData.vatInclusive === true;",
+									"tests[\"expenseItems length is 2\"] = jsonData.expenseItems.length === 2;",
+									"",
+									"tests[\"invoiceRef is \\\"FR123456XXLOREAL\\\"\"] = jsonData.invoiceRef === \"FR123456XXLOREAL\";",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\":{{created_expense_id}},\n  \"cltype\": \"purchase\",\n  \"description\":\"Purple Color sticks\",\n  \"amount\":1000,\n  \"paymentDate\":1505707896023,\n  \"categories\": [\n            \"Provider\",\n            \"Color Broker in Paris\"\n  ],\n  \"provider\": \"Bleu Libellule\",\n  \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n        ]\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/PurchaseExpense?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"PurchaseExpense"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update - cancel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cdc7a51d-e856-4868-9ec1-29e96e119d62",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"pm.environment.set(\"created_expense_id\", jsonData.id);",
+									"tests[\"cltype is \\\"purchase\\\"\"] = jsonData.cltype === \"purchase\";",
+									"tests[\"description is \\\"Purple Color sticks\\\"\"] = jsonData.description === \"Purple Color sticks\";",
+									"tests[\"issueDate is defined\"] = jsonData.issueDate !== undefined;",
+									"tests[\"cancelled is true\"] = jsonData.cancelled === true;",
+									"tests[\"cancellationDate is defined\"] = jsonData.cancellationDate !== undefined;",
+									"tests[\"currency is \\\"EUR\\\"\"] = jsonData.currency === \"EUR\";",
+									"tests[\"amount is 4050\"] = jsonData.amount === 4050;",
+									"tests[\"paymentDate is \"+new Date(1505707896023)] = jsonData.paymentDate === 1505707896023;",
+									"tests[\"categories length is 2\"] = jsonData.categories.length === 2;",
+									"",
+									"var total = 0;",
+									"for(i=0 ; i<jsonData.payments.length ;i++){",
+									"    total+=jsonData.payments[i].amount;",
+									"}",
+									"",
+									"tests[\"Total Amount is \"+total] = jsonData.amount === total;",
+									"",
+									"tests[\"businesses[0].designation is \\\"Coiffure\\\"\"] = jsonData.businesses[0].designation === \"Coiffure\";",
+									"tests[\"vatInclusive is true\"] = jsonData.vatInclusive === true;",
+									"tests[\"expenseItems length is 2\"] = jsonData.expenseItems.length === 2;",
+									"",
+									"tests[\"invoiceRef is \\\"FR123456XXLOREAL\\\"\"] = jsonData.invoiceRef === \"FR123456XXLOREAL\";",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\":{{created_expense_id}},\n  \"cltype\": \"purchase\",\n  \"description\":\"Purple Color sticks\",\n  \"amount\":1000,\n  \"paymentDate\":1505707896023,\n  \"categories\": [\n            \"Provider\",\n            \"Color Broker in Paris\"\n  ],\n  \"provider\": \"Bleu Libellule\",\n  \"cancelled\":true,\n  \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n        ]\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/PurchaseExpense?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"PurchaseExpense"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "34946957-7b28-4080-8d84-ba773b466bf8",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"pm.environment.get(\"created_expense_id\");",
+									"//created_expense_id environment variable is stored as a string...",
+									"tests[\"id is \"+pm.environment.get(\"created_expense_id\")] = jsonData.id == pm.environment.get(\"created_expense_id\");",
+									"",
+									"tests[\"cltype is \\\"purchase\\\"\"] = jsonData.cltype === \"purchase\";",
+									"tests[\"description is \\\"Purple Color sticks\\\"\"] = jsonData.description === \"Purple Color sticks\";",
+									"tests[\"amount is 4050\"] = jsonData.amount === 4050;",
+									"tests[\"cancelled is true\"] = jsonData.cancelled === true;",
+									"tests[\"cancellationDate is defined\"] = jsonData.cancellationDate !== undefined;",
+									"tests[\"currency is \\\"EUR\\\"\"] = jsonData.currency === \"EUR\";",
+									"tests[\"paymentDate is \"+new Date(1505707896023)] = jsonData.paymentDate === 1505707896023;",
+									"tests[\"categories length is 2\"] = jsonData.categories.length === 2;",
+									"",
+									"var total = 0;",
+									"for(i=0 ; i<jsonData.payments.length ;i++){",
+									"    total+=jsonData.payments[i].amount;",
+									"}",
+									"",
+									"tests[\"Total Amount is \"+total] = jsonData.amount === total;",
+									"",
+									"tests[\"businesses[0].designation is \\\"Coiffure\\\"\"] = jsonData.businesses[0].designation === \"Coiffure\";",
+									"tests[\"invoiceRef is \\\"FR123456XXLOREAL\\\"\"] = jsonData.invoiceRef === \"FR123456XXLOREAL\";"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/PurchaseExpense/{{created_expense_id}}?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"PurchaseExpense",
+								"{{created_expense_id}}"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPurchasedItems",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/PurchaseExpense/{{created_expense_id}}/purchasedItems?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"PurchaseExpense",
+								"{{created_expense_id}}",
+								"purchasedItems"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/PurchaseExpense/{{created_expense_id}}?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"PurchaseExpense",
+								"{{created_expense_id}}"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com"
+								}
 							]
 						}
 					},

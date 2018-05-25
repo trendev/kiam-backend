@@ -3,6 +3,9 @@ package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import fr.trendev.comptandye.utils.ExpenseType;
 import fr.trendev.comptandye.utils.visitors.Visitor;
 import java.util.Date;
 import java.util.LinkedList;
@@ -33,12 +36,24 @@ import javax.validation.constraints.Past;
 @DiscriminatorColumn(length = 31)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @SuppressWarnings("unchecked")
-public class Expense {
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "cltype",
+        visible = true)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = ClassicExpense.class,
+            name = ExpenseType.CLASSIC_EXPENSE)
+    ,   @JsonSubTypes.Type(value = PurchaseExpense.class,
+            name = ExpenseType.PURCHASE_EXPENSE)})
+public abstract class Expense {
 
     @Column(name = "EXPENSE_ID")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Basic
+    @NotNull(message = "cltype field in Expense must not be null")
+    protected String cltype;
 
     @Basic
     @NotNull(message = "description field in Expense must not be null")
@@ -120,18 +135,6 @@ public class Expense {
             orphanRemoval = true)
     private List<ExpenseItem> expenseItems = new LinkedList<>();
 
-    public Expense(String description, int amount, Date paymentDate,
-            List categories, Professional professional, List payments,
-            List businesses) {
-        this.description = description;
-        this.amount = amount;
-        this.paymentDate = paymentDate;
-        this.categories = categories;
-        this.professional = professional;
-        this.payments = payments;
-        this.businesses = businesses;
-    }
-
     public Expense() {
     }
 
@@ -141,6 +144,14 @@ public class Expense {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCltype() {
+        return this.cltype;
+    }
+
+    public void setCltype(String cltype) {
+        this.cltype = cltype;
     }
 
     public String getDescription() {

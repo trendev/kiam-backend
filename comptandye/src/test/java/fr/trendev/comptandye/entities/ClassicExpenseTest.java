@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import fr.trendev.comptandye.utils.ExpenseType;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -15,9 +16,9 @@ import org.junit.Test;
  *
  * @author jsie
  */
-public class ExpenseTest {
+public class ClassicExpenseTest {
 
-    public ExpenseTest() {
+    public ClassicExpenseTest() {
     }
 
     /**
@@ -25,7 +26,7 @@ public class ExpenseTest {
      */
     @Test
     public void testConstructors() {
-        Expense instance = new Expense();
+        ClassicExpense instance = new ClassicExpense();
 
         assert instance.getId() == null;
         assert instance.getDescription() == null;
@@ -42,18 +43,23 @@ public class ExpenseTest {
         assert instance.getBusinesses() != null;
         assert instance.getBusinesses().isEmpty();
         assert instance.getIssueDate() != null;
+        assert ExpenseType.CLASSIC_EXPENSE.equals(instance.getCltype());
 
         String name = "Expensive expense";
         int amount = 50000; // 1000 euros
         String invoiceRef = "Invoice12345ABC";
 
-        instance = new Expense(name, amount, new Date(),
-                Arrays.
-                        asList("Partner", "Provider"),
-                new Professional(),
+        instance = new ClassicExpense();
+        instance.setDescription(name);
+        instance.setAmount(amount);
+        instance.setPaymentDate(new Date());
+        instance.setCategories(Arrays.
+                asList("Partner", "Provider"));
+        instance.setProfessional(new Professional());
+        instance.setPayments(
                 Arrays.asList(new Payment(30000, new PaymentMode("CB")),
-                        new Payment(30000, new PaymentMode("Espèces"))),
-                Arrays.asList(new Business("Buziness")));
+                        new Payment(30000, new PaymentMode("Espèces"))));
+        instance.setBusinesses(Arrays.asList(new Business("Buziness")));
 
         int size = 10;
         instance.setCategories(IntStream.range(0, size).mapToObj(i ->
@@ -75,6 +81,7 @@ public class ExpenseTest {
         assert instance.getBusinesses() != null;
         assert !instance.getBusinesses().isEmpty();
         assert instance.getIssueDate() != null;
+        assert ExpenseType.CLASSIC_EXPENSE.equals(instance.getCltype());
 
     }
 

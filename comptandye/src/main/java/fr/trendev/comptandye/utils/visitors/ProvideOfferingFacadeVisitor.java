@@ -29,7 +29,7 @@ import fr.trendev.comptandye.entities.Product;
 import fr.trendev.comptandye.entities.ProductRecord;
 import fr.trendev.comptandye.entities.ProductReference;
 import fr.trendev.comptandye.entities.Professional;
-import fr.trendev.comptandye.entities.Purchase;
+import fr.trendev.comptandye.entities.PurchaseExpense;
 import fr.trendev.comptandye.entities.PurchasedItem;
 import fr.trendev.comptandye.entities.PurchasedOffering;
 import fr.trendev.comptandye.entities.ReturnedItem;
@@ -231,7 +231,7 @@ public class ProvideOfferingFacadeVisitor implements
 
     @Override
     public AbstractFacade<? extends Offering, OfferingPK> visit(
-            Purchase instance) {
+            PurchaseExpense instance) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
