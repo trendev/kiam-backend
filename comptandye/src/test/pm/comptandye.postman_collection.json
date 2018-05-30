@@ -4078,6 +4078,276 @@
 			]
 		},
 		{
+			"name": "ExpenseItem",
+			"description": "Manage Addresses.\nRequires Administrator Authorization.",
+			"item": [
+				{
+					"name": "findAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f242b2ad-db33-4da5-99af-2072706ba84d",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"/*var jsonData = JSON.parse(responseBody);",
+									"tests[\"ExpenseItem table is not empty\"] = jsonData.length >= 1;*/"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/ExpenseItem",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"ExpenseItem"
+							]
+						},
+						"description": "List all addresses."
+					},
+					"response": []
+				},
+				{
+					"name": "count",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3ec7ac7e-2774-4796-bad9-92b077579081",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"/*tests[\"Total count >= 1\"] = responseBody >= 1;*/"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/ExpenseItem/count",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"ExpenseItem",
+								"count"
+							]
+						},
+						"description": "Provides the Address total count."
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "25633915-ad72-4282-91db-76d759ec046c",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"tests[\"Status code is 201\"] = responseCode.code === 201;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"pm.environment.set(\"created_expense-item_id\", jsonData.id);",
+									"",
+									"tests[\"description is \\\"An expense itemt\\\"\"] = jsonData.description === \"An expense item\";",
+									"tests[\"amount is 1000\"] = jsonData.amount === 1000;",
+									"tests[\"qty is 2\"] = jsonData.qty === 2;",
+									"tests[\"vatRate is 10\"] = jsonData.vatRate === 10;",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"description\":\"An expense item\",\n\t\"amount\": 1000,\n\t\"qty\":2,\n\t\"vatRate\":10\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/ExpenseItem",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"ExpenseItem"
+							]
+						},
+						"description": "Creates and Persists an Address. Id is auto-generated."
+					},
+					"response": []
+				},
+				{
+					"name": "find",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ea605b08-d37c-463b-a185-a032e776532b",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is \"+pm.environment.get(\"created_expense-item_id\")] = jsonData.id == pm.environment.get(\"created_expense-item_id\");",
+									"tests[\"description is \\\"An expense itemt\\\"\"] = jsonData.description === \"An expense item\";",
+									"tests[\"amount is 1000\"] = jsonData.amount === 1000;",
+									"tests[\"qty is 2\"] = jsonData.qty === 2;",
+									"tests[\"vatRate is 10\"] = jsonData.vatRate === 10;",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/ExpenseItem/{{created_expense-item_id}}",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"ExpenseItem",
+								"{{created_expense-item_id}}"
+							]
+						},
+						"description": "Finds an Address."
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e2e9c1d4-f72d-464e-b3ca-652c22ea62db",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is \"+pm.environment.get(\"created_expense-item_id\")] = jsonData.id == pm.environment.get(\"created_expense-item_id\");",
+									"tests[\"description is \\\"An expense itemt\\\"\"] = jsonData.description === \"An expense item\";",
+									"tests[\"amount is 1500\"] = jsonData.amount === 1500;",
+									"tests[\"qty is 3\"] = jsonData.qty === 3;",
+									"tests[\"vatRate is 10\"] = jsonData.vatRate === 10;",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\":{{created_expense-item_id}},\n    \"description\": \"An expense item\",\n    \"amount\": 1500,\n    \"qty\": 3,\n    \"vatRate\": 10\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/ExpenseItem",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"ExpenseItem"
+							]
+						},
+						"description": "Updates and Saves an Address."
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/ExpenseItem/{{created_expense-item_id}}",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"ExpenseItem",
+								"{{created_expense-item_id}}"
+							]
+						},
+						"description": "Finds and Deletes an Address."
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Individual",
 			"description": null,
 			"item": [
