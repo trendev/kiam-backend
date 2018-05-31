@@ -206,7 +206,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"newpassword\": \"ANOTHER_PASSWORD\"\n}"
+							"raw": "{\n  \"newpassword\": \"ANOTHER_PASSWORD\"\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Authentication/new-password",
@@ -251,7 +251,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"newpassword\": \"{{password}}\"\n}"
+							"raw": "{\n  \"newpassword\": \"{{password}}\"\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Authentication/new-password",
@@ -3327,7 +3327,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"reference\": \"{{created_collectivegroupbill_reference}}\",\n    \"deliveryDate\": {{created_collectivegroupbill_deliveryDate}},\n    \"paymentDate\": {{created_collectivegroupbill_deliveryDate}},\n    \"cltype\": \"collectivegroupbill\",\n    \"amount\": 5000,\n    \"currency\": \"EUR\",\n    \"discount\": 1000,\n    \"comments\": [\n        \"Let the color applying\",\n        \"Hair used to be darker than expected\"\n    ],\n    \"payments\": [\n        {\n            \"amount\": 4000,\n            \"paymentMode\": {\n                \"name\": \"CB\"\n            }\n        },\n        {\n            \"amount\": 1000,\n            \"paymentMode\": {\n                \"name\": \"Espèces\"\n            }\n        }\n    ],\n    \"purchasedOfferings\": [\n        {\n            \"qty\": 4,\n            \"offering\": {\n                \"id\": {{created_offering_id}},\n                \"cltype\": \"service\",\n                \"name\": \"beauty service\",\n                \"price\": 1500,\n                \"duration\": 180,\n                \"businesses\": [\n                    {\n                        \"designation\": \"Esthétique\"\n                    }\n                ]\n            }\n        }\n    ],\n\t  \"collectiveGroup\":{\n\t    \"id\":{{created_collectivegroup_id}}\n\t  }\n}"
+							"raw": "{\n    \"reference\": \"{{created_collectivegroupbill_reference}}\",\n    \"deliveryDate\": {{created_collectivegroupbill_deliveryDate}},\n    \"paymentDate\": {{created_collectivegroupbill_deliveryDate}},\n    \"cltype\": \"collectivegroupbill\",\n    \"amount\": 5000,\n    \"currency\": \"EUR\",\n    \"discount\": 1000,\n    \"comments\": [\n        \"Let the color applying\",\n        \"Hair used to be darker than expected\"\n    ],\n    \"payments\": [\n        {\n            \"amount\": 4000,\n            \"paymentMode\": {\n                \"name\": \"CB\"\n            }\n        },\n        {\n            \"amount\": 1000,\n            \"paymentMode\": {\n                \"name\": \"Espèces\"\n            }\n        }\n    ],\n    \"purchasedOfferings\": [\n        {\n            \"qty\": 4,\n            \"offering\": {\n                \"id\": {{created_offering_id}},\n                \"cltype\": \"service\",\n                \"name\": \"beauty service\",\n                \"price\": 1500,\n                \"duration\": 180,\n                \"businesses\": [\n                    {\n                        \"designation\": \"Esthétique\"\n                    }\n                ]\n            }\n        }\n    ],\n    \"collectiveGroup\":{\n      \"id\":{{created_collectivegroup_id}}\n    }\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/CollectiveGroupBill?professional=vanessa.gay@gmail.com",
@@ -3828,7 +3828,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"cltype\": \"classic\",\n  \"description\":\"Purple Color\",\n  \"amount\":4050,\n  \"paymentDate\":1505707896023,\n  \"provider\":\"L'OREAL\",\n  \"vatInclusive\": false,\n  \"categories\": [\n            \"Color\",\n            \"Perfect Color from Paris\"\n    ],\n    \"payments\": [\n            {\n        \"amount\": 4000,\n                \"paymentMode\": {\n                    \"name\": \"CB\"\n                }\n            },\n            {\n                \"amount\": 50,\n                \"paymentMode\": {\n                    \"name\": \"Espèces\"\n                }\n            }\n        ],\n    \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n    ],\n    \"expenseItems\":[\n    \t{\n    \t\"description\":\"Purple #1\",\n    \t\"amount\":1000,\n    \t\"qty\":2,\n    \t\"vatRate\":20\n    \t},\n    \t{\n    \t\"description\":\"Purple #2\",\n    \t\"amount\":500,\n    \t\"qty\":3,\n    \t\"vatRate\":10\n    \t}\n    ]\n}"
+							"raw": "{\n  \"cltype\": \"classic\",\n  \"description\":\"Purple Color\",\n  \"amount\":4050,\n  \"paymentDate\":1505707896023,\n  \"provider\":\"L'OREAL\",\n  \"vatInclusive\": false,\n  \"categories\": [\n            \"Color\",\n            \"Perfect Color from Paris\"\n    ],\n    \"payments\": [\n            {\n        \"amount\": 4000,\n                \"paymentMode\": {\n                    \"name\": \"CB\"\n                }\n            },\n            {\n                \"amount\": 50,\n                \"paymentMode\": {\n                    \"name\": \"Espèces\"\n                }\n            }\n        ],\n    \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n    ],\n    \"expenseItems\":[\n      {\n      \"description\":\"Purple #1\",\n      \"amount\":1000,\n      \"qty\":2,\n      \"vatRate\":20\n      },\n      {\n      \"description\":\"Purple #2\",\n      \"amount\":500,\n      \"qty\":3,\n      \"vatRate\":10\n      }\n    ]\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/ClassicExpense?professional=vanessa.gay@gmail.com",
@@ -4220,7 +4220,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"description\":\"An expense item\",\n\t\"amount\": 1000,\n\t\"qty\":2,\n\t\"vatRate\":10\n}"
+							"raw": "{\n  \"description\":\"An expense item\",\n  \"amount\": 1000,\n  \"qty\":2,\n  \"vatRate\":10\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/ExpenseItem",
@@ -4671,7 +4671,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"individual@gmail.com\",\n\t\"cltype\":\"Individual\",\n    \"password\": \"ANOTHER_PASSWORD\",\n    \"username\": \"ind_test\",\n    \"registrationDate\": 1504361329000,\n    \"customerDetails\": {\n        \"id\": {{created_customer_details_id}},\n        \"firstName\": \"Hank\",\n        \"lastName\": \"Moody\",\n        \"nickname\": \"Hanky\",\n        \"phone\": \"0102030405\",\n        \"birthdate\": -296697600000,\n        \"sex\": \"M\",\n        \"comments\": [\n            \"Fun\",\n            \"Book Author\",\n            \"Smokes and drinks a lot\",\n            \"Also Weed and Sex addicted\",\n            \"Driving a Porsche 911\"\n        ]\n    },\n    \"address\": {\n        \"id\": {{created_address_id}},\n        \"street\": \"26 Brooks Avenue\",\n        \"postalCode\": \"90291\",\n        \"city\": \"Venice, Ca\",\n        \"country\": \"USA\"\n    },\n    \"socialNetworkAccounts\": {\n        \"id\": {{created_socialnetworkaccounts_id}},\n        \"facebook\": \"https://www.facebook.com/hankmoody\",\n        \"twitter\": \"@hankfuckinmoody\",\n        \"pinterest\": \"https://www.pinterest.com/californication123/\"\n    }\n}"
+							"raw": "{\n    \"email\": \"individual@gmail.com\",\n  \"cltype\":\"Individual\",\n    \"password\": \"ANOTHER_PASSWORD\",\n    \"username\": \"ind_test\",\n    \"registrationDate\": 1504361329000,\n    \"customerDetails\": {\n        \"id\": {{created_customer_details_id}},\n        \"firstName\": \"Hank\",\n        \"lastName\": \"Moody\",\n        \"nickname\": \"Hanky\",\n        \"phone\": \"0102030405\",\n        \"birthdate\": -296697600000,\n        \"sex\": \"M\",\n        \"comments\": [\n            \"Fun\",\n            \"Book Author\",\n            \"Smokes and drinks a lot\",\n            \"Also Weed and Sex addicted\",\n            \"Driving a Porsche 911\"\n        ]\n    },\n    \"address\": {\n        \"id\": {{created_address_id}},\n        \"street\": \"26 Brooks Avenue\",\n        \"postalCode\": \"90291\",\n        \"city\": \"Venice, Ca\",\n        \"country\": \"USA\"\n    },\n    \"socialNetworkAccounts\": {\n        \"id\": {{created_socialnetworkaccounts_id}},\n        \"facebook\": \"https://www.facebook.com/hankmoody\",\n        \"twitter\": \"@hankfuckinmoody\",\n        \"pinterest\": \"https://www.pinterest.com/californication123/\"\n    }\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Individual",
@@ -6859,6 +6859,273 @@
 			]
 		},
 		{
+			"name": "ProductReference",
+			"description": "Manage Addresses.\nRequires Administrator Authorization.",
+			"item": [
+				{
+					"name": "findAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "52aa34a3-e453-4bff-89b8-e093a6ce3979",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/ProductReference",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"ProductReference"
+							]
+						},
+						"description": "List all addresses."
+					},
+					"response": []
+				},
+				{
+					"name": "count",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f8e11493-61a2-46e1-9126-03c2423a421d",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/ProductReference/count",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"ProductReference",
+								"count"
+							]
+						},
+						"description": "Provides the Address total count."
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bd08de66-1fee-496a-93e5-9ae320b2dbde",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 201\"] = responseCode.code === 201;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"barcode is defined\"] = jsonData.barcode !== undefined;",
+									"pm.environment.set(\"created_product-reference_id\", jsonData.barcode);",
+									"",
+									"tests[\"description is \\\"blond color stick\\\"\"] = jsonData.description === \"blond color stick\";",
+									"tests[\"brand is \\\"L'OREAL\\\"\"] = jsonData.brand === \"L'OREAL\";",
+									"tests[\"business.designation is \\\"Coiffure\\\"\"] = jsonData.business.designation === \"Coiffure\";"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"barcode\": \"1234567890\",\n\t\"description\": \"blond color stick\",\n\t\"brand\": \"L'OREAL\",\n\t\"business\":            \n\t\t{\n\t\t\t\"designation\": \"Coiffure\"\n    \t}\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/ProductReference",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"ProductReference"
+							]
+						},
+						"description": "Creates and Persists an Address. Id is auto-generated."
+					},
+					"response": []
+				},
+				{
+					"name": "find",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e73b0620-66d7-4c75-bf4e-27537ecdd4b8",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"barcode is \"+pm.environment.get(\"created_product-reference_id\")] = jsonData.barcode === pm.environment.get(\"created_product-reference_id\");",
+									"",
+									"tests[\"description is \\\"blond color stick\\\"\"] = jsonData.description === \"blond color stick\";",
+									"tests[\"brand is \\\"L'OREAL\\\"\"] = jsonData.brand === \"L'OREAL\";",
+									"tests[\"business.designation is \\\"Coiffure\\\"\"] = jsonData.business.designation === \"Coiffure\";"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/ProductReference/{{created_product-reference_id}}",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"ProductReference",
+								"{{created_product-reference_id}}"
+							]
+						},
+						"description": "Finds an Address."
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dd7895c4-6295-4d7b-afff-dbb41659d3be",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"barcode is \"+pm.environment.get(\"created_product-reference_id\")] = jsonData.barcode === pm.environment.get(\"created_product-reference_id\");",
+									"",
+									"",
+									"tests[\"description is \\\"black color stick\\\"\"] = jsonData.description === \"black color stick\";",
+									"tests[\"brand is \\\"WELLA\\\"\"] = jsonData.brand === \"WELLA\";",
+									"tests[\"business.designation is \\\"Coiffure\\\"\"] = jsonData.business.designation === \"Coiffure\";"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"barcode\": {{created_product-reference_id}},\n\t\"description\": \"black color stick\",\n\t\"brand\": \"WELLA\",\n\t\"business\":            \n\t\t{\n\t\t\t\"designation\": \"Coiffure\"\n    \t}\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/ProductReference",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"ProductReference"
+							]
+						},
+						"description": "Updates and Saves an Address."
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/ProductReference/{{created_product-reference_id}}",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"ProductReference",
+								"{{created_product-reference_id}}"
+							]
+						},
+						"description": "Finds and Deletes an Address."
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Professional",
 			"description": null,
 			"item": [
@@ -7256,7 +7523,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"pro@domain.com\",\n    \"cltype\":\"Professional\",\n    \"password\": \"ANOTHER_PASSWORD\",\n    \"username\": \"pro_test\",\n    \"uuid\": \"PRO_d7d1b42c88b8450c96236d0a0f5b8294\",\n    \"registrationDate\": 1504361329000,\n    \"vatcode\": \"FR91552118465\",\n    \"companyName\": \"Boss Company\",\n    \"customerDetails\": {\n        \"id\": {{created_customer_details_id}},\n        \"firstName\": \"Hank\",\n        \"lastName\": \"Moody\",\n        \"nickname\": \"Hanky\",\n        \"phone\": \"0102030405\",\n        \"birthdate\": -296697600000,\n        \"sex\": \"M\",\n        \"comments\": [\n            \"Fun\",\n            \"Book Author\",\n            \"Smokes and drinks a lot\",\n            \"Also Weed and Sex addicted\",\n            \"Driving a Porsche 911\"\n        ]\n    },\n    \"address\": {\n        \"id\": {{created_address_id}},\n        \"street\": \"26 Brooks Avenue\",\n        \"postalCode\": \"90291\",\n        \"city\": \"Venice, Ca\",\n        \"country\": \"USA\"\n    },\n    \"socialNetworkAccounts\": {\n        \"id\": {{created_socialnetworkaccounts_id}},\n        \"facebook\": \"https://www.facebook.com/hankmoody\",\n        \"twitter\": \"@hankfuckinmoody\",\n        \"pinterest\": \"https://www.pinterest.com/californication123/\"\n    },\n    \"businesses\":[\n    \t{\n        \t\"designation\": \"Coiffure\"\n    \t},\n    \t{\n        \t\"designation\": \"Esthétique\"\n    \t}\n\t],\n\t\"paymentModes\":[\n    \t{\n        \t\"name\": \"CB\"\n    \t},\n    \t{\n        \t\"name\": \"Chèque\"\n    \t},\n\t    {\n        \t\"name\": \"Espèces\"\n    \t},\n    \t{\n    \t\t\"name\": \"Virement\"\n    \t}\t\n\t]\n}"
+							"raw": "{\n    \"email\": \"pro@domain.com\",\n    \"cltype\":\"Professional\",\n    \"password\": \"ANOTHER_PASSWORD\",\n    \"username\": \"pro_test\",\n    \"uuid\": \"PRO_d7d1b42c88b8450c96236d0a0f5b8294\",\n    \"registrationDate\": 1504361329000,\n    \"vatcode\": \"FR91552118465\",\n    \"companyName\": \"Boss Company\",\n    \"customerDetails\": {\n        \"id\": {{created_customer_details_id}},\n        \"firstName\": \"Hank\",\n        \"lastName\": \"Moody\",\n        \"nickname\": \"Hanky\",\n        \"phone\": \"0102030405\",\n        \"birthdate\": -296697600000,\n        \"sex\": \"M\",\n        \"comments\": [\n            \"Fun\",\n            \"Book Author\",\n            \"Smokes and drinks a lot\",\n            \"Also Weed and Sex addicted\",\n            \"Driving a Porsche 911\"\n        ]\n    },\n    \"address\": {\n        \"id\": {{created_address_id}},\n        \"street\": \"26 Brooks Avenue\",\n        \"postalCode\": \"90291\",\n        \"city\": \"Venice, Ca\",\n        \"country\": \"USA\"\n    },\n    \"socialNetworkAccounts\": {\n        \"id\": {{created_socialnetworkaccounts_id}},\n        \"facebook\": \"https://www.facebook.com/hankmoody\",\n        \"twitter\": \"@hankfuckinmoody\",\n        \"pinterest\": \"https://www.pinterest.com/californication123/\"\n    },\n    \"businesses\":[\n      {\n          \"designation\": \"Coiffure\"\n      },\n      {\n          \"designation\": \"Esthétique\"\n      }\n  ],\n  \"paymentModes\":[\n      {\n          \"name\": \"CB\"\n      },\n      {\n          \"name\": \"Chèque\"\n      },\n      {\n          \"name\": \"Espèces\"\n      },\n      {\n        \"name\": \"Virement\"\n      }  \n  ]\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Professional",
@@ -7915,7 +8182,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"qty\":2,\n  \"offering\":{\n\t\t\"id\":{{created_offering_id}},\n\t    \"name\":\"beauty service\",\n\t    \"price\":10000,\n\t    \"duration\":180,\n\t    \"businesses\": [\n\t\t     {\n\t\t         \"designation\": \"Esthétique\"\n\t\t     }\n\t     ],\n\t    \"cltype\":\"service\"\n\t}\n}"
+							"raw": "{\n  \"qty\":2,\n  \"offering\":{\n    \"id\":{{created_offering_id}},\n      \"name\":\"beauty service\",\n      \"price\":10000,\n      \"duration\":180,\n      \"businesses\": [\n         {\n             \"designation\": \"Esthétique\"\n         }\n       ],\n      \"cltype\":\"service\"\n  }\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/PurchasedOffering?professional=vanessa.gay@gmail.com",
@@ -8024,7 +8291,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"id\":{{created_purchasedoffering_id}},\n  \"qty\":20,\n  \"offering\":{\n\t\t\"id\":{{created_offering_id}},\n\t    \"name\":\"beauty service\",\n\t    \"price\":10000,\n\t    \"duration\":180,\n\t    \"businesses\": [\n\t\t     {\n\t\t         \"designation\": \"Esthétique\"\n\t\t     }\n\t     ],\n\t    \"cltype\":\"service\"\n\t}\n}"
+							"raw": "{\n  \"id\":{{created_purchasedoffering_id}},\n  \"qty\":20,\n  \"offering\":{\n    \"id\":{{created_offering_id}},\n      \"name\":\"beauty service\",\n      \"price\":10000,\n      \"duration\":180,\n      \"businesses\": [\n         {\n             \"designation\": \"Esthétique\"\n         }\n       ],\n      \"cltype\":\"service\"\n  }\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/PurchasedOffering?professional=vanessa.gay@gmail.com",
@@ -8232,7 +8499,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"cltype\": \"purchase\",\n  \"description\":\"Purple Color\",\n  \"amount\":4050,\n  \"paymentDate\":1505707896023,\n  \"provider\":\"L'OREAL\",\n  \"vatInclusive\": false,\n  \"categories\": [\n            \"Color\",\n            \"Perfect Color from Paris\"\n    ],\n    \"payments\": [\n            {\n        \"amount\": 4000,\n                \"paymentMode\": {\n                    \"name\": \"CB\"\n                }\n            },\n            {\n                \"amount\": 50,\n                \"paymentMode\": {\n                    \"name\": \"Espèces\"\n                }\n            }\n        ],\n    \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n    ],\n    \"expenseItems\":[\n    \t{\n    \t\"description\":\"Purple #1\",\n    \t\"amount\":1000,\n    \t\"qty\":2,\n    \t\"vatRate\":20\n    \t},\n    \t{\n    \t\"description\":\"Purple #2\",\n    \t\"amount\":500,\n    \t\"qty\":3,\n    \t\"vatRate\":10\n    \t}\n    ],\n    \"invoiceRef\":\"FR123456XXLOREAL\"\n}"
+							"raw": "{\n  \"cltype\": \"purchase\",\n  \"description\":\"Purple Color\",\n  \"amount\":4050,\n  \"paymentDate\":1505707896023,\n  \"provider\":\"L'OREAL\",\n  \"vatInclusive\": false,\n  \"categories\": [\n            \"Color\",\n            \"Perfect Color from Paris\"\n    ],\n    \"payments\": [\n            {\n        \"amount\": 4000,\n                \"paymentMode\": {\n                    \"name\": \"CB\"\n                }\n            },\n            {\n                \"amount\": 50,\n                \"paymentMode\": {\n                    \"name\": \"Espèces\"\n                }\n            }\n        ],\n    \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n    ],\n    \"expenseItems\":[\n      {\n      \"description\":\"Purple #1\",\n      \"amount\":1000,\n      \"qty\":2,\n      \"vatRate\":20\n      },\n      {\n      \"description\":\"Purple #2\",\n      \"amount\":500,\n      \"qty\":3,\n      \"vatRate\":10\n      }\n    ],\n    \"invoiceRef\":\"FR123456XXLOREAL\"\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/PurchaseExpense?professional=vanessa.gay@gmail.com",
@@ -8664,7 +8931,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"cltype\":\"sale\",\n  \"name\":\"product sale\",\n  \"price\":10000,\n  \"qty\":2,\n  \"businesses\": [\n        {\n                \"designation\": \"Coiffure\"\n        }\n  ]\n}"
+							"raw": "{\n  \"cltype\":\"sale\",\n  \"name\":\"product sale\",\n  \"price\":10000,\n  \"qty\":2,\n  \"businesses\": [\n        {\n                \"designation\": \"Coiffure\"\n        }\n  ]\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Sale?professional=vanessa.gay@gmail.com",
