@@ -6,10 +6,16 @@
 package fr.trendev.comptandye.sessions;
 
 import fr.trendev.comptandye.entities.ProductReference;
+import fr.trendev.comptandye.entities.ProductReference_;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 @Stateless
 @Named("productreference")
@@ -30,5 +36,17 @@ public class ProductReferenceFacade extends AbstractFacade<ProductReference, Str
     @Override
     public String prettyPrintPK(String pk) {
         return pk;
+    }
+
+    public List<ProductReference> findFromBarcode(String barcode) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<ProductReference> cq = cb.createQuery(
+                ProductReference.class);
+        Root<ProductReference> root = cq.from(ProductReference.class);
+        cq.select(root)
+                .where(cb.equal(root.get(ProductReference_.barcode), barcode));
+//        cq.orderBy(cb.asc(root.get(ProductReference_.brand)), cb.asc(root.get(ProductReference_.description)));
+        TypedQuery<ProductReference> q = em.createQuery(cq);
+        return q.getResultList();
     }
 }

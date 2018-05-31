@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "0a82d215-1d54-4bc4-b35e-fc94f1301303",
-		"name": "comptandye-v2",
+		"name": "comptandye",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -15,19 +15,41 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "29402ced-a91e-4c5d-b9e6-347e1b641b8b",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200 ;",
 									"",
+									" pm.test(\"JSESSIONID cookie is present\", function () {",
+									"      pm.response.to.not.be.error;",
+									"      pm.cookies.has(\"JSESSIONID\");",
+									"  });",
+									"",
+									"if(pm.cookies.has(\"JSESSIONID\")){",
+									"    console.log(pm.cookies.get(\"JSESSIONID\"));",
+									"    pm.environment.set(\"JSESSIONID\", pm.cookies.get(\"JSESSIONID\"))",
+									"}",
+									"",
+									" pm.test(\"XSRF-TOKEN cookie is present\", function () {",
+									"      pm.response.to.not.be.error;",
+									"      pm.cookies.has(\"XSRF-TOKEN\");",
+									"  });",
+									"",
+									"if(pm.cookies.has(\"XSRF-TOKEN\")){",
+									"    console.log(pm.cookies.get(\"XSRF-TOKEN\"));",
+									"    pm.environment.set(\"XSRF-TOKEN\", pm.cookies.get(\"XSRF-TOKEN\"))",
+									"}",
+									"",
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"cltype is Administrator or Professional or Individual ==> \"+jsonData.cltype] = jsonData.cltype === (\"Administrator\" || \"Professional\" || \"Individual\");",
 									"",
-									"if(postman.getResponseHeader(\"Set-Cookie\")){",
+									"",
+									"/*if(postman.getResponseHeader(\"Set-Cookie\")){",
 									"    tests[\"Set-Cookie is present\"] = postman.getResponseHeader(\"Set-Cookie\");",
 									"    ",
 									"    postman.setEnvironmentVariable(\"XSRF-TOKEN\",postman.getResponseHeader(\"Set-Cookie\").split(\";\")[0].split(\"=\")[1]);",
 									"    console.log(postman.getEnvironmentVariable(\"XSRF-TOKEN\"));",
-									"}",
+									"}*/",
 									""
 								]
 							}
@@ -125,7 +147,12 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "",
+								"value": ""
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
