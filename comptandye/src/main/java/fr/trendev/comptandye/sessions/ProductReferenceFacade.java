@@ -44,7 +44,8 @@ public class ProductReferenceFacade extends AbstractFacade<ProductReference, Str
                 ProductReference.class);
         Root<ProductReference> root = cq.from(ProductReference.class);
         cq.select(root)
-                .where(cb.equal(root.get(ProductReference_.barcode), barcode));
+                .where(cb.like(root.get(ProductReference_.barcode),
+                        barcode + "%"));
 //        cq.orderBy(cb.asc(root.get(ProductReference_.brand)), cb.asc(root.get(ProductReference_.description)));
         TypedQuery<ProductReference> q = em.createQuery(cq);
         return q.getResultList();

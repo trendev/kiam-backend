@@ -8,6 +8,8 @@ package fr.trendev.comptandye.services;
 import fr.trendev.comptandye.entities.ProductReference;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.ProductReferenceFacade;
+import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
@@ -22,6 +24,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -33,27 +36,27 @@ import javax.ws.rs.core.Response;
 @Path("ProductReference")
 @RolesAllowed({"Administrator"})
 public class ProductReferenceService extends AbstractCommonService<ProductReference, String> {
-    
+
     @Inject
     ProductReferenceFacade productReferenceFacade;
-    
+
     private final Logger LOG = Logger.getLogger(ProductReferenceService.class.
             getName());
-    
+
     public ProductReferenceService() {
         super(ProductReference.class);
     }
-    
+
     @Override
     protected Logger getLogger() {
         return LOG;
     }
-    
+
     @Override
     protected AbstractFacade<ProductReference, String> getFacade() {
         return productReferenceFacade;
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
@@ -62,7 +65,7 @@ public class ProductReferenceService extends AbstractCommonService<ProductRefere
         LOG.log(Level.INFO, "Providing the ProductReference list");
         return super.findAll();
     }
-    
+
     @Path("count")
     @GET
     @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON,})
@@ -70,7 +73,7 @@ public class ProductReferenceService extends AbstractCommonService<ProductRefere
     public Response count() {
         return super.count();
     }
-    
+
     @Path("{barcode}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -82,7 +85,28 @@ public class ProductReferenceService extends AbstractCommonService<ProductRefere
                 barcode);
         return super.find(barcode, refresh);
     }
-    
+
+    @Path("search/{barcode}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"Administrator", "Professional"})
+    public Response search(@PathParam("barcode") String barcode) {
+        LOG.log(Level.INFO, "REST request to search ProductReference : {0}",
+                barcode);
+        try {
+            List<ProductReference> result = productReferenceFacade
+                    .findFromBarcode(barcode);
+            return Response.status(Response.Status.OK).
+                    entity(result).build();
+
+        } catch (Exception ex) {
+            String errmsg = ExceptionHelper.handleException(ex,
+                    "Exception occurs searching ProductReference" + barcode);
+            getLogger().log(Level.WARNING, errmsg, ex);
+            throw new WebApplicationException(errmsg, ex);
+        }
+    }
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -92,7 +116,7 @@ public class ProductReferenceService extends AbstractCommonService<ProductRefere
         return super.post(entity, e -> {
         });
     }
-    
+
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -107,7 +131,7 @@ public class ProductReferenceService extends AbstractCommonService<ProductRefere
             e.setBusiness(entity.getBusiness());
         });
     }
-    
+
     @Path("{barcode}")
     @DELETE
     public Response delete(@PathParam("barcode") String barcode) {
@@ -115,5 +139,5 @@ public class ProductReferenceService extends AbstractCommonService<ProductRefere
         return super.delete(barcode, e -> {
         });
     }
-    
+
 }

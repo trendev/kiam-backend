@@ -6940,14 +6940,14 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bd08de66-1fee-496a-93e5-9ae320b2dbde",
+								"id": "e1df6e47-d2bf-41b4-b1a7-6f0825707b7d",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"barcode is defined\"] = jsonData.barcode !== undefined;",
-									"pm.environment.set(\"created_product-reference_id\", jsonData.barcode);",
+									"pm.environment.set(\"created_product-reference_barcode\", jsonData.barcode);",
 									"",
 									"tests[\"description is \\\"blond color stick\\\"\"] = jsonData.description === \"blond color stick\";",
 									"tests[\"brand is \\\"L'OREAL\\\"\"] = jsonData.brand === \"L'OREAL\";",
@@ -6991,13 +6991,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e73b0620-66d7-4c75-bf4e-27537ecdd4b8",
+								"id": "f2fbed31-963a-498d-8e32-19526eb10d5f",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"barcode is \"+pm.environment.get(\"created_product-reference_id\")] = jsonData.barcode === pm.environment.get(\"created_product-reference_id\");",
+									"tests[\"barcode is \"+pm.environment.get(\"created_product-reference_barcode\")] = jsonData.barcode === pm.environment.get(\"created_product-reference_barcode\");",
 									"",
 									"tests[\"description is \\\"blond color stick\\\"\"] = jsonData.description === \"blond color stick\";",
 									"tests[\"brand is \\\"L'OREAL\\\"\"] = jsonData.brand === \"L'OREAL\";",
@@ -7014,13 +7014,78 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{API_URL}}/ProductReference/{{created_product-reference_id}}",
+							"raw": "{{API_URL}}/ProductReference/{{created_product-reference_barcode}}",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"ProductReference",
-								"{{created_product-reference_id}}"
+								"{{created_product-reference_barcode}}"
+							]
+						},
+						"description": "Finds an Address."
+					},
+					"response": []
+				},
+				{
+					"name": "search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "eb29621b-bf9b-4fb7-9bb1-0f75833e2301",
+								"type": "text/javascript",
+								"exec": [
+									" pm.test(\"response should be 200 OK\", function () {",
+									"           pm.response.to.be.ok",
+									" });",
+									" ",
+									" var jsonData = pm.response.json();",
+									" ",
+									" pm.test(\"response should contain an array with at least one ProductReference\", function(){",
+									"     pm.expect(Array.isArray(jsonData)).to.be.true;",
+									"     pm.expect(jsonData.length).gt(0);",
+									"});",
+									" ",
+									"pm.test(\"response should contain barcode \"+pm.environment.get(\"created_product-reference_barcode\"),function(){",
+									"    ",
+									"    var pr = jsonData",
+									"        .filter(pr => pr.barcode === pm.environment.get(\"created_product-reference_barcode\"))",
+									"        .pop();",
+									"    ",
+									"    pm.expect(pr.barcode).to.equal(pm.environment.get(\"created_product-reference_barcode\"));",
+									" });",
+									""
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8d6b97be-40ca-4220-8425-cdb5d1a5087b",
+								"type": "text/javascript",
+								"exec": [
+									"pm.environment.set(\"searched_product-reference_barcode\", pm.environment.get(\"created_product-reference_barcode\").substring(0,4));"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/ProductReference/search/{{searched_product-reference_barcode}}",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"ProductReference",
+								"search",
+								"{{searched_product-reference_barcode}}"
 							]
 						},
 						"description": "Finds an Address."
@@ -7033,7 +7098,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "dd7895c4-6295-4d7b-afff-dbb41659d3be",
+								"id": "cc98c581-5234-4ffd-b025-a4fc2ab04973",
 								"type": "text/javascript",
 								"exec": [
 									"",
@@ -7041,7 +7106,7 @@
 									"",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"barcode is \"+pm.environment.get(\"created_product-reference_id\")] = jsonData.barcode === pm.environment.get(\"created_product-reference_id\");",
+									"tests[\"barcode is \"+pm.environment.get(\"created_product-reference_barcode\")] = jsonData.barcode === pm.environment.get(\"created_product-reference_barcode\");",
 									"",
 									"",
 									"tests[\"description is \\\"black color stick\\\"\"] = jsonData.description === \"black color stick\";",
@@ -7065,7 +7130,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"barcode\": {{created_product-reference_id}},\n\t\"description\": \"black color stick\",\n\t\"brand\": \"WELLA\",\n\t\"business\":            \n\t\t{\n\t\t\t\"designation\": \"Coiffure\"\n    \t}\n}"
+							"raw": "{\n\t\"barcode\": {{created_product-reference_barcode}},\n\t\"description\": \"black color stick\",\n\t\"brand\": \"WELLA\",\n\t\"business\":            \n\t\t{\n\t\t\t\"designation\": \"Coiffure\"\n    \t}\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/ProductReference",
@@ -7110,13 +7175,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{API_URL}}/ProductReference/{{created_product-reference_id}}",
+							"raw": "{{API_URL}}/ProductReference/{{created_product-reference_barcode}}",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"ProductReference",
-								"{{created_product-reference_id}}"
+								"{{created_product-reference_barcode}}"
 							]
 						},
 						"description": "Finds and Deletes an Address."
