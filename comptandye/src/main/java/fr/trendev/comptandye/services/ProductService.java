@@ -7,7 +7,9 @@ package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.entities.Product;
 import fr.trendev.comptandye.entities.ProductPK;
+import fr.trendev.comptandye.entities.ProductRecord;
 import fr.trendev.comptandye.entities.Professional;
+import fr.trendev.comptandye.entities.Sale;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.ProductFacade;
 import fr.trendev.comptandye.sessions.ProductRecordFacade;
@@ -184,6 +186,14 @@ public class ProductService extends AbstractCommonService<Product, ProductPK> {
         });
     }
 
+    /**
+     * Delete a Product, if sales & productRecords are empty
+     *
+     * @param sec the security context
+     * @param barcode the code of the Product
+     * @param professional the professional who owns the Product
+     * @return OK or a HttpError
+     */
     @Path("{barcode}")
     @DELETE
     public Response delete(@Context SecurityContext sec,
@@ -210,6 +220,37 @@ public class ProductService extends AbstractCommonService<Product, ProductPK> {
                         "Product cannot be deleted because it has some ProductRecords");
             }
         });
+    }
+
+    /**
+     * Get the Sales linked to this Product.
+     *
+     * @param sec the security context
+     * @param barcode the code of the Product
+     * @param professional the professional, owner of the Product
+     * @return the sales list if OK or a HttpError
+     */
+    @Path("{barcode}/sales")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getSales(@Context SecurityContext sec,
+            @PathParam("barcode") String barcode,
+            @QueryParam("professional") String professional) {
+        ProductPK pk = new ProductPK(
+                this.getProEmail(sec, professional), barcode);
+        return super.provideRelation(pk, Product::getSales, Sale.class);
+    }
+
+    @Path("{barcode}/productRecords")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getProductRecords(@Context SecurityContext sec,
+            @PathParam("barcode") String barcode,
+            @QueryParam("professional") String professional) {
+        ProductPK pk = new ProductPK(
+                this.getProEmail(sec, professional), barcode);
+        return super.provideRelation(pk, Product::getProductRecords,
+                ProductRecord.class);
     }
 
     /*@Path("{categoryid}/addClient/{clientid}")
@@ -258,14 +299,6 @@ public class ProductService extends AbstractCommonService<Product, ProductPK> {
                 remove(cat));
     }
 
-    @Path("{id}/clients")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getClients(@Context SecurityContext sec,
-            @PathParam("id") Long id,
-            @QueryParam("professional") String professional) {
-        CategoryPK pk = new CategoryPK(id, this.getProEmail(sec, professional));
-        return super.provideRelation(pk, Category::getClients, Client.class);
-    }
+    
      */
 }
