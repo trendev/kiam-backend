@@ -21,8 +21,10 @@ import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -154,42 +156,63 @@ public class ProductService extends AbstractCommonService<Product, ProductPK> {
 
     }
 
-    /*@PUT
+    /**
+     * Update a Product. Doesn't update the available quantity.
+     *
+     * @param sec
+     * @param entity
+     * @param professional
+     * @return
+     */
+    @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response put(@Context SecurityContext sec, Category entity,
+    public Response put(@Context SecurityContext sec, Product entity,
             @QueryParam("professional") String professional) {
 
-        CategoryPK pk = new CategoryPK(entity.getId(), this.getProEmail(sec,
-                professional));
+        ProductPK pk = new ProductPK(
+                this.getProEmail(sec, professional),
+                entity.getProductReference().getBarcode());
 
-        LOG.log(Level.INFO, "Updating Category {0}", productFacade.
+        LOG.log(Level.INFO, "Updating Product {0}", productFacade.
                 prettyPrintPK(pk));
+
         return super.put(entity, pk, e -> {
-            e.setDescription(entity.getDescription());
-            e.setName(entity.getName());
+            e.setThresholdWarning(entity.getThresholdWarning());
+            e.setThresholdSevere(entity.getThresholdSevere());
+            e.setComments(entity.getComments());
         });
     }
 
-    @Path("{id}")
+    @Path("{barcode}")
     @DELETE
     public Response delete(@Context SecurityContext sec,
-            @PathParam("id") Long id,
+            @PathParam("barcode") String barcode,
             @QueryParam("professional") String professional) {
 
-        CategoryPK pk = new CategoryPK(id, this.getProEmail(sec,
-                professional));
+        ProductPK pk = new ProductPK(
+                this.getProEmail(sec, professional), barcode);
 
-        LOG.log(Level.INFO, "Deleting Category {0}", productFacade.
+        LOG.log(Level.INFO, "Deleting Product {0}", productFacade.
                 prettyPrintPK(pk));
         return super.delete(pk,
                 e -> {
-            e.getProfessional().getCategories().remove(e);
-            e.getClients().forEach(cl -> cl.getCategories().remove(e));
+            e.getProfessional().getStock().remove(e);
+
+            if (e.getSales() != null && !e.getSales().isEmpty()) {
+                throw new WebApplicationException(
+                        "Product cannot be deleted because Sales are linked with this Product");
+            }
+
+            if (e.getProductRecords() != null && !e.getProductRecords().
+                    isEmpty()) {
+                throw new WebApplicationException(
+                        "Product cannot be deleted because it has some ProductRecords");
+            }
         });
     }
 
-    @Path("{categoryid}/addClient/{clientid}")
+    /*@Path("{categoryid}/addClient/{clientid}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public Response addClient(@Context SecurityContext sec,

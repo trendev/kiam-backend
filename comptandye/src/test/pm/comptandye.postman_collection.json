@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0a82d215-1d54-4bc4-b35e-fc94f1301303",
+		"_postman_id": "2d715493-fa83-44d4-911f-9cf5f403414a",
 		"name": "comptandye",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -6859,6 +6859,404 @@
 			]
 		},
 		{
+			"name": "Product",
+			"description": null,
+			"item": [
+				{
+					"name": "findAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9298f39e-df7e-402b-b5a9-074ffddb4b70",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Product table exists\"] = jsonData.length >= 0;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/Product",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "count",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2225329f-8a77-4eec-8991-8dd3f1046d2c",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"tests[\"count >= 0\"] = responseBody >= 0;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/Product/count",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Product",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c3d5d89f-045c-4b2b-8b38-5150dc203750",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Response is 201 Created',function(){",
+									"    pm.response.to.have.status(201);",
+									"    pm.response.to.have.status(\"Created\");",
+									"})",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test('availableQty is 0',function(){",
+									"    pm.expect(jsonData.availableQty).to.equal(0);",
+									"})",
+									"",
+									"pm.test('thresholdWarning is 2 and thresholdSevere is 1',function(){",
+									"    pm.expect(jsonData.thresholdWarning).to.equal(2);",
+									"    pm.expect(jsonData.thresholdSevere).to.equal(1);",
+									"})",
+									"",
+									"var pr = {",
+									"        \"description\": \"blond color stick\",",
+									"        \"brand\": \"L'OREAL\",",
+									"        \"business\": {",
+									"            \"designation\": \"Coiffure\"",
+									"        }",
+									"    };",
+									"pr.barcode = pm.environment.get('created_product-reference_barcode');",
+									"    ",
+									"pm.test('productReference is correct',function(){",
+									"    pm.expect(jsonData.productReference).to.deep.equal(pr);",
+									"})",
+									"",
+									"pm.test('comments.length is 2',function(){",
+									"    pm.expect(jsonData.comments).to.have.lengthOf(2);",
+									"})",
+									""
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8166e928-0c45-4c64-bf2b-2bea50336e67",
+								"type": "text/javascript",
+								"exec": [
+									"pm.environment.set(\"created_product-reference_barcode\", \"1234567899\");",
+									"",
+									"pm.sendRequest({",
+									"    url:pm.environment.get('API_URL')+\"/ProductReference\",",
+									"    method: 'POST',",
+									"   header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"    },",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify(",
+									"            {",
+									"\t\"barcode\": pm.environment.get('created_product-reference_barcode'),",
+									"\t\"description\": \"blond color stick\",",
+									"\t\"brand\": \"L'OREAL\",",
+									"\t\"business\":            ",
+									"\t\t{",
+									"\t\t\t\"designation\": \"Coiffure\"",
+									"    \t}",
+									"})",
+									"    }",
+									"}, function (err, response) {",
+									"    console.log(response.json());",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"availableQty\": 3,\n        \"thresholdWarning\": 2,\n        \"thresholdSevere\": 1,\n        \"comments\":[\n        \t\"No restriction\",\n        \t\"ok for me\"\n        ],\n        \"productReference\": {\n\t\"barcode\": {{created_product-reference_barcode}},\n\t\"description\": \"blond color stick\",\n\t\"brand\": \"L'OREAL\",\n\t\"business\":            \n\t\t{\n\t\t\t\"designation\": \"Coiffure\"\n    \t}\n}\n    }"
+						},
+						"url": {
+							"raw": "{{API_URL}}/Product?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Product"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "17969962-9e99-4704-b7f1-9bf19db19543",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Response is 200 OK',function(){",
+									"    pm.response.to.be.ok;",
+									"})",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test('availableQty is 0',function(){",
+									"    pm.expect(jsonData.availableQty).to.equal(0);",
+									"})",
+									"",
+									"pm.test('thresholdWarning is 2 and thresholdSevere is 1',function(){",
+									"    pm.expect(jsonData.thresholdWarning).to.equal(2);",
+									"    pm.expect(jsonData.thresholdSevere).to.equal(1);",
+									"})",
+									"",
+									"var pr = {",
+									"        \"description\": \"blond color stick\",",
+									"        \"brand\": \"L'OREAL\",",
+									"        \"business\": {",
+									"            \"designation\": \"Coiffure\"",
+									"        }",
+									"    };",
+									"pr.barcode = pm.environment.get('created_product-reference_barcode');",
+									"    ",
+									"pm.test('productReference is correct',function(){",
+									"    pm.expect(jsonData.productReference).to.deep.equal(pr);",
+									"})",
+									"",
+									"pm.test('comments.length is 2',function(){",
+									"    pm.expect(jsonData.comments).to.have.lengthOf(2);",
+									"})"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/Product/{{created_product-reference_barcode}}?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Product",
+								"{{created_product-reference_barcode}}"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2f540e49-5a5c-485d-a819-d8cd1b5b0b44",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Response is 200 OK',function(){",
+									"    pm.response.to.be.ok;",
+									"})",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test('availableQty is 0',function(){",
+									"    pm.expect(jsonData.availableQty).to.equal(0);",
+									"})",
+									"",
+									"pm.test('thresholdWarning is 3 and thresholdSevere is 2',function(){",
+									"    pm.expect(jsonData.thresholdWarning).to.equal(3);",
+									"    pm.expect(jsonData.thresholdSevere).to.equal(2);",
+									"})",
+									"",
+									"var pr = {",
+									"        \"description\": \"blond color stick\",",
+									"        \"brand\": \"L'OREAL\",",
+									"        \"business\": {",
+									"            \"designation\": \"Coiffure\"",
+									"        }",
+									"    };",
+									"pr.barcode = pm.environment.get('created_product-reference_barcode');",
+									"    ",
+									"pm.test('productReference is correct',function(){",
+									"    pm.expect(jsonData.productReference).to.deep.equal(pr);",
+									"})",
+									"",
+									"pm.test('comments.length is 1',function(){",
+									"    pm.expect(jsonData.comments).to.have.lengthOf(1);",
+									"    pm.expect(jsonData.comments[0]).to.equal('Just one comment');",
+									"})"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"availableQty\": 3,\n        \"thresholdWarning\": 3,\n        \"thresholdSevere\": 2,\n        \"comments\":[\n        \t\"Just one comment\"\n        ],\n        \"productReference\": {\n\t\t\t\"barcode\": {{created_product-reference_barcode}}\n\t\t}\n    }"
+						},
+						"url": {
+							"raw": "{{API_URL}}/Product?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Product"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "52799f14-c770-413d-9d89-9a768e64963a",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"pm.sendRequest({",
+									"    url:pm.environment.get('API_URL')+\"/ProductReference/\"+pm.environment.get('created_product-reference_barcode'),",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"    },",
+									"    method: 'DELETE'",
+									"}, function (err, res) {",
+									"    pm.expect(res).to.have.property('code', 200);",
+									"    pm.expect(res).to.have.property('status', 'OK');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/Product/{{created_product-reference_barcode}}?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Product",
+								"{{created_product-reference_barcode}}"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "ProductReference",
 			"description": "Manage Addresses.\nRequires Administrator Authorization.",
 			"item": [
@@ -6970,7 +7368,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"barcode\": \"1234567890\",\n\t\"description\": \"blond color stick\",\n\t\"brand\": \"L'OREAL\",\n\t\"business\":            \n\t\t{\n\t\t\t\"designation\": \"Coiffure\"\n    \t}\n}"
+							"raw": "{\n\t\"barcode\": \"1234567899\",\n\t\"description\": \"blond color stick\",\n\t\"brand\": \"L'OREAL\",\n\t\"business\":            \n\t\t{\n\t\t\t\"designation\": \"Coiffure\"\n    \t}\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/ProductReference",
@@ -7953,6 +8351,45 @@
 							"path": [
 								"Professional",
 								"expenses"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "vanessa.gay@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getStock",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/Professional/stock?email=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Professional",
+								"stock"
 							],
 							"query": [
 								{
