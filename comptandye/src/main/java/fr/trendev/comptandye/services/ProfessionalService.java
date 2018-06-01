@@ -12,6 +12,7 @@ import fr.trendev.comptandye.entities.CollectiveGroup;
 import fr.trendev.comptandye.entities.Expense;
 import fr.trendev.comptandye.entities.Individual;
 import fr.trendev.comptandye.entities.Offering;
+import fr.trendev.comptandye.entities.Product;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.entities.VatRates;
@@ -400,6 +401,15 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
             @QueryParam("email") String email) {
         return this.provideRelation(this.getProEmail(sec, email),
                 Professional::getExpenses, Expense.class);
+    }
+
+    @Path("stock")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getStock(@Context SecurityContext sec,
+            @QueryParam("email") String email) {
+        return this.provideRelation(this.getProEmail(sec, email),
+                Professional::getStock, Product.class);
     }
 
     @Path("individuals")
