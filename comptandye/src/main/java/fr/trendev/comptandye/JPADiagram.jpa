@@ -1894,14 +1894,23 @@ import fr.trendev.comptandye.utils.ExpenseType;</jpa:snp>
             <jpa:basic attribute-type="String" v="true" xvt="" name="description" id="_1524840963347153">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:nn m="description field in ProductReference must not be null"/>
+                </jpa:bv>
             </jpa:basic>
             <jpa:basic attribute-type="String" v="true" xvt="" name="brand" id="_1524841057219154">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:nn m="brand field in ProductReference must not be null"/>
+                </jpa:bv>
             </jpa:basic>
             <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1503060694288" v="true" xvt="" name="business" id="_1524841100537155">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:nn m="business field in ProductReference must not be null"/>
+                </jpa:bv>
             </jpa:one-to-one>
             <jpa:id attribute-type="String" v="true" xvt="" name="barcode" ft="false" id="_1524840333044151">
                 <jpa:xwm nil="false" req="false"/>
@@ -1929,14 +1938,23 @@ import fr.trendev.comptandye.utils.ExpenseType;</jpa:snp>
                 <jpa:des>Quantity of available items</jpa:des>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:mi v="0" m="availableQty in Product cannot be less than 0"/>
+                </jpa:bv>
             </jpa:basic>
             <jpa:basic attribute-type="int" v="true" xvt="" name="thresholdWarning" id="_1524842511104169">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:mi v="0" m="thresholdWarning in Product cannot be less than 0"/>
+                </jpa:bv>
             </jpa:basic>
             <jpa:basic attribute-type="int" v="true" xvt="" name="thresholdSevere" id="_1524842543060170">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:mi v="0" m="thresholdSevere in Product cannot be less than 0"/>
+                </jpa:bv>
             </jpa:basic>
             <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_1524841981058165" v="true" xvt="" name="professional" id="_1524841981057164">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>

@@ -14,6 +14,7 @@ import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Min;
 
 /**
  * @author jsie
@@ -27,12 +28,16 @@ public class Product {
      * Quantity of available items
      */
     @Basic
+    @Min(value = 0, message = "availableQty in Product cannot be less than 0")
     private int availableQty;
 
     @Basic
+    @Min(value = 0,
+            message = "thresholdWarning in Product cannot be less than 0")
     private int thresholdWarning;
 
     @Basic
+    @Min(value = 0, message = "thresholdSevere in Product cannot be less than 0")
     private int thresholdSevere;
 
     @ElementCollection

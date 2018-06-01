@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author jsie
@@ -20,12 +21,15 @@ public class ProductReference {
     private String barcode;
 
     @Basic
+    @NotNull(message = "description field in ProductReference must not be null")
     private String description;
 
     @Basic
+    @NotNull(message = "brand field in ProductReference must not be null")
     private String brand;
 
     @OneToOne(targetEntity = Business.class)
+    @NotNull(message = "business field in ProductReference must not be null")
     private Business business;
 
     public String getBarcode() {
