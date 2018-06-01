@@ -11,8 +11,10 @@ import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.ProductFacade;
 import fr.trendev.comptandye.sessions.ProductRecordFacade;
+import fr.trendev.comptandye.sessions.ProductReferenceFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.sessions.SaleFacade;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
@@ -51,6 +53,9 @@ public class ProductService extends AbstractCommonService<Product, ProductPK> {
 
     @Inject
     ProductRecordFacade productRecordFacade;
+
+    @Inject
+    ProductReferenceFacade productReferenceFacade;
 
     private final Logger LOG = Logger.getLogger(ProductService.class.
             getName());
@@ -100,6 +105,16 @@ public class ProductService extends AbstractCommonService<Product, ProductPK> {
         return super.find(pk, refresh);
     }
 
+    /**
+     * Checks the Thresholds, set available quantity to 0 and persist the
+     * Product (and the provided ProductReference if necessary)
+     *
+     * @param sec the security context
+     * @param entity the entity to persist
+     * @param professional the email of the professional (for Administrator
+     * usage)
+     * @return the persisted Product if created or an HttpError
+     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -129,6 +144,12 @@ public class ProductService extends AbstractCommonService<Product, ProductPK> {
                 throw new WebApplicationException(
                         "Warning Threshold must not be less than Severe Threshold");
             }
+
+            // avoid to PERSIST an existing ProductReference and use it instead
+            Optional.ofNullable(productReferenceFacade
+                    .find(entity.getProductReference().getBarcode()))
+                    .ifPresent(pr -> e.setProductReference(pr));
+            // or else let JPA persisting the provided ProductReference
         });
 
     }
