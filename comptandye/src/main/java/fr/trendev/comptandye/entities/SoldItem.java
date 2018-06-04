@@ -3,6 +3,7 @@ package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.trendev.comptandye.utils.ProductRecordType;
+import fr.trendev.comptandye.utils.visitors.Visitor;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -34,6 +35,10 @@ public class SoldItem extends ProductRecord {
 
     public void setBill(Bill bill) {
         this.bill = bill;
+    }
+
+    public <T> T accept(Visitor<T> v) {
+        return v.visit(this);
     }
 
 }

@@ -3,6 +3,7 @@ package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.trendev.comptandye.utils.ProductRecordType;
+import fr.trendev.comptandye.utils.visitors.Visitor;
 import javax.persistence.Entity;
 
 /**
@@ -17,6 +18,10 @@ public class UsedItem extends ProductRecord {
     public UsedItem() {
         super();
         this.cltype = ProductRecordType.USED_ITEM;
+    }
+
+    public <T> T accept(Visitor<T> v) {
+        return v.visit(this);
     }
 
 }

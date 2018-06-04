@@ -181,13 +181,13 @@ public class DemoConfigureBean implements Serializable {
         vanessa.getExpenses().add(ce);
 
         PurchaseExpense pe = new PurchaseExpense();
-        pe.setDescription("Buy 4x color sticks");
-        pe.setAmount(1200);
+        pe.setDescription("Buy 40x color sticks");
+        pe.setAmount(12000);
         pe.setPaymentDate(new Date());
         pe.setProvider("BLEU LIBELLULE");
         pe.setCategories(Arrays.asList("color"));
         pe.setPayments(Arrays.asList(
-                new Payment(1200, em.find(PaymentMode.class, "CB"))));
+                new Payment(12000, em.find(PaymentMode.class, "CB"))));
         pe.setBusinesses(Arrays.
                 asList(em.find(Business.class, "Coiffure")));
         pe.setInvoiceRef("facture #2341");

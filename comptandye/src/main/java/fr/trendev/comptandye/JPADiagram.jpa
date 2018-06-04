@@ -2084,7 +2084,11 @@ import fr.trendev.comptandye.utils.ExpenseType;</jpa:snp>
             <jpa:post>this.cltype = ProductRecordType.PURCHASED_ITEM;</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.ProductRecordType;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.ProductRecordType;
+import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
+        <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
+            }</jpa:snp>
         <jpa:des>Recored added when an item is purchased(bought by the professional) must be linked to an Expense (Purchase)</jpa:des>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -2103,7 +2107,11 @@ import fr.trendev.comptandye.utils.ExpenseType;</jpa:snp>
             <jpa:post>this.cltype = ProductRecordType.USED_ITEM;</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.ProductRecordType;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.ProductRecordType;
+import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
+        <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
+            }</jpa:snp>
         <jpa:des>Record added when an Item is consumed during the delivery</jpa:des>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes/>
@@ -2117,7 +2125,11 @@ import fr.trendev.comptandye.utils.ExpenseType;</jpa:snp>
             <jpa:post>this.cltype = ProductRecordType.RETURNED_ITEM;</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.ProductRecordType;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.ProductRecordType;
+import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
+        <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
+            }</jpa:snp>
         <jpa:des>Recorded add when a Bill is cancelled and the product are returned</jpa:des>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -2139,7 +2151,11 @@ import fr.trendev.comptandye.utils.ExpenseType;</jpa:snp>
             <jpa:post>this.cltype = ProductRecordType.SOLD_ITEM;</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.ProductRecordType;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.ProductRecordType;
+import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
+        <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
+            }</jpa:snp>
         <jpa:des>Record added when an item is sold and linked with an active Bill</jpa:des>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -2404,7 +2420,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1525253236164" x="420" y="2271">
+            <i ref="_1525253236164" x="420" y="2273">
                 <el>
                     <e ref="_1525257002758119">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -2428,7 +2444,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                 </el>
             </i>
             <i ref="_1490104062170" x="-413" y="393"/>
-            <i ref="_1490113906035" x="-365" y="998">
+            <i ref="_1490113906035" x="-363" y="998">
                 <el>
                     <e ref="_1513010994290214">
                         <v st="1" si="12.0" cl="#00ff00"/>

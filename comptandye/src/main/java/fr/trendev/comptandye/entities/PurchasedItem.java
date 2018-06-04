@@ -3,6 +3,7 @@ package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.trendev.comptandye.utils.ProductRecordType;
+import fr.trendev.comptandye.utils.visitors.Visitor;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
@@ -30,6 +31,10 @@ public class PurchasedItem extends ProductRecord {
 
     public void setPurchaseExpense(PurchaseExpense purchaseExpense) {
         this.purchaseExpense = purchaseExpense;
+    }
+
+    public <T> T accept(Visitor<T> v) {
+        return v.visit(this);
     }
 
 }
