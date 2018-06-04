@@ -10,6 +10,7 @@ import fr.trendev.comptandye.entities.ProductPK;
 import fr.trendev.comptandye.entities.ProductRecord;
 import fr.trendev.comptandye.sessions.ProductFacade;
 import fr.trendev.comptandye.utils.visitors.VariationOfProductRecordQtyVisitor;
+import java.util.Date;
 import java.util.Optional;
 import java.util.function.Consumer;
 import javax.inject.Inject;
@@ -37,7 +38,16 @@ public abstract class AbstractProductRecordService<T extends ProductRecord>
             String professional,
             Consumer<T> createActions) {
         return super.post(entity, e -> {
+            //inits the product record
             e.setId(null);
+            e.setRecordDate(new Date());
+            e.setCancelled(false);
+            e.setCancellationDate(null);
+
+            if (e.getQty() <= 0) {
+                throw new WebApplicationException("(" + e.getQty()
+                        + ") is not a supported value for qty field in ProductRecord: must not be less than 1");
+            }
 
             //links the product and the current product record
             Product product = productFacade.find(
@@ -68,7 +78,6 @@ public abstract class AbstractProductRecordService<T extends ProductRecord>
             e.setProduct(product);
 
             // updates availableQty
-            // TODO: do the opposite on CANCEL/DELETE
             product.setAvailableQty(
                     product.getAvailableQty() + e.accept(visitor));
 
