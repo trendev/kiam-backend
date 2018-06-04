@@ -39,30 +39,30 @@ import javax.ws.rs.core.SecurityContext;
 @Path("PurchasedItem")
 @RolesAllowed({"Administrator"})
 public class PurchasedItemService extends AbstractProductRecordService<PurchasedItem> {
-
+    
     @Inject
     PurchasedItemFacade purchasedItemFacade;
-
+    
     @Inject
     PurchaseExpenseFacade purchaseExpenseFacade;
-
+    
     private final Logger LOG = Logger.getLogger(PurchasedItemService.class.
             getName());
-
+    
     public PurchasedItemService() {
         super(PurchasedItem.class);
     }
-
+    
     @Override
     protected Logger getLogger() {
         return LOG;
     }
-
+    
     @Override
     protected AbstractFacade<PurchasedItem, Long> getFacade() {
         return purchasedItemFacade;
     }
-
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
@@ -70,7 +70,7 @@ public class PurchasedItemService extends AbstractProductRecordService<Purchased
         LOG.log(Level.INFO, "Providing the PurchasedItem list");
         return super.findAll();
     }
-
+    
     @Path("count")
     @GET
     @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON,})
@@ -78,7 +78,7 @@ public class PurchasedItemService extends AbstractProductRecordService<Purchased
     public Response count() {
         return super.count();
     }
-
+    
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -88,7 +88,7 @@ public class PurchasedItemService extends AbstractProductRecordService<Purchased
         LOG.log(Level.INFO, "REST request to get PurchasedItem : {0}", id);
         return super.find(id, refresh);
     }
-
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -98,22 +98,22 @@ public class PurchasedItemService extends AbstractProductRecordService<Purchased
             @QueryParam("professional") String professional) {
         LOG.log(Level.INFO, "Creating PurchasedItem {0}", super.
                 stringify(entity));
-
+        
         String proEmail = this.getProEmail(sec, professional);
-
+        
         return super.post(entity, proEmail, e -> {
             //finds the PurchaseExpense
 
             if (e.getPurchaseExpense() == null) {
-
+                
                 String errmsg = "A PurchaseExpense must be provided";
                 LOG.log(Level.WARNING, errmsg);
                 throw new WebApplicationException(errmsg);
             }
-
+            
             PurchaseExpense pe = purchaseExpenseFacade.find(new ExpensePK(e.
                     getPurchaseExpense().getId(), proEmail));
-
+            
             if (pe == null) {
                 String errmsg = "PurchaseExpense " + e.
                         getPurchaseExpense().getId()
@@ -121,7 +121,7 @@ public class PurchasedItemService extends AbstractProductRecordService<Purchased
                 LOG.log(Level.WARNING, errmsg);
                 throw new WebApplicationException(errmsg);
             }
-
+            
             if (pe.isCancelled()) {
                 String errmsg = "PurchaseExpense " + e.
                         getPurchaseExpense().getId()
@@ -133,29 +133,29 @@ public class PurchasedItemService extends AbstractProductRecordService<Purchased
             //adds the current PurchasedItem inside
             e.setPurchaseExpense(pe);
             pe.getPurchasedItems().add(e);
-
+            
         });
     }
-
+    
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed({"Administrator", "Professional"})
-    public Response put(PurchasedItem entity) {
+    public Response put(@Context SecurityContext sec,
+            PurchasedItem entity,
+            @QueryParam("professional") String professional) {
         LOG.log(Level.INFO, "Updating PurchasedItem {0}", entity.getId());
-        return super.put(entity, entity.getId(),
-                e -> {
-            //TODO : only HANDLE CANCEL
-        });
+        return super.put(entity, this.getProEmail(sec, professional));
     }
-
+    
     @Path("{id}")
     @DELETE
     public Response delete(@PathParam("id") Long id) {
         LOG.log(Level.INFO, "Deleting PurchasedItem {0}", id);
         return super.delete(id, e -> {
-            //TODO : handle availableQty updates
+            e.getPurchaseExpense().getPurchasedItems().remove(e);
+            e.setPurchaseExpense(null);
         });
     }
-
+    
 }

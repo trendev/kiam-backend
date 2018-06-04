@@ -50,23 +50,7 @@ public abstract class AbstractProductRecordService<T extends ProductRecord>
             }
 
             //links the product and the current product record
-            Product product = productFacade.find(
-                    new ProductPK(professional,
-                            Optional.ofNullable(e.getProduct())
-                                    .map(p_ ->
-                                            Optional.ofNullable(
-                                                    p_.getProductReference())
-                                                    .map(pr -> pr.getBarcode()).
-                                                    orElseThrow(
-                                                            () ->
-                                                            new WebApplicationException(
-                                                                    "A ProductReference must be provided inside the Product during ProductRecord creation")
-                                                    ))
-                                    .orElseThrow(
-                                            () ->
-                                            new WebApplicationException(
-                                                    "A Product must be provided during ProductRecord creation")
-                                    )));
+            Product product = this.findProduct(e, professional);
 
             if (product == null) {
                 throw new WebApplicationException("Product " + entity.
@@ -84,6 +68,68 @@ public abstract class AbstractProductRecordService<T extends ProductRecord>
             // performs additionnal operations
             createActions.accept(e);
         });
+    }
+
+    public Response put(T entity,
+            String professional) {
+        return super.put(entity, entity.getId(),
+                e -> {
+            if (entity.isCancelled() && !e.isCancelled()) {
+                e.setCancelled(true);
+                e.setCancellationDate(new Date());
+
+                Product product = productFacade.find(
+                        new ProductPK(professional,
+                                e.getProduct().getProductReference().
+                                        getBarcode()));
+
+                if (product == null) {
+                    throw new WebApplicationException("Product " + e.
+                            getProduct().getProductReference().getBarcode()
+                            + " not found for user " + professional + " !");
+                }
+
+                // updates availableQty
+                product.setAvailableQty(
+                        product.getAvailableQty() - e.accept(visitor));
+            }// else, do nothing
+        });
+    }
+
+    public Response delete(Long id, Consumer<T> deleteActions) {
+        return super.delete(id, e -> {
+
+            // updates availableQty in Product if the product record is not cancelled
+            if (!e.isCancelled()) {
+                Product product = e.getProduct();
+                product.setAvailableQty(
+                        product.getAvailableQty() - e.accept(visitor));
+            }
+
+            deleteActions.accept(e);
+        });
+    }
+
+    private Product findProduct(T e,
+            String professional) {
+
+        return productFacade.find(
+                new ProductPK(professional,
+                        Optional.ofNullable(e.getProduct())
+                                .map(p_ ->
+                                        Optional.ofNullable(
+                                                p_.getProductReference())
+                                                .map(pr -> pr.getBarcode()).
+                                                orElseThrow(
+                                                        () ->
+                                                        new WebApplicationException(
+                                                                "A ProductReference must be provided inside the Product during ProductRecord creation")
+                                                ))
+                                .orElseThrow(
+                                        () ->
+                                        new WebApplicationException(
+                                                "A Product must be provided during ProductRecord creation")
+                                )));
     }
 
 }

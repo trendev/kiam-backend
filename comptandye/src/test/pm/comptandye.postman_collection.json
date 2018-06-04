@@ -8611,6 +8611,292 @@
 			]
 		},
 		{
+			"name": "PurchasedItem",
+			"description": "Manage Addresses.\nRequires Administrator Authorization.",
+			"item": [
+				{
+					"name": "findAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "27b7c8ab-5926-4ac2-8c58-0b3ebe93b341",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/PurchasedItem",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"PurchasedItem"
+							]
+						},
+						"description": "List all addresses."
+					},
+					"response": []
+				},
+				{
+					"name": "count",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f2395f75-b3f7-41a7-b1f2-6615d8b9c513",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/PurchasedItem/count",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"PurchasedItem",
+								"count"
+							]
+						},
+						"description": "Provides the Address total count."
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "54e59a8c-d947-4623-82a2-2e24e268ebf1",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"tests[\"Status code is 201\"] = responseCode.code === 201;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"pm.environment.set(\"created_product-record_id\", jsonData.id);",
+									"",
+									"/*",
+									"tests[\"street is \\\"47 Rue René Benoist\\\"\"] = jsonData.street === \"47 Rue René Benoist\";",
+									"tests[\"optional is \\\"TRENDev SASU\\\"\"] = jsonData.optional === \"TRENDev SASU\";",
+									"tests[\"postalCode is \\\"77860\\\"\"] = jsonData.postalCode === \"77860\";",
+									"tests[\"city is \\\"Quincy-Voisins\\\"\"] = jsonData.city === \"Quincy-Voisins\";",
+									"tests[\"country is \\\"France\\\"\"] = jsonData.country === \"France\";*/",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"id\": 22222,\n        \"cltype\": \"purchased\",\n        \"qty\": 2,\n        \"product\": {\n            \"productReference\": {\n                \"barcode\": \"1234567891\"\n            }\n        },\n        \"purchaseExpense\": {\n            \"id\": 9,\n            \"cltype\": \"purchase\"\n        }\n    }"
+						},
+						"url": {
+							"raw": "{{API_URL}}/PurchasedItem?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"PurchasedItem"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com"
+								}
+							]
+						},
+						"description": "Creates and Persists an Address. Id is auto-generated."
+					},
+					"response": []
+				},
+				{
+					"name": "find",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f8e551ef-aed7-49d0-8fc5-0c58d0d868a3",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is \"+pm.environment.get(\"created_product-record_id\")] = jsonData.id == pm.environment.get(\"created_product-record_id\");",
+									"",
+									"/*tests[\"street is \\\"47 Rue René Benoist\\\"\"] = jsonData.street === \"47 Rue René Benoist\";",
+									"tests[\"optional is \\\"TRENDev SASU\\\"\"] = jsonData.optional === \"TRENDev SASU\";",
+									"tests[\"postalCode is \\\"77860\\\"\"] = jsonData.postalCode === \"77860\";",
+									"tests[\"city is \\\"Quincy-Voisins\\\"\"] = jsonData.city === \"Quincy-Voisins\";",
+									"tests[\"country is \\\"France\\\"\"] = jsonData.country === \"France\";*/",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/PurchasedItem/{{created_product-record_id}}",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"PurchasedItem",
+								"{{created_product-record_id}}"
+							]
+						},
+						"description": "Finds an Address."
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "57f970b0-97f4-4b16-a60a-6d7a43a26288",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is \"+pm.environment.get(\"created_product-record_id\")] = jsonData.id == pm.environment.get(\"created_product-record_id\");",
+									"",
+									"/*tests[\"street is \\\"47 Rue René Benoist\\\"\"] = jsonData.street === \"47 Rue René Benoist\";",
+									"tests[\"optional is undefined\"] = jsonData.optional === undefined;",
+									"tests[\"postalCode is \\\"77860\\\"\"] = jsonData.postalCode === \"77860\";",
+									"tests[\"city is \\\"Quincy-Voisins\\\"\"] = jsonData.city === \"Quincy-Voisins\";",
+									"tests[\"country is \\\"France\\\"\"] = jsonData.country === \"France\";*/",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"id\": {{created_product-record_id}},\n        \"cltype\": \"purchased\",\n        \"qty\": 100,\n        \"cancelled\": true,\n        \"product\": {\n            \"productReference\": {\n                \"barcode\": \"1234567891\"\n            }\n        },\n        \"purchaseExpense\": {\n            \"id\": 9,\n            \"cltype\": \"purchase\"\n        }\n    }"
+						},
+						"url": {
+							"raw": "{{API_URL}}/PurchasedItem?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"PurchasedItem"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com"
+								}
+							]
+						},
+						"description": "Updates and Saves an Address."
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/PurchasedItem/{{created_product-record_id}}",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"PurchasedItem",
+								"{{created_product-record_id}}"
+							]
+						},
+						"description": "Finds and Deletes an Address."
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "PurchasedOffering",
 			"description": null,
 			"item": [
