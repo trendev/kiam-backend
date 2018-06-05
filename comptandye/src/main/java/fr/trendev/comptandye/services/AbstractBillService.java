@@ -188,6 +188,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
 
                                 // TODO : control the product qty for Sales (DiscoverSaleVisitor -> List<Sale>)
                                 // TODO : create a SoldItem for each discovered product
+                                // TODO : alert when qty is under thresholds / no enough qty
                                 //link the Offering with the PurchasedOffering
                                 o.getPurchasedOfferings().add(po);
                                 return po;
