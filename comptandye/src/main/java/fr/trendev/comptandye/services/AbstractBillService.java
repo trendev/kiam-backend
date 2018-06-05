@@ -39,7 +39,7 @@ import javax.ws.rs.core.SecurityContext;
  * @author jsie
  */
 public abstract class AbstractBillService<T extends Bill> extends AbstractCommonService<T, BillPK> {
-    
+
     @Inject
     ProfessionalFacade professionalFacade;
 
@@ -57,15 +57,15 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
      */
     @Inject
     BillTypeVisitor billTypeVisitor;
-    
+
     private final Logger LOG = Logger.getLogger(
             AbstractBillService.class.
                     getName());
-    
+
     public AbstractBillService(Class<T> entityClass) {
         super(entityClass);
     }
-    
+
     @Override
     protected Logger getLogger() {
         return LOG;
@@ -104,21 +104,21 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
     public Response post(Consumer<T> prepareAction,
             SecurityContext sec, T entity,
             String professional) {
-        
+
         String proEmail = this.getProEmail(sec, professional);
-        
+
         return super.<Professional, String>post(entity, proEmail,
                 AbstractFacade::prettyPrintPK,
                 Professional.class,
                 professionalFacade,
                 T::setProfessional,
                 Professional::getBills, e -> {
-            
+
             if (e.getDeliveryDate() == null) {
                 throw new WebApplicationException(
                         "A delivery date must be provided !");
             }
-            
+
             if (e.getProfessional().getBillsRefDate() == null) {
                 //fix the bill reference date with the delivery date of the first bill
                 e.getProfessional().setBillsRefDate(e.getDeliveryDate());
@@ -140,7 +140,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
             //increment the bill count, will be used in concurrency context
             e.getProfessional().setBillsCount(e.getProfessional().
                     getBillsCount() + 1);
-            
+
             setBillReference(e, billTypeVisitor);
 
             //a new bill can not be cancelled yet
@@ -149,11 +149,11 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
             // check if the professional has a VAT code before submitting a bill with VAT rates
             if (e.isVatInclusive() && e.getProfessional().getVatcode() == null) {
                 throw new WebApplicationException(
-                        "Impossible to apply VAT on Bill with a VAT Code !");
+                        "Impossible to apply VAT on Bill without a VAT Code !");
             }
-            
+
             this.checkPayment(e);
-            
+
             if (e.getPurchasedOfferings() == null || e.getPurchasedOfferings().
                     isEmpty()) {
                 throw new WebApplicationException(
@@ -186,6 +186,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                                     );
                                 }
 
+                                // TODO : control the product qty for Sales
                                 //link the Offering with the PurchasedOffering
                                 o.getPurchasedOfferings().add(po);
                                 return po;
@@ -212,7 +213,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                             RoundingMode.HALF_UP).intValue()
                     )
                     .sum();
-            
+
             if (e.getAmount() != (total - e.getDiscount())) {
                 String errmsg = "Amount is " + e.getAmount()
                         + " but the total amount computed (based on the purchased offerings prices and the discount) is "
@@ -221,12 +222,12 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                 LOG.log(Level.WARNING, errmsg);
                 throw new WebApplicationException(errmsg);
             }
-            
+
             e.setPurchasedOfferings(purchasedOfferings);
 
             //fix the issue date
             e.setIssueDate(new Date());
-            
+
             prepareAction.accept(e);
         });
     }
@@ -253,7 +254,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                     getPaymentDate() + " cannot be before Delivery Date "
                     + bill.getDeliveryDate());
         }
-        
+
         if (!bill.getPayments().isEmpty()) {
             if (bill.getPaymentDate() != null) {
                 //Total amount should be equal to the sum of the amount's payment
@@ -313,16 +314,16 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
     public Response put(
             SecurityContext sec, T entity,
             String professional) {
-        
+
         BillPK pk = new BillPK(entity.getReference(), entity.getDeliveryDate(),
                 this.getProEmail(sec,
                         professional));
-        
+
         LOG.log(Level.INFO, "Updating {1} {0}", new Object[]{getFacade().
             prettyPrintPK(pk), entity.getClass().getSimpleName()});
         return super.put(entity, pk, e -> {
             e.setComments(entity.getComments());
-            
+
             if (!e.isCancelled() && e.getPaymentDate() == null) {
                 if (entity.isCancelled()) { // avoid further useless checks
                     e.setCancelled(true);
@@ -354,9 +355,9 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
             String reference,
             long deliverydate,
             String professional) {
-        
+
         BillPK pk = new BillPK(reference, new Date(deliverydate), professional);
-        
+
         LOG.log(Level.INFO, "Deleting {1} {0}",
                 new Object[]{getFacade().prettyPrintPK(pk),
                     entityClass.getSimpleName()});
