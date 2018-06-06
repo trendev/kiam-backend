@@ -467,15 +467,17 @@ public class DemoConfigureBean implements Serializable {
         bill.setDeliveryDate(new Date());
         bill.setAmount(4000);
 
-        em.persist(bill);
-
         SoldItem si = new SoldItem();
         si.setQty(2);
-        si.setBill(bill);
 
         product.getProductRecords().add(si);
         si.setProduct(product);
         product.setAvailableQty(product.getAvailableQty() - si.getQty());
+
+        si.setBill(bill);
+        // Test if it is possible to persist the SoldItem before persisting the linked Bill
+        em.persist(si);
+        em.persist(bill);
 
         bill.setCancelled(true);
         bill.setCancellationDate(new Date());
@@ -490,7 +492,7 @@ public class DemoConfigureBean implements Serializable {
 
         em.persist(pr);
         em.persist(u);
-        em.persist(si);
+
         em.persist(ri);
 
     }
