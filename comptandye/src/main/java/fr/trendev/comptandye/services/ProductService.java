@@ -117,13 +117,15 @@ public class ProductService extends AbstractCommonService<Product, ProductPK> {
      * @param entity the entity to persist
      * @param professional the email of the professional (for Administrator
      * usage)
+     * @param iaq ignore available quantity flag, if yes, set availableQty to 0
      * @return the persisted Product if created or an HttpError
      */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response post(@Context SecurityContext sec, Product entity,
-            @QueryParam("professional") String professional) {
+            @QueryParam("professional") String professional,
+            @QueryParam("iaq") boolean iaq) {
 
         String email = this.getProEmail(sec, professional);
 
@@ -132,7 +134,11 @@ public class ProductService extends AbstractCommonService<Product, ProductPK> {
                 Professional.class,
                 professionalFacade, Product::setProfessional,
                 Professional::getStock, e -> {
-            e.setAvailableQty(0);
+
+            //ignores the provided available quantity
+            if (iaq) {
+                e.setAvailableQty(0);
+            }
 
             if (entity.getThresholdWarning() < 0) {
                 throw new WebApplicationException(
