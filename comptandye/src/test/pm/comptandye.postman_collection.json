@@ -9836,6 +9836,760 @@
 			]
 		},
 		{
+			"name": "ReturnedItem",
+			"description": "Manage Addresses.\nRequires Administrator Authorization.",
+			"item": [
+				{
+					"name": "findAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "27b7c8ab-5926-4ac2-8c58-0b3ebe93b341",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/ReturnedItem",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"ReturnedItem"
+							]
+						},
+						"description": "List all addresses."
+					},
+					"response": []
+				},
+				{
+					"name": "count",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f2395f75-b3f7-41a7-b1f2-6615d8b9c513",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/ReturnedItem/count",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"ReturnedItem",
+								"count"
+							]
+						},
+						"description": "Provides the Address total count."
+					},
+					"response": []
+				},
+				{
+					"name": "inits create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2a980c99-3ef0-46ff-9a51-bd9c60dc93c5",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 201\"] = responseCode.code === 201;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"reference is defined\"] = jsonData.reference !== undefined;",
+									"pm.environment.set(\"created_clientbill_reference\", jsonData.reference);",
+									"tests[\"deliveryDate is defined\"] = jsonData.deliveryDate !== undefined;",
+									"pm.environment.set(\"created_clientbill_deliveryDate\", jsonData.deliveryDate);",
+									"",
+									"tests[\"issueDate is defined\"] = jsonData.issueDate !== undefined;",
+									"",
+									"tests[\"client.email is \\\"client@domain.com\\\"\"] = jsonData.client.email === \"client@domain.com\";",
+									"tests[\"client.socialNetworkAccounts.twitter is \\\"@client_facebook_account\\\"\"] = jsonData.client.socialNetworkAccounts.twitter === \"@client_facebook_account\";",
+									"",
+									"tests[\"client.address.street is \\\"Allée de Fontenelle\\\"\"] = jsonData.client.address.street === \"Allée de Fontenelle\";",
+									"tests[\"client.address.optional is \\\"Château de Fontenelle\\\"\"] = jsonData.client.address.optional === \"Château de Fontenelle\";",
+									"tests[\"client.address.postalCode is \\\"77600\\\"\"] = jsonData.client.address.postalCode === \"77600\";",
+									"tests[\"client.address.city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.client.address.city === \"Chanteloup-en-Brie\";",
+									"",
+									"tests[\"client.customerDetails.firstName is \\\"Paul\\\"\"] = jsonData.client.customerDetails.firstName === \"Paul\";",
+									"tests[\"client.customerDetails.lastName is \\\"Newman\\\"\"] = jsonData.client.customerDetails.lastName === \"Newman\";",
+									"tests[\"client.customerDetails.sex is \\\"M\\\"\"] = jsonData.client.customerDetails.sex === \"M\";",
+									"tests[\"client.customerDetails.comments.length is 2\"] = jsonData.client.customerDetails.comments.length === 2;",
+									"",
+									"tests[\"purchasedOfferings[0].id is defined\"] = jsonData.purchasedOfferings[0].id !== undefined;",
+									"pm.environment.set(\"created_purchasedoffering_id\", jsonData.purchasedOfferings[0].id);",
+									"",
+									"tests[\"purchasedOfferings[0].qty is 4\"] = jsonData.purchasedOfferings[0].qty === 4;",
+									"",
+									"tests[\"purchasedOfferings[0].offering is defined\"] = jsonData.purchasedOfferings[0].offering !== undefined;",
+									"tests[\"purchasedOfferings[0].offering.cltype = service\"] = jsonData.purchasedOfferings[0].offering.cltype === \"service\";",
+									"tests[\"purchasedOfferings[0].offering.name = beauty service\"] = jsonData.purchasedOfferings[0].offering.name === \"beauty service\";",
+									"tests[\"purchasedOfferings[0].offering.price = 1500\"] = jsonData.purchasedOfferings[0].offering.price === 1500;",
+									"tests[\"purchasedOfferings[0].offering.duration = 180\"] = jsonData.purchasedOfferings[0].offering.duration === 180;",
+									"tests[\"purchasedOfferings[0].offering.businesses[0].designation = Esthétique\"] = jsonData.purchasedOfferings[0].offering.businesses[0].designation === \"Esthétique\";",
+									"",
+									""
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "bb84429c-b272-4840-8e4d-6ac9701dd3f5",
+								"type": "text/javascript",
+								"exec": [
+									"var billdate = new Date();",
+									"billdate.setHours(0,0,0,0);",
+									"",
+									"pm.environment.set(\"billdate\", billdate.getTime());",
+									"",
+									"pm.sendRequest({",
+									"    url:pm.environment.get('API_URL')+\"/Client?professional=vanessa.gay@gmail.com\",",
+									"    method: 'POST',",
+									"   header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"    },",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify(",
+									"            {",
+									"            \"email\": \"client@domain.com\",",
+									"            \"socialNetworkAccounts\": {",
+									"                \"twitter\": \"@client_facebook_account\"",
+									"            },",
+									"            \"customerDetails\": {",
+									"                \"firstName\": \"Paul\",",
+									"                \"lastName\": \"Newman\",",
+									"                \"sex\": \"M\",",
+									"                \"comments\": [",
+									"                    \"old american actor\",",
+									"                    \"old shool boy\"",
+									"                ]",
+									"            },",
+									"            \"address\": {",
+									"                \"street\": \"Allée de Fontenelle\",",
+									"                \"optional\": \"Château de Fontenelle\",",
+									"                \"postalCode\": \"77600\",",
+									"                \"city\": \"Chanteloup-en-Brie\",",
+									"                \"country\": \"France\"",
+									"            }",
+									"})",
+									"    }",
+									"}, function (err, response) {",
+									"    console.log(response.json());",
+									"   pm.environment.set(\"created_client_id\", response.json().id);",
+									"});",
+									"",
+									"",
+									"pm.sendRequest({",
+									"    url:pm.environment.get('API_URL')+\"/Service?professional=vanessa.gay@gmail.com\",",
+									"    method: 'POST',",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"    },",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify(",
+									"            {",
+									"                name:\"beauty service\",",
+									"              price:1500,",
+									"              duration:180,",
+									"              businesses: [",
+									"                {",
+									"                    designation: \"Esthétique\"",
+									"                }",
+									"                ],",
+									"                cltype:\"service\"",
+									"            })",
+									"    }",
+									"}, function (err, response) {",
+									"    console.log(response.json());",
+									"   pm.environment.set(\"created_offering_id\", response.json().id);",
+									"});",
+									"",
+									"",
+									"pm.environment.set(\"created_product-reference_barcode\", \"1234567899\");",
+									"",
+									"pm.sendRequest({",
+									"    url:pm.environment.get('API_URL')+\"/Product?professional=vanessa.gay@gmail.com\",",
+									"    method: 'POST',",
+									"   header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"    },",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify(",
+									"                        {",
+									"        \"availableQty\": 3,",
+									"        \"thresholdWarning\": 2,",
+									"        \"thresholdSevere\": 1,",
+									"        \"comments\":[",
+									"        \t\"No restriction\",",
+									"        \t\"ok for me\"",
+									"        ],",
+									"        \"productReference\": {",
+									"\t\"barcode\": pm.environment.get('created_product-reference_barcode'),",
+									"\t\"description\": \"blond color stick\",",
+									"\t\"brand\": \"L'OREAL\",",
+									"\t\"business\":            ",
+									"\t\t{",
+									"\t\t\t\"designation\": \"Coiffure\"",
+									"    \t}",
+									"        }",
+									"        })",
+									"    }",
+									"}, function (err, response) {",
+									"    console.log(response.json());",
+									"    ",
+									"    pm.sendRequest({",
+									"    url:pm.environment.get('API_URL')+\"/Sale?professional=vanessa.gay@gmail.com\",",
+									"    method: 'POST',",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"    },",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify(",
+									"            {",
+									"                name:\"beauty product\",",
+									"                qty:2,",
+									"              price:1000,",
+									"              businesses: [",
+									"                {",
+									"                    designation: \"Esthétique\"",
+									"                }",
+									"                ],",
+									"                cltype:\"sale\"",
+									"            })",
+									"    }",
+									"}, function (err, response) {",
+									"    console.log(response.json());",
+									"   pm.environment.set(\"created_sale_id\", response.json().id);",
+									"});",
+									"    ",
+									"});",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cltype\":\"clientbill\",\n  \"deliveryDate\":{{billdate}},\n  \"amount\":9000,\n  \"discount\":1000,\n  \"comments\":[\n    \"The first one created by a rest api request\"\n  ],\n  \"payments\":[\n    {\n      \"amount\":4000,\n      \"paymentMode\": {\n                    \"name\": \"CB\"\n            }\n    },\n    {\n      \"amount\":1000,\n      \"paymentMode\": {\n                    \"name\": \"Espèces\" \n            }\n    }\n  ],\n  \"purchasedOfferings\":[\n    {\n      \"qty\":4,\n      \"offering\": {\n        \"id\": {{created_offering_id}},\n        \"cltype\": \"service\",\n        \"name\": \"beauty service\",\n        \"price\": 1500,\n        \"duration\": 180,\n        \"businesses\": [\n            {\n                \"designation\": \"Esthétique\"\n            }\n        ]\n    }\n    },\n    {\n      \"qty\":4,\n      \"offering\": {\n        \"id\": {{created_sale_id}},\n        \"cltype\": \"sale\",\n        \"name\": \"beauty service\",\n        \"price\": 1000,\n        \"businesses\": [\n            {\n                \"designation\": \"Esthétique\"\n            }\n        ]\n    }\n    }\n  ],\n  \"client\":{\n    \"id\":{{created_client_id}}\n  }\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/ClientBill?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"ClientBill"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com"
+								}
+							]
+						},
+						"description": "Provides the Address total count."
+					},
+					"response": []
+				},
+				{
+					"name": "cancel bill",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "09431838-e228-46f1-b8b0-741439a51bae",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"reference is defined\"] = jsonData.reference !== undefined;",
+									"pm.environment.set(\"created_clientbill_reference\", jsonData.reference);",
+									"tests[\"deliveryDate is defined\"] = jsonData.deliveryDate !== undefined;",
+									"pm.environment.set(\"created_clientbill_deliveryDate\", jsonData.deliveryDate);",
+									"",
+									"tests[\"issueDate is defined\"] = jsonData.issueDate !== undefined;",
+									"",
+									"tests[\"cancelled is true\"] = jsonData.cancelled == true;",
+									"tests[\"cancellationDate is defined\"] = jsonData.cancellationDate !== undefined;",
+									"",
+									"",
+									"tests[\"client.email is \\\"client@domain.com\\\"\"] = jsonData.client.email === \"client@domain.com\";",
+									"tests[\"client.socialNetworkAccounts.twitter is \\\"@client_facebook_account\\\"\"] = jsonData.client.socialNetworkAccounts.twitter === \"@client_facebook_account\";",
+									"",
+									"tests[\"client.address.street is \\\"Allée de Fontenelle\\\"\"] = jsonData.client.address.street === \"Allée de Fontenelle\";",
+									"tests[\"client.address.optional is \\\"Château de Fontenelle\\\"\"] = jsonData.client.address.optional === \"Château de Fontenelle\";",
+									"tests[\"client.address.postalCode is \\\"77600\\\"\"] = jsonData.client.address.postalCode === \"77600\";",
+									"tests[\"client.address.city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.client.address.city === \"Chanteloup-en-Brie\";",
+									"",
+									"tests[\"client.customerDetails.firstName is \\\"Paul\\\"\"] = jsonData.client.customerDetails.firstName === \"Paul\";",
+									"tests[\"client.customerDetails.lastName is \\\"Newman\\\"\"] = jsonData.client.customerDetails.lastName === \"Newman\";",
+									"tests[\"client.customerDetails.sex is \\\"M\\\"\"] = jsonData.client.customerDetails.sex === \"M\";",
+									"tests[\"client.customerDetails.comments.length is 2\"] = jsonData.client.customerDetails.comments.length === 2;",
+									"",
+									"tests[\"purchasedOfferings[0].id is defined\"] = jsonData.purchasedOfferings[0].id !== undefined;",
+									"pm.environment.set(\"created_purchasedoffering_id\", jsonData.purchasedOfferings[0].id);",
+									"",
+									"tests[\"purchasedOfferings[0].qty is 4\"] = jsonData.purchasedOfferings[0].qty === 4;",
+									"",
+									"tests[\"purchasedOfferings[0].offering is defined\"] = jsonData.purchasedOfferings[0].offering !== undefined;",
+									"tests[\"purchasedOfferings[0].offering.cltype = service\"] = jsonData.purchasedOfferings[0].offering.cltype === \"service\";",
+									"tests[\"purchasedOfferings[0].offering.name = beauty service\"] = jsonData.purchasedOfferings[0].offering.name === \"beauty service\";",
+									"tests[\"purchasedOfferings[0].offering.price = 1500\"] = jsonData.purchasedOfferings[0].offering.price === 1500;",
+									"tests[\"purchasedOfferings[0].offering.duration = 180\"] = jsonData.purchasedOfferings[0].offering.duration === 180;",
+									"tests[\"purchasedOfferings[0].offering.businesses[0].designation = Esthétique\"] = jsonData.purchasedOfferings[0].offering.businesses[0].designation === \"Esthétique\";",
+									"",
+									""
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8d91f706-6ff5-438a-89f5-641307536d96",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cltype\":\"clientbill\",\n  \"reference\": \"{{created_clientbill_reference}}\",\n  \"deliveryDate\":{{billdate}},\n  \"cancelled\":true\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/ClientBill?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"ClientBill"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com"
+								}
+							]
+						},
+						"description": "Provides the Address total count."
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fc8ba1f3-45c0-4017-ab4e-862df5aa4138",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"tests[\"Status code is 201\"] = responseCode.code === 201;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"pm.environment.set(\"created_product-record_id\", jsonData.id);",
+									"",
+									"tests[\"recordDate is defined\"] = jsonData.recordDate !== undefined;",
+									"tests[\"cancelled is false\"] = jsonData.cancelled === false;",
+									"tests[\"product.availableQty === 5\"] = jsonData.product.availableQty === 5;",
+									"tests[\"product.productReference.barcode is \"+pm.environment.get(\"created_product-reference_barcode\")] = jsonData.product.productReference.barcode === pm.environment.get(\"created_product-reference_barcode\");",
+									"",
+									"tests[\"cancelledBill.reference is \"+pm.environment.get(\"created_clientbill_reference\")] = jsonData.cancelledBill.reference === pm.environment.get(\"created_clientbill_reference\");",
+									"",
+									"tests[\"cancelledBill.deliveryDate is \"+pm.environment.get(\"billdate\")] = jsonData.cancelledBill.deliveryDate === pm.environment.get(\"billdate\");",
+									"",
+									"tests[\"cancelledBill.cancelled is true\"] = jsonData.cancelledBill.cancelled === true;",
+									""
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "3cbb147b-bd2d-490e-8f8d-bd1724f10e1d",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"cltype\": \"returned\",\n        \"qty\": 2,\n        \"product\": {\n            \"productReference\": {\n                \"barcode\": {{created_product-reference_barcode}}\n            }\n        },\n        \"cancelledBill\": {\n            \"reference\": \"{{created_clientbill_reference}}\",\n            \"deliveryDate\":{{billdate}},\n            \"cltype\": \"clientbill\"\n        }\n    }"
+						},
+						"url": {
+							"raw": "{{API_URL}}/ReturnedItem?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"ReturnedItem"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com"
+								}
+							]
+						},
+						"description": "Creates and Persists an Address. Id is auto-generated."
+					},
+					"response": []
+				},
+				{
+					"name": "find",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "40647000-935b-4ded-8889-029f7b2b71a9",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is \"+pm.environment.get(\"created_product-record_id\")] = jsonData.id == pm.environment.get(\"created_product-record_id\");",
+									"",
+									"tests[\"recordDate is defined\"] = jsonData.recordDate !== undefined;",
+									"tests[\"cancelled is false\"] = jsonData.cancelled === false;",
+									"tests[\"product.availableQty === 5\"] = jsonData.product.availableQty === 5;",
+									"tests[\"product.productReference.barcode is \"+pm.environment.get(\"created_product-reference_barcode\")] = jsonData.product.productReference.barcode === pm.environment.get(\"created_product-reference_barcode\");",
+									"",
+									"tests[\"cancelledBill.reference is \"+pm.environment.get(\"created_clientbill_reference\")] = jsonData.cancelledBill.reference === pm.environment.get(\"created_clientbill_reference\");",
+									"",
+									"tests[\"cancelledBill.deliveryDate is \"+pm.environment.get(\"billdate\")] = jsonData.cancelledBill.deliveryDate === pm.environment.get(\"billdate\");",
+									"",
+									"tests[\"cancelledBill.cancelled is true\"] = jsonData.cancelledBill.cancelled === true;",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/ReturnedItem/{{created_product-record_id}}",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"ReturnedItem",
+								"{{created_product-record_id}}"
+							]
+						},
+						"description": "Finds an Address."
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b0f28c33-083d-424e-907d-23d6a81d684f",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is \"+pm.environment.get(\"created_product-record_id\")] = jsonData.id == pm.environment.get(\"created_product-record_id\");",
+									"",
+									"tests[\"recordDate is defined\"] = jsonData.recordDate !== undefined;",
+									"tests[\"cancelled is true\"] = jsonData.cancelled === true;",
+									"tests[\"cancellationDate is defined\"] = jsonData.cancellationDate !== undefined;",
+									"tests[\"product.availableQty === 3\"] = jsonData.product.availableQty === 3;",
+									"tests[\"product.productReference.barcode is \"+pm.environment.get(\"created_product-reference_barcode\")] = jsonData.product.productReference.barcode === pm.environment.get(\"created_product-reference_barcode\");",
+									"",
+									"tests[\"cancelledBill.reference is \"+pm.environment.get(\"created_clientbill_reference\")] = jsonData.cancelledBill.reference === pm.environment.get(\"created_clientbill_reference\");",
+									"",
+									"tests[\"cancelledBill.deliveryDate is \"+pm.environment.get(\"billdate\")] = jsonData.cancelledBill.deliveryDate === pm.environment.get(\"billdate\");",
+									"",
+									"tests[\"cancelledBill.cancelled is true\"] = jsonData.cancelledBill.cancelled === true;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"id\": {{created_product-record_id}},\n        \"cltype\": \"returned\",\n        \"qty\": 100,\n        \"cancelled\": true,\n        \"product\": {\n            \"productReference\": {\n                \"barcode\": {{created_product-reference_barcode}}\n            }\n        },\n        \"cancelledBill\": {\n            \"reference\": \"{{created_clientbill_reference}}\",\n            \"deliveryDate\":{{billdate}},\n            \"cltype\": \"clientbill\"\n        }\n    }"
+						},
+						"url": {
+							"raw": "{{API_URL}}/ReturnedItem?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"ReturnedItem"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com"
+								}
+							]
+						},
+						"description": "Updates and Saves an Address."
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d6cb1191-4c4b-4bd2-a86c-a353870c9660",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/ReturnedItem/{{created_product-record_id}}",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"ReturnedItem",
+								"{{created_product-record_id}}"
+							]
+						},
+						"description": "Finds and Deletes an Address."
+					},
+					"response": []
+				},
+				{
+					"name": "clean after delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3b258130-1679-4946-a3b3-27f362762d65",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"pm.sendRequest({",
+									"    url:pm.environment.get('API_URL')+\"/Service/\"+pm.environment.get('created_offering_id')+\"?professional=vanessa.gay@gmail.com\",",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"    },",
+									"    method: 'DELETE'",
+									"}, function (err, res) {",
+									"    pm.expect(res).to.have.property('code', 200);",
+									"    pm.expect(res).to.have.property('status', 'OK');",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url:pm.environment.get('API_URL')+\"/Sale/\"+pm.environment.get('created_sale_id')+\"?professional=vanessa.gay@gmail.com\",",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"    },",
+									"    method: 'DELETE'",
+									"}, function (err, res) {",
+									"    pm.expect(res).to.have.property('code', 200);",
+									"    pm.expect(res).to.have.property('status', 'OK');",
+									"    ",
+									"    pm.sendRequest({",
+									"    url:pm.environment.get('API_URL')+\"/Product/\"+pm.environment.get('created_product-reference_barcode')+\"?professional=vanessa.gay@gmail.com\",",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"    },",
+									"    method: 'DELETE'",
+									"}, function (err, res) {",
+									"    pm.expect(res).to.have.property('code', 200);",
+									"    pm.expect(res).to.have.property('status', 'OK');",
+									"    pm.sendRequest({",
+									"    url:pm.environment.get('API_URL')+\"/ProductReference/\"+pm.environment.get('created_product-reference_barcode'),",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"    },",
+									"    method: 'DELETE'",
+									"}, function (err, res) {",
+									"    pm.expect(res).to.have.property('code', 200);",
+									"    pm.expect(res).to.have.property('status', 'OK');",
+									"});",
+									"});",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url:pm.environment.get('API_URL')+\"/Client/\"+pm.environment.get('created_client_id')+\"?professional=vanessa.gay@gmail.com\",",
+									"    header: {",
+									"        'Content-Type':'application/json',",
+									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"    },",
+									"    method: 'DELETE'",
+									"}, function (err, res) {",
+									"    pm.expect(res).to.have.property('code', 200);",
+									"    pm.expect(res).to.have.property('status', 'OK');",
+									"});",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/ClientBill/{{created_clientbill_reference}}/{{created_clientbill_deliveryDate}}?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"ClientBill",
+								"{{created_clientbill_reference}}",
+								"{{created_clientbill_deliveryDate}}"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Sale",
 			"description": null,
 			"item": [
