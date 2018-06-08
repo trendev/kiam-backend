@@ -144,8 +144,8 @@ public abstract class ProductRecord {
         this.cancelled = true;
         this.cancellationDate = new Date();
 
-        int qty = this.product.getAvailableQty() - this.accept(visitor);
-        this.product.setAvailableQty(qty < 0 ? 0 : qty);
+        int availableQty = this.product.getAvailableQty() - this.accept(visitor);
+        this.product.setAvailableQty(availableQty < 0 ? 0 : availableQty);
     }
 
 }
