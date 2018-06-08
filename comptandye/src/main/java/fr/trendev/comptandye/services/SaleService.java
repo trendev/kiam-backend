@@ -6,6 +6,7 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.entities.OfferingPK;
+import fr.trendev.comptandye.entities.Product;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.Sale;
 import fr.trendev.comptandye.sessions.AbstractFacade;
@@ -114,14 +115,14 @@ public class SaleService extends AbstractOfferingService<Sale> {
                 Professional::getOfferings, e -> {
             e.setId(null);
 
-//            //search and link the Product with the current Sale
-//            Product product = productFinder.findProduct(e,
-//                    email,
-//                    productFacade,
-//                    Sale.class,
-//                    Sale::getProduct);
-//            e.setProduct(product);
-//            product.getSales().add(e);
+            //search and link the Product with the current Sale
+            Product product = productFinder.findProduct(e,
+                    email,
+                    productFacade,
+                    Sale.class,
+                    Sale::getProduct);
+            e.setProduct(product);
+            product.getSales().add(e);
         });
 
     }
@@ -176,8 +177,9 @@ public class SaleService extends AbstractOfferingService<Sale> {
                 prettyPrintPK(pk));
 
         return super.delete(pk, e -> {
-//            e.getProduct().getSales().remove(e);
-//            e.setProduct(null);
+            // removes dependencies between Product and Sale
+            e.getProduct().getSales().remove(e);
+            e.setProduct(null);
         });
     }
 
