@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import fr.trendev.comptandye.utils.ProductRecordType;
+import fr.trendev.comptandye.utils.visitors.VariationOfProductRecordQtyVisitor;
 import fr.trendev.comptandye.utils.visitors.Visitor;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -137,6 +138,14 @@ public abstract class ProductRecord {
 
     public <T> T accept(Visitor<T> v) {
         return v.visit(this);
+    }
+
+    public void cancel(VariationOfProductRecordQtyVisitor visitor) {
+        this.cancelled = true;
+        this.cancellationDate = new Date();
+
+        int qty = this.product.getAvailableQty() - this.accept(visitor);
+        this.product.setAvailableQty(qty < 0 ? 0 : qty);
     }
 
 }

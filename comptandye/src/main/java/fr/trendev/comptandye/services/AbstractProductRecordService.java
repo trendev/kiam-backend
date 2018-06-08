@@ -13,6 +13,7 @@ import fr.trendev.comptandye.utils.visitors.VariationOfProductRecordQtyVisitor;
 import java.util.Date;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.logging.Level;
 import javax.inject.Inject;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
@@ -76,23 +77,26 @@ public abstract class AbstractProductRecordService<T extends ProductRecord>
         return super.put(entity, entity.getId(),
                 e -> {
             if (entity.isCancelled() && !e.isCancelled()) {
-                e.setCancelled(true);
-                e.setCancellationDate(new Date());
 
+                //should come from the cache
                 Product product = productFacade.find(
                         new ProductPK(professional,
                                 e.getProduct().getProductReference().
                                         getBarcode()));
 
-                if (product == null) {
-                    throw new WebApplicationException("Product " + e.
-                            getProduct().getProductReference().getBarcode()
-                            + " not found for user " + professional + " !");
+                // controls the Product and ProductRecord owner
+                if (product == null
+                        || e.getProduct() == null
+                        || !e.getProduct().equals(product)) {
+                    throw new WebApplicationException(
+                            "A valid Product must be provided !");
                 }
 
-                // updates availableQty
-                int qty = product.getAvailableQty() - e.accept(visitor);
-                product.setAvailableQty(qty < 0 ? 0 : qty);
+                e.cancel(visitor);
+
+                this.getLogger().log(Level.INFO,
+                        "ProductRecord {0} is now cancelled", this.
+                                getFacade().prettyPrintPK(e.getId()));
             }// else, do nothing
         });
     }

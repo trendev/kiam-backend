@@ -10,6 +10,7 @@ import fr.trendev.comptandye.entities.PurchaseExpense;
 import fr.trendev.comptandye.entities.PurchasedItem;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.PurchaseExpenseFacade;
+import fr.trendev.comptandye.utils.visitors.VariationOfProductRecordQtyVisitor;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
@@ -40,6 +41,9 @@ public class PurchaseExpenseService extends AbstractExpenseService<PurchaseExpen
 
     @Inject
     private PurchaseExpenseFacade purchaseFacade;
+
+    @Inject
+    VariationOfProductRecordQtyVisitor visitor;
 
     private final Logger LOG = Logger.getLogger(PurchaseExpenseService.class.
             getName());
@@ -101,17 +105,45 @@ public class PurchaseExpenseService extends AbstractExpenseService<PurchaseExpen
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    /**
-     * No modification allowed
-     */
-    // TODO : cancel purchasedItems if the PurchaseExpense is cancelled
     public Response put(@Context SecurityContext sec, PurchaseExpense entity,
             @QueryParam("professional") String professional) {
 
         return super.put(e -> {
+            // cancels purchasedItems if the PurchaseExpense is cancelled
+            if (entity.isCancelled() && !e.isCancelled()) {
+
+                e.getPurchasedItems()
+                        .stream()
+                        //excludes already cancelled PurchasedItems
+                        .filter(pi -> !pi.isCancelled())
+                        //cancels remaining PurchasedItems
+                        .forEach(pi -> {
+                            pi.cancel(visitor);
+                            LOG.log(Level.INFO,
+                                    "PurchasedItem {0} is now cancelled", pi.
+                                            getId());
+                        });
+                LOG.
+                        log(Level.INFO,
+                                "All PurchasedItems of PurchaseExpense {0} are now cancelled",
+                                purchaseFacade.
+                                        prettyPrintPK(new ExpensePK(e.getId(),
+                                                this.
+                                                        getProEmail(sec,
+                                                                professional))));
+            }
         }, sec, entity, professional);
     }
 
+    /**
+     * Delete a PurchaseExpense. Removes PurchasedItems/PurchaseExpense
+     * dependencies : leaves PurchasedItems with purchaseExpense as null
+     *
+     * @param sec the security context
+     * @param id the PurchaseExpense's id
+     * @param professional the PurchaseExpense's owner
+     * @return 200 OK or HTTP Unexpected Error
+     */
     @RolesAllowed({"Administrator"})
     @Path("{id}")
     @DELETE
@@ -125,7 +157,9 @@ public class PurchaseExpenseService extends AbstractExpenseService<PurchaseExpen
         LOG.log(Level.INFO, "Deleting PurchaseExpense {0}", purchaseFacade.
                 prettyPrintPK(pk));
         return super.delete(pk, e -> {
+            //removes the current expense from the expense list of the Professional 
             e.getProfessional().getExpenses().remove(e);
+            //removes the PurchasedItems/PurchasedExpense dependencies
             e.getPurchasedItems().forEach(pi -> pi.setPurchaseExpense(null));
             e.setPurchasedItems(null);
         });
