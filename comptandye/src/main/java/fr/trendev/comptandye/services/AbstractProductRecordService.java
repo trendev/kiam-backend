@@ -9,9 +9,9 @@ import fr.trendev.comptandye.entities.Product;
 import fr.trendev.comptandye.entities.ProductPK;
 import fr.trendev.comptandye.entities.ProductRecord;
 import fr.trendev.comptandye.sessions.ProductFacade;
+import fr.trendev.comptandye.utils.ProductFinder;
 import fr.trendev.comptandye.utils.visitors.VariationOfProductRecordQtyVisitor;
 import java.util.Date;
-import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import javax.inject.Inject;
@@ -27,6 +27,9 @@ public abstract class AbstractProductRecordService<T extends ProductRecord>
 
     @Inject
     ProductFacade productFacade;
+
+    @Inject
+    private ProductFinder<ProductRecord> productFinder;
 
     @Inject
     VariationOfProductRecordQtyVisitor visitor;
@@ -51,7 +54,11 @@ public abstract class AbstractProductRecordService<T extends ProductRecord>
             }
 
             //links the product and the current product record
-            Product product = this.findProduct(e, professional);
+            Product product = productFinder.findProduct(e,
+                    professional,
+                    productFacade,
+                    ProductRecord.class,
+                    ProductRecord::getProduct);
 
             if (product == null) {
                 throw new WebApplicationException("Product " + entity.
@@ -116,28 +123,6 @@ public abstract class AbstractProductRecordService<T extends ProductRecord>
 
             deleteActions.accept(e);
         });
-    }
-
-    private Product findProduct(T e,
-            String professional) {
-
-        return productFacade.find(
-                new ProductPK(professional,
-                        Optional.ofNullable(e.getProduct())
-                                .map(p_ ->
-                                        Optional.ofNullable(
-                                                p_.getProductReference())
-                                                .map(pr -> pr.getBarcode()).
-                                                orElseThrow(
-                                                        () ->
-                                                        new WebApplicationException(
-                                                                "A ProductReference must be provided inside the Product during ProductRecord creation")
-                                                ))
-                                .orElseThrow(
-                                        () ->
-                                        new WebApplicationException(
-                                                "A Product must be provided during ProductRecord creation")
-                                )));
     }
 
 }

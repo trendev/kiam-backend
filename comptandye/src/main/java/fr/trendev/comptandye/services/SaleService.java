@@ -9,10 +9,13 @@ import fr.trendev.comptandye.entities.OfferingPK;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.Sale;
 import fr.trendev.comptandye.sessions.AbstractFacade;
+import fr.trendev.comptandye.sessions.ProductFacade;
+import fr.trendev.comptandye.utils.ProductFinder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -36,24 +39,30 @@ import javax.ws.rs.core.SecurityContext;
 @Path("Sale")
 @RolesAllowed({"Administrator", "Professional"})
 public class SaleService extends AbstractOfferingService<Sale> {
-    
+
+    @Inject
+    private ProductFacade productFacade;
+
+    @Inject
+    private ProductFinder<Sale> productFinder;
+
     private final Logger LOG = Logger.getLogger(SaleService.class.
             getName());
-    
+
     public SaleService() {
         super(Sale.class);
     }
-    
+
     @Override
     protected Logger getLogger() {
         return LOG;
     }
-    
+
     @Override
     protected AbstractFacade<Sale, OfferingPK> getFacade() {
         return saleFacade;
     }
-    
+
     @RolesAllowed({"Administrator"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -62,7 +71,7 @@ public class SaleService extends AbstractOfferingService<Sale> {
         LOG.log(Level.INFO, "Providing the Sale list");
         return super.findAll();
     }
-    
+
     @RolesAllowed({"Administrator"})
     @Path("count")
     @GET
@@ -71,7 +80,7 @@ public class SaleService extends AbstractOfferingService<Sale> {
     public Response count() {
         return super.count();
     }
-    
+
     @RolesAllowed({"Administrator"})
     @Path("{id}")
     @GET
@@ -85,42 +94,51 @@ public class SaleService extends AbstractOfferingService<Sale> {
                         pk));
         return super.find(pk, refresh);
     }
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response post(@Context SecurityContext sec, Sale entity,
             @QueryParam("professional") String professional) {
-        
+
         String email = this.getProEmail(sec, professional);
-        
+
         if (entity.getBusinesses() == null || entity.getBusinesses().isEmpty()) {
             throw new WebApplicationException("No Business provided !");
         }
-        
+
         return super.<Professional, String>post(entity, email,
                 AbstractFacade::prettyPrintPK,
                 Professional.class,
                 professionalFacade, Sale::setProfessional,
                 Professional::getOfferings, e -> {
             e.setId(null);
+
+//            //search and link the Product with the current Sale
+//            Product product = productFinder.findProduct(e,
+//                    email,
+//                    productFacade,
+//                    Sale.class,
+//                    Sale::getProduct);
+//            e.setProduct(product);
+//            product.getSales().add(e);
         });
-        
+
     }
-    
+
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(@Context SecurityContext sec, Sale entity,
             @QueryParam("professional") String professional) {
-        
+
         if (entity.getBusinesses() == null || entity.getBusinesses().isEmpty()) {
             throw new WebApplicationException("No Business provided !");
         }
-        
+
         OfferingPK pk = new OfferingPK(entity.getId(), this.getProEmail(sec,
                 professional));
-        
+
         LOG.log(Level.INFO, "Updating Sale {0}", saleFacade.
                 prettyPrintPK(pk));
         return super.put(entity, pk, e -> {
@@ -129,7 +147,7 @@ public class SaleService extends AbstractOfferingService<Sale> {
             e.setPrice(entity.getPrice());
             e.setDuration(entity.getDuration());
             e.setBusinesses(entity.getBusinesses());
-            
+
             e.setQty(entity.getQty());
         });
     }
@@ -151,16 +169,18 @@ public class SaleService extends AbstractOfferingService<Sale> {
     public Response delete(@Context SecurityContext sec,
             @PathParam("id") Long id,
             @QueryParam("professional") String professional) {
-        
+
         OfferingPK pk = new OfferingPK(id, this.getProEmail(sec, professional));
-        
+
         LOG.log(Level.INFO, "Deleting Sale {0}", saleFacade.
                 prettyPrintPK(pk));
-        
+
         return super.delete(pk, e -> {
+//            e.getProduct().getSales().remove(e);
+//            e.setProduct(null);
         });
     }
-    
+
     @Path("{id}/purchasedOfferings")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -171,7 +191,7 @@ public class SaleService extends AbstractOfferingService<Sale> {
                 professional));
         return super.getPurchasedOfferings(pk);
     }
-    
+
     @Path("{id}/parentPacks")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -182,4 +202,5 @@ public class SaleService extends AbstractOfferingService<Sale> {
                 professional));
         return super.getParentPacks(pk);
     }
+
 }
