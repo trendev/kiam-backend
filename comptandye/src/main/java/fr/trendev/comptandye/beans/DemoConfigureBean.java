@@ -463,6 +463,7 @@ public class DemoConfigureBean implements Serializable {
 
         Bill bill = new ClientBill();
         bill.setProfessional(vanessa);
+        vanessa.getBills().add(bill);
         bill.setReference("CX-SOMETHING");
         bill.setDeliveryDate(new Date());
         bill.setAmount(4000);
