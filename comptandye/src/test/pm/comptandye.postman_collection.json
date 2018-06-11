@@ -8870,7 +8870,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "e27e6573-528e-454e-960d-ac24d47f58e6",
+								"id": "f5b1b44c-9c85-4a29-8955-e7855cb31f46",
 								"type": "text/javascript",
 								"exec": [
 									"pm.environment.set(\"created_product-reference_barcode\", \"1234567899\");",
@@ -8887,7 +8887,7 @@
 									"        raw: JSON.stringify(",
 									"                        {",
 									"        \"availableQty\": 3,",
-									"        \"thresholdWarning\": 2,",
+									"        \"thresholdWarning\": 3,",
 									"        \"thresholdSevere\": 1,",
 									"        \"comments\":[",
 									"        \t\"No restriction\",",
