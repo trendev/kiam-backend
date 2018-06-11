@@ -3,12 +3,14 @@ package fr.trendev.comptandye.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import fr.trendev.comptandye.utils.listeners.ProductEntityListener;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -21,6 +23,7 @@ import javax.validation.constraints.Min;
  */
 @Entity
 @IdClass(ProductPK.class)
+@EntityListeners({ProductEntityListener.class})
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Product {
 

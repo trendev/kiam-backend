@@ -1999,6 +1999,9 @@ import fr.trendev.comptandye.utils.ExpenseType;</jpa:snp>
         <jpa:nq e="false" name="Product.findByThresholdSevere">
             <jpa:query>Select p from Product p where p.thresholdSevere=:thresholdSevere</jpa:query>
         </jpa:nq>
+        <jpa:el>
+            <jpa:ln e="true" n="fr.trendev.comptandye.utils.listeners.ProductEntityListener"/>
+        </jpa:el>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="ProductRecordPK" abs="true" class="ProductRecord" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524923958426">
         <jpa:con am="PUBLIC" e="true">
