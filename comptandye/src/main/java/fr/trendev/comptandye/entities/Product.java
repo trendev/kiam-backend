@@ -31,7 +31,6 @@ public class Product {
      * Quantity of available items
      */
     @Basic
-    @Min(value = 0, message = "availableQty in Product cannot be less than 0")
     private int availableQty;
 
     @Basic

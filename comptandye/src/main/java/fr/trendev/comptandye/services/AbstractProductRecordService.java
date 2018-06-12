@@ -70,9 +70,8 @@ public abstract class AbstractProductRecordService<T extends ProductRecord>
             e.setProduct(product);
 
             // updates availableQty
-            int qty = product.getAvailableQty() + e.accept(visitor);
-
-            product.setAvailableQty(qty < 0 ? 0 : qty);
+            product.setAvailableQty(
+                    product.getAvailableQty() + e.accept(visitor));
 
             // performs additionnal operations
             createActions.accept(e);
@@ -113,9 +112,7 @@ public abstract class AbstractProductRecordService<T extends ProductRecord>
 
             // updates availableQty in Product if the product record is not cancelled
             if (!e.isCancelled()) {
-                Product product = e.getProduct();
-                int qty = product.getAvailableQty() - e.accept(visitor);
-                product.setAvailableQty(qty < 0 ? 0 : qty);
+                e.cancel(visitor);
             }
 
             e.getProduct().getProductRecords().remove(e);

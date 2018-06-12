@@ -1938,9 +1938,6 @@ import fr.trendev.comptandye.utils.ExpenseType;</jpa:snp>
                 <jpa:des>Quantity of available items</jpa:des>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:bv>
-                    <jpa:mi v="0" m="availableQty in Product cannot be less than 0"/>
-                </jpa:bv>
             </jpa:basic>
             <jpa:basic attribute-type="int" v="true" xvt="" name="thresholdWarning" id="_1524842511104169">
                 <jpa:xwm nil="false" req="false"/>
