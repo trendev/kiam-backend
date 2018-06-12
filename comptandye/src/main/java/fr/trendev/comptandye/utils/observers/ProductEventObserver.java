@@ -45,9 +45,13 @@ public class ProductEventObserver {
 
     public void observeEmptyThresholdEvent(
             @Observes @EmptyThreshold Product p) {
+
+        String status = p.getAvailableQty() == 0 ? "is now EMPTY" : "MUST BE FILLED";
         LOG.log(Level.INFO,
-                "Product [{0}] for Professional Account [{1}]: the set is now EMPTY",
-                new Object[]{p.getProductReference().
-                            getBarcode(), p.getProfessional().getEmail()});
+                "Product [{0}] for Professional Account [{1}]: the set {2}",
+                new Object[]{p.getProductReference().getBarcode(),
+                    p.getProfessional().getEmail(),
+                    status
+                });
     }
 }

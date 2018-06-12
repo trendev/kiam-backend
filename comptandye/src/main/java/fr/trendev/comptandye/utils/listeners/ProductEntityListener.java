@@ -34,7 +34,7 @@ public class ProductEntityListener {
     @PostUpdate
     void onPostUpdate(Product p) {
 
-        if (p.getAvailableQty() == 0) {
+        if (p.getAvailableQty() <= 0) {
             emptyThresholdEvent.fire(p);
         } else {
             if (p.getAvailableQty() <= p.getThresholdSevere()) {
