@@ -148,6 +148,11 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
 
         return super.post(entity, e -> {
 
+            //Reset the id (if provided)
+            entity.getCustomerDetails().setId(null);
+            entity.getAddress().setId(null);
+            entity.getSocialNetworkAccounts().setId(null);
+
             e.setUuid(UUIDGenerator.generate("PRO-", true));
 
             //encrypts the provided password

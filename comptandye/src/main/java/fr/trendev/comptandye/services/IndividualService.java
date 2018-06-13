@@ -118,6 +118,11 @@ public class IndividualService extends AbstractCommonService<Individual, String>
         return super.post(entity,
                 e -> {
 
+            //Reset the id (if provided)
+            entity.getCustomerDetails().setId(null);
+            entity.getAddress().setId(null);
+            entity.getSocialNetworkAccounts().setId(null);
+
             e.setUuid(UUIDGenerator.generate("IND-", true));
 
             //encrypts the provided password
