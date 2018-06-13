@@ -28,11 +28,14 @@ import fr.trendev.comptandye.entities.ReturnedItem;
 import fr.trendev.comptandye.entities.Sale;
 import fr.trendev.comptandye.entities.SocialNetworkAccounts;
 import fr.trendev.comptandye.entities.SoldItem;
+import fr.trendev.comptandye.entities.ThresholdAlert;
 import fr.trendev.comptandye.entities.UsedItem;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.entities.VatRates;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
+import fr.trendev.comptandye.utils.NotificationLevelEnum;
 import fr.trendev.comptandye.utils.PasswordGenerator;
+import fr.trendev.comptandye.utils.ThresholdAlertQualifierEnum;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import fr.trendev.comptandye.utils.visitors.BillTypeVisitor;
 import java.io.BufferedReader;
@@ -206,6 +209,22 @@ public class DemoConfigureBean implements Serializable {
                 new PaymentMode("Espèces"),
                 new PaymentMode("Virement")
         ));
+
+        ThresholdAlert ta = new ThresholdAlert(
+                NotificationLevelEnum.WARNING,
+                vanessa,
+                "123456789",
+                "a haircut product",
+                5, 2,
+                ThresholdAlertQualifierEnum.WARNING);
+
+        ThresholdAlert ta2 = new ThresholdAlert(
+                NotificationLevelEnum.SEVERE,
+                vanessa,
+                "123456780",
+                "another haircut product",
+                0, -5,
+                ThresholdAlertQualifierEnum.EMPTY);
 
         Professional audrey = new Professional("audreyheitzmann@gmail.com",
                 "VvCdf6nrd7ksdB3RlAnAFSuhmyLgzeO/oeZpcPju7Fc=",

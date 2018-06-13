@@ -102,6 +102,11 @@ public class Professional extends Customer {
     @JsonIgnore
     private List<Product> stock = new LinkedList();
 
+    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Notification.class,
+            mappedBy = "professional")
+    @JsonIgnore
+    private List<Notification> notifications = new LinkedList();
+
     @ManyToMany(targetEntity = Individual.class, mappedBy = "professionals")
     @JsonIgnore
     private List<Individual> individuals = new LinkedList<>();
@@ -265,6 +270,14 @@ public class Professional extends Customer {
 
     public void setStock(List<Product> stock) {
         this.stock = stock;
+    }
+
+    public List<Notification> getNotifications() {
+        return this.notifications;
+    }
+
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
     }
 
     public List<Individual> getIndividuals() {

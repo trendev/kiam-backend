@@ -377,6 +377,14 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-many>
+            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1528899065548" connected-attribute-id="_1528899165846100" v="true" xvt="" name="notifications" dv="new LinkedList()" id="_1528899165848101">
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:cascade>
+                    <jpa:cascade-all/>
+                </jpa:cascade>
+            </jpa:one-to-many>
             <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490101520286" connected-attribute-id="_1490180547173493" v="true" xvt="" name="individuals" dv="new LinkedList&lt;&gt;()" id="_1490180547178494">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
@@ -2191,6 +2199,133 @@ import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
             <jpa:query>Select e from ClassicExpense e</jpa:query>
         </jpa:nq>
     </jpa:entity>
+    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="NotificationPK" abs="true" class="Notification" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1528899065548">
+        <jpa:con am="PUBLIC" e="true"/>
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_1528899988622110</jpa:a>
+            <jpa:a>_1528899165846100</jpa:a>
+            <jpa:post>this.professional.getNotifications().add(this);</jpa:post>
+        </jpa:con>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonTypeInfo(use = JsonTypeInfo.Id.NAME,&#xA;        include = JsonTypeInfo.As.EXISTING_PROPERTY,&#xA;        property = &quot;cltype&quot;,&#xA;        visible = true)"/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({&#xA;    @JsonSubTypes.Type(value = ThresholdAlert.class,&#xA;            name = NotificationType.THRESHOLD_ALERT)})&#xA;"/>
+        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.visitors.Visitor;
+            import fr.trendev.comptandye.utils.NotificationType;</jpa:snp>
+        <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
+            }</jpa:snp>
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" xvt="" am="PROTECTED" name="cltype" id="_1528899379066102">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:nn m="cltype field in Notification cannot be null"/>
+                </jpa:bv>
+            </jpa:basic>
+            <jpa:basic attribute-type="boolean" v="true" xvt="" name="checked" dv="false" id="_1528899897177109">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="fr.trendev.comptandye.utils.NotificationLevelEnum" v="true" xvt="" name="levelRank" id="_1528899988622110">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:enumerated>STRING</jpa:enumerated>
+            </jpa:basic>
+            <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_1528899165848101" v="true" xvt="" name="professional" id="_1528899165846100">
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:many-to-one>
+            <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_152889906588197">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:nq e="false" name="Notification.findAll">
+            <jpa:query>Select e from Notification e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Notification.findByChecked">
+            <jpa:query>Select n from Notification n where n.checked=:checked</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Notification.findByLevelRank">
+            <jpa:query>Select n from Notification n where n.levelRank=:levelRank</jpa:query>
+        </jpa:nq>
+        <jpa:discriminator-column/>
+    </jpa:entity>
+    <jpa:entity compositePrimaryKeyClass="ThresholdAlertPK" abs="false" class="ThresholdAlert" superclassId="_1528899065548" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1528899529391">
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:pre>super();</jpa:pre>
+            <jpa:post>this.cltype = NotificationType.THRESHOLD_ALERT;</jpa:post>
+        </jpa:con>
+        <jpa:con am="PUBLIC" e="true">
+            <jpa:a>_1528899988622110</jpa:a>
+            <jpa:a>_1528899613411105</jpa:a>
+            <jpa:a>_1528899679627106</jpa:a>
+            <jpa:a>_1528899683499107</jpa:a>
+            <jpa:a>_1528899683903108</jpa:a>
+            <jpa:a>_15289082626011767</jpa:a>
+            <jpa:a>_1528899165846100</jpa:a>
+            <jpa:pre></jpa:pre>
+            <jpa:post>this.cltype = NotificationType.THRESHOLD_ALERT;</jpa:post>
+        </jpa:con>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
+        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.NotificationType;
+import fr.trendev.comptandye.utils.visitors.Visitor;
+import fr.trendev.comptandye.utils.NotificationLevelEnum;</jpa:snp>
+        <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
+            }</jpa:snp>
+        <jpa:ath>jsie</jpa:ath>
+        <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" xvt="" name="barcode" id="_1528899613411105">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:nn m="Barcode in ThresholdAlert must not be null"/>
+                </jpa:bv>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" xvt="" name="description" id="_1528899679627106">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:nn m="Description in ThresholdAlert must not be null"/>
+                </jpa:bv>
+            </jpa:basic>
+            <jpa:basic attribute-type="int" v="true" xvt="" name="threshold" id="_1528899683499107">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="int" v="true" xvt="" name="qty" id="_1528899683903108">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="fr.trendev.comptandye.utils.ThresholdAlertQualifierEnum" v="true" xvt="" name="qualifier" id="_15289082626011767">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:enumerated>STRING</jpa:enumerated>
+            </jpa:basic>
+        </jpa:attributes>
+        <jpa:nq e="false" name="ThresholdAlert.findAll">
+            <jpa:query>Select e from ThresholdAlert e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="ThresholdAlert.findByBarcode">
+            <jpa:query>Select p from ThresholdAlert p where p.barcode=:barcode</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="ThresholdAlert.findByDescription">
+            <jpa:query>Select p from ThresholdAlert p where p.description=:description</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="ThresholdAlert.findByThreshold">
+            <jpa:query>Select p from ThresholdAlert p where p.threshold=:threshold</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="ThresholdAlert.findByQty">
+            <jpa:query>Select p from ThresholdAlert p where p.qty=:qty</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="ThresholdAlert.findByQualifier">
+            <jpa:query>Select t from ThresholdAlert t where t.qualifier=:qualifier</jpa:query>
+        </jpa:nq>
+    </jpa:entity>
     <jpa:embeddable abs="false" class="OfferingSnapshot" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1512853437669">
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
@@ -2340,6 +2475,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
+            <i ref="_1528899529391" x="-689" y="1926"/>
             <i ref="_1490281931338" x="405" y="965">
                 <el>
                     <e ref="_1490283543806197">
@@ -2383,6 +2519,9 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                     <e ref="_1524841981058165">
+                        <v st="1" si="12.0" cl="#ff0000"/>
+                    </e>
+                    <e ref="_1528899165848101">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
                     <e ref="_1521217263508375">
@@ -2435,6 +2574,13 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
+            <i ref="_1528899065548" x="-679" y="1708">
+                <el>
+                    <e ref="_1528899165846100">
+                        <v st="1" si="12.0" cl="#ff0000"/>
+                    </e>
+                </el>
+            </i>
             <i ref="_1490180671085" x="703" y="335">
                 <el>
                     <e ref="_150652336702164">
@@ -2459,7 +2605,7 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
                     </e>
                 </el>
             </i>
-            <i ref="_1524835087412" x="-534" y="2032"/>
+            <i ref="_1524835087412" x="-534" y="2123"/>
             <i ref="_1490704206844" x="-86" y="851">
                 <el>
                     <e ref="_15049038294552105">

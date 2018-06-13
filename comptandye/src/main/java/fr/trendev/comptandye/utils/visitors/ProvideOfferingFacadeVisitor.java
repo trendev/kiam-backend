@@ -20,6 +20,7 @@ import fr.trendev.comptandye.entities.Expense;
 import fr.trendev.comptandye.entities.ExpenseItem;
 import fr.trendev.comptandye.entities.Individual;
 import fr.trendev.comptandye.entities.IndividualBill;
+import fr.trendev.comptandye.entities.Notification;
 import fr.trendev.comptandye.entities.Offering;
 import fr.trendev.comptandye.entities.OfferingPK;
 import fr.trendev.comptandye.entities.Pack;
@@ -37,6 +38,7 @@ import fr.trendev.comptandye.entities.Sale;
 import fr.trendev.comptandye.entities.Service;
 import fr.trendev.comptandye.entities.SocialNetworkAccounts;
 import fr.trendev.comptandye.entities.SoldItem;
+import fr.trendev.comptandye.entities.ThresholdAlert;
 import fr.trendev.comptandye.entities.UsedItem;
 import fr.trendev.comptandye.entities.UserAccount;
 import fr.trendev.comptandye.entities.UserGroup;
@@ -256,6 +258,18 @@ public class ProvideOfferingFacadeVisitor implements
     @Override
     public AbstractFacade<? extends Offering, OfferingPK> visit(
             UsedItem instance) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public AbstractFacade<? extends Offering, OfferingPK> visit(
+            Notification instance) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public AbstractFacade<? extends Offering, OfferingPK> visit(
+            ThresholdAlert instance) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

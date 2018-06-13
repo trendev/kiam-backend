@@ -8,10 +8,6 @@ package fr.trendev.comptandye.entities;
 import fr.trendev.comptandye.utils.UserAccountType;
 import java.util.Calendar;
 import java.util.Date;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -21,22 +17,6 @@ import org.junit.Test;
 public class ProfessionalTest {
 
     public ProfessionalTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
     }
 
     @Test
@@ -82,6 +62,8 @@ public class ProfessionalTest {
         assert instance.getStock() != null;
         assert instance.getStock().isEmpty() == true;
         assert UserAccountType.PROFESSIONAL.equals(instance.getCltype());
+        assert instance.getNotifications() != null;
+        assert instance.getNotifications().isEmpty();
 
         String email = "professional@domain.com";
         String password = "encrypted_pwd";
@@ -128,6 +110,8 @@ public class ProfessionalTest {
         assert instance.getStock() != null;
         assert instance.getStock().isEmpty() == true;
         assert UserAccountType.PROFESSIONAL.equals(instance.getCltype());
+        assert instance.getNotifications() != null;
+        assert instance.getNotifications().isEmpty();
 
         String website = "http://www.mycompany.com";
         String companyName = "MyCompany";
@@ -182,6 +166,8 @@ public class ProfessionalTest {
         assert instance.getStock() != null;
         assert instance.getStock().isEmpty() == true;
         assert UserAccountType.PROFESSIONAL.equals(instance.getCltype());
+        assert instance.getNotifications() != null;
+        assert instance.getNotifications().isEmpty();
 
     }
 
