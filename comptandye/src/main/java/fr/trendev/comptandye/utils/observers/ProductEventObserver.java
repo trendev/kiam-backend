@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Observes;
+import javax.enterprise.event.TransactionPhase;
 
 /**
  *
@@ -26,7 +27,7 @@ public class ProductEventObserver {
             getName());
 
     public void observeWarningThresholdEvent(
-            @Observes @WarningThreshold Product p) {
+            @Observes(during = TransactionPhase.AFTER_SUCCESS) @WarningThreshold Product p) {
         LOG.log(Level.INFO,
                 "Product [{0}] for Professional Account [{1}]: availableQty has reached the WARNING threshold (qty = {2} / warning = {3})",
                 new Object[]{p.getProductReference().
@@ -35,7 +36,7 @@ public class ProductEventObserver {
     }
 
     public void observeSevereThresholdEvent(
-            @Observes @SevereThreshold Product p) {
+            @Observes(during = TransactionPhase.AFTER_SUCCESS) @SevereThreshold Product p) {
         LOG.log(Level.INFO,
                 "Product [{0}] for Professional Account [{1}]: availableQty has reached the SEVERE threshold (qty = {2} / severe = {3})",
                 new Object[]{p.getProductReference().
@@ -44,7 +45,7 @@ public class ProductEventObserver {
     }
 
     public void observeEmptyThresholdEvent(
-            @Observes @EmptyThreshold Product p) {
+            @Observes(during = TransactionPhase.AFTER_SUCCESS) @EmptyThreshold Product p) {
 
         String status = p.getAvailableQty() == 0 ? "is now EMPTY" : "MUST BE FILLED";
         LOG.log(Level.INFO,
