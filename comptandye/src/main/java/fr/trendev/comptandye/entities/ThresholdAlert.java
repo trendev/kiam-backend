@@ -10,6 +10,7 @@ import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -28,6 +29,8 @@ public class ThresholdAlert extends Notification {
     private String description;
 
     @Basic
+    @Min(value = 0,
+            message = "threshold field in ThresholdAlert must not be less than 0")
     private int threshold;
 
     @Basic
@@ -35,6 +38,7 @@ public class ThresholdAlert extends Notification {
 
     @Basic
     @Enumerated(EnumType.STRING)
+    @NotNull(message = "qualifier field in ThresholdAlert must not be null")
     private ThresholdAlertQualifierEnum qualifier;
 
     public ThresholdAlert() {

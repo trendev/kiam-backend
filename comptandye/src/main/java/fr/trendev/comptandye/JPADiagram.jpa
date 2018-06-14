@@ -2296,6 +2296,9 @@ import fr.trendev.comptandye.utils.NotificationLevelEnum;</jpa:snp>
             <jpa:basic attribute-type="int" v="true" xvt="" name="threshold" id="_1528899683499107">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:mi v="0" m="threshold field in ThresholdAlert must not be less than 0"/>
+                </jpa:bv>
             </jpa:basic>
             <jpa:basic attribute-type="int" v="true" xvt="" name="qty" id="_1528899683903108">
                 <jpa:xwm nil="false" req="false"/>
@@ -2304,6 +2307,9 @@ import fr.trendev.comptandye.utils.NotificationLevelEnum;</jpa:snp>
             <jpa:basic attribute-type="fr.trendev.comptandye.utils.ThresholdAlertQualifierEnum" v="true" xvt="" name="qualifier" id="_15289082626011767">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:nn m="qualifier field in ThresholdAlert must not be null"/>
+                </jpa:bv>
                 <jpa:enumerated>STRING</jpa:enumerated>
             </jpa:basic>
         </jpa:attributes>
