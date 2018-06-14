@@ -29,6 +29,10 @@ public class ThresholdAlert extends Notification {
     private String description;
 
     @Basic
+    @NotNull(message = "brand field in Threshold must not be null")
+    private String brand;
+
+    @Basic
     @Min(value = 0,
             message = "threshold field in ThresholdAlert must not be less than 0")
     private int threshold;
@@ -48,10 +52,12 @@ public class ThresholdAlert extends Notification {
 
     public ThresholdAlert(NotificationLevelEnum levelRank,
             Professional professional, String barcode, String description,
-            int threshold, int qty, ThresholdAlertQualifierEnum qualifier) {
+            String brand, int threshold, int qty,
+            ThresholdAlertQualifierEnum qualifier) {
         super(levelRank, professional);
         this.barcode = barcode;
         this.description = description;
+        this.brand = brand;
         this.threshold = threshold;
         this.qty = qty;
         this.qualifier = qualifier;
@@ -72,6 +78,14 @@ public class ThresholdAlert extends Notification {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getBrand() {
+        return this.brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
     public int getThreshold() {

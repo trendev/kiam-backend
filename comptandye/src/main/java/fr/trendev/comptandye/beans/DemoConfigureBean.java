@@ -215,6 +215,7 @@ public class DemoConfigureBean implements Serializable {
                 vanessa,
                 "123456789",
                 "a haircut product",
+                "WELLA",
                 5, 2,
                 ThresholdAlertQualifierEnum.WARNING);
 
@@ -223,6 +224,7 @@ public class DemoConfigureBean implements Serializable {
                 vanessa,
                 "123456780",
                 "another haircut product",
+                "WELLA",
                 0, -5,
                 ThresholdAlertQualifierEnum.EMPTY);
 

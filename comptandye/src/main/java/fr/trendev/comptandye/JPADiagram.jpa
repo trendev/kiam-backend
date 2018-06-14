@@ -2263,6 +2263,7 @@ import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
             <jpa:a>_1528899988622110</jpa:a>
             <jpa:a>_1528899613411105</jpa:a>
             <jpa:a>_1528899679627106</jpa:a>
+            <jpa:a>_1528991954925218</jpa:a>
             <jpa:a>_1528899683499107</jpa:a>
             <jpa:a>_1528899683903108</jpa:a>
             <jpa:a>_15289082626011767</jpa:a>
@@ -2291,6 +2292,13 @@ import fr.trendev.comptandye.utils.NotificationLevelEnum;</jpa:snp>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:bv>
                     <jpa:nn m="Description in ThresholdAlert must not be null"/>
+                </jpa:bv>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" xvt="" name="brand" id="_1528991954925218">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:nn m="brand field in Threshold must not be null"/>
                 </jpa:bv>
             </jpa:basic>
             <jpa:basic attribute-type="int" v="true" xvt="" name="threshold" id="_1528899683499107">
@@ -2330,6 +2338,9 @@ import fr.trendev.comptandye.utils.NotificationLevelEnum;</jpa:snp>
         </jpa:nq>
         <jpa:nq e="false" name="ThresholdAlert.findByQualifier">
             <jpa:query>Select t from ThresholdAlert t where t.qualifier=:qualifier</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="ThresholdAlert.findByBrand">
+            <jpa:query>Select t from ThresholdAlert t where t.brand=:brand</jpa:query>
         </jpa:nq>
     </jpa:entity>
     <jpa:embeddable abs="false" class="OfferingSnapshot" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1512853437669">

@@ -35,6 +35,7 @@ public class ThresholdAlertTest {
         Professional pro = new Professional();
         String barcode = "barcode";
         String description = "this is a description";
+        String brand = "TOP BRAND";
         int threshold = 5;
         int qty = 3;
 
@@ -43,6 +44,7 @@ public class ThresholdAlertTest {
                 pro,
                 barcode,
                 description,
+                brand,
                 threshold, qty,
                 ThresholdAlertQualifierEnum.WARNING);
 
@@ -53,6 +55,7 @@ public class ThresholdAlertTest {
         assert NotificationLevelEnum.WARNING.equals(instance.getLevelRank());
         assert barcode.equals(instance.getBarcode());
         assert description.equals(instance.getDescription());
+        assert brand.equals(instance.getBrand());
         assert instance.getThreshold() == threshold;
         assert instance.getQty() == qty;
         assert ThresholdAlertQualifierEnum.WARNING.equals(instance.

@@ -53,6 +53,7 @@ public class ProductEventObserver {
                     professional,
                     p.getProductReference().getBarcode(),
                     p.getProductReference().getDescription(),
+                    p.getProductReference().getBrand(),
                     p.getThresholdWarning(),
                     p.getAvailableQty(),
                     ThresholdAlertQualifierEnum.WARNING
@@ -88,6 +89,7 @@ public class ProductEventObserver {
                     professional,
                     p.getProductReference().getBarcode(),
                     p.getProductReference().getDescription(),
+                    p.getProductReference().getBrand(),
                     p.getThresholdSevere(),
                     p.getAvailableQty(),
                     ThresholdAlertQualifierEnum.SEVERE
@@ -123,6 +125,7 @@ public class ProductEventObserver {
                     professional,
                     p.getProductReference().getBarcode(),
                     p.getProductReference().getDescription(),
+                    p.getProductReference().getBrand(),
                     0,
                     p.getAvailableQty(),
                     ThresholdAlertQualifierEnum.EMPTY
