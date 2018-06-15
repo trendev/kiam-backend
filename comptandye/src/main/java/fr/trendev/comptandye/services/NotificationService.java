@@ -175,7 +175,7 @@ public class NotificationService extends AbstractCommonService<Notification, Not
 
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs updating Notification "
-                    + getFacade().prettyPrintPK(pk));
+                    + notificationFacade.prettyPrintPK(pk));
             getLogger().log(Level.WARNING, errmsg, ex);
             throw new WebApplicationException(errmsg, ex);
         }
@@ -230,10 +230,32 @@ public class NotificationService extends AbstractCommonService<Notification, Not
         LOG.log(Level.INFO, "Deleting Notification {0}",
                 notificationFacade.
                         prettyPrintPK(pk));
-        return super.delete(pk,
-                e -> {
-            e.getProfessional().getNotifications().remove(e);
-        });
+
+        try {
+            return Optional.ofNullable(notificationFacade.find(pk))
+                    .map(result -> {
+                        result.getProfessional().getNotifications().remove(
+                                result);
+                        return Response.ok().build();
+                    })
+                    .orElse(Response.status(Response.Status.NOT_FOUND).entity(
+                            Json.createObjectBuilder().add("error",
+                                    "Notification "
+                                    + notificationFacade.prettyPrintPK(pk)
+                                    + " not found").
+                                    build()).
+                            build());
+        } catch (EJBTransactionRolledbackException | RollbackException ex) {
+            throw ex;
+        } catch (Exception ex) {
+
+            String errmsg = ExceptionHelper.handleException(ex,
+                    "Exception occurs deleting Notification "
+                    + notificationFacade.prettyPrintPK(pk));
+            getLogger().log(Level.WARNING, errmsg, ex);
+            throw new WebApplicationException(errmsg, ex);
+        }
+
     }
 
     @RolesAllowed({"Administrator", "Professional"})
