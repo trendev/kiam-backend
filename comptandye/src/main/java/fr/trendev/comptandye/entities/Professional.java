@@ -103,7 +103,7 @@ public class Professional extends Customer {
     private List<Product> stock = new LinkedList();
 
     @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Notification.class,
-            mappedBy = "professional")
+            orphanRemoval = true, mappedBy = "professional")
     @JsonIgnore
     private List<Notification> notifications = new LinkedList();
 

@@ -2,10 +2,16 @@ package fr.trendev.comptandye.sessions;
 
 import fr.trendev.comptandye.entities.Notification;
 import fr.trendev.comptandye.entities.NotificationPK;
+import fr.trendev.comptandye.entities.Notification_;
+import fr.trendev.comptandye.entities.Professional;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
+import javax.persistence.criteria.Root;
 
 @Stateless
 @Named("notification")
@@ -29,6 +35,16 @@ public class NotificationFacade extends AbstractFacade<Notification, Notificatio
         sb.append(pk.getId());
         sb.append("?professional=").append(pk.getProfessional());
         return sb.toString();
+    }
+
+    public int checkAll(Professional professional) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaDelete<Notification> cd = cb.createCriteriaDelete(
+                Notification.class);
+        Root<Notification> root = cd.from(Notification.class);
+        cd.where(cb.equal(root.get(Notification_.professional), professional));
+        Query q = em.createQuery(cd);
+        return q.executeUpdate();
     }
 
 }
