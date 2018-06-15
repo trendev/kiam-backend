@@ -16,10 +16,11 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.Json;
-import javax.ws.rs.Consumes;
+import javax.persistence.RollbackException;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -113,26 +114,107 @@ public class NotificationService extends AbstractCommonService<Notification, Not
 //        });
 //
 //    }
+//    @RolesAllowed({"Administrator", "Professional"})
+//    @Path("check")
+//    @PUT
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Response put(@Context SecurityContext sec, Notification entity,
+//            @QueryParam("professional") String professional) {
+//
+//        NotificationPK pk = new NotificationPK(entity.getId(), this.
+//                getProEmail(sec,
+//                        professional));
+//
+//        LOG.log(Level.INFO, "Updating Notification {0}",
+//                notificationFacade.
+//                        prettyPrintPK(pk));
+//        return super.put(entity, pk, e -> {
+//            if (!e.isChecked()) {
+//                e.setChecked(true);
+//            }// else do nothing
+//        });
+//    }
     @RolesAllowed({"Administrator", "Professional"})
-    @Path("check")
+    @Path("check/{id}")
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response put(@Context SecurityContext sec, Notification entity,
+    public Response put(@Context SecurityContext sec,
+            @PathParam("id") Long id,
             @QueryParam("professional") String professional) {
 
-        NotificationPK pk = new NotificationPK(entity.getId(), this.
+        NotificationPK pk = new NotificationPK(id, this.
                 getProEmail(sec,
                         professional));
 
-        LOG.log(Level.INFO, "Updating Notification {0}",
+        LOG.log(Level.INFO, "Checking Notification {0}",
                 notificationFacade.
                         prettyPrintPK(pk));
-        return super.put(entity, pk, e -> {
-            if (!e.isChecked()) {
-                e.setChecked(true);
-            }// else do nothing
-        });
+        try {
+            return Optional.ofNullable(notificationFacade.find(pk))
+                    .map(result -> {
+                        if (!result.isChecked()) {
+                            result.setChecked(true);
+                            LOG.log(Level.INFO,
+                                    "Notification {0} checked",
+                                    notificationFacade.prettyPrintPK(pk));
+                        }// else do nothing
+                        return Response.status(Response.Status.OK).entity(
+                                result).build();
+                    })
+                    .orElse(Response.status(Response.Status.NOT_FOUND).entity(
+                            Json.createObjectBuilder().add("error",
+                                    "Notification "
+                                    + notificationFacade.prettyPrintPK(pk)
+                                    + " not found").
+                                    build()).
+                            build());
+        } catch (EJBTransactionRolledbackException | RollbackException ex) {
+            throw ex;
+        } catch (Exception ex) {
+
+            String errmsg = ExceptionHelper.handleException(ex,
+                    "Exception occurs updating Notification "
+                    + getFacade().prettyPrintPK(pk));
+            getLogger().log(Level.WARNING, errmsg, ex);
+            throw new WebApplicationException(errmsg, ex);
+        }
+    }
+
+    @RolesAllowed({"Administrator", "Professional"})
+    @Path("check-all")
+    @PUT
+    public Response checkAll(@Context SecurityContext sec,
+            @QueryParam("professional") String professional) {
+
+        String proEmail = this.getProEmail(sec, professional);
+
+        try {
+            return Optional.ofNullable(professionalFacade.find(proEmail))
+                    .map(pro -> {
+                        LOG.log(Level.INFO,
+                                "Checking All Notifications of Professional Account {0}",
+                                proEmail);
+                        int checked = notificationFacade.checkAll(pro);
+                        return Response.ok(Json.createObjectBuilder()
+                                .add("totalChecked", checked).build()
+                        ).build();
+                    })
+                    .orElse(Response.status(Response.Status.NOT_FOUND).entity(
+                            Json.createObjectBuilder().add("error",
+                                    "Professional"
+                                    + proEmail
+                                    + " not found").
+                                    build()).
+                            build());
+        } catch (Exception ex) {
+            String errmsg = ExceptionHelper.handleException(ex,
+                    "Exception occurs checking All Notifications of Professional Account"
+                    + proEmail);
+            LOG.log(Level.WARNING, errmsg, ex);
+            throw new WebApplicationException(errmsg, ex);
+        }
+
     }
 
     @RolesAllowed({"Administrator", "Professional"})
@@ -155,6 +237,7 @@ public class NotificationService extends AbstractCommonService<Notification, Not
     }
 
     @RolesAllowed({"Administrator", "Professional"})
+    @Path("delete-all")
     @DELETE
     public Response deleteAll(@Context SecurityContext sec,
             @QueryParam("professional") String professional) {

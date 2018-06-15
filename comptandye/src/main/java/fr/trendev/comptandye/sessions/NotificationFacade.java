@@ -10,7 +10,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaDelete;
+import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 
 @Stateless
@@ -39,11 +39,12 @@ public class NotificationFacade extends AbstractFacade<Notification, Notificatio
 
     public int checkAll(Professional professional) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaDelete<Notification> cd = cb.createCriteriaDelete(
+        CriteriaUpdate<Notification> cu = cb.createCriteriaUpdate(
                 Notification.class);
-        Root<Notification> root = cd.from(Notification.class);
-        cd.where(cb.equal(root.get(Notification_.professional), professional));
-        Query q = em.createQuery(cd);
+        Root<Notification> root = cu.from(Notification.class);
+        cu.set(root.get(Notification_.checked), true);
+        cu.where(cb.equal(root.get(Notification_.professional), professional));
+        Query q = em.createQuery(cu);
         return q.executeUpdate();
     }
 

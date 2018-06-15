@@ -74,7 +74,7 @@ public class XSRFFilter extends ApiFilter {
         if (sem.contains(req.getMethod())) {
             if (xxsfrtoken != null && !xxsfrtoken.isEmpty()) {
                 try {
-                    LOG.log(Level.INFO, "Checking X-XSFR-TOKEN");
+                    LOG.log(Level.INFO, "Controlling X-XSFR-TOKEN");
                     String xsfrtoken = (String) session.getAttribute(
                             "XSRF-TOKEN");
                     if (xsfrtoken == null
