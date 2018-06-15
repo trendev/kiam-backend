@@ -13430,6 +13430,467 @@
 			]
 		},
 		{
+			"name": "Notification",
+			"description": null,
+			"item": [
+				{
+					"name": "ThresholdAlert",
+					"description": "",
+					"item": [
+						{
+							"name": "create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "483426b7-7362-426e-8444-7756f6f32f41",
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 201\"] = responseCode.code === 201;",
+											"",
+											"var jsonData = JSON.parse(responseBody);",
+											"tests[\"id is defined\"] = jsonData.id !== undefined;",
+											"pm.environment.set(\"created_notification_id\", jsonData.id);",
+											"",
+											"tests[\"cltype is \\\"threshold\\\"\"] = jsonData.cltype === \"threshold\";",
+											"tests[\"checked is false\"] = jsonData.checked === false;",
+											"tests[\"levelRank is \\\"WARNING\\\"\"] = jsonData.levelRank === \"WARNING\";",
+											"tests[\"barcode is \\\"123456789\\\"\"] = jsonData.barcode === \"123456789\";",
+											"tests[\"description is \\\"a haircut product\\\"\"] = jsonData.description === \"a haircut product\";",
+											"tests[\"brand is \\\"WELLA\\\"\"] = jsonData.brand === \"WELLA\";",
+											"tests[\"threshold is 5\"] = jsonData.threshold === 5;",
+											"tests[\"qty is 2\"] = jsonData.qty === 2;",
+											"tests[\"qualifier is \\\"WARNING\\\"\"] = jsonData.qualifier === \"WARNING\";",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-XSRF-TOKEN",
+										"value": "{{XSRF-TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n        \"id\": 123456,\n        \"cltype\": \"threshold\",\n        \"checked\": false,\n        \"levelRank\": \"WARNING\",\n        \"barcode\": \"123456789\",\n        \"description\": \"a haircut product\",\n        \"brand\": \"WELLA\",\n        \"threshold\": 5,\n        \"qty\": 2,\n        \"qualifier\": \"WARNING\"\n    }"
+								},
+								"url": {
+									"raw": "{{API_URL}}/ThresholdAlert?professional=vanessa.gay@gmail.com",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"ThresholdAlert"
+									],
+									"query": [
+										{
+											"key": "professional",
+											"value": "vanessa.gay@gmail.com"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "457106b3-5e9c-4903-9061-f00097ce366c",
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											"var jsonData = JSON.parse(responseBody);",
+											"tests[\"id is \"+pm.environment.get(\"created_notification_id\")] = jsonData.id === pm.environment.get(\"created_notification_id\");",
+											"",
+											"tests[\"cltype is \\\"threshold\\\"\"] = jsonData.cltype === \"threshold\";",
+											"tests[\"checked is false\"] = jsonData.checked === false;",
+											"tests[\"levelRank is \\\"SEVERE\\\"\"] = jsonData.levelRank === \"SEVERE\";",
+											"tests[\"barcode is \\\"123456789\\\"\"] = jsonData.barcode === \"123456789\";",
+											"tests[\"description is \\\"a haircut product\\\"\"] = jsonData.description === \"a haircut product\";",
+											"tests[\"brand is \\\"WELLA\\\"\"] = jsonData.brand === \"WELLA\";",
+											"tests[\"threshold is 0\"] = jsonData.threshold === 0;",
+											"tests[\"qty is 0\"] = jsonData.qty === 0;",
+											"tests[\"qualifier is \\\"EMPTY\\\"\"] = jsonData.qualifier === \"EMPTY\";"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-XSRF-TOKEN",
+										"value": "{{XSRF-TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n        \"id\": {{created_notification_id}},\n        \"cltype\": \"threshold\",\n        \"checked\": false,\n        \"levelRank\": \"SEVERE\",\n        \"barcode\": \"123456789\",\n        \"description\": \"a haircut product\",\n        \"brand\": \"WELLA\",\n        \"threshold\": 0,\n        \"qty\": 0,\n        \"qualifier\": \"EMPTY\"\n    }"
+								},
+								"url": {
+									"raw": "{{API_URL}}/ThresholdAlert?professional=vanessa.gay@gmail.com",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"ThresholdAlert"
+									],
+									"query": [
+										{
+											"key": "professional",
+											"value": "vanessa.gay@gmail.com"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "findAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0ef4d005-c88f-489d-ab42-2801f4ebe1e0",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Notification table is not empty\"] = jsonData.length >= 1;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/Notification",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Notification"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "count",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "55b0edff-59f4-4ed8-89d0-9ecc0c5679df",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"count >= 1\"] = responseBody >= 1;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/Notification/count",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Notification",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "058f3be3-f9f4-4e0f-9435-a85549078296",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"/*var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"//created_collectivegroup_id environment variable is stored as a string...",
+									"tests[\"id is \"+pm.environment.get(\"created_collectivegroup_id\")] = jsonData.id == pm.environment.get(\"created_collectivegroup_id\");",
+									"tests[\"groupName is \\\"Maison de retraite de Chanteloup-en-Brie\\\"\"] = jsonData.groupName === \"Maison de retraite de Chanteloup-en-Brie\";",
+									"tests[\"phone is \\\"0123456789\\\"\"] = jsonData.phone === \"0123456789\";",
+									"tests[\"Address is defined\"] = jsonData.address !== undefined;",
+									"tests[\"address.id is \"+pm.environment.get(\"created_address_id\")] = jsonData.address.id == pm.environment.get(\"created_address_id\");",
+									"tests[\"address.street is \\\"Allée de Fontenelle\\\"\"] = jsonData.address.street === \"Allée de Fontenelle\";",
+									"tests[\"address.optional is \\\"Château de Fontenelle\\\"\"] = jsonData.address.optional === \"Château de Fontenelle\";",
+									"tests[\"address.postalCode is \\\"77600\\\"\"] = jsonData.address.postalCode === \"77600\";",
+									"tests[\"address.city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.address.city === \"Chanteloup-en-Brie\";*/"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/Notification/{{created_notification_id}}?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Notification",
+								"{{created_notification_id}}"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f3bf73b8-f3c3-445e-8c41-b2d2f86d4e7e",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is \"+pm.environment.get(\"created_notification_id\")] = jsonData.id === pm.environment.get(\"created_notification_id\");",
+									"",
+									"tests[\"cltype is \\\"threshold\\\"\"] = jsonData.cltype === \"threshold\";",
+									"tests[\"checked is true\"] = jsonData.checked === true;",
+									"tests[\"levelRank is \\\"SEVERE\\\"\"] = jsonData.levelRank === \"SEVERE\";",
+									"tests[\"barcode is \\\"123456789\\\"\"] = jsonData.barcode === \"123456789\";",
+									"tests[\"description is \\\"a haircut product\\\"\"] = jsonData.description === \"a haircut product\";",
+									"tests[\"brand is \\\"WELLA\\\"\"] = jsonData.brand === \"WELLA\";",
+									"tests[\"threshold is 0\"] = jsonData.threshold === 0;",
+									"tests[\"qty is 0\"] = jsonData.qty === 0;",
+									"tests[\"qualifier is \\\"EMPTY\\\"\"] = jsonData.qualifier === \"EMPTY\";"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/Notification/check/{{created_notification_id}}?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Notification",
+								"check",
+								"{{created_notification_id}}"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "checkAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a4676892-8bac-4149-9146-8b79c84d2b25",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"totalChecked >= 1\"] = jsonData.totalChecked >= 1;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/plain"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/Notification/check-all?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Notification",
+								"check-all"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/Notification/{{created_notification_id}}?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Notification",
+								"{{created_notification_id}}"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/Notification/delete-all?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Notification",
+								"delete-all"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "logout",
 			"event": [
 				{
