@@ -35,38 +35,38 @@ import javax.ws.rs.core.SecurityContext;
 @Path("ThresholdAlert")
 @RolesAllowed({"Administrator"})
 public class ThresholdAlertService extends AbstractCommonService<ThresholdAlert, NotificationPK> {
-
+    
     @Inject
     private ThresholdAlertFacade thresholdAlertFacade;
-
+    
     @Inject
     private ProfessionalFacade professionalFacade;
-
+    
     private final Logger LOG = Logger.getLogger(ThresholdAlertService.class.
             getName());
-
+    
     public ThresholdAlertService() {
         super(ThresholdAlert.class);
     }
-
+    
     @Override
     protected Logger getLogger() {
         return LOG;
     }
-
+    
     @Override
     protected AbstractFacade<ThresholdAlert, NotificationPK> getFacade() {
         return thresholdAlertFacade;
     }
-
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response post(@Context SecurityContext sec, ThresholdAlert entity,
             @QueryParam("professional") String professional) {
-
+        
         String email = this.getProEmail(sec, professional);
-
+        
         return super.<Professional, String>post(entity, email,
                 AbstractFacade::prettyPrintPK,
                 Professional.class,
@@ -75,19 +75,19 @@ public class ThresholdAlertService extends AbstractCommonService<ThresholdAlert,
                 Professional::getNotifications, e -> {
             e.setId(null);
         });
-
+        
     }
-
+    
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(@Context SecurityContext sec, ThresholdAlert entity,
             @QueryParam("professional") String professional) {
-
+        
         NotificationPK pk = new NotificationPK(entity.getId(), this.
                 getProEmail(sec,
                         professional));
-
+        
         LOG.log(Level.INFO, "Updating ThresholdAlert {0}",
                 thresholdAlertFacade.
                         prettyPrintPK(pk));
@@ -96,6 +96,7 @@ public class ThresholdAlertService extends AbstractCommonService<ThresholdAlert,
             e.setLevelRank(entity.getLevelRank());
             e.setBarcode(entity.getBarcode());
             e.setDescription(entity.getDescription());
+            e.setBrand(entity.getBrand());
             e.setThreshold(entity.getThreshold());
             e.setQty(entity.getQty());
             e.setQualifier(entity.getQualifier());
