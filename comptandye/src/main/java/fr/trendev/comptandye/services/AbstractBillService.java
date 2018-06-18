@@ -9,12 +9,19 @@ import fr.trendev.comptandye.entities.Bill;
 import fr.trendev.comptandye.entities.BillPK;
 import fr.trendev.comptandye.entities.OfferingPK;
 import fr.trendev.comptandye.entities.Payment;
+import fr.trendev.comptandye.entities.Product;
+import fr.trendev.comptandye.entities.ProductPK;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.PurchasedOffering;
+import fr.trendev.comptandye.entities.Sale;
+import fr.trendev.comptandye.entities.SoldItem;
 import fr.trendev.comptandye.sessions.AbstractFacade;
+import fr.trendev.comptandye.sessions.ProductFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
+import fr.trendev.comptandye.sessions.SoldItemFacade;
 import fr.trendev.comptandye.utils.exceptions.InvalidDeliveryDateException;
 import fr.trendev.comptandye.utils.visitors.BillTypeVisitor;
+import fr.trendev.comptandye.utils.visitors.DiscoverSalesVisitor;
 import fr.trendev.comptandye.utils.visitors.ProvideOfferingFacadeVisitor;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -57,6 +64,15 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
      */
     @Inject
     BillTypeVisitor billTypeVisitor;
+
+    @Inject
+    private DiscoverSalesVisitor discoverSalesVisitor;
+
+    @Inject
+    private ProductFacade productFacade;
+
+    @Inject
+    private SoldItemFacade soldItemFacade;
 
     private final Logger LOG = Logger.getLogger(
             AbstractBillService.class.
@@ -186,9 +202,10 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                                     );
                                 }
 
-                                // TODO : control the product qty for Sales (DiscoverSaleVisitor -> List<Sale>)
-                                // TODO : create a SoldItem for each discovered product
-                                // TODO : alert when qty is under thresholds / no enough qty
+                                this.updateProduct(
+                                        o.accept(discoverSalesVisitor),
+                                        po.getQty(), e);
+
                                 //link the Offering with the PurchasedOffering
                                 o.getPurchasedOfferings().add(po);
                                 return po;
@@ -399,5 +416,55 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                 + new SimpleDateFormat("yyyyMMdd").format(e.
                         getDeliveryDate())
         );
+    }
+
+    /**
+     * Controls the Products quantities and creates specific SoldItems.
+     *
+     */
+    private void updateProduct(List<Sale> sales,
+            int poQty,
+            Bill bill) {
+        sales.forEach(s -> {
+            if (s.getProduct() == null) {
+                throw new IllegalStateException("Product is NULL in Sale "
+                        + s.getName());
+            }
+
+            ProductPK pk = new ProductPK(
+                    s.getProfessional().getEmail(),
+                    s.getProduct().getProductReference().getBarcode());
+            Product product = productFacade.find(pk);
+
+            // the required quantity
+            int reqQty = s.getQty() * poQty;
+            // the new product's quantity
+            int qty = product.getAvailableQty() - reqQty;
+            if (qty < 0) { // blocks the bill
+                throw new WebApplicationException(
+                        "Impossible to create bill because there is not enough Product "
+                        + productFacade.prettyPrintPK(pk) + ". Required = "
+                        + reqQty + " / Available = "
+                        + product.getAvailableQty());
+            } else {
+                /**
+                 * Update the available quantity. Alerts are automatically sent
+                 * using the Product LifeCycle events.
+                 */
+                product.setAvailableQty(qty);
+
+                /**
+                 * Creates SoldItem automatically. Will be persist thanks to the
+                 * CascadeType.ALL relationship between Product and
+                 * ProductRecord.
+                 */
+                SoldItem soldItem = new SoldItem();
+                soldItem.setQty(reqQty);
+                soldItem.setProduct(product);
+                product.getProductRecords().add(soldItem);
+                soldItem.setBill(bill);
+            }
+
+        });
     }
 }
