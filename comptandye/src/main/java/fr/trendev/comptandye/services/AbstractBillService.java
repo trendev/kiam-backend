@@ -421,6 +421,9 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
     /**
      * Controls the Products quantities and creates specific SoldItems.
      *
+     * @param sales the sales in the purchased Offerings
+     * @param poQty the purchased offering required quantity
+     * @param bill the bill linked to the SoldItems
      */
     private void updateProduct(List<Sale> sales,
             int poQty,
