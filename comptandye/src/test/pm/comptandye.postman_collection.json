@@ -2120,7 +2120,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "0429afac-6bba-430b-890e-fe8cd8e742c9",
+								"id": "ed9f7aef-ea78-403d-9f07-c9de0e26bc34",
 								"type": "text/javascript",
 								"exec": [
 									"var billdate = new Date();",
@@ -2207,7 +2207,7 @@
 									"        mode: 'raw',",
 									"        raw: JSON.stringify(",
 									"                        {",
-									"        \"availableQty\": 3,",
+									"        \"availableQty\": 13,",
 									"        \"thresholdWarning\": 2,",
 									"        \"thresholdSevere\": 1,",
 									"        \"comments\":[",
@@ -2249,7 +2249,7 @@
 									"                ],",
 									"                cltype:\"sale\",",
 									"                product:{",
-									"        \"availableQty\": 3,",
+									"        \"availableQty\": 13,",
 									"        \"thresholdWarning\": 2,",
 									"        \"thresholdSevere\": 1,",
 									"        \"comments\":[",
@@ -2356,6 +2356,50 @@
 								}
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "identify autocreated SoldItem",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8ad38598-c124-45ab-8e02-4c674d7853a1",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"There is one or more SoldItem\"] = jsonData.length >= 1;",
+									"",
+									"var lng = jsonData.length;",
+									"// the auto created sold item should be the last one...",
+									"var autoCreatedSoldItem = jsonData[lng-1];",
+									"",
+									"// save the id",
+									"pm.environment.set(\"auto_created_product_record_id\", autoCreatedSoldItem.id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/SoldItem",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"SoldItem"
+							]
+						},
+						"description": "List all addresses."
 					},
 					"response": []
 				},
@@ -2606,6 +2650,51 @@
 							]
 						},
 						"description": "Cancel a paid bill will do nothing : bill is definitively closed."
+					},
+					"response": []
+				},
+				{
+					"name": "delete autocreated SoldItem",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d6cb1191-4c4b-4bd2-a86c-a353870c9660",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/SoldItem/{{auto_created_product_record_id}}",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"SoldItem",
+								"{{auto_created_product_record_id}}"
+							]
+						},
+						"description": "Finds and Deletes an Address."
 					},
 					"response": []
 				},
@@ -10150,7 +10239,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "bbea3933-9be0-4b05-b9af-1588b1198898",
+								"id": "7815ba55-f65e-45c8-bff9-d423aa769295",
 								"type": "text/javascript",
 								"exec": [
 									"var billdate = new Date();",
@@ -10238,7 +10327,7 @@
 									"        mode: 'raw',",
 									"        raw: JSON.stringify(",
 									"                        {",
-									"        \"availableQty\": 3,",
+									"        \"availableQty\": 13,",
 									"        \"thresholdWarning\": 2,",
 									"        \"thresholdSevere\": 1,",
 									"        \"comments\":[",
@@ -10280,7 +10369,7 @@
 									"                ],",
 									"                cltype:\"sale\",",
 									"                product:{",
-									"        \"availableQty\": 3,",
+									"        \"availableQty\": 13,",
 									"        \"thresholdWarning\": 2,",
 									"        \"thresholdSevere\": 1,",
 									"        \"comments\":[",
@@ -10349,6 +10438,50 @@
 							]
 						},
 						"description": "Provides the Address total count."
+					},
+					"response": []
+				},
+				{
+					"name": "identify autocreated SoldItem",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8ad38598-c124-45ab-8e02-4c674d7853a1",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"There is one or more SoldItem\"] = jsonData.length >= 1;",
+									"",
+									"var lng = jsonData.length;",
+									"// the auto created sold item should be the last one...",
+									"var autoCreatedSoldItem = jsonData[lng-1];",
+									"",
+									"// save the id",
+									"pm.environment.set(\"auto_created_product_record_id\", autoCreatedSoldItem.id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/SoldItem",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"SoldItem"
+							]
+						},
+						"description": "List all addresses."
 					},
 					"response": []
 				},
@@ -10456,7 +10589,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fc8ba1f3-45c0-4017-ab4e-862df5aa4138",
+								"id": "4f12e59b-d0cf-4488-91dd-f49475e2333b",
 								"type": "text/javascript",
 								"exec": [
 									"",
@@ -10468,7 +10601,7 @@
 									"",
 									"tests[\"recordDate is defined\"] = jsonData.recordDate !== undefined;",
 									"tests[\"cancelled is false\"] = jsonData.cancelled === false;",
-									"tests[\"product.availableQty === 5\"] = jsonData.product.availableQty === 5;",
+									"tests[\"product.availableQty === 7\"] = jsonData.product.availableQty === 7;",
 									"tests[\"product.productReference.barcode is \"+pm.environment.get(\"created_product-reference_barcode\")] = jsonData.product.productReference.barcode === pm.environment.get(\"created_product-reference_barcode\");",
 									"",
 									"tests[\"cancelledBill.reference is \"+pm.environment.get(\"created_clientbill_reference\")] = jsonData.cancelledBill.reference === pm.environment.get(\"created_clientbill_reference\");",
@@ -10534,7 +10667,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "40647000-935b-4ded-8889-029f7b2b71a9",
+								"id": "42dfe700-3abb-4ee4-88c5-422c7e83c998",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -10544,7 +10677,7 @@
 									"",
 									"tests[\"recordDate is defined\"] = jsonData.recordDate !== undefined;",
 									"tests[\"cancelled is false\"] = jsonData.cancelled === false;",
-									"tests[\"product.availableQty === 5\"] = jsonData.product.availableQty === 5;",
+									"tests[\"product.availableQty === 7\"] = jsonData.product.availableQty === 7;",
 									"tests[\"product.productReference.barcode is \"+pm.environment.get(\"created_product-reference_barcode\")] = jsonData.product.productReference.barcode === pm.environment.get(\"created_product-reference_barcode\");",
 									"",
 									"tests[\"cancelledBill.reference is \"+pm.environment.get(\"created_clientbill_reference\")] = jsonData.cancelledBill.reference === pm.environment.get(\"created_clientbill_reference\");",
@@ -10584,7 +10717,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b0f28c33-083d-424e-907d-23d6a81d684f",
+								"id": "dbf88a6a-713f-47a1-9386-4ecec007dfdb",
 								"type": "text/javascript",
 								"exec": [
 									"",
@@ -10596,7 +10729,7 @@
 									"tests[\"recordDate is defined\"] = jsonData.recordDate !== undefined;",
 									"tests[\"cancelled is true\"] = jsonData.cancelled === true;",
 									"tests[\"cancellationDate is defined\"] = jsonData.cancellationDate !== undefined;",
-									"tests[\"product.availableQty === 3\"] = jsonData.product.availableQty === 3;",
+									"tests[\"product.availableQty === 5\"] = jsonData.product.availableQty === 5;",
 									"tests[\"product.productReference.barcode is \"+pm.environment.get(\"created_product-reference_barcode\")] = jsonData.product.productReference.barcode === pm.environment.get(\"created_product-reference_barcode\");",
 									"",
 									"tests[\"cancelledBill.reference is \"+pm.environment.get(\"created_clientbill_reference\")] = jsonData.cancelledBill.reference === pm.environment.get(\"created_clientbill_reference\");",
@@ -10682,6 +10815,51 @@
 							"path": [
 								"ReturnedItem",
 								"{{created_product-record_id}}"
+							]
+						},
+						"description": "Finds and Deletes an Address."
+					},
+					"response": []
+				},
+				{
+					"name": "delete autocreated SoldItem",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d6cb1191-4c4b-4bd2-a86c-a353870c9660",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/SoldItem/{{auto_created_product_record_id}}",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"SoldItem",
+								"{{auto_created_product_record_id}}"
 							]
 						},
 						"description": "Finds and Deletes an Address."
@@ -11979,7 +12157,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "83d5de5b-acdd-45c6-bb22-a4cf001e0134",
+								"id": "e040cfc3-7dec-44ef-ba4b-6c7efb73e1e1",
 								"type": "text/javascript",
 								"exec": [
 									"var billdate = new Date();",
@@ -12067,7 +12245,7 @@
 									"        mode: 'raw',",
 									"        raw: JSON.stringify(",
 									"                        {",
-									"        \"availableQty\": 3,",
+									"        \"availableQty\": 13,",
 									"        \"thresholdWarning\": 2,",
 									"        \"thresholdSevere\": 1,",
 									"        \"comments\":[",
@@ -12109,7 +12287,7 @@
 									"                ],",
 									"                cltype:\"sale\",",
 									"                product:{",
-									"        \"availableQty\": 3,",
+									"        \"availableQty\": 13,",
 									"        \"thresholdWarning\": 2,",
 									"        \"thresholdSevere\": 1,",
 									"        \"comments\":[",
@@ -12182,12 +12360,56 @@
 					"response": []
 				},
 				{
+					"name": "identify autocreated SoldItem",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8ad38598-c124-45ab-8e02-4c674d7853a1",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"There is one or more SoldItem\"] = jsonData.length >= 1;",
+									"",
+									"var lng = jsonData.length;",
+									"// the auto created sold item should be the last one...",
+									"var autoCreatedSoldItem = jsonData[lng-1];",
+									"",
+									"// save the id",
+									"pm.environment.set(\"auto_created_product_record_id\", autoCreatedSoldItem.id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/SoldItem",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"SoldItem"
+							]
+						},
+						"description": "List all addresses."
+					},
+					"response": []
+				},
+				{
 					"name": "create",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "5682343a-4cce-4f9c-be4b-2a4da7c7a56a",
+								"id": "8fa8e650-b790-431d-8522-73fa43d7047b",
 								"type": "text/javascript",
 								"exec": [
 									"",
@@ -12199,7 +12421,7 @@
 									"",
 									"tests[\"recordDate is defined\"] = jsonData.recordDate !== undefined;",
 									"tests[\"cancelled is false\"] = jsonData.cancelled === false;",
-									"tests[\"product.availableQty === 1\"] = jsonData.product.availableQty === 1;",
+									"tests[\"product.availableQty === 3\"] = jsonData.product.availableQty === 3;",
 									"tests[\"product.productReference.barcode is \"+pm.environment.get(\"created_product-reference_barcode\")] = jsonData.product.productReference.barcode === pm.environment.get(\"created_product-reference_barcode\");",
 									"",
 									"tests[\"bill.reference is \"+pm.environment.get(\"created_clientbill_reference\")] = jsonData.bill.reference === pm.environment.get(\"created_clientbill_reference\");",
@@ -12263,7 +12485,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "988b319c-9e05-4307-93cb-00c3c640e80b",
+								"id": "533f2d79-f0aa-4ba7-8bd9-595d685e3aad",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -12273,7 +12495,7 @@
 									"",
 									"tests[\"recordDate is defined\"] = jsonData.recordDate !== undefined;",
 									"tests[\"cancelled is false\"] = jsonData.cancelled === false;",
-									"tests[\"product.availableQty === 1\"] = jsonData.product.availableQty === 1;",
+									"tests[\"product.availableQty === 3\"] = jsonData.product.availableQty === 3;",
 									"tests[\"product.productReference.barcode is \"+pm.environment.get(\"created_product-reference_barcode\")] = jsonData.product.productReference.barcode === pm.environment.get(\"created_product-reference_barcode\");",
 									"",
 									"tests[\"bill.reference is \"+pm.environment.get(\"created_clientbill_reference\")] = jsonData.bill.reference === pm.environment.get(\"created_clientbill_reference\");",
@@ -12310,7 +12532,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d5db0581-11ab-4905-830c-82d997696588",
+								"id": "bf8306c5-fbba-46b7-b6a2-bf182b5ce46a",
 								"type": "text/javascript",
 								"exec": [
 									"",
@@ -12322,7 +12544,7 @@
 									"tests[\"recordDate is defined\"] = jsonData.recordDate !== undefined;",
 									"tests[\"cancelled is true\"] = jsonData.cancelled === true;",
 									"tests[\"cancellationDate is defined\"] = jsonData.cancellationDate !== undefined;",
-									"tests[\"product.availableQty === 3\"] = jsonData.product.availableQty === 3;",
+									"tests[\"product.availableQty === 5\"] = jsonData.product.availableQty === 5;",
 									"tests[\"product.productReference.barcode is \"+pm.environment.get(\"created_product-reference_barcode\")] = jsonData.product.productReference.barcode === pm.environment.get(\"created_product-reference_barcode\");",
 									"",
 									"tests[\"bill.reference is \"+pm.environment.get(\"created_clientbill_reference\")] = jsonData.bill.reference === pm.environment.get(\"created_clientbill_reference\");",
@@ -12406,6 +12628,51 @@
 							"path": [
 								"SoldItem",
 								"{{created_product-record_id}}"
+							]
+						},
+						"description": "Finds and Deletes an Address."
+					},
+					"response": []
+				},
+				{
+					"name": "delete autocreated SoldItem",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d6cb1191-4c4b-4bd2-a86c-a353870c9660",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/SoldItem/{{auto_created_product_record_id}}",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"SoldItem",
+								"{{auto_created_product_record_id}}"
 							]
 						},
 						"description": "Finds and Deletes an Address."
