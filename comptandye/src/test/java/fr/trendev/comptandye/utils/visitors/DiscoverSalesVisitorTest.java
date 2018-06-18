@@ -5,24 +5,24 @@
  */
 package fr.trendev.comptandye.utils.visitors;
 
-import fr.trendev.comptandye.entities.OfferingExtents;
 import fr.trendev.comptandye.entities.Pack;
 import fr.trendev.comptandye.entities.Sale;
 import fr.trendev.comptandye.entities.Service;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.Test;
 
 /**
  *
  * @author jsie
  */
-public class OfferingExtentsVisitorTest {
+public class DiscoverSalesVisitorTest {
 
-    public OfferingExtentsVisitorTest() {
+    public DiscoverSalesVisitorTest() {
     }
 
     @Test
-    public void testVisit_Offering() {
-
+    public void discover() {
         Pack p1 = new Pack();
         p1.setName("p1");
         p1.setPrice(11000);
@@ -47,22 +47,28 @@ public class OfferingExtentsVisitorTest {
         sl2.setName("sl2");
         sl2.setPrice(2080);
 
+        Pack p3 = new Pack();
+        p3.setName("p3");
+        p3.setPrice(900);
+
+        Sale sl3 = new Sale();
+        sl3.setName("sl3");
+        sl3.setPrice(1000);
+
         p2.getOfferings().add(sv2);
         p2.getOfferings().add(sl2);
+        p3.getOfferings().add(sl3);
+        p2.getOfferings().add(p3);
         p1.getOfferings().add(sv1);
         p1.getOfferings().add(sl1);
         p1.getOfferings().add(p2);
 
-        // Test using the visitor directly
-        OfferingExtents oa = p1.accept(new OfferingExtentsVisitor());
-        // Test using the OfferingExtents constructor
-        OfferingExtents oa2 = new OfferingExtents(p1);
+        List<Sale> sales = Arrays.asList(sl1, sl2, sl3);
 
-        // control the services extents value
-        assert oa.getServices() == oa2.getServices();
-        // control the sales extents value
-        assert oa.getSales() == oa2.getSales();
-
+        List<Sale> list = p1.accept(new DiscoverSalesVisitor());
+        assert !list.isEmpty();
+        assert list.size() == sales.size();
+        assert list.containsAll(sales);
     }
 
 }
