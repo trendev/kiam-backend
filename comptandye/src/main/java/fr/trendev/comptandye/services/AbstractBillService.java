@@ -35,7 +35,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
@@ -469,5 +476,25 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
             }
 
         });
+    }
+
+    @Path("cancel/{reference}/{deliverydate}")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response cancel(@Context SecurityContext sec,
+            @PathParam("reference") String reference,
+            @PathParam("deliverydate") long deliverydate,
+            @QueryParam("professional") String professional) {
+
+        String proEmail = this.getProEmail(sec, professional);
+        BillPK pk = new BillPK(reference, new Date(deliverydate),
+                proEmail);
+
+//        LOG.log(Level.INFO, "REST request to get ClientBill : {0}",
+//                clientBillFacade.
+//                        prettyPrintPK(
+//                                pk));
+//        return super.find(pk, refresh);
+        return Response.ok("Cancel the bill").build();
     }
 }
