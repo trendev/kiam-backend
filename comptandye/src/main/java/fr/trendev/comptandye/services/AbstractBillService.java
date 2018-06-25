@@ -16,9 +16,10 @@ import fr.trendev.comptandye.entities.PurchasedOffering;
 import fr.trendev.comptandye.entities.Sale;
 import fr.trendev.comptandye.entities.SoldItem;
 import fr.trendev.comptandye.sessions.AbstractFacade;
+import fr.trendev.comptandye.sessions.BillFacade;
 import fr.trendev.comptandye.sessions.ProductFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
-import fr.trendev.comptandye.sessions.SoldItemFacade;
+import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
 import fr.trendev.comptandye.utils.exceptions.InvalidDeliveryDateException;
 import fr.trendev.comptandye.utils.visitors.BillTypeVisitor;
 import fr.trendev.comptandye.utils.visitors.DiscoverSalesVisitor;
@@ -34,7 +35,10 @@ import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.inject.Inject;
+import javax.json.Json;
+import javax.persistence.RollbackException;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -79,8 +83,10 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
     private ProductFacade productFacade;
 
     @Inject
-    private SoldItemFacade soldItemFacade;
+    private BillFacade billFacade;
 
+//    @Inject
+//    private SoldItemFacade soldItemFacade;
     private final Logger LOG = Logger.getLogger(
             AbstractBillService.class.
                     getName());
@@ -490,11 +496,65 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         BillPK pk = new BillPK(reference, new Date(deliverydate),
                 proEmail);
 
-//        LOG.log(Level.INFO, "REST request to get ClientBill : {0}",
-//                clientBillFacade.
-//                        prettyPrintPK(
-//                                pk));
-//        return super.find(pk, refresh);
-        return Response.ok("Cancel the bill").build();
+        LOG.log(Level.INFO, "REST request to cancel Bill : {0}",
+                getFacade().
+                        prettyPrintPK(
+                                pk));
+        try {
+            return Optional.ofNullable(getFacade().find(pk))
+                    .map(bill -> {
+                        if (!bill.isCancelled()) {
+                            bill.setCancelled(true);
+                            bill.setCancellationDate(new Date());
+
+                            List<Date> dates = billFacade.
+                                    findLastValidBillsRefDate(
+                                            bill.getProfessional());
+
+                            switch (dates.size()) {
+                                case 0:
+                                    LOG.log(Level.INFO,
+                                            "All Bills of Professionnal {0} are cancelled! No deliveryDate limit",
+                                            proEmail);
+                                    bill.getProfessional().setBillsRefDate(
+                                            null);
+                                    break;
+                                case 1:
+                                    LOG.log(Level.INFO,
+                                            "DeliveryDate limit of Professionnal "
+                                            + proEmail + " reset to " + dates.
+                                                    get(0));
+                                    bill.getProfessional().setBillsRefDate(
+                                            dates.get(0));
+                                    break;
+                                default:
+                                    throw new IllegalStateException(
+                                            "Too much BillsRefDates found");
+                            }
+
+                            getLogger().log(Level.INFO, "Bill "
+                                    + " {0} cancelled", getFacade().
+                                            prettyPrintPK(pk));
+                        }// do nothing if the bill is already cancelled
+
+                        return Response.ok().build();
+                    })
+                    .orElse(Response.status(Response.Status.NOT_FOUND).entity(
+                            Json.createObjectBuilder().add("error",
+                                    "Bill "
+                                    + getFacade().prettyPrintPK(pk)
+                                    + " not found").
+                                    build()).
+                            build());
+        } catch (EJBTransactionRolledbackException | RollbackException ex) {
+            throw ex;
+        } catch (Exception ex) {
+
+            String errmsg = ExceptionHelper.handleException(ex,
+                    "Exception occurs cancelling Bill "
+                    + getFacade().prettyPrintPK(pk));
+            getLogger().log(Level.WARNING, errmsg, ex);
+            throw new WebApplicationException(errmsg, ex);
+        }
     }
 }
