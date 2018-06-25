@@ -47,9 +47,9 @@
             <property name="eclipselink.logging.level" value="FINER"/>
             <property name="eclipselink.logging.parameters" value="true"/>
             <!--Drop and create a new tables-->
-            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <!--            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
             <property name="javax.persistence.schema-generation.drop-source" value="script"/>
-            <property name="javax.persistence.schema-generation.drop-script-source" value="META-INF/sql/comptandye_master-delete.sql"/>
+            <property name="javax.persistence.schema-generation.drop-script-source" value="META-INF/sql/comptandye_master-delete.sql"/>-->
         </properties>
     </persistence-unit>
 </persistence>
