@@ -2569,7 +2569,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d100ed7e-52bf-4c61-a95f-ff0b1fcfe9c9",
+								"id": "76dbb7de-1fb6-414d-a9da-3cc3cfdded6d",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -2583,6 +2583,10 @@
 									"tests[\"currency is EUR\"] = jsonData.currency === \"EUR\";",
 									"tests[\"discount is 1000\"] = jsonData.discount === 1000;",
 									"tests[\"paymentDate is \"+new Date(jsonData.paymentDate)] = jsonData.paymentDate !== undefined;",
+									"",
+									"/*Bills is paid and cannot be cancelled using this service*/",
+									"tests[\"cancelled is false\"] = jsonData.cancelled === false;",
+									"",
 									"tests[\"comments.length is 2\"] = jsonData.comments.length === 2;",
 									"tests[\"payments.length is 2\"] = jsonData.payments.length === 2;",
 									"",
@@ -2641,6 +2645,60 @@
 							],
 							"path": [
 								"ClientBill"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com"
+								}
+							]
+						},
+						"description": "Cancel a paid bill will do nothing : bill is definitively closed."
+					},
+					"response": []
+				},
+				{
+					"name": "cancel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b54dcf58-9257-4c68-83b0-57367552cb52",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"/*",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"reference is \"+pm.environment.get(\"created_clientbill_reference\")] = jsonData.reference == pm.environment.get(\"created_clientbill_reference\");",
+									"tests[\"deliveryDate is \"+pm.environment.get(\"created_clientbill_deliveryDate\")] = jsonData.deliveryDate == pm.environment.get(\"created_clientbill_deliveryDate\");",
+									"*/"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{XSRF-TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/ClientBill/cancel/{{created_clientbill_reference}}/{{created_clientbill_deliveryDate}}?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"ClientBill",
+								"cancel",
+								"{{created_clientbill_reference}}",
+								"{{created_clientbill_deliveryDate}}"
 							],
 							"query": [
 								{
