@@ -328,13 +328,14 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
     }
 
     /**
-     * Updates a Bill. The composed primary key is based on the Bill's
-     * reference, its deliveryData and the owner's email extracted from the
-     * SecurityContext or provided in a QueryParam. If a paymentDate is provided
-     * to an unpaid (Bill without a payment date), a check of the dates
-     * (deliveryDate/paymentDate) and the amounts will be performed and if
-     * successful the Bill will be paid (paymentDate set and other modifications
-     * will be ignored). If a bill is canceled, only comments can be updated.
+     * Updates a Bill. Controls the payments but cannot cancel a Bill. The
+     * composed primary key is based on the Bill's reference, its deliveryData
+     * and the owner's email extracted from the SecurityContext or provided in a
+     * QueryParam. If a paymentDate is provided to an unpaid (Bill without a
+     * payment date), a check of the dates (deliveryDate/paymentDate) and the
+     * amounts will be performed and if successful the Bill will be paid
+     * (paymentDate set and other modifications will be ignored). If a bill is
+     * canceled, only comments can be updated.
      *
      * @param sec the security context
      * @param entity the entity to update
@@ -356,15 +357,11 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         return super.put(entity, pk, e -> {
             e.setComments(entity.getComments());
 
+            //just controls the payments
             if (!e.isCancelled() && e.getPaymentDate() == null) {
-                if (entity.isCancelled()) { // avoid further useless checks
-                    e.setCancelled(true);
-                    e.setCancellationDate(new Date());
-                } else {
-                    checkPayment(entity);
-                    e.setPaymentDate(entity.getPaymentDate());
-                    e.setPayments(entity.getPayments());
-                }
+                checkPayment(entity);
+                e.setPaymentDate(entity.getPaymentDate());
+                e.setPayments(entity.getPayments());
             } // if the bill is cancelled or paid, do nothing
 
         });
