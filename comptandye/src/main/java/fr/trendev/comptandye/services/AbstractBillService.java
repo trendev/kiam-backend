@@ -372,7 +372,8 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
 
     /**
      * Finds a Bill and removes it from its owner (Professional) and authors
-     * (Client, CollectiveGroup and Individual bills list).
+     * (Client, CollectiveGroup and Individual bills list). Professional's
+     * BillsRefDate field is not updated when a Bill is deleted!
      *
      * @param entityClass the Bill's class, used for logging purposes
      * @param deleteAction the actions to perform before deletion
@@ -484,6 +485,15 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         });
     }
 
+    /**
+     * Cancels a Bill and updates the BillsRefDate attribute of the owner
+     *
+     * @param sec the security context
+     * @param reference the bill's reference
+     * @param deliverydate the bill's delivery date
+     * @param professional the owner
+     * @return 200 OK or throw a WebAppplicationException (417 not expected)
+     */
     @Path("cancel/{reference}/{deliverydate}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -507,30 +517,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                             bill.setCancelled(true);
                             bill.setCancellationDate(new Date());
 
-                            List<Date> dates = billFacade.
-                                    findLastValidBillsRefDate(
-                                            bill.getProfessional());
-
-                            switch (dates.size()) {
-                                case 0:
-                                    LOG.log(Level.INFO,
-                                            "All Bills of Professionnal {0} are cancelled! No deliveryDate limit",
-                                            proEmail);
-                                    bill.getProfessional().setBillsRefDate(
-                                            null);
-                                    break;
-                                case 1:
-                                    LOG.log(Level.INFO,
-                                            "DeliveryDate limit of Professionnal "
-                                            + proEmail + " reset to " + dates.
-                                                    get(0));
-                                    bill.getProfessional().setBillsRefDate(
-                                            dates.get(0));
-                                    break;
-                                default:
-                                    throw new IllegalStateException(
-                                            "Too much BillsRefDates found");
-                            }
+                            resetBillsRefDate(bill.getProfessional());
 
                             getLogger().log(Level.INFO, "Bill "
                                     + " {0} cancelled", getFacade().
@@ -555,6 +542,39 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                     + getFacade().prettyPrintPK(pk));
             getLogger().log(Level.WARNING, errmsg, ex);
             throw new WebApplicationException(errmsg, ex);
+        }
+    }
+
+    /**
+     * Get the last valid Bills deliveryDate reference and update the owner.
+     *
+     * @param professional the professional to update
+     * @throws IllegalStateException if there are too much valid dates found
+     */
+    private void resetBillsRefDate(Professional professional) {
+        List<Date> dates = billFacade.
+                findLastValidBillsRefDate(
+                        professional);
+
+        switch (dates.size()) {
+            case 0:
+                LOG.log(Level.INFO,
+                        "All Bills of Professionnal {0} are cancelled! No deliveryDate limit",
+                        professional.getEmail());
+                professional.setBillsRefDate(
+                        null);
+                break;
+            case 1:
+                LOG.log(Level.INFO,
+                        "DeliveryDate limit of Professionnal "
+                        + professional.getEmail() + " reset to " + dates.
+                        get(0));
+                professional.setBillsRefDate(
+                        dates.get(0));
+                break;
+            default:
+                throw new IllegalStateException(
+                        "Too much BillsRefDates found");
         }
     }
 }
