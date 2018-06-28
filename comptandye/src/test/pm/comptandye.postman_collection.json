@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "2d715493-fa83-44d4-911f-9cf5f403414a",
+		"_postman_id": "c4f955a1-8c6f-4be5-9224-c8b27e8268ad",
 		"name": "comptandye",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -10545,64 +10545,21 @@
 					"response": []
 				},
 				{
-					"name": "cancel bill",
+					"name": "cancel Copy",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "09431838-e228-46f1-b8b0-741439a51bae",
+								"id": "b54dcf58-9257-4c68-83b0-57367552cb52",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
+									"/*",
 									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"reference is defined\"] = jsonData.reference !== undefined;",
-									"pm.environment.set(\"created_clientbill_reference\", jsonData.reference);",
-									"tests[\"deliveryDate is defined\"] = jsonData.deliveryDate !== undefined;",
-									"pm.environment.set(\"created_clientbill_deliveryDate\", jsonData.deliveryDate);",
-									"",
-									"tests[\"issueDate is defined\"] = jsonData.issueDate !== undefined;",
-									"",
-									"tests[\"cancelled is true\"] = jsonData.cancelled == true;",
-									"tests[\"cancellationDate is defined\"] = jsonData.cancellationDate !== undefined;",
-									"",
-									"",
-									"tests[\"client.email is \\\"client@domain.com\\\"\"] = jsonData.client.email === \"client@domain.com\";",
-									"tests[\"client.socialNetworkAccounts.twitter is \\\"@client_facebook_account\\\"\"] = jsonData.client.socialNetworkAccounts.twitter === \"@client_facebook_account\";",
-									"",
-									"tests[\"client.address.street is \\\"Allée de Fontenelle\\\"\"] = jsonData.client.address.street === \"Allée de Fontenelle\";",
-									"tests[\"client.address.optional is \\\"Château de Fontenelle\\\"\"] = jsonData.client.address.optional === \"Château de Fontenelle\";",
-									"tests[\"client.address.postalCode is \\\"77600\\\"\"] = jsonData.client.address.postalCode === \"77600\";",
-									"tests[\"client.address.city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.client.address.city === \"Chanteloup-en-Brie\";",
-									"",
-									"tests[\"client.customerDetails.firstName is \\\"Paul\\\"\"] = jsonData.client.customerDetails.firstName === \"Paul\";",
-									"tests[\"client.customerDetails.lastName is \\\"Newman\\\"\"] = jsonData.client.customerDetails.lastName === \"Newman\";",
-									"tests[\"client.customerDetails.sex is \\\"M\\\"\"] = jsonData.client.customerDetails.sex === \"M\";",
-									"tests[\"client.customerDetails.comments.length is 2\"] = jsonData.client.customerDetails.comments.length === 2;",
-									"",
-									"tests[\"purchasedOfferings[0].id is defined\"] = jsonData.purchasedOfferings[0].id !== undefined;",
-									"pm.environment.set(\"created_purchasedoffering_id\", jsonData.purchasedOfferings[0].id);",
-									"",
-									"tests[\"purchasedOfferings[0].qty is 4\"] = jsonData.purchasedOfferings[0].qty === 4;",
-									"",
-									"tests[\"purchasedOfferings[0].offering is defined\"] = jsonData.purchasedOfferings[0].offering !== undefined;",
-									"tests[\"purchasedOfferings[0].offering.cltype = service\"] = jsonData.purchasedOfferings[0].offering.cltype === \"service\";",
-									"tests[\"purchasedOfferings[0].offering.name = beauty service\"] = jsonData.purchasedOfferings[0].offering.name === \"beauty service\";",
-									"tests[\"purchasedOfferings[0].offering.price = 1500\"] = jsonData.purchasedOfferings[0].offering.price === 1500;",
-									"tests[\"purchasedOfferings[0].offering.duration = 180\"] = jsonData.purchasedOfferings[0].offering.duration === 180;",
-									"tests[\"purchasedOfferings[0].offering.businesses[0].designation = Esthétique\"] = jsonData.purchasedOfferings[0].offering.businesses[0].designation === \"Esthétique\";",
-									"",
-									""
-								]
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "8d91f706-6ff5-438a-89f5-641307536d96",
-								"type": "text/javascript",
-								"exec": [
-									""
+									"tests[\"reference is \"+pm.environment.get(\"created_clientbill_reference\")] = jsonData.reference == pm.environment.get(\"created_clientbill_reference\");",
+									"tests[\"deliveryDate is \"+pm.environment.get(\"created_clientbill_deliveryDate\")] = jsonData.deliveryDate == pm.environment.get(\"created_clientbill_deliveryDate\");",
+									"*/"
 								]
 							}
 						}
@@ -10611,25 +10568,24 @@
 						"method": "PUT",
 						"header": [
 							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
 								"key": "X-XSRF-TOKEN",
 								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"cltype\":\"clientbill\",\n  \"reference\": \"{{created_clientbill_reference}}\",\n  \"deliveryDate\":{{billdate}},\n  \"cancelled\":true\n}"
+							"raw": ""
 						},
 						"url": {
-							"raw": "{{API_URL}}/ClientBill?professional=vanessa.gay@gmail.com",
+							"raw": "{{API_URL}}/ClientBill/cancel/{{created_clientbill_reference}}/{{created_clientbill_deliveryDate}}?professional=vanessa.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
-								"ClientBill"
+								"ClientBill",
+								"cancel",
+								"{{created_clientbill_reference}}",
+								"{{created_clientbill_deliveryDate}}"
 							],
 							"query": [
 								{
@@ -10638,7 +10594,7 @@
 								}
 							]
 						},
-						"description": "Provides the Address total count."
+						"description": "Cancel a paid bill will do nothing : bill is definitively closed."
 					},
 					"response": []
 				},
@@ -13761,7 +13717,7 @@
 			"item": [
 				{
 					"name": "ThresholdAlert",
-					"description": "",
+					"description": null,
 					"item": [
 						{
 							"name": "create",
