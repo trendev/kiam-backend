@@ -40,8 +40,5 @@ $AS_ADMIN restart-domain $DOMAIN
 # Autodeploy the project
 COPY ./target/$COMPTANDYE.war $AUTODEPLOY_DIR/comptandye.war
 
-# Stop the server
-RUN $AS_ADMIN stop-domain $DOMAIN
-
 # Start the server in verbose mode
 ENTRYPOINT $AS_ADMIN start-domain -v $DOMAIN
