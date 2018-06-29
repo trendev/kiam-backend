@@ -29,6 +29,7 @@
         <description>Cross-Site Request Forgery (XSRF) Filter</description>
         <filter-name>XSRFFilter</filter-name>
         <filter-class>fr.trendev.comptandye.utils.filters.XSRFFilter</filter-class>
+        <async-supported>true</async-supported>
     </filter>
     <filter-mapping>
         <filter-name>OverallFilter</filter-name>
