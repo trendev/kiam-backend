@@ -13,6 +13,7 @@ import fr.trendev.comptandye.sessions.ClientBillFacade;
 import fr.trendev.comptandye.sessions.ClientFacade;
 import java.util.Date;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,6 +30,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -69,9 +72,16 @@ public class ClientBillService extends AbstractBillService<ClientBill> {
     @RolesAllowed({"Administrator"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findAll() {
+    public void findAll(@Suspended final AsyncResponse ar) {
         LOG.log(Level.INFO, "Providing the ClientBill list");
-        return super.findAll();
+
+        CompletableFuture
+                .supplyAsync(() -> super.findAll())
+                .thenApply(result -> ar.resume(result))
+                .exceptionally(e -> ar.resume(
+                        Response.status(Response.Status.EXPECTATION_FAILED).
+                                entity(e).build())
+                );
     }
 
     @RolesAllowed({"Administrator"})
