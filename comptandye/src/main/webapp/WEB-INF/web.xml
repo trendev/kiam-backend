@@ -79,7 +79,7 @@
         <init-param>
             <param-name>jersey.config.server.provider.packages</param-name>
             <param-value>
-                fr.trendev.comptandye.services,
+                fr.trendev.comptandye,
                 com.fasterxml.jackson.jaxrs <!-- Jackson providers -->
             </param-value>
         </init-param>
