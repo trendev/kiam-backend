@@ -8,8 +8,8 @@ package fr.trendev.comptandye.services;
 import fr.trendev.comptandye.beans.ActiveSessionTracker;
 import fr.trendev.comptandye.beans.xsrf.XSRFTokenGenerator;
 import fr.trendev.comptandye.sessions.UserAccountFacade;
+import fr.trendev.comptandye.utils.AuthenticationSecurityUtils;
 import fr.trendev.comptandye.utils.PasswordGenerator;
-import fr.trendev.comptandye.utils.UserAccountType;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
 import java.io.StringReader;
 import java.security.Principal;
@@ -58,6 +58,9 @@ public class AuthenticationService {
     @Inject
     XSRFTokenGenerator generator;
 
+    @Inject
+    AuthenticationSecurityUtils securityUtils;
+
     private final Logger LOG = Logger.getLogger(AuthenticationService.class.
             getName());
 
@@ -72,7 +75,7 @@ public class AuthenticationService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response profile(@Context SecurityContext sec) {
-        return this.getEmail(sec)
+        return securityUtils.getProfessionalEmailFromSecurityContext(sec)
                 .map(email -> {
                     LOG.log(Level.INFO, "Providing the profile of [{0}]", email);
                     return Response.ok(userAccountFacade.find(email)).build();
@@ -83,21 +86,6 @@ public class AuthenticationService {
                                         "Unauthorized or Blocked User").build())
                                 .build()
                 );
-    }
-
-    private Optional<String> getEmail(SecurityContext sec) {
-        return Optional.ofNullable(
-                sec.isSecure() && (sec.
-                isUserInRole(UserAccountType.PROFESSIONAL)
-                || sec.isUserInRole(UserAccountType.INDIVIDUAL)
-                || sec.isUserInRole(UserAccountType.ADMINISTRATOR))
-                ? sec.getUserPrincipal().getName() : null);
-    }
-
-    private boolean isBlockedUser(SecurityContext sec) {
-        return this.getEmail(sec)
-                .map(u -> false)
-                .orElse(true);
     }
 
     @Path("login")
@@ -118,7 +106,7 @@ public class AuthenticationService {
                 HttpSession session = req.getSession();
 
                 // checks first if the user is Blocked or not
-                if (this.isBlockedUser(sec)) {
+                if (securityUtils.isBlockedUser(sec, this)) {
                     LOG.log(Level.WARNING,
                             "Login cancelled - user [{0}] is Blocked",
                             username);
@@ -247,7 +235,7 @@ public class AuthenticationService {
 
         String password = this.readNewPassword(newPassword);
 
-        return this.getEmail(sec)
+        return securityUtils.getProfessionalEmailFromSecurityContext(sec)
                 .map(email ->
                         Optional.ofNullable(this.userAccountFacade.find(email))
                                 .map(user -> {
