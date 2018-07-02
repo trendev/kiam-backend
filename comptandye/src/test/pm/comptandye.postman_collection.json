@@ -2120,7 +2120,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "ed9f7aef-ea78-403d-9f07-c9de0e26bc34",
+								"id": "0e7413d2-21a7-41f8-9646-afa2a5e1ab7f",
 								"type": "text/javascript",
 								"exec": [
 									"var billdate = new Date();",
@@ -8175,13 +8175,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{API_URL}}/Pack/buildModelOfferings/?professional=pro@domain.com",
+							"raw": "{{API_URL}}/OfferingsModel/build/?professional=pro@domain.com",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
-								"Pack",
-								"buildModelOfferings",
+								"OfferingsModel",
+								"build",
 								""
 							],
 							"query": [
