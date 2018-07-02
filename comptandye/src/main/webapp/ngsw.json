@@ -1,9 +1,9 @@
 {
   "configVersion": 1,
-  "index": "/index.html",
   "appData": {
     "version": "1.0.0"
   },
+  "index": "/index.html",
   "assetGroups": [
     {
       "name": "app",
@@ -11,23 +11,7 @@
       "updateMode": "prefetch",
       "urls": [
         "/favicon.ico",
-        "/index.html",
-        "/0.61a46d2ba40ee72bb84c.chunk.js",
-        "/1.6dccefd9b11a632968ba.chunk.js",
-        "/10.d275c79543964e8a5159.chunk.js",
-        "/11.261a0714191d6731c987.chunk.js",
-        "/2.14ae4d3871160e53ef7f.chunk.js",
-        "/3.50a7631d77ba5d61d18d.chunk.js",
-        "/4.01d4440b1b0c3c564ccb.chunk.js",
-        "/5.cad12e4a347b6bea0f0f.chunk.js",
-        "/6.ac6befe8cbb26816e4c5.chunk.js",
-        "/7.713176bd8a6ad92cb15b.chunk.js",
-        "/8.11d0e52046bf9378da11.chunk.js",
-        "/9.37a8d23164c309f11c00.chunk.js",
-        "/inline.f6447d2148cadda0877e.bundle.js",
-        "/main.053898566ccedc00cc38.bundle.js",
-        "/polyfills.d6bea59dc52639dd7815.bundle.js",
-        "/styles.4d9c2457a9173a091f37.bundle.css"
+        "/index.html"
       ],
       "patterns": [
         "https:\\/\\/fonts\\.googleapis\\.com\\/.*",
@@ -44,23 +28,25 @@
   ],
   "dataGroups": [],
   "hashTable": {
-    "/0.61a46d2ba40ee72bb84c.chunk.js": "978d4afc5b6f14b7d2b3bc8118f71170211e6b54",
-    "/1.6dccefd9b11a632968ba.chunk.js": "24be3677b1dc420e0e453e058abf3575fe2add2e",
-    "/10.d275c79543964e8a5159.chunk.js": "9e1aa82cffb51370808d590aafb2116febb8e9da",
-    "/11.261a0714191d6731c987.chunk.js": "6556f3fea3ae14ddc92d282cf943f38b48973bcd",
-    "/2.14ae4d3871160e53ef7f.chunk.js": "b64b75cda56c5d54c4a4581943aa96d95f2c831e",
-    "/3.50a7631d77ba5d61d18d.chunk.js": "ad558c4353d23990bcebb5cc070f8c48914c43d2",
-    "/4.01d4440b1b0c3c564ccb.chunk.js": "fb9fb68130fb45cc20cdd645b85fd9f9619a2b8f",
-    "/5.cad12e4a347b6bea0f0f.chunk.js": "0b767e42e5d62b12302e1dea13dfa9fd943278a0",
-    "/6.ac6befe8cbb26816e4c5.chunk.js": "9452d39636445dbabd5422cbf9d2be5ddc66da90",
-    "/7.713176bd8a6ad92cb15b.chunk.js": "b5c8b6536b5a3a9d4b95a6c9af7a4d5856094b25",
-    "/8.11d0e52046bf9378da11.chunk.js": "15d774f1d20fde1204a1407b0b0eff37d371ebca",
-    "/9.37a8d23164c309f11c00.chunk.js": "edc7af824e004718b5aa5b6e87bef55ea50e5c4a",
-    "/inline.f6447d2148cadda0877e.bundle.js": "e35ecbb29f7361eb8231a9ff8f6b32d94bcb5f08",
-    "/main.053898566ccedc00cc38.bundle.js": "305c1c88982f3ba3aa73be3850fba93afd4cea06",
-    "/polyfills.d6bea59dc52639dd7815.bundle.js": "113468d1093ab3d64aba40902106adb7da7d58b1",
-    "/styles.4d9c2457a9173a091f37.bundle.css": "53f67060409e5bf6e89986ab258cd0a988dde800",
     "/favicon.ico": "2e813f714c0e269574d009a46ed172bb2c9e36bb",
-    "/index.html": "224cba8d0a6e9b237bc9190e6a2ef1c0efe444c1"
-  }
+    "/index.html": "09f810755f030fd32d3a6d363cf5c759381e7626"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^\\/]*\\.[^\\/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^\\/]*__[^\\/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^\\/]*__[^\\/]*\\/.*$"
+    }
+  ]
 }
