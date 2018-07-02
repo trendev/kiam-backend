@@ -6,6 +6,7 @@
 package fr.trendev.comptandye.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.trendev.comptandye.entities.Business;
 import fr.trendev.comptandye.entities.Offering;
 import fr.trendev.comptandye.entities.Pack;
 import fr.trendev.comptandye.entities.Professional;
@@ -20,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -87,17 +89,28 @@ public class OfferingsModelService {
         return Optional.ofNullable(professionalFacade.find(email))
                 .map(pro -> {
                     try {
-                        Map<String, Offering> services = this.
-                                importServices(pro);
-                        List<Offering> packs = this.importPacks(pro, services);
 
-                        //concat pack and services
-                        packs.addAll(services.values());
+                        List<Offering> offeringsModel = new LinkedList<>();
+
+                        for (Business b : pro.getBusinesses()) {
+                            String business = b.getDesignation().toLowerCase();
+
+                            Map<String, Offering> services = this.
+                                    importServices(pro, business);
+
+                            List<Offering> packs = this.importPacks(pro,
+                                    business,
+                                    services);
+
+                            offeringsModel.addAll(services.values());
+                            offeringsModel.addAll(packs);
+
+                        }
 
                         //avoid to return pro.getOffering(): can be outdated offering!
                         return Response.created(
                                 new URI("Professional/offerings"))
-                                .entity(packs)
+                                .entity(offeringsModel)
                                 .build();
                     } catch (Exception ex) {
                         String errmsg = ExceptionHelper.handleException(ex,
@@ -121,29 +134,35 @@ public class OfferingsModelService {
      * @return a Map of the newly created Services
      * @throws IOException if an error occurs reading/parsing the file
      */
-    private Map<String, Offering> importServices(Professional pro) throws
+    private Map<String, Offering> importServices(Professional pro,
+            String business) throws
             IOException {
 
         ClassLoader classloader = Thread.currentThread().
                 getContextClassLoader();
-        InputStream is = classloader.getResourceAsStream(
-                "json/services_hairdressing.json");
+        String path = "json/services_" + business + ".json";
+        InputStream is = classloader.getResourceAsStream(path);
 
         Map<String, Offering> map = new TreeMap<>();
 
-        Arrays.asList(om.readValue(is, Service[].class)).stream()
-                .map(s -> {
-                    s.setProfessional(pro);
-                    pro.getOfferings().add(s);
-                    return s;
-                })
-                .forEach(s -> {
-                    serviceFacade.create(s);
-                    //map the managed entity
-                    map.put(s.getName(), s);
-                });
+        if (is != null) {
+            LOG.log(Level.INFO, "Reading in {0}", path);
+            Arrays.asList(om.readValue(is, Service[].class)).stream()
+                    .map(s -> {
+                        s.setProfessional(pro);
+                        pro.getOfferings().add(s);
+                        return s;
+                    })
+                    .forEach(s -> {
+                        serviceFacade.create(s);
+                        //map the managed entity
+                        map.put(s.getName(), s);
+                    });
 
-        is.close();
+            LOG.log(Level.INFO, "Closing {0}", path);
+            is.close();
+            LOG.log(Level.INFO, "{0} is now closed", path);
+        }
 
         return map;
     }
@@ -156,45 +175,54 @@ public class OfferingsModelService {
      * @throws IOException if an error occurs reading/parsing the file
      */
     private List<Offering> importPacks(Professional pro,
+            String business,
             Map<String, Offering> services)
             throws IOException {
         ClassLoader classloader = Thread.currentThread().
                 getContextClassLoader();
-        InputStream is = classloader.getResourceAsStream(
-                "json/packs_hairdressing.json");
+        String path = "json/packs_" + business + ".json";
+        InputStream is = classloader.getResourceAsStream(path);
 
-        List<Offering> packs = Arrays.asList(om.readValue(is, Pack[].class)).
-                stream()
-                .map(p -> {
-                    List<Offering> offerings = p.getOfferings().stream()
-                            //use the managed entity instead of the provided offering
-                            .map(o -> Optional.ofNullable(
-                                    services.get(o.getName()))
-                                    .map(_o -> {
-                                        //update the link between the offering and the pack
-                                        _o.getParentPacks().add(p);
-                                        return _o;
-                                    })
-                                    //occurs if json file contains errors
-                                    .orElseThrow(() ->
-                                            new WebApplicationException(
-                                                    "Service " + o.getName()
-                                                    + " not found !"))
-                            )
-                            .collect(Collectors.toList());
+        if (is != null) {
+            LOG.log(Level.INFO, "Reading in {0}", path);
+            List<Offering> packs = Arrays.asList(om.readValue(is, Pack[].class)).
+                    stream()
+                    .map(p -> {
+                        List<Offering> offerings = p.getOfferings().stream()
+                                //use the managed entity instead of the provided offering
+                                .map(o -> Optional.ofNullable(
+                                        services.get(o.getName()))
+                                        .map(_o -> {
+                                            //update the link between the offering and the pack
+                                            _o.getParentPacks().add(p);
+                                            return _o;
+                                        })
+                                        //occurs if json file contains errors
+                                        .orElseThrow(() ->
+                                                new WebApplicationException(
+                                                        "Service " + o.getName()
+                                                        + " not found !"))
+                                )
+                                .collect(Collectors.toList());
 
-                    p.setOfferings(offerings);
+                        p.setOfferings(offerings);
 
-                    p.setProfessional(pro);
-                    pro.getOfferings().add(p);
-                    packFacade.create(p);
-                    return p;
-                })
-                .collect(Collectors.toList());
+                        p.setProfessional(pro);
+                        pro.getOfferings().add(p);
+                        packFacade.create(p);
+                        return p;
+                    })
+                    .collect(Collectors.toList());
 
-        is.close();
+            LOG.log(Level.INFO, "Closing {0}", path);
+            is.close();
+            LOG.log(Level.INFO, "{0} is now closed", path);
 
-        return packs;
+            return packs;
+        } else {
+            return new LinkedList<Offering>();
+        }
+
     }
 
 }
