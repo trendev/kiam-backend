@@ -9,6 +9,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;
+import fr.trendev.comptandye.utils.AuthenticationSecurityUtils;
 import fr.trendev.comptandye.utils.UserAccountType;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
 import fr.trendev.comptandye.utils.exceptions.InvalidDeliveryDateException;
@@ -42,6 +43,9 @@ public abstract class AbstractCommonService<E, P> {
      */
     @Inject
     private ObjectMapper om;
+
+    @Inject
+    private AuthenticationSecurityUtils authenticationSecurityUtils;
 
     private final Class<E> entityClass;
 
@@ -518,12 +522,8 @@ public abstract class AbstractCommonService<E, P> {
      * @return the professional's email
      */
     protected String getProEmail(SecurityContext sec, String professional) {
-        return Optional.ofNullable(
-                sec.isSecure() && sec.isUserInRole(UserAccountType.PROFESSIONAL)
-                ? sec.getUserPrincipal().getName() : professional)
-                .map(Function.identity())
-                .orElseThrow(() -> new BadRequestException(
-                        "Impossible to find the professional's email from the SecurityContext or from the Query Parameters"));
+        return authenticationSecurityUtils
+                .getProEmail(sec, professional);
     }
 
     /**
