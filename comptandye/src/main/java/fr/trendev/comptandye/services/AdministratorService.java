@@ -13,6 +13,7 @@ import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UUIDGenerator;
+import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
@@ -28,6 +29,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -66,10 +69,12 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Override
-    public Response findAll() {
+    public void findAll(@Suspended final AsyncResponse ar) {
         LOG.log(Level.INFO, "Providing the Administrator list");
-        return super.findAll();
+        CompletableFuture
+                .supplyAsync(() -> super.findAll())
+                .thenApply(result -> ar.resume(result))
+                .exceptionally(e -> ar.resume(exceptionHandler.handle(e)));
     }
 
     @Path("count")
