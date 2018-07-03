@@ -21,7 +21,7 @@ public class ReloadWebApp extends HttpServlet {
     protected void doGet(HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/index.html").include(
+        request.getRequestDispatcher("/dist/index.html").include(
                 request,
                 response);
     }

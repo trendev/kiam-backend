@@ -3,15 +3,15 @@
   "appData": {
     "version": "1.0.0"
   },
-  "index": "/index.html",
+  "index": "/dist/index.html",
   "assetGroups": [
     {
       "name": "app",
       "installMode": "prefetch",
       "updateMode": "prefetch",
       "urls": [
-        "/favicon.ico",
-        "/index.html"
+        "/dist/favicon.ico",
+        "/dist/index.html"
       ],
       "patterns": [
         "https:\\/\\/fonts\\.googleapis\\.com\\/.*",
@@ -28,8 +28,8 @@
   ],
   "dataGroups": [],
   "hashTable": {
-    "/favicon.ico": "2e813f714c0e269574d009a46ed172bb2c9e36bb",
-    "/index.html": "09f810755f030fd32d3a6d363cf5c759381e7626"
+    "/dist/favicon.ico": "2e813f714c0e269574d009a46ed172bb2c9e36bb",
+    "/dist/index.html": "4725ff2c92aa10f6142f02707988978d9c60b34c"
   },
   "navigationUrls": [
     {
