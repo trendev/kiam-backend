@@ -22,6 +22,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -33,35 +35,33 @@ import javax.ws.rs.core.Response;
 @Path("ExpenseItem")
 @RolesAllowed({"Administrator"})
 public class ExpenseItemService extends AbstractCommonService<ExpenseItem, Long> {
-    
+
     @Inject
     ExpenseItemFacade expenseItemFacade;
-    
+
     private final Logger LOG = Logger.getLogger(ExpenseItemService.class.
             getName());
-    
+
     public ExpenseItemService() {
         super(ExpenseItem.class);
     }
-    
+
     @Override
     protected Logger getLogger() {
         return LOG;
     }
-    
+
     @Override
     protected AbstractFacade<ExpenseItem, Long> getFacade() {
         return expenseItemFacade;
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Override
-    public Response findAll() {
-        LOG.log(Level.INFO, "Providing the ExpenseItem list");
-        return super.findAll();
+    public void findAll(@Suspended final AsyncResponse ar) {
+        super.findAll(ar);
     }
-    
+
     @Path("count")
     @GET
     @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON,})
@@ -69,7 +69,7 @@ public class ExpenseItemService extends AbstractCommonService<ExpenseItem, Long>
     public Response count() {
         return super.count();
     }
-    
+
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -79,7 +79,7 @@ public class ExpenseItemService extends AbstractCommonService<ExpenseItem, Long>
         LOG.log(Level.INFO, "REST request to get ExpenseItem : {0}", id);
         return super.find(id, refresh);
     }
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -89,7 +89,7 @@ public class ExpenseItemService extends AbstractCommonService<ExpenseItem, Long>
             e.setId(null);
         });
     }
-    
+
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -103,7 +103,7 @@ public class ExpenseItemService extends AbstractCommonService<ExpenseItem, Long>
             e.setVatRate(entity.getVatRate());
         });
     }
-    
+
     @Path("{id}")
     @DELETE
     public Response delete(@PathParam("id") Long id) {
@@ -111,5 +111,5 @@ public class ExpenseItemService extends AbstractCommonService<ExpenseItem, Long>
         return super.delete(id, e -> {
         });
     }
-    
+
 }

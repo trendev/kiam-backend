@@ -13,7 +13,6 @@ import fr.trendev.comptandye.sessions.ClientBillFacade;
 import fr.trendev.comptandye.sessions.ClientFacade;
 import java.util.Date;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -73,12 +72,7 @@ public class ClientBillService extends AbstractBillService<ClientBill> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public void findAll(@Suspended final AsyncResponse ar) {
-        LOG.log(Level.INFO, "Providing the ClientBill list");
-
-        CompletableFuture
-                .supplyAsync(() -> super.findAll())
-                .thenApply(result -> ar.resume(result))
-                .exceptionally(e -> ar.resume(exceptionHandler.handle(e)));
+        super.findAll(ar);
     }
 
     @RolesAllowed({"Administrator"})

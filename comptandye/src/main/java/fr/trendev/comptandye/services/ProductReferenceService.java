@@ -25,6 +25,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -59,11 +61,8 @@ public class ProductReferenceService extends AbstractCommonService<ProductRefere
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Override
-    @RolesAllowed({"Administrator", "Professional"})
-    public Response findAll() {
-        LOG.log(Level.INFO, "Providing the ProductReference list");
-        return super.findAll();
+    public void findAll(@Suspended final AsyncResponse ar) {
+        super.findAll(ar);
     }
 
     @Path("count")

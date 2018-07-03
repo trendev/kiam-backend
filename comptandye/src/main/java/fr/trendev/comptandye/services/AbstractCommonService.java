@@ -18,6 +18,7 @@ import java.net.URI;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -30,6 +31,7 @@ import javax.json.Json;
 import javax.persistence.RollbackException;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
@@ -69,7 +71,16 @@ public abstract class AbstractCommonService<E, P> {
      */
     protected abstract AbstractFacade<E, P> getFacade();
 
-    protected Response findAll() {
+    protected void findAll(final AsyncResponse ar) {
+        getLogger().log(Level.INFO, "Providing the {0} list", entityClass.
+                getSimpleName());
+        CompletableFuture
+                .supplyAsync(() -> this.findAll())
+                .thenApply(result -> ar.resume(result))
+                .exceptionally(e -> ar.resume(exceptionHandler.handle(e)));
+    }
+
+    private Response findAll() {
         try {
             List<E> list = getFacade().findAll();
             getLogger().log(Level.INFO, "{0} list size = {1}", new Object[]{

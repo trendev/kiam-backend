@@ -8,7 +8,6 @@ package fr.trendev.comptandye.services;
 import fr.trendev.comptandye.entities.Address;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.AddressFacade;
-import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
@@ -61,11 +60,7 @@ public class AddressService extends AbstractCommonService<Address, Long> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public void findAll(@Suspended final AsyncResponse ar) {
-        LOG.log(Level.INFO, "Providing the Address list");
-        CompletableFuture
-                .supplyAsync(() -> super.findAll())
-                .thenApply(result -> ar.resume(result))
-                .exceptionally(e -> ar.resume(exceptionHandler.handle(e)));
+        super.findAll(ar);
     }
 
     @Path("count")

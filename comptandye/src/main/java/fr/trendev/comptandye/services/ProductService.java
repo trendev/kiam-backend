@@ -32,6 +32,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -81,10 +83,8 @@ public class ProductService extends AbstractCommonService<Product, ProductPK> {
     @RolesAllowed({"Administrator"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Override
-    public Response findAll() {
-        LOG.log(Level.INFO, "Providing the Product list");
-        return super.findAll();
+    public void findAll(@Suspended final AsyncResponse ar) {
+        super.findAll(ar);
     }
 
     @RolesAllowed({"Administrator"})

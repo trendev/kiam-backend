@@ -27,6 +27,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -38,39 +40,37 @@ import javax.ws.rs.core.Response;
 @Path("PurchasedOffering")
 @RolesAllowed({"Administrator"})
 public class PurchasedOfferingService extends AbstractCommonService<PurchasedOffering, Long> {
-    
+
     @Inject
     PurchasedOfferingFacade purchasedOfferingFacade;
-    
+
     @Inject
     ProvideOfferingFacadeVisitor visitor;
-    
+
     private final Logger LOG = Logger.getLogger(
             PurchasedOfferingService.class.
                     getName());
-    
+
     public PurchasedOfferingService() {
         super(PurchasedOffering.class);
     }
-    
+
     @Override
     protected Logger getLogger() {
         return LOG;
     }
-    
+
     @Override
     protected AbstractFacade<PurchasedOffering, Long> getFacade() {
         return purchasedOfferingFacade;
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Override
-    public Response findAll() {
-        LOG.log(Level.INFO, "Providing the PurchasedOffering list");
-        return super.findAll();
+    public void findAll(@Suspended final AsyncResponse ar) {
+        super.findAll(ar);
     }
-    
+
     @Path("count")
     @GET
     @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON,})
@@ -78,7 +78,7 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
     public Response count() {
         return super.count();
     }
-    
+
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -88,7 +88,7 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
         LOG.log(Level.INFO, "REST request to get PurchasedOffering : {0}", id);
         return super.find(id, refresh);
     }
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -96,19 +96,19 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
             @QueryParam("professional") String professional) {
         LOG.log(Level.INFO, "Creating PurchasedOffering {0}", super.stringify(
                 entity));
-        
+
         if (professional == null) {
             throw new WebApplicationException(
                     "Profession email is not provided !");
         }
-        
+
         return super.post(entity, e -> {
             e.setId(null);
-            
+
             if (e.getOffering() == null) {
                 throw new WebApplicationException("No Offering provided !");
             }
-            
+
             e.setOffering(Optional.ofNullable(e.getOffering().accept(visitor).
                     find(new OfferingPK(e.getOffering().getId(), professional)))
                     .map(o -> {
@@ -120,32 +120,32 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
                             "Create PurchasedOffering : Offering "
                             + e.getOffering().getId()
                             + " not found and cannot be linked !")));
-            
+
         });
     }
-    
+
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(PurchasedOffering entity,
             @QueryParam("professional") String professional) {
         LOG.log(Level.INFO, "Updating PurchasedOffering {0}", entity.getId());
-        
+
         if (professional == null) {
             throw new WebApplicationException(
                     "Profession email is not provided !");
         }
-        
+
         return super.put(entity, entity.getId(),
                 e -> {
-            
+
             if (e.getOffering() == null) {
                 throw new WebApplicationException("No Offering provided !");
             }
-            
+
             e.setQty(entity.getQty());
             e.setVatRate(entity.getVatRate());
-            
+
             e.setOffering(Optional.ofNullable(e.getOffering().accept(visitor).
                     find(new OfferingPK(e.getOffering().getId(), professional)))
                     .map(o -> {

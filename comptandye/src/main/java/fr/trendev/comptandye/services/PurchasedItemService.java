@@ -26,6 +26,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -39,38 +41,36 @@ import javax.ws.rs.core.SecurityContext;
 @Path("PurchasedItem")
 @RolesAllowed({"Administrator"})
 public class PurchasedItemService extends AbstractProductRecordService<PurchasedItem> {
-    
+
     @Inject
     PurchasedItemFacade purchasedItemFacade;
-    
+
     @Inject
     PurchaseExpenseFacade purchaseExpenseFacade;
-    
+
     private final Logger LOG = Logger.getLogger(PurchasedItemService.class.
             getName());
-    
+
     public PurchasedItemService() {
         super(PurchasedItem.class);
     }
-    
+
     @Override
     protected Logger getLogger() {
         return LOG;
     }
-    
+
     @Override
     protected AbstractFacade<PurchasedItem, Long> getFacade() {
         return purchasedItemFacade;
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Override
-    public Response findAll() {
-        LOG.log(Level.INFO, "Providing the PurchasedItem list");
-        return super.findAll();
+    public void findAll(@Suspended final AsyncResponse ar) {
+        super.findAll(ar);
     }
-    
+
     @Path("count")
     @GET
     @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON,})
@@ -78,7 +78,7 @@ public class PurchasedItemService extends AbstractProductRecordService<Purchased
     public Response count() {
         return super.count();
     }
-    
+
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -88,7 +88,7 @@ public class PurchasedItemService extends AbstractProductRecordService<Purchased
         LOG.log(Level.INFO, "REST request to get PurchasedItem : {0}", id);
         return super.find(id, refresh);
     }
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -98,22 +98,22 @@ public class PurchasedItemService extends AbstractProductRecordService<Purchased
             @QueryParam("professional") String professional) {
         LOG.log(Level.INFO, "Creating PurchasedItem {0}", super.
                 stringify(entity));
-        
+
         String proEmail = this.getProEmail(sec, professional);
-        
+
         return super.post(entity, proEmail, e -> {
             //finds the PurchaseExpense
 
             if (e.getPurchaseExpense() == null) {
-                
+
                 String errmsg = "A PurchaseExpense must be provided";
                 LOG.log(Level.WARNING, errmsg);
                 throw new WebApplicationException(errmsg);
             }
-            
+
             PurchaseExpense pe = purchaseExpenseFacade.find(new ExpensePK(e.
                     getPurchaseExpense().getId(), proEmail));
-            
+
             if (pe == null) {
                 String errmsg = "PurchaseExpense " + e.
                         getPurchaseExpense().getId()
@@ -121,7 +121,7 @@ public class PurchasedItemService extends AbstractProductRecordService<Purchased
                 LOG.log(Level.WARNING, errmsg);
                 throw new WebApplicationException(errmsg);
             }
-            
+
             if (pe.isCancelled()) {
                 String errmsg = "PurchaseExpense " + e.
                         getPurchaseExpense().getId()
@@ -133,10 +133,10 @@ public class PurchasedItemService extends AbstractProductRecordService<Purchased
             //adds the current PurchasedItem inside
             e.setPurchaseExpense(pe);
             pe.getPurchasedItems().add(e);
-            
+
         });
     }
-    
+
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -147,7 +147,7 @@ public class PurchasedItemService extends AbstractProductRecordService<Purchased
         LOG.log(Level.INFO, "Updating PurchasedItem {0}", entity.getId());
         return super.put(entity, this.getProEmail(sec, professional));
     }
-    
+
     @Path("{id}")
     @DELETE
     public Response delete(@PathParam("id") Long id) {
@@ -157,5 +157,5 @@ public class PurchasedItemService extends AbstractProductRecordService<Purchased
             e.setPurchaseExpense(null);
         });
     }
-    
+
 }
