@@ -19,10 +19,15 @@ public abstract class ApiFilter implements Filter {
 
     private final Set<String> allowedOrigins;
 
+    /**
+     * Sets the Allowed Origins. Localhost / jsie-macbook URLs should be removed
+     * for Production (security purpose)
+     */
     public ApiFilter() {
         this.allowedOrigins = new HashSet<String>();
         this.allowedOrigins.addAll(
                 Arrays.asList("http://localhost:4200",
+                        "http://jsie-macbook:4200",
                         "https://localhost:4200",
                         "http://localhost:9876"));
     }
