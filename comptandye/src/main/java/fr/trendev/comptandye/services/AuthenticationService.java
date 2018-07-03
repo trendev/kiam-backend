@@ -10,10 +10,12 @@ import fr.trendev.comptandye.beans.xsrf.XSRFTokenGenerator;
 import fr.trendev.comptandye.sessions.UserAccountFacade;
 import fr.trendev.comptandye.utils.AuthenticationSecurityUtils;
 import fr.trendev.comptandye.utils.PasswordGenerator;
+import fr.trendev.comptandye.utils.exceptions.ExceptionHandler;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
 import java.io.StringReader;
 import java.security.Principal;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.PermitAll;
@@ -34,6 +36,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
@@ -61,6 +65,9 @@ public class AuthenticationService {
     @Inject
     AuthenticationSecurityUtils securityUtils;
 
+    @Inject
+    ExceptionHandler exceptionHandler;
+
     private final Logger LOG = Logger.getLogger(AuthenticationService.class.
             getName());
 
@@ -74,7 +81,15 @@ public class AuthenticationService {
     @Path("profile")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response profile(@Context SecurityContext sec) {
+    public void profile(@Suspended final AsyncResponse ar,
+            @Context SecurityContext sec) {
+        CompletableFuture
+                .supplyAsync(() -> this.profile(sec))
+                .thenApply(result -> ar.resume(result))
+                .exceptionally(e -> ar.resume(exceptionHandler.handle(e)));
+    }
+
+    private Response profile(SecurityContext sec) {
         return securityUtils.getProfessionalEmailFromSecurityContext(sec)
                 .map(email -> {
                     LOG.log(Level.INFO, "Providing the profile of [{0}]", email);
