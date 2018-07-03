@@ -11,7 +11,6 @@ import fr.trendev.comptandye.entities.ClientPK;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.ClientBillFacade;
 import fr.trendev.comptandye.sessions.ClientFacade;
-import fr.trendev.comptandye.utils.exceptions.ExceptionHandler;
 import java.util.Date;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -52,9 +51,6 @@ public class ClientBillService extends AbstractBillService<ClientBill> {
 
     @Inject
     ClientFacade clientFacade;
-
-    @Inject
-    ExceptionHandler exceptionHandler;
 
     private final Logger LOG = Logger.getLogger(ClientBillService.class.
             getName());

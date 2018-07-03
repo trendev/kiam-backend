@@ -11,6 +11,7 @@ import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;
 import fr.trendev.comptandye.utils.AuthenticationSecurityUtils;
 import fr.trendev.comptandye.utils.UserAccountType;
+import fr.trendev.comptandye.utils.exceptions.ExceptionHandler;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
 import fr.trendev.comptandye.utils.exceptions.InvalidDeliveryDateException;
 import java.net.URI;
@@ -46,6 +47,9 @@ public abstract class AbstractCommonService<E, P> {
 
     @Inject
     private AuthenticationSecurityUtils authenticationSecurityUtils;
+
+    @Inject
+    protected ExceptionHandler exceptionHandler;
 
     private final Class<E> entityClass;
 
