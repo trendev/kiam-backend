@@ -84,8 +84,9 @@ public class UserGroupService extends AbstractCommonService<UserGroup, String> {
     @Path("{name}/userAccounts")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserAccounts(@PathParam("name") String name) {
-        return super.provideRelation(name,
+    public void getUserAccounts(@Suspended final AsyncResponse ar, @PathParam(
+            "name") String name) {
+        super.provideRelation(ar, name,
                 UserGroup::getUserAccounts, UserAccount.class);
     }
 

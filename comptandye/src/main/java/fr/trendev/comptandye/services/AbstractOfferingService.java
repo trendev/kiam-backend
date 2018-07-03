@@ -17,6 +17,7 @@ import fr.trendev.comptandye.utils.visitors.OfferingIntegrityVisitor;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 import javax.inject.Inject;
+import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.core.Response;
 
 /**
@@ -50,13 +51,15 @@ public abstract class AbstractOfferingService<T extends Offering> extends Abstra
         return LOG;
     }
 
-    protected Response getPurchasedOfferings(OfferingPK pk) {
-        return super.provideRelation(pk, Offering::getPurchasedOfferings,
+    protected void getPurchasedOfferings(final AsyncResponse ar,
+            OfferingPK pk) {
+        super.provideRelation(ar, pk, Offering::getPurchasedOfferings,
                 PurchasedOffering.class);
     }
 
-    protected Response getParentPacks(OfferingPK pk) {
-        return super.provideRelation(pk, Offering::getParentPacks,
+    protected void getParentPacks(final AsyncResponse ar,
+            OfferingPK pk) {
+        super.provideRelation(ar, pk, Offering::getParentPacks,
                 Pack.class);
     }
 

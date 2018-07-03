@@ -296,10 +296,11 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     @Path("{email}/userGroups")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserGroups(@PathParam("email") String email) {
+    public void getUserGroups(@Suspended final AsyncResponse ar, @PathParam(
+            "email") String email) {
         LOG.log(Level.INFO,
                 "REST request to get userGroups of Professional : {0}", email);
-        return super.provideRelation(email,
+        super.provideRelation(ar, email,
                 Professional::getUserGroups, UserGroup.class);
     }
 
@@ -354,9 +355,10 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     @Path("bills")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getBills(@Context SecurityContext sec,
+    public void getBills(@Suspended final AsyncResponse ar,
+            @Context SecurityContext sec,
             @QueryParam("email") String email) {
-        return this.provideRelation(this.getProEmail(sec, email),
+        this.provideRelation(ar, this.getProEmail(sec, email),
                 Professional::getBills,
                 Bill.class);
     }
@@ -364,9 +366,10 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     @Path("clients")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getClients(@Context SecurityContext sec,
+    public void getClients(@Suspended final AsyncResponse ar,
+            @Context SecurityContext sec,
             @QueryParam("email") String email) {
-        return this.provideRelation(this.getProEmail(sec, email),
+        this.provideRelation(ar, this.getProEmail(sec, email),
                 Professional::getClients,
                 Client.class);
     }
@@ -374,9 +377,10 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     @Path("offerings")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getOfferings(@Context SecurityContext sec,
+    public void getOfferings(@Suspended final AsyncResponse ar,
+            @Context SecurityContext sec,
             @QueryParam("email") String email) {
-        return this.provideRelation(this.getProEmail(sec, email),
+        this.provideRelation(ar, this.getProEmail(sec, email),
                 Professional::getOfferings,
                 Offering.class);
     }
@@ -384,9 +388,10 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     @Path("categories")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCategories(@Context SecurityContext sec,
+    public void getCategories(@Suspended final AsyncResponse ar,
+            @Context SecurityContext sec,
             @QueryParam("email") String email) {
-        return this.provideRelation(this.getProEmail(sec, email),
+        this.provideRelation(ar, this.getProEmail(sec, email),
                 Professional::getCategories,
                 Category.class);
     }
@@ -394,45 +399,50 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     @Path("collectiveGroups")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCollectiveGroups(@Context SecurityContext sec,
+    public void getCollectiveGroups(@Suspended final AsyncResponse ar,
+            @Context SecurityContext sec,
             @QueryParam("email") String email) {
-        return this.provideRelation(this.getProEmail(sec, email),
+        this.provideRelation(ar, this.getProEmail(sec, email),
                 Professional::getCollectiveGroups, CollectiveGroup.class);
     }
 
     @Path("expenses")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getExpenses(@Context SecurityContext sec,
+    public void getExpenses(@Suspended final AsyncResponse ar,
+            @Context SecurityContext sec,
             @QueryParam("email") String email) {
-        return this.provideRelation(this.getProEmail(sec, email),
+        this.provideRelation(ar, this.getProEmail(sec, email),
                 Professional::getExpenses, Expense.class);
     }
 
     @Path("stock")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getStock(@Context SecurityContext sec,
+    public void getStock(@Suspended final AsyncResponse ar,
+            @Context SecurityContext sec,
             @QueryParam("email") String email) {
-        return this.provideRelation(this.getProEmail(sec, email),
+        this.provideRelation(ar, this.getProEmail(sec, email),
                 Professional::getStock, Product.class);
     }
 
     @Path("notifications")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getNotifications(@Context SecurityContext sec,
+    public void getNotifications(@Suspended final AsyncResponse ar,
+            @Context SecurityContext sec,
             @QueryParam("email") String email) {
-        return this.provideRelation(this.getProEmail(sec, email),
+        this.provideRelation(ar, this.getProEmail(sec, email),
                 Professional::getNotifications, Notification.class);
     }
 
     @Path("individuals")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getIndividuals(@Context SecurityContext sec,
+    public void getIndividuals(@Suspended final AsyncResponse ar,
+            @Context SecurityContext sec,
             @QueryParam("email") String email) {
-        return this.provideRelation(this.getProEmail(sec, email),
+        this.provideRelation(ar, this.getProEmail(sec, email),
                 Professional::getIndividuals, Individual.class);
     }
 

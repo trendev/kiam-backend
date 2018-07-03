@@ -93,8 +93,9 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
     @Path("{email}/userGroups")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserGroups(@PathParam("email") String email) {
-        return super.provideRelation(email, Administrator::getUserGroups,
+    public void getUserGroups(@Suspended final AsyncResponse ar,
+            @PathParam("email") String email) {
+        super.provideRelation(ar, email, Administrator::getUserGroups,
                 UserGroup.class);
     }
 

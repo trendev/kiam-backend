@@ -236,21 +236,23 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
     @Path("{id}/clientBills")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getClientBills(@Context SecurityContext sec,
+    public void getClientBills(@Suspended final AsyncResponse ar,
+            @Context SecurityContext sec,
             @PathParam("id") Long id,
             @QueryParam("professional") String professional) {
         ClientPK pk = new ClientPK(id, this.getProEmail(sec, professional));
-        return super.provideRelation(pk, Client::getClientBills,
+        super.provideRelation(ar, pk, Client::getClientBills,
                 ClientBill.class);
     }
 
     @Path("{id}/categories")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCategories(@Context SecurityContext sec,
+    public void getCategories(@Suspended final AsyncResponse ar,
+            @Context SecurityContext sec,
             @PathParam("id") Long id,
             @QueryParam("professional") String professional) {
         ClientPK pk = new ClientPK(id, this.getProEmail(sec, professional));
-        return super.provideRelation(pk, Client::getCategories, Category.class);
+        super.provideRelation(ar, pk, Client::getCategories, Category.class);
     }
 }

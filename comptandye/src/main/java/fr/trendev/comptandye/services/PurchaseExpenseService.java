@@ -169,13 +169,14 @@ public class PurchaseExpenseService extends AbstractExpenseService<PurchaseExpen
     @Path("{id}/purchasedItems")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPurchasedItems(@Context SecurityContext sec,
+    public void getPurchasedItems(@Suspended final AsyncResponse ar,
+            @Context SecurityContext sec,
             @PathParam("id") Long id,
             @QueryParam("professional") String professional) {
         ExpensePK pk = new ExpensePK(id, this.getProEmail(sec,
                 professional));
 
-        return this.provideRelation(pk,
+        this.provideRelation(ar, pk,
                 PurchaseExpense::getPurchasedItems, PurchasedItem.class);
     }
 

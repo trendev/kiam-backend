@@ -239,23 +239,25 @@ public class ProductService extends AbstractCommonService<Product, ProductPK> {
     @Path("{barcode}/sales")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getSales(@Context SecurityContext sec,
+    public void getSales(@Suspended final AsyncResponse ar,
+            @Context SecurityContext sec,
             @PathParam("barcode") String barcode,
             @QueryParam("professional") String professional) {
         ProductPK pk = new ProductPK(
                 this.getProEmail(sec, professional), barcode);
-        return super.provideRelation(pk, Product::getSales, Sale.class);
+        super.provideRelation(ar, pk, Product::getSales, Sale.class);
     }
 
     @Path("{barcode}/productRecords")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getProductRecords(@Context SecurityContext sec,
+    public void getProductRecords(@Suspended final AsyncResponse ar,
+            @Context SecurityContext sec,
             @PathParam("barcode") String barcode,
             @QueryParam("professional") String professional) {
         ProductPK pk = new ProductPK(
                 this.getProEmail(sec, professional), barcode);
-        return super.provideRelation(pk, Product::getProductRecords,
+        super.provideRelation(ar, pk, Product::getProductRecords,
                 ProductRecord.class);
     }
 

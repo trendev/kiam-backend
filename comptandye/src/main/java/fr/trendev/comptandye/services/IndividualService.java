@@ -202,8 +202,9 @@ public class IndividualService extends AbstractCommonService<Individual, String>
     @Path("{email}/userGroups")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserGroups(@PathParam("email") String email) {
-        return super.provideRelation(email, Individual::getUserGroups,
+    public void getUserGroups(@Suspended final AsyncResponse ar,
+            @PathParam("email") String email) {
+        super.provideRelation(ar, email, Individual::getUserGroups,
                 UserGroup.class);
     }
 
@@ -256,16 +257,18 @@ public class IndividualService extends AbstractCommonService<Individual, String>
     @Path("{email}/professionals")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getProfessionals(@PathParam("email") String email) {
-        return super.provideRelation(email,
+    public void getProfessionals(@Suspended final AsyncResponse ar, @PathParam(
+            "email") String email) {
+        super.provideRelation(ar, email,
                 Individual::getProfessionals, Professional.class);
     }
 
     @Path("{email}/individualBills")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getIndividualBills(@PathParam("email") String email) {
-        return super.provideRelation(email,
+    public void getIndividualBills(@Suspended final AsyncResponse ar,
+            @PathParam("email") String email) {
+        super.provideRelation(ar, email,
                 Individual::getIndividualBills, IndividualBill.class);
     }
 

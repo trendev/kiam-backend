@@ -162,22 +162,24 @@ public class ServiceService extends AbstractOfferingService<Service> {
     @Path("{id}/purchasedOfferings")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPurchasedOfferings(@Context SecurityContext sec,
+    public void getPurchasedOfferings(@Suspended final AsyncResponse ar,
+            @Context SecurityContext sec,
             @PathParam("id") Long id,
             @QueryParam("professional") String professional) {
         OfferingPK pk = new OfferingPK(id, this.getProEmail(sec,
                 professional));
-        return super.getPurchasedOfferings(pk);
+        super.getPurchasedOfferings(ar, pk);
     }
 
     @Path("{id}/parentPacks")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getParentPacks(@Context SecurityContext sec,
+    public void getParentPacks(@Suspended final AsyncResponse ar,
+            @Context SecurityContext sec,
             @PathParam("id") Long id,
             @QueryParam("professional") String professional) {
         OfferingPK pk = new OfferingPK(id, this.getProEmail(sec,
                 professional));
-        return super.getParentPacks(pk);
+        super.getParentPacks(ar, pk);
     }
 }

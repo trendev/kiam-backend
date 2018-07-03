@@ -164,12 +164,13 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
     @Path("{id}/collectiveGroupBills")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCollectiveGroupBills(@Context SecurityContext sec,
+    public void getCollectiveGroupBills(@Suspended final AsyncResponse ar,
+            @Context SecurityContext sec,
             @PathParam("id") Long id,
             @QueryParam("professional") String professional) {
         CollectiveGroupPK pk = new CollectiveGroupPK(id, this.getProEmail(sec,
                 professional));
-        return super.provideRelation(pk,
+        super.provideRelation(ar, pk,
                 CollectiveGroup::getCollectiveGroupBills,
                 CollectiveGroupBill.class);
     }

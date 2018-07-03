@@ -204,10 +204,11 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
     @Path("{id}/clients")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getClients(@Context SecurityContext sec,
+    public void getClients(@Suspended final AsyncResponse ar,
+            @Context SecurityContext sec,
             @PathParam("id") Long id,
             @QueryParam("professional") String professional) {
         CategoryPK pk = new CategoryPK(id, this.getProEmail(sec, professional));
-        return super.provideRelation(pk, Category::getClients, Client.class);
+        super.provideRelation(ar, pk, Category::getClients, Client.class);
     }
 }
