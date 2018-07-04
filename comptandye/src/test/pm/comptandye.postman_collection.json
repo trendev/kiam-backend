@@ -14173,6 +14173,59 @@
 			]
 		},
 		{
+			"name": "ExportData",
+			"description": "",
+			"item": [
+				{
+					"name": "export data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5fa9f196-00ab-4f08-b126-7146d3cb0723",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"/*var jsonData = JSON.parse(responseBody);",
+									"tests[\"id is defined\"] = jsonData.id !== undefined;",
+									"//created_category_id environment variable is stored as a string...",
+									"tests[\"id is \"+pm.environment.get(\"created_category_id\")] = jsonData.id == pm.environment.get(\"created_category_id\");",
+									"tests[\"name is \\\"NEW_CATEGORY\\\"\"] = jsonData.name === \"NEW_CATEGORY\";",
+									"tests[\"description is \\\"This a new category for special clients\\\"\"] = jsonData.description === \"This a new category for special clients\";*/"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/ExportData/JSON?professional=vanessa.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"ExportData",
+								"JSON"
+							],
+							"query": [
+								{
+									"key": "professional",
+									"value": "vanessa.gay@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "logout",
 			"event": [
 				{

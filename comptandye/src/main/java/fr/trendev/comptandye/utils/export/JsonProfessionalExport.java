@@ -6,12 +6,16 @@
 package fr.trendev.comptandye.utils.export;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
+import fr.trendev.comptandye.entities.Product;
+import fr.trendev.comptandye.entities.ProductRecord;
 import fr.trendev.comptandye.entities.Professional;
+import fr.trendev.comptandye.entities.Sale;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
-import fr.trendev.comptandye.utils.serializers.ProfessionalSerializer;
+import fr.trendev.comptandye.utils.mixins.ProductMixin;
+import fr.trendev.comptandye.utils.mixins.ProductRecordMixin;
+import fr.trendev.comptandye.utils.mixins.ProfessionalMixin;
+import fr.trendev.comptandye.utils.mixins.SaleMixin;
 import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -51,15 +55,18 @@ public class JsonProfessionalExport {
     }
 
     private String stringify(Professional pro) {
+
         try {
-            SimpleModule module =
-                    new SimpleModule("ProfessionalSerializer", new Version(1, 0,
-                            0,
-                            null, null, null));
-            module.addSerializer(Professional.class,
-                    new ProfessionalSerializer());
-            om.registerModule(module);
-            return om.writeValueAsString(pro);
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.addMixIn(Professional.class, ProfessionalMixin.class);
+            objectMapper.addMixIn(Product.class, ProductMixin.class);
+            objectMapper.addMixIn(ProductRecord.class, ProductRecordMixin.class);
+            objectMapper.addMixIn(Sale.class, SaleMixin.class);
+            String json = objectMapper.writerWithDefaultPrettyPrinter().
+                    writeValueAsString(pro);
+            System.out.println(json);
+            return json;
+
         } catch (JsonProcessingException ex) {
             throw new WebApplicationException(
                     "Error building the Response exporting data of Professional "
