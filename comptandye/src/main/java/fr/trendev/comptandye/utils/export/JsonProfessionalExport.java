@@ -7,6 +7,7 @@ package fr.trendev.comptandye.utils.export;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.utils.producers.qualifiers.ProfessionalExport;
@@ -52,8 +53,14 @@ public class JsonProfessionalExport {
     private String stringify(Professional pro) {
 
         try {
+
+            long timestamp = System.currentTimeMillis();
+            ObjectNode objnode = om.createObjectNode();
+            objnode.put("timestamp", timestamp);
+            objnode.putPOJO("professional_details", pro);
+
             String json = om.writerWithDefaultPrettyPrinter().
-                    writeValueAsString(pro);
+                    writeValueAsString(objnode);
             System.out.println(json);
             return json;
 
