@@ -7,7 +7,7 @@ package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.utils.AuthenticationSecurityUtils;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHandler;
-import fr.trendev.comptandye.utils.export.JsonProfessionalExport;
+import fr.trendev.comptandye.utils.export.JsonProfessionalExporter;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,7 +37,7 @@ public class ExportDataService {
             getName());
 
     @Inject
-    private JsonProfessionalExport jsonProExport;
+    private JsonProfessionalExporter jsonProExport;
 
     @Inject
     private AuthenticationSecurityUtils authenticationSecurityUtils;

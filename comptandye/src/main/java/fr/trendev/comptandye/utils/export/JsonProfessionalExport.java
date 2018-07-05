@@ -5,70 +5,10 @@
  */
 package fr.trendev.comptandye.utils.export;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import fr.trendev.comptandye.entities.Professional;
-import fr.trendev.comptandye.sessions.ProfessionalFacade;
-import fr.trendev.comptandye.utils.producers.qualifiers.ProfessionalExport;
-import java.util.Optional;
-import javax.ejb.Stateless;
-import javax.inject.Inject;
-import javax.json.Json;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
-
 /**
  *
  * @author jsie
  */
-@Stateless
 public class JsonProfessionalExport {
-
-    @Inject
-    private ProfessionalFacade professionalFacade;
-
-    @Inject
-    @ProfessionalExport
-    private ObjectMapper om;
-
-    public Response export(String email) {
-        try {
-            return Optional.ofNullable(professionalFacade.find(email))
-                    .map(pro -> Response.ok(stringify(pro)).build())
-                    .orElse(Response.status(Response.Status.NOT_FOUND)
-                            .entity(
-                                    Json.createObjectBuilder()
-                                            .add("errmsg", "Professional "
-                                                    + email
-                                                    + " not found")
-                                            .build()
-                            ).build());
-        } catch (Exception ex) {
-            throw new WebApplicationException(
-                    "Error exporting data of Professional " + email, ex);
-        }
-    }
-
-    private String stringify(Professional pro) {
-
-        try {
-
-            long timestamp = System.currentTimeMillis();
-            ObjectNode objnode = om.createObjectNode();
-            objnode.put("timestamp", timestamp);
-            objnode.putPOJO("professional_details", pro);
-
-            String json = om.writerWithDefaultPrettyPrinter().
-                    writeValueAsString(objnode);
-            System.out.println(json);
-            return json;
-
-        } catch (JsonProcessingException ex) {
-            throw new WebApplicationException(
-                    "Error building the Response exporting data of Professional "
-                    + pro.getEmail(), ex);
-        }
-    }
 
 }
