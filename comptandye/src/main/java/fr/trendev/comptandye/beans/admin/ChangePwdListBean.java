@@ -35,6 +35,9 @@ public class ChangePwdListBean implements Serializable {
             getName());
 
     @Inject
+    private PasswordGenerator passwordGenerator;
+
+    @Inject
     private AdministratorFacade administratorFacade;
 
     @Inject
@@ -100,7 +103,7 @@ public class ChangePwdListBean implements Serializable {
         String pwd = this.password;
         LOG.log(Level.WARNING, "password = {0}", pwd);
         LOG.log(Level.WARNING, "Will update {0}", user.getEmail());
-        String epwd = PasswordGenerator.encrypt_SHA256(pwd);
+        String epwd = passwordGenerator.encrypt_SHA256(pwd);
         user.setPassword(epwd);
         userAccountFacade.edit(user);
         this.clear();
@@ -114,7 +117,7 @@ public class ChangePwdListBean implements Serializable {
     }
 
     public void generate() {
-        this.password = PasswordGenerator.autoGenerate();
+        this.password = passwordGenerator.autoGenerate();
     }
 
 }

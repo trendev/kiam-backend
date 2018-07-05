@@ -8,6 +8,7 @@ package fr.trendev.comptandye.beans.xsrf;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.inject.Inject;
 
 /**
  *
@@ -17,13 +18,16 @@ import javax.ejb.Startup;
 @Singleton
 public class XSRFTokenGenerator {
 
+    @Inject
+    PasswordGenerator passwordGenerator;
+
     /**
      * Generates a XSRF token
      *
      * @return the generated token
      */
     public String generate() {
-        return PasswordGenerator.autoGenerate(128);
+        return passwordGenerator.autoGenerate(128);
     }
 
 }

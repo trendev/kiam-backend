@@ -48,6 +48,9 @@ import javax.ws.rs.core.SecurityContext;
 public class IndividualService extends AbstractCommonService<Individual, String> {
 
     @Inject
+    PasswordGenerator passwordGenerator;
+
+    @Inject
     IndividualFacade individualFacade;
 
     @Inject
@@ -126,7 +129,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
             e.setUuid(UUIDGenerator.generate("IND-", true));
 
             //encrypts the provided password
-            String encrypted_pwd = PasswordGenerator.encrypt_SHA256(e.
+            String encrypted_pwd = passwordGenerator.encrypt_SHA256(e.
                     getPassword());
             e.setPassword(encrypted_pwd);
 
@@ -150,7 +153,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
              *
              */
             if (entity.getPassword() != null && !entity.getPassword().isEmpty()) {
-                String encrypted_pwd = PasswordGenerator.encrypt_SHA256(
+                String encrypted_pwd = passwordGenerator.encrypt_SHA256(
                         entity.getPassword());
                 e.setPassword(encrypted_pwd);
             }

@@ -54,6 +54,9 @@ import javax.ws.rs.core.SecurityContext;
 public class AuthenticationService {
 
     @Inject
+    PasswordGenerator passwordGenerator;
+
+    @Inject
     UserAccountFacade userAccountFacade;
 
     @Inject
@@ -75,7 +78,7 @@ public class AuthenticationService {
     @GET
     @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON,})
     public String password(@QueryParam("size") int size) {
-        return PasswordGenerator.autoGenerate(size);
+        return passwordGenerator.autoGenerate(size);
     }
 
     @Path("profile")
@@ -119,9 +122,8 @@ public class AuthenticationService {
             if (user == null) {
                 req.login(username, password);
                 HttpSession session = req.getSession();
-
                 // checks first if the user is Blocked or not
-                if (securityUtils.isBlockedUser(sec, this)) {
+                if (securityUtils.isBlockedUser(sec)) {
                     LOG.log(Level.WARNING,
                             "Login cancelled - user [{0}] is Blocked",
                             username);
@@ -254,7 +256,7 @@ public class AuthenticationService {
                 .map(email ->
                         Optional.ofNullable(this.userAccountFacade.find(email))
                                 .map(user -> {
-                                    String epwd = PasswordGenerator.
+                                    String epwd = passwordGenerator.
                                             encrypt_SHA256(password);
                                     user.setPassword(epwd);
                                     String msg = "Password of user ["

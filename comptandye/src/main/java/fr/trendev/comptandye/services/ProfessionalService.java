@@ -57,6 +57,9 @@ import javax.ws.rs.core.SecurityContext;
 public class ProfessionalService extends AbstractCommonService<Professional, String> {
 
     @Inject
+    PasswordGenerator passwordGenerator;
+
+    @Inject
     ProfessionalFacade professionalFacade;
 
     @Inject
@@ -157,7 +160,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
             e.setUuid(UUIDGenerator.generate("PRO-", true));
 
             //encrypts the provided password
-            String encrypted_pwd = PasswordGenerator.encrypt_SHA256(e.
+            String encrypted_pwd = passwordGenerator.encrypt_SHA256(e.
                     getPassword());
             e.setPassword(encrypted_pwd);
 
@@ -233,7 +236,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
              *
              */
             if (entity.getPassword() != null && !entity.getPassword().isEmpty()) {
-                String encrypted_pwd = PasswordGenerator.encrypt_SHA256(
+                String encrypted_pwd = passwordGenerator.encrypt_SHA256(
                         entity.getPassword());
                 e.setPassword(encrypted_pwd);
             }

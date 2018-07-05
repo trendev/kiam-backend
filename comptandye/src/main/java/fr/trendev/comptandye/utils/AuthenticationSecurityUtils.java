@@ -5,7 +5,6 @@
  */
 package fr.trendev.comptandye.utils;
 
-import fr.trendev.comptandye.services.AuthenticationService;
 import java.util.Optional;
 import java.util.function.Function;
 import javax.ejb.Stateless;
@@ -19,18 +18,35 @@ import javax.ws.rs.core.SecurityContext;
 @Stateless
 public class AuthenticationSecurityUtils {
 
+    /**
+     * Controls if the context is secured (HTTPS) and if the user of the
+     * security context is in a support group
+     *
+     * @param sec the security context
+     * @return the user's email (principal's name) or null if context is not
+     * secured or user is not in a supported group
+     */
     public Optional<String> getProfessionalEmailFromSecurityContext(
             SecurityContext sec) {
-        return Optional.ofNullable(sec.isSecure() && (sec.isUserInRole(
-                UserAccountType.PROFESSIONAL) || sec.isUserInRole(
-                        UserAccountType.INDIVIDUAL) || sec.isUserInRole(
-                        UserAccountType.ADMINISTRATOR)) ? sec.getUserPrincipal().
-                                getName() : null);
+        return Optional.ofNullable(
+                sec.isSecure()
+                && (sec.isUserInRole(UserAccountType.PROFESSIONAL)
+                || sec.isUserInRole(UserAccountType.INDIVIDUAL)
+                || sec.isUserInRole(UserAccountType.ADMINISTRATOR))
+                ? sec.getUserPrincipal().getName() : null);
     }
 
-    public boolean isBlockedUser(SecurityContext sec,
-            AuthenticationService authenticationService) {
-        return this.getProfessionalEmailFromSecurityContext(sec).
+    /**
+     * Controls if an user is blocked or not. If a user has been blocked (using
+     * the admin interface), it should have been set as blocked and removed from
+     * its group:getProfessionalEmailFromSecurityContext() should return null
+     * and this method should return false in this case.
+     *
+     * @param sec
+     * @return
+     */
+    public boolean isBlockedUser(SecurityContext sec) {
+        return getProfessionalEmailFromSecurityContext(sec).
                 map(u -> false).orElse(true);
     }
 
@@ -43,11 +59,13 @@ public class AuthenticationSecurityUtils {
      * @return the professional's email
      */
     public String getProEmail(SecurityContext sec, String professional) {
-        return Optional.ofNullable(sec.isSecure() &&
-                sec.isUserInRole(UserAccountType.PROFESSIONAL) ? sec.getUserPrincipal().
-                getName() : professional).map(Function.identity()).
+        return Optional.ofNullable(sec.isSecure() && sec.isUserInRole(
+                UserAccountType.PROFESSIONAL) ? sec.getUserPrincipal().
+                                getName() : professional).map(Function.
+                        identity()).
                 orElseThrow(() ->
-                new BadRequestException("Impossible to find the professional's email from the SecurityContext or from the Query Parameters"));
+                        new BadRequestException(
+                                "Impossible to find the professional's email from the SecurityContext or from the Query Parameters"));
     }
 
 }

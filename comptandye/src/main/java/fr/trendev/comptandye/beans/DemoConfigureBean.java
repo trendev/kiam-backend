@@ -73,6 +73,9 @@ public class DemoConfigureBean implements Serializable {
     private EntityManager em;
 
     @Inject
+    PasswordGenerator passwordGenerator;
+
+    @Inject
     UserGroupFacade userGroupFacade;
 
     @Inject
@@ -269,13 +272,13 @@ public class DemoConfigureBean implements Serializable {
         UserGroup ind = new UserGroup("Individual", "Individual User Group");
 
         Individual skonx = new Individual();
-        skonx.setEmail("skonx2006@gmail.com");
-        skonx.setPassword(PasswordGenerator.encrypt_SHA256(PasswordGenerator.
+        skonx.setEmail("skonx2006@hotmail.com");
+        skonx.setPassword(passwordGenerator.encrypt_SHA256(passwordGenerator.
                 autoGenerate()));
 
         Individual sylvioc = new Individual();
         sylvioc.setEmail("sylvie.gay@gmail.com");
-        sylvioc.setPassword(PasswordGenerator.encrypt_SHA256(PasswordGenerator.
+        sylvioc.setPassword(passwordGenerator.encrypt_SHA256(passwordGenerator.
                 autoGenerate()));
 
         ind.getUserAccounts().add(skonx);

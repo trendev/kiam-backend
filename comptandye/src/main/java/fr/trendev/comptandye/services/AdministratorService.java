@@ -43,6 +43,9 @@ import javax.ws.rs.core.Response;
 public class AdministratorService extends AbstractCommonService<Administrator, String> {
 
     @Inject
+    PasswordGenerator passwordGenerator;
+
+    @Inject
     AdministratorFacade administratorFacade;
 
     @Inject
@@ -116,7 +119,7 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
             }
 
             //encrypts the provided password
-            String encrypted_pwd = PasswordGenerator.encrypt_SHA256(e.
+            String encrypted_pwd = passwordGenerator.encrypt_SHA256(e.
                     getPassword());
             e.setPassword(encrypted_pwd);
 
@@ -137,7 +140,7 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
         {
             //encrypts the provided password
             if (entity.getPassword() != null && !entity.getPassword().isEmpty()) {
-                String encrypted_pwd = PasswordGenerator.encrypt_SHA256(
+                String encrypted_pwd = passwordGenerator.encrypt_SHA256(
                         entity.getPassword());
                 e.setPassword(encrypted_pwd);
             }
