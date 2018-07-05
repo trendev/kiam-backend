@@ -74,10 +74,10 @@ public class ExportDataService {
                 getProEmail(sec, professional);
 
         LOG.log(Level.INFO, "Exporting data of Professional " + email
-                + "into a json file");
+                + " into a json file");
 
         CompletableFuture
-                .supplyAsync(() -> jsonProExport.exportAsFile(email))
+                .supplyAsync(() -> jsonProExport.export(email, true))
                 .thenApply(result -> ar.resume(result))
                 .exceptionally(e -> ar.resume(exceptionHandler.handle(e)));
     }
