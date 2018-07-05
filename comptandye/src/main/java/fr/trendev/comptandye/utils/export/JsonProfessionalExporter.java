@@ -11,6 +11,8 @@ import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.utils.EncryptionUtils;
 import fr.trendev.comptandye.utils.producers.qualifiers.ProfessionalExport;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -42,7 +44,7 @@ public class JsonProfessionalExporter {
                     .orElse(Response.status(Response.Status.NOT_FOUND)
                             .entity(
                                     Json.createObjectBuilder()
-                                            .add("errmsg", "Professional "
+                                            .add("error", "Professional "
                                                     + email
                                                     + " not found")
                                             .build()
@@ -65,6 +67,35 @@ public class JsonProfessionalExporter {
             throw new WebApplicationException(
                     "Error building the Response exporting data of Professional "
                     + pro.getEmail(), ex);
+        }
+    }
+
+    public Response exportAsFile(String email) {
+        try {
+            return Optional.ofNullable(professionalFacade.find(email))
+                    .map(pro -> {
+                        Response.ResponseBuilder response = Response.ok(
+                                stringify(pro));
+                        String date = new SimpleDateFormat("yyyyMMdd")
+                                .format(new Date());
+                        response.header("Content-Disposition",
+                                "attachment; filename=\"backup_" + date + "_"
+                                + pro.
+                                        getUuid()
+                                + ".json\"");
+                        return response.build();
+                    })
+                    .orElse(Response.status(Response.Status.NOT_FOUND)
+                            .entity(
+                                    Json.createObjectBuilder()
+                                            .add("error", "Professional "
+                                                    + email
+                                                    + " not found")
+                                            .build()
+                            ).build());
+        } catch (Exception ex) {
+            throw new WebApplicationException(
+                    "Error exporting data of Professional " + email, ex);
         }
     }
 
