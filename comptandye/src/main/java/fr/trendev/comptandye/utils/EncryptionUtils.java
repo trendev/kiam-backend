@@ -37,13 +37,21 @@ public class EncryptionUtils {
     }
 
     public String encrypt_SHA256_base64(String pwd) {
+        return this.encrypt_SHA_base64(pwd, "SHA-256");
+    }
+
+    public String encrypt_SHA512_base64(String pwd) {
+        return this.encrypt_SHA_base64(pwd, "SHA-512");
+    }
+
+    private String encrypt_SHA_base64(String pwd, String algo) {
         try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            MessageDigest md = MessageDigest.getInstance(algo);
             byte[] hash = md.digest(pwd.getBytes(StandardCharsets.UTF_8));
             return Base64.getEncoder().encodeToString(hash);
         } catch (NoSuchAlgorithmException ex) {
             throw new IllegalArgumentException(
-                    "SHA-256 is not a supported algorithm", ex);
+                    algo + " is not a supported algorithm", ex);
         }
     }
 }
