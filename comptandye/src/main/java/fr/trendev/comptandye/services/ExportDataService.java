@@ -63,4 +63,23 @@ public class ExportDataService {
                 .exceptionally(e -> ar.resume(exceptionHandler.handle(e)));
     }
 
+    @GET
+    @Path("jsonfile")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_OCTET_STREAM})
+    public void exportAsJsonFile(@Suspended final AsyncResponse ar,
+            @Context SecurityContext sec,
+            @QueryParam("professional") String professional) {
+
+        String email = authenticationSecurityUtils.
+                getProEmail(sec, professional);
+
+        LOG.log(Level.INFO, "Exporting data of Professional " + email
+                + "into a json file");
+
+        CompletableFuture
+                .supplyAsync(() -> jsonProExport.exportAsFile(email))
+                .thenApply(result -> ar.resume(result))
+                .exceptionally(e -> ar.resume(exceptionHandler.handle(e)));
+    }
+
 }
