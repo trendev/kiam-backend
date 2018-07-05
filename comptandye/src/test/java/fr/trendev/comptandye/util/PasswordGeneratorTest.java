@@ -21,7 +21,10 @@ import org.junit.Test;
  */
 public class PasswordGeneratorTest {
 
+    private PasswordGenerator passwordGenerator;
+
     public PasswordGeneratorTest() {
+        passwordGenerator = new PasswordGenerator();
     }
 
     @BeforeClass
@@ -53,8 +56,8 @@ public class PasswordGeneratorTest {
 
         assert spwd.isEmpty();
 
-        IntStream.range(0, n).forEach(i -> spwd.add(PasswordGenerator.
-                encrypt_SHA256(PasswordGenerator.
+        IntStream.range(0, n).forEach(i -> spwd.add(passwordGenerator.
+                encrypt_SHA256(passwordGenerator.
                         autoGenerate(size))));
 
         assert !spwd.isEmpty();
@@ -104,7 +107,7 @@ public class PasswordGeneratorTest {
 
     private void assertPasswordEncryption(String pwd, String pwd_sha256,
             String base) {
-        String encoded = PasswordGenerator.encrypt_SHA256(pwd, base);
+        String encoded = passwordGenerator.encrypt_SHA256(pwd, base);
         System.out.println("\"" + pwd + "\" ==> " + encoded);
         assert encoded.equals(pwd_sha256);
 
