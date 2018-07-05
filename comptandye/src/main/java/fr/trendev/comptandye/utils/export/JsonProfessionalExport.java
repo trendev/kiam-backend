@@ -7,15 +7,9 @@ package fr.trendev.comptandye.utils.export;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.trendev.comptandye.entities.Product;
-import fr.trendev.comptandye.entities.ProductRecord;
 import fr.trendev.comptandye.entities.Professional;
-import fr.trendev.comptandye.entities.Sale;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
-import fr.trendev.comptandye.utils.mixins.ProductMixin;
-import fr.trendev.comptandye.utils.mixins.ProductRecordMixin;
-import fr.trendev.comptandye.utils.mixins.ProfessionalMixin;
-import fr.trendev.comptandye.utils.mixins.SaleMixin;
+import fr.trendev.comptandye.utils.producers.qualifiers.ProfessionalExport;
 import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -34,6 +28,7 @@ public class JsonProfessionalExport {
     private ProfessionalFacade professionalFacade;
 
     @Inject
+    @ProfessionalExport
     private ObjectMapper om;
 
     public Response export(String email) {
@@ -57,12 +52,7 @@ public class JsonProfessionalExport {
     private String stringify(Professional pro) {
 
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.addMixIn(Professional.class, ProfessionalMixin.class);
-            objectMapper.addMixIn(Product.class, ProductMixin.class);
-            objectMapper.addMixIn(ProductRecord.class, ProductRecordMixin.class);
-            objectMapper.addMixIn(Sale.class, SaleMixin.class);
-            String json = objectMapper.writerWithDefaultPrettyPrinter().
+            String json = om.writerWithDefaultPrettyPrinter().
                     writeValueAsString(pro);
             System.out.println(json);
             return json;
