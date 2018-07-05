@@ -29,7 +29,7 @@ import javax.ws.rs.core.SecurityContext;
  * @author jsie
  */
 @Stateless
-@Path("ExportData")
+@Path("Data/Export")
 @RolesAllowed({"Administrator", "Professional"})
 public class ExportDataService {
 
@@ -46,7 +46,7 @@ public class ExportDataService {
     protected ExceptionHandler exceptionHandler;
 
     @GET
-    @Path("JSON")
+    @Path("json")
     @Produces(MediaType.APPLICATION_JSON)
     public void exportAsJson(@Suspended final AsyncResponse ar,
             @Context SecurityContext sec,
