@@ -34,7 +34,7 @@ public class ObjectMapperProducer {
 
     @Produces
     @ProfessionalExport
-    public ObjectMapper getPEObjectMapper() {
+    public ObjectMapper getProfessionalExportObjectMapper() {
         ObjectMapper om = new ObjectMapper();
         om.addMixIn(Professional.class, ProfessionalMixin.class);
         om.addMixIn(Product.class, ProductMixin.class);
