@@ -14,6 +14,8 @@ import fr.trendev.comptandye.utils.producers.qualifiers.ProfessionalExport;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.Json;
@@ -26,6 +28,9 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 public class JsonProfessionalExporter {
+
+    private final Logger LOG = Logger.getLogger(JsonProfessionalExporter.class.
+            getName());
 
     @Inject
     private ProfessionalFacade professionalFacade;
@@ -47,6 +52,8 @@ public class JsonProfessionalExporter {
 
         try {
             String json = om.writeValueAsString(pro);
+            LOG.log(Level.INFO, "Graph of " + pro.getEmail()
+                    + " : successfully FLATTENED");
             return om.writerWithDefaultPrettyPrinter().
                     writeValueAsString(new JsonProfessionalExport(pro,
                             encryptionUtils, json));
@@ -71,7 +78,7 @@ public class JsonProfessionalExporter {
         } else {
             Response.ResponseBuilder response = Response.ok(
                     stringify(pro));
-            String date = new SimpleDateFormat("yyyyMMdd")
+            String date = new SimpleDateFormat("yyyyMMdd-HHmm")
                     .format(new Date());
             response.header("Content-Disposition",
                     "attachment; filename=\"export_" + date
