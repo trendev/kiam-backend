@@ -7,7 +7,6 @@ package fr.trendev.comptandye.utils.export;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.utils.EncryptionUtils;
@@ -57,19 +56,10 @@ public class JsonProfessionalExporter {
     private String stringify(Professional pro) {
 
         try {
-
-            long timestamp = System.currentTimeMillis();
-            String proJson = om.writeValueAsString(pro);
-            ObjectNode objnode = om.createObjectNode();
-            objnode.put("timestamp", timestamp);
-            objnode.put("checksum", encryptionUtils.encrypt_SHA512_base64(
-                    proJson + timestamp));
-            objnode.putPOJO("professional_details", pro);
-
-            String json = om.writerWithDefaultPrettyPrinter().
-                    writeValueAsString(objnode);
-            System.out.println((System.currentTimeMillis() - timestamp) + "ms");
-            return json;
+            String json = om.writeValueAsString(pro);
+            return om.writerWithDefaultPrettyPrinter().
+                    writeValueAsString(new JsonProfessionalExport(pro,
+                            encryptionUtils, json));
 
         } catch (JsonProcessingException ex) {
             throw new WebApplicationException(

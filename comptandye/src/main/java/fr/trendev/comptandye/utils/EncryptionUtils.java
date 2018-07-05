@@ -18,10 +18,10 @@ import javax.ejb.Singleton;
 @Singleton
 public class EncryptionUtils {
 
-    public String encrypt_SHA256_base16(String pwd) {
+    public String encrypt_SHA256_base16(String word) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] bytes = md.digest(pwd.getBytes());
+            byte[] bytes = md.digest(word.getBytes());
 
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < bytes.length; i++) {
@@ -36,18 +36,18 @@ public class EncryptionUtils {
 
     }
 
-    public String encrypt_SHA256_base64(String pwd) {
-        return this.encrypt_SHA_base64(pwd, "SHA-256");
+    public String encrypt_SHA256_base64(String word) {
+        return this.encrypt_SHA_base64(word, "SHA-256");
     }
 
-    public String encrypt_SHA512_base64(String pwd) {
-        return this.encrypt_SHA_base64(pwd, "SHA-512");
+    public String encrypt_SHA512_base64(String word) {
+        return this.encrypt_SHA_base64(word, "SHA-512");
     }
 
-    private String encrypt_SHA_base64(String pwd, String algo) {
+    private String encrypt_SHA_base64(String word, String algo) {
         try {
             MessageDigest md = MessageDigest.getInstance(algo);
-            byte[] hash = md.digest(pwd.getBytes(StandardCharsets.UTF_8));
+            byte[] hash = md.digest(word.getBytes(StandardCharsets.UTF_8));
             return Base64.getEncoder().encodeToString(hash);
         } catch (NoSuchAlgorithmException ex) {
             throw new IllegalArgumentException(
