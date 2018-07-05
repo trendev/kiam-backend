@@ -65,7 +65,7 @@ public class ExportDataService {
 
     @GET
     @Path("jsonfile")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_OCTET_STREAM})
+    @Produces({MediaType.APPLICATION_OCTET_STREAM, MediaType.APPLICATION_JSON,})
     public void exportAsJsonFile(@Suspended final AsyncResponse ar,
             @Context SecurityContext sec,
             @QueryParam("professional") String professional) {
