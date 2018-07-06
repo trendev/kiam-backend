@@ -62,23 +62,37 @@ public class JsonProfessionalBackup {
         this.professional = professional;
     }
 
+    /**
+     * Inits the checksum control (with salt)
+     *
+     * @param encryptionUtils the encryption utils
+     * @param json the flattened graph
+     */
     public void initChecksum(EncryptionUtils encryptionUtils,
             String json) {
         this.checksum = encryptionUtils.encrypt_SHA512_base64(
                 json + getSalt());
         LOG.
-                log(Level.INFO, "Checksum initialized with value : "
-                        + this.checksum);
+                log(Level.INFO, "Checksum initialized with value : {0}",
+                        this.checksum);
     }
 
+    /**
+     * Control if the Backup is valid or not, comparing the provided checksum
+     * with the computed one.
+     *
+     * @param om the ObjectMapper (should be a custom ProfessionalExport)
+     * @param encryptionUtils the encryption utils
+     * @return true if the backup is valid or false if not
+     */
     public boolean isValid(ObjectMapper om, EncryptionUtils encryptionUtils) {
         try {
-            LOG.log(Level.INFO, "Validating backup of Professional "
-                    + professional.getEmail());
+            LOG.log(Level.INFO, "Validating backup of Professional {0}",
+                    professional.getEmail());
             String json = om.writeValueAsString(this.professional);
             String checksum = encryptionUtils.encrypt_SHA512_base64(
                     json + getSalt());
-            LOG.log(Level.INFO, "Checksum should be : " + checksum);
+            LOG.log(Level.INFO, "Checksum should be : {0}", checksum);
             return this.checksum.equals(checksum);
         } catch (Exception ex) {
             throw new WebApplicationException(
