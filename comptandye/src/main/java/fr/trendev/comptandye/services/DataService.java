@@ -36,22 +36,22 @@ import javax.ws.rs.core.SecurityContext;
 @Path("Data")
 @RolesAllowed({"Administrator", "Professional"})
 public class DataService {
-    
+
     private final Logger LOG = Logger.getLogger(DataService.class.
             getName());
-    
+
     @Inject
     private JsonProfessionalExporter jsonProExport;
-    
+
     @Inject
     private JsonProfessionalImporter jsonProImport;
-    
+
     @Inject
     private AuthenticationSecurityUtils authenticationSecurityUtils;
-    
+
     @Inject
     protected ExceptionHandler exceptionHandler;
-    
+
     @GET
     @Path("export/json")
     @Produces(MediaType.APPLICATION_JSON)
@@ -59,13 +59,13 @@ public class DataService {
             @Context SecurityContext sec,
             @QueryParam("f") boolean asFile,
             @QueryParam("professional") String professional) {
-        
+
         String email = authenticationSecurityUtils.
                 getProEmail(sec, professional);
-        
+
         LOG.log(Level.INFO, "Exporting data of Professional " + email
                 + (asFile ? " into a json file" : ""));
-        
+
         CompletableFuture
                 .supplyAsync(() -> jsonProExport.export(email, asFile))
                 .thenApply(result -> ar.resume(result))
@@ -86,18 +86,18 @@ public class DataService {
     public void controlJson(@Suspended final AsyncResponse ar,
             @Context SecurityContext sec,
             InputStream is) {
-        
-        LOG.log(Level.WARNING, "Receiving a backup...");
-        
+
+        LOG.log(Level.INFO, "Receiving a backup...");
+
         authenticationSecurityUtils.getProfessionalEmailFromSecurityContext(sec)
                 .ifPresent(email -> LOG.log(Level.INFO, email
                         + " is controlling a backup..."));
-        
+
         CompletableFuture
-                .supplyAsync(() -> jsonProImport.builResponse(is))
+                .supplyAsync(() -> jsonProImport.control(is))
                 .thenApply(result -> ar.resume(result))
                 .exceptionally(e -> ar.resume(exceptionHandler.handle(e)));
-        
+
     }
-    
+
 }

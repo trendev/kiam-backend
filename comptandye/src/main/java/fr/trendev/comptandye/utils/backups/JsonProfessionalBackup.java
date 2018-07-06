@@ -92,8 +92,17 @@ public class JsonProfessionalBackup {
             String json = om.writeValueAsString(this.professional);
             String checksum = encryptionUtils.encrypt_SHA512_base64(
                     json + getSalt());
-            LOG.log(Level.INFO, "Checksum should be : {0}", checksum);
-            return this.checksum.equals(checksum);
+
+            boolean result = this.checksum.equals(checksum);
+            if (!result) {
+                LOG.log(Level.WARNING,
+                        "*** CHECKSUM MISMATCH ***\nBACKUP Checksum : {0}\nCOMPUTED Checksum : {1}",
+                        new Object[]{this.checksum,
+                            checksum});
+            } else {
+                LOG.log(Level.INFO, "VALID CHECKSUM");
+            }
+            return result;
         } catch (Exception ex) {
             throw new WebApplicationException(
                     "Error validating a backup of Professional "
