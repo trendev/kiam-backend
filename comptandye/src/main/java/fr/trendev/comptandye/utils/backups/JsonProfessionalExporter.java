@@ -45,7 +45,7 @@ public class JsonProfessionalExporter {
     /**
      * Stringify a professional into a JsonProfessionalBackup.
      *
-     * @param pro the professsional to export
+     * @param pro the professional to export
      * @return the stringified JsonProfessionalBackup
      */
     protected String stringify(Professional pro) {
@@ -54,9 +54,11 @@ public class JsonProfessionalExporter {
             String json = om.writeValueAsString(pro);
             LOG.log(Level.INFO, "Graph of " + pro.getEmail()
                     + " : successfully FLATTENED");
+
+            JsonProfessionalBackup jpb = new JsonProfessionalBackup(pro);
+            jpb.initChecksum(encryptionUtils, json);
             return om.writerWithDefaultPrettyPrinter().
-                    writeValueAsString(new JsonProfessionalBackup(pro,
-                            encryptionUtils, json));
+                    writeValueAsString(jpb);
 
         } catch (JsonProcessingException ex) {
             throw new WebApplicationException(
