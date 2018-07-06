@@ -6,8 +6,8 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.utils.AuthenticationSecurityUtils;
+import fr.trendev.comptandye.utils.backups.JsonProfessionalExporter;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHandler;
-import fr.trendev.comptandye.utils.export.JsonProfessionalExporter;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,11 +29,11 @@ import javax.ws.rs.core.SecurityContext;
  * @author jsie
  */
 @Stateless
-@Path("Data/Export")
+@Path("Data")
 @RolesAllowed({"Administrator", "Professional"})
-public class ExportDataService {
+public class DataService {
 
-    private final Logger LOG = Logger.getLogger(ExportDataService.class.
+    private final Logger LOG = Logger.getLogger(DataService.class.
             getName());
 
     @Inject
@@ -46,7 +46,7 @@ public class ExportDataService {
     protected ExceptionHandler exceptionHandler;
 
     @GET
-    @Path("json")
+    @Path("export/json")
     @Produces(MediaType.APPLICATION_JSON)
     public void exportAsJson(@Suspended final AsyncResponse ar,
             @Context SecurityContext sec,

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils.export;
+package fr.trendev.comptandye.utils.backups;
 
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.utils.EncryptionSalt;
@@ -13,16 +13,16 @@ import fr.trendev.comptandye.utils.EncryptionUtils;
  *
  * @author jsie
  */
-public class JsonProfessionalExport {
+public class JsonProfessionalBackup {
 
     private long timestamp;
     private String checksum;
     private Professional professional;
 
-    public JsonProfessionalExport() {
+    public JsonProfessionalBackup() {
     }
 
-    public JsonProfessionalExport(Professional pro,
+    public JsonProfessionalBackup(Professional pro,
             EncryptionUtils encryptionUtils,
             String json) {
         this.timestamp = System.currentTimeMillis();

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils.export;
+package fr.trendev.comptandye.utils.backups;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,10 +43,10 @@ public class JsonProfessionalExporter {
     private EncryptionUtils encryptionUtils;
 
     /**
-     * Stringify a professional into a JsonProfessionalExport.
+     * Stringify a professional into a JsonProfessionalBackup.
      *
      * @param pro the professsional to export
-     * @return the stringified JsonProfessionalExport
+     * @return the stringified JsonProfessionalBackup
      */
     protected String stringify(Professional pro) {
 
@@ -55,7 +55,7 @@ public class JsonProfessionalExporter {
             LOG.log(Level.INFO, "Graph of " + pro.getEmail()
                     + " : successfully FLATTENED");
             return om.writerWithDefaultPrettyPrinter().
-                    writeValueAsString(new JsonProfessionalExport(pro,
+                    writeValueAsString(new JsonProfessionalBackup(pro,
                             encryptionUtils, json));
 
         } catch (JsonProcessingException ex) {
