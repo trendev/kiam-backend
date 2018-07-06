@@ -26,8 +26,9 @@ public class JsonProfessionalExport {
             EncryptionUtils encryptionUtils,
             String json) {
         this.timestamp = System.currentTimeMillis();
+        String salt = pro.getEmail() + EncryptionSalt.PRAESTAT + timestamp;
         this.checksum = encryptionUtils.encrypt_SHA512_base64(
-                json + EncryptionSalt.PRAESTAT + timestamp);
+                json + salt);
         this.professional = pro;
     }
 
