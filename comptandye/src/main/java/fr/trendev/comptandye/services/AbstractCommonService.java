@@ -25,7 +25,9 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Resource;
 import javax.ejb.EJBTransactionRolledbackException;
+import javax.enterprise.concurrent.ManagedExecutorService;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.persistence.RollbackException;
@@ -52,6 +54,9 @@ public abstract class AbstractCommonService<E, P> {
 
     @Inject
     protected ExceptionHandler exceptionHandler;
+
+    @Resource
+    private ManagedExecutorService managedExecutorService;
 
     private final Class<E> entityClass;
 
@@ -80,7 +85,7 @@ public abstract class AbstractCommonService<E, P> {
         getLogger().log(Level.INFO, "Providing the {0} list", entityClass.
                 getSimpleName());
         CompletableFuture
-                .supplyAsync(() -> this.findAll())
+                .supplyAsync(() -> this.findAll(), managedExecutorService)
                 .thenApply(result -> ar.resume(result))
                 .exceptionally(e -> ar.resume(exceptionHandler.handle(e)));
     }
@@ -177,7 +182,7 @@ public abstract class AbstractCommonService<E, P> {
             Class<R> elementClass) {
         CompletableFuture
                 .supplyAsync(() -> this.provideRelation(pk, getFunction,
-                        elementClass))
+                        elementClass), managedExecutorService)
                 .thenApply(result -> ar.resume(result))
                 .exceptionally(e -> ar.resume(exceptionHandler.handle(e)));
     }
