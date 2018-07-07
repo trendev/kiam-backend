@@ -27,8 +27,10 @@ import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Resource;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
+import javax.enterprise.concurrent.ManagedExecutorService;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -70,6 +72,9 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
 
     @Inject
     VatRatesFacade vatRatesFacade;
+
+    @Resource
+    ManagedExecutorService managedExecutorService;
 
     private final Logger LOG = Logger.getLogger(
             ProfessionalService.class.
@@ -274,25 +279,32 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     @RolesAllowed({"Administrator"})
     @Path("{email}")
     @DELETE
-    public Response delete(@PathParam("email") String email) {
+
+    public void delete(@Suspended AsyncResponse ar,
+            @PathParam("email") String email) {
         LOG.log(Level.INFO, "Deleting Professional {0}", email);
 
-        return super.delete(email, e -> {
+        managedExecutorService.submit(() -> ar.resume(
+                super.delete(email, e -> {
 
-            e.getUserGroups().forEach(grp -> {
-                grp.getUserAccounts().remove(e);
-                LOG.log(Level.INFO,
-                        "Professional {0} removed from UserGroup {1}",
-                        new Object[]{email, grp.getName()});
-            });
+                    e.getUserGroups().forEach(grp -> {
+                        grp.getUserAccounts().remove(e);
+                        LOG.log(Level.INFO,
+                                "Professional {0} removed from UserGroup {1}",
+                                new Object[]{email, grp.getName()});
+                    });
 
-            e.getIndividuals().forEach(i -> {
-                i.getProfessionals().remove(e);
-                LOG.log(Level.INFO,
-                        "Professional {0} and Individual {1} association deleted",
-                        new Object[]{email, i.getEmail()});
-            });
-        });
+                    e.getIndividuals().forEach(i -> {
+                        i.getProfessionals().remove(e);
+                        LOG.log(Level.INFO,
+                                "Professional {0} and Individual {1} association deleted",
+                                new Object[]{email, i.getEmail()});
+                    });
+
+                    getFacade().flush();
+                })
+        ));
+
     }
 
     @RolesAllowed({"Administrator"})

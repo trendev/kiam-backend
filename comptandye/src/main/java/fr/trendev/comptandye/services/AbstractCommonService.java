@@ -46,15 +46,15 @@ public abstract class AbstractCommonService<E, P> {
      */
     @Inject
     private ObjectMapper om;
-    
+
     @Inject
     private AuthenticationSecurityUtils authenticationSecurityUtils;
-    
+
     @Inject
     protected ExceptionHandler exceptionHandler;
-    
+
     private final Class<E> entityClass;
-    
+
     public AbstractCommonService(Class<E> entityClass) {
         this.entityClass = entityClass;
     }
@@ -84,19 +84,19 @@ public abstract class AbstractCommonService<E, P> {
                 .thenApply(result -> ar.resume(result))
                 .exceptionally(e -> ar.resume(exceptionHandler.handle(e)));
     }
-    
+
     private Response findAll() {
         try {
             List<E> list = getFacade().findAll();
             getLogger().log(Level.INFO, "{0} list size = {1}", new Object[]{
                 entityClass.getSimpleName(), list.
                 size()});
-            
+
             return Response.status(Response.Status.OK)
                     .entity(list).
                     build();
         } catch (Exception ex) {
-            
+
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs providing " + entityClass.getSimpleName()
                     + " list");
@@ -104,18 +104,18 @@ public abstract class AbstractCommonService<E, P> {
             throw new WebApplicationException(errmsg, ex);
         }
     }
-    
+
     protected Response count() {
         try {
             Long count = getFacade().count();
             getLogger().log(Level.INFO, "Total Count of {0} = {1}",
                     new Object[]{entityClass.getSimpleName(), count});
-            
+
             return Response.status(Response.Status.OK)
                     .entity(count).
                     build();
         } catch (Exception ex) {
-            
+
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs providing " + entityClass.getSimpleName()
                     + " count");
@@ -151,7 +151,7 @@ public abstract class AbstractCommonService<E, P> {
                                     build()).
                             build());
         } catch (Exception ex) {
-            
+
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs providing " + entityClass.getSimpleName()
                     + " "
@@ -181,7 +181,7 @@ public abstract class AbstractCommonService<E, P> {
                 .thenApply(result -> ar.resume(result))
                 .exceptionally(e -> ar.resume(exceptionHandler.handle(e)));
     }
-    
+
     private <R> Response provideRelation(
             P pk,
             Function<E, Collection<R>> getFunction,
@@ -204,7 +204,7 @@ public abstract class AbstractCommonService<E, P> {
                                     build()).
                             build());
         } catch (Exception ex) {
-            
+
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs providing a relationship of "
                     + entityClass.getSimpleName()
@@ -228,9 +228,9 @@ public abstract class AbstractCommonService<E, P> {
      * @return the persisted entity
      */
     protected Response post(E entity, Consumer<E> initAction) {
-        
+
         String jsonString = this.stringify(entity);
-        
+
         try {
             initAction.accept(entity);
             getFacade().create(entity);
@@ -248,7 +248,7 @@ public abstract class AbstractCommonService<E, P> {
                 EJBTransactionRolledbackException ex) {
             throw ex;
         } catch (Exception ex) {
-            
+
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs creating "
                     + entityClass.getSimpleName()
@@ -310,12 +310,12 @@ public abstract class AbstractCommonService<E, P> {
                                     + " is not found !").
                                     build()).
                             build());
-            
+
         } catch (InvalidDeliveryDateException | RollbackException |
                 EJBTransactionRolledbackException ex) {
             throw ex;
         } catch (Exception ex) {
-            
+
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs in subroutine post() creating "
                     + entityClass.getSimpleName() + " "
@@ -323,7 +323,7 @@ public abstract class AbstractCommonService<E, P> {
             getLogger().log(Level.WARNING, errmsg, ex);
             throw new WebApplicationException(errmsg, ex);
         }
-        
+
     }
 
     /**
@@ -356,7 +356,7 @@ public abstract class AbstractCommonService<E, P> {
         } catch (EJBTransactionRolledbackException | RollbackException ex) {
             throw ex;
         } catch (Exception ex) {
-            
+
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs updating "
                     + entityClass.getSimpleName()
@@ -381,6 +381,7 @@ public abstract class AbstractCommonService<E, P> {
             return Optional.ofNullable(getFacade().find(pk))
                     .map(result -> {
                         prepareDelete.accept(result);
+                        //commit all previous modifications
                         getFacade().flush();
                         getFacade().remove(result);
                         getLogger().log(Level.INFO, entityClass.getSimpleName()
@@ -395,7 +396,7 @@ public abstract class AbstractCommonService<E, P> {
                                     build()).
                             build());
         } catch (Exception ex) {
-            
+
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs deleting "
                     + entityClass.getSimpleName()
@@ -452,7 +453,7 @@ public abstract class AbstractCommonService<E, P> {
                                                 associationFacade.prettyPrintPK(
                                                         associationPk),
                                                 result});
-                                    
+
                                     if (!result) {
                                         String errmsg = "No existing association between "
                                                 + entityClass.
@@ -510,7 +511,7 @@ public abstract class AbstractCommonService<E, P> {
         } catch (EJBTransactionRolledbackException | RollbackException ex) {
             throw ex;
         } catch (Exception ex) {
-            
+
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs " + (option.equals(
                             AssociationManagementEnum.INSERT) ? "associating" : "unassociated")
