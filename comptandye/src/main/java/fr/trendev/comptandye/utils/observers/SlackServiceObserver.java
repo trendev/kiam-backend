@@ -53,6 +53,12 @@ public class SlackServiceObserver {
         LOG.info("SlackServiceObserver initialized");
     }
 
+    /**
+     * Observes if a new password is created for the demo account and send it to
+     * slack channel (authentication)
+     *
+     * @param object the content of the slack message
+     */
     public void observeDemoAccountNewPassword(
             @Observes(during = TransactionPhase.AFTER_SUCCESS)
             @NewPasswordDemoAccount JsonObject object) {
@@ -62,6 +68,8 @@ public class SlackServiceObserver {
                 throw new IllegalStateException(
                         "Slack message error. Status = " + response.getStatus());
             }
+
+            // controls if the request is ok
             if (response.hasEntity()) {
                 String output = response.readEntity(String.class);
                 JsonNode node = om.readTree(output).get("ok");
@@ -84,6 +92,12 @@ public class SlackServiceObserver {
 
     }
 
+    /**
+     * Sends the message in the slack channel
+     *
+     * @param object the slack message
+     * @return the response (usually HTTP 200 OK)
+     */
     public Response postMessage(JsonObject object) {
         return client.target(SLACK_URL)
                 .request(MediaType.APPLICATION_JSON)
@@ -91,6 +105,12 @@ public class SlackServiceObserver {
                 .post(Entity.entity(object, MediaType.APPLICATION_JSON));
     }
 
+    /**
+     * Builds the content of the slack message from the observed event
+     *
+     * @param object the observed event
+     * @return the slack message
+     */
     private JsonObject buildPostMessage(JsonObject object) {
         return Json.createObjectBuilder()
                 .add("channel", CHANNEL)

@@ -53,6 +53,10 @@ public class ChangeDemoAccountPasswordBean {
         LOG.info("ChangeDemoAccountPasswordBean initialized");
     }
 
+    /**
+     * Renew Demo Account password every Monday at 8 am and send the password on
+     * Slack channel
+     */
     @Schedules({
         @Schedule(dayOfWeek = "Mon", hour = "8"/*, minute = "30", second = "0"*/,
                 persistent = false)
@@ -86,6 +90,12 @@ public class ChangeDemoAccountPasswordBean {
 
     }
 
+    /**
+     * Creates the content of the slack message with the new password
+     *
+     * @param password the new password
+     * @return an object which will be embedded in the slack message
+     */
     private JsonObject buildText(String password) {
         return Json.createObjectBuilder()
                 .add("pretext",
