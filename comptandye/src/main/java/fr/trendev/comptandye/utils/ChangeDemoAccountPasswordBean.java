@@ -6,15 +6,19 @@
 package fr.trendev.comptandye.utils;
 
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
+import fr.trendev.comptandye.utils.observers.qualifiers.NewPasswordDemoAccount;
 import java.util.Optional;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.Schedule;
+import javax.ejb.Schedules;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
+import javax.json.Json;
+import javax.json.JsonObject;
 
 /**
  *
@@ -30,21 +34,16 @@ public class ChangeDemoAccountPasswordBean {
     @Inject
     private PasswordGenerator passwordGenerator;
 
+    @Inject
+    @NewPasswordDemoAccount
+    private Event<JsonObject> newPasswordEvent;
+
     private final Logger LOG;
 
     private final String DEMO_ACCOUNT_EMAIL;
 
-    private final String SLACK_URL;
-
-    private final String TOKEN;
-
-    private final Client client;
-
     public ChangeDemoAccountPasswordBean() {
         this.DEMO_ACCOUNT_EMAIL = "pro@domain.com";
-        this.SLACK_URL = "https://slack.com/api/chat.postMessage";
-        this.TOKEN = "xoxa-320251608305-395708530182-394370785636-d227cf997e97f4d4b650e4ed31d48434";
-        this.client = ClientBuilder.newClient();
         this.LOG = Logger.getLogger(ChangeDemoAccountPasswordBean.class.
                 getName());
     }
@@ -54,22 +53,46 @@ public class ChangeDemoAccountPasswordBean {
         LOG.info("ChangeDemoAccountPasswordBean initialized");
     }
 
-    @Schedule(second = "*/10", minute = "*", hour = "*", persistent = false)
+    @Schedules({
+        @Schedule(dayOfWeek = "Mon", hour = "8"/*, minute = "30", second = "0"*/,
+                persistent = false)
+    //       ,
+//        @Schedule(second = "*/20", minute = "*", hour = "*", persistent = false)
+    })
     public void atSchedule() {
+        try {
+            Optional.ofNullable(professionalFacade.find(DEMO_ACCOUNT_EMAIL))
+                    .ifPresent(pro -> {
+                        String password = passwordGenerator.autoGenerate();
 
-        Optional.ofNullable(professionalFacade.find(DEMO_ACCOUNT_EMAIL))
-                .ifPresent(pro -> {
-                    String password = passwordGenerator.autoGenerate();
+                        LOG.info("New Password generated for Demo Account "
+                                + DEMO_ACCOUNT_EMAIL);
 
-                    LOG.info("New Password generated for Demo Account "
-                            + DEMO_ACCOUNT_EMAIL);
+                        pro.setPassword(passwordGenerator.encrypt_SHA256(
+                                password));
 
-                    pro.setPassword(passwordGenerator.encrypt_SHA256(password));
+                        LOG.info("New encrypted password for Demo Account "
+                                + DEMO_ACCOUNT_EMAIL + " has been saved");
 
-                });
+                        newPasswordEvent.fire(buildText(password));
 
-        LOG.info("New encrypted password for Demo Account "
-                + DEMO_ACCOUNT_EMAIL + " has been saved");
+                    });
+
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE,
+                    "Error occurs during demo account password renewal",
+                    ex);
+        }
+
+    }
+
+    private JsonObject buildText(String password) {
+        return Json.createObjectBuilder()
+                .add("pretext",
+                        "New password for user `"
+                        + DEMO_ACCOUNT_EMAIL + "`")
+                .add("text", "*" + password + "*")
+                .build();
     }
 
 }
