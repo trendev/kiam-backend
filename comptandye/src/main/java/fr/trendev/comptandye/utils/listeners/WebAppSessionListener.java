@@ -5,7 +5,7 @@
  */
 package fr.trendev.comptandye.utils.listeners;
 
-import fr.trendev.comptandye.beans.ActiveSessionTracker;
+import fr.trendev.comptandye.utils.ActiveSessionTracker;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.logging.Level;

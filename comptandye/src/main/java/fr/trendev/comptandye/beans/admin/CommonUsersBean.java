@@ -5,7 +5,7 @@
  */
 package fr.trendev.comptandye.beans.admin;
 
-import fr.trendev.comptandye.beans.ActiveSessionTracker;
+import fr.trendev.comptandye.utils.ActiveSessionTracker;
 import fr.trendev.comptandye.entities.UserAccount;
 import fr.trendev.comptandye.sessions.UserAccountFacade;
 import java.io.Serializable;

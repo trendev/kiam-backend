@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.beans;
+package fr.trendev.comptandye.utils;
 
 import java.io.UnsupportedEncodingException;
 import javax.annotation.Resource;

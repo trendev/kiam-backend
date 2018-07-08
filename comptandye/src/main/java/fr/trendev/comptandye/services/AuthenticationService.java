@@ -5,7 +5,7 @@
  */
 package fr.trendev.comptandye.services;
 
-import fr.trendev.comptandye.beans.ActiveSessionTracker;
+import fr.trendev.comptandye.utils.ActiveSessionTracker;
 import fr.trendev.comptandye.beans.xsrf.XSRFTokenGenerator;
 import fr.trendev.comptandye.sessions.UserAccountFacade;
 import fr.trendev.comptandye.utils.AuthenticationSecurityUtils;
