@@ -14,7 +14,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.event.Observes;
 import javax.enterprise.event.TransactionPhase;
 import javax.inject.Inject;
-import javax.inject.Singleton;
+import javax.ejb.Singleton;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.ws.rs.client.Client;
