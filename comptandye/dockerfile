@@ -34,6 +34,8 @@ $AS_ADMIN create-jdbc-connection-pool --passwordfile=/opt/pwdfile --allownoncomp
 $AS_ADMIN create-jdbc-resource --passwordfile=/opt/pwdfile --enabled=true --connectionpoolid=mysql_comptandye_master_admin_comptandye_20170328Pool jdbc/MySQLDataSourceComptaNdye && \
 $AS_ADMIN create-auth-realm --passwordfile=/opt/pwdfile --classname com.sun.enterprise.security.auth.realm.jdbc.JDBCRealm --property="jaas-context=jdbcRealm:encoding=Base64:password-column=PASSWORD:datasource-jndi=jdbc/MySQLDataSourceComptaNdye:group-table=USER_ACCOUNT_USER_GROUP:charset=UTF-8:user-table=USER_ACCOUNT:group-name-column=userGroups_NAME:group-table-user-name-column=userAccounts_EMAIL:digest-algorithm=SHA-256:user-name-column=EMAIL" comptandye-security-realm && \
 $AS_ADMIN set configs.config.server-config.security-service.activate-default-principal-to-role-mapping=true --passwordfile=/opt/pwdfile && \
+$AS_ADMIN set configs.config.server-config.admin-service.das-config.dynamic-reload-enabled=false --passwordfile=/opt/pwdfile && \
+# $AS_ADMIN set configs.config.server-config.admin-service.das-config.autodeploy-enabled=false --passwordfile=/opt/pwdfile && \
 $AS_ADMIN delete-jvm-options --passwordfile=/opt/pwdfile -client:-Xmx512m: && \
 $AS_ADMIN create-jvm-options --passwordfile=/opt/pwdfile -server:-Xmx2048m:-Xms2048m:-Dfish.payara.classloading.delegate=false  && \
 $AS_ADMIN restart-domain $DOMAIN
