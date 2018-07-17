@@ -53,7 +53,7 @@ public class XSRFFilter extends ApiFilter {
      *
      * @param request the request to check
      * @param response the expected response or Unauthorized response if the
-     * request is not compliant (block XSFR attacks).
+     * request is not compliant (block XSRF attacks).
      * @param chain the filter chain
      * @throws IOException if an error occurs during the filtering
      * @throws ServletException if an error occurs during the filtering
@@ -68,21 +68,21 @@ public class XSRFFilter extends ApiFilter {
 
         HttpSession session = req.getSession();
 
-        String xxsfrtoken = req.getHeader("X-XSRF-TOKEN");
+        String xxsrftoken = req.getHeader("X-XSRF-TOKEN");
 
         //allows access to no side effects methods
         if (sem.contains(req.getMethod())) {
-            if (xxsfrtoken != null && !xxsfrtoken.isEmpty()) {
+            if (xxsrftoken != null && !xxsrftoken.isEmpty()) {
                 try {
-                    LOG.log(Level.INFO, "Controlling X-XSFR-TOKEN");
-                    String xsfrtoken = (String) session.getAttribute(
+                    LOG.log(Level.INFO, "Controlling X-XSRF-TOKEN");
+                    String xsrftoken = (String) session.getAttribute(
                             "XSRF-TOKEN");
-                    if (xsfrtoken == null
-                            || xsfrtoken.isEmpty()
-                            || !xsfrtoken.equals(xxsfrtoken)) {
+                    if (xsrftoken == null
+                            || xsrftoken.isEmpty()
+                            || !xsrftoken.equals(xxsrftoken)) {
                         LOG.log(Level.WARNING,
-                                "Unauthorized Access : XSFR-TOKEN={0} ; X-XSFR-TOKEN={1}",
-                                new Object[]{xsfrtoken, xxsfrtoken});
+                                "Unauthorized Access : XSRF-TOKEN={0} ; X-XSRF-TOKEN={1}",
+                                new Object[]{xsrftoken, xxsrftoken});
                         rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
                     } else {
                         chain.doFilter(request, response);
@@ -98,11 +98,11 @@ public class XSRFFilter extends ApiFilter {
                 String origin = req.getHeader("Origin");
                 if (isOriginAllowed(origin)) {
                     LOG.log(Level.INFO,
-                            "No X-XSFR-TOKEN specified in the Header but Origin is trusted !");
+                            "No X-XSRF-TOKEN specified in the Header but Origin is trusted !");
                     chain.doFilter(request, response);
                 } else {
                     LOG.log(Level.WARNING,
-                            "No X-XSFR-TOKEN specified in the Header and Origin [{0}] is not trusted !",
+                            "No X-XSRF-TOKEN specified in the Header and Origin [{0}] is not trusted !",
                             origin);
                     rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
                 }
