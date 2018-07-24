@@ -14,7 +14,7 @@
     "prefer_related_applications": false,
     "icons": [
       {
-        "src": "/dist/favicon.ico",
+        "src": "/favicon.ico",
         "sizes": "16x16 32x32"
       }
     ]
