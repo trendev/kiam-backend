@@ -129,6 +129,8 @@
         <url-pattern>/dist/register/*</url-pattern>
         <url-pattern>/dist/unsupported-user-type</url-pattern>
         <url-pattern>/dist/unsupported-user-type/*</url-pattern>
+        <url-pattern>/dist/welcome</url-pattern>
+        <url-pattern>/dist/welcome/*</url-pattern>
         <url-pattern>/professional</url-pattern>
         <url-pattern>/individual</url-pattern>
         <url-pattern>/login</url-pattern>
@@ -141,6 +143,8 @@
         <url-pattern>/register/*</url-pattern>
         <url-pattern>/unsupported-user-type</url-pattern>
         <url-pattern>/unsupported-user-type/*</url-pattern>
+        <url-pattern>/welcome</url-pattern>
+        <url-pattern>/welcome/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>60</session-timeout>
