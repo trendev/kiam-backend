@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.ejb.DependsOn;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
@@ -30,7 +31,11 @@ import javax.servlet.http.HttpSession;
  */
 @Startup
 @Singleton
+@DependsOn("LoginController")
 public class ActiveSessionTracker {
+
+    @Inject
+    private LoginController loginController;
 
     /**
      * User / Sessions map
@@ -111,6 +116,9 @@ public class ActiveSessionTracker {
         index.put(session.getId(), email);
 
         int count = map.get(email).size();
+        if (count == 1) {
+            loginController.login(email);
+        }
         LOG.log(Level.INFO,
                 "Session {0} added to ActiveSessionTracker. [{1}] has now {2} active session{3}",
                 new Object[]{session.getId(),
@@ -141,7 +149,6 @@ public class ActiveSessionTracker {
      * if email is null.
      */
     public boolean remove(String email, HttpSession session) {
-
         return Optional.ofNullable(map.get(email))
                 .map(s -> {
                     String id = session.getId();
@@ -183,10 +190,13 @@ public class ActiveSessionTracker {
                                     ActiveSessionTracker.class.getSimpleName()});
                     }
 
+                    if (result) {
+                        loginController.logout(email);
+                    }
+
                     return result;
                 })
                 .orElse(false);
-
     }
 
     /**

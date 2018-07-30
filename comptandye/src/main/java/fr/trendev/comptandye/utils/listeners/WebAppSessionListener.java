@@ -24,7 +24,7 @@ public class WebAppSessionListener implements HttpSessionListener,
         HttpSessionIdListener {
 
     @Inject
-    ActiveSessionTracker tracker;
+    private ActiveSessionTracker tracker;
 
     private static final Logger LOG = Logger.getLogger(
             WebAppSessionListener.class.getName());
