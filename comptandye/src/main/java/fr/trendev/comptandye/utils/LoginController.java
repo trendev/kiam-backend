@@ -15,6 +15,7 @@ import javax.json.Json;
 import javax.json.JsonObject;
 
 /**
+ * Controls the logins/logout directly in the active session tracker.
  *
  * @author jsie
  */

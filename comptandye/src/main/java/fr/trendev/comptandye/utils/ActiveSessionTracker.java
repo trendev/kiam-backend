@@ -34,6 +34,9 @@ import javax.servlet.http.HttpSession;
 @DependsOn("LoginController")
 public class ActiveSessionTracker {
 
+    /**
+     * Controls the logins/logout directly in the tracker
+     */
     @Inject
     private LoginController loginController;
 
@@ -117,6 +120,11 @@ public class ActiveSessionTracker {
 
         int count = map.get(email).size();
         if (count == 1) {
+            /**
+             * If there is only one session linked with the user, the user is
+             * connected for the first time. Additional sessions won't be
+             * consider as new login.
+             */
             loginController.login(email);
         }
         LOG.log(Level.INFO,
@@ -184,14 +192,19 @@ public class ActiveSessionTracker {
 
                     if (s.isEmpty()) {
                         map.remove(email);
+
+                        /**
+                         * If there is no session linked with the user, the user
+                         * is definitively disconnected
+                         */
+                        if (result) {
+                            loginController.logout(email);
+                        }
+
                         LOG.log(Level.INFO,
                                 "[{0}] has no active session and is now removed from {1}",
                                 new Object[]{email,
                                     ActiveSessionTracker.class.getSimpleName()});
-                    }
-
-                    if (result) {
-                        loginController.logout(email);
                     }
 
                     return result;
