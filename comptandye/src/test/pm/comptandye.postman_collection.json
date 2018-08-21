@@ -7,7 +7,6 @@
 	"item": [
 		{
 			"name": "Authentication",
-			"description": null,
 			"item": [
 				{
 					"name": "login",
@@ -270,7 +269,6 @@
 		},
 		{
 			"name": "Data",
-			"description": null,
 			"item": [
 				{
 					"name": "export json",
@@ -368,7 +366,6 @@
 		},
 		{
 			"name": "Address",
-			"description": "Manage Addresses.\nRequires Administrator Authorization.",
 			"item": [
 				{
 					"name": "findAll",
@@ -599,6 +596,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "197fef53-1593-4589-901a-fbb7aafb49a9",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -636,11 +634,11 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Manage Addresses.\nRequires Administrator Authorization."
 		},
 		{
 			"name": "Administrator",
-			"description": "Manage Administrators. Requires Administrator Authorization.",
 			"item": [
 				{
 					"name": "findAll",
@@ -1027,11 +1025,11 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Manage Administrators. Requires Administrator Authorization."
 		},
 		{
 			"name": "Business",
-			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -1228,7 +1226,6 @@
 		},
 		{
 			"name": "Category",
-			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -1723,7 +1720,6 @@
 		},
 		{
 			"name": "Client",
-			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -2138,7 +2134,6 @@
 		},
 		{
 			"name": "ClientBill",
-			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -2962,7 +2957,6 @@
 		},
 		{
 			"name": "CollectiveGroup",
-			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -3294,7 +3288,6 @@
 		},
 		{
 			"name": "CollectiveGroupBill",
-			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -3742,7 +3735,6 @@
 		},
 		{
 			"name": "CustomerDetails",
-			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -4022,7 +4014,6 @@
 		},
 		{
 			"name": "ClassicExpense",
-			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -4429,7 +4420,6 @@
 		},
 		{
 			"name": "ExpenseItem",
-			"description": "Manage Addresses.\nRequires Administrator Authorization.",
 			"item": [
 				{
 					"name": "findAll",
@@ -4695,11 +4685,11 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Manage Addresses.\nRequires Administrator Authorization."
 		},
 		{
 			"name": "Individual",
-			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -5333,7 +5323,6 @@
 		},
 		{
 			"name": "IndividualBill",
-			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -5876,7 +5865,6 @@
 		},
 		{
 			"name": "Pack",
-			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -6808,7 +6796,6 @@
 		},
 		{
 			"name": "Payment",
-			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -7060,7 +7047,6 @@
 		},
 		{
 			"name": "PaymentMode",
-			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -7257,7 +7243,6 @@
 		},
 		{
 			"name": "Product",
-			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -7735,7 +7720,6 @@
 		},
 		{
 			"name": "ProductReference",
-			"description": "Manage Addresses.\nRequires Administrator Authorization.",
 			"item": [
 				{
 					"name": "findAll",
@@ -8063,11 +8047,11 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Manage Addresses.\nRequires Administrator Authorization."
 		},
 		{
 			"name": "Professional",
-			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -9048,7 +9032,6 @@
 		},
 		{
 			"name": "PurchaseExpense",
-			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -9501,7 +9484,6 @@
 		},
 		{
 			"name": "PurchasedItem",
-			"description": "Manage Addresses.\nRequires Administrator Authorization.",
 			"item": [
 				{
 					"name": "findAll",
@@ -9930,11 +9912,11 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Manage Addresses.\nRequires Administrator Authorization."
 		},
 		{
 			"name": "PurchasedOffering",
-			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -10273,7 +10255,6 @@
 		},
 		{
 			"name": "ReturnedItem",
-			"description": "Manage Addresses.\nRequires Administrator Authorization.",
 			"item": [
 				{
 					"name": "findAll",
@@ -11086,11 +11067,11 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Manage Addresses.\nRequires Administrator Authorization."
 		},
 		{
 			"name": "Sale",
-			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -11525,7 +11506,6 @@
 		},
 		{
 			"name": "Service",
-			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -11890,7 +11870,6 @@
 		},
 		{
 			"name": "SocialNetworkAccounts",
-			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -12147,7 +12126,6 @@
 		},
 		{
 			"name": "SoldItem",
-			"description": "Manage Addresses.\nRequires Administrator Authorization.",
 			"item": [
 				{
 					"name": "findAll",
@@ -12899,11 +12877,11 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Manage Addresses.\nRequires Administrator Authorization."
 		},
 		{
 			"name": "UsedItem",
-			"description": "Manage Addresses.\nRequires Administrator Authorization.",
 			"item": [
 				{
 					"name": "findAll",
@@ -13255,11 +13233,11 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Manage Addresses.\nRequires Administrator Authorization."
 		},
 		{
 			"name": "UserGroup",
-			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -13512,6 +13490,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "b06d25fd-4a07-443c-a71c-df8c2fba96f5",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -13519,7 +13498,7 @@
 									"",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"Should contain 3 or more elements \"] = jsonData.length >= 3;",
+									"tests[\"Should contain 2 or more elements \"] = jsonData.length >= 2;",
 									"",
 									"function checkAdmin(admin){",
 									"    return admin.email === \"trendevfr@gmail.com\";",
@@ -13560,7 +13539,6 @@
 		},
 		{
 			"name": "VatRates",
-			"description": null,
 			"item": [
 				{
 					"name": "findAll",
@@ -13811,11 +13789,9 @@
 		},
 		{
 			"name": "Notification",
-			"description": null,
 			"item": [
 				{
 					"name": "ThresholdAlert",
-					"description": null,
 					"item": [
 						{
 							"name": "create",
