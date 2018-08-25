@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils;
+package fr.trendev.comptandye.utils.stripe;
 
 import com.stripe.Stripe;
 import javax.annotation.PostConstruct;
