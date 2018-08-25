@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Comptandye</title>
+  <title>comptandye</title>
   <base href="/dist/">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -15,12 +15,16 @@
 
 <body class="mat-app-background">
   <app-root>
-    <p>
-      Comptandye</p>
-    <p>
-      La seule application Cloud pour les Artisans de la Beauté à Domicile...
-    </p>
+    <p>Enfin une application Cloud adaptée pour les Artisans à Domicile...</p>
+    <p>Tu es en freelance, tu travailles à domicile, tu es micro(auto)-entrepreneur et tu souhaites piloter
+      efficacement ton activité ?</p>
+    <p>Bienvenue 😉</p>
   </app-root>
-<script type="text/javascript" src="runtime.826aefe986f9d32a2672.js"></script><script type="text/javascript" src="polyfills.c87810eecca8f5e9c1d3.js"></script><script type="text/javascript" src="main.e42cc61aa7eb4eab5ef6.js"></script></body>
+  <script src="https://js.stripe.com/v3/"></script>
+  <script type="text/javascript">
+    var stripe = Stripe('pk_test_zw5JuBUOmXxIsi55rTtDDQG9');
+    var elements = stripe.elements({locale: 'fr'});
+  </script>
+<script type="text/javascript" src="runtime.4a610dce9eb9c145e8ae.js"></script><script type="text/javascript" src="polyfills.c87810eecca8f5e9c1d3.js"></script><script type="text/javascript" src="main.d55880c326b8b813bf9b.js"></script></body>
 
 </html>
