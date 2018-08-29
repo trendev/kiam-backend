@@ -175,6 +175,10 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
             e.setBillsRefDate(null);
 
             this.checkVatCode(e);
+
+            e.setStripeCustomerId(null);
+            e.setStripeSubscriptionId(null);
+            e.setTos(false);
         });
     }
 
@@ -213,8 +217,8 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
 
     /**
      * Prepares and Updates a Professional. Email, UUID, blocked and
-     * registrationDate fields will be ignored and should not be changed by the
-     * way...
+     * registrationDate and Stripe, TOS fields will be ignored and should not be
+     * changed by the way...
      *
      * @param sec the security context (use if a Professional has initiated the
      * request)

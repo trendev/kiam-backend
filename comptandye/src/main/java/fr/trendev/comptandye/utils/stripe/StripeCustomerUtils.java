@@ -25,7 +25,8 @@ public class StripeCustomerUtils {
         Map<String, Object> params = new HashMap<>();
         params.put("source", source.getId());
         params.put("email", pro.getEmail());
-        params.put("description", pro.getCltype());
+        params.put("description", pro.getCustomerDetails().getFirstName()
+                + " " + pro.getCustomerDetails().getLastName());
 
         Map<String, String> customerMetadata = new HashMap<>();
         customerMetadata.put("uuid", pro.getUuid());

@@ -61,6 +61,18 @@ public class Professional extends Customer {
     @Temporal(TemporalType.TIMESTAMP)
     private Date billsRefDate;
 
+    @Basic
+    private String stripeCustomerId;
+
+    @Basic
+    private String stripeSubscriptionId;
+
+    /**
+     * Terms of Service
+     */
+    @Basic
+    private boolean tos;
+
     @ManyToOne(targetEntity = VatRates.class)
     private VatRates vatRates;
 
@@ -198,6 +210,30 @@ public class Professional extends Customer {
 
     public void setBillsRefDate(Date billsRefDate) {
         this.billsRefDate = billsRefDate;
+    }
+
+    public String getStripeCustomerId() {
+        return this.stripeCustomerId;
+    }
+
+    public void setStripeCustomerId(String stripeCustomerId) {
+        this.stripeCustomerId = stripeCustomerId;
+    }
+
+    public String getStripeSubscriptionId() {
+        return this.stripeSubscriptionId;
+    }
+
+    public void setStripeSubscriptionId(String stripeSubscriptionId) {
+        this.stripeSubscriptionId = stripeSubscriptionId;
+    }
+
+    public boolean isTos() {
+        return this.tos;
+    }
+
+    public void setTos(boolean tos) {
+        this.tos = tos;
     }
 
     public VatRates getVatRates() {

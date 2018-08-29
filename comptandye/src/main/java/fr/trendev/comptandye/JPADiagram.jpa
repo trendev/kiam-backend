@@ -313,6 +313,19 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 <jpa:temporal>TIMESTAMP</jpa:temporal>
                 <jpa:column unique="false" nullable="true" insertable="true" updatable="true" column-definition="DATETIME(3)"/>
             </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" xvt="" name="stripeCustomerId" id="_1535569552216101">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" xvt="" name="stripeSubscriptionId" id="_1535569599281110">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="boolean" v="true" xvt="" name="tos" id="_1535573444232715">
+                <jpa:des>Terms of Service</jpa:des>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
             <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1521215136542" v="true" xvt="" name="vatRates" id="_1521217263508375">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -444,6 +457,18 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         </jpa:nq>
         <jpa:nq e="false" name="Professional.findByBillsRefDate">
             <jpa:query>Select p from Professional p where p.billsRefDate=:billsRefDate</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Professional.findByStripeCustomerId">
+            <jpa:query>Select p from Professional p where p.stripeCustomerId=:stripeCustomerId</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Professional.findByStripeSubscriptionId">
+            <jpa:query>Select p from Professional p where p.stripeSubscriptionId=:stripeSubscriptionId</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Professional.findByTos">
+            <jpa:query>Select p from Professional p where p.tos=:tos</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Professional.findByAttribute1">
+            <jpa:query>Select p from Professional p where p.attribute1=:attribute1</jpa:query>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="IndividualPK" abs="false" class="Individual" superclassId="_1490101376664" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101520286">

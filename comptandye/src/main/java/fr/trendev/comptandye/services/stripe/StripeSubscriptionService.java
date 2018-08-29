@@ -7,10 +7,12 @@ package fr.trendev.comptandye.services.stripe;
 
 import com.stripe.model.Customer;
 import com.stripe.model.Source;
+import com.stripe.model.Subscription;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.utils.AuthenticationSecurityUtils;
 import fr.trendev.comptandye.utils.stripe.StripeCustomerUtils;
+import fr.trendev.comptandye.utils.stripe.StripeSubscriptionUtils;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
@@ -44,6 +46,9 @@ public class StripeSubscriptionService {
     @Inject
     private StripeCustomerUtils stripeCustomerUtils;
 
+    @Inject
+    private StripeSubscriptionUtils stripeSubscriptionUtils;
+
     private final Logger LOG = Logger.getLogger(StripeSubscriptionService.class.
             getName());
 
@@ -63,10 +68,17 @@ public class StripeSubscriptionService {
 
             Customer customer = this.stripeCustomerUtils.create(source, pro);
 
-            return Response.ok(customer.toJson()).build();
+            Subscription subscription = this.stripeSubscriptionUtils
+                    .createDefaultSubscription(customer, pro);
+
+            pro.setStripeCustomerId(customer.getId());
+            pro.setStripeSubscriptionId(subscription.getId());
+            pro.setTos(true);
+
+            return Response.ok(subscription.toJson()).build();
         } catch (Exception ex) {
-            throw new WebApplicationException("Error retrieving a Stripe Source",
-                    ex);
+            throw new WebApplicationException(
+                    "Error retrieving a Stripe Source", ex);
         }
     }
 
