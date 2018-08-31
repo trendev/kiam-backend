@@ -78,7 +78,7 @@ public class StripeSubscriptionService {
             return Response.ok(subscription.toJson()).build();
         } catch (Exception ex) {
             throw new WebApplicationException(
-                    "Error retrieving a Stripe Source", ex);
+                    "Error creating a standard Subscription", ex);
         }
     }
 
