@@ -20,7 +20,10 @@ public class StripeConfiguration {
 
     @PostConstruct
     void init() {
+        // TEST
         Stripe.apiKey = "sk_test_0gkdtCawLunLNk2sPRCSrTDv";
+        // PROD
+//        Stripe.apiKey = "sk_live_wSpz6KIOBRcHoMUMhtUdB0vU";
     }
 
 }
