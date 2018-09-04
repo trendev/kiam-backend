@@ -12,6 +12,7 @@ import fr.trendev.comptandye.entities.Professional;
 import java.util.HashMap;
 import java.util.Map;
 import javax.ejb.Singleton;
+import javax.ws.rs.WebApplicationException;
 
 /**
  *
@@ -57,6 +58,20 @@ public class StripeCustomerUtils {
         }
 
         return Customer.create(params);
+
+    }
+
+    public Customer details(Professional pro) throws StripeException {
+
+        String id = pro.getStripeCustomerId();
+
+        if (id == null || id.isEmpty()) {
+            throw new WebApplicationException("Professional "
+                    + pro.getEmail()
+                    + "has no Customer id !");
+        } else {
+            return Customer.retrieve(id);
+        }
 
     }
 }

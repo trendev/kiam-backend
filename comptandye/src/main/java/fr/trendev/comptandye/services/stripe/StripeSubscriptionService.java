@@ -19,9 +19,11 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -52,6 +54,7 @@ public class StripeSubscriptionService {
     private final Logger LOG = Logger.getLogger(StripeSubscriptionService.class.
             getName());
 
+    @RolesAllowed({"Professional"})
     @Path("std-subscription")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
@@ -79,6 +82,23 @@ public class StripeSubscriptionService {
         } catch (Exception ex) {
             throw new WebApplicationException(
                     "Error creating a standard Subscription", ex);
+        }
+    }
+
+    @Path("details")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response details(@Context SecurityContext sec,
+            @QueryParam("email") String email) {
+        try {
+            String proEmail = authenticationSecurityUtils.
+                    getProEmail(sec, email);
+            Professional pro = professionalFacade.find(proEmail);
+            Customer customer = this.stripeCustomerUtils.details(pro);
+            return Response.ok(customer.toJson()).build();
+        } catch (Exception ex) {
+            throw new WebApplicationException(
+                    "Error getting details on a subscription", ex);
         }
     }
 
