@@ -62,16 +62,28 @@ public class StripeCustomerUtils {
     }
 
     public Customer details(Professional pro) throws StripeException {
+        return this.retrieveCustomer(pro);
+    }
 
+    private Customer retrieveCustomer(Professional pro) throws StripeException {
         String id = pro.getStripeCustomerId();
 
         if (id == null || id.isEmpty()) {
-            throw new WebApplicationException("Professional "
+            throw new WebApplicationException(
+                    "Error retrieving a Stripe Customer: Professional "
                     + pro.getEmail()
                     + "has no Customer id !");
         } else {
             return Customer.retrieve(id);
         }
+    }
 
+    public Customer addSource(Source source, Professional pro) throws
+            StripeException {
+        Customer customer = this.retrieveCustomer(pro);
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("source", source.getId());
+        customer.getSources().create(params);
+        return Customer.retrieve(customer.getId());
     }
 }

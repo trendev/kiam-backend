@@ -54,19 +54,20 @@ public class StripeSubscriptionService {
     private final Logger LOG = Logger.getLogger(StripeSubscriptionService.class.
             getName());
 
-    @RolesAllowed({"Professional"})
     @Path("std-subscription")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response subscription(@Context SecurityContext sec,
-            JsonObject stripeSourceJson) {
+            JsonObject stripeSourceJson,
+            @QueryParam("email") String email) {
         try {
 
-            String email = authenticationSecurityUtils.getProEmail(sec, null);
-            Professional pro = professionalFacade.find(email);
+            String proEmail = authenticationSecurityUtils.
+                    getProEmail(sec, email);
+            Professional pro = professionalFacade.find(proEmail);
 
-            // should you the source id instead of retrieving it
+            // TODO : use the source id instead of retrieving it
             Source source = Source.retrieve(stripeSourceJson.getString("id"));
 
             Customer customer = this.stripeCustomerUtils.create(source, pro);
@@ -99,6 +100,31 @@ public class StripeSubscriptionService {
         } catch (Exception ex) {
             throw new WebApplicationException(
                     "Error getting details on a subscription", ex);
+        }
+    }
+
+    @Path("add-source")
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addSource(@Context SecurityContext sec,
+            JsonObject stripeSourceJson,
+            @QueryParam("email") String email) {
+        try {
+
+            String proEmail = authenticationSecurityUtils.
+                    getProEmail(sec, email);
+            Professional pro = professionalFacade.find(proEmail);
+
+            // TODO : use the source id instead of retrieving it
+            Source source = Source.retrieve(stripeSourceJson.getString("id"));
+
+            Customer customer = this.stripeCustomerUtils.addSource(source, pro);
+
+            return Response.ok(customer.toJson()).build();
+        } catch (Exception ex) {
+            throw new WebApplicationException(
+                    "Error creating a standard Subscription", ex);
         }
     }
 
