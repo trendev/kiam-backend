@@ -23,7 +23,7 @@ public class StripeConfiguration {
      */
     @PostConstruct
     void init() {
-        Stripe.apiKey = StripeApiKey.LIVE.getKey();
+        Stripe.apiKey = StripeApiKey.TEST.getKey();
     }
 
     private enum StripeApiKey {
