@@ -7,6 +7,7 @@ package fr.trendev.comptandye.utils.stripe;
 
 import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
+import com.stripe.model.Source;
 import fr.trendev.comptandye.entities.Professional;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +21,15 @@ import javax.ws.rs.WebApplicationException;
 @Singleton
 public class StripeCustomerUtils {
 
+    /**
+     * Creates a Stripe Customer from a Stripe Source, the data of the
+     * Professional.
+     *
+     * @param sourceId the id of the Stripe Source
+     * @param pro the Professional
+     * @return the new Stripe Customer
+     * @throws StripeException if errors occur from Stripe services
+     */
     public Customer create(String sourceId, Professional pro) throws
             StripeException {
         Map<String, Object> params = new HashMap<>();
@@ -60,6 +70,13 @@ public class StripeCustomerUtils {
 
     }
 
+    /**
+     * Gets details from the Stripe Customer config of a Professional
+     *
+     * @param pro the Professional
+     * @return the Stripe Customer (as JSON object)
+     * @throws StripeException if errors occur from Stripe
+     */
     public Customer details(Professional pro) throws StripeException {
         return this.retrieveCustomer(pro);
     }
@@ -77,20 +94,54 @@ public class StripeCustomerUtils {
         }
     }
 
+    /**
+     * Adds a new Source and sets it as the default one.
+     *
+     * @param sourceId the id of the Stripe Source
+     * @param pro the Professional
+     * @return the updated Stripe Customer
+     * @throws StripeException if errors occur from Stripe
+     */
     public Customer addSource(String sourceId, Professional pro) throws
             StripeException {
         Customer customer = this.retrieveCustomer(pro);
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("source", sourceId);
         customer.getSources().create(params);
-        return Customer.retrieve(customer.getId());
+        params = new HashMap<String, Object>();
+        params.put("default_source", sourceId);
+        return customer.update(params);
     }
 
+    /**
+     * Sets a Stripe source as the default one.
+     *
+     * @param sourceId the id of the Stripe Source
+     * @param pro the Professional
+     * @return the updated Stripe Customer
+     * @throws StripeException if errors occur from Stripe
+     */
     public Customer defaultSource(String sourceId, Professional pro) throws
             StripeException {
         Customer customer = this.retrieveCustomer(pro);
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("default_source", sourceId);
         return customer.update(params);
+    }
+
+    /**
+     * Detaches (removes) a Stripe Source from a Stripe Customer.
+     *
+     * @param sourceId
+     * @param pro
+     * @return
+     * @throws StripeException
+     */
+    public Customer detachSource(String sourceId, Professional pro) throws
+            StripeException {
+        Source source = Source.retrieve(sourceId);
+        source.detach();// will set the source status with consumed (cannot be used anymore)
+        Customer customer = this.retrieveCustomer(pro);
+        return customer;
     }
 }

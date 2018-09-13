@@ -18,9 +18,12 @@ import javax.ejb.Startup;
 @Singleton
 public class StripeConfiguration {
 
+    /**
+     * Initializes the Stripe API KEY with the TEST or LIVE Stripe Key
+     */
     @PostConstruct
     void init() {
-        Stripe.apiKey = StripeApiKey.TEST.getKey();
+        Stripe.apiKey = StripeApiKey.LIVE.getKey();
     }
 
     private enum StripeApiKey {
