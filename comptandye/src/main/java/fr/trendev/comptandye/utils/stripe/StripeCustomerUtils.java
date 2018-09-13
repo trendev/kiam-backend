@@ -7,7 +7,6 @@ package fr.trendev.comptandye.utils.stripe;
 
 import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
-import com.stripe.model.Source;
 import fr.trendev.comptandye.entities.Professional;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,10 +20,10 @@ import javax.ws.rs.WebApplicationException;
 @Singleton
 public class StripeCustomerUtils {
 
-    public Customer create(Source source, Professional pro) throws
+    public Customer create(String sourceId, Professional pro) throws
             StripeException {
         Map<String, Object> params = new HashMap<>();
-        params.put("source", source.getId());
+        params.put("source", sourceId);
         params.put("email", pro.getEmail());
         params.put("description", pro.getCustomerDetails().getFirstName()
                 + " " + pro.getCustomerDetails().getLastName());
@@ -78,12 +77,20 @@ public class StripeCustomerUtils {
         }
     }
 
-    public Customer addSource(Source source, Professional pro) throws
+    public Customer addSource(String sourceId, Professional pro) throws
             StripeException {
         Customer customer = this.retrieveCustomer(pro);
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("source", source.getId());
+        params.put("source", sourceId);
         customer.getSources().create(params);
         return Customer.retrieve(customer.getId());
+    }
+
+    public Customer defaultSource(String sourceId, Professional pro) throws
+            StripeException {
+        Customer customer = this.retrieveCustomer(pro);
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("default_source", sourceId);
+        return customer.update(params);
     }
 }

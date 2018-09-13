@@ -6,7 +6,6 @@
 package fr.trendev.comptandye.services.stripe;
 
 import com.stripe.model.Customer;
-import com.stripe.model.Source;
 import com.stripe.model.Subscription;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
@@ -22,6 +21,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
@@ -55,7 +55,7 @@ public class StripeSubscriptionService {
             getName());
 
     @Path("std-subscription")
-    @PUT
+//    @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response subscription(@Context SecurityContext sec,
@@ -67,10 +67,8 @@ public class StripeSubscriptionService {
                     getProEmail(sec, email);
             Professional pro = professionalFacade.find(proEmail);
 
-            // TODO : use the source id instead of retrieving it
-            Source source = Source.retrieve(stripeSourceJson.getString("id"));
-
-            Customer customer = this.stripeCustomerUtils.create(source, pro);
+            String sourceId = stripeSourceJson.getString("id");
+            Customer customer = this.stripeCustomerUtils.create(sourceId, pro);
 
             Subscription subscription = this.stripeSubscriptionUtils
                     .createDefaultSubscription(customer, pro);
@@ -99,7 +97,7 @@ public class StripeSubscriptionService {
             return Response.ok(customer.toJson()).build();
         } catch (Exception ex) {
             throw new WebApplicationException(
-                    "Error getting details on a subscription", ex);
+                    "Error providing Customer's details on", ex);
         }
     }
 
@@ -116,15 +114,40 @@ public class StripeSubscriptionService {
                     getProEmail(sec, email);
             Professional pro = professionalFacade.find(proEmail);
 
-            // TODO : use the source id instead of retrieving it
-            Source source = Source.retrieve(stripeSourceJson.getString("id"));
+            String sourceId = stripeSourceJson.getString("id");
 
-            Customer customer = this.stripeCustomerUtils.addSource(source, pro);
+            Customer customer = this.stripeCustomerUtils.
+                    addSource(sourceId, pro);
 
             return Response.ok(customer.toJson()).build();
         } catch (Exception ex) {
             throw new WebApplicationException(
-                    "Error creating a standard Subscription", ex);
+                    "Error adding a Source to an existing Customer", ex);
+        }
+    }
+
+    @Path("default_source/{default_source}")
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response defaultSource(@Context SecurityContext sec,
+            JsonObject stripeSourceJson,
+            @PathParam("default_source") String sourceId,
+            @QueryParam("email") String email) {
+        try {
+
+            String proEmail = authenticationSecurityUtils.
+                    getProEmail(sec, email);
+            Professional pro = professionalFacade.find(proEmail);
+
+            Customer customer = this.stripeCustomerUtils.
+                    defaultSource(sourceId, pro);
+
+            return Response.ok(customer.toJson()).build();
+        } catch (Exception ex) {
+            throw new WebApplicationException(
+                    "Error setting the default Source of an existing Customer",
+                    ex);
         }
     }
 

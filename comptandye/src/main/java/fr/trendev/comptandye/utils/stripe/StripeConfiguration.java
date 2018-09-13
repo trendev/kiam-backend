@@ -20,10 +20,22 @@ public class StripeConfiguration {
 
     @PostConstruct
     void init() {
-        // TEST
-        Stripe.apiKey = "sk_test_0gkdtCawLunLNk2sPRCSrTDv";
-        // PROD
-//        Stripe.apiKey = "sk_live_wSpz6KIOBRcHoMUMhtUdB0vU";
+        Stripe.apiKey = StripeApiKey.TEST.getKey();
+    }
+
+    private enum StripeApiKey {
+        TEST("sk_test_0gkdtCawLunLNk2sPRCSrTDv"),
+        LIVE("sk_live_wSpz6KIOBRcHoMUMhtUdB0vU");
+
+        private StripeApiKey(String key) {
+            this.key = key;
+        }
+
+        private final String key;
+
+        String getKey() {
+            return this.key;
+        }
     }
 
 }
