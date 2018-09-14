@@ -165,7 +165,6 @@ public class StripeCustomerUtils {
         //TODO: manage this limit if the Professional has more than 100 invoices
         invoiceParams.put("limit", (n > 100) ? 100 : n);
         invoiceParams.put("customer", pro.getStripeCustomerId());
-//        invoiceParams.put("subscription", pro.getStripeSubscriptionId());
 
         return Invoice.list(invoiceParams);
     }
