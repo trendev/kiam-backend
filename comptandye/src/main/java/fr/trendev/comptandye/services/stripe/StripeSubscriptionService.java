@@ -6,6 +6,7 @@
 package fr.trendev.comptandye.services.stripe;
 
 import com.stripe.model.Customer;
+import com.stripe.model.InvoiceCollection;
 import com.stripe.model.Subscription;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
@@ -244,6 +245,28 @@ public class StripeSubscriptionService {
             throw new WebApplicationException(
                     "Error detaching a Source of an existing Customer",
                     ex);
+        }
+    }
+
+    @Path("invoices")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response invoices(@Context SecurityContext sec,
+            @QueryParam("email") String email) {
+        try {
+            String proEmail = authenticationSecurityUtils.
+                    getProEmail(sec, email);
+            Professional pro = professionalFacade.find(proEmail);
+            InvoiceCollection invoices = this.stripeCustomerUtils
+                    .getInvoices(pro);
+            LOG.log(Level.INFO,
+                    "Providing invoices of Stripe Customer {0}/{1}: {2} invoices",
+                    new Object[]{pro.getStripeCustomerId(), pro.getEmail(),
+                        invoices.getTotalCount()});
+            return Response.ok(invoices.toJson()).build();
+        } catch (Exception ex) {
+            throw new WebApplicationException(
+                    "Error providing Invoices", ex);
         }
     }
 

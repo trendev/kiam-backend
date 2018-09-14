@@ -7,6 +7,8 @@ package fr.trendev.comptandye.utils.stripe;
 
 import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
+import com.stripe.model.Invoice;
+import com.stripe.model.InvoiceCollection;
 import com.stripe.model.Source;
 import fr.trendev.comptandye.entities.Professional;
 import java.util.HashMap;
@@ -143,5 +145,16 @@ public class StripeCustomerUtils {
         source.detach();// will set the source status with consumed (cannot be used anymore)
         Customer customer = this.retrieveCustomer(pro);
         return customer;
+    }
+
+    public InvoiceCollection getInvoices(Professional pro) throws
+            StripeException {
+
+        Map<String, Object> invoiceParams = new HashMap<String, Object>();
+//        invoiceParams.put("limit", "100");
+        invoiceParams.put("customer", pro.getStripeCustomerId());
+        invoiceParams.put("subscription", pro.getStripeSubscriptionId());
+
+        return Invoice.list(invoiceParams);
     }
 }
