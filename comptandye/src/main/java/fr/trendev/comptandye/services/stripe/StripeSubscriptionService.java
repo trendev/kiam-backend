@@ -259,10 +259,16 @@ public class StripeSubscriptionService {
             Professional pro = professionalFacade.find(proEmail);
             InvoiceCollection invoices = this.stripeCustomerUtils
                     .getInvoices(pro);
+
+            int size = invoices.getData().size();
+
             LOG.log(Level.INFO,
-                    "Providing invoices of Stripe Customer {0}/{1}: {2} invoices",
-                    new Object[]{pro.getStripeCustomerId(), pro.getEmail(),
-                        invoices.getTotalCount()});
+                    "Providing invoices of Stripe Customer {0}/{1}: {2} invoice{3}",
+                    new Object[]{
+                        pro.getStripeCustomerId(),
+                        pro.getEmail(),
+                        size,
+                        size > 1 ? "s" : ""});
             return Response.ok(invoices.toJson()).build();
         } catch (Exception ex) {
             throw new WebApplicationException(
