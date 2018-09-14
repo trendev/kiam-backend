@@ -122,8 +122,9 @@ public class StripeSubscriptionService {
                     getProEmail(sec, email);
             Professional pro = professionalFacade.find(proEmail);
             Customer customer = this.stripeCustomerUtils.details(pro);
-            LOG.log(Level.INFO, "Providing details of Stripe Customer {0}",
-                    customer.getId());
+            LOG.log(Level.INFO, "Providing details of Stripe Customer {0}/{1}",
+                    new Object[]{customer.getId(),
+                        proEmail});
             return Response.ok(customer.toJson()).build();
         } catch (Exception ex) {
             throw new WebApplicationException(
