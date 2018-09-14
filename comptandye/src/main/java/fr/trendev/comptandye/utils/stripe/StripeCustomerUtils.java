@@ -162,6 +162,7 @@ public class StripeCustomerUtils {
         int r = 5; // retention period of 5 years 
         int n = r * 12;
         Map<String, Object> invoiceParams = new HashMap<String, Object>();
+        //TODO: manage this limit if the Professional has more than 100 invoices
         invoiceParams.put("limit", (n > 100) ? 100 : n);
         invoiceParams.put("customer", pro.getStripeCustomerId());
 //        invoiceParams.put("subscription", pro.getStripeSubscriptionId());
