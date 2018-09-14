@@ -147,13 +147,24 @@ public class StripeCustomerUtils {
         return customer;
     }
 
+    /**
+     * Provides the Stripe Invoices of the Stripe Customer linked to the
+     * Professional. Retention period is 5 years. Stripe limits the response to
+     * a max of 100 invoices.
+     *
+     * @param pro the Professional
+     * @return the Stripe Invoice list
+     * @throws StripeException if errors occur from the Stripe services
+     */
     public InvoiceCollection getInvoices(Professional pro) throws
             StripeException {
 
+        int r = 5; // retention period of 5 years 
+        int n = r * 12;
         Map<String, Object> invoiceParams = new HashMap<String, Object>();
-//        invoiceParams.put("limit", "100");
+        invoiceParams.put("limit", (n > 100) ? 100 : n);
         invoiceParams.put("customer", pro.getStripeCustomerId());
-        invoiceParams.put("subscription", pro.getStripeSubscriptionId());
+//        invoiceParams.put("subscription", pro.getStripeSubscriptionId());
 
         return Invoice.list(invoiceParams);
     }
