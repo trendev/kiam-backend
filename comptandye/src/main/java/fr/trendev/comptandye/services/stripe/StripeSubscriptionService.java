@@ -13,6 +13,7 @@ import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.utils.AuthenticationSecurityUtils;
 import fr.trendev.comptandye.utils.stripe.StripeCustomerUtils;
 import fr.trendev.comptandye.utils.stripe.StripeSubscriptionUtils;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
@@ -274,6 +275,30 @@ public class StripeSubscriptionService {
         } catch (Exception ex) {
             throw new WebApplicationException(
                     "Error providing Invoices", ex);
+        }
+    }
+
+    @Path("rescind")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response rescind(@Context SecurityContext sec,
+            @QueryParam("email") String email) {
+        try {
+            String proEmail = authenticationSecurityUtils.
+                    getProEmail(sec, email);
+            Professional pro = professionalFacade.find(proEmail);
+            Subscription subscription = this.stripeSubscriptionUtils.
+                    rescind(pro);
+
+            LOG.log(Level.INFO, "Stripe Subscription " + pro.
+                    getStripeSubscriptionId() + " of the user " + pro.getEmail()
+                    + "has been rescinded on "
+                    + new Date(subscription.getCanceledAt() * 1000));
+
+            return Response.ok(subscription.toJson()).build();
+        } catch (Exception ex) {
+            throw new WebApplicationException(
+                    "Error rescinding a stripe subscription", ex);
         }
     }
 

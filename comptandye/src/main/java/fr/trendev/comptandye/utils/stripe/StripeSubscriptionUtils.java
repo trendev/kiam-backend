@@ -9,6 +9,7 @@ import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
 import com.stripe.model.Subscription;
 import fr.trendev.comptandye.entities.Professional;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.ejb.Singleton;
@@ -27,7 +28,7 @@ public class StripeSubscriptionUtils {
      * @param customer the Stripe Customer created for the Professional
      * @param pro the Professional
      * @return the active Stripe Subscription to the Stripe Plan "classic"
-     * @throws StripeException if errors occur from Stripe services
+     * @throws StripeException if errors occur from the Stripe services
      */
     public Subscription createDefaultSubscription(Customer customer,
             Professional pro) throws StripeException {
@@ -48,6 +49,51 @@ public class StripeSubscriptionUtils {
         }
 
         return Subscription.create(params);
+    }
+
+    /**
+     * Manages the rescission
+     *
+     * @param pro the Professional
+     * @param rescind true if the subscription must be rescind, false if the
+     * subscription must be reactivated
+     * @return the rescinded/reactivated subscription
+     * @throws StripeException if errors occur from the Stripe services
+     */
+    private Subscription manageRescission(Professional pro,
+            boolean rescind)
+            throws StripeException {
+        Subscription subscription = Subscription.retrieve(
+                pro.getStripeSubscriptionId());
+        Map<String, Object> params = new HashMap<>();
+        params.put("cancel_at_period_end", rescind);
+        pro.setRescissionDate(
+                rescind ? new Date(subscription.getCurrentPeriodEnd() * 1000) : null
+        );
+        return subscription.update(params);
+    }
+
+    /**
+     * Rescinds an existing Stripe Subscription
+     *
+     * @param pro the Professional who wants to cancel its subscription
+     * @return the rescinded subscription
+     * @throws StripeException if errors occur from the Stripe services
+     */
+    public Subscription rescind(Professional pro) throws StripeException {
+        return this.manageRescission(pro, true);
+    }
+
+    /**
+     * Reactivates an existing Stripe Subscription
+     *
+     * @param pro the Professional who wants to reactivate its canceled
+     * subscription
+     * @return the reactivated subscription
+     * @throws StripeException if errors occur from the Stripe services
+     */
+    public Subscription reactivate(Professional pro) throws StripeException {
+        return this.manageRescission(pro, false);
     }
 
 }
