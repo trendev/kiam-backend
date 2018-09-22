@@ -326,6 +326,13 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
+            <jpa:basic attribute-type="java.util.Date" v="true" xvt="" name="rescissionDate" dv="new Date()" id="_1537623410825101">
+                <jpa:des>When the Stripe Subscription has been rescinded</jpa:des>
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+                <jpa:column unique="false" nullable="true" insertable="true" updatable="true" column-definition="DATETIME(3)"/>
+            </jpa:basic>
             <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1521215136542" v="true" xvt="" name="vatRates" id="_1521217263508375">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -469,6 +476,9 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         </jpa:nq>
         <jpa:nq e="false" name="Professional.findByAttribute1">
             <jpa:query>Select p from Professional p where p.attribute1=:attribute1</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Professional.findByRescissionDate">
+            <jpa:query>Select p from Professional p where p.rescissionDate=:rescissionDate</jpa:query>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="IndividualPK" abs="false" class="Individual" superclassId="_1490101376664" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101520286">
@@ -2534,10 +2544,10 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
             <i ref="_1490101456632" x="-61" y="238">
                 <el>
                     <e ref="_1514560844274158">
-                        <v st="1" si="12.0" cl="#000000"/>
+                        <v st="0" si="12.0" cl="#ffffff"/>
                     </e>
                     <e ref="_1514567319873171">
-                        <v st="1" si="12.0" cl="#000000"/>
+                        <v st="0" si="12.0" cl="#000000"/>
                     </e>
                     <e ref="_1490179812678394">
                         <v st="1" si="12.0" cl="#ff0000"/>

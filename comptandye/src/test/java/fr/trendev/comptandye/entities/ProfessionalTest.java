@@ -64,6 +64,10 @@ public class ProfessionalTest {
         assert UserAccountType.PROFESSIONAL.equals(instance.getCltype());
         assert instance.getNotifications() != null;
         assert instance.getNotifications().isEmpty();
+        assert instance.getStripeCustomerId() == null;
+        assert instance.getStripeSubscriptionId() == null;
+        assert instance.isTos() == false;
+        assert instance.getRegistrationDate() != null;
 
         String email = "professional@domain.com";
         String password = "encrypted_pwd";

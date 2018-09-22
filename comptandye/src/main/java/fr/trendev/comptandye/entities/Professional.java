@@ -73,6 +73,14 @@ public class Professional extends Customer {
     @Basic
     private boolean tos;
 
+    /**
+     * When the Stripe Subscription has been rescinded
+     */
+    @Column(columnDefinition = "DATETIME(3)")
+    @Basic
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date rescissionDate = new Date();
+
     @ManyToOne(targetEntity = VatRates.class)
     private VatRates vatRates;
 
@@ -234,6 +242,14 @@ public class Professional extends Customer {
 
     public void setTos(boolean tos) {
         this.tos = tos;
+    }
+
+    public Date getRescissionDate() {
+        return this.rescissionDate;
+    }
+
+    public void setRescissionDate(Date rescissionDate) {
+        this.rescissionDate = rescissionDate;
     }
 
     public VatRates getVatRates() {
