@@ -285,27 +285,49 @@ public class StripeSubscriptionService {
     public Response rescind(@Context SecurityContext sec,
             @QueryParam("email") String email) {
         return this.manageRescission(sec, email,
-                this.stripeSubscriptionUtils::rescind);
+                this.stripeSubscriptionUtils::rescind,
+                true);
+    }
+
+    @Path("reactivate")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response reactivate(@Context SecurityContext sec,
+            @QueryParam("email") String email) {
+        return this.manageRescission(sec, email,
+                this.stripeSubscriptionUtils::reactivate,
+                false);
     }
 
     private Response manageRescission(SecurityContext sec,
             String email,
-            ThrowingFunction<Professional, Subscription> fn) {
+            ThrowingFunction<Professional, Subscription> fn,
+            boolean rescind) {
         try {
             String proEmail = authenticationSecurityUtils.
                     getProEmail(sec, email);
             Professional pro = professionalFacade.find(proEmail);
             Subscription subscription = fn.apply(pro);
 
-            LOG.log(Level.INFO, "Stripe Subscription " + pro.
-                    getStripeSubscriptionId() + " of the user " + pro.getEmail()
-                    + "has been rescinded on "
-                    + new Date(subscription.getCanceledAt() * 1000));
+            if (rescind) {
+                LOG.log(Level.INFO,
+                        "Stripe Subscription {0} of the user {1} has been rescinded on {2}",
+                        new Object[]{pro.
+                                    getStripeSubscriptionId(), pro.getEmail(),
+                            new Date(subscription.getCanceledAt() * 1000)});
+            } else {
+                LOG.log(Level.INFO,
+                        "Stripe Subscription {0} of the user {1} has been reactivated !",
+                        new Object[]{pro.
+                                    getStripeSubscriptionId(), pro.
+                                    getEmail()});
+            }
 
             return Response.ok(subscription.toJson()).build();
         } catch (Exception ex) {
             throw new WebApplicationException(
-                    "Error rescinding a stripe subscription", ex);
+                    "Error " + (rescind ? "rescinding" : "reactivating")
+                    + " a stripe subscription", ex);
         }
     }
 
