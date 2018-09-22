@@ -176,9 +176,13 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
 
             this.checkVatCode(e);
 
+            /**
+             * Resets subscription fields
+             */
             e.setStripeCustomerId(null);
             e.setStripeSubscriptionId(null);
             e.setTos(false);
+            e.setRescissionDate(null);
         });
     }
 
