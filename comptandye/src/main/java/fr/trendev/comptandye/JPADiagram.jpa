@@ -18,7 +18,7 @@
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({&#xA;  @JsonSubTypes.Type(value = Administrator.class, name = UserAccountType.ADMINISTRATOR), &#xA;  @JsonSubTypes.Type(value = Individual.class, name = UserAccountType.INDIVIDUAL),&#xA;  @JsonSubTypes.Type(value = Professional.class, name = UserAccountType.PROFESSIONAL)&#xA;})"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
             import fr.trendev.comptandye.utils.visitors.Visitor;
-import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
+            import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -252,7 +252,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         </jpa:con>
         <jpa:con am="PUBLIC" e="true">
             <jpa:post>super();
-this.cltype = UserAccountType.PROFESSIONAL;</jpa:post>
+                this.cltype = UserAccountType.PROFESSIONAL;</jpa:post>
         </jpa:con>
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_14901149376313047</jpa:a>
@@ -272,7 +272,7 @@ this.cltype = UserAccountType.PROFESSIONAL;</jpa:post>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
             import fr.trendev.comptandye.utils.visitors.Visitor;
-import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
+            import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
@@ -491,7 +491,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         </jpa:con>
         <jpa:con am="PUBLIC" e="true">
             <jpa:post>super();
-this.cltype = UserAccountType.INDIVIDUAL;</jpa:post>
+                this.cltype = UserAccountType.INDIVIDUAL;</jpa:post>
         </jpa:con>
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_14901149376313047</jpa:a>
@@ -506,7 +506,7 @@ this.cltype = UserAccountType.INDIVIDUAL;</jpa:post>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
             import fr.trendev.comptandye.utils.visitors.Visitor;
-import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
+            import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
@@ -859,7 +859,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.visitors.Visitor;
-import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
+            import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
@@ -896,7 +896,7 @@ import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
             import fr.trendev.comptandye.utils.visitors.Visitor;
-import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
+            import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
@@ -1199,7 +1199,7 @@ import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
         <jpa:snp loc="IMPORT" e="true">import java.util.Date;
             import java.util.List;
             import fr.trendev.comptandye.utils.visitors.Visitor;
-import fr.trendev.comptandye.utils.BillType;</jpa:snp>
+            import fr.trendev.comptandye.utils.BillType;</jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
@@ -1236,7 +1236,7 @@ import fr.trendev.comptandye.utils.BillType;</jpa:snp>
         <jpa:snp loc="IMPORT" e="true">import java.util.Date;
             import java.util.List;
             import fr.trendev.comptandye.utils.visitors.Visitor;
-import fr.trendev.comptandye.utils.BillType;</jpa:snp>
+            import fr.trendev.comptandye.utils.BillType;</jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
@@ -1406,7 +1406,7 @@ import fr.trendev.comptandye.utils.BillType;</jpa:snp>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.visitors.Visitor;
-import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
+            import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
@@ -1475,7 +1475,7 @@ import fr.trendev.comptandye.utils.UserAccountType;</jpa:snp>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonTypeInfo(use = JsonTypeInfo.Id.NAME,&#xA;        include = JsonTypeInfo.As.EXISTING_PROPERTY,&#xA;        property = &quot;cltype&quot;,&#xA;        visible = true)"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({&#xA;    @JsonSubTypes.Type(value = ClassicExpense.class,&#xA;            name = ExpenseType.CLASSIC_EXPENSE)&#xA;    ,   @JsonSubTypes.Type(value = PurchaseExpense.class,&#xA;            name = ExpenseType.PURCHASE_EXPENSE)})"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
-import fr.trendev.comptandye.utils.ExpenseType;
+            import fr.trendev.comptandye.utils.ExpenseType;
             import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
@@ -1688,7 +1688,7 @@ import fr.trendev.comptandye.utils.ExpenseType;
         <jpa:snp loc="IMPORT" e="true">import java.util.Date;
             import java.util.List;
             import fr.trendev.comptandye.utils.visitors.Visitor;
-import fr.trendev.comptandye.utils.BillType;</jpa:snp>
+            import fr.trendev.comptandye.utils.BillType;</jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
@@ -1717,12 +1717,12 @@ import fr.trendev.comptandye.utils.BillType;</jpa:snp>
             <jpa:a>_15063452150691272</jpa:a>
             <jpa:a>_1512851997729268</jpa:a>
             <jpa:post>this.offeringSnapshot = new OfferingSnapshot(offering);
-this.offeringExtents = new OfferingExtents(offering);
+                this.offeringExtents = new OfferingExtents(offering);
 
-/* Offering/PurchasedOffering links are set/destroyed in the rest api services */
-// this.offering.getPurchasedOfferings().add(this); */
+                /* Offering/PurchasedOffering links are set/destroyed in the rest api services */
+                // this.offering.getPurchasedOfferings().add(this); */
 
-</jpa:post>
+            </jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp e="false">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
@@ -1822,7 +1822,7 @@ this.offeringExtents = new OfferingExtents(offering);
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.visitors.Visitor;
-import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
+            import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
@@ -1907,7 +1907,7 @@ import fr.trendev.comptandye.utils.OfferingType;</jpa:snp>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
-import fr.trendev.comptandye.utils.ExpenseType;</jpa:snp>
+            import fr.trendev.comptandye.utils.ExpenseType;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="invoiceRef" id="_1524836395765710">
@@ -2055,17 +2055,17 @@ import fr.trendev.comptandye.utils.ExpenseType;</jpa:snp>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({&#xA;    @JsonSubTypes.Type(value = PurchasedItem.class,&#xA;            name = ProductRecordType.PURCHASED_ITEM)&#xA;    ,   @JsonSubTypes.Type(value = UsedItem.class,&#xA;            name = ProductRecordType.USED_ITEM)&#xA;    ,  @JsonSubTypes.Type(value = ReturnedItem.class,&#xA;            name = ProductRecordType.RETURNED_ITEM)&#xA;    ,  @JsonSubTypes.Type(value = SoldItem.class,&#xA;            name = ProductRecordType.SOLD_ITEM)})&#xA;"/>
         <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.visitors.Visitor;
             import fr.trendev.comptandye.utils.ProductRecordType;
-import fr.trendev.comptandye.utils.visitors.VariationOfProductRecordQtyVisitor;</jpa:snp>
+            import fr.trendev.comptandye.utils.visitors.VariationOfProductRecordQtyVisitor;</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
         <jpa:snp e="true">public void cancel(VariationOfProductRecordQtyVisitor visitor) {
-        this.cancelled = true;
-        this.cancellationDate = new Date();
+            this.cancelled = true;
+            this.cancellationDate = new Date();
 
-        int availableQty = this.product.getAvailableQty() - this.accept(visitor);
-        this.product.setAvailableQty(availableQty &lt; 0 ? 0 : availableQty);
-    }</jpa:snp>
+            int availableQty = this.product.getAvailableQty() - this.accept(visitor);
+            this.product.setAvailableQty(availableQty &lt; 0 ? 0 : availableQty);
+            }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" am="PROTECTED" name="cltype" id="_15249240375981409">
@@ -2136,7 +2136,7 @@ import fr.trendev.comptandye.utils.visitors.VariationOfProductRecordQtyVisitor;<
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.ProductRecordType;
-import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
+            import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -2159,7 +2159,7 @@ import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.ProductRecordType;
-import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
+            import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -2177,7 +2177,7 @@ import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.ProductRecordType;
-import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
+            import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -2203,7 +2203,7 @@ import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.ProductRecordType;
-import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
+            import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -2308,8 +2308,8 @@ import fr.trendev.comptandye.utils.visitors.Visitor;</jpa:snp>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.NotificationType;
-import fr.trendev.comptandye.utils.visitors.Visitor;
-import fr.trendev.comptandye.utils.NotificationLevelEnum;</jpa:snp>
+            import fr.trendev.comptandye.utils.visitors.Visitor;
+            import fr.trendev.comptandye.utils.NotificationLevelEnum;</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -2383,13 +2383,13 @@ import fr.trendev.comptandye.utils.NotificationLevelEnum;</jpa:snp>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
         <jpa:snp loc="BEFORE_METHOD" e="true">public OfferingSnapshot(Offering offering) {
-        this.cltype = offering.getCltype();
-        this.name = offering.getName();
-        this.shortname = offering.getShortname();
-        this.price = offering.getPrice();
-        this.duration = offering.getDuration();
-        this.businesses = offering.getBusinesses();
-}</jpa:snp>
+            this.cltype = offering.getCltype();
+            this.name = offering.getName();
+            this.shortname = offering.getShortname();
+            this.price = offering.getPrice();
+            this.duration = offering.getDuration();
+            this.businesses = offering.getBusinesses();
+            }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="cltype" id="_1512853518502564">
@@ -2428,11 +2428,11 @@ import fr.trendev.comptandye.utils.NotificationLevelEnum;</jpa:snp>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="BEFORE_METHOD" e="true">public OfferingExtents(Offering offering) {
-        //computes services/sales extents
-OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
-        this.services = oe.services;
-        this.sales = oe.sales;
-}</jpa:snp>
+            //computes services/sales extents
+            OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
+            this.services = oe.services;
+            this.sales = oe.sales;
+            }</jpa:snp>
         <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.visitors.OfferingExtentsVisitor;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -2543,12 +2543,6 @@ OfferingExtents oe = offering.accept(new OfferingExtentsVisitor());
             </i>
             <i ref="_1490101456632" x="-61" y="238">
                 <el>
-                    <e ref="_1514560844274158">
-                        <v st="0" si="12.0" cl="#ffffff"/>
-                    </e>
-                    <e ref="_1514567319873171">
-                        <v st="0" si="12.0" cl="#000000"/>
-                    </e>
                     <e ref="_1490179812678394">
                         <v st="1" si="12.0" cl="#ff0000"/>
                     </e>
