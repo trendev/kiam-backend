@@ -11,6 +11,7 @@ import com.stripe.model.Subscription;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.utils.AuthenticationSecurityUtils;
+import fr.trendev.comptandye.utils.exceptions.ThrowingFunction;
 import fr.trendev.comptandye.utils.stripe.StripeCustomerUtils;
 import fr.trendev.comptandye.utils.stripe.StripeSubscriptionUtils;
 import java.util.Date;
@@ -283,12 +284,18 @@ public class StripeSubscriptionService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response rescind(@Context SecurityContext sec,
             @QueryParam("email") String email) {
+        return this.manageRescission(sec, email,
+                this.stripeSubscriptionUtils::rescind);
+    }
+
+    private Response manageRescission(SecurityContext sec,
+            String email,
+            ThrowingFunction<Professional, Subscription> fn) {
         try {
             String proEmail = authenticationSecurityUtils.
                     getProEmail(sec, email);
             Professional pro = professionalFacade.find(proEmail);
-            Subscription subscription = this.stripeSubscriptionUtils.
-                    rescind(pro);
+            Subscription subscription = fn.apply(pro);
 
             LOG.log(Level.INFO, "Stripe Subscription " + pro.
                     getStripeSubscriptionId() + " of the user " + pro.getEmail()
