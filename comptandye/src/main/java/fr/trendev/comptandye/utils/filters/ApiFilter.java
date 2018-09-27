@@ -27,6 +27,7 @@ public abstract class ApiFilter implements Filter {
         this.allowedOrigins = new HashSet<String>();
         this.allowedOrigins.addAll(
                 Arrays.asList("http://localhost:4200",
+                        "http://localhost:8080",
                         "http://jsie-macbook:4200",
                         "https://localhost:4200",
                         "http://localhost:9876"));
