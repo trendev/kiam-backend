@@ -1,0 +1,41 @@
+version: '3'
+services:
+  payara-node1:
+    image: payara-node
+    container_name: payara-node1
+    ports:
+      - "10022:22"
+    volumes:
+      - $HOME/docker-data/payara-node1:/opt/payara5
+  payara-node2:
+    image: payara-node
+    container_name: payara-node2
+    ports:
+      - "20022:22"
+    volumes:
+      - $HOME/docker-data/payara-node2:/opt/payara5
+  payara-das:
+    build:
+      context: .
+      dockerfile:  cluster.dockerfile
+    container_name: payara-das
+    ports:
+      - "8080:8080"
+      - "8181:8181"
+      - "4848:4848"
+    depends_on:
+      - "payara-node1"
+      - "payara-node2"
+      - "db-mysql"
+  db-mysql:
+    image: mysql:5.7
+    container_name: db-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=7gXf1pwmtW
+      - MYSQL_USER=admin_comptandye_20170328
+      - MYSQL_PASSWORD=SfBuVPRw0S
+      - MYSQL_DATABASE=comptandye_master
+    volumes:
+      - $HOME/mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"

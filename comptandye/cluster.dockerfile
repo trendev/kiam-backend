@@ -8,10 +8,11 @@ ENV ADMIN_USER admin
 ENV ADMIN_PASSWORD admin
 ENV NEW_ADMIN_PASSWORD qsec0fr
 ENV VERSION 2.2.3
-ENV COMPTANDYE comptandye-$VERSION
+ENV WEBAPP comptandye
+ENV COMPTANDYE $WEBAPP-$VERSION
 
 # Copy the mysql connector to the Glassfish libs
-COPY ../target/$COMPTANDYE/WEB-INF/lib/mysql-connector-java-5.1.46.jar $PAYARA_PATH/glassfish/domains/domain1/lib
+COPY ./target/$COMPTANDYE/WEB-INF/lib/mysql-connector-java-5.1.46.jar $PAYARA_PATH/glassfish/domains/domain1/lib
 
 # Reset the admin password
 RUN echo 'AS_ADMIN_PASSWORD='$ADMIN_PASSWORD'\n\
@@ -37,11 +38,17 @@ $AS_ADMIN set configs.config.server-config.security-service.activate-default-pri
 $AS_ADMIN set configs.config.server-config.admin-service.das-config.dynamic-reload-enabled=false --passwordfile=/opt/pwdfile && \
 # $AS_ADMIN set configs.config.server-config.admin-service.das-config.autodeploy-enabled=false --passwordfile=/opt/pwdfile && \
 $AS_ADMIN delete-jvm-options --passwordfile=/opt/pwdfile -client:-Xmx512m: && \
-$AS_ADMIN create-jvm-options --passwordfile=/opt/pwdfile -server:-Xmx2048m:-Xms2048m:-Dfish.payara.classloading.delegate=false  && \
+$AS_ADMIN create-jvm-options --passwordfile=/opt/pwdfile -server:-Xmx2048m:-Xms2048m:-Dfish.payara.classloading.delegate=false:-DjvmRoute=\$\{com.sun.aas.instanceName\}  && \
+$AS_ADMIN set-hazelcast-configuration --passwordfile=/opt/pwdfile --enabled=true --dynamic=true && \
+$AS_ADMIN copy-config --passwordfile=/opt/pwdfile server-config dg-config && \
+$AS_ADMIN create-deployment-group --passwordfile=/opt/pwdfile dg-$WEBAPP && \
 $AS_ADMIN restart-domain $DOMAIN
 
 # Autodeploy the project
 # COPY ./target/$COMPTANDYE.war $AUTODEPLOY_DIR/comptandye.war
+
+#EXPOSE 7000-8000
+EXPOSE 1-65000/udp 1-65000/tcp
 
 # Start the server in verbose mode
 ENTRYPOINT $AS_ADMIN start-domain -v $DOMAIN
