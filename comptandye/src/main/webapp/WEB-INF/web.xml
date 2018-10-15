@@ -78,10 +78,6 @@
 
         <async-supported>true</async-supported>
     </servlet>
-    <servlet>
-        <servlet-name>ReloadWebApp</servlet-name>
-        <servlet-class>fr.trendev.comptandye.utils.servlets.ReloadWebApp</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
         <url-pattern>/api/*</url-pattern>
@@ -106,37 +102,6 @@
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ReloadWebApp</servlet-name>
-        <url-pattern>/dist/professional</url-pattern>
-        <url-pattern>/dist/individual</url-pattern>
-        <url-pattern>/dist/login</url-pattern>
-        <url-pattern>/dist/professional/*</url-pattern>
-        <url-pattern>/dist/administrator</url-pattern>
-        <url-pattern>/dist/login/*</url-pattern>
-        <url-pattern>/dist/administrator/*</url-pattern>
-        <url-pattern>/dist/individual/*</url-pattern>
-        <url-pattern>/dist/register</url-pattern>
-        <url-pattern>/dist/register/*</url-pattern>
-        <url-pattern>/dist/unsupported-user-type</url-pattern>
-        <url-pattern>/dist/unsupported-user-type/*</url-pattern>
-        <url-pattern>/dist/welcome</url-pattern>
-        <url-pattern>/dist/welcome/*</url-pattern>
-        <url-pattern>/professional</url-pattern>
-        <url-pattern>/individual</url-pattern>
-        <url-pattern>/login</url-pattern>
-        <url-pattern>/professional/*</url-pattern>
-        <url-pattern>/administrator</url-pattern>
-        <url-pattern>/login/*</url-pattern>
-        <url-pattern>/administrator/*</url-pattern>
-        <url-pattern>/individual/*</url-pattern>
-        <url-pattern>/register</url-pattern>
-        <url-pattern>/register/*</url-pattern>
-        <url-pattern>/unsupported-user-type</url-pattern>
-        <url-pattern>/unsupported-user-type/*</url-pattern>
-        <url-pattern>/welcome</url-pattern>
-        <url-pattern>/welcome/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>60</session-timeout>
