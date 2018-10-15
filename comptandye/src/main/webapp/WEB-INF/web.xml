@@ -55,33 +55,33 @@
         <dispatcher>INCLUDE</dispatcher>
         <dispatcher>ERROR</dispatcher>
     </filter-mapping>
-    <servlet>
+<!--    <servlet>
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
-        <!--disable MoxyJson and use Jackson instead -->
+        disable MoxyJson and use Jackson instead 
         <init-param>
             <param-name>jersey.config.server.disableMoxyJson</param-name>
             <param-value>true</param-value>
         </init-param>
-        <!-- Force Jackson instead of default JSONb or MoxyJson -->
+         Force Jackson instead of default JSONb or MoxyJson 
         <init-param>
             <param-name>jersey.config.server.provider.classnames</param-name>
-            <!-- This package should be added in dependencies -->
+             This package should be added in dependencies 
             <param-value>org.glassfish.jersey.jackson.JacksonFeature</param-value>
         </init-param>
         <init-param>
             <param-name>jersey.config.server.provider.packages</param-name>
             <param-value>
                 fr.trendev.comptandye,
-                com.fasterxml.jackson.jaxrs <!-- Jackson providers -->
+                com.fasterxml.jackson.jaxrs  Jackson providers 
             </param-value>
         </init-param>
 
         <async-supported>true</async-supported>
-    </servlet>
-    <servlet-mapping>
+    </servlet>-->
+    <!--    <servlet-mapping>
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
         <url-pattern>/api/*</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
