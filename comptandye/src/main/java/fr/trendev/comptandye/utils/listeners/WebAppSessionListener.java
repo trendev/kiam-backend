@@ -11,15 +11,18 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
+import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionIdListener;
 import javax.servlet.http.HttpSessionListener;
 
 /**
+ * Tracks HTTP Sessions lifecycle changes
  *
  * @author jsie
  */
+@WebListener
 public class WebAppSessionListener implements HttpSessionListener,
         HttpSessionIdListener {
 

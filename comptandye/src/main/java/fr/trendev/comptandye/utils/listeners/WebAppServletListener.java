@@ -10,11 +10,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
 
 /**
+ * Gets notified of the app lifecycle changes (startup/shutdown)
  *
  * @author jsie
  */
+@WebListener
 public class WebAppServletListener implements ServletContextListener {
 
     private static final Logger LOG = Logger.getLogger(
