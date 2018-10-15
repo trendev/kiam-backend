@@ -6,6 +6,7 @@
 package fr.trendev.comptandye.services;
 
 import java.util.Map;
+import java.util.TreeMap;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
@@ -18,17 +19,8 @@ public class JAXRSConfiguration extends Application {
 
     @Override
     public Map<String, Object> getProperties() {
-        Map<String, Object> map = super.getProperties();
-//        map.put("jersey.config.jsonFeature", JacksonFeature.class);
+        Map<String, Object> map = new TreeMap<>();
+        map.put("jersey.config.jsonFeature", "JacksonFeature");
         return map;
     }
-
-//    public Set<Class<?>> getClasses() {
-//        final Set<Class<?>> classes = new HashSet<Class<?>>();
-//
-//        // Add JacksonFeature.
-//        classes.add(JacksonFeature.class);
-//
-//        return classes;
-//    }
 }
