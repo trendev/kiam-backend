@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <display-name>comptandye</display-name>
-    <context-param>
+    <!--    <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Production</param-value>
     </context-param>
@@ -12,7 +12,7 @@
     <context-param>
         <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
         <param-value>true</param-value>
-    </context-param>
+    </context-param>-->
     <filter>
         <description>Filters all http/https requests and check session validity</description>
         <filter-name>OverallFilter</filter-name>
@@ -55,7 +55,7 @@
         <dispatcher>INCLUDE</dispatcher>
         <dispatcher>ERROR</dispatcher>
     </filter-mapping>
-    <servlet>
+    <!--    <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
@@ -66,7 +66,7 @@
         <url-pattern>*.jsf</url-pattern>
         <url-pattern>*.faces</url-pattern>
         <url-pattern>*.xhtml</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
     <session-config>
         <session-timeout>60</session-timeout>
         <cookie-config>
@@ -76,7 +76,7 @@
     <welcome-file-list>
         <welcome-file>/dist/index.html</welcome-file>
     </welcome-file-list>
-    <security-constraint>
+    <!--    <security-constraint>
         <display-name>ADMIN_secured_access</display-name>
         <web-resource-collection>
             <web-resource-name>Admin secured pages</web-resource-name>
@@ -104,14 +104,6 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-    <login-config>
-        <auth-method>FORM</auth-method>
-        <realm-name>comptandye-security-realm</realm-name>
-        <form-login-config>
-            <form-login-page>/login_register/login.html</form-login-page>
-            <form-error-page>/login_register/error.html</form-error-page>
-        </form-login-config>
-    </login-config>
     <security-role>
         <description/>
         <role-name>Administrator</role-name>
@@ -124,4 +116,12 @@
         <description/>
         <role-name>Individual</role-name>
     </security-role>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>comptandye-security-realm</realm-name>
+        <form-login-config>
+            <form-login-page>/login_register/login.html</form-login-page>
+            <form-error-page>/login_register/error.html</form-error-page>
+        </form-login-config>
+    </login-config>-->
 </web-app>
