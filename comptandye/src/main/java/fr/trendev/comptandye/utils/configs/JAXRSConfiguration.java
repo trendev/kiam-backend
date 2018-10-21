@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.services;
+package fr.trendev.comptandye.utils.configs;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -11,7 +11,6 @@ import javax.annotation.security.DeclareRoles;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.security.enterprise.authentication.mechanism.http.BasicAuthenticationMechanismDefinition;
-import javax.security.enterprise.identitystore.DatabaseIdentityStoreDefinition;
 import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -25,18 +24,18 @@ import javax.ws.rs.core.Application;
     "Professional",
     "Individual"
 })
-@DatabaseIdentityStoreDefinition(
-        dataSourceLookup = "jdbc/MySQLDataSourceComptaNdye",
-        callerQuery = "select PASSWORD from USER_ACCOUNT where EMAIL=?",
-        groupsQuery = "select userGroups_NAME from USER_ACCOUNT_USER_GROUP where userAccounts_EMAIL = ?",
-        priority = 30
-)
+//@DatabaseIdentityStoreDefinition(
+//        dataSourceLookup = "jdbc/MySQLDataSourceComptaNdye",
+//        callerQuery = "select PASSWORD from USER_ACCOUNT where EMAIL=?",
+//        groupsQuery = "select userGroups_NAME from USER_ACCOUNT_USER_GROUP where userAccounts_EMAIL = ?",
+//        priority = 30
+//)
 //@FormAuthenticationMechanismDefinition(
 //        loginToContinue =
 //        @LoginToContinue(
 //                useForwardToLogin = false,
 //                loginPage = "/login.html",
-//                errorPage = "/error.html"
+//                errorPage = "/login-error.html"
 //        ))
 @BasicAuthenticationMechanismDefinition(realmName = "comptandye-security")
 @ApplicationScoped
