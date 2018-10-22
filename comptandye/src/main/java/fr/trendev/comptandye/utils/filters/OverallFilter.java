@@ -5,9 +5,9 @@
  */
 package fr.trendev.comptandye.utils.filters;
 
-import fr.trendev.comptandye.utils.ActiveSessionTracker;
 import fr.trendev.comptandye.beans.admin.AuthorizationsBean;
 import fr.trendev.comptandye.beans.xsrf.XSRFTokenGenerator;
+import fr.trendev.comptandye.utils.ActiveSessionTracker;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.logging.Level;
@@ -67,7 +67,8 @@ public class OverallFilter implements Filter {
 
         Principal user = req.getUserPrincipal();
 
-        HttpSession session = req.getSession();
+        //do not create a session if the user is not authenticated
+        HttpSession session = req.getSession(false);
 
         LOG.log(Level.INFO, "{3} / [{1}] has requested {2} {0}",
                 new Object[]{req.getRequestURL(), (user != null) ? user.
