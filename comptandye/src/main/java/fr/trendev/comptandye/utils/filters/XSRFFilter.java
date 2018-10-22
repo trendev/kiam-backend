@@ -66,7 +66,8 @@ public class XSRFFilter extends ApiFilter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse rsp = (HttpServletResponse) response;
 
-        HttpSession session = req.getSession();
+        //do not create a session if the user is not authenticated
+        HttpSession session = req.getSession(false);
 
         String xxsrftoken = req.getHeader("X-XSRF-TOKEN");
 
