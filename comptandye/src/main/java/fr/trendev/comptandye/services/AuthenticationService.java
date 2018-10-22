@@ -5,9 +5,9 @@
  */
 package fr.trendev.comptandye.services;
 
-import fr.trendev.comptandye.utils.ActiveSessionTracker;
 import fr.trendev.comptandye.beans.xsrf.XSRFTokenGenerator;
 import fr.trendev.comptandye.sessions.UserAccountFacade;
+import fr.trendev.comptandye.utils.ActiveSessionTracker;
 import fr.trendev.comptandye.utils.AuthenticationSecurityUtils;
 import fr.trendev.comptandye.utils.PasswordGenerator;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHandler;
@@ -167,9 +167,9 @@ public class AuthenticationService {
                             .cookie(jsessionid, xsrfCookie)
                             .build();
                 }
-            } else {// user is authenticated
+            } else {// user is already authenticated
                 LOG.log(Level.WARNING,
-                        "Login cancelled - user [{0}] is already logged in",
+                        "Login process cancelled - user [{0}] is already logged in",
                         user.getName());
 
             }
