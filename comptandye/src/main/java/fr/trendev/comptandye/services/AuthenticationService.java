@@ -222,7 +222,9 @@ public class AuthenticationService {
                 0, true, false);
 
         try {
-            req.getSession().invalidate();
+            //Get the current session and invalidate it
+            Optional.ofNullable(req.getSession(false))
+                    .ifPresent(session -> session.invalidate());
         } catch (IllegalStateException ex) {
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(
                     Json.createObjectBuilder()
