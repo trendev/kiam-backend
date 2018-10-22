@@ -120,8 +120,15 @@ public class AuthenticationService {
         try {
             //user is not authenticated
             if (user == null) {
-                req.login(username, password);
+
+                /**
+                 * Get a session and Validate the provided username and password
+                 * in the password validation realm used by the web container
+                 * login mechanism configured for the ServletContext.
+                 */
                 HttpSession session = req.getSession();
+                req.login(username, password);
+
                 // checks first if the user is Blocked or not
                 if (securityUtils.isBlockedUser(sec)) {
                     LOG.log(Level.WARNING,
