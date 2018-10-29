@@ -134,7 +134,11 @@
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>src/main/filtered-resources/stripe</directory>
                 <filtering>true</filtering>
+                <targetPath>stripe</targetPath>
             </resource>
         </resources>
         <plugins>
