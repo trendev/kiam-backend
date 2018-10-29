@@ -136,9 +136,8 @@
                 <directory>src/main/resources</directory>
             </resource>
             <resource>
-                <directory>src/main/filtered-resources/stripe</directory>
+                <directory>src/main/filtered-resources</directory>
                 <filtering>true</filtering>
-                <targetPath>stripe</targetPath>
             </resource>
         </resources>
         <plugins>
