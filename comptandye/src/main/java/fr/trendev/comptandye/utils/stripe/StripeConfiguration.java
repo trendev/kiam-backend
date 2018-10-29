@@ -6,6 +6,11 @@
 package fr.trendev.comptandye.utils.stripe;
 
 import com.stripe.Stripe;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -18,26 +23,35 @@ import javax.ejb.Startup;
 @Singleton
 public class StripeConfiguration {
 
+    private final Logger LOG = Logger.getLogger(StripeConfiguration.class.
+            getName());
+
     /**
-     * Initializes the Stripe API KEY with the TEST or LIVE Stripe Key
+     * Loads and Initializes the Stripe API KEY with the TEST or LIVE Stripe Key
+     * (depending of the PROD or DEV environment)
      */
     @PostConstruct
     void init() {
-        Stripe.apiKey = StripeApiKey.LIVE.getKey();
-    }
+        try {
+            // loads the properties
+            ClassLoader classloader = Thread.currentThread().
+                    getContextClassLoader();
+            InputStream is = classloader.getResourceAsStream(
+                    "stripe/stripe.properties");
 
-    private enum StripeApiKey {
-        TEST("sk_test_0gkdtCawLunLNk2sPRCSrTDv"),
-        LIVE("sk_live_wSpz6KIOBRcHoMUMhtUdB0vU");
+            Properties properties = new Properties();
+            properties.load(is);
 
-        private StripeApiKey(String key) {
-            this.key = key;
-        }
+            String key = properties.getProperty("stripe.key");
+            String type = properties.getProperty("stripe.type");
 
-        private final String key;
+            // sets the stripe api key
+            Stripe.apiKey = key;
 
-        String getKey() {
-            return this.key;
+            LOG.log(Level.INFO, "Stripe " + type + " key is set (" + key + ")");
+
+        } catch (IOException ex) { //should not happen
+            LOG.log(Level.SEVERE, "STRIPE API KEY IS NOT SET", ex);
         }
     }
 
