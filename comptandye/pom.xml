@@ -16,9 +16,34 @@
     
     <profiles>
         <profile>
+            <id>dev</id>
+            <activation>
+                <!-- this profile is active by default -->
+                <activeByDefault>true</activeByDefault>
+                <!-- activate if system properties 'env=dev' -->
+                <property>
+                    <name>env</name>
+                    <value>dev</value>
+                </property>
+            </activation>
+            <properties>
+                <stripe.key>sk_test_0gkdtCawLunLNk2sPRCSrTDv</stripe.key>
+                <stripe.type>TEST</stripe.type>
+            </properties>
+        </profile>
+        <profile>
             <id>prod</id>
+            <activation>
+                <!-- activate if system properties 'env=prod' -->
+                <property>
+                    <name>env</name>
+                    <value>prod</value>
+                </property>
+            </activation>
             <properties>
                 <maven.test.skip>true</maven.test.skip>
+                <stripe.key>sk_live_wSpz6KIOBRcHoMUMhtUdB0vU</stripe.key>
+                <stripe.type>LIVE</stripe.type>
             </properties>
         </profile>
     </profiles>
@@ -106,6 +131,12 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
