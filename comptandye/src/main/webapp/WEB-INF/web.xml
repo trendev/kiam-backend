@@ -77,22 +77,23 @@
         <welcome-file>/dist/index.html</welcome-file>
     </welcome-file-list>
     <!--    <security-constraint>
-        <display-name>ADMIN_secured_access</display-name>
-        <web-resource-collection>
-            <web-resource-name>Admin secured pages</web-resource-name>
-            <description>admin tools + wadl</description>
-            <url-pattern>/admin/*</url-pattern>
-            <url-pattern>/api/application.wadl</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <description/>
-            <role-name>Administrator</role-name>
-        </auth-constraint>
-        <user-data-constraint>
-            <description/>
-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>
-    </security-constraint>
+            <display-name>ADMIN_secured_access</display-name>
+            <web-resource-collection>
+                <web-resource-name>Admin secured pages</web-resource-name>
+                <description>admin tools + wadl</description>
+                <url-pattern>/admin/*</url-pattern>
+                <url-pattern>/api/application.wadl</url-pattern>
+            </web-resource-collection>
+            <auth-constraint>
+                <description/>
+                <role-name>Administrator</role-name>
+            </auth-constraint>
+            <user-data-constraint>
+                <description/>
+                <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+            </user-data-constraint>
+        </security-constraint>
+    -->    
     <security-constraint>
         <display-name>Secured REST-API</display-name>
         <web-resource-collection>
@@ -120,8 +121,8 @@
         <auth-method>FORM</auth-method>
         <realm-name>comptandye-security-realm</realm-name>
         <form-login-config>
-            <form-login-page>/login_register/login.html</form-login-page>
-            <form-error-page>/login_register/error.html</form-error-page>
+            <form-login-page>/login.html</form-login-page>
+            <form-error-page>/login-error.html</form-error-page>
         </form-login-config>
-    </login-config>-->
+    </login-config>
 </web-app>

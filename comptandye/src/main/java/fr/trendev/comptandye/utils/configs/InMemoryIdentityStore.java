@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
 import javax.security.enterprise.credential.UsernamePasswordCredential;
 import javax.security.enterprise.identitystore.CredentialValidationResult;
 import static javax.security.enterprise.identitystore.CredentialValidationResult.INVALID_RESULT;
@@ -22,7 +21,7 @@ import javax.security.enterprise.identitystore.IdentityStore;
  *
  * @author jsie
  */
-@ApplicationScoped
+//@ApplicationScoped
 public class InMemoryIdentityStore implements IdentityStore {
 
     private final Map<String, Set<String>> accounts = new HashMap<>();
