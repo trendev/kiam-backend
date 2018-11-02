@@ -5,7 +5,7 @@
  */
 package fr.trendev.comptandye.beans.xsrf;
 
-import fr.trendev.comptandye.utils.PasswordGenerator;
+import fr.trendev.comptandye.utils.security.PasswordGenerator;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;

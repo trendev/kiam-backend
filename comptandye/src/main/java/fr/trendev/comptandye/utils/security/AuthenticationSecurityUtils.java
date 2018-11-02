@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils;
+package fr.trendev.comptandye.utils.security;
 
+import fr.trendev.comptandye.utils.UserAccountType;
 import java.util.Optional;
 import java.util.function.Function;
 import javax.ejb.Stateless;

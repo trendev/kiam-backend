@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils;
+package fr.trendev.comptandye.utils.security;
 
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.utils.observers.qualifiers.NewPasswordDemoAccount;

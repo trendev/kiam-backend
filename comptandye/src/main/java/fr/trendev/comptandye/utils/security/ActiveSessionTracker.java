@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils;
+package fr.trendev.comptandye.utils.security;
 
 import fr.trendev.comptandye.entities.UserAccount;
+import fr.trendev.comptandye.utils.LoginController;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;

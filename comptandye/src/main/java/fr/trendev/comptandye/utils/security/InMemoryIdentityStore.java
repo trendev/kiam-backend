@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils.configs;
+package fr.trendev.comptandye.utils.security;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -22,6 +22,11 @@ import javax.security.enterprise.identitystore.IdentityStore;
  * @author jsie
  */
 //@ApplicationScoped
+/**
+ * TEST purposes only, should not be provided on Production
+ *
+ * @author jsie
+ */
 public class InMemoryIdentityStore implements IdentityStore {
 
     private final Map<String, Set<String>> accounts = new HashMap<>();

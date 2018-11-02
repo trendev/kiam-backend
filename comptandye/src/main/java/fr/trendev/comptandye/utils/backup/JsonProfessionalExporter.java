@@ -9,7 +9,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
-import fr.trendev.comptandye.utils.EncryptionUtils;
+import fr.trendev.comptandye.utils.security.EncryptionUtils;
 import fr.trendev.comptandye.utils.producers.qualifiers.ProfessionalExport;
 import java.text.SimpleDateFormat;
 import java.util.Date;

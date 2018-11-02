@@ -10,7 +10,7 @@ import com.stripe.model.InvoiceCollection;
 import com.stripe.model.Subscription;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
-import fr.trendev.comptandye.utils.AuthenticationSecurityUtils;
+import fr.trendev.comptandye.utils.security.AuthenticationSecurityUtils;
 import fr.trendev.comptandye.utils.exceptions.ThrowingFunction;
 import fr.trendev.comptandye.utils.stripe.StripeCustomerUtils;
 import fr.trendev.comptandye.utils.stripe.StripeSubscriptionUtils;

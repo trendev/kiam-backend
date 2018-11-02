@@ -9,7 +9,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;
-import fr.trendev.comptandye.utils.AuthenticationSecurityUtils;
+import fr.trendev.comptandye.utils.security.AuthenticationSecurityUtils;
 import fr.trendev.comptandye.utils.UserAccountType;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHandler;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;

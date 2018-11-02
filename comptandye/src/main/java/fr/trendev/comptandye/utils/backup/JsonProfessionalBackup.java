@@ -7,8 +7,8 @@ package fr.trendev.comptandye.utils.backup;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.trendev.comptandye.entities.Professional;
-import fr.trendev.comptandye.utils.EncryptionSalt;
-import fr.trendev.comptandye.utils.EncryptionUtils;
+import fr.trendev.comptandye.utils.security.EncryptionSalt;
+import fr.trendev.comptandye.utils.security.EncryptionUtils;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.WebApplicationException;

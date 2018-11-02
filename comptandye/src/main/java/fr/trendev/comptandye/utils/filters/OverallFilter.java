@@ -7,7 +7,7 @@ package fr.trendev.comptandye.utils.filters;
 
 import fr.trendev.comptandye.beans.admin.AuthorizationsBean;
 import fr.trendev.comptandye.beans.xsrf.XSRFTokenGenerator;
-import fr.trendev.comptandye.utils.ActiveSessionTracker;
+import fr.trendev.comptandye.utils.security.ActiveSessionTracker;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.logging.Level;

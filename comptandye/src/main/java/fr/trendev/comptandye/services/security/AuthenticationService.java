@@ -7,9 +7,9 @@ package fr.trendev.comptandye.services.security;
 
 import fr.trendev.comptandye.beans.xsrf.XSRFTokenGenerator;
 import fr.trendev.comptandye.sessions.UserAccountFacade;
-import fr.trendev.comptandye.utils.ActiveSessionTracker;
-import fr.trendev.comptandye.utils.AuthenticationSecurityUtils;
-import fr.trendev.comptandye.utils.PasswordGenerator;
+import fr.trendev.comptandye.utils.security.ActiveSessionTracker;
+import fr.trendev.comptandye.utils.security.AuthenticationSecurityUtils;
+import fr.trendev.comptandye.utils.security.PasswordGenerator;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHandler;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
 import java.io.StringReader;

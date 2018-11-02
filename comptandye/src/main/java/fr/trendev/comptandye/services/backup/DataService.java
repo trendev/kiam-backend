@@ -5,7 +5,7 @@
  */
 package fr.trendev.comptandye.services.backup;
 
-import fr.trendev.comptandye.utils.AuthenticationSecurityUtils;
+import fr.trendev.comptandye.utils.security.AuthenticationSecurityUtils;
 import fr.trendev.comptandye.utils.backup.JsonProfessionalExporter;
 import fr.trendev.comptandye.utils.backup.JsonProfessionalImporter;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHandler;

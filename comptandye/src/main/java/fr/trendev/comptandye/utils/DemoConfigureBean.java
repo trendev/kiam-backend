@@ -34,7 +34,7 @@ import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.entities.VatRates;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.utils.NotificationLevelEnum;
-import fr.trendev.comptandye.utils.PasswordGenerator;
+import fr.trendev.comptandye.utils.security.PasswordGenerator;
 import fr.trendev.comptandye.utils.ThresholdAlertQualifierEnum;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import fr.trendev.comptandye.utils.visitors.BillTypeVisitor;

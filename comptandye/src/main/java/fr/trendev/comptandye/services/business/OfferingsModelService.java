@@ -15,7 +15,7 @@ import fr.trendev.comptandye.sessions.PackFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.sessions.SaleFacade;
 import fr.trendev.comptandye.sessions.ServiceFacade;
-import fr.trendev.comptandye.utils.AuthenticationSecurityUtils;
+import fr.trendev.comptandye.utils.security.AuthenticationSecurityUtils;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
 import java.io.IOException;
 import java.io.InputStream;
