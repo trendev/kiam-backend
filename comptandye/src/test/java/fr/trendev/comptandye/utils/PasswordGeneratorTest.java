@@ -5,7 +5,7 @@
  */
 package fr.trendev.comptandye.utils;
 
-import fr.trendev.comptandye.security.controllers.PasswordGenerator;
+import fr.trendev.comptandye.security.controllers.PasswordManager;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.IntStream;
@@ -21,10 +21,10 @@ import org.junit.Test;
  */
 public class PasswordGeneratorTest {
 
-    private PasswordGenerator passwordGenerator;
+    private PasswordManager passwordManager;
 
     public PasswordGeneratorTest() {
-        passwordGenerator = new PasswordGenerator();
+        passwordManager = new PasswordManager();
     }
 
     @BeforeClass
@@ -44,7 +44,7 @@ public class PasswordGeneratorTest {
     }
 
     /**
-     * Test of autoGenerate method, of class PasswordGenerator.
+     * Test of autoGenerate method, of class PasswordManager.
      */
     @Test
     public void testAutoGenerate() {
@@ -56,8 +56,8 @@ public class PasswordGeneratorTest {
 
         assert spwd.isEmpty();
 
-        IntStream.range(0, n).forEach(i -> spwd.add(passwordGenerator.
-                encrypt_SHA256(passwordGenerator.
+        IntStream.range(0, n).forEach(i -> spwd.add(passwordManager.
+                hashPassword(passwordManager.
                         autoGenerate(size))));
 
         assert !spwd.isEmpty();
@@ -72,7 +72,7 @@ public class PasswordGeneratorTest {
     }
 
     /**
-     * Test of encrypt_SHA256 method, of class PasswordGenerator.
+     * Test of hashPassword method, of class PasswordManager.
      */
     @Test
     public void testEncrypt_SHA256() {
@@ -80,37 +80,21 @@ public class PasswordGeneratorTest {
 
         System.out.println("encrypt_SHA256 Base64");
         System.out.println("---------------------");
-        String pwd = "error";
-        String pwd_sha256 = "ygD8z7QImJ7dxAEGLE0SGaas62ubVUEjV/F5CGLo8Xg=";
 
-        String pwd2 = "password";
-        String pwd2_sha256 = "XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg=";
+        assertPasswordEncryption("error",
+                "ygD8z7QImJ7dxAEGLE0SGaas62ubVUEjV/F5CGLo8Xg=");
 
-        String pwd3 = "comptandye_password";
-        String pwd3_sha256 = "8oOK6BsXsv+s19XMaKMUYh6y0IvVf4Kjb7GmSWS/M0Y=";
+        assertPasswordEncryption("password",
+                "XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg=");
 
-        assertPasswordEncryption(pwd, pwd_sha256, "base64");
-        assertPasswordEncryption(pwd2, pwd2_sha256, "base64");
-        assertPasswordEncryption(pwd3, pwd3_sha256, "base64");
-
-        System.out.println("encrypt_SHA256 Base16");
-        System.out.println("---------------------");
-
-        pwd_sha256 = "ca00fccfb408989eddc401062c4d1219a6aceb6b9b55412357f1790862e8f178";
-        pwd2_sha256 = "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8";
-        pwd3_sha256 = "f2838ae81b17b2ffacd7d5cc68a314621eb2d08bd57f82a36fb1a64964bf3346";
-
-        assertPasswordEncryption(pwd, pwd_sha256, "base16");
-        assertPasswordEncryption(pwd2, pwd2_sha256, "base16");
-        assertPasswordEncryption(pwd3, pwd3_sha256, "base16");
+        assertPasswordEncryption("comptandye_password",
+                "8oOK6BsXsv+s19XMaKMUYh6y0IvVf4Kjb7GmSWS/M0Y=");
     }
 
-    private void assertPasswordEncryption(String pwd, String pwd_sha256,
-            String base) {
-        String encoded = passwordGenerator.encrypt_SHA256(pwd, base);
-        System.out.println("\"" + pwd + "\" ==> " + encoded);
-        assert encoded.equals(pwd_sha256);
+    private void assertPasswordEncryption(String pwd, String pwd_sha256) {
+        String hpwd = passwordManager.hashPassword(pwd);
+        System.out.println("\"" + pwd + "\" ==> " + hpwd);
+        assert pwd_sha256.equals(hpwd);
 
     }
-
 }

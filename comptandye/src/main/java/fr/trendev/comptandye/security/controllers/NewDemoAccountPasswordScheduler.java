@@ -31,20 +31,20 @@ public class NewDemoAccountPasswordScheduler {
     private ProfessionalFacade professionalFacade;
 
     @Inject
-    private PasswordGenerator passwordGenerator;
+    private PasswordManager passwordManager;
 
     @Inject
     @NewDemoAccountPassword
     private Event<JsonObject> newPasswordEvent;
 
-    private final Logger LOG;
+    private static final Logger LOG = Logger.getLogger(
+            NewDemoAccountPasswordScheduler.class.
+                    getName());
 
     private final String DEMO_ACCOUNT_EMAIL;
 
     public NewDemoAccountPasswordScheduler() {
         this.DEMO_ACCOUNT_EMAIL = "pro@domain.com";
-        this.LOG = Logger.getLogger(NewDemoAccountPasswordScheduler.class.
-                getName());
     }
 
     @PostConstruct
@@ -66,13 +66,13 @@ public class NewDemoAccountPasswordScheduler {
         try {
             Optional.ofNullable(professionalFacade.find(DEMO_ACCOUNT_EMAIL))
                     .ifPresent(pro -> {
-                        String password = passwordGenerator.autoGenerate();
+                        String password = passwordManager.autoGenerate();
 
                         LOG.log(Level.INFO,
                                 "New Password generated for Demo Account {0}",
                                 DEMO_ACCOUNT_EMAIL);
 
-                        pro.setPassword(passwordGenerator.encrypt_SHA256(
+                        pro.setPassword(passwordManager.hashPassword(
                                 password));
 
                         LOG.log(Level.INFO,

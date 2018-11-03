@@ -5,13 +5,13 @@
  */
 package fr.trendev.comptandye.services.business;
 
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.entities.Administrator;
 import fr.trendev.comptandye.entities.UserGroup;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
+import fr.trendev.comptandye.security.controllers.PasswordManager;
 import fr.trendev.comptandye.sessions.AdministratorFacade;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;
-import fr.trendev.comptandye.security.controllers.PasswordGenerator;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,7 +43,7 @@ import javax.ws.rs.core.Response;
 public class AdministratorService extends AbstractCommonService<Administrator, String> {
 
     @Inject
-    PasswordGenerator passwordGenerator;
+    PasswordManager passwordManager;
 
     @Inject
     AdministratorFacade administratorFacade;
@@ -118,10 +118,10 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
                 e.setUuid(uuid);
             }
 
-            //encrypts the provided password
-            String encrypted_pwd = passwordGenerator.encrypt_SHA256(e.
+            //hashes the provided password
+            String hpwd = passwordManager.hashPassword(e.
                     getPassword());
-            e.setPassword(encrypted_pwd);
+            e.setPassword(hpwd);
 
             //adds the new administrator to the group and the group to the new admin
             UserGroup adminGroup = userGroupFacade.find("Administrator");
@@ -138,11 +138,11 @@ public class AdministratorService extends AbstractCommonService<Administrator, S
         LOG.log(Level.INFO, "Updating Administrator {0}", entity.getEmail());
         return super.put(entity, entity.getEmail(), e ->
         {
-            //encrypts the provided password
+            //hashes the provided password
             if (entity.getPassword() != null && !entity.getPassword().isEmpty()) {
-                String encrypted_pwd = passwordGenerator.encrypt_SHA256(
+                String hpwd = passwordManager.hashPassword(
                         entity.getPassword());
-                e.setPassword(encrypted_pwd);
+                e.setPassword(hpwd);
             }
 
             e.setUsername(entity.getUsername());

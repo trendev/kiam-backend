@@ -5,13 +5,13 @@
  */
 package fr.trendev.comptandye.security.boundaries;
 
-import fr.trendev.comptandye.security.controllers.XSRFTokenGenerator;
-import fr.trendev.comptandye.sessions.UserAccountFacade;
-import fr.trendev.comptandye.security.controllers.ActiveSessionTracker;
-import fr.trendev.comptandye.security.controllers.AuthenticationSecurityUtils;
-import fr.trendev.comptandye.security.controllers.PasswordGenerator;
 import fr.trendev.comptandye.exceptions.ExceptionHandler;
 import fr.trendev.comptandye.exceptions.ExceptionHelper;
+import fr.trendev.comptandye.security.controllers.ActiveSessionTracker;
+import fr.trendev.comptandye.security.controllers.AuthenticationSecurityUtils;
+import fr.trendev.comptandye.security.controllers.PasswordManager;
+import fr.trendev.comptandye.security.controllers.XSRFTokenGenerator;
+import fr.trendev.comptandye.sessions.UserAccountFacade;
 import java.io.StringReader;
 import java.security.Principal;
 import java.util.Optional;
@@ -54,7 +54,7 @@ import javax.ws.rs.core.SecurityContext;
 public class AuthenticationService {
 
     @Inject
-    PasswordGenerator passwordGenerator;
+    PasswordManager passwordManager;
 
     @Inject
     UserAccountFacade userAccountFacade;
@@ -78,7 +78,7 @@ public class AuthenticationService {
     @GET
     @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON,})
     public String password(@QueryParam("size") int size) {
-        return passwordGenerator.autoGenerate(size);
+        return passwordManager.autoGenerate(size);
     }
 
     @Path("profile")
@@ -265,16 +265,16 @@ public class AuthenticationService {
                 .map(email ->
                         Optional.ofNullable(this.userAccountFacade.find(email))
                                 .map(user -> {
-                                    String epwd = passwordGenerator.
-                                            encrypt_SHA256(password);
-                                    user.setPassword(epwd);
+                                    String hpwd = passwordManager.hashPassword(
+                                            password);
+                                    user.setPassword(hpwd);
                                     String msg = "Password of user ["
                                             + email
                                             + "] has been changed !";
                                     LOG.log(Level.INFO, msg);
                                     return Response.ok(
                                             Json.createObjectBuilder().
-                                                    add("password", epwd).
+                                                    add("password", hpwd).
                                                     build()
                                     ).build();
                                 })

@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.services.business;
 
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.entities.Bill;
 import fr.trendev.comptandye.entities.Category;
 import fr.trendev.comptandye.entities.Client;
@@ -17,13 +18,12 @@ import fr.trendev.comptandye.entities.Product;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.entities.VatRates;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
+import fr.trendev.comptandye.security.controllers.PasswordManager;
 import fr.trendev.comptandye.sessions.IndividualFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.sessions.VatRatesFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;
-import fr.trendev.comptandye.security.controllers.PasswordGenerator;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -57,7 +57,7 @@ import javax.ws.rs.core.SecurityContext;
 public class ProfessionalService extends AbstractCommonService<Professional, String> {
 
     @Inject
-    PasswordGenerator passwordGenerator;
+    PasswordManager passwordManager;
 
     @Inject
     ProfessionalFacade professionalFacade;
@@ -159,10 +159,10 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
 
             e.setUuid(UUIDGenerator.generate("PRO-", true));
 
-            //encrypts the provided password
-            String encrypted_pwd = passwordGenerator.encrypt_SHA256(e.
+            //hashs the provided password
+            String hpwd = passwordManager.hashPassword(e.
                     getPassword());
-            e.setPassword(encrypted_pwd);
+            e.setPassword(hpwd);
 
             if (!inactivate) {
                 this.grantAsProfessional(e);
@@ -239,14 +239,11 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
 
         return super.put(entity, proEmail, e ->
         {
-            /**
-             * encrypts the provided password
-             *
-             */
+            // hashes the provided password
             if (entity.getPassword() != null && !entity.getPassword().isEmpty()) {
-                String encrypted_pwd = passwordGenerator.encrypt_SHA256(
+                String hpwd = passwordManager.hashPassword(
                         entity.getPassword());
-                e.setPassword(encrypted_pwd);
+                e.setPassword(hpwd);
             }
 
             e.setUsername(entity.getUsername());

@@ -18,7 +18,7 @@ import javax.inject.Inject;
 public class XSRFTokenGenerator {
 
     @Inject
-    PasswordGenerator passwordGenerator;
+    PasswordManager passwordManager;
 
     /**
      * Generates a XSRF token
@@ -26,7 +26,7 @@ public class XSRFTokenGenerator {
      * @return the generated token
      */
     public String generate() {
-        return passwordGenerator.autoGenerate(128);
+        return passwordManager.autoGenerate(128);
     }
 
 }

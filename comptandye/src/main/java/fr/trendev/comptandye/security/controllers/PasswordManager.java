@@ -13,7 +13,7 @@ import javax.ejb.Singleton;
  * @author jsie
  */
 @Singleton
-public class PasswordGenerator {
+public class PasswordManager {
 
     private final String sequence;
     private final SecureRandom rand;
@@ -21,7 +21,7 @@ public class PasswordGenerator {
 
     private final HashingMechanism hashingMechanism;
 
-    public PasswordGenerator() {
+    public PasswordManager() {
         sequence = "azertyuiopmlkjhgfdsqwxcvbn0123456789._-!?@AZERTYUIOPMLKJHGFDSQWXCVBN";
         rand = new SecureRandom();
         default_size = 10;
@@ -42,28 +42,12 @@ public class PasswordGenerator {
         return autoGenerate(default_size);
     }
 
-    public String encrypt_SHA256(String pwd) {
+    public String hashPassword(String pwd) {
         if (pwd == null || pwd.isEmpty()) {
             throw new IllegalArgumentException(
                     "Password or String to encrypt cannot be null or empty");
         }
         return hashingMechanism.hash_SHA256_base64(pwd);
-    }
-
-    public String encrypt_SHA256(String pwd, String base) {
-        if (pwd == null || pwd.isEmpty()) {
-            throw new IllegalArgumentException(
-                    "Password to encrypt cannot be null or empty");
-        }
-        switch (base) {
-            case "base64":
-                return hashingMechanism.hash_SHA256_base64(pwd);
-            case "base16":
-                return hashingMechanism.hash_SHA256_base16(pwd);
-            default:
-                return hashingMechanism.hash_SHA256_base64(pwd);
-        }
-
     }
 
 }

@@ -33,7 +33,7 @@ import fr.trendev.comptandye.entities.UsedItem;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.entities.VatRates;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
-import fr.trendev.comptandye.security.controllers.PasswordGenerator;
+import fr.trendev.comptandye.security.controllers.PasswordManager;
 import fr.trendev.comptandye.utils.visitors.BillTypeVisitor;
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -70,7 +70,7 @@ public class DemoConfigureBean implements Serializable {
     private EntityManager em;
 
     @Inject
-    PasswordGenerator passwordGenerator;
+    PasswordManager passwordManager;
 
     @Inject
     UserGroupFacade userGroupFacade;
@@ -270,12 +270,12 @@ public class DemoConfigureBean implements Serializable {
 
         Individual skonx = new Individual();
         skonx.setEmail("skonx2006@hotmail.com");
-        skonx.setPassword(passwordGenerator.encrypt_SHA256(passwordGenerator.
+        skonx.setPassword(passwordManager.hashPassword(passwordManager.
                 autoGenerate()));
 
         Individual sylvioc = new Individual();
         sylvioc.setEmail("sylvie.gay@gmail.com");
-        sylvioc.setPassword(passwordGenerator.encrypt_SHA256(passwordGenerator.
+        sylvioc.setPassword(passwordManager.hashPassword(passwordManager.
                 autoGenerate()));
 
         ind.getUserAccounts().add(skonx);

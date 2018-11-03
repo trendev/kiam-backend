@@ -9,11 +9,11 @@ import fr.trendev.comptandye.entities.Administrator;
 import fr.trendev.comptandye.entities.Individual;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.UserAccount;
+import fr.trendev.comptandye.security.controllers.PasswordManager;
 import fr.trendev.comptandye.sessions.AdministratorFacade;
 import fr.trendev.comptandye.sessions.IndividualFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.sessions.UserAccountFacade;
-import fr.trendev.comptandye.security.controllers.PasswordGenerator;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
@@ -35,7 +35,7 @@ public class ChangePwdListBean implements Serializable {
             getName());
 
     @Inject
-    private PasswordGenerator passwordGenerator;
+    private PasswordManager passwordManager;
 
     @Inject
     private AdministratorFacade administratorFacade;
@@ -103,8 +103,8 @@ public class ChangePwdListBean implements Serializable {
         String pwd = this.password;
         LOG.log(Level.WARNING, "password = {0}", pwd);
         LOG.log(Level.WARNING, "Will update {0}", user.getEmail());
-        String epwd = passwordGenerator.encrypt_SHA256(pwd);
-        user.setPassword(epwd);
+        String hpwd = passwordManager.hashPassword(pwd);
+        user.setPassword(hpwd);
         userAccountFacade.edit(user);
         this.clear();
         this.init();
@@ -117,7 +117,7 @@ public class ChangePwdListBean implements Serializable {
     }
 
     public void generate() {
-        this.password = passwordGenerator.autoGenerate();
+        this.password = passwordManager.autoGenerate();
     }
 
 }

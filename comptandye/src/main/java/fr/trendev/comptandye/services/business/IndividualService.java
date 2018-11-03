@@ -5,16 +5,16 @@
  */
 package fr.trendev.comptandye.services.business;
 
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.entities.Individual;
 import fr.trendev.comptandye.entities.IndividualBill;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.UserGroup;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
+import fr.trendev.comptandye.security.controllers.PasswordManager;
 import fr.trendev.comptandye.sessions.IndividualFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;
-import fr.trendev.comptandye.security.controllers.PasswordGenerator;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,7 +48,7 @@ import javax.ws.rs.core.SecurityContext;
 public class IndividualService extends AbstractCommonService<Individual, String> {
 
     @Inject
-    PasswordGenerator passwordGenerator;
+    PasswordManager passwordManager;
 
     @Inject
     IndividualFacade individualFacade;
@@ -128,10 +128,10 @@ public class IndividualService extends AbstractCommonService<Individual, String>
 
             e.setUuid(UUIDGenerator.generate("IND-", true));
 
-            //encrypts the provided password
-            String encrypted_pwd = passwordGenerator.encrypt_SHA256(e.
+            //hashes the provided password
+            String hwpd = passwordManager.hashPassword(e.
                     getPassword());
-            e.setPassword(encrypted_pwd);
+            e.setPassword(hwpd);
 
             //adds the new individual to the group and the group to the new individual
             UserGroup indGroup = userGroupFacade.find("Individual");
@@ -149,13 +149,13 @@ public class IndividualService extends AbstractCommonService<Individual, String>
         return super.put(entity, entity.getEmail(), e ->
         {
             /**
-             * encrypts the provided password
+             * hashes the provided password
              *
              */
             if (entity.getPassword() != null && !entity.getPassword().isEmpty()) {
-                String encrypted_pwd = passwordGenerator.encrypt_SHA256(
+                String hpwd = passwordManager.hashPassword(
                         entity.getPassword());
-                e.setPassword(encrypted_pwd);
+                e.setPassword(hpwd);
             }
 
             e.setUsername(entity.getUsername());
