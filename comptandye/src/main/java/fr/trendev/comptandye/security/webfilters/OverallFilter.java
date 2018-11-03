@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.webfilters;
+package fr.trendev.comptandye.security.webfilters;
 
 import fr.trendev.comptandye.utils.security.ActiveSessionTracker;
 import fr.trendev.comptandye.utils.security.XSRFTokenGenerator;
