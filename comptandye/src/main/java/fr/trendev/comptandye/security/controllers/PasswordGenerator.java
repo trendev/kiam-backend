@@ -5,7 +5,6 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
-import fr.trendev.comptandye.security.controllers.EncryptionMechanism;
 import java.security.SecureRandom;
 import java.util.logging.Logger;
 import javax.ejb.Singleton;
@@ -20,16 +19,15 @@ public class PasswordGenerator {
     private final String sequence;
     private final SecureRandom rand;
     private final int default_size;
-    private final Logger LOG;
-    private final EncryptionMechanism encryptionUtils;
+    private static final Logger LOG = Logger.getLogger(PasswordGenerator.class.
+            getName());
+    private final HashingMechanism hashingMechanism;
 
     public PasswordGenerator() {
         sequence = "azertyuiopmlkjhgfdsqwxcvbn0123456789._-!?@AZERTYUIOPMLKJHGFDSQWXCVBN";
         rand = new SecureRandom();
         default_size = 10;
-        LOG = Logger.getLogger(PasswordGenerator.class.
-                getName());
-        encryptionUtils = new EncryptionMechanism();
+        hashingMechanism = new HashingMechanism();
     }
 
     public String autoGenerate(int s) {
@@ -51,7 +49,7 @@ public class PasswordGenerator {
             throw new IllegalArgumentException(
                     "Password or String to encrypt cannot be null or empty");
         }
-        return encryptionUtils.encrypt_SHA256_base64(pwd);
+        return hashingMechanism.hash_SHA256_base64(pwd);
     }
 
     public String encrypt_SHA256(String pwd, String base) {
@@ -61,11 +59,11 @@ public class PasswordGenerator {
         }
         switch (base) {
             case "base64":
-                return encryptionUtils.encrypt_SHA256_base64(pwd);
+                return hashingMechanism.hash_SHA256_base64(pwd);
             case "base16":
-                return encryptionUtils.encrypt_SHA256_base16(pwd);
+                return hashingMechanism.hash_SHA256_base16(pwd);
             default:
-                return encryptionUtils.encrypt_SHA256_base64(pwd);
+                return hashingMechanism.hash_SHA256_base64(pwd);
         }
 
     }

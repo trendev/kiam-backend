@@ -7,7 +7,7 @@ package fr.trendev.comptandye.backup.entities;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.trendev.comptandye.entities.Professional;
-import fr.trendev.comptandye.security.controllers.EncryptionMechanism;
+import fr.trendev.comptandye.security.controllers.HashingMechanism;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.WebApplicationException;
@@ -22,8 +22,9 @@ public class JsonProfessionalBackup {
     private String checksum;
     private Professional professional;
 
-    private final Logger LOG = Logger.getLogger(JsonProfessionalBackup.class.
-            getName());
+    private static final Logger LOG = Logger.getLogger(
+            JsonProfessionalBackup.class.
+                    getName());
 
     public JsonProfessionalBackup() {
     }
@@ -65,12 +66,12 @@ public class JsonProfessionalBackup {
     /**
      * Inits the checksum control (with salt)
      *
-     * @param encryptionUtils the encryption utils
+     * @param hashingMechanism the encryption utils
      * @param json the flattened graph
      */
-    public void initChecksum(EncryptionMechanism encryptionUtils,
+    public void initChecksum(HashingMechanism hashingMechanism,
             String json) {
-        this.checksum = encryptionUtils.encrypt_SHA512_base64(
+        this.checksum = hashingMechanism.hash_SHA512_base64(
                 json + getSalt());
         LOG.
                 log(Level.INFO, "Checksum initialized with value : {0}",
@@ -82,23 +83,23 @@ public class JsonProfessionalBackup {
      * with the computed one.
      *
      * @param om the ObjectMapper (should be a custom ProfessionalExport)
-     * @param encryptionUtils the encryption utils
+     * @param hashingMechanism the encryption utils
      * @return true if the backup is valid or false if not
      */
-    public boolean isValid(ObjectMapper om, EncryptionMechanism encryptionUtils) {
+    public boolean isValid(ObjectMapper om, HashingMechanism hashingMechanism) {
         try {
             LOG.log(Level.INFO, "Validating backup of Professional {0}",
                     professional.getEmail());
             String json = om.writeValueAsString(this.professional);
-            String checksum = encryptionUtils.encrypt_SHA512_base64(
+            String jsonHash = hashingMechanism.hash_SHA512_base64(
                     json + getSalt());
 
-            boolean result = this.checksum.equals(checksum);
+            boolean result = this.checksum.equals(jsonHash);
             if (!result) {
                 LOG.log(Level.WARNING,
                         "*** CHECKSUM MISMATCH ***\nBACKUP Checksum : {0}\nCOMPUTED Checksum : {1}",
                         new Object[]{this.checksum,
-                            checksum});
+                            jsonHash});
             } else {
                 LOG.log(Level.INFO, "VALID CHECKSUM");
             }

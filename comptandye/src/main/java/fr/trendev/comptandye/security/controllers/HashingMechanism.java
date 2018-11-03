@@ -16,9 +16,9 @@ import javax.ejb.Singleton;
  * @author jsie
  */
 @Singleton
-public class EncryptionMechanism {
+public class HashingMechanism {
 
-    public String encrypt_SHA256_base16(String word) {
+    public String hash_SHA256_base16(String word) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] bytes = md.digest(word.getBytes());
@@ -36,15 +36,15 @@ public class EncryptionMechanism {
 
     }
 
-    public String encrypt_SHA256_base64(String word) {
-        return this.encrypt_SHA_base64(word, "SHA-256");
+    public String hash_SHA256_base64(String word) {
+        return this.hash_SHA_base64(word, "SHA-256");
     }
 
-    public String encrypt_SHA512_base64(String word) {
-        return this.encrypt_SHA_base64(word, "SHA-512");
+    public String hash_SHA512_base64(String word) {
+        return this.hash_SHA_base64(word, "SHA-512");
     }
 
-    private String encrypt_SHA_base64(String word, String algo) {
+    private String hash_SHA_base64(String word, String algo) {
         try {
             MessageDigest md = MessageDigest.getInstance(algo);
             byte[] hash = md.digest(word.getBytes(StandardCharsets.UTF_8));
