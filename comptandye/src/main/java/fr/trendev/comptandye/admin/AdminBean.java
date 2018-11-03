@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.admin.jsfbeans;
+package fr.trendev.comptandye.admin;
 
 import fr.trendev.comptandye.security.controllers.ActiveSessionTracker;
 import fr.trendev.comptandye.entities.Administrator;
