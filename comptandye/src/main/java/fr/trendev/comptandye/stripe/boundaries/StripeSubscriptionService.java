@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.services.stripe;
+package fr.trendev.comptandye.stripe.boundaries;
 
 import com.stripe.model.Customer;
 import com.stripe.model.InvoiceCollection;
@@ -12,8 +12,8 @@ import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.exceptions.ThrowingFunction;
 import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
-import fr.trendev.comptandye.utils.stripe.StripeCustomerUtils;
-import fr.trendev.comptandye.utils.stripe.StripeSubscriptionUtils;
+import fr.trendev.comptandye.stripe.controllers.StripeCustomerController;
+import fr.trendev.comptandye.stripe.controllers.StripeSubscriptionController;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,10 +51,10 @@ public class StripeSubscriptionService {
     private AuthenticationHelper authenticationHelper;
 
     @Inject
-    private StripeCustomerUtils stripeCustomerUtils;
+    private StripeCustomerController stripeCustomerUtils;
 
     @Inject
-    private StripeSubscriptionUtils stripeSubscriptionUtils;
+    private StripeSubscriptionController stripeSubscriptionUtils;
 
     private final Logger LOG = Logger.getLogger(StripeSubscriptionService.class.
             getName());

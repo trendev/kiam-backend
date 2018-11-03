@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils.stripe;
+package fr.trendev.comptandye.stripe.controllers;
 
 import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
@@ -19,7 +19,7 @@ import javax.ejb.Singleton;
  * @author jsie
  */
 @Singleton
-public class StripeSubscriptionUtils {
+public class StripeSubscriptionController {
 
     /**
      * Creates a default Stripe Subscription to Stripe Plan "classic", adds a
