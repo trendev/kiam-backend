@@ -5,12 +5,12 @@
  */
 package fr.trendev.comptandye.services;
 
-import fr.trendev.comptandye.entities.BillPK;
-import fr.trendev.comptandye.entities.ClientBill;
-import fr.trendev.comptandye.entities.ClientPK;
+import fr.trendev.comptandye.bill.entities.BillPK;
+import fr.trendev.comptandye.clientbill.entities.ClientBill;
+import fr.trendev.comptandye.client.entities.ClientPK;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.sessions.ClientBillFacade;
-import fr.trendev.comptandye.sessions.ClientFacade;
+import fr.trendev.comptandye.clientbill.controllers.ClientBillFacade;
+import fr.trendev.comptandye.client.controllers.ClientFacade;
 import java.util.Date;
 import java.util.Optional;
 import java.util.function.Function;

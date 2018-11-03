@@ -5,10 +5,10 @@
  */
 package fr.trendev.comptandye.services;
 
-import fr.trendev.comptandye.entities.ClassicExpense;
-import fr.trendev.comptandye.entities.ExpensePK;
+import fr.trendev.comptandye.classicexpense.entities.ClassicExpense;
+import fr.trendev.comptandye.expense.entities.ExpensePK;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.sessions.ClassicExpenseFacade;
+import fr.trendev.comptandye.classicexpense.controllers.ClassicExpenseFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

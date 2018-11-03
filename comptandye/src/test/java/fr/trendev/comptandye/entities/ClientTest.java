@@ -5,6 +5,11 @@
  */
 package fr.trendev.comptandye.entities;
 
+import fr.trendev.comptandye.socialnetworkaccounts.entities.SocialNetworkAccounts;
+import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.comptandye.customerdetails.entities.CustomerDetails;
+import fr.trendev.comptandye.client.entities.Client;
+import fr.trendev.comptandye.category.entities.Category;
 import fr.trendev.comptandye.address.entities.Address;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;

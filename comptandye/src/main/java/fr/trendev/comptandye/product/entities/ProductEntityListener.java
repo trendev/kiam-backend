@@ -5,7 +5,6 @@
  */
 package fr.trendev.comptandye.product.entities;
 
-import fr.trendev.comptandye.entities.Product;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.persistence.PostUpdate;

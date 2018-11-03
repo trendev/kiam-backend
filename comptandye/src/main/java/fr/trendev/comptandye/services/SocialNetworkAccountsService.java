@@ -6,9 +6,9 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.entities.SocialNetworkAccounts;
+import fr.trendev.comptandye.socialnetworkaccounts.entities.SocialNetworkAccounts;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.sessions.SocialNetworkAccountsFacade;
+import fr.trendev.comptandye.socialnetworkaccounts.controllers.SocialNetworkAccountsFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

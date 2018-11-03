@@ -6,10 +6,10 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.entities.Product;
-import fr.trendev.comptandye.entities.ProductPK;
-import fr.trendev.comptandye.entities.ProductRecord;
-import fr.trendev.comptandye.sessions.ProductFacade;
+import fr.trendev.comptandye.product.entities.Product;
+import fr.trendev.comptandye.product.entities.ProductPK;
+import fr.trendev.comptandye.productrecord.entities.ProductRecord;
+import fr.trendev.comptandye.product.controllers.ProductFacade;
 import fr.trendev.comptandye.utils.ProductFinder;
 import fr.trendev.comptandye.utils.visitors.VariationOfProductRecordQtyVisitor;
 import java.util.Date;

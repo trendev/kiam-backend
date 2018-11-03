@@ -5,12 +5,12 @@
  */
 package fr.trendev.comptandye.product.controllers;
 
-import fr.trendev.comptandye.entities.Product;
-import fr.trendev.comptandye.entities.Professional;
-import fr.trendev.comptandye.entities.ThresholdAlert;
+import fr.trendev.comptandye.product.entities.Product;
+import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.comptandye.thresholdalert.entities.ThresholdAlert;
 import fr.trendev.comptandye.product.entities.EmptyThreshold;
-import fr.trendev.comptandye.sessions.ProfessionalFacade;
-import fr.trendev.comptandye.sessions.ThresholdAlertFacade;
+import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
+import fr.trendev.comptandye.thresholdalert.controllers.ThresholdAlertFacade;
 import fr.trendev.comptandye.utils.NotificationLevelEnum;
 import fr.trendev.comptandye.utils.ThresholdAlertQualifierEnum;
 import fr.trendev.comptandye.product.entities.ProductEntityListener;

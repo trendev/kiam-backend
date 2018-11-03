@@ -10,7 +10,7 @@ import com.stripe.model.Customer;
 import com.stripe.model.Invoice;
 import com.stripe.model.InvoiceCollection;
 import com.stripe.model.Source;
-import fr.trendev.comptandye.entities.Professional;
+import fr.trendev.comptandye.professional.entities.Professional;
 import java.util.HashMap;
 import java.util.Map;
 import javax.ejb.Singleton;

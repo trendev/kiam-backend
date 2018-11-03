@@ -11,7 +11,7 @@ import fr.trendev.comptandye.security.controllers.ActiveSessionTracker;
 import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
 import fr.trendev.comptandye.security.controllers.PasswordManager;
 import fr.trendev.comptandye.security.controllers.XSRFTokenGenerator;
-import fr.trendev.comptandye.sessions.UserAccountFacade;
+import fr.trendev.comptandye.useraccount.controllers.UserAccountFacade;
 import java.io.StringReader;
 import java.security.Principal;
 import java.util.Optional;

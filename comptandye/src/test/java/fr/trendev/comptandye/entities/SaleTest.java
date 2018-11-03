@@ -5,6 +5,8 @@
  */
 package fr.trendev.comptandye.entities;
 
+import fr.trendev.comptandye.sale.entities.Sale;
+import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.utils.OfferingType;
 import org.junit.After;
 import org.junit.AfterClass;

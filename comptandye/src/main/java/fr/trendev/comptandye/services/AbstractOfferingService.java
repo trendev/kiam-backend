@@ -6,14 +6,14 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.entities.Offering;
-import fr.trendev.comptandye.entities.OfferingPK;
-import fr.trendev.comptandye.entities.Pack;
-import fr.trendev.comptandye.entities.PurchasedOffering;
-import fr.trendev.comptandye.sessions.PackFacade;
-import fr.trendev.comptandye.sessions.ProfessionalFacade;
-import fr.trendev.comptandye.sessions.SaleFacade;
-import fr.trendev.comptandye.sessions.ServiceFacade;
+import fr.trendev.comptandye.offering.entities.Offering;
+import fr.trendev.comptandye.offering.entities.OfferingPK;
+import fr.trendev.comptandye.pack.entities.Pack;
+import fr.trendev.comptandye.purchasedoffering.entities.PurchasedOffering;
+import fr.trendev.comptandye.pack.controllers.PackFacade;
+import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
+import fr.trendev.comptandye.sale.controllers.SaleFacade;
+import fr.trendev.comptandye.service.controllers.ServiceFacade;
 import fr.trendev.comptandye.utils.visitors.OfferingIntegrityVisitor;
 import java.util.function.Consumer;
 import java.util.logging.Logger;

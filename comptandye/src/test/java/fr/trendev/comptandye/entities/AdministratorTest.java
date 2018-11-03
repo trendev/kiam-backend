@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import fr.trendev.comptandye.administrator.entities.Administrator;
 import fr.trendev.comptandye.utils.UserAccountType;
 import org.junit.After;
 import org.junit.AfterClass;

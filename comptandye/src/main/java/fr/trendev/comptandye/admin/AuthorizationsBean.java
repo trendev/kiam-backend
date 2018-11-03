@@ -5,10 +5,10 @@
  */
 package fr.trendev.comptandye.admin;
 
-import fr.trendev.comptandye.entities.Administrator;
-import fr.trendev.comptandye.entities.Individual;
-import fr.trendev.comptandye.entities.Professional;
-import fr.trendev.comptandye.entities.UserAccount;
+import fr.trendev.comptandye.administrator.entities.Administrator;
+import fr.trendev.comptandye.individual.entities.Individual;
+import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.comptandye.useraccount.entities.UserAccount;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;

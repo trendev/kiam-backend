@@ -6,12 +6,12 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.entities.NotificationPK;
-import fr.trendev.comptandye.entities.Professional;
-import fr.trendev.comptandye.entities.ThresholdAlert;
+import fr.trendev.comptandye.notification.entities.NotificationPK;
+import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.comptandye.thresholdalert.entities.ThresholdAlert;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.sessions.ProfessionalFacade;
-import fr.trendev.comptandye.sessions.ThresholdAlertFacade;
+import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
+import fr.trendev.comptandye.thresholdalert.controllers.ThresholdAlertFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

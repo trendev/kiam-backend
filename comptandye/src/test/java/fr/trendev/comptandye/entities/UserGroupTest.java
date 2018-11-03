@@ -5,6 +5,8 @@
  */
 package fr.trendev.comptandye.entities;
 
+import fr.trendev.comptandye.usergroup.entities.UserGroup;
+import fr.trendev.comptandye.administrator.entities.Administrator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;

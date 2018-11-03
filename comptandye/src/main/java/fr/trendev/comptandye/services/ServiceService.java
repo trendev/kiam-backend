@@ -5,9 +5,9 @@
  */
 package fr.trendev.comptandye.services;
 
-import fr.trendev.comptandye.entities.OfferingPK;
-import fr.trendev.comptandye.entities.Professional;
-import fr.trendev.comptandye.entities.Service;
+import fr.trendev.comptandye.offering.entities.OfferingPK;
+import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.comptandye.service.entities.Service;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;

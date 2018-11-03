@@ -6,8 +6,8 @@
 package fr.trendev.comptandye.admin;
 
 import fr.trendev.comptandye.security.controllers.ActiveSessionTracker;
-import fr.trendev.comptandye.entities.Administrator;
-import fr.trendev.comptandye.sessions.AdministratorFacade;
+import fr.trendev.comptandye.administrator.entities.Administrator;
+import fr.trendev.comptandye.administrator.controllers.AdministratorFacade;
 import java.io.IOException;
 import java.io.Serializable;
 import java.security.Principal;

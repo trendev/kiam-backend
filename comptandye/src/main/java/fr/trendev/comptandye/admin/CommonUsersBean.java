@@ -6,8 +6,8 @@
 package fr.trendev.comptandye.admin;
 
 import fr.trendev.comptandye.security.controllers.ActiveSessionTracker;
-import fr.trendev.comptandye.entities.UserAccount;
-import fr.trendev.comptandye.sessions.UserAccountFacade;
+import fr.trendev.comptandye.useraccount.entities.UserAccount;
+import fr.trendev.comptandye.useraccount.controllers.UserAccountFacade;
 import java.io.Serializable;
 import java.util.ConcurrentModificationException;
 import java.util.LinkedList;

@@ -6,17 +6,17 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.entities.Product;
-import fr.trendev.comptandye.entities.ProductPK;
-import fr.trendev.comptandye.entities.ProductRecord;
-import fr.trendev.comptandye.entities.Professional;
-import fr.trendev.comptandye.entities.Sale;
+import fr.trendev.comptandye.product.entities.Product;
+import fr.trendev.comptandye.product.entities.ProductPK;
+import fr.trendev.comptandye.productrecord.entities.ProductRecord;
+import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.comptandye.sale.entities.Sale;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.sessions.ProductFacade;
-import fr.trendev.comptandye.sessions.ProductRecordFacade;
-import fr.trendev.comptandye.sessions.ProductReferenceFacade;
-import fr.trendev.comptandye.sessions.ProfessionalFacade;
-import fr.trendev.comptandye.sessions.SaleFacade;
+import fr.trendev.comptandye.product.controllers.ProductFacade;
+import fr.trendev.comptandye.productrecord.controllers.ProductRecordFacade;
+import fr.trendev.comptandye.productreference.controllers.ProductReferenceFacade;
+import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
+import fr.trendev.comptandye.sale.controllers.SaleFacade;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;

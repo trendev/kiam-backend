@@ -6,7 +6,7 @@
 package fr.trendev.comptandye.backup.entities;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.trendev.comptandye.entities.Professional;
+import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.security.controllers.HashingMechanism;
 import java.util.logging.Level;
 import java.util.logging.Logger;

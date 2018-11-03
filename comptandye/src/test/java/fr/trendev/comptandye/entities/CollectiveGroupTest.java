@@ -5,6 +5,8 @@
  */
 package fr.trendev.comptandye.entities;
 
+import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.comptandye.collectivegroup.entities.CollectiveGroup;
 import fr.trendev.comptandye.address.entities.Address;
 import org.junit.After;
 import org.junit.AfterClass;

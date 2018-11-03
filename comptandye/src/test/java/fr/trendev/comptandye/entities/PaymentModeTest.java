@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import fr.trendev.comptandye.paymentmode.entities.PaymentMode;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

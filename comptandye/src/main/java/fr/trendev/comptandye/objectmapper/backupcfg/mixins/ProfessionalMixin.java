@@ -6,16 +6,16 @@
 package fr.trendev.comptandye.objectmapper.backupcfg.mixins;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import fr.trendev.comptandye.entities.Bill;
-import fr.trendev.comptandye.entities.Category;
-import fr.trendev.comptandye.entities.Client;
-import fr.trendev.comptandye.entities.CollectiveGroup;
-import fr.trendev.comptandye.entities.Expense;
-import fr.trendev.comptandye.entities.Individual;
-import fr.trendev.comptandye.entities.Notification;
-import fr.trendev.comptandye.entities.Offering;
-import fr.trendev.comptandye.entities.Product;
-import fr.trendev.comptandye.entities.UserGroup;
+import fr.trendev.comptandye.bill.entities.Bill;
+import fr.trendev.comptandye.category.entities.Category;
+import fr.trendev.comptandye.client.entities.Client;
+import fr.trendev.comptandye.collectivegroup.entities.CollectiveGroup;
+import fr.trendev.comptandye.expense.entities.Expense;
+import fr.trendev.comptandye.individual.entities.Individual;
+import fr.trendev.comptandye.notification.entities.Notification;
+import fr.trendev.comptandye.offering.entities.Offering;
+import fr.trendev.comptandye.product.entities.Product;
+import fr.trendev.comptandye.usergroup.entities.UserGroup;
 import java.util.List;
 
 public abstract class ProfessionalMixin {

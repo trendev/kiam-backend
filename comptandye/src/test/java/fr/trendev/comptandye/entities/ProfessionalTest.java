@@ -5,6 +5,9 @@
  */
 package fr.trendev.comptandye.entities;
 
+import fr.trendev.comptandye.socialnetworkaccounts.entities.SocialNetworkAccounts;
+import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.comptandye.customerdetails.entities.CustomerDetails;
 import fr.trendev.comptandye.address.entities.Address;
 import fr.trendev.comptandye.utils.UserAccountType;
 import java.util.Calendar;

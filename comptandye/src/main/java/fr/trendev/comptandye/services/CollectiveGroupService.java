@@ -6,14 +6,14 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.entities.CollectiveGroup;
-import fr.trendev.comptandye.entities.CollectiveGroupBill;
-import fr.trendev.comptandye.entities.CollectiveGroupPK;
-import fr.trendev.comptandye.entities.Professional;
+import fr.trendev.comptandye.collectivegroup.entities.CollectiveGroup;
+import fr.trendev.comptandye.collectivegroupbill.entities.CollectiveGroupBill;
+import fr.trendev.comptandye.collectivegroup.entities.CollectiveGroupPK;
+import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.sessions.ClientFacade;
-import fr.trendev.comptandye.sessions.CollectiveGroupFacade;
-import fr.trendev.comptandye.sessions.ProfessionalFacade;
+import fr.trendev.comptandye.client.controllers.ClientFacade;
+import fr.trendev.comptandye.collectivegroup.controllers.CollectiveGroupFacade;
+import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

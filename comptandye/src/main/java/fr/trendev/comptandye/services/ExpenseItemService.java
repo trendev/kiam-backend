@@ -6,9 +6,9 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.entities.ExpenseItem;
+import fr.trendev.comptandye.expenseitem.entities.ExpenseItem;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.sessions.ExpenseItemFacade;
+import fr.trendev.comptandye.expenseitem.controllers.ExpenseItemFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

@@ -6,10 +6,10 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.entities.UserAccount;
-import fr.trendev.comptandye.entities.UserGroup;
+import fr.trendev.comptandye.useraccount.entities.UserAccount;
+import fr.trendev.comptandye.usergroup.entities.UserGroup;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.sessions.UserGroupFacade;
+import fr.trendev.comptandye.usergroup.controllers.UserGroupFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

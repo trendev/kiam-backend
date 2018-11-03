@@ -6,7 +6,7 @@
 package fr.trendev.comptandye.objectmapper.backupcfg.mixins;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import fr.trendev.comptandye.entities.Product;
+import fr.trendev.comptandye.product.entities.Product;
 
 /**
  *

@@ -6,9 +6,9 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.entities.PaymentMode;
+import fr.trendev.comptandye.paymentmode.entities.PaymentMode;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.sessions.PaymentModeFacade;
+import fr.trendev.comptandye.paymentmode.controllers.PaymentModeFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

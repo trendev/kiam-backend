@@ -6,8 +6,8 @@
 package fr.trendev.comptandye.objectmapper.backupcfg.mixins;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import fr.trendev.comptandye.entities.ProductRecord;
-import fr.trendev.comptandye.entities.Sale;
+import fr.trendev.comptandye.productrecord.entities.ProductRecord;
+import fr.trendev.comptandye.sale.entities.Sale;
 import java.util.List;
 
 /**

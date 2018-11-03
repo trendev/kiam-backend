@@ -5,7 +5,7 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
-import fr.trendev.comptandye.entities.UserAccount;
+import fr.trendev.comptandye.useraccount.entities.UserAccount;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;

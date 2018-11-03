@@ -7,11 +7,11 @@ package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.entities.Administrator;
-import fr.trendev.comptandye.entities.UserGroup;
+import fr.trendev.comptandye.administrator.entities.Administrator;
+import fr.trendev.comptandye.usergroup.entities.UserGroup;
 import fr.trendev.comptandye.security.controllers.PasswordManager;
-import fr.trendev.comptandye.sessions.AdministratorFacade;
-import fr.trendev.comptandye.sessions.UserGroupFacade;
+import fr.trendev.comptandye.administrator.controllers.AdministratorFacade;
+import fr.trendev.comptandye.usergroup.controllers.UserGroupFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import java.util.logging.Level;

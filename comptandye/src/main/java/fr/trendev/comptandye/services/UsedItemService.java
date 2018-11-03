@@ -5,9 +5,9 @@
  */
 package fr.trendev.comptandye.services;
 
-import fr.trendev.comptandye.entities.UsedItem;
+import fr.trendev.comptandye.useditem.entities.UsedItem;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.sessions.UsedItemFacade;
+import fr.trendev.comptandye.useditem.controllers.UsedItemFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

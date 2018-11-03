@@ -6,11 +6,11 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.entities.OfferingPK;
-import fr.trendev.comptandye.entities.OfferingSnapshot;
-import fr.trendev.comptandye.entities.PurchasedOffering;
+import fr.trendev.comptandye.offering.entities.OfferingPK;
+import fr.trendev.comptandye.purchasedoffering.entities.OfferingSnapshot;
+import fr.trendev.comptandye.purchasedoffering.entities.PurchasedOffering;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.sessions.PurchasedOfferingFacade;
+import fr.trendev.comptandye.purchasedoffering.controllers.PurchasedOfferingFacade;
 import fr.trendev.comptandye.utils.visitors.ProvideOfferingFacadeVisitor;
 import java.util.Optional;
 import java.util.logging.Level;

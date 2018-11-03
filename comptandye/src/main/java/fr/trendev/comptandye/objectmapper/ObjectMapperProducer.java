@@ -7,10 +7,10 @@ package fr.trendev.comptandye.objectmapper;
 
 import fr.trendev.comptandye.objectmapper.backupcfg.ProfessionalBackup;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.trendev.comptandye.entities.Product;
-import fr.trendev.comptandye.entities.ProductRecord;
-import fr.trendev.comptandye.entities.Professional;
-import fr.trendev.comptandye.entities.Sale;
+import fr.trendev.comptandye.product.entities.Product;
+import fr.trendev.comptandye.productrecord.entities.ProductRecord;
+import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.comptandye.sale.entities.Sale;
 import fr.trendev.comptandye.objectmapper.backupcfg.mixins.ProductMixin;
 import fr.trendev.comptandye.objectmapper.backupcfg.mixins.ProductRecordMixin;
 import fr.trendev.comptandye.objectmapper.backupcfg.mixins.ProfessionalMixin;

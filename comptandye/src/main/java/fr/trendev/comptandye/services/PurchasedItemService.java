@@ -5,12 +5,12 @@
  */
 package fr.trendev.comptandye.services;
 
-import fr.trendev.comptandye.entities.ExpensePK;
-import fr.trendev.comptandye.entities.PurchaseExpense;
-import fr.trendev.comptandye.entities.PurchasedItem;
+import fr.trendev.comptandye.expense.entities.ExpensePK;
+import fr.trendev.comptandye.purchaseexpense.entities.PurchaseExpense;
+import fr.trendev.comptandye.purchaseditem.entities.PurchasedItem;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.sessions.PurchaseExpenseFacade;
-import fr.trendev.comptandye.sessions.PurchasedItemFacade;
+import fr.trendev.comptandye.purchaseexpense.controllers.PurchaseExpenseFacade;
+import fr.trendev.comptandye.purchaseditem.controllers.PurchasedItemFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

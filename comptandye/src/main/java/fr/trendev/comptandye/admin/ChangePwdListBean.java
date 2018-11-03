@@ -5,15 +5,15 @@
  */
 package fr.trendev.comptandye.admin;
 
-import fr.trendev.comptandye.entities.Administrator;
-import fr.trendev.comptandye.entities.Individual;
-import fr.trendev.comptandye.entities.Professional;
-import fr.trendev.comptandye.entities.UserAccount;
+import fr.trendev.comptandye.administrator.entities.Administrator;
+import fr.trendev.comptandye.individual.entities.Individual;
+import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.comptandye.useraccount.entities.UserAccount;
 import fr.trendev.comptandye.security.controllers.PasswordManager;
-import fr.trendev.comptandye.sessions.AdministratorFacade;
-import fr.trendev.comptandye.sessions.IndividualFacade;
-import fr.trendev.comptandye.sessions.ProfessionalFacade;
-import fr.trendev.comptandye.sessions.UserAccountFacade;
+import fr.trendev.comptandye.administrator.controllers.AdministratorFacade;
+import fr.trendev.comptandye.individual.controllers.IndividualFacade;
+import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
+import fr.trendev.comptandye.useraccount.controllers.UserAccountFacade;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;

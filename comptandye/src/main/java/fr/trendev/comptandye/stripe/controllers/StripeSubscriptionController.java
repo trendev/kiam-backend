@@ -8,7 +8,7 @@ package fr.trendev.comptandye.stripe.controllers;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
 import com.stripe.model.Subscription;
-import fr.trendev.comptandye.entities.Professional;
+import fr.trendev.comptandye.professional.entities.Professional;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;

@@ -6,15 +6,15 @@
 package fr.trendev.comptandye.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.trendev.comptandye.entities.Business;
-import fr.trendev.comptandye.entities.Offering;
-import fr.trendev.comptandye.entities.Pack;
-import fr.trendev.comptandye.entities.Professional;
-import fr.trendev.comptandye.entities.Service;
-import fr.trendev.comptandye.sessions.PackFacade;
-import fr.trendev.comptandye.sessions.ProfessionalFacade;
-import fr.trendev.comptandye.sessions.SaleFacade;
-import fr.trendev.comptandye.sessions.ServiceFacade;
+import fr.trendev.comptandye.business.entities.Business;
+import fr.trendev.comptandye.offering.entities.Offering;
+import fr.trendev.comptandye.pack.entities.Pack;
+import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.comptandye.service.entities.Service;
+import fr.trendev.comptandye.pack.controllers.PackFacade;
+import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
+import fr.trendev.comptandye.sale.controllers.SaleFacade;
+import fr.trendev.comptandye.service.controllers.ServiceFacade;
 import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
 import fr.trendev.comptandye.exceptions.ExceptionHelper;
 import java.io.IOException;

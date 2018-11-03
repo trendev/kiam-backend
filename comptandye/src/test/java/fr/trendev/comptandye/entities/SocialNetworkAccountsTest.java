@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import fr.trendev.comptandye.socialnetworkaccounts.entities.SocialNetworkAccounts;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

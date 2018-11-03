@@ -5,6 +5,8 @@
  */
 package fr.trendev.comptandye.entities;
 
+import fr.trendev.comptandye.thresholdalert.entities.ThresholdAlert;
+import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.utils.NotificationLevelEnum;
 import fr.trendev.comptandye.utils.NotificationType;
 import fr.trendev.comptandye.utils.ThresholdAlertQualifierEnum;

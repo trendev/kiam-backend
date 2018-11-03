@@ -6,13 +6,13 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.entities.Expense;
-import fr.trendev.comptandye.entities.ExpenseItem;
-import fr.trendev.comptandye.entities.ExpensePK;
-import fr.trendev.comptandye.entities.Payment;
-import fr.trendev.comptandye.entities.Professional;
+import fr.trendev.comptandye.expense.entities.Expense;
+import fr.trendev.comptandye.expenseitem.entities.ExpenseItem;
+import fr.trendev.comptandye.expense.entities.ExpensePK;
+import fr.trendev.comptandye.payment.entities.Payment;
+import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.sessions.ProfessionalFacade;
+import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Date;

@@ -5,11 +5,11 @@
  */
 package fr.trendev.comptandye.services;
 
-import fr.trendev.comptandye.entities.Bill;
-import fr.trendev.comptandye.entities.BillPK;
-import fr.trendev.comptandye.entities.SoldItem;
+import fr.trendev.comptandye.bill.entities.Bill;
+import fr.trendev.comptandye.bill.entities.BillPK;
+import fr.trendev.comptandye.solditem.entities.SoldItem;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.sessions.SoldItemFacade;
+import fr.trendev.comptandye.solditem.controllers.SoldItemFacade;
 import fr.trendev.comptandye.utils.visitors.ProvideBillFacadeVisitor;
 import java.util.logging.Level;
 import java.util.logging.Logger;

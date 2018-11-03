@@ -6,11 +6,11 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.entities.Notification;
-import fr.trendev.comptandye.entities.NotificationPK;
+import fr.trendev.comptandye.notification.entities.Notification;
+import fr.trendev.comptandye.notification.entities.NotificationPK;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.sessions.NotificationFacade;
-import fr.trendev.comptandye.sessions.ProfessionalFacade;
+import fr.trendev.comptandye.notification.controllers.NotificationFacade;
+import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
 import fr.trendev.comptandye.exceptions.ExceptionHelper;
 import java.util.ArrayList;
 import java.util.Optional;

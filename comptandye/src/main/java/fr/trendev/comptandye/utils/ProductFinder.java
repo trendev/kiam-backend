@@ -5,9 +5,9 @@
  */
 package fr.trendev.comptandye.utils;
 
-import fr.trendev.comptandye.entities.Product;
-import fr.trendev.comptandye.entities.ProductPK;
-import fr.trendev.comptandye.sessions.ProductFacade;
+import fr.trendev.comptandye.product.entities.Product;
+import fr.trendev.comptandye.product.entities.ProductPK;
+import fr.trendev.comptandye.product.controllers.ProductFacade;
 import java.util.Optional;
 import java.util.function.Function;
 import javax.ejb.Stateless;

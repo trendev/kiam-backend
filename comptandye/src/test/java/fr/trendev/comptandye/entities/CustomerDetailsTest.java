@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import fr.trendev.comptandye.customerdetails.entities.CustomerDetails;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;

@@ -6,12 +6,12 @@
 package fr.trendev.comptandye.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.trendev.comptandye.entities.Offering;
-import fr.trendev.comptandye.entities.OfferingPK;
-import fr.trendev.comptandye.entities.Pack;
-import fr.trendev.comptandye.entities.Professional;
-import fr.trendev.comptandye.entities.Sale;
-import fr.trendev.comptandye.entities.Service;
+import fr.trendev.comptandye.offering.entities.Offering;
+import fr.trendev.comptandye.offering.entities.OfferingPK;
+import fr.trendev.comptandye.pack.entities.Pack;
+import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.comptandye.sale.entities.Sale;
+import fr.trendev.comptandye.service.entities.Service;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;
 import java.util.LinkedList;

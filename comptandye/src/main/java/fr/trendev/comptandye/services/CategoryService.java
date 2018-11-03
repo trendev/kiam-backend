@@ -6,15 +6,15 @@
 package fr.trendev.comptandye.services;
 
 import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.entities.Category;
-import fr.trendev.comptandye.entities.CategoryPK;
-import fr.trendev.comptandye.entities.Client;
-import fr.trendev.comptandye.entities.ClientPK;
-import fr.trendev.comptandye.entities.Professional;
+import fr.trendev.comptandye.category.entities.Category;
+import fr.trendev.comptandye.category.entities.CategoryPK;
+import fr.trendev.comptandye.client.entities.Client;
+import fr.trendev.comptandye.client.entities.ClientPK;
+import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.sessions.CategoryFacade;
-import fr.trendev.comptandye.sessions.ClientFacade;
-import fr.trendev.comptandye.sessions.ProfessionalFacade;
+import fr.trendev.comptandye.category.controllers.CategoryFacade;
+import fr.trendev.comptandye.client.controllers.ClientFacade;
+import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;
 import java.util.logging.Level;
 import java.util.logging.Logger;

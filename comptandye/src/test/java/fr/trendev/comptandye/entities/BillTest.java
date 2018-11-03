@@ -5,6 +5,12 @@
  */
 package fr.trendev.comptandye.entities;
 
+import fr.trendev.comptandye.service.entities.Service;
+import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.comptandye.paymentmode.entities.PaymentMode;
+import fr.trendev.comptandye.payment.entities.Payment;
+import fr.trendev.comptandye.purchasedoffering.entities.PurchasedOffering;
+import fr.trendev.comptandye.bill.entities.Bill;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import java.util.Arrays;
 import java.util.Date;
