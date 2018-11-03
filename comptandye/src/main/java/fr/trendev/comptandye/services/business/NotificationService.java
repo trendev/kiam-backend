@@ -10,7 +10,7 @@ import fr.trendev.comptandye.entities.NotificationPK;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.NotificationFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
-import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
+import fr.trendev.comptandye.exceptions.ExceptionHelper;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.logging.Level;

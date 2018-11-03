@@ -8,7 +8,7 @@ package fr.trendev.comptandye.services.business;
 import fr.trendev.comptandye.entities.ProductReference;
 import fr.trendev.comptandye.sessions.AbstractFacade;
 import fr.trendev.comptandye.sessions.ProductReferenceFacade;
-import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
+import fr.trendev.comptandye.exceptions.ExceptionHelper;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;

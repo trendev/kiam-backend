@@ -8,7 +8,7 @@ package fr.trendev.comptandye.backup.services;
 import fr.trendev.comptandye.utils.security.AuthenticationSecurityUtils;
 import fr.trendev.comptandye.backup.controllers.JsonProfessionalExporter;
 import fr.trendev.comptandye.backup.controllers.JsonProfessionalImporter;
-import fr.trendev.comptandye.utils.exceptions.ExceptionHandler;
+import fr.trendev.comptandye.exceptions.ExceptionHandler;
 import java.io.InputStream;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;

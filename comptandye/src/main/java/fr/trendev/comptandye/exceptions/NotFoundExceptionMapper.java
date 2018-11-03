@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils.exceptions;
+package fr.trendev.comptandye.exceptions;
 
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;

@@ -3,21 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils.exceptions;
+package fr.trendev.comptandye.exceptions;
 
-import javax.ejb.EJBTransactionRolledbackException;
 import javax.json.Json;
+import javax.transaction.RollbackException;
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 @Provider
-public class EJBTransactionRolledbackExceptionMapper
-        implements ExceptionMapper<EJBTransactionRolledbackException> {
+public class RollbackExceptionMapper
+        implements ExceptionMapper<RollbackException> {
 
     @Override
-    public Response toResponse(EJBTransactionRolledbackException exception) {
+    public Response toResponse(RollbackException exception) {
 
         Throwable cause = ExceptionHelper.findRootCauseException(exception);
 

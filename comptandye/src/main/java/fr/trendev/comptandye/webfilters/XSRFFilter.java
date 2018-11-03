@@ -5,7 +5,7 @@
  */
 package fr.trendev.comptandye.webfilters;
 
-import fr.trendev.comptandye.utils.exceptions.ExceptionHelper;
+import fr.trendev.comptandye.exceptions.ExceptionHelper;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
