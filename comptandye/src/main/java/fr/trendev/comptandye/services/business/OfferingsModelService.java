@@ -15,7 +15,7 @@ import fr.trendev.comptandye.sessions.PackFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.sessions.SaleFacade;
 import fr.trendev.comptandye.sessions.ServiceFacade;
-import fr.trendev.comptandye.security.controllers.AuthenticationSecurityUtils;
+import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
 import fr.trendev.comptandye.exceptions.ExceptionHelper;
 import java.io.IOException;
 import java.io.InputStream;
@@ -69,7 +69,7 @@ public class OfferingsModelService {
     SaleFacade saleFacade;
 
     @Inject
-    AuthenticationSecurityUtils authenticationSecurityUtils;
+    AuthenticationHelper authenticationHelper;
 
     private final Logger LOG = Logger.getLogger(OfferingsModelService.class.
             getName());
@@ -80,7 +80,7 @@ public class OfferingsModelService {
     public Response build(@Context SecurityContext sec,
             @QueryParam("professional") String professional) {
 
-        String email = authenticationSecurityUtils.
+        String email = authenticationHelper.
                 getProEmail(sec, professional);
         LOG.log(Level.INFO,
                 "Generating pre-build Offerings for the professional [{0}]",

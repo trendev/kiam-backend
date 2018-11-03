@@ -9,9 +9,9 @@ import com.stripe.model.Customer;
 import com.stripe.model.InvoiceCollection;
 import com.stripe.model.Subscription;
 import fr.trendev.comptandye.entities.Professional;
-import fr.trendev.comptandye.sessions.ProfessionalFacade;
-import fr.trendev.comptandye.security.controllers.AuthenticationSecurityUtils;
 import fr.trendev.comptandye.exceptions.ThrowingFunction;
+import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
+import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.utils.stripe.StripeCustomerUtils;
 import fr.trendev.comptandye.utils.stripe.StripeSubscriptionUtils;
 import java.util.Date;
@@ -48,7 +48,7 @@ public class StripeSubscriptionService {
     ProfessionalFacade professionalFacade;
 
     @Inject
-    private AuthenticationSecurityUtils authenticationSecurityUtils;
+    private AuthenticationHelper authenticationHelper;
 
     @Inject
     private StripeCustomerUtils stripeCustomerUtils;
@@ -78,7 +78,7 @@ public class StripeSubscriptionService {
             @QueryParam("email") String email) {
         try {
 
-            String proEmail = authenticationSecurityUtils.
+            String proEmail = authenticationHelper.
                     getProEmail(sec, email);
             Professional pro = professionalFacade.find(proEmail);
 
@@ -120,7 +120,7 @@ public class StripeSubscriptionService {
     public Response details(@Context SecurityContext sec,
             @QueryParam("email") String email) {
         try {
-            String proEmail = authenticationSecurityUtils.
+            String proEmail = authenticationHelper.
                     getProEmail(sec, email);
             Professional pro = professionalFacade.find(proEmail);
             Customer customer = this.stripeCustomerUtils.details(pro);
@@ -153,7 +153,7 @@ public class StripeSubscriptionService {
             @QueryParam("email") String email) {
         try {
 
-            String proEmail = authenticationSecurityUtils.
+            String proEmail = authenticationHelper.
                     getProEmail(sec, email);
             Professional pro = professionalFacade.find(proEmail);
 
@@ -193,7 +193,7 @@ public class StripeSubscriptionService {
             @QueryParam("email") String email) {
         try {
 
-            String proEmail = authenticationSecurityUtils.
+            String proEmail = authenticationHelper.
                     getProEmail(sec, email);
             Professional pro = professionalFacade.find(proEmail);
 
@@ -231,7 +231,7 @@ public class StripeSubscriptionService {
             @QueryParam("email") String email) {
         try {
 
-            String proEmail = authenticationSecurityUtils.
+            String proEmail = authenticationHelper.
                     getProEmail(sec, email);
             Professional pro = professionalFacade.find(proEmail);
 
@@ -257,7 +257,7 @@ public class StripeSubscriptionService {
     public Response invoices(@Context SecurityContext sec,
             @QueryParam("email") String email) {
         try {
-            String proEmail = authenticationSecurityUtils.
+            String proEmail = authenticationHelper.
                     getProEmail(sec, email);
             Professional pro = professionalFacade.find(proEmail);
             InvoiceCollection invoices = this.stripeCustomerUtils
@@ -304,7 +304,7 @@ public class StripeSubscriptionService {
             ThrowingFunction<Professional, Subscription> fn,
             boolean rescind) {
         try {
-            String proEmail = authenticationSecurityUtils.
+            String proEmail = authenticationHelper.
                     getProEmail(sec, email);
             Professional pro = professionalFacade.find(proEmail);
             Subscription subscription = fn.apply(pro);

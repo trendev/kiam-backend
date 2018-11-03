@@ -8,7 +8,7 @@ package fr.trendev.comptandye.backup.boundaries;
 import fr.trendev.comptandye.backup.controllers.JsonProfessionalExporter;
 import fr.trendev.comptandye.backup.controllers.JsonProfessionalImporter;
 import fr.trendev.comptandye.exceptions.ExceptionHandler;
-import fr.trendev.comptandye.security.controllers.AuthenticationSecurityUtils;
+import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
 import java.io.InputStream;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
@@ -47,7 +47,7 @@ public class BackupService {
     private JsonProfessionalImporter jsonProImport;
 
     @Inject
-    private AuthenticationSecurityUtils authenticationSecurityUtils;
+    private AuthenticationHelper authenticationHelper;
 
     @Inject
     protected ExceptionHandler exceptionHandler;
@@ -60,7 +60,7 @@ public class BackupService {
             @QueryParam("f") boolean asFile,
             @QueryParam("professional") String professional) {
 
-        String email = authenticationSecurityUtils.
+        String email = authenticationHelper.
                 getProEmail(sec, professional);
 
         LOG.log(Level.INFO, "Exporting data of Professional {0}{1}",
@@ -89,7 +89,7 @@ public class BackupService {
 
         LOG.log(Level.INFO, "Receiving a backup...");
 
-        authenticationSecurityUtils.getProfessionalEmailFromSecurityContext(sec)
+        authenticationHelper.getProfessionalEmailFromSecurityContext(sec)
                 .ifPresent(email -> LOG.log(Level.INFO, email
                         + " is controlling a backup..."));
 

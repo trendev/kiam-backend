@@ -8,12 +8,12 @@ package fr.trendev.comptandye.services.business;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.utils.AssociationManagementEnum;
-import fr.trendev.comptandye.security.controllers.AuthenticationSecurityUtils;
-import fr.trendev.comptandye.utils.UserAccountType;
 import fr.trendev.comptandye.exceptions.ExceptionHandler;
 import fr.trendev.comptandye.exceptions.ExceptionHelper;
 import fr.trendev.comptandye.exceptions.InvalidDeliveryDateException;
+import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
+import fr.trendev.comptandye.utils.AssociationManagementEnum;
+import fr.trendev.comptandye.utils.UserAccountType;
 import java.net.URI;
 import java.util.Collection;
 import java.util.List;
@@ -50,7 +50,7 @@ public abstract class AbstractCommonService<E, P> {
     private ObjectMapper om;
 
     @Inject
-    private AuthenticationSecurityUtils authenticationSecurityUtils;
+    private AuthenticationHelper authenticationHelper;
 
     @Inject
     protected ExceptionHandler exceptionHandler;
@@ -560,7 +560,7 @@ public abstract class AbstractCommonService<E, P> {
      * @return the professional's email
      */
     protected String getProEmail(SecurityContext sec, String professional) {
-        return authenticationSecurityUtils
+        return authenticationHelper
                 .getProEmail(sec, professional);
     }
 

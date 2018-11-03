@@ -8,7 +8,7 @@ package fr.trendev.comptandye.security.boundaries;
 import fr.trendev.comptandye.exceptions.ExceptionHandler;
 import fr.trendev.comptandye.exceptions.ExceptionHelper;
 import fr.trendev.comptandye.security.controllers.ActiveSessionTracker;
-import fr.trendev.comptandye.security.controllers.AuthenticationSecurityUtils;
+import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
 import fr.trendev.comptandye.security.controllers.PasswordManager;
 import fr.trendev.comptandye.security.controllers.XSRFTokenGenerator;
 import fr.trendev.comptandye.sessions.UserAccountFacade;
@@ -66,7 +66,7 @@ public class AuthenticationService {
     XSRFTokenGenerator generator;
 
     @Inject
-    AuthenticationSecurityUtils securityUtils;
+    AuthenticationHelper authenticationHelper;
 
     @Inject
     ExceptionHandler exceptionHandler;
@@ -93,7 +93,7 @@ public class AuthenticationService {
     }
 
     private Response profile(SecurityContext sec) {
-        return securityUtils.getProfessionalEmailFromSecurityContext(sec)
+        return authenticationHelper.getProfessionalEmailFromSecurityContext(sec)
                 .map(email -> {
                     LOG.log(Level.INFO, "Providing the profile of [{0}]", email);
                     return Response.ok(userAccountFacade.find(email)).build();
@@ -130,7 +130,7 @@ public class AuthenticationService {
                 req.login(username, password);
 
                 // checks first if the user is Blocked or not
-                if (securityUtils.isBlockedUser(sec)) {
+                if (authenticationHelper.isBlockedUser(sec)) {
                     LOG.log(Level.WARNING,
                             "Login cancelled - user [{0}] is Blocked",
                             username);
@@ -261,7 +261,7 @@ public class AuthenticationService {
 
         String password = this.readNewPassword(newPassword);
 
-        return securityUtils.getProfessionalEmailFromSecurityContext(sec)
+        return authenticationHelper.getProfessionalEmailFromSecurityContext(sec)
                 .map(email ->
                         Optional.ofNullable(this.userAccountFacade.find(email))
                                 .map(user -> {

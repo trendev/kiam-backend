@@ -17,7 +17,7 @@ import javax.ws.rs.core.SecurityContext;
  * @author jsie
  */
 @Stateless
-public class AuthenticationSecurityUtils {
+public class AuthenticationHelper {
 
     /**
      * Controls if the context is secured (HTTPS) and if the user of the
