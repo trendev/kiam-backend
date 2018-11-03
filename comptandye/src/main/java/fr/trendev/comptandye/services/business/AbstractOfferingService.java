@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.services.business;
 
+import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
 import fr.trendev.comptandye.entities.Offering;
 import fr.trendev.comptandye.entities.OfferingPK;
 import fr.trendev.comptandye.entities.Pack;

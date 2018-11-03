@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.services.business;
 
+import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
 import fr.trendev.comptandye.entities.UserAccount;
 import fr.trendev.comptandye.entities.UserGroup;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;

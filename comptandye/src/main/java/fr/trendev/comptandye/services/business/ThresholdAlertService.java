@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.services.business;
 
+import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
 import fr.trendev.comptandye.entities.NotificationPK;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.ThresholdAlert;

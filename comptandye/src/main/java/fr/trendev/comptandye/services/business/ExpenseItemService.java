@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.services.business;
 
+import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
 import fr.trendev.comptandye.entities.ExpenseItem;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.sessions.ExpenseItemFacade;
