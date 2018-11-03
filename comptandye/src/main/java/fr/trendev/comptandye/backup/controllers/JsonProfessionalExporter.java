@@ -21,6 +21,7 @@ import javax.inject.Inject;
 import javax.json.Json;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
+import fr.trendev.comptandye.objectmapper.backupcfg.ProfessionalBackup;
 
 /**
  *
@@ -36,7 +37,7 @@ public class JsonProfessionalExporter {
     private ProfessionalFacade professionalFacade;
 
     @Inject
-    @ProfessionalExport
+    @ProfessionalBackup
     private ObjectMapper om;
 
     @Inject

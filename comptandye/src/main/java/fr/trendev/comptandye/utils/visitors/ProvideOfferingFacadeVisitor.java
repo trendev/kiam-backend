@@ -42,7 +42,7 @@ import fr.trendev.comptandye.entities.ThresholdAlert;
 import fr.trendev.comptandye.entities.UsedItem;
 import fr.trendev.comptandye.entities.UserAccount;
 import fr.trendev.comptandye.entities.UserGroup;
-import fr.trendev.comptandye.sessions.AbstractFacade;
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.sessions.PackFacade;
 import fr.trendev.comptandye.sessions.SaleFacade;
 import fr.trendev.comptandye.sessions.ServiceFacade;

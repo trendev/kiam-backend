@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.sessions;
 
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.entities.ProductReference;
 import fr.trendev.comptandye.entities.ProductReference_;
 import java.util.List;

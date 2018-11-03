@@ -1,5 +1,6 @@
 package fr.trendev.comptandye.sessions;
 
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.entities.NotificationPK;
 import fr.trendev.comptandye.entities.ThresholdAlert;
 import javax.ejb.Stateless;

@@ -1,5 +1,6 @@
 package fr.trendev.comptandye.sessions;
 
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.entities.CollectiveGroup;
 import fr.trendev.comptandye.entities.CollectiveGroupPK;
 import javax.ejb.Stateless;

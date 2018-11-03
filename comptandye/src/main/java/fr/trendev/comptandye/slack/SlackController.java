@@ -5,10 +5,10 @@
  */
 package fr.trendev.comptandye.slack;
 
-import fr.trendev.comptandye.authentication.controllers.LogoutDetected;
-import fr.trendev.comptandye.authentication.controllers.LoginDetected;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.trendev.comptandye.authentication.controllers.LoginDetected;
+import fr.trendev.comptandye.authentication.controllers.LogoutDetected;
 import fr.trendev.comptandye.utils.observers.NewPasswordDemoAccount;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,7 +30,7 @@ import javax.ws.rs.core.Response;
  * @author jsie
  */
 @Singleton
-public class SlackServiceObserver {
+public class SlackController {
 
     private final String SLACK_URL;
     private final String AUTHENTICATION_CHANNEL;
@@ -38,18 +38,18 @@ public class SlackServiceObserver {
     private final String TOKEN;
 
     private final Client client;
-    private final Logger LOG;
+    private static final Logger LOG = Logger.getLogger(
+            SlackController.class.getName());
 
     @Inject
     ObjectMapper om;
 
-    public SlackServiceObserver() {
+    public SlackController() {
         this.SLACK_URL = "https://slack.com/api/chat.postMessage";
         this.AUTHENTICATION_CHANNEL = "GB1R67HL2"; // slack channel: "authentication"
         this.LOGINS_CHANNEL = "GC0K0E00P"; // slack channel : "logins"
         this.TOKEN = "xoxa-320251608305-395708530182-394370785636-d227cf997e97f4d4b650e4ed31d48434";
         this.client = ClientBuilder.newClient();
-        this.LOG = Logger.getLogger(SlackServiceObserver.class.getName());
     }
 
     @PostConstruct

@@ -1,4 +1,4 @@
-package fr.trendev.comptandye;
+package fr.trendev.comptandye.common.controllers;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

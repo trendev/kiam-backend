@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils.mixins;
+package fr.trendev.comptandye.objectmapper.backupcfg.mixins;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.trendev.comptandye.entities.Product;
@@ -12,8 +12,9 @@ import fr.trendev.comptandye.entities.Product;
  *
  * @author jsie
  */
-public abstract class SaleMixin {
+public abstract class ProductRecordMixin {
 
     @JsonIgnore
     public abstract Product getProduct();
+
 }

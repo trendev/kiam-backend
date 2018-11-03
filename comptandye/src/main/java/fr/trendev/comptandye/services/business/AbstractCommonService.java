@@ -7,7 +7,7 @@ package fr.trendev.comptandye.services.business;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.trendev.comptandye.sessions.AbstractFacade;
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;
 import fr.trendev.comptandye.utils.security.AuthenticationSecurityUtils;
 import fr.trendev.comptandye.utils.UserAccountType;

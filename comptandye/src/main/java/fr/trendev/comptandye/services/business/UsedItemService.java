@@ -6,7 +6,7 @@
 package fr.trendev.comptandye.services.business;
 
 import fr.trendev.comptandye.entities.UsedItem;
-import fr.trendev.comptandye.sessions.AbstractFacade;
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.sessions.UsedItemFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -8,7 +8,7 @@ package fr.trendev.comptandye.services.business;
 import fr.trendev.comptandye.entities.ExpensePK;
 import fr.trendev.comptandye.entities.PurchaseExpense;
 import fr.trendev.comptandye.entities.PurchasedItem;
-import fr.trendev.comptandye.sessions.AbstractFacade;
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.sessions.PurchaseExpenseFacade;
 import fr.trendev.comptandye.sessions.PurchasedItemFacade;
 import java.util.logging.Level;

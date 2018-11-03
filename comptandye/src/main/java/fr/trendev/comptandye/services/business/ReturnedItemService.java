@@ -8,7 +8,7 @@ package fr.trendev.comptandye.services.business;
 import fr.trendev.comptandye.entities.Bill;
 import fr.trendev.comptandye.entities.BillPK;
 import fr.trendev.comptandye.entities.ReturnedItem;
-import fr.trendev.comptandye.sessions.AbstractFacade;
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.sessions.ReturnedItemFacade;
 import fr.trendev.comptandye.utils.visitors.ProvideBillFacadeVisitor;
 import java.util.logging.Level;

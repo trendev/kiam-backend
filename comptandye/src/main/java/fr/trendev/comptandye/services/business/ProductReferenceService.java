@@ -6,7 +6,7 @@
 package fr.trendev.comptandye.services.business;
 
 import fr.trendev.comptandye.entities.ProductReference;
-import fr.trendev.comptandye.sessions.AbstractFacade;
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.sessions.ProductReferenceFacade;
 import fr.trendev.comptandye.exceptions.ExceptionHelper;
 import java.util.List;

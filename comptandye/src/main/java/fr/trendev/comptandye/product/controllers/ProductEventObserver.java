@@ -3,16 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils.observers;
+package fr.trendev.comptandye.product.controllers;
 
 import fr.trendev.comptandye.entities.Product;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.ThresholdAlert;
+import fr.trendev.comptandye.product.entities.EmptyThreshold;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.sessions.ThresholdAlertFacade;
 import fr.trendev.comptandye.utils.NotificationLevelEnum;
 import fr.trendev.comptandye.utils.ThresholdAlertQualifierEnum;
-import fr.trendev.comptandye.utils.listeners.ProductEntityListener;
+import fr.trendev.comptandye.product.entities.ProductEntityListener;
+import fr.trendev.comptandye.product.entities.ProductEntityListener;
+import fr.trendev.comptandye.product.entities.SevereThreshold;
+import fr.trendev.comptandye.product.entities.WarningThreshold;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;

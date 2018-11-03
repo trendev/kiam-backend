@@ -7,7 +7,7 @@ package fr.trendev.comptandye.services.business;
 
 import fr.trendev.comptandye.entities.BillPK;
 import fr.trendev.comptandye.entities.IndividualBill;
-import fr.trendev.comptandye.sessions.AbstractFacade;
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.sessions.IndividualBillFacade;
 import fr.trendev.comptandye.sessions.IndividualFacade;
 import java.util.Date;

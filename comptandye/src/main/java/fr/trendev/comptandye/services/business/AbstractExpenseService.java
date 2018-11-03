@@ -10,7 +10,7 @@ import fr.trendev.comptandye.entities.ExpenseItem;
 import fr.trendev.comptandye.entities.ExpensePK;
 import fr.trendev.comptandye.entities.Payment;
 import fr.trendev.comptandye.entities.Professional;
-import fr.trendev.comptandye.sessions.AbstractFacade;
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import java.math.BigDecimal;
 import java.math.RoundingMode;

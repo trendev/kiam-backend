@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils.mixins;
+package fr.trendev.comptandye.objectmapper.backupcfg.mixins;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import fr.trendev.comptandye.entities.Bill;

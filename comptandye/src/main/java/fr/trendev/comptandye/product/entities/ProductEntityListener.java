@@ -3,12 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils.listeners;
+package fr.trendev.comptandye.product.entities;
 
 import fr.trendev.comptandye.entities.Product;
-import fr.trendev.comptandye.utils.observers.EmptyThreshold;
-import fr.trendev.comptandye.utils.observers.SevereThreshold;
-import fr.trendev.comptandye.utils.observers.WarningThreshold;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.persistence.PostUpdate;

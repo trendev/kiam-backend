@@ -9,7 +9,7 @@ import fr.trendev.comptandye.entities.CollectiveGroup;
 import fr.trendev.comptandye.entities.CollectiveGroupBill;
 import fr.trendev.comptandye.entities.CollectiveGroupPK;
 import fr.trendev.comptandye.entities.Professional;
-import fr.trendev.comptandye.sessions.AbstractFacade;
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.sessions.ClientFacade;
 import fr.trendev.comptandye.sessions.CollectiveGroupFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;

@@ -8,7 +8,7 @@ package fr.trendev.comptandye.services.business;
 import fr.trendev.comptandye.entities.OfferingPK;
 import fr.trendev.comptandye.entities.OfferingSnapshot;
 import fr.trendev.comptandye.entities.PurchasedOffering;
-import fr.trendev.comptandye.sessions.AbstractFacade;
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.sessions.PurchasedOfferingFacade;
 import fr.trendev.comptandye.utils.visitors.ProvideOfferingFacadeVisitor;
 import java.util.Optional;

@@ -17,6 +17,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
+import fr.trendev.comptandye.objectmapper.backupcfg.ProfessionalBackup;
 
 /**
  *
@@ -29,7 +30,7 @@ public class JsonProfessionalImporter {
             getName());
 
     @Inject
-    @ProfessionalExport
+    @ProfessionalBackup
     private ObjectMapper om;
 
     @Inject

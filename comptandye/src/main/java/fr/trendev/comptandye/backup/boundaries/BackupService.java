@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.backup.services;
+package fr.trendev.comptandye.backup.boundaries;
 
-import fr.trendev.comptandye.utils.security.AuthenticationSecurityUtils;
 import fr.trendev.comptandye.backup.controllers.JsonProfessionalExporter;
 import fr.trendev.comptandye.backup.controllers.JsonProfessionalImporter;
 import fr.trendev.comptandye.exceptions.ExceptionHandler;
+import fr.trendev.comptandye.utils.security.AuthenticationSecurityUtils;
 import java.io.InputStream;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
@@ -33,11 +33,11 @@ import javax.ws.rs.core.SecurityContext;
  * @author jsie
  */
 @Stateless
-@Path("Data")
+@Path("Backup")
 @RolesAllowed({"Administrator", "Professional"})
-public class DataService {
+public class BackupService {
 
-    private final Logger LOG = Logger.getLogger(DataService.class.
+    private final Logger LOG = Logger.getLogger(BackupService.class.
             getName());
 
     @Inject
@@ -63,8 +63,8 @@ public class DataService {
         String email = authenticationSecurityUtils.
                 getProEmail(sec, professional);
 
-        LOG.log(Level.INFO, "Exporting data of Professional " + email
-                + (asFile ? " into a json file" : ""));
+        LOG.log(Level.INFO, "Exporting data of Professional {0}{1}",
+                new Object[]{email, asFile ? " into a json file" : ""});
 
         CompletableFuture
                 .supplyAsync(() -> jsonProExport.export(email, asFile))
@@ -77,7 +77,7 @@ public class DataService {
      *
      * @param ar the Asynchronous Response
      * @param sec the security context
-     * @param sjpb serialized JsonProfessionalBackup
+     * @param is the stream including the Professional object
      */
     @POST
     @Path("control/json")

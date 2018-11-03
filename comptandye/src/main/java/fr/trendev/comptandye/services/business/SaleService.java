@@ -9,7 +9,7 @@ import fr.trendev.comptandye.entities.OfferingPK;
 import fr.trendev.comptandye.entities.Product;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.Sale;
-import fr.trendev.comptandye.sessions.AbstractFacade;
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.sessions.ProductFacade;
 import fr.trendev.comptandye.utils.ProductFinder;
 import java.util.logging.Level;

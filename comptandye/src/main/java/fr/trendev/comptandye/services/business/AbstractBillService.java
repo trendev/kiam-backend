@@ -15,7 +15,7 @@ import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.PurchasedOffering;
 import fr.trendev.comptandye.entities.Sale;
 import fr.trendev.comptandye.entities.SoldItem;
-import fr.trendev.comptandye.sessions.AbstractFacade;
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.sessions.BillFacade;
 import fr.trendev.comptandye.sessions.ProductFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;

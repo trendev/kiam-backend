@@ -1,4 +1,4 @@
-package fr.trendev.comptandye.sessions;
+package fr.trendev.comptandye.common.controllers;
 
 import java.util.List;
 import javax.persistence.EntityManager;

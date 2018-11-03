@@ -7,7 +7,7 @@ package fr.trendev.comptandye.services.business;
 
 import fr.trendev.comptandye.entities.Notification;
 import fr.trendev.comptandye.entities.NotificationPK;
-import fr.trendev.comptandye.sessions.AbstractFacade;
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.sessions.NotificationFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.exceptions.ExceptionHelper;

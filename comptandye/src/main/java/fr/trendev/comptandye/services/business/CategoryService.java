@@ -10,7 +10,7 @@ import fr.trendev.comptandye.entities.CategoryPK;
 import fr.trendev.comptandye.entities.Client;
 import fr.trendev.comptandye.entities.ClientPK;
 import fr.trendev.comptandye.entities.Professional;
-import fr.trendev.comptandye.sessions.AbstractFacade;
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.sessions.CategoryFacade;
 import fr.trendev.comptandye.sessions.ClientFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;

@@ -12,7 +12,7 @@ import fr.trendev.comptandye.entities.Pack;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.Sale;
 import fr.trendev.comptandye.entities.Service;
-import fr.trendev.comptandye.sessions.AbstractFacade;
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;
 import java.util.LinkedList;
 import java.util.List;

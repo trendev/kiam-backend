@@ -7,7 +7,7 @@ package fr.trendev.comptandye.services.business;
 
 import fr.trendev.comptandye.entities.Administrator;
 import fr.trendev.comptandye.entities.UserGroup;
-import fr.trendev.comptandye.sessions.AbstractFacade;
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.sessions.AdministratorFacade;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;

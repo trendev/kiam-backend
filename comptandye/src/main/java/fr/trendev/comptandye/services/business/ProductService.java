@@ -10,7 +10,7 @@ import fr.trendev.comptandye.entities.ProductPK;
 import fr.trendev.comptandye.entities.ProductRecord;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.entities.Sale;
-import fr.trendev.comptandye.sessions.AbstractFacade;
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.sessions.ProductFacade;
 import fr.trendev.comptandye.sessions.ProductRecordFacade;
 import fr.trendev.comptandye.sessions.ProductReferenceFacade;
