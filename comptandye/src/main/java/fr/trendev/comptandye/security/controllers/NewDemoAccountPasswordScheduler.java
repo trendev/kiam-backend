@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils.security;
+package fr.trendev.comptandye.security.controllers;
 
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
-import fr.trendev.comptandye.utils.observers.NewPasswordDemoAccount;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +25,7 @@ import javax.json.JsonObject;
  */
 @Singleton
 @Startup
-public class ChangeDemoAccountPasswordBean {
+public class NewDemoAccountPasswordScheduler {
 
     @Inject
     private ProfessionalFacade professionalFacade;
@@ -35,22 +34,22 @@ public class ChangeDemoAccountPasswordBean {
     private PasswordGenerator passwordGenerator;
 
     @Inject
-    @NewPasswordDemoAccount
+    @NewDemoAccountPassword
     private Event<JsonObject> newPasswordEvent;
 
     private final Logger LOG;
 
     private final String DEMO_ACCOUNT_EMAIL;
 
-    public ChangeDemoAccountPasswordBean() {
+    public NewDemoAccountPasswordScheduler() {
         this.DEMO_ACCOUNT_EMAIL = "pro@domain.com";
-        this.LOG = Logger.getLogger(ChangeDemoAccountPasswordBean.class.
+        this.LOG = Logger.getLogger(NewDemoAccountPasswordScheduler.class.
                 getName());
     }
 
     @PostConstruct
     public void init() {
-        LOG.info("ChangeDemoAccountPasswordBean initialized");
+        LOG.info("NewDemoAccountPasswordScheduler initialized");
     }
 
     /**
@@ -69,14 +68,16 @@ public class ChangeDemoAccountPasswordBean {
                     .ifPresent(pro -> {
                         String password = passwordGenerator.autoGenerate();
 
-                        LOG.info("New Password generated for Demo Account "
-                                + DEMO_ACCOUNT_EMAIL);
+                        LOG.log(Level.INFO,
+                                "New Password generated for Demo Account {0}",
+                                DEMO_ACCOUNT_EMAIL);
 
                         pro.setPassword(passwordGenerator.encrypt_SHA256(
                                 password));
 
-                        LOG.info("New encrypted password for Demo Account "
-                                + DEMO_ACCOUNT_EMAIL + " has been saved");
+                        LOG.log(Level.INFO,
+                                "New encrypted password for Demo Account {0} has been saved",
+                                DEMO_ACCOUNT_EMAIL);
 
                         newPasswordEvent.fire(buildText(password));
 

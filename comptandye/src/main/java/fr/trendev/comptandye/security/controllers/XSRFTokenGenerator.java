@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils.security;
+package fr.trendev.comptandye.security.controllers;
 
-import fr.trendev.comptandye.utils.security.PasswordGenerator;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;

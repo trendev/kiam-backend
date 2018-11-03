@@ -10,7 +10,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
-import fr.trendev.comptandye.utils.security.EncryptionUtils;
+import fr.trendev.comptandye.security.controllers.EncryptionMechanism;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
@@ -41,7 +41,7 @@ public class JsonProfessionalExporter {
     private ObjectMapper om;
 
     @Inject
-    private EncryptionUtils encryptionUtils;
+    private EncryptionMechanism encryptionUtils;
 
     /**
      * Stringify a professional into a JsonProfessionalBackup.

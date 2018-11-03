@@ -5,7 +5,7 @@
  */
 package fr.trendev.comptandye.admin.jsfbeans;
 
-import fr.trendev.comptandye.utils.security.ActiveSessionTracker;
+import fr.trendev.comptandye.security.controllers.ActiveSessionTracker;
 import fr.trendev.comptandye.entities.Administrator;
 import fr.trendev.comptandye.sessions.AdministratorFacade;
 import java.io.IOException;

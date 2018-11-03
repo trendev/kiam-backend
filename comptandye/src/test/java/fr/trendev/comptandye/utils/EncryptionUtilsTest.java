@@ -5,7 +5,7 @@
  */
 package fr.trendev.comptandye.utils;
 
-import fr.trendev.comptandye.utils.security.EncryptionUtils;
+import fr.trendev.comptandye.security.controllers.EncryptionMechanism;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ import org.junit.Test;
  */
 public class EncryptionUtilsTest {
 
-    private EncryptionUtils encryptionUtils = new EncryptionUtils();
+    private EncryptionMechanism encryptionUtils = new EncryptionMechanism();
 
     @Test
     public void testEncrypt_SHA256_base64() throws Exception {

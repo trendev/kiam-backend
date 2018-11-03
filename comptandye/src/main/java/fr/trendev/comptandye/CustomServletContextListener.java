@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.weblisteners;
+package fr.trendev.comptandye;
 
 import java.util.Date;
 import java.util.logging.Level;
@@ -18,10 +18,9 @@ import javax.servlet.annotation.WebListener;
  * @author jsie
  */
 @WebListener
-public class WebAppServletListener implements ServletContextListener {
+public class CustomServletContextListener implements ServletContextListener {
 
-    private static final Logger LOG = Logger.getLogger(
-            WebAppServletListener.class.getName());
+    private static final Logger LOG = Logger.getLogger(CustomServletContextListener.class.getName());
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {

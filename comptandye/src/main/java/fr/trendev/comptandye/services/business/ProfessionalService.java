@@ -23,7 +23,7 @@ import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.sessions.VatRatesFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;
-import fr.trendev.comptandye.utils.security.PasswordGenerator;
+import fr.trendev.comptandye.security.controllers.PasswordGenerator;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -7,8 +7,7 @@ package fr.trendev.comptandye.backup.entities;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.trendev.comptandye.entities.Professional;
-import fr.trendev.comptandye.utils.security.EncryptionSalt;
-import fr.trendev.comptandye.utils.security.EncryptionUtils;
+import fr.trendev.comptandye.security.controllers.EncryptionMechanism;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.WebApplicationException;
@@ -35,7 +34,8 @@ public class JsonProfessionalBackup {
     }
 
     private String getSalt() {
-        return professional.getEmail() + EncryptionSalt.PRAESTAT + timestamp;
+        return professional.getEmail() + BackupEncryptionSalt.PRAESTAT
+                + timestamp;
     }
 
     public long getTimestamp() {
@@ -68,7 +68,7 @@ public class JsonProfessionalBackup {
      * @param encryptionUtils the encryption utils
      * @param json the flattened graph
      */
-    public void initChecksum(EncryptionUtils encryptionUtils,
+    public void initChecksum(EncryptionMechanism encryptionUtils,
             String json) {
         this.checksum = encryptionUtils.encrypt_SHA512_base64(
                 json + getSalt());
@@ -85,7 +85,7 @@ public class JsonProfessionalBackup {
      * @param encryptionUtils the encryption utils
      * @return true if the backup is valid or false if not
      */
-    public boolean isValid(ObjectMapper om, EncryptionUtils encryptionUtils) {
+    public boolean isValid(ObjectMapper om, EncryptionMechanism encryptionUtils) {
         try {
             LOG.log(Level.INFO, "Validating backup of Professional {0}",
                     professional.getEmail());
@@ -109,6 +109,21 @@ public class JsonProfessionalBackup {
                     + professional.getEmail(), ex);
         }
 
+    }
+
+    private enum BackupEncryptionSalt {
+        LABOR("Labor omnia vincit improbus."),
+        PRAESTAT("Præstat cautela quam medela.");
+        private final String value;
+
+        private BackupEncryptionSalt(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return value;
+        }
     }
 
 }

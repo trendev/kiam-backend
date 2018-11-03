@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils.security;
+package fr.trendev.comptandye.security.controllers;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -16,7 +16,7 @@ import javax.ejb.Singleton;
  * @author jsie
  */
 @Singleton
-public class EncryptionUtils {
+public class EncryptionMechanism {
 
     public String encrypt_SHA256_base16(String word) {
         try {

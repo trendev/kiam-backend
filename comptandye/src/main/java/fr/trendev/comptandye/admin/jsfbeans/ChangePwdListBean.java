@@ -13,7 +13,7 @@ import fr.trendev.comptandye.sessions.AdministratorFacade;
 import fr.trendev.comptandye.sessions.IndividualFacade;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.sessions.UserAccountFacade;
-import fr.trendev.comptandye.utils.security.PasswordGenerator;
+import fr.trendev.comptandye.security.controllers.PasswordGenerator;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;

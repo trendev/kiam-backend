@@ -7,9 +7,8 @@ package fr.trendev.comptandye.slack;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.trendev.comptandye.authentication.controllers.LoginDetected;
-import fr.trendev.comptandye.authentication.controllers.LogoutDetected;
-import fr.trendev.comptandye.utils.observers.NewPasswordDemoAccount;
+import fr.trendev.comptandye.security.controllers.LoginDetected;
+import fr.trendev.comptandye.security.controllers.LogoutDetected;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -24,6 +23,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import fr.trendev.comptandye.security.controllers.NewDemoAccountPassword;
 
 /**
  *
@@ -65,7 +65,7 @@ public class SlackController {
      */
     public void observeDemoAccountNewPassword(
             @Observes(during = TransactionPhase.AFTER_SUCCESS)
-            @NewPasswordDemoAccount JsonObject object) {
+            @NewDemoAccountPassword JsonObject object) {
         this.controlPostMessage(object, AUTHENTICATION_CHANNEL);
     }
 

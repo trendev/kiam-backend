@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils.security;
+package fr.trendev.comptandye.security.controllers;
 
 import fr.trendev.comptandye.entities.UserAccount;
-import fr.trendev.comptandye.authentication.controllers.LoginController;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -51,7 +50,7 @@ public class ActiveSessionTracker {
      */
     private final Map<String, String> index;
 
-    private final Logger LOG = Logger.getLogger(
+    private static final Logger LOG = Logger.getLogger(
             ActiveSessionTracker.class.getName());
 
     @Inject

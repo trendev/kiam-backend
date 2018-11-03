@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.weblisteners;
+package fr.trendev.comptandye.security.weblisteners;
 
-import fr.trendev.comptandye.utils.security.ActiveSessionTracker;
+import fr.trendev.comptandye.security.controllers.ActiveSessionTracker;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.logging.Level;
@@ -23,14 +23,13 @@ import javax.servlet.http.HttpSessionListener;
  * @author jsie
  */
 @WebListener
-public class WebAppSessionListener implements HttpSessionListener,
+public class CustomHttpSessionListener implements HttpSessionListener,
         HttpSessionIdListener {
 
     @Inject
     private ActiveSessionTracker tracker;
 
-    private static final Logger LOG = Logger.getLogger(
-            WebAppSessionListener.class.getName());
+    private static final Logger LOG = Logger.getLogger(CustomHttpSessionListener.class.getName());
 
     private static final DateFormat df = DateFormat.getDateTimeInstance(
             DateFormat.FULL, DateFormat.FULL);

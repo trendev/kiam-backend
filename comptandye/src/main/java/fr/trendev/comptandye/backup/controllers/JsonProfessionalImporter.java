@@ -8,7 +8,7 @@ package fr.trendev.comptandye.backup.controllers;
 import fr.trendev.comptandye.backup.entities.JsonProfessionalBackup;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import fr.trendev.comptandye.utils.security.EncryptionUtils;
+import fr.trendev.comptandye.security.controllers.EncryptionMechanism;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
@@ -34,7 +34,7 @@ public class JsonProfessionalImporter {
     private ObjectMapper om;
 
     @Inject
-    private EncryptionUtils encryptionUtils;
+    private EncryptionMechanism encryptionUtils;
 
     public Response control(InputStream is) {
         try {

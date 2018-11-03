@@ -5,8 +5,8 @@
  */
 package fr.trendev.comptandye.security.webfilters;
 
-import fr.trendev.comptandye.utils.security.ActiveSessionTracker;
-import fr.trendev.comptandye.utils.security.XSRFTokenGenerator;
+import fr.trendev.comptandye.security.controllers.ActiveSessionTracker;
+import fr.trendev.comptandye.security.controllers.XSRFTokenGenerator;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.logging.Level;

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils.security;
+package fr.trendev.comptandye.security.controllers;
 
-import fr.trendev.comptandye.utils.security.EncryptionUtils;
+import fr.trendev.comptandye.security.controllers.EncryptionMechanism;
 import java.security.SecureRandom;
 import java.util.logging.Logger;
 import javax.ejb.Singleton;
@@ -21,7 +21,7 @@ public class PasswordGenerator {
     private final SecureRandom rand;
     private final int default_size;
     private final Logger LOG;
-    private final EncryptionUtils encryptionUtils;
+    private final EncryptionMechanism encryptionUtils;
 
     public PasswordGenerator() {
         sequence = "azertyuiopmlkjhgfdsqwxcvbn0123456789._-!?@AZERTYUIOPMLKJHGFDSQWXCVBN";
@@ -29,7 +29,7 @@ public class PasswordGenerator {
         default_size = 10;
         LOG = Logger.getLogger(PasswordGenerator.class.
                 getName());
-        encryptionUtils = new EncryptionUtils();
+        encryptionUtils = new EncryptionMechanism();
     }
 
     public String autoGenerate(int s) {

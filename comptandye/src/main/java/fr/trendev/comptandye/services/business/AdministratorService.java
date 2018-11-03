@@ -11,7 +11,7 @@ import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.sessions.AdministratorFacade;
 import fr.trendev.comptandye.sessions.UserGroupFacade;
 import fr.trendev.comptandye.utils.AssociationManagementEnum;
-import fr.trendev.comptandye.utils.security.PasswordGenerator;
+import fr.trendev.comptandye.security.controllers.PasswordGenerator;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.authentication.boundaries;
+package fr.trendev.comptandye.security.boundaries;
 
-import fr.trendev.comptandye.utils.security.XSRFTokenGenerator;
+import fr.trendev.comptandye.security.controllers.XSRFTokenGenerator;
 import fr.trendev.comptandye.sessions.UserAccountFacade;
-import fr.trendev.comptandye.utils.security.ActiveSessionTracker;
-import fr.trendev.comptandye.utils.security.AuthenticationSecurityUtils;
-import fr.trendev.comptandye.utils.security.PasswordGenerator;
+import fr.trendev.comptandye.security.controllers.ActiveSessionTracker;
+import fr.trendev.comptandye.security.controllers.AuthenticationSecurityUtils;
+import fr.trendev.comptandye.security.controllers.PasswordGenerator;
 import fr.trendev.comptandye.exceptions.ExceptionHandler;
 import fr.trendev.comptandye.exceptions.ExceptionHelper;
 import java.io.StringReader;
