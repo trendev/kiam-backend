@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils.backup;
+package fr.trendev.comptandye.backup.controllers;
 
+import fr.trendev.comptandye.backup.entities.JsonProfessionalBackup;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.trendev.comptandye.entities.Professional;
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
 import fr.trendev.comptandye.utils.security.EncryptionUtils;
-import fr.trendev.comptandye.utils.producers.qualifiers.ProfessionalExport;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;

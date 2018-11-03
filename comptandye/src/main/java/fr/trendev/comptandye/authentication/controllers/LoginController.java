@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils;
+package fr.trendev.comptandye.authentication.controllers;
 
-import fr.trendev.comptandye.utils.observers.qualifiers.LoginDetected;
-import fr.trendev.comptandye.utils.observers.qualifiers.LogoutDetected;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.enterprise.event.Event;

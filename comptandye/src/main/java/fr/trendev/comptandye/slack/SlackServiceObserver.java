@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils.observers;
+package fr.trendev.comptandye.slack;
 
+import fr.trendev.comptandye.authentication.controllers.LogoutDetected;
+import fr.trendev.comptandye.authentication.controllers.LoginDetected;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.trendev.comptandye.utils.observers.qualifiers.LoginDetected;
-import fr.trendev.comptandye.utils.observers.qualifiers.LogoutDetected;
-import fr.trendev.comptandye.utils.observers.qualifiers.NewPasswordDemoAccount;
+import fr.trendev.comptandye.utils.observers.NewPasswordDemoAccount;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;

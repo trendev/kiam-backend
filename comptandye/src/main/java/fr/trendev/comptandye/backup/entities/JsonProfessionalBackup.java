@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils.backup;
+package fr.trendev.comptandye.backup.entities;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.trendev.comptandye.entities.Professional;

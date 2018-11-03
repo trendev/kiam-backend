@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils.producers;
+package fr.trendev.comptandye;
 
+import fr.trendev.comptandye.backup.controllers.ProfessionalExport;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.trendev.comptandye.entities.Product;
 import fr.trendev.comptandye.entities.ProductRecord;
@@ -14,7 +15,6 @@ import fr.trendev.comptandye.utils.mixins.ProductMixin;
 import fr.trendev.comptandye.utils.mixins.ProductRecordMixin;
 import fr.trendev.comptandye.utils.mixins.ProfessionalMixin;
 import fr.trendev.comptandye.utils.mixins.SaleMixin;
-import fr.trendev.comptandye.utils.producers.qualifiers.ProfessionalExport;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 

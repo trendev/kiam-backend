@@ -6,7 +6,7 @@
 package fr.trendev.comptandye.utils.security;
 
 import fr.trendev.comptandye.sessions.ProfessionalFacade;
-import fr.trendev.comptandye.utils.observers.qualifiers.NewPasswordDemoAccount;
+import fr.trendev.comptandye.utils.observers.NewPasswordDemoAccount;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;

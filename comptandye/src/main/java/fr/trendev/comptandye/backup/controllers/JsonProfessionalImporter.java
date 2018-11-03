@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils.backup;
+package fr.trendev.comptandye.backup.controllers;
 
+import fr.trendev.comptandye.backup.entities.JsonProfessionalBackup;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import fr.trendev.comptandye.utils.security.EncryptionUtils;
-import fr.trendev.comptandye.utils.producers.qualifiers.ProfessionalExport;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;

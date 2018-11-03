@@ -6,9 +6,9 @@
 package fr.trendev.comptandye.utils.listeners;
 
 import fr.trendev.comptandye.entities.Product;
-import fr.trendev.comptandye.utils.observers.qualifiers.EmptyThreshold;
-import fr.trendev.comptandye.utils.observers.qualifiers.SevereThreshold;
-import fr.trendev.comptandye.utils.observers.qualifiers.WarningThreshold;
+import fr.trendev.comptandye.utils.observers.EmptyThreshold;
+import fr.trendev.comptandye.utils.observers.SevereThreshold;
+import fr.trendev.comptandye.utils.observers.WarningThreshold;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.persistence.PostUpdate;

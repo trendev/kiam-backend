@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.services.security;
+package fr.trendev.comptandye.authentication.boundaries;
 
 import fr.trendev.comptandye.utils.security.XSRFTokenGenerator;
 import fr.trendev.comptandye.sessions.UserAccountFacade;

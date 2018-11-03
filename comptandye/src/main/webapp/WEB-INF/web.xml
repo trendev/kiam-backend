@@ -16,19 +16,19 @@
     <filter>
         <description>Filters all http/https requests and check session validity</description>
         <filter-name>OverallFilter</filter-name>
-        <filter-class>fr.trendev.comptandye.utils.filters.OverallFilter</filter-class>
+        <filter-class>fr.trendev.comptandye.webfilters.OverallFilter</filter-class>
         <async-supported>true</async-supported>
     </filter>
     <filter>
         <description>apply Cross Origin Resource Sharing on restapi requests/responses</description>
         <filter-name>CORS</filter-name>
-        <filter-class>fr.trendev.comptandye.utils.filters.CORSFilter</filter-class>
+        <filter-class>fr.trendev.comptandye.webfilters.CORSFilter</filter-class>
         <async-supported>true</async-supported>
     </filter>
     <filter>
         <description>Cross-Site Request Forgery (XSRF) Filter</description>
         <filter-name>XSRFFilter</filter-name>
-        <filter-class>fr.trendev.comptandye.utils.filters.XSRFFilter</filter-class>
+        <filter-class>fr.trendev.comptandye.webfilters.XSRFFilter</filter-class>
         <async-supported>true</async-supported>
     </filter>
     <filter-mapping>
@@ -93,7 +93,7 @@
                 <transport-guarantee>CONFIDENTIAL</transport-guarantee>
             </user-data-constraint>
         </security-constraint>
-    -->    
+    -->
     <!--    <security-constraint>
         <display-name>Secured REST-API</display-name>
         <web-resource-collection>

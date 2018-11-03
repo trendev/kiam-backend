@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.services.backup;
+package fr.trendev.comptandye.backup.services;
 
 import fr.trendev.comptandye.utils.security.AuthenticationSecurityUtils;
-import fr.trendev.comptandye.utils.backup.JsonProfessionalExporter;
-import fr.trendev.comptandye.utils.backup.JsonProfessionalImporter;
+import fr.trendev.comptandye.backup.controllers.JsonProfessionalExporter;
+import fr.trendev.comptandye.backup.controllers.JsonProfessionalImporter;
 import fr.trendev.comptandye.utils.exceptions.ExceptionHandler;
 import java.io.InputStream;
 import java.util.concurrent.CompletableFuture;
