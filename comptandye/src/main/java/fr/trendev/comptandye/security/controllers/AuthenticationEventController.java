@@ -19,7 +19,7 @@ import javax.json.JsonObject;
  */
 @Singleton
 @Startup
-public class LoginController {
+public class AuthenticationEventController {
 
     @Inject
     @LoginDetected

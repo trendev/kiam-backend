@@ -31,14 +31,14 @@ import javax.servlet.http.HttpSession;
  */
 @Startup
 @Singleton
-@DependsOn("LoginController")
+@DependsOn("AuthenticationEventController")
 public class ActiveSessionTracker {
 
     /**
      * Controls the logins/logout directly in the tracker
      */
     @Inject
-    private LoginController loginController;
+    private AuthenticationEventController loginController;
 
     /**
      * User / Sessions map
