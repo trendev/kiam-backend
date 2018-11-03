@@ -29,12 +29,15 @@ public class AuthenticationHelper {
      */
     public Optional<String> getProfessionalEmailFromSecurityContext(
             SecurityContext sec) {
-        return Optional.ofNullable(
-                sec.isSecure()
+
+        if (sec.isSecure()
                 && (sec.isUserInRole(UserAccountType.PROFESSIONAL)
                 || sec.isUserInRole(UserAccountType.INDIVIDUAL)
-                || sec.isUserInRole(UserAccountType.ADMINISTRATOR))
-                ? sec.getUserPrincipal().getName() : null);
+                || sec.isUserInRole(UserAccountType.ADMINISTRATOR))) {
+            return Optional.of(sec.getUserPrincipal().getName());
+        } else {
+            return Optional.empty();
+        }
     }
 
     /**
@@ -47,8 +50,7 @@ public class AuthenticationHelper {
      * @return
      */
     public boolean isBlockedUser(SecurityContext sec) {
-        return getProfessionalEmailFromSecurityContext(sec).
-                map(u -> false).orElse(true);
+        return getProfessionalEmailFromSecurityContext(sec).isPresent();
     }
 
     /**
@@ -60,11 +62,12 @@ public class AuthenticationHelper {
      * @return the professional's email
      */
     public String getProEmail(SecurityContext sec, String professional) {
-        return Optional.ofNullable(sec.isSecure() && sec.isUserInRole(
-                UserAccountType.PROFESSIONAL) ? sec.getUserPrincipal().
-                                getName() : professional).map(Function.
-                        identity()).
-                orElseThrow(() ->
+        return Optional.ofNullable(sec.isSecure()
+                && sec.isUserInRole(UserAccountType.PROFESSIONAL)
+                ? sec.getUserPrincipal().getName()
+                : professional)
+                .map(Function.identity())
+                .orElseThrow(() ->
                         new BadRequestException(
                                 "Impossible to find the professional's email from the SecurityContext or from the Query Parameters"));
     }
