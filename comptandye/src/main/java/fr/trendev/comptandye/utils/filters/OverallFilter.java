@@ -5,9 +5,8 @@
  */
 package fr.trendev.comptandye.utils.filters;
 
-import fr.trendev.comptandye.beans.admin.AuthorizationsBean;
-import fr.trendev.comptandye.utils.security.XSRFTokenGenerator;
 import fr.trendev.comptandye.utils.security.ActiveSessionTracker;
+import fr.trendev.comptandye.utils.security.XSRFTokenGenerator;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.logging.Level;
@@ -51,7 +50,7 @@ public class OverallFilter implements Filter {
      * is generated and added in the session. A timestamp is also added in the
      * session in order to avoid using the lastAccessedTime of the HttpSession.
      * Session is marked with a specific attribute RQT_TIMESTAMP and the current
-     * timestamp {@link AuthorizationsBean}
+     * timestamp.
      *
      * @param request the request to filter
      * @param response the expected response

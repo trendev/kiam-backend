@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.beans.admin;
+package fr.trendev.comptandye.admin.jsfbeans;
 
 import java.util.Map;
 import java.util.TreeMap;
