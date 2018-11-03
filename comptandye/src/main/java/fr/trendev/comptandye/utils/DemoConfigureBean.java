@@ -5,7 +5,7 @@
  */
 package fr.trendev.comptandye.utils;
 
-import fr.trendev.comptandye.entities.Address;
+import fr.trendev.comptandye.address.entities.Address;
 import fr.trendev.comptandye.entities.Administrator;
 import fr.trendev.comptandye.entities.Bill;
 import fr.trendev.comptandye.entities.Business;

@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import fr.trendev.comptandye.address.entities.Address;
 import fr.trendev.comptandye.utils.UserAccountType;
 import java.util.Date;
 import org.junit.After;

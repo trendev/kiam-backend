@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import fr.trendev.comptandye.address.entities.Address;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.junit.After;
