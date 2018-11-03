@@ -6,7 +6,6 @@
 package fr.trendev.comptandye.security.controllers;
 
 import java.security.SecureRandom;
-import java.util.logging.Logger;
 import javax.ejb.Singleton;
 
 /**
@@ -19,8 +18,7 @@ public class PasswordGenerator {
     private final String sequence;
     private final SecureRandom rand;
     private final int default_size;
-    private static final Logger LOG = Logger.getLogger(PasswordGenerator.class.
-            getName());
+
     private final HashingMechanism hashingMechanism;
 
     public PasswordGenerator() {
