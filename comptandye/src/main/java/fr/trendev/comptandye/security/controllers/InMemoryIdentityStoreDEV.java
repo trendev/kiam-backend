@@ -11,7 +11,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-import javax.annotation.PostConstruct;
 import javax.security.enterprise.credential.UsernamePasswordCredential;
 import javax.security.enterprise.identitystore.CredentialValidationResult;
 import static javax.security.enterprise.identitystore.CredentialValidationResult.INVALID_RESULT;
@@ -23,19 +22,21 @@ import javax.security.enterprise.identitystore.IdentityStore;
  */
 //@ApplicationScoped
 /**
- * TEST purposes only, should not be provided on Production
+ * DEV/TEST purposes only, should not be provided on PRODUCTION
  *
  * @author jsie
  */
-public class InMemoryIdentityStore implements IdentityStore {
+public class InMemoryIdentityStoreDEV implements IdentityStore {
 
-    private final Map<String, Set<String>> accounts = new HashMap<>();
-    private final Map<String, String> passwords = new TreeMap<>();
+    private final Map<String, Set<String>> accounts;
+    private final Map<String, String> passwords;
+    private final String email;
 
-    private final String email = "trendevfr@gmail.com";
+    public InMemoryIdentityStoreDEV() {
+        this.accounts = new HashMap<>();
+        this.passwords = new TreeMap<>();
+        this.email = "trendevfr@gmail.com";
 
-    @PostConstruct
-    public void init() {
         accounts.put(email,
                 new HashSet<>(Arrays.asList("Administrator")));
         passwords.put(email, "Qsec0fr@3");
