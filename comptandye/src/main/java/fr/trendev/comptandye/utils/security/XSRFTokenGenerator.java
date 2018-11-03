@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.beans.xsrf;
+package fr.trendev.comptandye.utils.security;
 
 import fr.trendev.comptandye.utils.security.PasswordGenerator;
 import javax.ejb.Singleton;
