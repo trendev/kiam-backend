@@ -13,7 +13,7 @@ import fr.trendev.comptandye.purchasedoffering.entities.PurchasedOffering;
 import fr.trendev.comptandye.clientbill.entities.ClientBill;
 import fr.trendev.comptandye.client.entities.Client;
 import fr.trendev.comptandye.bill.entities.BillType;
-import fr.trendev.comptandye.utils.UUIDGenerator;
+import fr.trendev.comptandye.useraccount.controllers.UUIDGenerator;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;

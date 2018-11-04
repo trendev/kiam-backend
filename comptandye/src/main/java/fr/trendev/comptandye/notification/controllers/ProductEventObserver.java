@@ -15,7 +15,7 @@ import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
 import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.thresholdalert.controllers.ThresholdAlertFacade;
 import fr.trendev.comptandye.thresholdalert.entities.ThresholdAlert;
-import fr.trendev.comptandye.utils.ThresholdAlertQualifierEnum;
+import fr.trendev.comptandye.thresholdalert.entities.ThresholdAlertQualifierEnum;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;

@@ -3,8 +3,8 @@ package fr.trendev.comptandye.administrator.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.trendev.comptandye.useraccount.entities.UserAccount;
-import fr.trendev.comptandye.utils.UserAccountType;
-import fr.trendev.comptandye.utils.visitors.Visitor;
+import fr.trendev.comptandye.useraccount.entities.UserAccountType;
+import fr.trendev.comptandye.utils.Visitor;
 import javax.persistence.Entity;
 
 /**

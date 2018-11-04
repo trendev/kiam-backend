@@ -15,7 +15,7 @@ import fr.trendev.comptandye.individual.controllers.IndividualFacade;
 import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
 import fr.trendev.comptandye.useraccount.controllers.UserAccountFacade;
 import fr.trendev.comptandye.usergroup.controllers.UserGroupFacade;
-import fr.trendev.comptandye.utils.visitors.ProvideUserGroupVisitor;
+import fr.trendev.comptandye.usergroup.controllers.ProvideUserGroupVisitor;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;

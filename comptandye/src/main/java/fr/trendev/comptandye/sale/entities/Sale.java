@@ -6,7 +6,7 @@ import fr.trendev.comptandye.product.entities.Product;
 import fr.trendev.comptandye.offering.entities.Offering;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.trendev.comptandye.offering.entities.OfferingType;
-import fr.trendev.comptandye.utils.visitors.Visitor;
+import fr.trendev.comptandye.utils.Visitor;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;

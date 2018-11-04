@@ -4,7 +4,7 @@ package fr.trendev.comptandye.usergroup.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.trendev.comptandye.useraccount.entities.UserAccount;
-import fr.trendev.comptandye.utils.visitors.Visitor;
+import fr.trendev.comptandye.utils.Visitor;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;

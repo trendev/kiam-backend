@@ -14,7 +14,6 @@
     <class>fr.trendev.comptandye.clientbill.entities.ClientBill</class>
     <class>fr.trendev.comptandye.collectivegroup.entities.CollectiveGroup</class>
     <class>fr.trendev.comptandye.collectivegroupbill.entities.CollectiveGroupBill</class>
-    <class>fr.trendev.comptandye.customer.entities.Customer</class>
     <class>fr.trendev.comptandye.customerdetails.entities.CustomerDetails</class>
     <class>fr.trendev.comptandye.expense.entities.Expense</class>
     <class>fr.trendev.comptandye.expenseitem.entities.ExpenseItem</class>
@@ -42,6 +41,7 @@
     <class>fr.trendev.comptandye.sale.entities.Sale</class>
     <class>fr.trendev.comptandye.service.entities.Service</class>
     <class>fr.trendev.comptandye.socialnetworkaccounts.entities.SocialNetworkAccounts</class>
+    <class>fr.trendev.comptandye.usergroup.entities.Customer</class>
     <properties>
       <!-- Enable SQL Logging-->
       <!--            <property name="eclipselink.logging.level" value="FINER"/>

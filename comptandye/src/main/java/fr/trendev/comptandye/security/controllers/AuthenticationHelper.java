@@ -5,7 +5,7 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
-import fr.trendev.comptandye.utils.UserAccountType;
+import fr.trendev.comptandye.useraccount.entities.UserAccountType;
 import java.util.Optional;
 import java.util.function.Function;
 import javax.ejb.Stateless;

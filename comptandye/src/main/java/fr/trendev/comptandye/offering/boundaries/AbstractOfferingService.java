@@ -14,7 +14,7 @@ import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
 import fr.trendev.comptandye.purchasedoffering.entities.PurchasedOffering;
 import fr.trendev.comptandye.sale.controllers.SaleFacade;
 import fr.trendev.comptandye.service.controllers.ServiceFacade;
-import fr.trendev.comptandye.utils.visitors.OfferingIntegrityVisitor;
+import fr.trendev.comptandye.offering.controllers.OfferingIntegrityVisitor;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 import javax.inject.Inject;

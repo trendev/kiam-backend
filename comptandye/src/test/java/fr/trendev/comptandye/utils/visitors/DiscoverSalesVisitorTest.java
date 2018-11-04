@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.utils.visitors;
 
+import fr.trendev.comptandye.offering.entities.DiscoverSalesVisitor;
 import fr.trendev.comptandye.pack.entities.Pack;
 import fr.trendev.comptandye.sale.entities.Sale;
 import fr.trendev.comptandye.service.entities.Service;

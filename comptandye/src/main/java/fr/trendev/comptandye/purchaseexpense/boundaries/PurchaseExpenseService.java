@@ -11,7 +11,7 @@ import fr.trendev.comptandye.purchaseexpense.entities.PurchaseExpense;
 import fr.trendev.comptandye.purchaseditem.entities.PurchasedItem;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.purchaseexpense.controllers.PurchaseExpenseFacade;
-import fr.trendev.comptandye.utils.visitors.VariationOfProductRecordQtyVisitor;
+import fr.trendev.comptandye.productrecord.entities.VariationOfProductRecordQtyVisitor;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

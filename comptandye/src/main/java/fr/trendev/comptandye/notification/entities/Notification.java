@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.thresholdalert.entities.ThresholdAlert;
-import fr.trendev.comptandye.utils.visitors.Visitor;
+import fr.trendev.comptandye.utils.Visitor;
 import javax.persistence.Basic;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;

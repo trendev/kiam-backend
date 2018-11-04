@@ -4,8 +4,8 @@ package fr.trendev.comptandye.purchaseditem.entities;
 import fr.trendev.comptandye.purchaseexpense.entities.PurchaseExpense;
 import fr.trendev.comptandye.productrecord.entities.ProductRecord;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import fr.trendev.comptandye.utils.ProductRecordType;
-import fr.trendev.comptandye.utils.visitors.Visitor;
+import fr.trendev.comptandye.productrecord.entities.ProductRecordType;
+import fr.trendev.comptandye.utils.Visitor;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 

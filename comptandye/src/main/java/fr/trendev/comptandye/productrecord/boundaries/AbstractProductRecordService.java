@@ -11,7 +11,7 @@ import fr.trendev.comptandye.product.entities.ProductPK;
 import fr.trendev.comptandye.productrecord.entities.ProductRecord;
 import fr.trendev.comptandye.product.controllers.ProductFacade;
 import fr.trendev.comptandye.product.controllers.ProductFinder;
-import fr.trendev.comptandye.utils.visitors.VariationOfProductRecordQtyVisitor;
+import fr.trendev.comptandye.productrecord.entities.VariationOfProductRecordQtyVisitor;
 import java.util.Date;
 import java.util.function.Consumer;
 import java.util.logging.Level;

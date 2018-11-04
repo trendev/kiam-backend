@@ -11,7 +11,7 @@ import fr.trendev.comptandye.paymentmode.entities.PaymentMode;
 import fr.trendev.comptandye.payment.entities.Payment;
 import fr.trendev.comptandye.purchasedoffering.entities.PurchasedOffering;
 import fr.trendev.comptandye.bill.entities.Bill;
-import fr.trendev.comptandye.utils.UUIDGenerator;
+import fr.trendev.comptandye.useraccount.controllers.UUIDGenerator;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;

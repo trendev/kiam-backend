@@ -11,7 +11,7 @@ import fr.trendev.comptandye.purchasedoffering.entities.OfferingSnapshot;
 import fr.trendev.comptandye.purchasedoffering.entities.PurchasedOffering;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.purchasedoffering.controllers.PurchasedOfferingFacade;
-import fr.trendev.comptandye.utils.visitors.ProvideOfferingFacadeVisitor;
+import fr.trendev.comptandye.offering.controllers.ProvideOfferingFacadeVisitor;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;

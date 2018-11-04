@@ -3,7 +3,7 @@ package fr.trendev.comptandye.purchasedoffering.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.trendev.comptandye.offering.entities.Offering;
-import fr.trendev.comptandye.utils.visitors.OfferingExtentsVisitor;
+import fr.trendev.comptandye.offering.entities.OfferingExtentsVisitor;
 import javax.persistence.Basic;
 import javax.persistence.Embeddable;
 

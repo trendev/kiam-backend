@@ -7,7 +7,7 @@ package fr.trendev.comptandye.entities;
 
 import fr.trendev.comptandye.purchaseditem.entities.PurchasedItem;
 import fr.trendev.comptandye.productrecord.entities.ProductRecord;
-import fr.trendev.comptandye.utils.ProductRecordType;
+import fr.trendev.comptandye.productrecord.entities.ProductRecordType;
 import org.junit.Test;
 
 /**

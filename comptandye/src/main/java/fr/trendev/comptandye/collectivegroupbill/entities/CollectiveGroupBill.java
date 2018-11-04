@@ -6,7 +6,7 @@ import fr.trendev.comptandye.bill.entities.Bill;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.bill.entities.BillType;
-import fr.trendev.comptandye.utils.visitors.Visitor;
+import fr.trendev.comptandye.utils.Visitor;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;

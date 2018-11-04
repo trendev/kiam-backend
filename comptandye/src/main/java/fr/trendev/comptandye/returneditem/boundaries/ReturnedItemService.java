@@ -11,7 +11,7 @@ import fr.trendev.comptandye.bill.entities.BillPK;
 import fr.trendev.comptandye.returneditem.entities.ReturnedItem;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.returneditem.controllers.ReturnedItemFacade;
-import fr.trendev.comptandye.utils.visitors.ProvideBillFacadeVisitor;
+import fr.trendev.comptandye.bill.controllers.ProvideBillFacadeVisitor;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

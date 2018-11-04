@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils.visitors;
+package fr.trendev.comptandye.utils;
 
 import fr.trendev.comptandye.address.entities.Address;
 import fr.trendev.comptandye.administrator.entities.Administrator;
@@ -14,7 +14,7 @@ import fr.trendev.comptandye.client.entities.Client;
 import fr.trendev.comptandye.clientbill.entities.ClientBill;
 import fr.trendev.comptandye.collectivegroup.entities.CollectiveGroup;
 import fr.trendev.comptandye.collectivegroupbill.entities.CollectiveGroupBill;
-import fr.trendev.comptandye.customer.entities.Customer;
+import fr.trendev.comptandye.usergroup.entities.Customer;
 import fr.trendev.comptandye.customerdetails.entities.CustomerDetails;
 import fr.trendev.comptandye.expense.entities.Expense;
 import fr.trendev.comptandye.expenseitem.entities.ExpenseItem;

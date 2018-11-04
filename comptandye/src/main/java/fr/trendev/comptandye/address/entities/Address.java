@@ -2,7 +2,7 @@
 package fr.trendev.comptandye.address.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import fr.trendev.comptandye.utils.visitors.Visitor;
+import fr.trendev.comptandye.utils.Visitor;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

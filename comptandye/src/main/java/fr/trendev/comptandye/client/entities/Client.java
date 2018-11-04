@@ -9,7 +9,7 @@ import fr.trendev.comptandye.clientbill.entities.ClientBill;
 import fr.trendev.comptandye.customerdetails.entities.CustomerDetails;
 import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.socialnetworkaccounts.entities.SocialNetworkAccounts;
-import fr.trendev.comptandye.utils.visitors.Visitor;
+import fr.trendev.comptandye.utils.Visitor;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;

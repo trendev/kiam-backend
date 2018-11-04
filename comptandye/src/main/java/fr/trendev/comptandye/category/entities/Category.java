@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.trendev.comptandye.client.entities.Client;
 import fr.trendev.comptandye.professional.entities.Professional;
-import fr.trendev.comptandye.utils.visitors.Visitor;
+import fr.trendev.comptandye.utils.Visitor;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;

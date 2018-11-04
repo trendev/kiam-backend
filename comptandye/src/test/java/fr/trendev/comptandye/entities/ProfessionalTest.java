@@ -9,7 +9,7 @@ import fr.trendev.comptandye.socialnetworkaccounts.entities.SocialNetworkAccount
 import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.customerdetails.entities.CustomerDetails;
 import fr.trendev.comptandye.address.entities.Address;
-import fr.trendev.comptandye.utils.UserAccountType;
+import fr.trendev.comptandye.useraccount.entities.UserAccountType;
 import java.util.Calendar;
 import java.util.Date;
 import org.junit.Test;

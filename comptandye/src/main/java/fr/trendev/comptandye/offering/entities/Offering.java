@@ -11,7 +11,7 @@ import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.purchasedoffering.entities.PurchasedOffering;
 import fr.trendev.comptandye.sale.entities.Sale;
 import fr.trendev.comptandye.service.entities.Service;
-import fr.trendev.comptandye.utils.visitors.Visitor;
+import fr.trendev.comptandye.utils.Visitor;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;

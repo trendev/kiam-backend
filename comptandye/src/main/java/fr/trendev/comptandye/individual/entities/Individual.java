@@ -2,15 +2,15 @@
 package fr.trendev.comptandye.individual.entities;
 
 import fr.trendev.comptandye.customerdetails.entities.CustomerDetails;
-import fr.trendev.comptandye.customer.entities.Customer;
+import fr.trendev.comptandye.usergroup.entities.Customer;
 import fr.trendev.comptandye.address.entities.Address;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.trendev.comptandye.individualbill.entities.IndividualBill;
 import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.socialnetworkaccounts.entities.SocialNetworkAccounts;
-import fr.trendev.comptandye.utils.UserAccountType;
-import fr.trendev.comptandye.utils.visitors.Visitor;
+import fr.trendev.comptandye.useraccount.entities.UserAccountType;
+import fr.trendev.comptandye.utils.Visitor;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.CascadeType;
