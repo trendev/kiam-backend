@@ -15,7 +15,7 @@ import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.category.controllers.CategoryFacade;
 import fr.trendev.comptandye.client.controllers.ClientFacade;
 import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
-import fr.trendev.comptandye.utils.AssociationManagementEnum;
+import fr.trendev.comptandye.common.boundaries.AssociationManagementEnum;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

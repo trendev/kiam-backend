@@ -12,7 +12,7 @@ import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.sale.entities.Sale;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.product.controllers.ProductFacade;
-import fr.trendev.comptandye.utils.ProductFinder;
+import fr.trendev.comptandye.product.controllers.ProductFinder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

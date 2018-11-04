@@ -5,7 +5,7 @@ import fr.trendev.comptandye.expense.entities.Expense;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.trendev.comptandye.purchaseditem.entities.PurchasedItem;
-import fr.trendev.comptandye.utils.ExpenseType;
+import fr.trendev.comptandye.expense.entities.ExpenseType;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;

@@ -24,7 +24,7 @@ import fr.trendev.comptandye.individual.controllers.IndividualFacade;
 import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
 import fr.trendev.comptandye.usergroup.controllers.UserGroupFacade;
 import fr.trendev.comptandye.vatrates.controllers.VatRatesFacade;
-import fr.trendev.comptandye.utils.AssociationManagementEnum;
+import fr.trendev.comptandye.common.boundaries.AssociationManagementEnum;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -3,20 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.product.controllers;
+package fr.trendev.comptandye.notification.controllers;
 
-import fr.trendev.comptandye.product.entities.Product;
-import fr.trendev.comptandye.professional.entities.Professional;
-import fr.trendev.comptandye.thresholdalert.entities.ThresholdAlert;
+import fr.trendev.comptandye.notification.entities.NotificationLevelEnum;
 import fr.trendev.comptandye.product.entities.EmptyThreshold;
-import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
-import fr.trendev.comptandye.thresholdalert.controllers.ThresholdAlertFacade;
-import fr.trendev.comptandye.utils.NotificationLevelEnum;
-import fr.trendev.comptandye.utils.ThresholdAlertQualifierEnum;
-import fr.trendev.comptandye.product.entities.ProductEntityListener;
+import fr.trendev.comptandye.product.entities.Product;
 import fr.trendev.comptandye.product.entities.ProductEntityListener;
 import fr.trendev.comptandye.product.entities.SevereThreshold;
 import fr.trendev.comptandye.product.entities.WarningThreshold;
+import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
+import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.comptandye.thresholdalert.controllers.ThresholdAlertFacade;
+import fr.trendev.comptandye.thresholdalert.entities.ThresholdAlert;
+import fr.trendev.comptandye.utils.ThresholdAlertQualifierEnum;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;

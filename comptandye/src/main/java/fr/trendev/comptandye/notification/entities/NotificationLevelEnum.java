@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils;
+package fr.trendev.comptandye.notification.entities;
 
 /**
  *
  * @author jsie
  */
-public enum AssociationManagementEnum {
-    INSERT, REMOVE;
+public enum NotificationLevelEnum {
+    INFO, WARNING, SEVERE;
 }

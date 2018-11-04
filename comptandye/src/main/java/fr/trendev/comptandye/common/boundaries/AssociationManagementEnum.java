@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils;
+package fr.trendev.comptandye.common.boundaries;
 
 /**
  *
  * @author jsie
  */
-public class ExpenseType {
-
-    public static final String CLASSIC_EXPENSE = "classic";
-    public static final String PURCHASE_EXPENSE = "purchase";
+public enum AssociationManagementEnum {
+    INSERT, REMOVE;
 }

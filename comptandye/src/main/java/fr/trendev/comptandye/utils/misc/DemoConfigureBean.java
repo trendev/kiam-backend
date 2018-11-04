@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils;
+package fr.trendev.comptandye.utils.misc;
 
+import fr.trendev.comptandye.notification.entities.NotificationLevelEnum;
 import fr.trendev.comptandye.address.entities.Address;
 import fr.trendev.comptandye.administrator.entities.Administrator;
 import fr.trendev.comptandye.bill.entities.Bill;
@@ -34,6 +35,8 @@ import fr.trendev.comptandye.usergroup.entities.UserGroup;
 import fr.trendev.comptandye.vatrates.entities.VatRates;
 import fr.trendev.comptandye.usergroup.controllers.UserGroupFacade;
 import fr.trendev.comptandye.security.controllers.PasswordManager;
+import fr.trendev.comptandye.utils.ThresholdAlertQualifierEnum;
+import fr.trendev.comptandye.utils.UUIDGenerator;
 import fr.trendev.comptandye.utils.visitors.BillTypeVisitor;
 import java.io.BufferedReader;
 import java.io.InputStream;

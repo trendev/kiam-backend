@@ -4,7 +4,7 @@ package fr.trendev.comptandye.service.entities;
 import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.offering.entities.Offering;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import fr.trendev.comptandye.utils.OfferingType;
+import fr.trendev.comptandye.offering.entities.OfferingType;
 import fr.trendev.comptandye.utils.visitors.Visitor;
 import javax.persistence.Entity;
 

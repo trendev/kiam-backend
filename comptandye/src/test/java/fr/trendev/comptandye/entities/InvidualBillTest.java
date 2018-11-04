@@ -12,7 +12,7 @@ import fr.trendev.comptandye.payment.entities.Payment;
 import fr.trendev.comptandye.purchasedoffering.entities.PurchasedOffering;
 import fr.trendev.comptandye.individualbill.entities.IndividualBill;
 import fr.trendev.comptandye.individual.entities.Individual;
-import fr.trendev.comptandye.utils.BillType;
+import fr.trendev.comptandye.bill.entities.BillType;
 import fr.trendev.comptandye.utils.UUIDGenerator;
 import java.util.Arrays;
 import java.util.Date;

@@ -4,7 +4,7 @@ package fr.trendev.comptandye.classicexpense.entities;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.trendev.comptandye.expense.entities.Expense;
 import fr.trendev.comptandye.expense.entities.Expense;
-import fr.trendev.comptandye.utils.ExpenseType;
+import fr.trendev.comptandye.expense.entities.ExpenseType;
 import javax.persistence.Entity;
 
 /**

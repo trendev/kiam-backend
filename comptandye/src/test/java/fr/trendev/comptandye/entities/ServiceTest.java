@@ -7,7 +7,7 @@ package fr.trendev.comptandye.entities;
 
 import fr.trendev.comptandye.service.entities.Service;
 import fr.trendev.comptandye.professional.entities.Professional;
-import fr.trendev.comptandye.utils.OfferingType;
+import fr.trendev.comptandye.offering.entities.OfferingType;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

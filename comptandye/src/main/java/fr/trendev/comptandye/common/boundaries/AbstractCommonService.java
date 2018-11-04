@@ -12,7 +12,6 @@ import fr.trendev.comptandye.exceptions.ExceptionHandler;
 import fr.trendev.comptandye.exceptions.ExceptionHelper;
 import fr.trendev.comptandye.exceptions.InvalidDeliveryDateException;
 import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
-import fr.trendev.comptandye.utils.AssociationManagementEnum;
 import fr.trendev.comptandye.utils.UserAccountType;
 import java.net.URI;
 import java.util.Collection;

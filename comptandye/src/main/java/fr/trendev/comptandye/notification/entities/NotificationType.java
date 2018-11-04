@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils;
+package fr.trendev.comptandye.notification.entities;
 
 /**
  *
  * @author jsie
  */
-public enum NotificationLevelEnum {
-    INFO, WARNING, SEVERE;
+public class NotificationType {
+
+    public static final String THRESHOLD_ALERT = "threshold";
 }

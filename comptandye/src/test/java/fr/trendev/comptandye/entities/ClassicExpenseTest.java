@@ -10,7 +10,7 @@ import fr.trendev.comptandye.paymentmode.entities.PaymentMode;
 import fr.trendev.comptandye.payment.entities.Payment;
 import fr.trendev.comptandye.classicexpense.entities.ClassicExpense;
 import fr.trendev.comptandye.business.entities.Business;
-import fr.trendev.comptandye.utils.ExpenseType;
+import fr.trendev.comptandye.expense.entities.ExpenseType;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.stream.Collectors;

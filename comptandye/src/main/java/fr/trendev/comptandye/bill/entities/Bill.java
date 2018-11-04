@@ -11,7 +11,6 @@ import fr.trendev.comptandye.individualbill.entities.IndividualBill;
 import fr.trendev.comptandye.payment.entities.Payment;
 import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.purchasedoffering.entities.PurchasedOffering;
-import fr.trendev.comptandye.utils.BillType;
 import fr.trendev.comptandye.utils.visitors.Visitor;
 import java.util.Date;
 import java.util.LinkedList;

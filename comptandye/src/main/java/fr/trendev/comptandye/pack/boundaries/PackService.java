@@ -14,7 +14,7 @@ import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.sale.entities.Sale;
 import fr.trendev.comptandye.service.entities.Service;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.utils.AssociationManagementEnum;
+import fr.trendev.comptandye.common.boundaries.AssociationManagementEnum;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
