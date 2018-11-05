@@ -5,21 +5,21 @@
  */
 package fr.trendev.comptandye.entities;
 
-import fr.trendev.comptandye.service.entities.Service;
-import fr.trendev.comptandye.professional.entities.Professional;
-import fr.trendev.comptandye.paymentmode.entities.PaymentMode;
-import fr.trendev.comptandye.payment.entities.Payment;
-import fr.trendev.comptandye.purchasedoffering.entities.PurchasedOffering;
-import fr.trendev.comptandye.individualbill.entities.IndividualBill;
-import fr.trendev.comptandye.individual.entities.Individual;
 import fr.trendev.comptandye.bill.entities.BillType;
+import fr.trendev.comptandye.individual.entities.Individual;
+import fr.trendev.comptandye.individualbill.entities.IndividualBill;
+import fr.trendev.comptandye.payment.entities.Payment;
+import fr.trendev.comptandye.paymentmode.entities.PaymentMode;
+import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.comptandye.purchasedoffering.entities.PurchasedOffering;
+import fr.trendev.comptandye.service.entities.Service;
 import fr.trendev.comptandye.useraccount.controllers.UUIDGenerator;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *

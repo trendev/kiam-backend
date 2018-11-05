@@ -6,11 +6,11 @@
 package fr.trendev.comptandye.utils.visitors;
 
 import fr.trendev.comptandye.offering.entities.OfferingExtentsVisitor;
-import fr.trendev.comptandye.purchasedoffering.entities.OfferingExtents;
 import fr.trendev.comptandye.pack.entities.Pack;
+import fr.trendev.comptandye.purchasedoffering.entities.OfferingExtents;
 import fr.trendev.comptandye.sale.entities.Sale;
 import fr.trendev.comptandye.service.entities.Service;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *

@@ -6,11 +6,7 @@
 package fr.trendev.comptandye.entities;
 
 import fr.trendev.comptandye.socialnetworkaccounts.entities.SocialNetworkAccounts;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -19,22 +15,6 @@ import org.junit.Test;
 public class SocialNetworkAccountsTest {
 
     public SocialNetworkAccountsTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
     }
 
     @Test

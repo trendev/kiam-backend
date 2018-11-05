@@ -5,19 +5,15 @@
  */
 package fr.trendev.comptandye.entities;
 
-import fr.trendev.comptandye.socialnetworkaccounts.entities.SocialNetworkAccounts;
-import fr.trendev.comptandye.professional.entities.Professional;
-import fr.trendev.comptandye.customerdetails.entities.CustomerDetails;
-import fr.trendev.comptandye.client.entities.Client;
-import fr.trendev.comptandye.category.entities.Category;
 import fr.trendev.comptandye.address.entities.Address;
+import fr.trendev.comptandye.category.entities.Category;
+import fr.trendev.comptandye.client.entities.Client;
+import fr.trendev.comptandye.customerdetails.entities.CustomerDetails;
+import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.comptandye.socialnetworkaccounts.entities.SocialNetworkAccounts;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -26,22 +22,6 @@ import org.junit.Test;
 public class ClientTest {
 
     public ClientTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
     }
 
     @Test

@@ -5,14 +5,10 @@
  */
 package fr.trendev.comptandye.entities;
 
-import fr.trendev.comptandye.professional.entities.Professional;
-import fr.trendev.comptandye.pack.entities.Pack;
 import fr.trendev.comptandye.offering.entities.OfferingType;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import fr.trendev.comptandye.pack.entities.Pack;
+import fr.trendev.comptandye.professional.entities.Professional;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -21,22 +17,6 @@ import org.junit.Test;
 public class PackTest {
 
     public PackTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
     }
 
     @Test

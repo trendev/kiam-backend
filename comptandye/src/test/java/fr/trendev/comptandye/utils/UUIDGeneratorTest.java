@@ -6,10 +6,6 @@
 package fr.trendev.comptandye.utils;
 
 import fr.trendev.comptandye.useraccount.controllers.UUIDGenerator;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 
 /**
  *
@@ -18,22 +14,6 @@ import org.junit.BeforeClass;
 public class UUIDGeneratorTest {
 
     public UUIDGeneratorTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
     }
 
     /**

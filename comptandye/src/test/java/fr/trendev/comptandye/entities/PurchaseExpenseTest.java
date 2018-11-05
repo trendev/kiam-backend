@@ -5,9 +5,9 @@
  */
 package fr.trendev.comptandye.entities;
 
-import fr.trendev.comptandye.purchaseexpense.entities.PurchaseExpense;
 import fr.trendev.comptandye.expense.entities.ExpenseType;
-import org.junit.Test;
+import fr.trendev.comptandye.purchaseexpense.entities.PurchaseExpense;
+import org.junit.jupiter.api.Test;
 
 /**
  *

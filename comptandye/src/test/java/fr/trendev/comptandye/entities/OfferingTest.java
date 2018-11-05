@@ -5,9 +5,9 @@
  */
 package fr.trendev.comptandye.entities;
 
-import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.offering.entities.Offering;
-import org.junit.Test;
+import fr.trendev.comptandye.professional.entities.Professional;
+import org.junit.jupiter.api.Test;
 
 /**
  *

@@ -5,17 +5,13 @@
  */
 package fr.trendev.comptandye.entities;
 
-import fr.trendev.comptandye.usergroup.entities.UserGroup;
-import fr.trendev.comptandye.administrator.entities.Administrator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.trendev.comptandye.administrator.entities.Administrator;
+import fr.trendev.comptandye.usergroup.entities.UserGroup;
 import java.io.IOException;
 import java.util.ArrayList;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -24,22 +20,6 @@ import org.junit.Test;
 public class UserGroupTest {
 
     public UserGroupTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
     }
 
     @Test//(expected = JsonMappingException.class)

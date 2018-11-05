@@ -6,7 +6,12 @@
 package fr.trendev.comptandye.security.controllers;
 
 import java.util.Optional;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -20,23 +25,21 @@ public class AuthenticationHelperTest {
     @Test
     public void testIsPresentWithOptional() {
         String email = "email";
-        assert Optional.of(email).isPresent();
+        assertTrue(Optional.of(email).isPresent());
     }
 
     @Test
     public void testIsPresentWithEmptyOptional() {
         Optional empty = Optional.empty();
-        assert !empty.isPresent();
+        assertFalse(empty.isPresent());
     }
 
     @Test
     public void testOptionalOfMethod() {
-        try {
+        assertThrows(NullPointerException.class, () -> {
             boolean value = Optional.of(null).isPresent();
-            assert value;
-        } catch (NullPointerException ex) {
-            assert ex != null;
-        }
+            assertTrue(value);
+        });
     }
 
     @Test
@@ -48,8 +51,8 @@ public class AuthenticationHelperTest {
                 .map(v -> v.length())
                 .orElse(0);
 
-        assert l == email.length();
-        assert l != 0;
+        assertEquals(l, email.length());
+        assertNotEquals(l, 0);
     }
 
     @Test
@@ -62,7 +65,7 @@ public class AuthenticationHelperTest {
                 // no value to get, so returns -1
                 .orElse(-1);
 
-        assert l == -1;
+        assertEquals(l, -1);
     }
 
     @Test
@@ -71,7 +74,7 @@ public class AuthenticationHelperTest {
                 .map(v -> v.length())
                 .orElse(-1);
 
-        assert l == 0;
+        assertEquals(l, 0);
     }
 
     @Test
@@ -79,8 +82,7 @@ public class AuthenticationHelperTest {
         int l = Optional.<String>empty()
                 .map(v -> v.length() + 1)
                 .orElse(0);
-
-        assert l == 0;
+        assertEquals(l, 0);
     }
 
 }

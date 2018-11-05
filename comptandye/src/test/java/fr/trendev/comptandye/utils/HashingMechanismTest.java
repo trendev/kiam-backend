@@ -6,8 +6,8 @@
 package fr.trendev.comptandye.utils;
 
 import fr.trendev.comptandye.security.controllers.HashingMechanism;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -22,7 +22,7 @@ public class HashingMechanismTest {
         String word = "Qb7EohqbI2";
         String encrypted = "P7vAmts0c+sxQprYoF5S1Uicvx4RY2J9A+A2FVlThQg=";
 
-        Assert.assertEquals(hashingMechanism.hash_SHA256_base64(word),
+        Assertions.assertEquals(hashingMechanism.hash_SHA256_base64(word),
                 encrypted);
 
     }
@@ -32,7 +32,7 @@ public class HashingMechanismTest {
         String word = "Qb7EohqbI2";
         String encrypted = "AEpNSeN1XHHS5Zah2OTf/zpmlNNtuJRMSCuxgMOCqfBfW6a/c7AsvJZJZGyz0qfxSS2WCOwqq0oZh34tUiU+pQ==";
 
-        Assert.assertEquals(hashingMechanism.hash_SHA512_base64(word),
+        Assertions.assertEquals(hashingMechanism.hash_SHA512_base64(word),
                 encrypted);
     }
 

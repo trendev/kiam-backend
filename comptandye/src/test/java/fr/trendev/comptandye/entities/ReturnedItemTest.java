@@ -5,10 +5,10 @@
  */
 package fr.trendev.comptandye.entities;
 
-import fr.trendev.comptandye.returneditem.entities.ReturnedItem;
 import fr.trendev.comptandye.productrecord.entities.ProductRecord;
 import fr.trendev.comptandye.productrecord.entities.ProductRecordType;
-import org.junit.Test;
+import fr.trendev.comptandye.returneditem.entities.ReturnedItem;
+import org.junit.jupiter.api.Test;
 
 /**
  *

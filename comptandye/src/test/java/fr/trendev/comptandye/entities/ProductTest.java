@@ -6,7 +6,7 @@
 package fr.trendev.comptandye.entities;
 
 import fr.trendev.comptandye.product.entities.Product;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *
