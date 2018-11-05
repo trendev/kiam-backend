@@ -53,7 +53,7 @@ public class PurchasedOffering {
         this.offeringExtents = new OfferingExtents(offering);
 
         /* Offering/PurchasedOffering links are set/destroyed in the rest api services */
-// this.offering.getPurchasedOfferings().add(this); */
+        // this.offering.getPurchasedOfferings().add(this); */
     }
 
     public Long getId() {
