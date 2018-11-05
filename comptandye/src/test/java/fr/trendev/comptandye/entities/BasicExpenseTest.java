@@ -5,8 +5,8 @@
  */
 package fr.trendev.comptandye.entities;
 
+import fr.trendev.comptandye.basicexpense.entities.BasicExpense;
 import fr.trendev.comptandye.business.entities.Business;
-import fr.trendev.comptandye.classicexpense.entities.ClassicExpense;
 import fr.trendev.comptandye.expense.entities.ExpenseType;
 import fr.trendev.comptandye.payment.entities.Payment;
 import fr.trendev.comptandye.paymentmode.entities.PaymentMode;
@@ -21,9 +21,9 @@ import org.junit.jupiter.api.Test;
  *
  * @author jsie
  */
-public class ClassicExpenseTest {
+public class BasicExpenseTest {
 
-    public ClassicExpenseTest() {
+    public BasicExpenseTest() {
     }
 
     /**
@@ -31,7 +31,7 @@ public class ClassicExpenseTest {
      */
     @Test
     public void testConstructors() {
-        ClassicExpense instance = new ClassicExpense();
+        BasicExpense instance = new BasicExpense();
 
         assert instance.getId() == null;
         assert instance.getDescription() == null;
@@ -48,13 +48,13 @@ public class ClassicExpenseTest {
         assert instance.getBusinesses() != null;
         assert instance.getBusinesses().isEmpty();
         assert instance.getIssueDate() != null;
-        assert ExpenseType.CLASSIC_EXPENSE.equals(instance.getCltype());
+        assert ExpenseType.BASIC_EXPENSE.equals(instance.getCltype());
 
         String name = "Expensive expense";
         int amount = 50000; // 1000 euros
         String invoiceRef = "Invoice12345ABC";
 
-        instance = new ClassicExpense();
+        instance = new BasicExpense();
         instance.setDescription(name);
         instance.setAmount(amount);
         instance.setPaymentDate(new Date());
@@ -86,7 +86,7 @@ public class ClassicExpenseTest {
         assert instance.getBusinesses() != null;
         assert !instance.getBusinesses().isEmpty();
         assert instance.getIssueDate() != null;
-        assert ExpenseType.CLASSIC_EXPENSE.equals(instance.getCltype());
+        assert ExpenseType.BASIC_EXPENSE.equals(instance.getCltype());
 
     }
 

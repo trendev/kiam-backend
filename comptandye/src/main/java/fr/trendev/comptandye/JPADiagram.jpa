@@ -1422,9 +1422,9 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:annotation e="true" n="@java.lang.SuppressWarnings(&quot;unchecked&quot;)"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonTypeInfo(use = JsonTypeInfo.Id.NAME,&#xA;        include = JsonTypeInfo.As.EXISTING_PROPERTY,&#xA;        property = &quot;cltype&quot;,&#xA;        visible = true)"/>
-        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({&#xA;    @JsonSubTypes.Type(value = ClassicExpense.class,&#xA;            name = ExpenseType.CLASSIC_EXPENSE)&#xA;    ,   @JsonSubTypes.Type(value = PurchaseExpense.class,&#xA;            name = ExpenseType.PURCHASE_EXPENSE)})"/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({&#xA;    @JsonSubTypes.Type(value = BasicExpense.class,&#xA;            name = ExpenseType.BASIC_EXPENSE)&#xA;    ,   @JsonSubTypes.Type(value = PurchaseExpense.class,&#xA;            name = ExpenseType.PURCHASE_EXPENSE)})"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
-            import fr.trendev.comptandye.classicexpense.entities.ClassicExpense;
+            import fr.trendev.comptandye.basicexpense.entities.BasicExpense;
             import fr.trendev.comptandye.purchaseexpense.entities.PurchaseExpense;
             import fr.trendev.comptandye.utils.Visitor;</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
@@ -2163,16 +2163,16 @@ import fr.trendev.comptandye.expense.entities.ExpenseType;
             <jpa:query>Select e from SoldItem e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="ClassicExpensePK" abs="false" class="ClassicExpense" superclassId="_1499512549878" v="true" pkg="classicexpense2.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1527253885059">
+    <jpa:entity compositePrimaryKeyClass="BasicExpensePK" abs="false" class="BasicExpense" superclassId="_1499512549878" v="true" pkg="basicexpense.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1527253885059">
         <jpa:con am="PUBLIC" e="true">
-            <jpa:post>this.cltype = ExpenseType.CLASSIC_EXPENSE;</jpa:post>
+            <jpa:post>this.cltype = ExpenseType.BASIC_EXPENSE;</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.expense.entities.ExpenseType;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes/>
-        <jpa:nq e="false" name="ClassicExpense.findAll">
-            <jpa:query>Select e from ClassicExpense e</jpa:query>
+        <jpa:nq e="false" name="BasicExpense.findAll">
+            <jpa:query>Select e from BasicExpense e</jpa:query>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="NotificationPK" abs="true" class="Notification" v="true" pkg="notification.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1528899065548">
@@ -2702,7 +2702,7 @@ import fr.trendev.comptandye.offering.entities.OfferingExtentsVisitor;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1527253885059" x="-474" y="2377"/>
+            <i ref="_1527253885059" x="-472" y="2377"/>
             <i ref="_1506009883340" x="642" y="965">
                 <el>
                     <e ref="_1506010011239530">

@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import fr.trendev.comptandye.basicexpense.entities.BasicExpense;
 import fr.trendev.comptandye.business.entities.Business;
-import fr.trendev.comptandye.classicexpense.entities.ClassicExpense;
 import fr.trendev.comptandye.expenseitem.entities.ExpenseItem;
 import fr.trendev.comptandye.payment.entities.Payment;
 import fr.trendev.comptandye.professional.entities.Professional;
@@ -45,8 +45,8 @@ import javax.validation.constraints.Past;
         include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "cltype",
         visible = true)
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = ClassicExpense.class,
-            name = ExpenseType.CLASSIC_EXPENSE)
+    @JsonSubTypes.Type(value = BasicExpense.class,
+            name = ExpenseType.BASIC_EXPENSE)
     ,   @JsonSubTypes.Type(value = PurchaseExpense.class,
             name = ExpenseType.PURCHASE_EXPENSE)})
 public abstract class Expense {

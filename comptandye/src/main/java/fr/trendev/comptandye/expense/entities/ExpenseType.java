@@ -11,6 +11,6 @@ package fr.trendev.comptandye.expense.entities;
  */
 public class ExpenseType {
 
-    public static final String CLASSIC_EXPENSE = "classic";
+    public static final String BASIC_EXPENSE = "basic";
     public static final String PURCHASE_EXPENSE = "purchase";
 }

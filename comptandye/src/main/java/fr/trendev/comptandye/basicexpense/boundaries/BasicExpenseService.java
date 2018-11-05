@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.classicexpense.boundaries;
+package fr.trendev.comptandye.basicexpense.boundaries;
 
-import fr.trendev.comptandye.expense.boundaries.AbstractExpenseService;
-import fr.trendev.comptandye.classicexpense.entities.ClassicExpense;
-import fr.trendev.comptandye.expense.entities.ExpensePK;
+import fr.trendev.comptandye.basicexpense.controllers.BasicExpenseFacade;
+import fr.trendev.comptandye.basicexpense.entities.BasicExpense;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.classicexpense.controllers.ClassicExpenseFacade;
+import fr.trendev.comptandye.expense.boundaries.AbstractExpenseService;
+import fr.trendev.comptandye.expense.entities.ExpensePK;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
@@ -36,18 +36,18 @@ import javax.ws.rs.core.SecurityContext;
  * @author jsie
  */
 @Stateless
-@Path("ClassicExpense")
+@Path("BasicExpense")
 @RolesAllowed({"Administrator", "Professional"})
-public class ClassicExpenseService extends AbstractExpenseService<ClassicExpense> {
+public class BasicExpenseService extends AbstractExpenseService<BasicExpense> {
 
     @Inject
-    private ClassicExpenseFacade classicFacade;
+    private BasicExpenseFacade classicFacade;
 
-    private final Logger LOG = Logger.getLogger(ClassicExpenseService.class.
+    private final Logger LOG = Logger.getLogger(BasicExpenseService.class.
             getName());
 
-    public ClassicExpenseService() {
-        super(ClassicExpense.class);
+    public BasicExpenseService() {
+        super(BasicExpense.class);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class ClassicExpenseService extends AbstractExpenseService<ClassicExpense
     }
 
     @Override
-    protected AbstractFacade<ClassicExpense, ExpensePK> getFacade() {
+    protected AbstractFacade<BasicExpense, ExpensePK> getFacade() {
         return classicFacade;
     }
 
@@ -93,7 +93,7 @@ public class ClassicExpenseService extends AbstractExpenseService<ClassicExpense
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public Response post(@Context SecurityContext sec, ClassicExpense entity,
+    public Response post(@Context SecurityContext sec, BasicExpense entity,
             @QueryParam("professional") String professional) {
 
         return super.post(sec, entity, professional);
@@ -107,7 +107,7 @@ public class ClassicExpenseService extends AbstractExpenseService<ClassicExpense
      * Amount, Currency, Payments and ExpenseItems/vatInclusive cannot be
      * updated using this method.
      */
-    public Response put(@Context SecurityContext sec, ClassicExpense entity,
+    public Response put(@Context SecurityContext sec, BasicExpense entity,
             @QueryParam("professional") String professional) {
 
         return super.put(e -> {

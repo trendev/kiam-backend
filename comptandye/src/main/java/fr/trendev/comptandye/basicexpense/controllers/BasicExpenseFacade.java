@@ -1,7 +1,7 @@
-package fr.trendev.comptandye.classicexpense.controllers;
+package fr.trendev.comptandye.basicexpense.controllers;
 
+import fr.trendev.comptandye.basicexpense.entities.BasicExpense;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.classicexpense.entities.ClassicExpense;
 import fr.trendev.comptandye.expense.entities.ExpensePK;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -9,14 +9,14 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 
 @Stateless
-@Named("classicExpense")
-public class ClassicExpenseFacade extends AbstractFacade<ClassicExpense, ExpensePK> {
+@Named("basicExpense")
+public class BasicExpenseFacade extends AbstractFacade<BasicExpense, ExpensePK> {
 
     @Inject
     private EntityManager em;
 
-    public ClassicExpenseFacade() {
-        super(ClassicExpense.class);
+    public BasicExpenseFacade() {
+        super(BasicExpense.class);
     }
 
     @Override
