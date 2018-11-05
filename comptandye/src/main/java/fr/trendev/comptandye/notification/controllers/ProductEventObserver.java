@@ -8,7 +8,7 @@ package fr.trendev.comptandye.notification.controllers;
 import fr.trendev.comptandye.notification.entities.NotificationLevelEnum;
 import fr.trendev.comptandye.product.entities.EmptyThreshold;
 import fr.trendev.comptandye.product.entities.Product;
-import fr.trendev.comptandye.product.entities.ProductEntityListener;
+import fr.trendev.comptandye.product.controllers.ProductEntityListener;
 import fr.trendev.comptandye.product.entities.SevereThreshold;
 import fr.trendev.comptandye.product.entities.WarningThreshold;
 import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
