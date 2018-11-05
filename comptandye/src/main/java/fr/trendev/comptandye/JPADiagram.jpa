@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jpa:entity-mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" pkg="fr.trendev.comptandye" v="3.6" rws="_14901008082912" Pws="_14901008082912" cws="_14901008082912" thm="PDarkColorScheme" dbthm="PLightColorScheme" ee="JAVA_EE_8" sm="false" xs="false" id="_14901008082901" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd">
-    <jpa:entity lbl-ref="_14901008440196" compositePrimaryKeyClass="UserAccountPK" abs="true" class="UserAccount" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490100823157">
+    <jpa:entity lbl-ref="_14901008440196" compositePrimaryKeyClass="UserAccountPK" abs="true" class="UserAccount" v="true" pkg="useraccount.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490100823157">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_14901149376313047</jpa:a>
             <jpa:a>_14901008440196</jpa:a>
@@ -126,7 +126,7 @@
         <jpa:inheritance strategy="SINGLE_TABLE"/>
         <jpa:discriminator-column/>
     </jpa:entity>
-    <jpa:entity lbl-ref="_14901008529027" compositePrimaryKeyClass="UserGroupPK" abs="false" class="UserGroup" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490100852900">
+    <jpa:entity lbl-ref="_14901008529027" compositePrimaryKeyClass="UserGroupPK" abs="false" class="UserGroup" v="true" pkg="usergroup.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490100852900">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_14901008529027</jpa:a>
             <jpa:a>_149062419655951</jpa:a>
@@ -177,7 +177,7 @@
         </jpa:nq>
         <jpa:table name="USER_GROUP"/>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="CustomerPK" abs="true" class="Customer" superclassId="_1490100823157" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101376664">
+    <jpa:entity compositePrimaryKeyClass="CustomerPK" abs="true" class="Customer" superclassId="_1490100823157" v="true" pkg="useraccount.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101376664">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_14901149376313047</jpa:a>
             <jpa:a>_14901008440196</jpa:a>
@@ -242,7 +242,7 @@
             <jpa:query>Select c from Customer c where c.username=:username</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity lbl-ref="_14901008440196" compositePrimaryKeyClass="ProfessionalPK" abs="false" class="Professional" superclassId="_1490101376664" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101456632">
+    <jpa:entity lbl-ref="_14901008440196" compositePrimaryKeyClass="ProfessionalPK" abs="false" class="Professional" superclassId="_1490101376664" v="true" pkg="professional.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101456632">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_14901149376313047</jpa:a>
             <jpa:a>_14901008440196</jpa:a>
@@ -481,7 +481,7 @@
             <jpa:query>Select p from Professional p where p.rescissionDate=:rescissionDate</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="IndividualPK" abs="false" class="Individual" superclassId="_1490101376664" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101520286">
+    <jpa:entity compositePrimaryKeyClass="IndividualPK" abs="false" class="Individual" superclassId="_1490101376664" v="true" pkg="individual.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101520286">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_14901149376313047</jpa:a>
             <jpa:a>_14901008440196</jpa:a>
@@ -531,7 +531,7 @@
             <jpa:query>Select e from Individual e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="ClientPK" abs="false" class="Client" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101555530">
+    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="ClientPK" abs="false" class="Client" v="true" pkg="client.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101555530">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490283378549192</jpa:a>
             <jpa:a>_1504895192868452</jpa:a>
@@ -625,7 +625,7 @@
             <jpa:query>Select c from Client c where c.email=:email</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="CustomerDetailsPK" abs="false" class="CustomerDetails" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101578444">
+    <jpa:entity compositePrimaryKeyClass="CustomerDetailsPK" abs="false" class="CustomerDetails" v="true" pkg="customerdetails.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101578444">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_149010159285359</jpa:a>
             <jpa:a>_149010160079560</jpa:a>
@@ -792,7 +792,7 @@
             <jpa:query>Select a from Address a where a.optional=:optional</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="SocialNetworkAccountsPK" abs="false" class="SocialNetworkAccounts" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490104062170">
+    <jpa:entity compositePrimaryKeyClass="SocialNetworkAccountsPK" abs="false" class="SocialNetworkAccounts" v="true" pkg="socialnetworkaccounts.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490104062170">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490104873485484</jpa:a>
             <jpa:a>_1490104876952485</jpa:a>
@@ -846,7 +846,7 @@
         </jpa:nq>
         <jpa:table name="SOCIAL_NETWORK_ACCOUNT"/>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="ServicePK" abs="false" class="Service" superclassId="_1490172966686" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490113751330">
+    <jpa:entity compositePrimaryKeyClass="ServicePK" abs="false" class="Service" superclassId="_1490172966686" v="true" pkg="service.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490113751330">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490176760174139</jpa:a>
             <jpa:a>_1490176780392140</jpa:a>
@@ -882,7 +882,7 @@
             <jpa:query>Select s from Service s where s.duration=:duration</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="PackPK" abs="false" class="Pack" superclassId="_1490172966686" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490113906035">
+    <jpa:entity compositePrimaryKeyClass="PackPK" abs="false" class="Pack" superclassId="_1490172966686" v="true" pkg="pack.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490113906035">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490176760174139</jpa:a>
             <jpa:a>_1490176780392140</jpa:a>
@@ -922,7 +922,7 @@
             <jpa:query>Select s from Pack s where s.totalPrice=:totalPrice</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="OfferingPK" abs="true" class="Offering" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490172966686">
+    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="OfferingPK" abs="true" class="Offering" v="true" pkg="offering.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490172966686">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490176760174139</jpa:a>
             <jpa:a>_1490176780392140</jpa:a>
@@ -1019,7 +1019,7 @@
         </jpa:nq>
         <jpa:discriminator-column/>
     </jpa:entity>
-    <jpa:entity lbl-ref="_149017899245630" compositePrimaryKeyType="D" compositePrimaryKeyClass="BillPK" abs="true" class="Bill" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490178979567">
+    <jpa:entity lbl-ref="_149017899245630" compositePrimaryKeyType="D" compositePrimaryKeyClass="BillPK" abs="true" class="Bill" v="true" pkg="bill.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490178979567">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490181067111504</jpa:a>
             <jpa:a>_1490181108037605</jpa:a>
@@ -1178,7 +1178,7 @@
         </jpa:nq>
         <jpa:discriminator-column/>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="IndividualBillPK" abs="false" class="IndividualBill" superclassId="_1490178979567" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490180671085">
+    <jpa:entity compositePrimaryKeyClass="IndividualBillPK" abs="false" class="IndividualBill" superclassId="_1490178979567" v="true" pkg="individualbill.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490180671085">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490181067111504</jpa:a>
             <jpa:a>_1490181108037605</jpa:a>
@@ -1215,7 +1215,7 @@
             <jpa:query>Select e from IndividualBill e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="ClientBillPK" abs="false" class="ClientBill" superclassId="_1490178979567" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490180682743">
+    <jpa:entity compositePrimaryKeyClass="ClientBillPK" abs="false" class="ClientBill" superclassId="_1490178979567" v="true" pkg="clientbill.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490180682743">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490181067111504</jpa:a>
             <jpa:a>_1490181108037605</jpa:a>
@@ -1252,7 +1252,7 @@
             <jpa:query>Select e from ClientBill e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="PaymentModePK" abs="false" class="PaymentMode" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490184243036">
+    <jpa:entity compositePrimaryKeyClass="PaymentModePK" abs="false" class="PaymentMode" v="true" pkg="paymentmode.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490184243036">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_149020688052381</jpa:a>
         </jpa:con>
@@ -1280,7 +1280,7 @@
             <jpa:query>Select p from PaymentMode p where p.name=:name</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="PaymentPK" abs="false" class="Payment" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490206901623">
+    <jpa:entity compositePrimaryKeyClass="PaymentPK" abs="false" class="Payment" v="true" pkg="payment.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490206901623">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_149020701195485</jpa:a>
             <jpa:a>_1503081214518630</jpa:a>
@@ -1320,7 +1320,7 @@
             <jpa:query>Select p from Payment p where p.currency=:currency</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="CollectiveGroupPK" abs="false" class="CollectiveGroup" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490281931338">
+    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="CollectiveGroupPK" abs="false" class="CollectiveGroup" v="true" pkg="collectivegroup.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490281931338">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490282399999187</jpa:a>
             <jpa:a>_1505826302473119</jpa:a>
@@ -1391,7 +1391,7 @@
         </jpa:nq>
         <jpa:table name="COLLECTIVE_GROUP"/>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="AdministratorPK" abs="false" class="Administrator" superclassId="_1490100823157" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490704123469">
+    <jpa:entity compositePrimaryKeyClass="AdministratorPK" abs="false" class="Administrator" superclassId="_1490100823157" v="true" pkg="administrator.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490704123469">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_14901149376313047</jpa:a>
             <jpa:a>_14901008440196</jpa:a>
@@ -1417,7 +1417,7 @@
             <jpa:query>Select e from Administrator e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="CategoryPK" abs="false" class="Category" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490704206844">
+    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="CategoryPK" abs="false" class="Category" v="true" pkg="category.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490704206844">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490704221835111</jpa:a>
             <jpa:a>_1490704473418120</jpa:a>
@@ -1468,7 +1468,7 @@
             <jpa:query>Select c from Category c where c.name=:name</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="ExpensePK" abs="true" class="Expense" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1499512549878">
+    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="ExpensePK" abs="true" class="Expense" v="true" pkg="expense.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1499512549878">
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:annotation e="true" n="@java.lang.SuppressWarnings(&quot;unchecked&quot;)"/>
@@ -1641,7 +1641,7 @@
         </jpa:nq>
         <jpa:discriminator-column/>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="BusinessPK" abs="false" class="Business" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1503060694288">
+    <jpa:entity compositePrimaryKeyClass="BusinessPK" abs="false" class="Business" v="true" pkg="business.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1503060694288">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1503060753512132</jpa:a>
         </jpa:con>
@@ -1667,7 +1667,7 @@
             <jpa:query>Select b from Business b where b.description=:description</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="CollectiveGroupBillPK" abs="false" class="CollectiveGroupBill" superclassId="_1490178979567" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1506009883340">
+    <jpa:entity compositePrimaryKeyClass="CollectiveGroupBillPK" abs="false" class="CollectiveGroupBill" superclassId="_1490178979567" v="true" pkg="collectivegroupbill.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1506009883340">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490181067111504</jpa:a>
             <jpa:a>_1490181108037605</jpa:a>
@@ -1711,7 +1711,7 @@
             <jpa:query>Select c from CollectiveGroupBill c where c.recipient=:recipient</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="PurchasedOfferingPK" abs="false" class="PurchasedOffering" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1506344869339">
+    <jpa:entity compositePrimaryKeyClass="PurchasedOfferingPK" abs="false" class="PurchasedOffering" v="true" pkg="purchasedoffering.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1506344869339">
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_15063452150691272</jpa:a>
@@ -1778,7 +1778,7 @@
             <jpa:query>Select p from PurchasedOffering p where p.extentSales=:extentSales</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="VatRatesPK" abs="false" class="VatRates" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1521215136542">
+    <jpa:entity compositePrimaryKeyClass="VatRatesPK" abs="false" class="VatRates" v="true" pkg="vatrates.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1521215136542">
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.ArrayList;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
@@ -1809,7 +1809,7 @@
             <jpa:query>Select v from VatRates v where v.country=:country</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="SalePK" abs="false" class="Sale" superclassId="_1490172966686" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1522937360932">
+    <jpa:entity compositePrimaryKeyClass="SalePK" abs="false" class="Sale" superclassId="_1490172966686" v="true" pkg="sale.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1522937360932">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490176760174139</jpa:a>
             <jpa:a>_1490176780392140</jpa:a>
@@ -1848,7 +1848,7 @@
             <jpa:query>Select s from Sale s where s.resellingPrice=:resellingPrice</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="ExpenseItemPK" abs="false" class="ExpenseItem" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524835087412">
+    <jpa:entity compositePrimaryKeyClass="ExpenseItemPK" abs="false" class="ExpenseItem" v="true" pkg="expenseitem.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524835087412">
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -1901,7 +1901,7 @@
             <jpa:query>Select e from ExpenseItem e where e.vatRate=:vatRate</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="PurchaseExpensePK" abs="false" class="PurchaseExpense" superclassId="_1499512549878" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524836293670">
+    <jpa:entity compositePrimaryKeyClass="PurchaseExpensePK" abs="false" class="PurchaseExpense" superclassId="_1499512549878" v="true" pkg="purchaseexpense.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524836293670">
         <jpa:con am="PUBLIC" e="true">
             <jpa:post>this.cltype = ExpenseType.PURCHASE_EXPENSE;</jpa:post>
         </jpa:con>
@@ -1930,7 +1930,7 @@
             <jpa:query>Select p from PurchaseExpense p where p.invoiceRef=:invoiceRef</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="ProductReferencePK" abs="false" class="ProductReference" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524840332929">
+    <jpa:entity compositePrimaryKeyClass="ProductReferencePK" abs="false" class="ProductReference" v="true" pkg="productreference.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524840332929">
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -1972,7 +1972,7 @@
             <jpa:query>Select p from ProductReference p where p.brand=:brand</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="ProductPK" abs="false" class="Product" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524841860187">
+    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="ProductPK" abs="false" class="Product" v="true" pkg="product.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524841860187">
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
@@ -2043,7 +2043,7 @@
             <jpa:ln e="true" n="fr.trendev.comptandye.utils.listeners.ProductEntityListener"/>
         </jpa:el>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="ProductRecordPK" abs="true" class="ProductRecord" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524923958426">
+    <jpa:entity compositePrimaryKeyClass="ProductRecordPK" abs="true" class="ProductRecord" v="true" pkg="productrecord.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524923958426">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_15249240375981409</jpa:a>
             <jpa:a>_15249241966021417</jpa:a>
@@ -2129,7 +2129,7 @@
         </jpa:nq>
         <jpa:discriminator-column/>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="PurchasedItemPK" abs="false" class="PurchasedItem" superclassId="_1524923958426" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524924325129">
+    <jpa:entity compositePrimaryKeyClass="PurchasedItemPK" abs="false" class="PurchasedItem" superclassId="_1524923958426" v="true" pkg="purchaseditem.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524924325129">
         <jpa:con am="PUBLIC" e="true">
             <jpa:pre>super();</jpa:pre>
             <jpa:post>this.cltype = ProductRecordType.PURCHASED_ITEM;</jpa:post>
@@ -2152,7 +2152,7 @@
             <jpa:query>Select e from PurchasedItem e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="UsedItemPK" abs="false" class="UsedItem" superclassId="_1524923958426" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1525251875162">
+    <jpa:entity compositePrimaryKeyClass="UsedItemPK" abs="false" class="UsedItem" superclassId="_1524923958426" v="true" pkg="useditem.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1525251875162">
         <jpa:con am="PUBLIC" e="true">
             <jpa:pre>super();</jpa:pre>
             <jpa:post>this.cltype = ProductRecordType.USED_ITEM;</jpa:post>
@@ -2170,7 +2170,7 @@
             <jpa:query>Select e from UsedItem e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="ReturnedItemPK" abs="false" class="ReturnedItem" superclassId="_1524923958426" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1525253236164">
+    <jpa:entity compositePrimaryKeyClass="ReturnedItemPK" abs="false" class="ReturnedItem" superclassId="_1524923958426" v="true" pkg="returneditem.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1525253236164">
         <jpa:con am="PUBLIC" e="true">
             <jpa:pre>super();</jpa:pre>
             <jpa:post>this.cltype = ProductRecordType.RETURNED_ITEM;</jpa:post>
@@ -2196,7 +2196,7 @@
             <jpa:query>Select e from ReturnedItem e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="SoldItemPK" abs="false" class="SoldItem" superclassId="_1524923958426" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1525258966197">
+    <jpa:entity compositePrimaryKeyClass="SoldItemPK" abs="false" class="SoldItem" superclassId="_1524923958426" v="true" pkg="solditem.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1525258966197">
         <jpa:con am="PUBLIC" e="true">
             <jpa:pre>super();</jpa:pre>
             <jpa:post>this.cltype = ProductRecordType.SOLD_ITEM;</jpa:post>
@@ -2222,7 +2222,7 @@
             <jpa:query>Select e from SoldItem e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="ClassicExpensePK" abs="false" class="ClassicExpense" superclassId="_1499512549878" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1527253885059">
+    <jpa:entity compositePrimaryKeyClass="ClassicExpensePK" abs="false" class="ClassicExpense" superclassId="_1499512549878" v="true" pkg="classicexpense.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1527253885059">
         <jpa:con am="PUBLIC" e="true">
             <jpa:post>this.cltype = ExpenseType.CLASSIC_EXPENSE;</jpa:post>
         </jpa:con>
@@ -2234,7 +2234,7 @@
             <jpa:query>Select e from ClassicExpense e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="NotificationPK" abs="true" class="Notification" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1528899065548">
+    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="NotificationPK" abs="true" class="Notification" v="true" pkg="notification.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1528899065548">
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1528899988622110</jpa:a>
@@ -2289,7 +2289,7 @@
         </jpa:nq>
         <jpa:discriminator-column/>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="ThresholdAlertPK" abs="false" class="ThresholdAlert" superclassId="_1528899065548" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1528899529391">
+    <jpa:entity compositePrimaryKeyClass="ThresholdAlertPK" abs="false" class="ThresholdAlert" superclassId="_1528899065548" v="true" pkg="thresholdalert.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1528899529391">
         <jpa:con am="PUBLIC" e="true">
             <jpa:pre>super();</jpa:pre>
             <jpa:post>this.cltype = NotificationType.THRESHOLD_ALERT;</jpa:post>
@@ -2378,7 +2378,7 @@
             <jpa:query>Select t from ThresholdAlert t where t.brand=:brand</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:embeddable abs="false" class="OfferingSnapshot" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1512853437669">
+    <jpa:embeddable abs="false" class="OfferingSnapshot" v="true" pkg="purchasedoffering.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1512853437669">
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
@@ -2420,7 +2420,7 @@
             </jpa:one-to-many>
         </jpa:attributes>
     </jpa:embeddable>
-    <jpa:embeddable abs="false" class="OfferingExtents" v="true" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524046966670">
+    <jpa:embeddable abs="false" class="OfferingExtents" v="true" pkg="purchasedoffering.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524046966670">
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_152404700574475</jpa:a>
@@ -2503,7 +2503,7 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490101520286" x="490" y="335">
+            <i ref="_1490101520286" x="496" y="335">
                 <el>
                     <e ref="_150652336703465">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -2652,7 +2652,7 @@
                 </el>
             </i>
             <i ref="_1524835087412" x="-534" y="2123"/>
-            <i ref="_1490704206844" x="-86" y="851">
+            <i ref="_1490704206844" x="-86" y="860">
                 <el>
                     <e ref="_15049038294552105">
                         <v st="1" si="12.0" cl="#ff0000"/>
@@ -2662,7 +2662,7 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1490101376664" x="60" y="49">
+            <i ref="_1490101376664" x="54" y="49">
                 <el>
                     <e ref="_14901093969381510">
                         <v st="1" si="12.0" cl="#00ff00"/>
@@ -2736,7 +2736,7 @@
                     </e>
                 </el>
             </i>
-            <i ref="_1512853437669" x="521" y="1668">
+            <i ref="_1512853437669" x="527" y="1668">
                 <el>
                     <e ref="_151290448762472">
                         <v st="1" si="12.0" cl="#00ff00"/>

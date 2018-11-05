@@ -2,7 +2,7 @@
 package fr.trendev.comptandye.individual.entities;
 
 import fr.trendev.comptandye.customerdetails.entities.CustomerDetails;
-import fr.trendev.comptandye.usergroup.entities.Customer;
+import fr.trendev.comptandye.useraccount.entities.Customer;
 import fr.trendev.comptandye.address.entities.Address;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;

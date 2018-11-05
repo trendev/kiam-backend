@@ -8,7 +8,7 @@ import fr.trendev.comptandye.notification.entities.Notification;
 import fr.trendev.comptandye.individual.entities.Individual;
 import fr.trendev.comptandye.expense.entities.Expense;
 import fr.trendev.comptandye.customerdetails.entities.CustomerDetails;
-import fr.trendev.comptandye.usergroup.entities.Customer;
+import fr.trendev.comptandye.useraccount.entities.Customer;
 import fr.trendev.comptandye.collectivegroup.entities.CollectiveGroup;
 import fr.trendev.comptandye.client.entities.Client;
 import fr.trendev.comptandye.category.entities.Category;

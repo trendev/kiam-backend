@@ -8,7 +8,7 @@ package fr.trendev.comptandye.entities;
 import fr.trendev.comptandye.address.entities.Address;
 import fr.trendev.comptandye.customerdetails.entities.CustomerDetails;
 import fr.trendev.comptandye.socialnetworkaccounts.entities.SocialNetworkAccounts;
-import fr.trendev.comptandye.usergroup.entities.Customer;
+import fr.trendev.comptandye.useraccount.entities.Customer;
 import org.junit.jupiter.api.Test;
 
 /**
