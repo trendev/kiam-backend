@@ -7,7 +7,7 @@ import fr.trendev.comptandye.productrecord.entities.ProductRecord;
 import fr.trendev.comptandye.productreference.entities.ProductReference;
 import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.sale.entities.Sale;
-import fr.trendev.comptandye.product.entities.ProductEntityListener;
+import fr.trendev.comptandye.product.controllers.ProductEntityListener;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
