@@ -48,7 +48,9 @@ public class StripeConfiguration {
             // sets the stripe api key
             Stripe.apiKey = key;
 
-            LOG.log(Level.INFO, "Stripe " + type + " key is set (" + key + ")");
+            LOG.log(Level.INFO, "Stripe {0} key is set ({1})",
+                    new Object[]{type,
+                        key});
 
         } catch (IOException ex) { //should not happen
             LOG.log(Level.SEVERE, "STRIPE API KEY IS NOT SET", ex);
