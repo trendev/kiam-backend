@@ -71,9 +71,14 @@ public class XSRFFilter extends ApiFilter {
 
         String xxsrftoken = req.getHeader("X-XSRF-TOKEN");
 
-        //allows access to no side effects methods
+        /**
+         * First, controls mutating requests (with side effects)
+         */
         if (sem.contains(req.getMethod())) {
             if (xxsrftoken != null && !xxsrftoken.isEmpty()) {
+                /**
+                 * Checks the XSRF token
+                 */
                 try {
                     LOG.log(Level.INFO, "Controlling X-XSRF-TOKEN");
                     String xsrftoken = (String) session.getAttribute(
@@ -81,11 +86,17 @@ public class XSRFFilter extends ApiFilter {
                     if (xsrftoken == null
                             || xsrftoken.isEmpty()
                             || !xsrftoken.equals(xxsrftoken)) {
+                        /**
+                         * Incorrect or no X-XSRF-TOKEN token
+                         */
                         LOG.log(Level.WARNING,
                                 "Unauthorized Access : XSRF-TOKEN={0} ; X-XSRF-TOKEN={1}",
                                 new Object[]{xsrftoken, xxsrftoken});
                         rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
                     } else {
+                        /**
+                         * Valid token, request accepted
+                         */
                         chain.doFilter(request, response);
                     }
                 } catch (Exception ex) {
@@ -96,12 +107,23 @@ public class XSRFFilter extends ApiFilter {
                     rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
                 }
             } else {
+                /**
+                 * No X-XSRF-TOKEN provided : non mutating request or absolute
+                 * URL
+                 */
                 String origin = req.getHeader("Origin");
                 if (isOriginAllowed(origin)) {
+                    /**
+                     * Checks the origin header of the absolute URL
+                     */
                     LOG.log(Level.INFO,
                             "No X-XSRF-TOKEN specified in the Header but Origin is trusted !");
                     chain.doFilter(request, response);
                 } else {
+                    /**
+                     * No token and not allowed origin : request is not
+                     * authorized
+                     */
                     LOG.log(Level.WARNING,
                             "No X-XSRF-TOKEN specified in the Header and Origin [{0}] is not trusted !",
                             origin);
@@ -109,6 +131,10 @@ public class XSRFFilter extends ApiFilter {
                 }
             }
         } else {
+            /**
+             * Accept non mutating requests (GET, HEAD or OPTION
+             */
+
             chain.doFilter(request, response);
         }
     }
