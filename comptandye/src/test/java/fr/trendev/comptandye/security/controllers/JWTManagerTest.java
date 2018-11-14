@@ -6,13 +6,16 @@
 package fr.trendev.comptandye.security.controllers;
 
 import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.JOSEObjectType;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
-import com.nimbusds.jose.JWSSigner;
+import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.KeyLengthException;
 import com.nimbusds.jose.crypto.MACSigner;
+import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -54,13 +57,10 @@ public class JWTManagerTest {
     }
 
     @Test
-    public void testCreateJWT() {
+    public void testSignedJWT() {
         try {
-            JWSSigner signer = new MACSigner(this.secret);
-
             // Prepare JWT with claims set
             JWTClaimsSet.Builder claimSetBuilder = new JWTClaimsSet.Builder();
-
             claimSetBuilder.issuer(this.iss);
             claimSetBuilder.subject(this.sub);
             claimSetBuilder.audience(this.aud);
@@ -72,20 +72,40 @@ public class JWTManagerTest {
             JWTClaimsSet claimsSet = claimSetBuilder.build();
 
             SignedJWT signedJWT = new SignedJWT(
-                    new JWSHeader(JWSAlgorithm.HS256), claimsSet);
+                    new JWSHeader.Builder(JWSAlgorithm.HS256)
+                            .type(JOSEObjectType.JWT)
+                            .build(), claimsSet);
 
-            // apply the HMAC protection
-            signedJWT.sign(signer);
+            signedJWT.sign(new MACSigner(this.secret));
 
-            // serialize the compact form
-            String jwt = signedJWT.serialize();
-            System.out.println(jwt);
-            Assertions.assertNotNull(jwt);
+            String token = signedJWT.serialize();
+//            System.out.println(token);
+            Assertions.assertNotEquals(token.length(), 0);
+            Assertions.assertNotNull(token);
+
+            SignedJWT parsedJWT = SignedJWT.parse(token);
+            JWSVerifier verifier = new MACVerifier(this.secret);
+
+            Assertions.assertTrue(parsedJWT.verify(verifier));
+            Assertions.assertEquals(parsedJWT.getJWTClaimsSet().getJWTID(),
+                    this.jti);
+            Assertions.assertEquals(parsedJWT.getJWTClaimsSet().getIssuer(),
+                    this.iss);
+            Assertions.assertEquals(parsedJWT.getJWTClaimsSet().getSubject(),
+                    this.sub);
+            Assertions.assertTrue(
+                    (this.iat.getTime() / 1000)
+                    == (parsedJWT.getJWTClaimsSet().getIssueTime()
+                            .getTime() / 1000)
+            );
 
         } catch (KeyLengthException ex) {
             Logger.getLogger(JWTManagerTest.class.getName()).
                     log(Level.SEVERE, null, ex);
         } catch (JOSEException ex) {
+            Logger.getLogger(JWTManagerTest.class.getName()).
+                    log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(JWTManagerTest.class.getName()).
                     log(Level.SEVERE, null, ex);
         }
