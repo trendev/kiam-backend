@@ -5,20 +5,24 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
-import java.io.IOException;
-import static java.lang.Thread.currentThread;
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.JOSEObjectType;
+import com.nimbusds.jose.JWSAlgorithm;
+import com.nimbusds.jose.JWSHeader;
+import com.nimbusds.jose.crypto.RSASSASigner;
+import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.SignedJWT;
 import java.security.PrivateKey;
 import java.security.interfaces.RSAPublicKey;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
-import java.util.Base64;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
-import javax.ws.rs.WebApplicationException;
+import javax.inject.Inject;
 
 /**
  *
@@ -27,54 +31,62 @@ import javax.ws.rs.WebApplicationException;
 @ApplicationScoped
 public class JWTManager {
 
-    private static final Logger LOG = Logger.getLogger(JWTManager.class.
-            getName());
+    @Inject
+    private PrivateKey privateKey;
 
-    public PrivateKey readPrivateKey(String resourceName) {
-        try {
-            String key = this.readKey(resourceName);
-            return KeyFactory.getInstance("RSA")
-                    .generatePrivate(new PKCS8EncodedKeySpec(
-                            Base64.getDecoder().
-                                    decode(key)));
-        } catch (IOException | NoSuchAlgorithmException |
-                InvalidKeySpecException ex) {
-            LOG.log(Level.SEVERE,
-                    "Exception reading the private key in JWTManager", ex);
-            throw new WebApplicationException(
-                    "Exception reading the private key in JWTManager", ex);
-        }
+    @Inject
+    private RSAPublicKey publicKey;
+
+    public JWTManager() {
     }
 
-    public RSAPublicKey readPublicKey(String resourceName) {
-        try {
-            String key = this.readKey(resourceName);
-            RSAPublicKey pubKey = (RSAPublicKey) KeyFactory.getInstance("RSA")
-                    .generatePublic(new X509EncodedKeySpec(
-                            Base64.getDecoder().
-                                    decode(key)));
-            return pubKey;
-        } catch (IOException | NoSuchAlgorithmException |
-                InvalidKeySpecException ex) {
-            LOG.log(Level.SEVERE,
-                    "Exception reading the public key in JWTManager", ex);
-            throw new WebApplicationException(
-                    "Exception reading the public key in JWTManager", ex);
-        }
+    public JWTManager(final PrivateKey privateKey, final RSAPublicKey publicKey) {
+        this.privateKey = privateKey;
+        this.publicKey = publicKey;
     }
 
-    private final String readKey(String resourceName) throws IOException {
-        byte[] byteBuffer = new byte[16384];
-        int length = currentThread().getContextClassLoader()
-                .getResource(resourceName)
-                .openStream()
-                .read(byteBuffer);
+    private final static String AUD = "comptandye";
+    private final static String ISS = "https://www.comptandye.fr";
 
-        return new String(byteBuffer, 0, length).replaceAll(
-                "-----BEGIN (.*)-----", "")
-                .replaceAll("-----END (.*)----", "")
-                .replaceAll("\r\n", "")
-                .replaceAll("\n", "")
-                .trim();
+    private final static int VALID_PERIOD = 3;
+
+    private static final Logger LOG = Logger.getLogger(
+            JWTManager.class.getName());
+
+    public String generateToken(final String caller, final List<String> groups)
+            throws JOSEException {
+        Instant current_time = Instant.now();
+        Instant expiration_time = current_time.plus(VALID_PERIOD,
+                ChronoUnit.MINUTES);
+
+        final String jti = UUID.randomUUID().toString();
+
+        JWTClaimsSet.Builder claimSetBuilder = new JWTClaimsSet.Builder();
+        claimSetBuilder.issuer(ISS);
+        claimSetBuilder.subject(caller);
+        claimSetBuilder.audience(AUD);
+        claimSetBuilder.issueTime(Date.from(current_time));
+        claimSetBuilder.expirationTime(Date.from(expiration_time));
+        claimSetBuilder.jwtID(jti);
+
+        //MP-JWT specific
+        claimSetBuilder.claim("upn", caller);
+        claimSetBuilder.claim("groups", groups);
+
+        JWTClaimsSet claimsSet = claimSetBuilder.build();
+
+        SignedJWT signedJWT = new SignedJWT(
+                new JWSHeader.Builder(JWSAlgorithm.RS256)
+                        .keyID("privateKey.pem")
+                        .type(JOSEObjectType.JWT)
+                        .build(), claimsSet);
+
+        signedJWT.sign(new RSASSASigner(this.privateKey));
+
+        String token = signedJWT.serialize();
+        LOG.log(Level.INFO, "JWT generated for user {0} : {1}",
+                new Object[]{caller, token});
+        return token;
     }
+
 }
