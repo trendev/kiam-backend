@@ -96,24 +96,29 @@ public class JWTManagerTest {
 
             SignedJWT parsedJWT = SignedJWT.parse(token);
             Assertions.assertNotNull(parsedJWT);
-//            JWSVerifier verifier = new MACVerifier(this.secret);
+
+//            RSAPublicKey publicKey = KeyFactory.getInstance("RSA")
+//                    .
+//                    
+//                    
+//            JWSVerifier verifier = new RSASSAVerifier(publicKey);
 //
 //            Assertions.assertTrue(parsedJWT.verify(verifier));
-//            Assertions.assertEquals(parsedJWT.getJWTClaimsSet().getJWTID(),
-//                    this.jti);
-//            Assertions.assertEquals(parsedJWT.getJWTClaimsSet().getIssuer(),
-//                    this.iss);
-//            Assertions.assertEquals(parsedJWT.getJWTClaimsSet().getSubject(),
-//                    this.sub);
-//            Assertions.assertTrue(
-//                    (this.iat.getTime() / 1000)
-//                    == (parsedJWT.getJWTClaimsSet().getIssueTime()
-//                            .getTime() / 1000));
-//            Assertions.assertEquals(this.sub, parsedJWT.getJWTClaimsSet().
-//                    getStringClaim("upn"));
-//            Assertions.assertIterableEquals(this.groups, parsedJWT.
-//                    getJWTClaimsSet().
-//                    getStringListClaim("groups"));
+            Assertions.assertEquals(parsedJWT.getJWTClaimsSet().getJWTID(),
+                    this.jti);
+            Assertions.assertEquals(parsedJWT.getJWTClaimsSet().getIssuer(),
+                    this.iss);
+            Assertions.assertEquals(parsedJWT.getJWTClaimsSet().getSubject(),
+                    this.sub);
+            Assertions.assertTrue(
+                    (this.iat.getTime() / 1000)
+                    == (parsedJWT.getJWTClaimsSet().getIssueTime()
+                            .getTime() / 1000));
+            Assertions.assertEquals(this.sub, parsedJWT.getJWTClaimsSet().
+                    getStringClaim("upn"));
+            Assertions.assertIterableEquals(this.groups, parsedJWT.
+                    getJWTClaimsSet().
+                    getStringListClaim("groups"));
 
         } catch (KeyLengthException ex) {
             Logger.getLogger(JWTManagerTest.class.getName()).
