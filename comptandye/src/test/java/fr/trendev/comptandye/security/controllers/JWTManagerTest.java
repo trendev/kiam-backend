@@ -6,6 +6,8 @@
 package fr.trendev.comptandye.security.controllers;
 
 import com.nimbusds.jose.JOSEException;
+import static com.nimbusds.jose.JOSEObjectType.JWT;
+import static com.nimbusds.jose.JWSAlgorithm.RS256;
 import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.KeyLengthException;
 import com.nimbusds.jose.crypto.RSASSAVerifier;
@@ -72,13 +74,23 @@ public class JWTManagerTest {
             Instant now = Instant.now();
             Instant iat = Instant.ofEpochMilli(parsedJWT.getJWTClaimsSet().
                     getIssueTime().getTime());
+            Instant exp = Instant.ofEpochMilli(parsedJWT.getJWTClaimsSet().
+                    getExpirationTime().getTime());
             Assertions.assertTrue(iat.isBefore(now));
             Assertions.assertTrue(iat.isAfter(now.minus(
+                    VALID_PERIOD, ChronoUnit.MINUTES)));
+            Assertions.assertTrue(exp.equals(iat.plus(
                     VALID_PERIOD, ChronoUnit.MINUTES)));
 
             Assertions.assertIterableEquals(this.groups, parsedJWT.
                     getJWTClaimsSet().
                     getStringListClaim("groups"));
+
+            Assertions.assertEquals(parsedJWT.getHeader().getAlgorithm(), RS256);
+            Assertions.assertEquals(parsedJWT.getHeader().getType(), JWT);
+            Assertions.assertEquals(parsedJWT.getHeader().getKeyID(),
+                    "privateKey.pem");
+
         } catch (KeyLengthException ex) {
             Logger.getLogger(JWTManagerTest.class.getName()).
                     log(Level.SEVERE, null, ex);

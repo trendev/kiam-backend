@@ -6,8 +6,8 @@
 package fr.trendev.comptandye.security.controllers;
 
 import com.nimbusds.jose.JOSEException;
-import com.nimbusds.jose.JOSEObjectType;
-import com.nimbusds.jose.JWSAlgorithm;
+import static com.nimbusds.jose.JOSEObjectType.JWT;
+import static com.nimbusds.jose.JWSAlgorithm.RS256;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.crypto.RSASSASigner;
 import com.nimbusds.jwt.JWTClaimsSet;
@@ -74,9 +74,9 @@ public class JWTManager {
         JWTClaimsSet claimsSet = claimSetBuilder.build();
 
         SignedJWT signedJWT = new SignedJWT(
-                new JWSHeader.Builder(JWSAlgorithm.RS256)
+                new JWSHeader.Builder(RS256)
                         .keyID("privateKey.pem")
-                        .type(JOSEObjectType.JWT)
+                        .type(JWT)
                         .build(), claimsSet);
 
         signedJWT.sign(new RSASSASigner(this.privateKey));
