@@ -6,7 +6,9 @@
 package fr.trendev.comptandye.security.controllers;
 
 import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.KeyLengthException;
+import com.nimbusds.jose.crypto.RSASSAVerifier;
 import com.nimbusds.jwt.SignedJWT;
 import java.text.ParseException;
 import java.util.Arrays;
@@ -52,11 +54,10 @@ public class JWTManagerTest {
             SignedJWT parsedJWT = SignedJWT.parse(token);
             Assertions.assertNotNull(parsedJWT);
 
-//            RSAPublicKey publicKey = this.jwtManager.readPublicKey(
-//                    "publicKey.pem");
-//            JWSVerifier verifier = new RSASSAVerifier(publicKey);
-//
-//            Assertions.assertTrue(parsedJWT.verify(verifier));
+            JWSVerifier verifier = new RSASSAVerifier(this.keyProvider.
+                    getPublicKey());
+
+            Assertions.assertTrue(parsedJWT.verify(verifier));
 //            Assertions.assertEquals(parsedJWT.getJWTClaimsSet().getJWTID(),
 //                    this.jti);
 //            Assertions.assertEquals(parsedJWT.getJWTClaimsSet().getIssuer(),

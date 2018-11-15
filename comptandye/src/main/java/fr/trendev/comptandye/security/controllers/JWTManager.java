@@ -84,7 +84,7 @@ public class JWTManager {
         signedJWT.sign(new RSASSASigner(this.privateKey));
 
         String token = signedJWT.serialize();
-        LOG.log(Level.INFO, "JWT generated for user {0} : {1}",
+        LOG.log(Level.INFO, "JWT generated for user {0} :\n{1}",
                 new Object[]{caller, token});
         return token;
     }
