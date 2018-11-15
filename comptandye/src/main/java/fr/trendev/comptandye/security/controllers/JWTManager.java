@@ -5,12 +5,18 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
+import java.io.IOException;
 import static java.lang.Thread.currentThread;
 import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
+import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Base64;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
+import javax.ws.rs.WebApplicationException;
 
 /**
  *
@@ -19,23 +25,34 @@ import javax.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class JWTManager {
 
-    public PrivateKey readPrivateKey(String resourceName) throws
-            Exception {
-        byte[] byteBuffer = new byte[16384];
-        int length = currentThread().getContextClassLoader()
-                .getResource(resourceName)
-                .openStream()
-                .read(byteBuffer);
+    private static final Logger LOG = Logger.getLogger(JWTManager.class.
+            getName());
 
-        String key = new String(byteBuffer, 0, length).replaceAll(
-                "-----BEGIN (.*)-----", "")
-                .replaceAll("-----END (.*)----", "")
-                .replaceAll("\r\n", "")
-                .replaceAll("\n", "")
-                .trim();
+    public PrivateKey readPrivateKey(String resourceName) {
+        try {
+            byte[] byteBuffer = new byte[16384];
+            int length = currentThread().getContextClassLoader()
+                    .getResource(resourceName)
+                    .openStream()
+                    .read(byteBuffer);
 
-        return KeyFactory.getInstance("RSA")
-                .generatePrivate(new PKCS8EncodedKeySpec(Base64.getDecoder().
-                        decode(key)));
+            String key = new String(byteBuffer, 0, length).replaceAll(
+                    "-----BEGIN (.*)-----", "")
+                    .replaceAll("-----END (.*)----", "")
+                    .replaceAll("\r\n", "")
+                    .replaceAll("\n", "")
+                    .trim();
+
+            return KeyFactory.getInstance("RSA")
+                    .generatePrivate(new PKCS8EncodedKeySpec(
+                            Base64.getDecoder().
+                                    decode(key)));
+        } catch (IOException | NoSuchAlgorithmException |
+                InvalidKeySpecException ex) {
+            LOG.log(Level.SEVERE,
+                    "Exception reading the private key in JWTManager", ex);
+            throw new WebApplicationException(
+                    "Exception reading the private key in JWTManager", ex);
+        }
     }
 }
