@@ -18,7 +18,9 @@ import com.nimbusds.jwt.SignedJWT;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,6 +42,7 @@ public class JWTManagerTest {
     private final Date iat;
     private final Date exp;
     private final String jti;
+    private final List<String> groups;
 
     public JWTManagerTest() {
         this.secret = "Iyi0KWCnZpwkr-HIVH1spXfSB2IiaTAk";
@@ -52,6 +55,8 @@ public class JWTManagerTest {
         this.iat = Date.from(current_time);
         this.exp = Date.from(expiration_time);
         this.jti = UUID.randomUUID().toString();
+        this.groups = Arrays.asList(new String[]{"Professional",
+            "Administrator"});
     }
 
     @Test
@@ -68,8 +73,7 @@ public class JWTManagerTest {
 
             //MP-JWT specific
             claimSetBuilder.claim("upn", this.sub);
-            claimSetBuilder.claim("groups", new String[]{"Professional",
-                "Administrator"});
+            claimSetBuilder.claim("groups", this.groups);
 
             JWTClaimsSet claimsSet = claimSetBuilder.build();
 
@@ -98,8 +102,12 @@ public class JWTManagerTest {
             Assertions.assertTrue(
                     (this.iat.getTime() / 1000)
                     == (parsedJWT.getJWTClaimsSet().getIssueTime()
-                            .getTime() / 1000)
-            );
+                            .getTime() / 1000));
+            Assertions.assertEquals(this.sub, parsedJWT.getJWTClaimsSet().
+                    getStringClaim("upn"));
+            Assertions.assertIterableEquals(this.groups, parsedJWT.
+                    getJWTClaimsSet().
+                    getStringListClaim("groups"));
 
         } catch (KeyLengthException ex) {
             Logger.getLogger(JWTManagerTest.class.getName()).
