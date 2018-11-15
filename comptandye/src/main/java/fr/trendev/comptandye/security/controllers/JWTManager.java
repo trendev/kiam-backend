@@ -45,10 +45,10 @@ public class JWTManager {
         this.publicKey = publicKey;
     }
 
-    private final static String AUD = "comptandye";
-    private final static String ISS = "https://www.comptandye.fr";
+    public final static String AUD = "comptandye";
+    public final static String ISS = "https://www.comptandye.fr";
 
-    private final static int VALID_PERIOD = 3;
+    public final static int VALID_PERIOD = 3;
 
     private static final Logger LOG = Logger.getLogger(
             JWTManager.class.getName());
@@ -84,8 +84,8 @@ public class JWTManager {
         signedJWT.sign(new RSASSASigner(this.privateKey));
 
         String token = signedJWT.serialize();
-        LOG.log(Level.INFO, "JWT generated for user {0} :\n{1}",
-                new Object[]{caller, token});
+        LOG.log(Level.INFO, "JWT generated for user {0} :\n{1}\njti = {2}",
+                new Object[]{caller, token, jti});
         return token;
     }
 
