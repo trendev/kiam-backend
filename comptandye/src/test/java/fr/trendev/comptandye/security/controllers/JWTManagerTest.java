@@ -38,20 +38,18 @@ public class JWTManagerTest {
     private final Instant current_time;
     private final Instant expiration_time;
     private final Date iat;
-    private final Date nbf;
     private final Date exp;
     private final String jti;
 
     public JWTManagerTest() {
         this.secret = "Iyi0KWCnZpwkr-HIVH1spXfSB2IiaTAk";
-        this.iss = "www.comptandye.fr";
+        this.iss = "https://www.comptandye.fr";
         this.sub = "julien.sie@gmail.com";
         this.aud = "comptandye";
         this.current_time = Instant.now();
         this.expiration_time = this.current_time.plus(3,
                 ChronoUnit.MINUTES);
         this.iat = Date.from(current_time);
-        this.nbf = Date.from(current_time);
         this.exp = Date.from(expiration_time);
         this.jti = UUID.randomUUID().toString();
     }
@@ -65,9 +63,13 @@ public class JWTManagerTest {
             claimSetBuilder.subject(this.sub);
             claimSetBuilder.audience(this.aud);
             claimSetBuilder.issueTime(this.iat);
-            claimSetBuilder.notBeforeTime(this.nbf);
             claimSetBuilder.expirationTime(this.exp);
             claimSetBuilder.jwtID(this.jti);
+
+            //MP-JWT specific
+            claimSetBuilder.claim("upn", this.sub);
+            claimSetBuilder.claim("groups", new String[]{"Professional",
+                "Administrator"});
 
             JWTClaimsSet claimsSet = claimSetBuilder.build();
 
@@ -79,7 +81,7 @@ public class JWTManagerTest {
             signedJWT.sign(new MACSigner(this.secret));
 
             String token = signedJWT.serialize();
-//            System.out.println(token);
+            System.out.println(token);
             Assertions.assertNotEquals(token.length(), 0);
             Assertions.assertNotNull(token);
 
