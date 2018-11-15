@@ -45,7 +45,6 @@ public class JWTManager {
         this.publicKey = publicKey;
     }
 
-    public final static String AUD = "comptandye";
     public final static String ISS = "https://www.comptandye.fr";
 
     public final static int VALID_PERIOD = 3;
@@ -64,7 +63,6 @@ public class JWTManager {
         JWTClaimsSet.Builder claimSetBuilder = new JWTClaimsSet.Builder();
         claimSetBuilder.issuer(ISS);
         claimSetBuilder.subject(caller);
-        claimSetBuilder.audience(AUD);
         claimSetBuilder.issueTime(Date.from(current_time));
         claimSetBuilder.expirationTime(Date.from(expiration_time));
         claimSetBuilder.jwtID(jti);

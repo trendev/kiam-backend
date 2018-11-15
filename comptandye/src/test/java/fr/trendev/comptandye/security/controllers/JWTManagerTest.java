@@ -10,7 +10,11 @@ import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.KeyLengthException;
 import com.nimbusds.jose.crypto.RSASSAVerifier;
 import com.nimbusds.jwt.SignedJWT;
+import static fr.trendev.comptandye.security.controllers.JWTManager.ISS;
+import static fr.trendev.comptandye.security.controllers.JWTManager.VALID_PERIOD;
 import java.text.ParseException;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
@@ -32,8 +36,7 @@ public class JWTManagerTest {
     private final List<String> groups;
 
     public JWTManagerTest() {
-        this.groups = Arrays.asList(new String[]{"Professional",
-            "Administrator"});
+        this.groups = Arrays.asList(new String[]{"Group2", "Group1",});
     }
 
     @Before
@@ -58,21 +61,24 @@ public class JWTManagerTest {
                     getPublicKey());
 
             Assertions.assertTrue(parsedJWT.verify(verifier));
-//            Assertions.assertEquals(parsedJWT.getJWTClaimsSet().getJWTID(),
-//                    this.jti);
-//            Assertions.assertEquals(parsedJWT.getJWTClaimsSet().getIssuer(),
-//                    this.iss);
-//            Assertions.assertEquals(parsedJWT.getJWTClaimsSet().getSubject(),
-//                    this.sub);
-//            Assertions.assertTrue(
-//                    (this.iat.getTime() / 1000)
-//                    == (parsedJWT.getJWTClaimsSet().getIssueTime()
-//                            .getTime() / 1000));
-//            Assertions.assertEquals(this.sub, parsedJWT.getJWTClaimsSet().
-//                    getStringClaim("upn"));
-//            Assertions.assertIterableEquals(this.groups, parsedJWT.
-//                    getJWTClaimsSet().
-//                    getStringListClaim("groups"));
+            Assertions.
+                    assertEquals(parsedJWT.getJWTClaimsSet().getIssuer(), ISS);
+            Assertions.assertEquals(parsedJWT.getJWTClaimsSet().getSubject(),
+                    this.caller);
+            Assertions.assertEquals(parsedJWT.getJWTClaimsSet().getStringClaim(
+                    "upn"),
+                    this.caller);
+
+            Instant now = Instant.now();
+            Instant iat = Instant.ofEpochMilli(parsedJWT.getJWTClaimsSet().
+                    getIssueTime().getTime());
+            Assertions.assertTrue(iat.isBefore(now));
+            Assertions.assertTrue(iat.isAfter(now.minus(
+                    VALID_PERIOD, ChronoUnit.MINUTES)));
+
+            Assertions.assertIterableEquals(this.groups, parsedJWT.
+                    getJWTClaimsSet().
+                    getStringListClaim("groups"));
         } catch (KeyLengthException ex) {
             Logger.getLogger(JWTManagerTest.class.getName()).
                     log(Level.SEVERE, null, ex);
