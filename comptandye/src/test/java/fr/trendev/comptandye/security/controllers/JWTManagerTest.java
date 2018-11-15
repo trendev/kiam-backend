@@ -32,7 +32,9 @@ import org.junit.jupiter.api.Test;
  * @author jsie
  */
 public class JWTManagerTest {
-
+    
+    private final JWTManager jwtManager;
+    
     private final String secret;
     private final String iss;
     private final String sub;
@@ -43,8 +45,10 @@ public class JWTManagerTest {
     private final Date exp;
     private final String jti;
     private final List<String> groups;
-
+    
     public JWTManagerTest() {
+        this.jwtManager = new JWTManager();
+        
         this.secret = "Iyi0KWCnZpwkr-HIVH1spXfSB2IiaTAk";
         this.iss = "https://www.comptandye.fr";
         this.sub = "julien.sie@gmail.com";
@@ -58,7 +62,7 @@ public class JWTManagerTest {
         this.groups = Arrays.asList(new String[]{"Professional",
             "Administrator"});
     }
-
+    
     @Test
     public void testSignedJWT() {
         try {
@@ -74,24 +78,24 @@ public class JWTManagerTest {
             //MP-JWT specific
             claimSetBuilder.claim("upn", this.sub);
             claimSetBuilder.claim("groups", this.groups);
-
+            
             JWTClaimsSet claimsSet = claimSetBuilder.build();
-
+            
             SignedJWT signedJWT = new SignedJWT(
                     new JWSHeader.Builder(JWSAlgorithm.HS256)
                             .type(JOSEObjectType.JWT)
                             .build(), claimsSet);
-
+            
             signedJWT.sign(new MACSigner(this.secret));
-
+            
             String token = signedJWT.serialize();
             System.out.println(token);
             Assertions.assertNotEquals(token.length(), 0);
             Assertions.assertNotNull(token);
-
+            
             SignedJWT parsedJWT = SignedJWT.parse(token);
             JWSVerifier verifier = new MACVerifier(this.secret);
-
+            
             Assertions.assertTrue(parsedJWT.verify(verifier));
             Assertions.assertEquals(parsedJWT.getJWTClaimsSet().getJWTID(),
                     this.jti);
@@ -108,7 +112,7 @@ public class JWTManagerTest {
             Assertions.assertIterableEquals(this.groups, parsedJWT.
                     getJWTClaimsSet().
                     getStringListClaim("groups"));
-
+            
         } catch (KeyLengthException ex) {
             Logger.getLogger(JWTManagerTest.class.getName()).
                     log(Level.SEVERE, null, ex);
@@ -120,5 +124,11 @@ public class JWTManagerTest {
                     log(Level.SEVERE, null, ex);
         }
     }
-
+    
+    @Test
+    public void testReadPrivateKey() throws Exception {
+        Assertions.assertNotNull(this.jwtManager.
+                readPrivateKey("privateKey.pem"));
+    }
+    
 }
