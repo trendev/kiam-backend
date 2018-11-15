@@ -6,8 +6,8 @@
 package fr.trendev.comptandye.utils;
 
 import fr.trendev.comptandye.security.controllers.HashingMechanism;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 /**
  *

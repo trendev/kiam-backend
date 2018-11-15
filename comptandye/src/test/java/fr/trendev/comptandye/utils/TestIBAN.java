@@ -1,7 +1,8 @@
 package fr.trendev.comptandye.utils;
 
 import java.math.BigDecimal;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestIBAN {
 
@@ -13,10 +14,10 @@ public class TestIBAN {
         assert (new BigDecimal("3214282912345698765432161182").remainder(
                 new BigDecimal(97))).compareTo(BigDecimal.ONE) == 0;
 
-        assert 321428291 % 97 == 70;
-        assert 702345698 % 97 == 29;
-        assert 297654321 % 97 == 24;
-        assert 2461182 % 97 == 1;
+        assertTrue(321428291 % 97 == 70);
+        assertTrue(702345698 % 97 == 29);
+        assertTrue(297654321 % 97 == 24);
+        assertTrue(2461182 % 97 == 1);
 
     }
 

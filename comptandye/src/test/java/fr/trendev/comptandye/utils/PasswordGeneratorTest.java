@@ -9,7 +9,11 @@ import fr.trendev.comptandye.security.controllers.PasswordManager;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.IntStream;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -20,7 +24,11 @@ public class PasswordGeneratorTest {
     private PasswordManager passwordManager;
 
     public PasswordGeneratorTest() {
-        passwordManager = new PasswordManager();
+    }
+
+    @Before
+    public void init() {
+        this.passwordManager = new PasswordManager();
     }
 
     /**
@@ -34,13 +42,13 @@ public class PasswordGeneratorTest {
         int size = 12;
         Set<String> spwd = new HashSet<>(n);
 
-        assert spwd.isEmpty();
+        assertTrue(spwd.isEmpty());
 
         IntStream.range(0, n).forEach(i -> spwd.add(passwordManager.
                 hashPassword(passwordManager.
                         autoGenerate(size))));
 
-        assert !spwd.isEmpty();
+        assertFalse(spwd.isEmpty());
 
         System.out.println(n + " secured passwords generated");
         if (spwd.size() != n) {
@@ -74,7 +82,6 @@ public class PasswordGeneratorTest {
     private void assertPasswordEncryption(String pwd, String pwd_sha256) {
         String hpwd = passwordManager.hashPassword(pwd);
         System.out.println("\"" + pwd + "\" ==> " + hpwd);
-        assert pwd_sha256.equals(hpwd);
-
+        assertEquals(pwd_sha256, hpwd);
     }
 }

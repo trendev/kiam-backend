@@ -29,6 +29,7 @@ import org.junit.jupiter.api.Assertions;
  *
  * @author jsie
  */
+//@RunWith(Parameterized.class)
 public class JWTManagerTest {
 
     private KeyProvider keyProvider;
@@ -41,6 +42,10 @@ public class JWTManagerTest {
         this.groups = Arrays.asList(new String[]{"Group2", "Group1",});
     }
 
+//    @Parameterized.Parameters
+//    public static Object[][] data() {
+//        return new Object[3][0];
+//    }
     @Before
     public void init() {
         this.keyProvider = new KeyProvider();
