@@ -207,8 +207,6 @@ public class AuthenticationService {
                     .filter(pwd -> !pwd.isEmpty())
                     .get();
         } catch (Exception ex) {
-            String errmsg = "Impossible to read the new password from json object "
-                    + json;
             throw new WebApplicationException(
                     "Impossible to read the new password from json object "
                     + json + " : " + ex.getMessage());
