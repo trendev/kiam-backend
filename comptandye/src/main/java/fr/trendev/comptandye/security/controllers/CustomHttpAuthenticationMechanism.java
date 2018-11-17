@@ -63,7 +63,6 @@ public class CustomHttpAuthenticationMechanism implements
             String password = req.getParameter("password");
 
             try {
-                //TODO : handle error with hash
                 CredentialValidationResult result = idStoreHandler.validate(
                         new UsernamePasswordCredential(
                                 username, new Password(password)));
@@ -77,7 +76,7 @@ public class CustomHttpAuthenticationMechanism implements
                     return hmc.responseUnauthorized();
                 }
 
-                //TODO: create session
+                //TODO: create XSRF token + JWT
                 return hmc.notifyContainerAboutLogin(
                         result.getCallerPrincipal(),
                         result.getCallerGroups());
