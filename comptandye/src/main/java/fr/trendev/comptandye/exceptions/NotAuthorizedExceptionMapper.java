@@ -19,7 +19,7 @@ public class NotAuthorizedExceptionMapper implements
     public Response toResponse(NotAuthorizedException ex) {
         return Response.status(Response.Status.UNAUTHORIZED)
                 .entity(Json.createObjectBuilder().add("error",
-                        "Unauthorized or Blocked User").build())
+                        "Unauthorized User").build())
                 .build();
     }
 }
