@@ -26,7 +26,7 @@ public class XSRFTokenGenerator {
      * @return the generated token
      */
     public String generate() {
-        return passwordManager.autoGenerate(128);
+        return passwordManager.autoGenerate(32);
     }
 
 }

@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.DeclareRoles;
@@ -19,6 +20,7 @@ import javax.security.enterprise.credential.UsernamePasswordCredential;
 import javax.security.enterprise.identitystore.CredentialValidationResult;
 import javax.security.enterprise.identitystore.DatabaseIdentityStoreDefinition;
 import javax.security.enterprise.identitystore.IdentityStoreHandler;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -46,6 +48,14 @@ public class CustomHttpAuthenticationMechanism implements
 
     @Inject
     private IdentityStoreHandler idStoreHandler;
+
+    @Inject
+    private XSRFTokenGenerator generator;
+
+    @Inject
+    private JWTManager jwtManager;
+
+    private final static int VALIDITY_PERIOD = 3;
 
     @Override
     public AuthenticationStatus validateRequest(HttpServletRequest req,
@@ -76,10 +86,19 @@ public class CustomHttpAuthenticationMechanism implements
                     return hmc.responseUnauthorized();
                 }
 
-                //TODO: create XSRF token + JWT
-                return hmc.notifyContainerAboutLogin(
-                        result.getCallerPrincipal(),
-                        result.getCallerGroups());
+                // TODO : manage blocked user
+                /**
+                 * Generates an anti-XSRF token and generate a JWT with it
+                 */
+                String xsrf = generator.generate();
+                String jwt = jwtManager.generateToken(
+                        result.getCallerPrincipal().getName(),
+                        new ArrayList<>(result.getCallerGroups()),
+                        VALIDITY_PERIOD, xsrf);
+                rsp.addCookie(this.createXSRFCookie(xsrf));
+                rsp.addCookie(this.createJWTCookie(jwt));
+
+                return hmc.notifyContainerAboutLogin(result);
             } catch (Exception ex) {
                 /**
                  * Handles exceptions generated during validation from
@@ -93,6 +112,23 @@ public class CustomHttpAuthenticationMechanism implements
         }
 
         return hmc.doNothing();
+    }
+
+    private Cookie createAuthenticationCookie(String name, String token) {
+        Cookie c = new Cookie(name, token);
+        c.setPath("/");
+        c.setHttpOnly(false);//should be used by javascript (Angular) scripts
+        c.setSecure(true);//requires to use HTTPS
+        c.setMaxAge(60 * VALIDITY_PERIOD); // converts in second
+        return c;
+    }
+
+    private Cookie createXSRFCookie(String token) {
+        return createAuthenticationCookie("XSRF-TOKEN", token);
+    }
+
+    private Cookie createJWTCookie(String token) {
+        return createAuthenticationCookie("JWT", token);
     }
 
 }

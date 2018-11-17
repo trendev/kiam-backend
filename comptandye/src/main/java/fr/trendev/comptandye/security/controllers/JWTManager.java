@@ -47,15 +47,16 @@ public class JWTManager {
 
     public final static String ISS = "https://www.comptandye.fr";
 
-    public final static int VALID_PERIOD = 3;
-
     private static final Logger LOG = Logger.getLogger(
             JWTManager.class.getName());
 
-    public String generateToken(final String caller, final List<String> groups)
+    public String generateToken(final String caller,
+            final List<String> groups,
+            final int validityPeriod,
+            final String xsrf)
             throws JOSEException {
         Instant current_time = Instant.now();
-        Instant expiration_time = current_time.plus(VALID_PERIOD,
+        Instant expiration_time = current_time.plus(validityPeriod,
                 ChronoUnit.MINUTES);
 
         final String jti = UUID.randomUUID().toString();
@@ -70,6 +71,9 @@ public class JWTManager {
         //MP-JWT specific
         claimSetBuilder.claim("upn", caller);
         claimSetBuilder.claim("groups", groups);
+
+        //XSRF-TOKEN
+        claimSetBuilder.claim("xsrf", xsrf);
 
         JWTClaimsSet claimsSet = claimSetBuilder.build();
 
