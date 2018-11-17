@@ -7,10 +7,8 @@ package fr.trendev.comptandye;
 
 import java.util.Map;
 import java.util.TreeMap;
-import javax.annotation.security.DeclareRoles;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.security.enterprise.identitystore.DatabaseIdentityStoreDefinition;
 import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -19,17 +17,6 @@ import javax.ws.rs.core.Application;
  *
  * @author jsie
  */
-@DeclareRoles({
-    "Administrator",
-    "Professional",
-    "Individual"
-})
-@DatabaseIdentityStoreDefinition(
-        dataSourceLookup = "jdbc/MySQLDataSourceComptaNdye",
-        callerQuery = "select PASSWORD from USER_ACCOUNT where EMAIL=?",
-        groupsQuery = "select userGroups_NAME from USER_ACCOUNT_USER_GROUP where userAccounts_EMAIL = ?",
-        priority = 1
-)
 @ApplicationScoped
 @ApplicationPath("api")
 public class JAXRSConfiguration extends Application {
