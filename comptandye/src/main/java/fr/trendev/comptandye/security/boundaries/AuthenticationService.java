@@ -75,7 +75,7 @@ public class AuthenticationService {
         return passwordManager.autoGenerate(size);
     }
 
-    @PermitAll
+//    @PermitAll
     @Path("profile")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -93,6 +93,7 @@ public class AuthenticationService {
                     LOG.log(Level.INFO, "Providing the profile of [{0}]", email);
                     return Response.ok(userAccountFacade.find(email)).build();
                 })
+                // should never happen (method used by secured methods
                 .orElseThrow(() -> new NotAuthorizedException(Response.status(
                         Response.Status.UNAUTHORIZED).build()));
 
@@ -201,17 +202,10 @@ public class AuthenticationService {
     }
 
     private String readNewPassword(String json) {
-
-        String password = null;
-
         try (JsonReader reader = Json.createReader(new StringReader(json))) {
-            password = reader.readObject().getString("newpassword");
-
-            if (password.isEmpty() || password == null) {
-                String errmsg = "The new password must not be null or empty";
-                throw new IllegalArgumentException(errmsg);
-            }
-            return password;
+            return Optional.of(reader.readObject().getString("newpassword"))
+                    .filter(pwd -> !pwd.isEmpty())
+                    .get();
         } catch (Exception ex) {
             String errmsg = "Impossible to read the new password from json object "
                     + json;
