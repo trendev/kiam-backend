@@ -31,15 +31,6 @@ public class OverallFilter implements Filter {
         LOG.log(Level.INFO, "OverallFilter initialized");
     }
 
-    /**
-     * Filters all HTTP requests and logs the request.
-     *
-     * @param request the request to filter
-     * @param response the expected response
-     * @param chain the filters chain
-     * @throws IOException an IOException
-     * @throws ServletException a Servlet Exception
-     */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
