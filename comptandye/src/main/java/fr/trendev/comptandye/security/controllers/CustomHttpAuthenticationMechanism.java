@@ -7,6 +7,7 @@ package fr.trendev.comptandye.security.controllers;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.security.DeclareRoles;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.security.enterprise.AuthenticationException;
@@ -16,6 +17,7 @@ import javax.security.enterprise.authentication.mechanism.http.HttpMessageContex
 import javax.security.enterprise.credential.Password;
 import javax.security.enterprise.credential.UsernamePasswordCredential;
 import javax.security.enterprise.identitystore.CredentialValidationResult;
+import javax.security.enterprise.identitystore.DatabaseIdentityStoreDefinition;
 import javax.security.enterprise.identitystore.IdentityStoreHandler;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +26,17 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author jsie
  */
+@DeclareRoles({
+    "Administrator",
+    "Professional",
+    "Individual"
+})
+@DatabaseIdentityStoreDefinition(
+        dataSourceLookup = "jdbc/MySQLDataSourceComptaNdye",
+        callerQuery = "select PASSWORD from USER_ACCOUNT where EMAIL=?",
+        groupsQuery = "select userGroups_NAME from USER_ACCOUNT_USER_GROUP where userAccounts_EMAIL = ?",
+        priority = 1
+)
 @ApplicationScoped
 public class CustomHttpAuthenticationMechanism implements
         HttpAuthenticationMechanism {
@@ -35,32 +48,49 @@ public class CustomHttpAuthenticationMechanism implements
     private IdentityStoreHandler idStoreHandler;
 
     @Override
-    public AuthenticationStatus validateRequest(HttpServletRequest hsr,
-            HttpServletResponse hsr1, HttpMessageContext hmc) throws
+    public AuthenticationStatus validateRequest(HttpServletRequest req,
+            HttpServletResponse rsp, HttpMessageContext hmc) throws
             AuthenticationException {
 
-        if (hsr.getParameter("username") != null
-                && hsr.getParameter("password") != null) {
+        LOG.log(Level.INFO, "Validating a request : {0} / {1}", new Object[]{
+            hmc.isProtected() ? "PROTECTED" : "UNPROTECTED",
+            hmc.isAuthenticationRequest() ? "AUTHENTICATION" : "NORMAL"});
 
-            String username = hsr.getParameter("username");
-            String password = hsr.getParameter("password");
+        if (req.getParameter("username") != null
+                && req.getParameter("password") != null) {
 
-            //TODO : handle error with hash
-            CredentialValidationResult result = idStoreHandler.validate(
-                    new UsernamePasswordCredential(
-                            username, new Password(password)));
+            String username = req.getParameter("username");
+            String password = req.getParameter("password");
 
-            if (result.getStatus() != CredentialValidationResult.Status.VALID) {
-                LOG.log(Level.WARNING,
-                        "Authentication of {0} FAILED - Status : {1}",
-                        new Object[]{username, result.getStatus().toString()});
+            try {
+                //TODO : handle error with hash
+                CredentialValidationResult result = idStoreHandler.validate(
+                        new UsernamePasswordCredential(
+                                username, new Password(password)));
+
+                if (result.getStatus()
+                        != CredentialValidationResult.Status.VALID) {
+                    LOG.log(Level.WARNING,
+                            "Authentication of {0} FAILED - Status : {1} CREDENTIAL",
+                            new Object[]{username, result.getStatus().
+                                        toString()});
+                    return hmc.responseUnauthorized();
+                }
+
+                //TODO: create session
+                return hmc.notifyContainerAboutLogin(
+                        result.getCallerPrincipal(),
+                        result.getCallerGroups());
+            } catch (Exception ex) {
+                /**
+                 * Handles exceptions generated during validation from
+                 * IdentityStore (hash issues...)
+                 */
+                LOG.log(Level.SEVERE,
+                        "Authentication of " + username
+                        + " FAILED : INTERNAL ERROR", ex);
                 return hmc.responseUnauthorized();
             }
-
-            //TODO: create session
-            return hmc.notifyContainerAboutLogin(
-                    result.getCallerPrincipal(),
-                    result.getCallerGroups());
         }
 
         return hmc.doNothing();
