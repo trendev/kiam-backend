@@ -29,7 +29,7 @@ public class ExceptionHandler {
     @SuppressWarnings("unchecked")
     public Response handle(Throwable t) {
 
-        LOG.log(Level.INFO, "ExceptionHandler {0} : {1}", new Object[]{
+        LOG.log(Level.INFO, "ExceptionHandler caught {0} : {1}", new Object[]{
             t.getMessage(), t});
 
         Throwable cause = t.getCause();
