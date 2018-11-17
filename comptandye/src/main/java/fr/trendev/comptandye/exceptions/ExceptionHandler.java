@@ -5,6 +5,8 @@
  */
 package fr.trendev.comptandye.exceptions;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -21,14 +23,20 @@ public class ExceptionHandler {
     @Context
     Providers providers;
 
+    private static final Logger LOG = Logger.getLogger(ExceptionHandler.class.
+            getName());
+
     @SuppressWarnings("unchecked")
     public Response handle(Throwable t) {
+
+        LOG.log(Level.INFO, "ExceptionHandler {0} : {1}", new Object[]{
+            t.getMessage(), t});
 
         Throwable cause = t.getCause();
 
         if (providers != null && cause != null) {
-            ExceptionMapper mapper = providers.getExceptionMapper(cause.
-                    getClass());
+            ExceptionMapper mapper =
+                    providers.getExceptionMapper(cause.getClass());
             if (mapper != null) {
                 return mapper.toResponse(cause);
             }
