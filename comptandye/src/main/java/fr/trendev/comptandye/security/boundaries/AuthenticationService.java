@@ -6,13 +6,11 @@
 package fr.trendev.comptandye.security.boundaries;
 
 import fr.trendev.comptandye.exceptions.ExceptionHandler;
-import fr.trendev.comptandye.exceptions.ExceptionHelper;
 import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
 import fr.trendev.comptandye.security.controllers.PasswordManager;
 import fr.trendev.comptandye.security.controllers.XSRFTokenGenerator;
 import fr.trendev.comptandye.useraccount.controllers.UserAccountFacade;
 import java.io.StringReader;
-import java.security.Principal;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
@@ -23,12 +21,11 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonReader;
-import javax.servlet.ServletException;
 import javax.servlet.SessionCookieConfig;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -49,7 +46,7 @@ import javax.ws.rs.core.SecurityContext;
  */
 @Stateless
 @Path("Authentication")
-@PermitAll
+@RolesAllowed({"Administrator", "Professional", "Individual"})
 public class AuthenticationService {
 
     @Inject
@@ -70,6 +67,7 @@ public class AuthenticationService {
     private final Logger LOG = Logger.getLogger(AuthenticationService.class.
             getName());
 
+    @PermitAll
     @Path("password")
     @GET
     @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON,})
@@ -77,6 +75,7 @@ public class AuthenticationService {
         return passwordManager.autoGenerate(size);
     }
 
+    @PermitAll
     @Path("profile")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -94,12 +93,9 @@ public class AuthenticationService {
                     LOG.log(Level.INFO, "Providing the profile of [{0}]", email);
                     return Response.ok(userAccountFacade.find(email)).build();
                 })
-                .orElse(
-                        Response.status(Response.Status.UNAUTHORIZED)
-                                .entity(Json.createObjectBuilder().add("error",
-                                        "Unauthorized or Blocked User").build())
-                                .build()
-                );
+                .orElseThrow(() -> new NotAuthorizedException(Response.status(
+                        Response.Status.UNAUTHORIZED).build()));
+
     }
 
     @Path("login")
@@ -110,82 +106,7 @@ public class AuthenticationService {
             @Context SecurityContext sec,
             @QueryParam("username") String username,
             @QueryParam("password") String password) {
-
-        Principal user = req.getUserPrincipal();
-
-        try {
-            //user is not authenticated
-            if (user == null) {
-
-                /**
-                 * Get a session and Validate the provided username and password
-                 * in the password validation realm used by the web container
-                 * login mechanism configured for the ServletContext.
-                 */
-                HttpSession session = req.getSession();
-                req.login(username, password);
-
-                // checks first if the user is Blocked or not
-                if (authenticationHelper.isBlockedUser(sec)) {
-                    LOG.log(Level.WARNING,
-                            "Login cancelled - user [{0}] is Blocked",
-                            username);
-                    try {
-                        session.invalidate();
-                    } catch (IllegalStateException ex) {
-                    }
-
-                    return Response.status(Response.Status.UNAUTHORIZED)
-                            .entity(Json.createObjectBuilder().add("error",
-                                    "Login FAILED - user [" + username
-                                    + "] is Blocked").
-                                    build())
-                            .build();
-                } else {
-
-                    //adds the session of the new authenticated user in the tracker
-//                    tracker.put(username, session);
-                    SessionCookieConfig scc = req.
-                            getServletContext().getSessionCookieConfig();
-
-                    NewCookie jsessionid = new NewCookie("JSESSIONID",
-                            session.getId(),
-                            scc.getPath(),
-                            scc.getDomain(),
-                            null,
-                            scc.getMaxAge(), true, true);
-
-                    String token = generator.generate();
-                    session.setAttribute("XSRF-TOKEN", token);
-                    NewCookie xsrfCookie = new NewCookie("XSRF-TOKEN",
-                            token,
-                            scc.getPath(),
-                            scc.getDomain(),
-                            null,
-                            scc.getMaxAge(), true, false);
-
-                    //sends the profile and set the cookies
-                    return Response.fromResponse(this.profile(sec))
-                            .cookie(jsessionid, xsrfCookie)
-                            .build();
-                }
-            } else {// user is already authenticated
-                LOG.log(Level.WARNING,
-                        "Login process cancelled - user [{0}] is already logged in",
-                        user.getName());
-
-            }
-            //just sends the profile if the user is authenticated
-            return this.profile(sec);
-        } catch (ServletException ex) {
-            LOG.log(Level.WARNING, ExceptionHelper.handleException(ex,
-                    "Login FAILED - user [" + username + "] / [" + req.
-                            getRemoteAddr() + "]"));
-        }
-        return Response.status(Response.Status.UNAUTHORIZED)
-                .entity(Json.createObjectBuilder().add("error",
-                        "Login FAILED - user [" + username + "]").build())
-                .build();
+        return this.profile(sec);
     }
 
     /**
@@ -197,7 +118,6 @@ public class AuthenticationService {
      * @return 200 if everything is OK or 417 Expectation failed if the session
      * is invalidated
      */
-    @RolesAllowed({"Administrator", "Professional", "Individual"})
     @Path("logout")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -247,7 +167,6 @@ public class AuthenticationService {
                 .build();
     }
 
-    @RolesAllowed({"Administrator", "Professional", "Individual"})
     @Path("new-password")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
