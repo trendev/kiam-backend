@@ -29,8 +29,7 @@ public class AuthenticationHelper {
      */
     public Optional<String> getProfessionalEmailFromSecurityContext(
             SecurityContext sec) {
-
-        if (sec.isSecure()
+        if (sec != null && sec.isSecure()
                 && (sec.isUserInRole(UserAccountType.PROFESSIONAL)
                 || sec.isUserInRole(UserAccountType.INDIVIDUAL)
                 || sec.isUserInRole(UserAccountType.ADMINISTRATOR))) {
