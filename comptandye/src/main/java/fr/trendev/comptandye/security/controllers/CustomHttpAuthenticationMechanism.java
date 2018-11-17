@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
+import static fr.trendev.comptandye.security.controllers.JWTManager.VALID_PERIOD;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,8 +56,6 @@ public class CustomHttpAuthenticationMechanism implements
     @Inject
     private JWTManager jwtManager;
 
-    private final static int VALIDITY_PERIOD = 3;
-
     @Override
     public AuthenticationStatus validateRequest(HttpServletRequest req,
             HttpServletResponse rsp, HttpMessageContext hmc) throws
@@ -94,7 +93,7 @@ public class CustomHttpAuthenticationMechanism implements
                 String jwt = jwtManager.generateToken(
                         result.getCallerPrincipal().getName(),
                         new ArrayList<>(result.getCallerGroups()),
-                        VALIDITY_PERIOD, xsrf);
+                        xsrf);
                 rsp.addCookie(this.createXSRFCookie(xsrf));
                 rsp.addCookie(this.createJWTCookie(jwt));
 
@@ -119,7 +118,7 @@ public class CustomHttpAuthenticationMechanism implements
         c.setPath("/");
         c.setHttpOnly(false);//should be used by javascript (Angular) scripts
         c.setSecure(true);//requires to use HTTPS
-        c.setMaxAge(60 * VALIDITY_PERIOD); // converts in second
+        c.setMaxAge(60 * VALID_PERIOD); // converts in second
         return c;
     }
 

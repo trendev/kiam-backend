@@ -37,6 +37,8 @@ public class JWTManager {
     @Inject
     private RSAPublicKey publicKey;
 
+    public final static int VALID_PERIOD = 3;
+
     public JWTManager() {
     }
 
@@ -52,11 +54,10 @@ public class JWTManager {
 
     public String generateToken(final String caller,
             final List<String> groups,
-            final int validityPeriod,
             final String xsrf)
             throws JOSEException {
         Instant current_time = Instant.now();
-        Instant expiration_time = current_time.plus(validityPeriod,
+        Instant expiration_time = current_time.plus(VALID_PERIOD,
                 ChronoUnit.MINUTES);
 
         final String jti = UUID.randomUUID().toString();

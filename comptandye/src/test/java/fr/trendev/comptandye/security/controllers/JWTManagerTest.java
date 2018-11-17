@@ -13,6 +13,7 @@ import com.nimbusds.jose.KeyLengthException;
 import com.nimbusds.jose.crypto.RSASSAVerifier;
 import com.nimbusds.jwt.SignedJWT;
 import static fr.trendev.comptandye.security.controllers.JWTManager.ISS;
+import static fr.trendev.comptandye.security.controllers.JWTManager.VALID_PERIOD;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -33,8 +34,6 @@ public class JWTManagerTest {
 
     private KeyProvider keyProvider;
     private JWTManager jwtManager;
-
-    private final static int VALIDITY_PERIOD = 3;
 
     private final String caller = "julien.sie@gmail.com";
     private final List<String> groups;
@@ -59,7 +58,6 @@ public class JWTManagerTest {
     public void testGenerateToken() {
         try {
             String token = this.jwtManager.generateToken(this.caller, groups,
-                    VALIDITY_PERIOD,
                     "1234567890");
             Assertions.assertNotEquals(token.length(), 0);
             Assertions.assertNotNull(token);
@@ -85,9 +83,9 @@ public class JWTManagerTest {
             Instant exp = Instant.ofEpochMilli(parsedJWT.getJWTClaimsSet().
                     getExpirationTime().getTime());
             Assertions.assertTrue(iat.isBefore(now));
-            Assertions.assertTrue(iat.isAfter(now.minus(VALIDITY_PERIOD,
+            Assertions.assertTrue(iat.isAfter(now.minus(VALID_PERIOD,
                     ChronoUnit.MINUTES)));
-            Assertions.assertTrue(exp.equals(iat.plus(VALIDITY_PERIOD,
+            Assertions.assertTrue(exp.equals(iat.plus(VALID_PERIOD,
                     ChronoUnit.MINUTES)));
 
             Assertions.assertIterableEquals(this.groups, parsedJWT.
