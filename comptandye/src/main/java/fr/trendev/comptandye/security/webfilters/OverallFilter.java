@@ -5,7 +5,6 @@
  */
 package fr.trendev.comptandye.security.webfilters;
 
-import fr.trendev.comptandye.security.controllers.ActiveSessionTracker;
 import fr.trendev.comptandye.security.controllers.XSRFTokenGenerator;
 import java.io.IOException;
 import java.security.Principal;
@@ -28,9 +27,6 @@ import javax.servlet.http.HttpSession;
  * @author jsie
  */
 public class OverallFilter implements Filter {
-
-    @Inject
-    ActiveSessionTracker tracker;
 
     @Inject
     XSRFTokenGenerator generator;
@@ -82,9 +78,7 @@ public class OverallFilter implements Filter {
          */
         try {
             if (user != null
-                    && session != null
-                    && !tracker.contains(user.getName(), session)) {
-                tracker.put(user.getName(), session);
+                    && session != null) {
 
                 //sets the XSRF token, JSESSIONID is already pushed
                 String token = generator.generate();

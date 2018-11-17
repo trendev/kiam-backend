@@ -7,7 +7,6 @@ package fr.trendev.comptandye.security.boundaries;
 
 import fr.trendev.comptandye.exceptions.ExceptionHandler;
 import fr.trendev.comptandye.exceptions.ExceptionHelper;
-import fr.trendev.comptandye.security.controllers.ActiveSessionTracker;
 import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
 import fr.trendev.comptandye.security.controllers.PasswordManager;
 import fr.trendev.comptandye.security.controllers.XSRFTokenGenerator;
@@ -58,9 +57,6 @@ public class AuthenticationService {
 
     @Inject
     UserAccountFacade userAccountFacade;
-
-    @Inject
-    ActiveSessionTracker tracker;
 
     @Inject
     XSRFTokenGenerator generator;
@@ -148,8 +144,7 @@ public class AuthenticationService {
                 } else {
 
                     //adds the session of the new authenticated user in the tracker
-                    tracker.put(username, session);
-
+//                    tracker.put(username, session);
                     SessionCookieConfig scc = req.
                             getServletContext().getSessionCookieConfig();
 
