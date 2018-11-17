@@ -42,6 +42,8 @@ public class OverallFilter implements Filter {
                 new Object[]{req.getRequestURL(), (user != null) ? user.
                     getName() : "an ANONYMOUS user", req.getMethod(), req.
                     getRemoteAddr()});
+
+        chain.doFilter(request, response);
     }
 
     @Override
