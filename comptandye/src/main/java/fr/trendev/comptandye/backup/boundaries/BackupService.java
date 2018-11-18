@@ -89,9 +89,9 @@ public class BackupService {
 
         LOG.log(Level.INFO, "Receiving a backup...");
 
-        authenticationHelper.getProfessionalEmailFromSecurityContext(sec)
-                .ifPresent(email -> LOG.log(Level.INFO, email
-                        + " is controlling a backup..."));
+        authenticationHelper.getUserEmailFromSecurityContext(sec)
+                .ifPresent(email -> LOG.log(Level.INFO,
+                        "{0} is controlling a backup...", email));
 
         CompletableFuture
                 .supplyAsync(() -> jsonProImport.control(is))

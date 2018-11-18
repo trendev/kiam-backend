@@ -88,7 +88,7 @@ public class AuthenticationService {
     }
 
     private Response profile(SecurityContext sec) {
-        return authenticationHelper.getProfessionalEmailFromSecurityContext(sec)
+        return authenticationHelper.getUserEmailFromSecurityContext(sec)
                 .map(email -> {
                     LOG.log(Level.INFO, "Providing the profile of [{0}]", email);
                     return Response.ok(userAccountFacade.find(email)).build();
@@ -176,7 +176,7 @@ public class AuthenticationService {
 
         String password = this.readNewPassword(newPassword);
 
-        return authenticationHelper.getProfessionalEmailFromSecurityContext(sec)
+        return authenticationHelper.getUserEmailFromSecurityContext(sec)
                 .map(email ->
                         Optional.ofNullable(this.userAccountFacade.find(email))
                                 .map(user -> {

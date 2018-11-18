@@ -27,7 +27,7 @@ public class AuthenticationHelper {
      * @return the user's email (principal's name) or null if context is not
      * secured or user is not in a supported group
      */
-    public Optional<String> getProfessionalEmailFromSecurityContext(
+    public Optional<String> getUserEmailFromSecurityContext(
             SecurityContext sec) {
         if (sec != null && sec.isSecure()
                 && (sec.isUserInRole(UserAccountType.PROFESSIONAL)
@@ -40,16 +40,21 @@ public class AuthenticationHelper {
     }
 
     /**
-     * Controls if an user is blocked or not. If a user has been blocked (using
-     * the admin interface), it should have been set as blocked and removed from
-     * its group:getProfessionalEmailFromSecurityContext() should return null
-     * and this method should return false in this case.
+     * Returns the user's email
      *
-     * @param sec
-     * @return
+     * @param sec the Security Context
+     * @param email the provided user's email if not set in the Security Context
+     * @param type the user type (Professional, Individual, Administrator...)
+     * @return an Optional with the user's email
      */
-    public boolean isBlockedUser(SecurityContext sec) {
-        return getProfessionalEmailFromSecurityContext(sec).isPresent();
+    private Optional<String> getUserEmail(SecurityContext sec,
+            String email,
+            String type) {
+
+        return Optional.ofNullable(sec != null && sec.isSecure()
+                && sec.isUserInRole(type)
+                ? sec.getUserPrincipal().getName() : email);
+
     }
 
     /**
@@ -61,10 +66,8 @@ public class AuthenticationHelper {
      * @return the professional's email
      */
     public String getProEmail(SecurityContext sec, String professional) {
-        return Optional.ofNullable(sec.isSecure()
-                && sec.isUserInRole(UserAccountType.PROFESSIONAL)
-                ? sec.getUserPrincipal().getName()
-                : professional)
+        return this.
+                getUserEmail(sec, professional, UserAccountType.PROFESSIONAL)
                 .map(Function.identity())
                 .orElseThrow(() ->
                         new BadRequestException(
