@@ -36,7 +36,7 @@ import javax.servlet.http.HttpServletResponse;
 })
 @DatabaseIdentityStoreDefinition(
         dataSourceLookup = "jdbc/MySQLDataSourceComptaNdye",
-        callerQuery = "select PASSWORD from USER_ACCOUNT where EMAIL=?",
+        callerQuery = "select PASSWORD from USER_ACCOUNT where EMAIL=? and BLOCKED is FALSE",
         groupsQuery = "select userGroups_NAME from USER_ACCOUNT_USER_GROUP where userAccounts_EMAIL = ?",
         priority = 1
 )
@@ -110,6 +110,11 @@ public class CustomHttpAuthenticationMechanism implements
             }
         }
 
+        /**
+         * TODO : update the frontend in order to accept HTTP 401 with empty
+         * content and avoid to throw a NotAuthorizedException
+         */
+        // return hmc.isProtected() ? hmc.responseUnauthorized() : hmc.doNothing();
         return hmc.doNothing();
     }
 
