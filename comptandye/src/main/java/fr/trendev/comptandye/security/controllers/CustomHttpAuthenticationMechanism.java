@@ -110,12 +110,7 @@ public class CustomHttpAuthenticationMechanism implements
             }
         }
 
-        /**
-         * TODO : update the frontend in order to accept HTTP 401 with empty
-         * content and avoid to throw a NotAuthorizedException
-         */
-        // return hmc.isProtected() ? hmc.responseUnauthorized() : hmc.doNothing();
-        return hmc.doNothing();
+        return hmc.isProtected() ? hmc.responseUnauthorized() : hmc.doNothing();
     }
 
     private Cookie createAuthenticationCookie(String name, String token) {
