@@ -76,6 +76,9 @@ public class CustomHttpAuthenticationMechanism implements
                         new UsernamePasswordCredential(
                                 username, new Password(password)));
 
+                /**
+                 * Credentials of a blocked user will be INVALID
+                 */
                 if (result.getStatus()
                         != CredentialValidationResult.Status.VALID) {
                     LOG.log(Level.WARNING,
@@ -85,7 +88,6 @@ public class CustomHttpAuthenticationMechanism implements
                     return hmc.responseUnauthorized();
                 }
 
-                // TODO : manage blocked user
                 /**
                  * Generates an anti-XSRF token and generate a JWT with it
                  */
