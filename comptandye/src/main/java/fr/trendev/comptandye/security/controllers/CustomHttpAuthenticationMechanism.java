@@ -7,6 +7,8 @@ package fr.trendev.comptandye.security.controllers;
 
 import static fr.trendev.comptandye.security.controllers.JWTManager.VALID_PERIOD;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.DeclareRoles;
@@ -46,6 +48,8 @@ public class CustomHttpAuthenticationMechanism implements
 
     private static final Logger LOG = Logger.getLogger(
             CustomHttpAuthenticationMechanism.class.getName());
+
+    private static final String JWT = "JWT";
 
     @Inject
     private IdentityStoreHandler idStoreHandler;
@@ -112,6 +116,19 @@ public class CustomHttpAuthenticationMechanism implements
             }
         }
 
+        if (req.getCookies() != null) {
+            Arrays.asList(req.getCookies())
+                    .stream()
+                    .filter(Objects::nonNull)
+                    .filter(c -> JWT.equals(c.getName()))
+                    .findFirst()
+                    .ifPresent(c -> {
+                        String token = c.getValue();
+                        //TODO : control the token 
+                        LOG.info("JWT = " + token);
+                    });
+        }
+
         return hmc.isProtected() ? hmc.responseUnauthorized() : hmc.doNothing();
     }
 
@@ -129,7 +146,7 @@ public class CustomHttpAuthenticationMechanism implements
     }
 
     private Cookie createJWTCookie(String token) {
-        return createAuthenticationCookie("JWT", token);
+        return createAuthenticationCookie(JWT, token);
     }
 
 }
