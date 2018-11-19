@@ -125,10 +125,23 @@ public class JWTManager {
                     + " cannot be parsed !!!");
         } catch (JOSEException ex) {
             LOG.log(Level.SEVERE, "Provided JWT " + token
-                    + " signature cannot be VERIFIED !!!");
+                    + " signature CANNOT BE VERIFIED !!!");
         }
 
+        // JWT IS INVALID
         return Optional.empty();
+    }
+    
+    public boolean hasExpired(final JWTClaimsSet claims){
+        Instant now = Instant.now();
+        // TODO : compare expiration date with now
+        return false;
+    }
+    
+    public boolean canBeRefreshed(final JWTClaimsSet claims){
+         Instant now = Instant.now();
+        // TODO : check if the token will expire soon and must be refreshed
+        return false;
     }
 
 }
