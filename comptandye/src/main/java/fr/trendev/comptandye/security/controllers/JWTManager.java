@@ -102,8 +102,8 @@ public class JWTManager {
         signedJWT.sign(this.signer);
 
         String token = signedJWT.serialize();
-//        LOG.log(Level.INFO, "JWT generated for user {0} :\n{1}\njti = {2}",
-//                new Object[]{caller, token, jti});
+        LOG.log(Level.INFO, "JWT generated for user {0} :\n{1}\njti = {2}",
+                new Object[]{caller, token, jti});
         return token;
     }
 
