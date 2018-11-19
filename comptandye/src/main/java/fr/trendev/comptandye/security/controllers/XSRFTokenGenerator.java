@@ -5,20 +5,15 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
-import javax.inject.Inject;
+import java.util.UUID;
+import javax.enterprise.context.ApplicationScoped;
 
 /**
  *
  * @author jsie
  */
-@Startup
-@Singleton
+@ApplicationScoped
 public class XSRFTokenGenerator {
-
-    @Inject
-    PasswordManager passwordManager;
 
     /**
      * Generates a XSRF token
@@ -26,7 +21,7 @@ public class XSRFTokenGenerator {
      * @return the generated token
      */
     public String generate() {
-        return passwordManager.autoGenerate(32);
+        return UUID.randomUUID().toString();
     }
 
 }
