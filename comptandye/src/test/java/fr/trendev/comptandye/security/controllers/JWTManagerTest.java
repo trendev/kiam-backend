@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Assertions;
 //@RunWith(Parameterized.class)
 public class JWTManagerTest {
 
-    private KeyProvider keyProvider;
+    private RSAKeyProvider keyProvider;
     private JWTManager jwtManager;
 
     private final String caller = "julien.sie@gmail.com";
@@ -48,10 +48,11 @@ public class JWTManagerTest {
 //    }
     @Before
     public void init() {
-        this.keyProvider = new KeyProvider();
+        this.keyProvider = new RSAKeyProvider();
         this.keyProvider.init();
         this.jwtManager = new JWTManager(this.keyProvider.getPrivateKey(),
                 this.keyProvider.getPublicKey());
+        this.jwtManager.init();
     }
 
     @Test
@@ -104,6 +105,71 @@ public class JWTManagerTest {
             Logger.getLogger(JWTManagerTest.class.getName()).
                     log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
+            Logger.getLogger(JWTManagerTest.class.getName()).
+                    log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Test
+    public void testGetClaim() {
+        try {
+            String token = this.jwtManager.generateToken(this.caller, groups,
+                    "x-xsrf-token");
+
+            Assertions.assertTrue(
+                    this.jwtManager.getClaim(token).isPresent());
+
+        } catch (JOSEException ex) {
+            Logger.getLogger(JWTManagerTest.class.getName()).
+                    log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Test
+    public void testGetClaimWithNullToken() {
+        try {
+            String token = this.jwtManager.generateToken(this.caller, groups,
+                    "x-xsrf-token");
+
+            Assertions.assertFalse(
+                    this.jwtManager.getClaim(null).isPresent());
+
+        } catch (JOSEException ex) {
+            Logger.getLogger(JWTManagerTest.class.getName()).
+                    log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Test
+    public void testGetClaimWithJWTCorruption() {
+        try {
+            String token = this.jwtManager.generateToken(this.caller, groups,
+                    "x-xsrf-token");
+
+            Assertions.assertFalse(
+                    this.jwtManager.getClaim(token.replaceFirst("e", "f"))
+                            .isPresent());
+
+        } catch (JOSEException ex) {
+            Logger.getLogger(JWTManagerTest.class.getName()).
+                    log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Test
+    public void testGetClaimWithUnverifiedSignature() {
+        try {
+            String token = this.jwtManager.generateToken(this.caller, groups,
+                    "x-xsrf-token");
+
+            byte[] bytes = token.getBytes();
+            bytes[token.length() - 10]++;
+
+            Assertions.assertFalse(
+                    this.jwtManager.getClaim(new String(bytes))
+                            .isPresent());
+
+        } catch (JOSEException ex) {
             Logger.getLogger(JWTManagerTest.class.getName()).
                     log(Level.SEVERE, null, ex);
         }
