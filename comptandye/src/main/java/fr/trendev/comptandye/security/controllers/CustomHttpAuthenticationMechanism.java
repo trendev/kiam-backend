@@ -106,6 +106,7 @@ public class CustomHttpAuthenticationMechanism implements
                 rsp.addCookie(this.createXSRFCookie(xsrf));
                 rsp.addCookie(this.createJWTCookie(jwt));
 
+                req.setAttribute("XSRF-TOKEN", xsrf);
                 return hmc.notifyContainerAboutLogin(result);
             } catch (Exception ex) {
                 /**
@@ -129,15 +130,18 @@ public class CustomHttpAuthenticationMechanism implements
                     .filter(c -> JWT.equals(c.getName()))
                     .findFirst()
                     .flatMap(c -> this.jwtManager.getClaimsSet(c.getValue()))
-                    .filter(cs -> !this.jwtManager.hasExpired(cs))
-                    .map(cs -> {
+                    .filter(clmset -> !this.jwtManager.hasExpired(clmset))
+                    .map(clmset -> {
                         try {
+                            req.setAttribute("XSRF-TOKEN", clmset.getClaim(
+                                    "xsrf"));
                             return hmc.notifyContainerAboutLogin(
                                     Optional.
-                                            ofNullable(cs.getStringClaim("upn"))
+                                            ofNullable(clmset.getStringClaim(
+                                                    "upn"))
                                             .filter(s -> !s.isEmpty())
-                                            .orElse(cs.getSubject()),
-                                    new HashSet<>(cs.
+                                            .orElse(clmset.getSubject()),
+                                    new HashSet<>(clmset.
                                             getStringListClaim("groups")));
                         } catch (ParseException ex) {
                             LOG.log(Level.SEVERE,
