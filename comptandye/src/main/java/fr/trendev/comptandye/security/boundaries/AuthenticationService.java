@@ -21,7 +21,6 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonReader;
-import javax.servlet.SessionCookieConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -117,29 +116,23 @@ public class AuthenticationService {
             @Context SecurityContext sec) {
 
         String username = sec.getUserPrincipal().getName();
-        SessionCookieConfig scc = req.
-                getServletContext().getSessionCookieConfig();
-
-        NewCookie jwt = new NewCookie("JWT",
-                null,
-                "/",
-                null,
-                null,
-                0, true, true);
-
-        NewCookie xsrfCookie = new NewCookie("XSRF-TOKEN",
-                null,
-                "/",
-                null,
-                null,
-                0, true, false);
 
         return Response.ok(
                 Json.createObjectBuilder()
                         .add("msg", "user " + username + " is now logged out").
-                        build()
-        )
-                .cookie(jwt, xsrfCookie)
+                        build())
+                .cookie(new NewCookie("JWT",
+                        null,
+                        "/",
+                        null,
+                        null,
+                        0, true, true),
+                        new NewCookie("XSRF-TOKEN",
+                                null,
+                                "/",
+                                null,
+                                null,
+                                0, true, false))
                 .build();
     }
 
