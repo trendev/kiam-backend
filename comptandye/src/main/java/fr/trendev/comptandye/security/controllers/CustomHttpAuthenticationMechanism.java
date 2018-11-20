@@ -68,26 +68,33 @@ public class CustomHttpAuthenticationMechanism implements
             HttpServletResponse rsp, HttpMessageContext hmc) throws
             AuthenticationException {
 
+        // DEBUG Purposes
         LOG.log(Level.INFO, "Validating a request : {0} / {1}",
                 new Object[]{
                     hmc.isProtected() ? "PROTECTED" : "UNPROTECTED",
                     hmc.isAuthenticationRequest() ? "AUTHENTICATION" : "NORMAL"
                 });
 
+        /**
+         * Checks if the request is a login request
+         */
         if (req.getParameter("username") != null
                 && req.getParameter("password") != null
+                // path should ends with login...
                 && req.getPathInfo().endsWith("login")) {
 
             String username = req.getParameter("username");
             String password = req.getParameter("password");
 
             try {
+                // controls the credential from the IdentityStores (DB is default)
                 CredentialValidationResult result = idStoreHandler.validate(
                         new UsernamePasswordCredential(
                                 username, new Password(password)));
 
                 /**
-                 * Credentials of a blocked user will be INVALID
+                 * Credentials of blocked users will be INVALID and access will
+                 * be UNAUTHORIZED
                  */
                 if (result.getStatus()
                         != CredentialValidationResult.Status.VALID) {
@@ -109,6 +116,9 @@ public class CustomHttpAuthenticationMechanism implements
                 rsp.addCookie(this.createXSRFCookie(xsrf));
                 rsp.addCookie(this.createJWTCookie(jwt));
 
+                /**
+                 * Confirm the access
+                 */
                 return hmc.notifyContainerAboutLogin(result);
             } catch (Exception ex) {
                 /**
@@ -125,19 +135,25 @@ public class CustomHttpAuthenticationMechanism implements
         /**
          * TODO : handle JWT renewal
          */
+        /**
+         * Checks if the JWT is in a Cookie, gets it, verifies/controls it
+         */
         if (req.getCookies() != null) {
             return Arrays.asList(req.getCookies())
                     .stream()
-                    .filter(Objects::nonNull)
+                    .filter(Objects::nonNull)// avoid null and empty element
                     .filter(c -> JWT.equals(c.getName()))
                     .findFirst()
                     .flatMap(c -> this.jwtManager.getClaimsSet(c.getValue()))
+                    // JWT is valid and signature is verified
                     .filter(clmset -> !this.jwtManager.hasExpired(clmset))
                     .map(clmset -> {
                         try {
+                            //share the anti xsrf-token with the filters as a request attribute
                             req.setAttribute("XSRF-TOKEN", clmset.getClaim(
                                     "xsrf"));
                             return hmc.notifyContainerAboutLogin(
+                                    //get the upn or the subject (MP-JWT)
                                     Optional.
                                             ofNullable(clmset.getStringClaim(
                                                     "upn"))
@@ -159,6 +175,12 @@ public class CustomHttpAuthenticationMechanism implements
 
     }
 
+    /**
+     * Controls and switch a request assuming it is a protected resource or not
+     *
+     * @param hmc the Jttp Message Context
+     * @return transferts to filters or refuses the access
+     */
     private AuthenticationStatus controlProtectedResource(HttpMessageContext hmc) {
         return hmc.isProtected() ? hmc.responseUnauthorized() : hmc.doNothing();
     }
