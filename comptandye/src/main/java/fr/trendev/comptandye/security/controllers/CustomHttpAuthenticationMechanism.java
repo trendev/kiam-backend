@@ -75,7 +75,8 @@ public class CustomHttpAuthenticationMechanism implements
                 });
 
         if (req.getParameter("username") != null
-                && req.getParameter("password") != null) {
+                && req.getParameter("password") != null
+                && req.getPathInfo().endsWith("login")) {
 
             String username = req.getParameter("username");
             String password = req.getParameter("password");
