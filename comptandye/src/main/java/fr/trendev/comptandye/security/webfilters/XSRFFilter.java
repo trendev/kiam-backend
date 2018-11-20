@@ -9,6 +9,7 @@ import fr.trendev.comptandye.exceptions.ExceptionHelper;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.FilterChain;
@@ -79,7 +80,7 @@ public class XSRFFilter extends ApiFilter {
                  */
                 try {
                     LOG.log(Level.INFO, "Controlling X-XSRF-TOKEN");
-                    String xsrftoken = this.xsrfAttribute(req);
+                    String xsrftoken = this.extractXSRFAttribute(req);
                     if (xsrftoken == null
                             || xsrftoken.isEmpty()
                             || !xsrftoken.equals(xxsrftoken)) {
@@ -144,12 +145,10 @@ public class XSRFFilter extends ApiFilter {
         LOG.log(Level.INFO, "XSRFFilter: destroyed...");
     }
 
-    private String xsrfAttribute(HttpServletRequest req) {
-        Object attrib = req.getAttribute("XSRF-TOKEN");
-        if (attrib != null) {
-            return String.valueOf(attrib);
-        }
-        return null;
+    private String extractXSRFAttribute(HttpServletRequest req) {
+        return Optional.ofNullable(req.getAttribute("XSRF-TOKEN"))
+                .map(attrib -> String.valueOf(attrib))
+                .orElse(null);
     }
 
 }
