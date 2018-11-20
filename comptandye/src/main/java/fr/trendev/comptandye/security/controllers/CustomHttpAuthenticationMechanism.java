@@ -6,9 +6,12 @@
 package fr.trendev.comptandye.security.controllers;
 
 import static fr.trendev.comptandye.security.controllers.JWTManager.VALID_PERIOD;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.DeclareRoles;
@@ -116,19 +119,41 @@ public class CustomHttpAuthenticationMechanism implements
             }
         }
 
+        /**
+         * TODO : handle JWT renewal
+         */
         if (req.getCookies() != null) {
-            Arrays.asList(req.getCookies())
+            return Arrays.asList(req.getCookies())
                     .stream()
                     .filter(Objects::nonNull)
                     .filter(c -> JWT.equals(c.getName()))
                     .findFirst()
-                    .ifPresent(c -> {
-                        String token = c.getValue();
-                        //TODO : control the token 
-                        LOG.info("JWT = " + token);
-                    });
+                    .flatMap(c -> this.jwtManager.getClaimsSet(c.getValue()))
+                    .filter(cs -> !this.jwtManager.hasExpired(cs))
+                    .map(cs -> {
+                        try {
+                            return hmc.notifyContainerAboutLogin(
+                                    Optional.
+                                            ofNullable(cs.getStringClaim("upn"))
+                                            .filter(s -> !s.isEmpty())
+                                            .orElse(cs.getSubject()),
+                                    new HashSet<>(cs.
+                                            getStringListClaim("groups")));
+                        } catch (ParseException ex) {
+                            LOG.log(Level.SEVERE,
+                                    "A valid JWT with a verified signature cannot be parsed: for Security reasons, access will be refused !",
+                                    ex);
+                            return hmc.responseUnauthorized();
+                        }
+                    })
+                    .orElseGet(() -> this.controlProtectedResource(hmc));
         }
 
+        return this.controlProtectedResource(hmc);
+
+    }
+
+    private AuthenticationStatus controlProtectedResource(HttpMessageContext hmc) {
         return hmc.isProtected() ? hmc.responseUnauthorized() : hmc.doNothing();
     }
 
