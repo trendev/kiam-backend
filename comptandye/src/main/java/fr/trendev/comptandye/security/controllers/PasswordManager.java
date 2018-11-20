@@ -21,6 +21,7 @@ public class PasswordManager {
 
     private final HashingMechanism hashingMechanism;
 
+    // TODO : add another constructor with HashingMechanism and inject the previous one
     public PasswordManager() {
         sequence = "azertyuiopmlkjhgfdsqwxcvbn0123456789._-!?@AZERTYUIOPMLKJHGFDSQWXCVBN";
         rand = new SecureRandom();
@@ -42,6 +43,7 @@ public class PasswordManager {
         return autoGenerate(default_size);
     }
 
+    // TODO : use Optional and use the new java ee 8 supported algorithm
     public String hashPassword(String pwd) {
         if (pwd == null || pwd.isEmpty()) {
             throw new IllegalArgumentException(
