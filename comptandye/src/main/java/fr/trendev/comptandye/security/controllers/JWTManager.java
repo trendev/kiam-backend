@@ -107,7 +107,7 @@ public class JWTManager {
         return token;
     }
 
-    public Optional<JWTClaimsSet> getClaim(String token) {
+    public Optional<JWTClaimsSet> getClaimsSet(String token) {
         try {
             if (token != null) {
                 SignedJWT parsedJWT = SignedJWT.parse(token);
@@ -121,25 +121,27 @@ public class JWTManager {
                 }
             }
         } catch (ParseException ex) {
-            LOG.log(Level.WARNING, "Provided JWT " + token
-                    + " cannot be parsed !!!");
+            LOG.log(Level.WARNING, "Provided JWT {0} cannot be parsed !!!",
+                    token);
         } catch (JOSEException ex) {
-            LOG.log(Level.SEVERE, "Provided JWT " + token
-                    + " signature CANNOT BE VERIFIED !!!");
+            LOG.log(Level.SEVERE,
+                    "Provided JWT {0} signature CANNOT BE VERIFIED !!!", token);
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Error processing the JWT " + token, ex);
         }
 
         // JWT IS INVALID
         return Optional.empty();
     }
-    
-    public boolean hasExpired(final JWTClaimsSet claims){
+
+    public boolean hasExpired(final JWTClaimsSet claims) {
         Instant now = Instant.now();
         // TODO : compare expiration date with now
         return false;
     }
-    
-    public boolean canBeRefreshed(final JWTClaimsSet claims){
-         Instant now = Instant.now();
+
+    public boolean canBeRefreshed(final JWTClaimsSet claims) {
+        Instant now = Instant.now();
         // TODO : check if the token will expire soon and must be refreshed
         return false;
     }
