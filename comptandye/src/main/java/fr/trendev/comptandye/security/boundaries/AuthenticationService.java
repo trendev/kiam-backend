@@ -8,7 +8,6 @@ package fr.trendev.comptandye.security.boundaries;
 import fr.trendev.comptandye.exceptions.ExceptionHandler;
 import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
 import fr.trendev.comptandye.security.controllers.PasswordManager;
-import fr.trendev.comptandye.security.controllers.XSRFTokenGenerator;
 import fr.trendev.comptandye.useraccount.controllers.UserAccountFacade;
 import java.io.StringReader;
 import java.util.Optional;
@@ -53,9 +52,6 @@ public class AuthenticationService {
 
     @Inject
     UserAccountFacade userAccountFacade;
-
-    @Inject
-    XSRFTokenGenerator generator;
 
     @Inject
     AuthenticationHelper authenticationHelper;
