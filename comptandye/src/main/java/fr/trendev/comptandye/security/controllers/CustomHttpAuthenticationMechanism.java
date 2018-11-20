@@ -106,7 +106,6 @@ public class CustomHttpAuthenticationMechanism implements
                 rsp.addCookie(this.createXSRFCookie(xsrf));
                 rsp.addCookie(this.createJWTCookie(jwt));
 
-                req.setAttribute("XSRF-TOKEN", xsrf);
                 return hmc.notifyContainerAboutLogin(result);
             } catch (Exception ex) {
                 /**
