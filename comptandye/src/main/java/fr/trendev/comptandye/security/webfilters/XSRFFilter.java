@@ -18,7 +18,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -66,9 +65,6 @@ public class XSRFFilter extends ApiFilter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse rsp = (HttpServletResponse) response;
 
-        //do not create a session if the user is not authenticated
-        HttpSession session = req.getSession(false);
-
         String xxsrftoken = req.getHeader("X-XSRF-TOKEN");
 
         /**
@@ -77,12 +73,13 @@ public class XSRFFilter extends ApiFilter {
         if (sem.contains(req.getMethod())) {
             if (xxsrftoken != null && !xxsrftoken.isEmpty()) {
                 /**
-                 * Checks the XSRF token
+                 * Checks the XSRF token and compares with the provided one (as
+                 * an attribute dynamically added in the request by the
+                 * AuthenticationMechanism)
                  */
                 try {
                     LOG.log(Level.INFO, "Controlling X-XSRF-TOKEN");
-                    String xsrftoken = (String) session.getAttribute(
-                            "XSRF-TOKEN");
+                    String xsrftoken = this.xsrfAttribute(req);
                     if (xsrftoken == null
                             || xsrftoken.isEmpty()
                             || !xsrftoken.equals(xxsrftoken)) {
@@ -145,6 +142,14 @@ public class XSRFFilter extends ApiFilter {
     @Override
     public void destroy() {
         LOG.log(Level.INFO, "XSRFFilter: destroyed...");
+    }
+
+    private String xsrfAttribute(HttpServletRequest req) {
+        Object attrib = req.getAttribute("XSRF-TOKEN");
+        if (attrib != null) {
+            return String.valueOf(attrib);
+        }
+        return null;
     }
 
 }
