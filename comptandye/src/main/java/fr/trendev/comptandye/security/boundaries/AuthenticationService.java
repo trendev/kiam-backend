@@ -75,7 +75,6 @@ public class AuthenticationService {
         return passwordManager.autoGenerate(size);
     }
 
-//    @PermitAll
     @Path("profile")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -110,15 +109,6 @@ public class AuthenticationService {
         return this.profile(sec);
     }
 
-    /**
-     * Logs out the user, invalidating the current session and setting the
-     * cookies with null value and 0 timeout.
-     *
-     * @param req the origin request
-     * @param sec the security context
-     * @return 200 if everything is OK or 417 Expectation failed if the session
-     * is invalidated
-     */
     @Path("logout")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -130,41 +120,26 @@ public class AuthenticationService {
         SessionCookieConfig scc = req.
                 getServletContext().getSessionCookieConfig();
 
-        NewCookie jsessionid = new NewCookie("JSESSIONID",
+        NewCookie jwt = new NewCookie("JWT",
                 null,
-                scc.getPath(),
-                scc.getDomain(),
+                "/",
+                null,
                 null,
                 0, true, true);
 
         NewCookie xsrfCookie = new NewCookie("XSRF-TOKEN",
                 null,
-                scc.getPath(),
-                scc.getDomain(),
+                "/",
+                null,
                 null,
                 0, true, false);
-
-        try {
-            //Get the current session and invalidate it
-            Optional.ofNullable(req.getSession(false))
-                    .ifPresent(session -> session.invalidate());
-        } catch (IllegalStateException ex) {
-            return Response.status(Response.Status.EXPECTATION_FAILED).entity(
-                    Json.createObjectBuilder()
-                            .add("msg", "user " + username
-                                    + " is now logged out").
-                            build()
-            )
-                    .cookie(jsessionid, xsrfCookie)
-                    .build();
-        }
 
         return Response.ok(
                 Json.createObjectBuilder()
                         .add("msg", "user " + username + " is now logged out").
                         build()
         )
-                .cookie(jsessionid, xsrfCookie)
+                .cookie(jwt, xsrfCookie)
                 .build();
     }
 
