@@ -68,9 +68,11 @@ public class CustomHttpAuthenticationMechanism implements
             HttpServletResponse rsp, HttpMessageContext hmc) throws
             AuthenticationException {
 
-        LOG.log(Level.INFO, "Validating a request : {0} / {1}", new Object[]{
-            hmc.isProtected() ? "PROTECTED" : "UNPROTECTED",
-            hmc.isAuthenticationRequest() ? "AUTHENTICATION" : "NORMAL"});
+        LOG.log(Level.INFO, "Validating a request : {0} / {1}",
+                new Object[]{
+                    hmc.isProtected() ? "PROTECTED" : "UNPROTECTED",
+                    hmc.isAuthenticationRequest() ? "AUTHENTICATION" : "NORMAL"
+                });
 
         if (req.getParameter("username") != null
                 && req.getParameter("password") != null) {
