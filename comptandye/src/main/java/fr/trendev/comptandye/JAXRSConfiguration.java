@@ -8,8 +8,6 @@ package fr.trendev.comptandye;
 import java.util.Map;
 import java.util.TreeMap;
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
@@ -20,9 +18,6 @@ import javax.ws.rs.core.Application;
 @ApplicationScoped
 @ApplicationPath("api")
 public class JAXRSConfiguration extends Application {
-
-    @Inject
-    private Pbkdf2PasswordHash pbkdf2Hash;
 
     @Override
     public Map<String, Object> getProperties() {
