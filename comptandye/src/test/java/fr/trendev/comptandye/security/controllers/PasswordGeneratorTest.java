@@ -95,12 +95,16 @@ public class PasswordGeneratorTest {
 
     @Test
     public void testHashPasswordWithEmptyPassword() {
-
+        Assertions.assertThrows(IllegalArgumentException.class, () ->
+                this.passwordManager.hashPassword(
+                        ""));
     }
 
     @Test
     public void testHashPasswordWithNullPassword() {
-
+        Assertions.assertThrows(IllegalArgumentException.class, () ->
+                this.passwordManager.hashPassword(
+                        null));
     }
 
     @Test
