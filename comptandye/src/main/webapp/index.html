@@ -13,9 +13,17 @@ and open the template in the editor.
             body {
                 background-color: black;
             }
-            div {
+            .container {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+            p {
                 color:white;
-                font-family: "Lucida Console";   
+                font-family: "Lucida Console"; 
+                font-size: 3em;
             }
             span {
                 font-weight: bold;
@@ -24,6 +32,9 @@ and open the template in the editor.
         </style>
     </head>
     <body>
-        <div>Restful API status : <span>[ UP ]</span></div>
+        <div class="container">
+            <p>Restful API status : <span>[ UP ]</span></p>
+        </div>
+
     </body>
 </html>
