@@ -24,7 +24,7 @@ public class PasswordManager {
     private final int default_size;
 
     @Inject
-    private Pbkdf2PasswordHash hashingMechanism;
+    private Pbkdf2PasswordHash pbkdf2PasswordHash;
 
     public PasswordManager() {
         sequence = "azertyuiopmlkjhgfdsqwxcvbn0123456789._-!?@AZERTYUIOPMLKJHGFDSQWXCVBN";
@@ -37,9 +37,9 @@ public class PasswordManager {
      *
      * @param hashingMechanism
      */
-    public PasswordManager(Pbkdf2PasswordHash hashingMechanism) {
+    public PasswordManager(Pbkdf2PasswordHash pbkdf2PasswordHash) {
         this();
-        this.hashingMechanism = hashingMechanism;
+        this.pbkdf2PasswordHash = pbkdf2PasswordHash;
     }
 
     public String autoGenerate(int s) {
@@ -60,7 +60,7 @@ public class PasswordManager {
         return Optional.ofNullable(pwd)
                 .filter(Objects::nonNull)
                 .filter(pwd_ -> !pwd_.isEmpty())
-                .map(pwd_ -> hashingMechanism.generate(pwd_.toCharArray()))
+                .map(pwd_ -> pbkdf2PasswordHash.generate(pwd_.toCharArray()))
                 .orElseThrow(() -> new IllegalArgumentException(
                         "Password or String to encrypt cannot be null or empty"));
     }
