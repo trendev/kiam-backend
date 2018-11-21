@@ -115,7 +115,7 @@ public class XSRFFilter extends ApiFilter {
                      * Checks the origin header of the absolute URL
                      */
                     LOG.log(Level.INFO,
-                            "No X-XSRF-TOKEN specified in the Header but Origin is trusted !");
+                            "Bypassing XSRF controls : no X-XSRF-TOKEN specified in the Header but Origin is trusted !");
                     chain.doFilter(request, response);
                 } else {
                     /**
@@ -132,7 +132,8 @@ public class XSRFFilter extends ApiFilter {
             /**
              * Accept non mutating requests (GET, HEAD or OPTION
              */
-
+            LOG.log(Level.INFO,
+                    "Bypassing XSRF controls : non mutating requests");
             chain.doFilter(request, response);
         }
     }
