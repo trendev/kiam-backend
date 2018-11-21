@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.security.controllers;
+package fr.trendev.comptandye.backup.entities;
 
-import fr.trendev.comptandye.security.controllers.HashingMechanism;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 

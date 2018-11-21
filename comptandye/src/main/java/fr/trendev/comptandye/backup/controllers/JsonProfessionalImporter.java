@@ -8,7 +8,7 @@ package fr.trendev.comptandye.backup.controllers;
 import fr.trendev.comptandye.backup.entities.JsonProfessionalBackup;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import fr.trendev.comptandye.security.controllers.HashingMechanism;
+import fr.trendev.comptandye.backup.entities.HashingMechanism;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;

@@ -10,7 +10,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
-import fr.trendev.comptandye.security.controllers.HashingMechanism;
+import fr.trendev.comptandye.backup.entities.HashingMechanism;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
