@@ -20,8 +20,8 @@ public class PasswordManager {
     private final int default_size;
 
     private final HashingMechanism hashingMechanism;
-
-    // TODO : add another constructor with HashingMechanism and inject the previous one
+	// TODO : Inject HashingMechanism
+    // TODO : add another constructor with HashingMechanism (for test purposes) 
     public PasswordManager() {
         sequence = "azertyuiopmlkjhgfdsqwxcvbn0123456789._-!?@AZERTYUIOPMLKJHGFDSQWXCVBN";
         rand = new SecureRandom();
