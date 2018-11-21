@@ -28,8 +28,6 @@ public class JAXRSConfiguration extends Application {
     public Map<String, Object> getProperties() {
         Map<String, Object> map = new TreeMap<>();
         map.put("jersey.config.jsonFeature", "JacksonFeature");
-        System.out.println("Qsec0fr@3 ====> "
-                + this.pbkdf2Hash.generate("Qsec0fr@3".toCharArray()));
         return map;
     }
 }
