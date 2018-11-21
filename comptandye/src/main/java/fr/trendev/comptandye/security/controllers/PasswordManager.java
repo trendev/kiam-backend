@@ -20,7 +20,7 @@ public class PasswordManager {
     private final int default_size;
 
     private final HashingMechanism hashingMechanism;
-	// TODO : Inject HashingMechanism
+    // TODO : Inject HashingMechanism
     // TODO : add another constructor with HashingMechanism (for test purposes) 
     public PasswordManager() {
         sequence = "azertyuiopmlkjhgfdsqwxcvbn0123456789._-!?@AZERTYUIOPMLKJHGFDSQWXCVBN";
