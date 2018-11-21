@@ -6,6 +6,8 @@
 package fr.trendev.comptandye.security.controllers;
 
 import java.security.SecureRandom;
+import java.util.Objects;
+import java.util.Optional;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
 
@@ -53,13 +55,14 @@ public class PasswordManager {
         return autoGenerate(default_size);
     }
 
-    // TODO : use Optional and use the new java ee 8 supported algorithm
+    // TODO : Use the new java ee 8 supported algorithm
     public String hashPassword(String pwd) {
-        if (pwd == null || pwd.isEmpty()) {
-            throw new IllegalArgumentException(
-                    "Password or String to encrypt cannot be null or empty");
-        }
-        return hashingMechanism.hash_SHA256_base64(pwd);
+        return Optional.ofNullable(pwd)
+                .filter(Objects::nonNull)
+                .filter(pwd_ -> !pwd_.isEmpty())
+                .map(pwd_ -> hashingMechanism.hash_SHA256_base64(pwd_))
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "Password or String to encrypt cannot be null or empty"));
     }
 
 }
