@@ -5,9 +5,8 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.stream.IntStream;
+import org.glassfish.soteria.identitystores.hash.Pbkdf2PasswordHashImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -22,59 +21,40 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class PasswordGeneratorTest {
 
     private PasswordManager passwordManager;
+    private final Pbkdf2PasswordHashImpl pbkdf2PasswordHashImpl = new Pbkdf2PasswordHashImpl();
 
     public PasswordGeneratorTest() {
     }
 
     @Before
     public void init() {
-        this.passwordManager = new PasswordManager(new HashingMechanism());
+        this.passwordManager = new PasswordManager(pbkdf2PasswordHashImpl);
     }
 
     @Test
     public void testConstructors() {
         PasswordManager passwordManager = new PasswordManager();
+        // Will throw an Exception if no Pbkdf2PasswordHash implementation is injected
         Assertions.assertThrows(NullPointerException.class,
                 () -> passwordManager.hashPassword("PASSWORD"));
 
     }
 
-    /**
-     * Test of autoGenerate method, of class PasswordManager.
-     */
     @Test
     public void testAutoGenerate() {
         System.out.println("autoGenerate");
 
         int n = 5;
         int size = 12;
-        Set<String> spwd = new HashSet<>(n);
 
-        assertTrue(spwd.isEmpty());
+        long count = IntStream.range(0, n)
+                .mapToObj(i -> passwordManager.hashPassword(passwordManager.
+                        autoGenerate(size)))
+                //                .peek(System.out::println)
+                .count();
 
-        IntStream.range(0, n).forEach(i -> spwd.add(passwordManager.
-                hashPassword(passwordManager.
-                        autoGenerate(size))));
-
-        assertFalse(spwd.isEmpty());
-
-        assertEquals(spwd.size(), n, "Passwords should be all different");
-
-    }
-
-    /**
-     * Test of hashPassword method, of class PasswordManager.
-     */
-    @Test
-    public void testEncrypt_SHA256() {
-        System.out.println("** encrypt_SHA256 **");
-
-        System.out.println("encrypt_SHA256 Base64");
-        System.out.println("---------------------");
-
-        String pwd1 = "error";
-        String pwd2 = "password";
-        String pwd3 = "comptandye_password";
+        assertFalse(count == 0);
+        assertEquals(n, count, "Passwords should be different");
 
     }
 
@@ -97,5 +77,10 @@ public class PasswordGeneratorTest {
         final String password = "PASSWORD";
         Assertions.assertDoesNotThrow(() -> this.passwordManager.hashPassword(
                 password));
+
+        String pwd1 = "password";
+        String hash1 = this.passwordManager.hashPassword(pwd1);
+        assertTrue(this.pbkdf2PasswordHashImpl.verify(pwd1.toCharArray(), hash1));
+
     }
 }
