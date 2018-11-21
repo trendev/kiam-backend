@@ -16,7 +16,7 @@ import javax.enterprise.context.ApplicationScoped;
 public class XSRFTokenGenerator {
 
     /**
-     * Generates a XSRF token
+     * Generates a XSRF token from an UUID
      *
      * @return the generated token
      */
