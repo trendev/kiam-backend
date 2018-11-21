@@ -11,6 +11,7 @@ import static com.nimbusds.jose.JWSAlgorithm.RS256;
 import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.KeyLengthException;
 import com.nimbusds.jose.crypto.RSASSAVerifier;
+import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import static fr.trendev.comptandye.security.controllers.JWTManager.ISS;
 import static fr.trendev.comptandye.security.controllers.JWTManager.VALID_PERIOD;
@@ -18,6 +19,7 @@ import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -79,10 +81,9 @@ public class JWTManagerTest {
                     this.caller);
 
             Instant now = Instant.now();
-            Instant iat = Instant.ofEpochMilli(parsedJWT.getJWTClaimsSet().
-                    getIssueTime().getTime());
-            Instant exp = Instant.ofEpochMilli(parsedJWT.getJWTClaimsSet().
-                    getExpirationTime().getTime());
+            Instant iat = parsedJWT.getJWTClaimsSet().getIssueTime().toInstant();
+            Instant exp = parsedJWT.getJWTClaimsSet().getExpirationTime().
+                    toInstant();
             Assertions.assertTrue(iat.isBefore(now));
             Assertions.assertTrue(iat.isAfter(now.minus(VALID_PERIOD,
                     ChronoUnit.MINUTES)));
@@ -170,6 +171,24 @@ public class JWTManagerTest {
             Logger.getLogger(JWTManagerTest.class.getName()).
                     log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Test
+    public void testHasExpired() throws JOSEException {
+
+        Instant now = Instant.now();
+        Instant futur = Instant.now().plus(VALID_PERIOD * 2, ChronoUnit.MINUTES);
+
+        String token = this.jwtManager.generateToken(this.caller, groups,
+                "x-xsrf-token");
+        Instant exp = this.jwtManager.getClaimsSet(token)
+                .map(JWTClaimsSet::getExpirationTime)
+                .map(Date::toInstant)
+                .orElseThrow(AssertionError::new);
+
+        Assertions.assertTrue(now.isBefore(exp));
+        Assertions.assertFalse(exp.isAfter(futur));
+
     }
 
 }

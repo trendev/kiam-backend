@@ -102,8 +102,9 @@ public class JWTManager {
         signedJWT.sign(this.signer);
 
         String token = signedJWT.serialize();
-        LOG.log(Level.INFO, "JWT generated for user {0} :\n{1}\njti = {2}",
-                new Object[]{caller, token, jti});
+        LOG.log(Level.INFO,
+                "JWT generated for user {0} :\n{1}\njti = {2}\nxsrf = {3}",
+                new Object[]{caller, token, jti, xsrf});
         return token;
     }
 
@@ -136,7 +137,7 @@ public class JWTManager {
 
     public boolean hasExpired(final JWTClaimsSet claims) {
         Instant now = Instant.now();
-        Instant exp = Instant.ofEpochMilli(claims.getExpirationTime().getTime());
+        Instant exp = claims.getExpirationTime().toInstant();
         return now.isBefore(exp);
     }
 
