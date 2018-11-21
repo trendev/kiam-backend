@@ -136,8 +136,8 @@ public class JWTManager {
 
     public boolean hasExpired(final JWTClaimsSet claims) {
         Instant now = Instant.now();
-        // TODO : compare expiration date with now
-        return false;
+        Instant exp = Instant.ofEpochMilli(claims.getExpirationTime().getTime());
+        return now.isBefore(exp);
     }
 
     public boolean canBeRefreshed(final JWTClaimsSet claims) {
