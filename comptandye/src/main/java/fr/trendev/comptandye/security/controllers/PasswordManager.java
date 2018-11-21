@@ -7,6 +7,7 @@ package fr.trendev.comptandye.security.controllers;
 
 import java.security.SecureRandom;
 import javax.ejb.Singleton;
+import javax.inject.Inject;
 
 /**
  *
@@ -16,17 +17,21 @@ import javax.ejb.Singleton;
 public class PasswordManager {
 
     private final String sequence;
-    private final SecureRandom rand;
+    private final SecureRandom random;
     private final int default_size;
 
-    private final HashingMechanism hashingMechanism;
-    // TODO : Inject HashingMechanism
-    // TODO : add another constructor with HashingMechanism (for test purposes) 
+    @Inject
+    private HashingMechanism hashingMechanism;
+
     public PasswordManager() {
         sequence = "azertyuiopmlkjhgfdsqwxcvbn0123456789._-!?@AZERTYUIOPMLKJHGFDSQWXCVBN";
-        rand = new SecureRandom();
+        random = new SecureRandom();
         default_size = 10;
-        hashingMechanism = new HashingMechanism();
+    }
+
+    public PasswordManager(HashingMechanism hashingMechanism) {
+        this();
+        this.hashingMechanism = hashingMechanism;
     }
 
     public String autoGenerate(int s) {
@@ -34,7 +39,7 @@ public class PasswordManager {
         int size = (s <= 0 || s > 4096) ? default_size : s;
 
         for (int i = 0; i < size; i++) {
-            pwd += sequence.charAt(rand.nextInt(sequence.length()));
+            pwd += sequence.charAt(random.nextInt(sequence.length()));
         }
         return pwd;
     }
