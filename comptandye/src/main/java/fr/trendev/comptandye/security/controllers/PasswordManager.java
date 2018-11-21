@@ -29,6 +29,11 @@ public class PasswordManager {
         default_size = 10;
     }
 
+    /**
+     * Should be used for test purposes only
+     *
+     * @param hashingMechanism
+     */
     public PasswordManager(HashingMechanism hashingMechanism) {
         this();
         this.hashingMechanism = hashingMechanism;
