@@ -174,6 +174,7 @@ public class AuthenticationService {
                         "email of an authenticated user should not be null"));
     }
 
+    // TODO : use json-p api (java ee 8)
     private String readNewPassword(String json) {
         try (JsonReader reader = Json.createReader(new StringReader(json))) {
             return Optional.of(reader.readObject().getString("newpassword"))
