@@ -5,7 +5,6 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
-import fr.trendev.comptandye.security.controllers.PasswordManager;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.IntStream;
@@ -28,7 +27,7 @@ public class PasswordGeneratorTest {
 
     @Before
     public void init() {
-        this.passwordManager = new PasswordManager();
+        this.passwordManager = new PasswordManager(new HashingMechanism());
     }
 
     /**
