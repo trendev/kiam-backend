@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Optional;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
+import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 
 /**
  *
@@ -23,7 +24,7 @@ public class PasswordManager {
     private final int default_size;
 
     @Inject
-    private HashingMechanism hashingMechanism;
+    private Pbkdf2PasswordHash hashingMechanism;
 
     public PasswordManager() {
         sequence = "azertyuiopmlkjhgfdsqwxcvbn0123456789._-!?@AZERTYUIOPMLKJHGFDSQWXCVBN";
@@ -36,7 +37,7 @@ public class PasswordManager {
      *
      * @param hashingMechanism
      */
-    public PasswordManager(HashingMechanism hashingMechanism) {
+    public PasswordManager(Pbkdf2PasswordHash hashingMechanism) {
         this();
         this.hashingMechanism = hashingMechanism;
     }
@@ -55,12 +56,11 @@ public class PasswordManager {
         return autoGenerate(default_size);
     }
 
-    // TODO : Use the new java ee 8 supported algorithm
     public String hashPassword(String pwd) {
         return Optional.ofNullable(pwd)
                 .filter(Objects::nonNull)
                 .filter(pwd_ -> !pwd_.isEmpty())
-                .map(pwd_ -> hashingMechanism.hash_SHA256_base64(pwd_))
+                .map(pwd_ -> hashingMechanism.generate(pwd_.toCharArray()))
                 .orElseThrow(() -> new IllegalArgumentException(
                         "Password or String to encrypt cannot be null or empty"));
     }
