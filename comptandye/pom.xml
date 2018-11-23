@@ -81,6 +81,17 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.jboss.weld.se</groupId>
+            <artifactId>weld-se-core</artifactId>
+            <version>3.0.5.Final</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.weld</groupId>
+            <artifactId>weld-junit4</artifactId>
+            <version>1.3.1.Final</version>
+        </dependency>
+        <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>eclipselink</artifactId>
             <version>${version.eclipselink}</version>

@@ -5,7 +5,9 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
-import org.junit.Before;
+import javax.inject.Inject;
+import org.jboss.weld.junit4.WeldInitiator;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
@@ -15,14 +17,15 @@ import org.junit.jupiter.api.Assertions;
  */
 public class RSAKeyProviderTest {
 
+    @Rule
+    public WeldInitiator weld = WeldInitiator
+            .from(RSAKeyProvider.class)
+            .inject(this).build();
+
+    @Inject
     private RSAKeyProvider keyProvider;
 
     public RSAKeyProviderTest() {
-    }
-
-    @Before
-    public void init() {
-        this.keyProvider = new RSAKeyProvider();
     }
 
     @Test
