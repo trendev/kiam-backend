@@ -38,10 +38,6 @@ public class PasswordGeneratorTest {
     public PasswordGeneratorTest() {
     }
 
-    @Before
-    public void init() {
-    }
-
     @Test
     public void testConstructors() {
         PasswordManager passwordManager = new PasswordManager();
