@@ -56,11 +56,6 @@ public class JWTManager {
     public JWTManager() {
     }
 
-    public JWTManager(final PrivateKey privateKey, final RSAPublicKey publicKey) {
-        this.privateKey = privateKey;
-        this.publicKey = publicKey;
-    }
-
     @PostConstruct
     public void init() {
         this.signer = new RSASSASigner(this.privateKey);
