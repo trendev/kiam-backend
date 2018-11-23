@@ -6,8 +6,12 @@
 package fr.trendev.comptandye.security.controllers;
 
 import java.util.stream.IntStream;
+import javax.inject.Inject;
+import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 import org.glassfish.soteria.identitystores.hash.Pbkdf2PasswordHashImpl;
+import org.jboss.weld.junit4.WeldInitiator;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,15 +24,22 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 public class PasswordGeneratorTest {
 
+    @Rule
+    public WeldInitiator weld = WeldInitiator
+            .from(PasswordManager.class, Pbkdf2PasswordHashImpl.class)
+            .inject(this).build();
+
+    @Inject
     private PasswordManager passwordManager;
-    private final Pbkdf2PasswordHashImpl pbkdf2PasswordHashImpl = new Pbkdf2PasswordHashImpl();
+
+    @Inject
+    private Pbkdf2PasswordHash pbkdf2PasswordHash;
 
     public PasswordGeneratorTest() {
     }
 
     @Before
     public void init() {
-        this.passwordManager = new PasswordManager(pbkdf2PasswordHashImpl);
     }
 
     @Test
@@ -80,7 +91,7 @@ public class PasswordGeneratorTest {
 
         String pwd1 = "password";
         String hash1 = this.passwordManager.hashPassword(pwd1);
-        assertTrue(this.pbkdf2PasswordHashImpl.verify(pwd1.toCharArray(), hash1));
+        assertTrue(this.pbkdf2PasswordHash.verify(pwd1.toCharArray(), hash1));
 
     }
 }

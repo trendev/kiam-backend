@@ -32,16 +32,6 @@ public class PasswordManager {
         default_size = 10;
     }
 
-    /**
-     * Should be used for test purposes only
-     *
-     * @param hashingMechanism
-     */
-    public PasswordManager(Pbkdf2PasswordHash pbkdf2PasswordHash) {
-        this();
-        this.pbkdf2PasswordHash = pbkdf2PasswordHash;
-    }
-
     public String autoGenerate(int s) {
         String pwd = "";
         int size = (s <= 0 || s > 4096) ? default_size : s;
