@@ -5,6 +5,9 @@
  */
 package fr.trendev.comptandye.backup.entities;
 
+import javax.inject.Inject;
+import org.jboss.weld.junit4.WeldInitiator;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
@@ -14,7 +17,13 @@ import org.junit.jupiter.api.Assertions;
  */
 public class HashingMechanismTest {
 
-    private final HashingMechanism hashingMechanism = new HashingMechanism();
+    @Rule
+    public WeldInitiator weld = WeldInitiator
+            .from(HashingMechanism.class)
+            .inject(this).build();
+
+    @Inject
+    private HashingMechanism hashingMechanism;
 
     @Test
     public void testEncrypt_SHA256_base64() throws Exception {
