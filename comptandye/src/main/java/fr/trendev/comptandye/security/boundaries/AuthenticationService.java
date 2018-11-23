@@ -8,8 +8,8 @@ package fr.trendev.comptandye.security.boundaries;
 import fr.trendev.comptandye.exceptions.ExceptionHandler;
 import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
 import fr.trendev.comptandye.security.controllers.PasswordManager;
+import fr.trendev.comptandye.security.entities.NewPassword;
 import fr.trendev.comptandye.useraccount.controllers.UserAccountFacade;
-import java.io.StringReader;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
@@ -19,7 +19,6 @@ import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.Json;
-import javax.json.JsonReader;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -145,9 +144,9 @@ public class AuthenticationService {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response newPassword(@Context SecurityContext sec, String newPassword) {
+    public Response newPassword(@Context SecurityContext sec, NewPassword npwd) {
 
-        String password = this.readNewPassword(newPassword);
+        String password = this.readNewPassword(npwd);
 
         return authenticationHelper.getUserEmailFromSecurityContext(sec)
                 .map(email ->
@@ -174,16 +173,12 @@ public class AuthenticationService {
                         "email of an authenticated user should not be null"));
     }
 
-    // TODO : use json-p api (java ee 8)
-    private String readNewPassword(String json) {
-        try (JsonReader reader = Json.createReader(new StringReader(json))) {
-            return Optional.of(reader.readObject().getString("newpassword"))
-                    .filter(pwd -> !pwd.isEmpty())
-                    .get();
-        } catch (Exception ex) {
-            throw new WebApplicationException(
-                    "Impossible to read the new password from json object "
-                    + json + " : " + ex.getMessage());
-        }
+    private String readNewPassword(NewPassword npwd) {
+        return Optional.of(npwd.getNewpassword())
+                .filter(s -> !s.isEmpty())
+                .orElseThrow(() ->
+                        new WebApplicationException(
+                                "Impossible to read the new password"));
     }
+
 }
