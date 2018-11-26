@@ -15,7 +15,7 @@ import java.util.Objects;
  */
 public class JWTRecord implements Serializable {
 
-    private String email;
+    private String token;
     private Date creationDate;
     private Date expirationDate;
 
