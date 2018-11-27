@@ -7,7 +7,7 @@ package fr.trendev.comptandye.entities;
 
 import fr.trendev.comptandye.payment.entities.Payment;
 import fr.trendev.comptandye.paymentmode.entities.PaymentMode;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 /**
  *

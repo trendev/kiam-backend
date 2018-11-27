@@ -10,7 +10,7 @@ import fr.trendev.comptandye.offering.entities.OfferingType;
 import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.purchasedoffering.entities.PurchasedOffering;
 import fr.trendev.comptandye.service.entities.Service;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 /**
  *

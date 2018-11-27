@@ -6,7 +6,7 @@
 package fr.trendev.comptandye.entities;
 
 import fr.trendev.comptandye.notification.entities.Notification;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 /**
  *

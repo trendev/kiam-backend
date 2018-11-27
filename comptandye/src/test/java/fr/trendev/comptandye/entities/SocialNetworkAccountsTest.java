@@ -6,7 +6,7 @@
 package fr.trendev.comptandye.entities;
 
 import fr.trendev.comptandye.socialnetworkaccounts.entities.SocialNetworkAccounts;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 /**
  *

@@ -11,7 +11,7 @@ import fr.trendev.comptandye.administrator.entities.Administrator;
 import fr.trendev.comptandye.usergroup.entities.UserGroup;
 import java.io.IOException;
 import java.util.ArrayList;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 /**
  *

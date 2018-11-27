@@ -8,7 +8,7 @@ package fr.trendev.comptandye.entities;
 import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.useraccount.entities.UserAccountType;
 import java.util.Date;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 /**
  *

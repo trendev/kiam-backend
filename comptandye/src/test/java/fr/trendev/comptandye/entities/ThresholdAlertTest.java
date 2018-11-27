@@ -10,7 +10,7 @@ import fr.trendev.comptandye.notification.entities.NotificationType;
 import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.thresholdalert.entities.ThresholdAlert;
 import fr.trendev.comptandye.thresholdalert.entities.ThresholdAlertQualifierEnum;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 /**
  *

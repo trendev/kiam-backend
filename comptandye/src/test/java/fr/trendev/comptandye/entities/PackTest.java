@@ -8,7 +8,7 @@ package fr.trendev.comptandye.entities;
 import fr.trendev.comptandye.offering.entities.OfferingType;
 import fr.trendev.comptandye.pack.entities.Pack;
 import fr.trendev.comptandye.professional.entities.Professional;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 /**
  *

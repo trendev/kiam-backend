@@ -7,7 +7,7 @@ package fr.trendev.comptandye.entities;
 
 import fr.trendev.comptandye.bill.entities.BillType;
 import fr.trendev.comptandye.individualbill.entities.IndividualBill;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 /**
  *
