@@ -49,7 +49,7 @@ public class JWTWhiteMap implements Serializable {
     }
 
     public Map<String, Set<JWTRecord>> getMap() {
-        return map;
+        return Collections.unmodifiableMap(map);
     }
 
     public void clear() {

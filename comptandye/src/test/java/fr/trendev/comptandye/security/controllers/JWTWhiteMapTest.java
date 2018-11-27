@@ -11,6 +11,7 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 import java.util.Date;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import javax.inject.Inject;
 import org.jboss.weld.junit4.WeldInitiator;
 import org.junit.Before;
@@ -61,6 +62,10 @@ public class JWTWhiteMapTest {
         Map<String, Set<JWTRecord>> map = jwtwm.getMap();
         Assertions.assertNotNull(map);
         Assertions.assertTrue(map.isEmpty());
+        Assertions.assertThrows(UnsupportedOperationException.class,
+                () -> map.clear());
+        Assertions.assertThrows(UnsupportedOperationException.class,
+                () -> map.put("email", new TreeSet<>()));
     }
 
     @Test
