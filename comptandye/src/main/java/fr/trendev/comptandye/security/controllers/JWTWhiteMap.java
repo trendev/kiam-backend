@@ -56,6 +56,10 @@ public class JWTWhiteMap implements Serializable {
         this.map.clear();
     }
 
+    public boolean isEmpty() {
+        return this.map.isEmpty();
+    }
+
     public Set<JWTRecord> add(String email, JWTRecord record) {
         Set<JWTRecord> records = map.getOrDefault(email, new TreeSet<>());
         records.add(record);
