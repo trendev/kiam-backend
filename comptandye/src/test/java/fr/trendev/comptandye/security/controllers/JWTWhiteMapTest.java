@@ -116,9 +116,14 @@ public class JWTWhiteMapTest {
         Assertions.assertTrue(email1Records.contains(record1));
         Assertions.assertTrue(email1Records.contains(record3));
 
-        email1Records.
-                add(new JWTRecord("TOKEN", creationDate1, expirationDate1));
-        Assertions.assertTrue(email1Records.size() == 3);
+        /**
+         * Control the returned Set is unmodifiable
+         */
+        Assertions.assertThrows(UnsupportedOperationException.class,
+                () -> email1Records.
+                        add(new JWTRecord("TOKEN", creationDate1,
+                                expirationDate1)));
+        Assertions.assertTrue(email1Records.size() == 2);
 
         Assertions.assertFalse(jwtwm.getMap().isEmpty());
         Assertions.assertTrue(jwtwm.getMap().size() == 2);

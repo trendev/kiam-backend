@@ -59,7 +59,11 @@ public class JWTWhiteMap implements Serializable {
     public Set<JWTRecord> add(String email, JWTRecord record) {
         Set<JWTRecord> records = map.getOrDefault(email, new TreeSet<>());
         records.add(record);
-        return map.put(email, records);
+
+        Set<JWTRecord> upd8Records = map.put(email, records);
+
+        return upd8Records == null ? null : Collections.unmodifiableSet(
+                upd8Records);
     }
 
 }
