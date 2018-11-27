@@ -19,21 +19,21 @@ public class JWTRecord implements Serializable {
     private Date creationDate;
     private Date expirationDate;
 
-    public JWTRecord() {
-    }
-
-    public JWTRecord(String email, Date creationDate, Date expirationDate) {
-        this.email = email;
+    public JWTRecord(String token, Date creationDate, Date expirationDate) {
+        this.token = token;
         this.creationDate = creationDate;
         this.expirationDate = expirationDate;
     }
 
-    public String getEmail() {
-        return email;
+    public JWTRecord() {
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public Date getCreationDate() {
@@ -55,9 +55,9 @@ public class JWTRecord implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 71 * hash + Objects.hashCode(this.email);
-        hash = 71 * hash + Objects.hashCode(this.creationDate);
-        hash = 71 * hash + Objects.hashCode(this.expirationDate);
+        hash = 97 * hash + Objects.hashCode(this.token);
+        hash = 97 * hash + Objects.hashCode(this.creationDate);
+        hash = 97 * hash + Objects.hashCode(this.expirationDate);
         return hash;
     }
 
@@ -73,7 +73,7 @@ public class JWTRecord implements Serializable {
             return false;
         }
         final JWTRecord other = (JWTRecord) obj;
-        if (!Objects.equals(this.email, other.email)) {
+        if (!Objects.equals(this.token, other.token)) {
             return false;
         }
         if (!Objects.equals(this.creationDate, other.creationDate)) {
