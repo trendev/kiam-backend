@@ -7,7 +7,7 @@ package fr.trendev.comptandye.entities;
 
 import fr.trendev.comptandye.category.entities.Category;
 import fr.trendev.comptandye.professional.entities.Professional;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 /**
  *

@@ -13,7 +13,7 @@ import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.socialnetworkaccounts.entities.SocialNetworkAccounts;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 /**
  *

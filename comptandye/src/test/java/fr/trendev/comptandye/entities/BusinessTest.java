@@ -6,7 +6,7 @@
 package fr.trendev.comptandye.entities;
 
 import fr.trendev.comptandye.business.entities.Business;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 /**
  *
