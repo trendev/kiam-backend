@@ -74,4 +74,48 @@ public class JWTRecordTest {
 
     }
 
+    @Test
+    public void testCompareTo() {
+
+        String token1 = "token1";
+        String token2 = "token2";
+        Instant now = Instant.now();
+
+        Date creationDate1 = Date.from(now);
+        Date creationDate2 = Date.from(now.plus(5, MINUTES));
+        Date expirationDate1 = Date.from(now.plus(JWTManager.VALID_PERIOD,
+                MINUTES));
+        Date expirationDate2 = Date.from(now.plus(JWTManager.VALID_PERIOD + 5,
+                MINUTES));
+
+        Assertions.assertTrue(
+                new JWTRecord(token1, creationDate1, expirationDate1)
+                        .compareTo(
+                                new JWTRecord(token1, creationDate1,
+                                        expirationDate1))
+                == 0);
+
+        Assertions.assertTrue(
+                new JWTRecord(token1, creationDate1, expirationDate1)
+                        .compareTo(
+                                new JWTRecord(token1, creationDate1,
+                                        expirationDate2))
+                < 0);
+
+        Assertions.assertTrue(
+                new JWTRecord(token1, creationDate1, expirationDate1)
+                        .compareTo(
+                                new JWTRecord(token1, creationDate2,
+                                        expirationDate2))
+                < 0);
+
+        Assertions.assertTrue(
+                new JWTRecord(token1, creationDate1, expirationDate1)
+                        .compareTo(
+                                new JWTRecord(token2, creationDate2,
+                                        expirationDate2))
+                < 0);
+
+    }
+
 }

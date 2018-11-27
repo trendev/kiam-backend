@@ -13,7 +13,7 @@ import java.util.Objects;
  *
  * @author jsie
  */
-public class JWTRecord implements Serializable {
+public class JWTRecord implements Serializable, Comparable<JWTRecord> {
 
     private String token;
     private Date creationDate;
@@ -83,6 +83,21 @@ public class JWTRecord implements Serializable {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public int compareTo(JWTRecord o) {
+        int tokenDiff = this.token.compareTo(o.token);
+        if (tokenDiff != 0) {
+            return tokenDiff;
+        } else {
+            int creationDateDiff = this.creationDate.compareTo(o.creationDate);
+            if (creationDateDiff != 0) {
+                return creationDateDiff;
+            } else {
+                return this.expirationDate.compareTo(o.expirationDate);
+            }
+        }
     }
 
 }
