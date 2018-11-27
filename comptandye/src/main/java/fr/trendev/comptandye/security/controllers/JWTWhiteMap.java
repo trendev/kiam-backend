@@ -16,16 +16,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
+import javax.enterprise.context.ApplicationScoped;
 
 /**
  *
  * @author jsie
  */
 @Clustered
-@Singleton
-@Startup
+@ApplicationScoped
 public class JWTWhiteMap implements Serializable {
 
     private final Map<String, Set<JWTRecord>> map;
