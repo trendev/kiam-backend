@@ -11,7 +11,6 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 import java.util.Date;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 import javax.inject.Inject;
 import org.jboss.weld.junit4.WeldInitiator;
 import org.junit.Before;
@@ -62,10 +61,6 @@ public class JWTWhiteMapTest {
         Map<String, Set<JWTRecord>> map = jwtwm.getMap();
         Assertions.assertNotNull(map);
         Assertions.assertTrue(map.isEmpty());
-        Assertions.assertThrows(UnsupportedOperationException.class,
-                () -> map.clear());
-        Assertions.assertThrows(UnsupportedOperationException.class,
-                () -> map.put("email", new TreeSet<>()));
     }
 
     @Test
@@ -116,17 +111,15 @@ public class JWTWhiteMapTest {
         Assertions.assertTrue(email1Records.contains(record1));
         Assertions.assertTrue(email1Records.contains(record3));
 
-        /**
-         * Control the returned Set is unmodifiable
-         */
-        Assertions.assertThrows(UnsupportedOperationException.class,
-                () -> email1Records.
-                        add(new JWTRecord("TOKEN", creationDate1,
-                                expirationDate1)));
-        Assertions.assertTrue(email1Records.size() == 2);
-
         Assertions.assertFalse(jwtwm.getMap().isEmpty());
         Assertions.assertTrue(jwtwm.getMap().size() == 2);
+
+        // test unique element
+        email1Records = jwtwm.add(email1, record3);
+        Assertions.assertNotNull(email1Records);
+        Assertions.assertTrue(email1Records.size() == 2);
+        Assertions.assertTrue(email1Records.contains(record1));
+        Assertions.assertTrue(email1Records.contains(record3));
 
     }
 

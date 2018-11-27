@@ -39,17 +39,17 @@ public class JWTWhiteMap implements Serializable {
     @PostConstruct
     public void init() {
         //TODO: load the map from a DB
-        LOG.log(Level.INFO, JWTWhiteMap.class.getName() + " initialized");
+        LOG.log(Level.INFO, "{0} initialized", JWTWhiteMap.class.getName());
     }
 
     @PreDestroy
     public void close() {
         //TODO : save the map in a DB
-        LOG.log(Level.INFO, JWTWhiteMap.class.getName() + " closed");
+        LOG.log(Level.INFO, "{0} closed", JWTWhiteMap.class.getName());
     }
 
     public Map<String, Set<JWTRecord>> getMap() {
-        return Collections.unmodifiableMap(map);
+        return this.map;
     }
 
     public void clear() {
@@ -60,10 +60,7 @@ public class JWTWhiteMap implements Serializable {
         Set<JWTRecord> records = map.getOrDefault(email, new TreeSet<>());
         records.add(record);
 
-        Set<JWTRecord> upd8Records = map.put(email, records);
-
-        return upd8Records == null ? null : Collections.unmodifiableSet(
-                upd8Records);
+        return map.put(email, records);
     }
 
 }
