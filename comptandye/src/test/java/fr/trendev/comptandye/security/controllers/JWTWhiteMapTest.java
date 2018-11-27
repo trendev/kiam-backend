@@ -76,7 +76,7 @@ public class JWTWhiteMapTest {
         String email2 = "email2";
 
         String token1 = "token1";
-        String token2 = "token12";
+        String token2 = "token2";
         Instant now = Instant.now();
 
         Date creationDate1 = Date.from(now);
