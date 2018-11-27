@@ -6,10 +6,14 @@
 package fr.trendev.comptandye.security.controllers;
 
 import fr.trendev.comptandye.security.entities.JWTRecord;
+import java.time.Instant;
+import static java.time.temporal.ChronoUnit.MINUTES;
+import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 import javax.inject.Inject;
 import org.jboss.weld.junit4.WeldInitiator;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -19,37 +23,78 @@ import org.junit.jupiter.api.Assertions;
  * @author jsie
  */
 public class JWTWhiteMapTest {
-    
+
     @Rule
     public WeldInitiator weld = WeldInitiator
             .from(JWTWhiteMap.class)
             .inject(this).build();
-    
+
     @Inject
     JWTWhiteMap jwtwm;
-    
+
     public JWTWhiteMapTest() {
     }
-    
+
+    @Before
+    public void init() {
+        if (jwtwm != null) {
+            jwtwm.clear();
+        }
+    }
+
     @Test
     public void testInjection() {
         Assertions.assertNotNull(jwtwm);
         Assertions.assertDoesNotThrow(() -> jwtwm.getMap());
     }
-    
+
     @Test
     public void testInit() {
     }
-    
+
     @Test
     public void testClose() {
     }
-    
+
     @Test
     public void testGetMap() {
         Map<String, Set<JWTRecord>> map = jwtwm.getMap();
         Assertions.assertNotNull(map);
         Assertions.assertTrue(map.isEmpty());
     }
-    
+
+    @Test
+    public void testClear() {
+        jwtwm.clear();
+        Assertions.assertTrue(jwtwm.getMap().isEmpty());
+    }
+
+    @Test
+    public void testAdd() {
+
+        String email1 = "email1";
+        String email2 = "email2";
+
+        String token1 = "token1";
+        String token2 = "token12";
+        Instant now = Instant.now();
+
+        Date creationDate1 = Date.from(now);
+        Date creationDate2 = Date.from(now.plus(5, MINUTES));
+        Date expirationDate1 = Date.from(now.plus(JWTManager.VALID_PERIOD,
+                MINUTES));
+        Date expirationDate2 = Date.from(now.plus(JWTManager.VALID_PERIOD + 5,
+                MINUTES));
+
+        JWTRecord record1 = new JWTRecord(token1, creationDate1, expirationDate1);
+        JWTRecord record2 = new JWTRecord(token2, creationDate2, expirationDate2);
+
+        Map<String, Set<JWTRecord>> map = jwtwm.getMap();
+        Assertions.assertNotNull(map);
+        Assertions.assertTrue(map.isEmpty());
+
+        Assertions.assertNull(jwtwm.add("email1", record1));
+
+    }
+
 }

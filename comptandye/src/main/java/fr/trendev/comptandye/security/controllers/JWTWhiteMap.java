@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -49,6 +50,16 @@ public class JWTWhiteMap implements Serializable {
 
     public Map<String, Set<JWTRecord>> getMap() {
         return map;
+    }
+
+    public void clear() {
+        this.map.clear();
+    }
+
+    public Set<JWTRecord> add(String email, JWTRecord record) {
+        Set<JWTRecord> records = map.getOrDefault(email, new TreeSet<>());
+        records.add(record);
+        return map.put(email, records);
     }
 
 }
