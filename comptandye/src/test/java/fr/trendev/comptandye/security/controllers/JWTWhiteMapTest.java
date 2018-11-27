@@ -94,7 +94,11 @@ public class JWTWhiteMapTest {
         Assertions.assertTrue(map.isEmpty());
 
         Assertions.assertNull(jwtwm.add("email1", record1));
-
+        Assertions.assertFalse(jwtwm.getMap().isEmpty());
+        Assertions.assertTrue(jwtwm.getMap().size() == 1);
+        Assertions.assertNull(jwtwm.add("email2", record2));
+        Assertions.assertFalse(jwtwm.getMap().isEmpty());
+        Assertions.assertTrue(jwtwm.getMap().size() == 2);
     }
 
 }
