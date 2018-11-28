@@ -67,4 +67,43 @@ public class JWTWhiteMap implements Serializable {
         return Optional.ofNullable(this.map.get(email));
     }
 
+    //TODO : test
+    public Optional<JWTRecord> remove(String email, String token) {
+        Set<JWTRecord> records = this.map.getOrDefault(email, new TreeSet<>());
+
+        if (records.isEmpty()) {
+            if (this.map.containsKey(email)) {
+                throw new IllegalStateException(
+                        "User " + email
+                        + " is in the JWT White Map but there is no JWT Record for this user !"
+                );
+            } else {
+                throw new IllegalStateException(
+                        "User " + email
+                        + " is not yet/anymore in the JWT White Map");
+            }
+        }
+
+        Optional<JWTRecord> record = records.stream()
+                .filter(r -> r.getToken().equals(token))
+                .findFirst();//should be unique
+
+        record.ifPresent(r -> records.remove(r));
+
+        // logged-out, no more active "session"
+        if (records.isEmpty()) {
+            this.map.remove(email);
+            LOG.log(Level.INFO,
+                    "Last JWT Record of user {0} has been removed : {0} is now removed from the JWT White Map",
+                    new Object[]{email});
+        }
+
+        return record;
+    }
+
+    // TODO : explore the WhiteMap
+    public Optional<JWTRecord> remove(String token) {
+        return null;
+    }
+
 }

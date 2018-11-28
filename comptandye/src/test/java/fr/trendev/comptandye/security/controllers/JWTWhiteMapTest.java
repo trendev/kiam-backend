@@ -159,4 +159,12 @@ public class JWTWhiteMapTest {
 
     }
 
+    @Test
+    public void testRemove_String_String() {
+    }
+
+    @Test
+    public void testRemove_String() {
+    }
+
 }
