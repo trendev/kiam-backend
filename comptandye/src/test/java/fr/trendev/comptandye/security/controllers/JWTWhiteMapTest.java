@@ -10,6 +10,7 @@ import java.time.Instant;
 import static java.time.temporal.ChronoUnit.MINUTES;
 import java.util.Date;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import javax.inject.Inject;
 import org.jboss.weld.junit4.WeldInitiator;
@@ -98,14 +99,16 @@ public class JWTWhiteMapTest {
         Assertions.assertNotNull(map);
         Assertions.assertTrue(map.isEmpty());
 
-        Assertions.assertNull(jwtwm.add(email1, record1));
+        Assertions.assertFalse(jwtwm.add(email1, record1).isPresent());
         Assertions.assertFalse(jwtwm.getMap().isEmpty());
         Assertions.assertTrue(jwtwm.getMap().size() == 1);
-        Assertions.assertNull(jwtwm.add(email2, record2));
+        Assertions.assertFalse(jwtwm.add(email2, record2).isPresent());
         Assertions.assertFalse(jwtwm.getMap().isEmpty());
         Assertions.assertTrue(jwtwm.getMap().size() == 2);
 
-        Set<JWTRecord> email1Records = jwtwm.add(email1, record3);
+        Optional<Set<JWTRecord>> opt = jwtwm.add(email1, record3);
+        Assertions.assertTrue(opt.isPresent());
+        Set<JWTRecord> email1Records = opt.get();
         Assertions.assertNotNull(email1Records);
         Assertions.assertTrue(email1Records.size() == 2);
         Assertions.assertTrue(email1Records.contains(record1));
@@ -115,7 +118,9 @@ public class JWTWhiteMapTest {
         Assertions.assertTrue(jwtwm.getMap().size() == 2);
 
         // test unique element
-        email1Records = jwtwm.add(email1, record3);
+        opt = jwtwm.add(email1, record3);
+        Assertions.assertTrue(opt.isPresent());
+        email1Records = opt.get();
         Assertions.assertNotNull(email1Records);
         Assertions.assertTrue(email1Records.size() == 2);
         Assertions.assertTrue(email1Records.contains(record1));

@@ -10,6 +10,7 @@ import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -56,11 +57,10 @@ public class JWTWhiteMap implements Serializable {
         this.map.clear();
     }
 
-    public Set<JWTRecord> add(String email, JWTRecord record) {
+    public Optional<Set<JWTRecord>> add(String email, JWTRecord record) {
         Set<JWTRecord> records = map.getOrDefault(email, new TreeSet<>());
         records.add(record);
-
-        return map.put(email, records);
+        return Optional.ofNullable(map.put(email, records));
     }
 
 }
