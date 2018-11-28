@@ -25,6 +25,27 @@ import org.junit.jupiter.api.Assertions;
  */
 public class JWTWhiteMapTest {
 
+    private final String email1 = "email1";
+    private final String email2 = "email2";
+
+    private final String token1 = "token1";
+    private final String token2 = "token2";
+    private final String token3 = "token3";
+    private final Instant now = Instant.now();
+
+    private final Date creationDate1 = Date.from(now);
+    private final Date creationDate2 = Date.from(now.plus(5, MINUTES));
+    private final Date creationDate3 = Date.from(now.plus(10, MINUTES));
+    private final Date expirationDate1 = Date.from(now.plus(
+            JWTManager.VALID_PERIOD,
+            MINUTES));
+    private final Date expirationDate2 = Date.from(now.plus(
+            JWTManager.VALID_PERIOD + 5,
+            MINUTES));
+    private final Date expirationDate3 = Date.from(now.plus(
+            JWTManager.VALID_PERIOD + 10,
+            MINUTES));
+
     @Rule
     public WeldInitiator weld = WeldInitiator
             .from(JWTWhiteMap.class)
@@ -73,24 +94,6 @@ public class JWTWhiteMapTest {
     @Test
     public void testAdd() {
 
-        String email1 = "email1";
-        String email2 = "email2";
-
-        String token1 = "token1";
-        String token2 = "token2";
-        String token3 = "token3";
-        Instant now = Instant.now();
-
-        Date creationDate1 = Date.from(now);
-        Date creationDate2 = Date.from(now.plus(5, MINUTES));
-        Date creationDate3 = Date.from(now.plus(10, MINUTES));
-        Date expirationDate1 = Date.from(now.plus(JWTManager.VALID_PERIOD,
-                MINUTES));
-        Date expirationDate2 = Date.from(now.plus(JWTManager.VALID_PERIOD + 5,
-                MINUTES));
-        Date expirationDate3 = Date.from(now.plus(JWTManager.VALID_PERIOD + 10,
-                MINUTES));
-
         JWTRecord record1 = new JWTRecord(token1, creationDate1, expirationDate1);
         JWTRecord record2 = new JWTRecord(token2, creationDate2, expirationDate2);
         JWTRecord record3 = new JWTRecord(token3, creationDate3, expirationDate3);
@@ -121,6 +124,34 @@ public class JWTWhiteMapTest {
         opt = jwtwm.add(email1, record3);
         Assertions.assertTrue(opt.isPresent());
         email1Records = opt.get();
+        Assertions.assertNotNull(email1Records);
+        Assertions.assertTrue(email1Records.size() == 2);
+        Assertions.assertTrue(email1Records.contains(record1));
+        Assertions.assertTrue(email1Records.contains(record3));
+
+    }
+
+    @Test
+    public void testGetTokens() {
+        JWTRecord record1 = new JWTRecord(token1, creationDate1, expirationDate1);
+        JWTRecord record2 = new JWTRecord(token2, creationDate2, expirationDate2);
+        JWTRecord record3 = new JWTRecord(token3, creationDate3, expirationDate3);
+
+        Map<String, Set<JWTRecord>> map = jwtwm.getMap();
+        Assertions.assertNotNull(map);
+        Assertions.assertTrue(map.isEmpty());
+
+        Assertions.assertFalse(jwtwm.getTokens("fake-email").isPresent());
+
+        jwtwm.add(email1, record1);
+        jwtwm.add(email2, record2);
+        jwtwm.add(email1, record3);
+
+        Assertions.assertTrue(jwtwm.getTokens(email1).isPresent());
+        Assertions.assertTrue(jwtwm.getTokens(email2).isPresent());
+
+        Optional<Set<JWTRecord>> opt = jwtwm.getTokens(email1);
+        Set<JWTRecord> email1Records = opt.get();
         Assertions.assertNotNull(email1Records);
         Assertions.assertTrue(email1Records.size() == 2);
         Assertions.assertTrue(email1Records.contains(record1));
