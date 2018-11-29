@@ -33,9 +33,6 @@ public class JWTWhiteMap implements Serializable {
     private static final Logger LOG = Logger.getLogger(JWTWhiteMap.class.
             getName());
 
-    /**
-     * Inits the map with a thread-safe / synchronized Map
-     */
     public JWTWhiteMap() {
         this.map = Collections.synchronizedSortedMap(new TreeMap<>());
     }
