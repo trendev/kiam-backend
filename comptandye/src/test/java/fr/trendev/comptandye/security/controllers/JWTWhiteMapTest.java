@@ -132,7 +132,7 @@ public class JWTWhiteMapTest {
     }
 
     @Test
-    public void testGetTokens() {
+    public void testGetRecords() {
         JWTRecord record1 = new JWTRecord(token1, creationDate1, expirationDate1);
         JWTRecord record2 = new JWTRecord(token2, creationDate2, expirationDate2);
         JWTRecord record3 = new JWTRecord(token3, creationDate3, expirationDate3);
@@ -141,16 +141,16 @@ public class JWTWhiteMapTest {
         Assertions.assertNotNull(map);
         Assertions.assertTrue(map.isEmpty());
 
-        Assertions.assertFalse(jwtwm.getTokens("fake-email").isPresent());
+        Assertions.assertFalse(jwtwm.getRecords("fake-email").isPresent());
 
         jwtwm.add(email1, record1);
         jwtwm.add(email2, record2);
         jwtwm.add(email1, record3);
 
-        Assertions.assertTrue(jwtwm.getTokens(email1).isPresent());
-        Assertions.assertTrue(jwtwm.getTokens(email2).isPresent());
+        Assertions.assertTrue(jwtwm.getRecords(email1).isPresent());
+        Assertions.assertTrue(jwtwm.getRecords(email2).isPresent());
 
-        Optional<Set<JWTRecord>> opt = jwtwm.getTokens(email1);
+        Optional<Set<JWTRecord>> opt = jwtwm.getRecords(email1);
         Set<JWTRecord> email1Records = opt.get();
         Assertions.assertNotNull(email1Records);
         Assertions.assertTrue(email1Records.size() == 2);
@@ -169,7 +169,7 @@ public class JWTWhiteMapTest {
         jwtwm.add(email2, record2);
         jwtwm.add(email1, record3);
 
-        Set<JWTRecord> records = jwtwm.getTokens(email1).get();
+        Set<JWTRecord> records = jwtwm.getRecords(email1).get();
 
         Assertions.assertFalse(jwtwm.remove("fake-email", token1).isPresent());
         Assertions.assertTrue(jwtwm.remove(email1, token1).isPresent());
@@ -187,6 +187,27 @@ public class JWTWhiteMapTest {
 
     @Test
     public void testRemove_String() {
+        JWTRecord record1 = new JWTRecord(token1, creationDate1, expirationDate1);
+        JWTRecord record2 = new JWTRecord(token2, creationDate2, expirationDate2);
+        JWTRecord record3 = new JWTRecord(token3, creationDate3, expirationDate3);
+
+        jwtwm.add(email1, record1);
+        jwtwm.add(email2, record2);
+        jwtwm.add(email1, record3);
+
+        Set<JWTRecord> records = jwtwm.getRecords(email1).get();
+
+        Assertions.assertFalse(jwtwm.remove("fake-token").isPresent());
+        Assertions.assertTrue(jwtwm.remove(token1).isPresent());
+        Assertions.assertTrue(records.size() == 1);
+        Assertions.assertTrue(jwtwm.remove(token3).isPresent());
+        Assertions.assertTrue(records.isEmpty());
+        Assertions.assertFalse(jwtwm.getMap().containsKey(email1));
+        Assertions.assertFalse(jwtwm.remove(token1).isPresent());
+
+        Assertions.assertTrue(jwtwm.remove(token2).isPresent());
+        Assertions.assertFalse(jwtwm.getMap().containsKey(email2));
+        Assertions.assertTrue(jwtwm.getMap().isEmpty());
     }
 
 }
