@@ -55,11 +55,20 @@ public class JWTWhiteMap implements Serializable {
 
     public void clear() {
         this.map.clear();
+        LOG.info("JWT White Map cleaned");
     }
 
     public Optional<Set<JWTRecord>> add(String email, JWTRecord record) {
         Set<JWTRecord> records = this.map.getOrDefault(email, new TreeSet<>());
         records.add(record);
+
+        //logged-in, first active "session"
+        if (records.size() == 1) {
+            LOG.log(Level.INFO,
+                    "First JWT Record added for user [{0}] in the JWT White Map (LOG-IN)",
+                    new Object[]{email});
+        }
+
         return Optional.ofNullable(this.map.put(email, records));
     }
 
@@ -67,21 +76,11 @@ public class JWTWhiteMap implements Serializable {
         return Optional.ofNullable(this.map.get(email));
     }
 
-    //TODO : test
     public Optional<JWTRecord> remove(String email, String token) {
         Set<JWTRecord> records = this.map.getOrDefault(email, new TreeSet<>());
 
         if (records.isEmpty()) {
-            if (this.map.containsKey(email)) {
-                throw new IllegalStateException(
-                        "User " + email
-                        + " is in the JWT White Map but there is no JWT Record for this user !"
-                );
-            } else {
-                throw new IllegalStateException(
-                        "User " + email
-                        + " is not yet/anymore in the JWT White Map");
-            }
+            return Optional.empty();
         }
 
         Optional<JWTRecord> record = records.stream()
@@ -94,7 +93,7 @@ public class JWTWhiteMap implements Serializable {
         if (records.isEmpty()) {
             this.map.remove(email);
             LOG.log(Level.INFO,
-                    "Last JWT Record of user {0} has been removed : {0} is now removed from the JWT White Map",
+                    "Last JWT Record of user [{0}] removed : no more entry in the JWT White Map (LOG-OUT)",
                     new Object[]{email});
         }
 
