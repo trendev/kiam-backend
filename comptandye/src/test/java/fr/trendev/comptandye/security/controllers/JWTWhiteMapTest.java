@@ -161,6 +161,28 @@ public class JWTWhiteMapTest {
 
     @Test
     public void testRemove_String_String() {
+        JWTRecord record1 = new JWTRecord(token1, creationDate1, expirationDate1);
+        JWTRecord record2 = new JWTRecord(token2, creationDate2, expirationDate2);
+        JWTRecord record3 = new JWTRecord(token3, creationDate3, expirationDate3);
+
+        jwtwm.add(email1, record1);
+        jwtwm.add(email2, record2);
+        jwtwm.add(email1, record3);
+
+        Set<JWTRecord> records = jwtwm.getTokens(email1).get();
+
+        Assertions.assertFalse(jwtwm.remove("fake-email", token1).isPresent());
+        Assertions.assertTrue(jwtwm.remove(email1, token1).isPresent());
+        Assertions.assertTrue(records.size() == 1);
+        Assertions.assertTrue(jwtwm.remove(email1, token3).isPresent());
+        Assertions.assertTrue(records.isEmpty());
+        Assertions.assertFalse(jwtwm.getMap().containsKey(email1));
+        Assertions.assertFalse(jwtwm.remove(email1, token1).isPresent());
+
+        Assertions.assertTrue(jwtwm.remove(email2, token2).isPresent());
+        Assertions.assertFalse(jwtwm.getMap().containsKey(email2));
+        Assertions.assertTrue(jwtwm.getMap().isEmpty());
+
     }
 
     @Test

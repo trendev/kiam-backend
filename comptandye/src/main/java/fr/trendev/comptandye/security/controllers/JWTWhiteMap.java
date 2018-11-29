@@ -79,10 +79,6 @@ public class JWTWhiteMap implements Serializable {
     public Optional<JWTRecord> remove(String email, String token) {
         Set<JWTRecord> records = this.map.getOrDefault(email, new TreeSet<>());
 
-        if (records.isEmpty()) {
-            return Optional.empty();
-        }
-
         Optional<JWTRecord> record = records.stream()
                 .filter(r -> r.getToken().equals(token))
                 .findFirst();//should be unique
@@ -90,7 +86,7 @@ public class JWTWhiteMap implements Serializable {
         record.ifPresent(r -> records.remove(r));
 
         // logged-out, no more active "session"
-        if (records.isEmpty()) {
+        if (records.isEmpty() && record.isPresent()) {
             this.map.remove(email);
             LOG.log(Level.INFO,
                     "Last JWT Record of user [{0}] removed : no more entry in the JWT White Map (LOG-OUT)",
