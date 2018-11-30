@@ -8,6 +8,7 @@ package fr.trendev.comptandye.security.controllers;
 import fish.payara.cluster.Clustered;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.util.Collections;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.logging.Level;
@@ -43,6 +44,31 @@ public class JWTRevokedSet {
     public void close() {
         //TODO : save the set in a DB
         LOG.log(Level.INFO, "{0} closed", JWTRevokedSet.class.getName());
+    }
+
+    //TODO : to test
+    public Set<JWTRecord> getSet() {
+        return this.set;
+    }
+
+    //TODO : to test
+    public boolean add(JWTRecord record) {
+        return this.add(record);
+    }
+
+    //TODO : to implement/test
+    public boolean contains(String token) {
+        return false;
+    }
+
+    //TODO : to implement/test
+    public Optional<JWTRecord> remove(String token) {
+        return null;
+    }
+
+    //TODO : to implement/test
+    public Optional<JWTRecord> remove(JWTRecord record) {
+        return null;
     }
 
 }
