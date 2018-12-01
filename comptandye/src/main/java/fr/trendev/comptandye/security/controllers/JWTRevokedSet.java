@@ -46,7 +46,6 @@ public class JWTRevokedSet {
         LOG.log(Level.INFO, "{0} closed", JWTRevokedSet.class.getName());
     }
 
-    //TODO : to test
     public Set<JWTRecord> getSet() {
         return this.set;
     }
