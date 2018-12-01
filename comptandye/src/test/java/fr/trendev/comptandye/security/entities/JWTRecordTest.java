@@ -29,6 +29,27 @@ public class JWTRecordTest {
     }
 
     @Test
+    public void testConstructor() {
+        Date creationDate1 = Date.from(now);
+        Date expirationDate1 = Date.from(now.plus(JWTManager.VALID_PERIOD,
+                MINUTES));
+        Assertions.assertThrows(IllegalArgumentException.class, () ->
+                new JWTRecord(null, creationDate1, expirationDate1));
+        Assertions.assertThrows(IllegalArgumentException.class, () ->
+                new JWTRecord("", creationDate1, expirationDate1));
+        Assertions.assertThrows(IllegalArgumentException.class, () ->
+                new JWTRecord(token, null, Date.from(now)));
+        Assertions.assertThrows(IllegalArgumentException.class, () ->
+                new JWTRecord(token, Date.from(now), null));
+        Assertions.assertThrows(IllegalArgumentException.class, () ->
+                new JWTRecord(token, null, null));
+        Assertions.assertThrows(IllegalArgumentException.class, () ->
+                new JWTRecord(token, Date.from(now), Date.from(now)));
+        Assertions.assertThrows(IllegalArgumentException.class, () ->
+                new JWTRecord(token, expirationDate1, creationDate1));
+    }
+
+    @Test
     public void testEquals() {
         Date creationDate1 = Date.from(now);
         Date creationDate2 = Date.from(now);

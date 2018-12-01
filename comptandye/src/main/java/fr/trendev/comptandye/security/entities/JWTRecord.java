@@ -20,6 +20,27 @@ public class JWTRecord implements Serializable, Comparable<JWTRecord> {
     private Date expirationDate;
 
     public JWTRecord(String token, Date creationDate, Date expirationDate) {
+
+        if (token == null || token.isEmpty()) {
+            throw new IllegalArgumentException(
+                    "token String must not be null or empty");
+        }
+
+        if (creationDate == null || expirationDate == null) {
+            throw new IllegalArgumentException(
+                    "creationDate and expirationDate must not be null");
+        }
+
+        if (creationDate.equals(expirationDate)) {
+            throw new IllegalArgumentException(
+                    "creationDate and expirationDate must not be the same");
+        }
+
+        if (expirationDate.before(creationDate)) {
+            throw new IllegalArgumentException(
+                    "expirationDate must not be before creationDate");
+        }
+
         this.token = token;
         this.creationDate = creationDate;
         this.expirationDate = expirationDate;
