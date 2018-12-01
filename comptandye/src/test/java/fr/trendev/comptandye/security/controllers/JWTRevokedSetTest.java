@@ -8,7 +8,10 @@ package fr.trendev.comptandye.security.controllers;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.time.Instant;
 import static java.time.temporal.ChronoUnit.MINUTES;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 import javax.inject.Inject;
 import org.jboss.weld.junit4.WeldInitiator;
 import org.junit.Before;
@@ -49,22 +52,22 @@ public class JWTRevokedSetTest {
             .inject(this).build();
 
     @Inject
-    JWTRevokedSet jwtRevokedSet;
+    JWTRevokedSet jwtrvkset;
 
     public JWTRevokedSetTest() {
     }
 
     @Before
     public void init() {
-        if (jwtRevokedSet != null) {
-            jwtRevokedSet.clear();
+        if (jwtrvkset != null) {
+            jwtrvkset.clear();
         }
     }
 
     @Test
     public void testInjection() {
-        Assertions.assertNotNull(jwtRevokedSet);
-        Assertions.assertDoesNotThrow(() -> jwtRevokedSet.init());
+        Assertions.assertNotNull(jwtrvkset);
+        Assertions.assertDoesNotThrow(() -> jwtrvkset.init());
     }
 
     @Test
@@ -77,8 +80,8 @@ public class JWTRevokedSetTest {
 
     @Test
     public void testGetSet() {
-        Assertions.assertNotNull(jwtRevokedSet.getSet());
-        Assertions.assertTrue(jwtRevokedSet.getSet().isEmpty());
+        Assertions.assertNotNull(jwtrvkset.getSet());
+        Assertions.assertTrue(jwtrvkset.getSet().isEmpty());
     }
 
     @Test
@@ -87,16 +90,16 @@ public class JWTRevokedSetTest {
         JWTRecord record2 = new JWTRecord(token2, creationDate2, expirationDate2);
         JWTRecord record3 = new JWTRecord(token3, creationDate3, expirationDate3);
 
-        Assertions.assertTrue(jwtRevokedSet.add(record1));
-        Assertions.assertTrue(jwtRevokedSet.getSet().size() == 1);
-        Assertions.assertTrue(jwtRevokedSet.add(record2));
-        Assertions.assertTrue(jwtRevokedSet.getSet().size() == 2);
-        Assertions.assertTrue(jwtRevokedSet.add(record3));
-        Assertions.assertTrue(jwtRevokedSet.getSet().size() == 3);
+        Assertions.assertTrue(jwtrvkset.add(record1));
+        Assertions.assertEquals(jwtrvkset.getSet().size(), 1);
+        Assertions.assertTrue(jwtrvkset.add(record2));
+        Assertions.assertEquals(jwtrvkset.getSet().size(), 2);
+        Assertions.assertTrue(jwtrvkset.add(record3));
+        Assertions.assertEquals(jwtrvkset.getSet().size(), 3);
 
         //control duplication
-        Assertions.assertFalse(jwtRevokedSet.add(record1));
-        Assertions.assertTrue(jwtRevokedSet.getSet().size() == 3);
+        Assertions.assertFalse(jwtrvkset.add(record1));
+        Assertions.assertEquals(jwtrvkset.getSet().size(), 3);
     }
 
     @Test
@@ -113,8 +116,23 @@ public class JWTRevokedSetTest {
 
     @Test
     public void testClear() {
-        jwtRevokedSet.clear();
-        Assertions.assertTrue(jwtRevokedSet.getSet().isEmpty());
+        jwtrvkset.clear();
+        Assertions.assertTrue(jwtrvkset.getSet().isEmpty());
+    }
+
+    @Test
+    public void testAddAll() {
+        JWTRecord record1 = new JWTRecord(token1, creationDate1, expirationDate1);
+        JWTRecord record2 = new JWTRecord(token2, creationDate2, expirationDate2);
+        JWTRecord record3 = new JWTRecord(token3, creationDate3, expirationDate3);
+
+        List<JWTRecord> records = Arrays.asList(record1, record2, record3);
+
+        Assertions.assertTrue(jwtrvkset.addAll(records));
+        Assertions.assertEquals(jwtrvkset.getSet().size(), records.size());
+
+        Assertions.assertFalse(jwtrvkset.addAll(new HashSet<>(records)));
+        Assertions.assertEquals(jwtrvkset.getSet().size(), records.size());
     }
 
 }

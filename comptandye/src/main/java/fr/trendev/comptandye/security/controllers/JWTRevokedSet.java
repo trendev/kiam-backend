@@ -7,8 +7,8 @@ package fr.trendev.comptandye.security.controllers;
 
 import fish.payara.cluster.Clustered;
 import fr.trendev.comptandye.security.entities.JWTRecord;
-import java.util.Collections;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
@@ -59,8 +59,8 @@ public class JWTRevokedSet {
     public boolean add(JWTRecord record) {
         return this.set.add(record);
     }
-    
-    public boolean addAll(Collection<JWTRecord> records){
+
+    public boolean addAll(Collection<JWTRecord> records) {
         return this.set.addAll(records);
     }
 
