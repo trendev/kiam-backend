@@ -50,9 +50,13 @@ public class JWTRevokedSet {
         return this.set;
     }
 
-    //TODO : to test
+    public void clear() {
+        this.set.clear();
+        LOG.info("JWT Revoked Set cleaned");
+    }
+
     public boolean add(JWTRecord record) {
-        return this.add(record);
+        return this.set.add(record);
     }
 
     //TODO : to implement/test
