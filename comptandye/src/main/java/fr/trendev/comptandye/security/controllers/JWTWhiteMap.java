@@ -5,8 +5,6 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
-import fish.payara.cluster.Clustered;
-import fish.payara.cluster.DistributedLockType;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.io.Serializable;
 import java.util.Collections;
@@ -28,8 +26,8 @@ import javax.ejb.Startup;
  *
  * @author jsie
  */
-@Clustered(callPostConstructOnAttach = false, callPreDestoyOnDetach = false,
-        lock = DistributedLockType.LOCK, keyName = "white-map")
+//@Clustered(callPostConstructOnAttach = false, callPreDestoyOnDetach = false,
+//        lock = DistributedLockType.LOCK, keyName = "white-map")
 @Singleton
 @Startup
 public class JWTWhiteMap implements Serializable {
@@ -122,6 +120,15 @@ public class JWTWhiteMap implements Serializable {
         return Optional.ofNullable(this.map.get(email));
     }
 
+    private void displayMap() {
+        for (Map.Entry<String, Set<JWTRecord>> e : this.map.entrySet()) {
+            for (JWTRecord r : e.getValue()) {
+                LOG.warning("ENTRY : [" + e.getKey() + "] / " + this.trunkToken(
+                        r.getToken()));
+            }
+        }
+    }
+
     /**
      * Searches and removes (if present) a JWT Record from the records and
      * removes the authenticated user from the map if there is no entry anymore
@@ -144,8 +151,8 @@ public class JWTWhiteMap implements Serializable {
             if (records.remove(r)) {
                 LOG.log(Level.INFO, "Token of user ["
                         + email + "] ("
-                        + this.getReducedToken(r.getToken())
-                        + ") expired and removed from JWT White Map");
+                        + this.trunkToken(r.getToken())
+                        + ") removed from JWT White Map");
             }
         });
 
@@ -160,7 +167,7 @@ public class JWTWhiteMap implements Serializable {
         return record;
     }
 
-    private String getReducedToken(String token) {
+    private String trunkToken(String token) {
         int l = token.length();
         int n = 10;
         return l < n ? token : "..." + token.substring(l - n, l);
@@ -176,6 +183,7 @@ public class JWTWhiteMap implements Serializable {
      * @return
      */
     public Optional<JWTRecord> remove(String email, String token) {
+        displayMap();
         return this.remove(email,
                 token,
                 this.map.getOrDefault(email, new TreeSet<>()));

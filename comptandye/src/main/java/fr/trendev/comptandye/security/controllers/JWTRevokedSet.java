@@ -5,8 +5,6 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
-import fish.payara.cluster.Clustered;
-import fish.payara.cluster.DistributedLockType;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.io.Serializable;
 import java.util.Collection;
@@ -25,8 +23,8 @@ import javax.ejb.Startup;
  *
  * @author jsie
  */
-@Clustered(callPostConstructOnAttach = false, callPreDestoyOnDetach = false,
-        lock = DistributedLockType.LOCK, keyName = "revoked-set")
+//@Clustered(callPostConstructOnAttach = false, callPreDestoyOnDetach = false,
+//        lock = DistributedLockType.LOCK, keyName = "revoked-set")
 @Singleton
 @Startup
 public class JWTRevokedSet implements Serializable {
