@@ -5,6 +5,8 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
+import fish.payara.cluster.Clustered;
+import fish.payara.cluster.DistributedLockType;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.io.Serializable;
 import java.util.Collections;
@@ -26,8 +28,8 @@ import javax.ejb.Startup;
  *
  * @author jsie
  */
-//@Clustered(callPostConstructOnAttach = false, callPreDestoyOnDetach = false,
-//        lock = DistributedLockType.LOCK, keyName = "white-map")
+@Clustered(callPostConstructOnAttach = false, callPreDestoyOnDetach = false,
+        lock = DistributedLockType.LOCK, keyName = "white-map")
 @Singleton
 @Startup
 public class JWTWhiteMap implements Serializable {
@@ -121,12 +123,18 @@ public class JWTWhiteMap implements Serializable {
     }
 
     private void displayMap() {
-        for (Map.Entry<String, Set<JWTRecord>> e : this.map.entrySet()) {
-            for (JWTRecord r : e.getValue()) {
-                LOG.warning("ENTRY : [" + e.getKey() + "] / " + this.trunkToken(
-                        r.getToken()));
-            }
-        }
+        this.map.entrySet().
+                forEach((e) -> {
+                    e.getValue().
+                            forEach((r) -> {
+                                LOG.log(Level.WARNING,
+                                        "Thread '{'{0}'}' ENTRY : [{1}] / {2}",
+                                        new Object[]{
+                                            Thread.currentThread().getName(),
+                                            e.getKey(),
+                                            this.trunkToken(r.getToken())});
+                            });
+                });
     }
 
     /**
