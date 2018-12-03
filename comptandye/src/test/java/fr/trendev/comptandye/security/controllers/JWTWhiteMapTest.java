@@ -166,10 +166,13 @@ public class JWTWhiteMapTest {
         JWTRecord record3 = new JWTRecord(token3, creationDate3, expirationDate3);
 
         jwtwm.add(email1, record1);
+        Set<JWTRecord> firstRecords = jwtwm.getRecords(email1).get();
         jwtwm.add(email2, record2);
         jwtwm.add(email1, record3);
 
         Set<JWTRecord> records = jwtwm.getRecords(email1).get();
+
+        Assertions.assertEquals(records, firstRecords);
 
         Assertions.assertFalse(jwtwm.remove("fake-email", token1).isPresent());
         Assertions.assertTrue(jwtwm.remove(email1, token1).isPresent());
