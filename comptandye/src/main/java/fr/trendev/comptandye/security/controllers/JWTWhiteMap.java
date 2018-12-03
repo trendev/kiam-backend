@@ -87,7 +87,13 @@ public class JWTWhiteMap implements Serializable {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                remove(email, record.getToken());
+                remove(email, record.getToken())
+                        .ifPresent(r -> LOG.log(Level.INFO, "Token of user ["
+                                + email + "] (..."
+                                + r.getToken().substring(r.getToken().length()
+                                        - 9,
+                                        r.getToken().length() - 1)
+                                + ") expired and removed from JWT White Map"));
             }
         }, record.getExpirationDate());
 
