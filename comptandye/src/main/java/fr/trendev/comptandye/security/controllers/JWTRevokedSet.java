@@ -80,9 +80,10 @@ public class JWTRevokedSet {
         return record;
     }
 
-    //TODO : to implement/test
     public Optional<JWTRecord> remove(JWTRecord record) {
-        return null;
+        return this.set.remove(record)
+                ? Optional.of(record)
+                : Optional.empty();
     }
 
 }
