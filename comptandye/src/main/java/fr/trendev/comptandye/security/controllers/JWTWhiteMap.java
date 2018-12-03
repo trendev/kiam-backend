@@ -12,6 +12,8 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.logging.Level;
@@ -33,8 +35,11 @@ public class JWTWhiteMap implements Serializable {
     private static final Logger LOG = Logger.getLogger(JWTWhiteMap.class.
             getName());
 
+    private final Timer timer;
+
     public JWTWhiteMap() {
         this.map = Collections.synchronizedSortedMap(new TreeMap<>());
+        this.timer = new Timer();
     }
 
     @PostConstruct
@@ -46,6 +51,7 @@ public class JWTWhiteMap implements Serializable {
     @PreDestroy
     public void close() {
         //TODO : save the map in a DB
+        timer.cancel();
         LOG.log(Level.INFO, "{0} closed", JWTWhiteMap.class.getName());
     }
 
@@ -77,6 +83,13 @@ public class JWTWhiteMap implements Serializable {
     public Optional<Set<JWTRecord>> add(String email, JWTRecord record) {
         Set<JWTRecord> records = this.map.getOrDefault(email, new TreeSet<>());
         records.add(record);
+
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                remove(email, record.getToken());
+            }
+        }, record.getExpirationDate());
 
         //logged-in, first active "session"
         if (records.size() == 1) {
