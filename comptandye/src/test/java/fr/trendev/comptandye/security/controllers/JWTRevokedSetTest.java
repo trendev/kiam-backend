@@ -25,9 +25,6 @@ import org.junit.jupiter.api.Assertions;
  */
 public class JWTRevokedSetTest {
 
-    private final String email1 = "email1";
-    private final String email2 = "email2";
-
     private final String token1 = "token1";
     private final String token2 = "token2";
     private final String token3 = "token3";
@@ -104,6 +101,19 @@ public class JWTRevokedSetTest {
 
     @Test
     public void testContains() {
+        JWTRecord record1 = new JWTRecord(token1, creationDate1, expirationDate1);
+        JWTRecord record2 = new JWTRecord(token2, creationDate2, expirationDate2);
+        JWTRecord record3 = new JWTRecord(token3, creationDate3, expirationDate3);
+
+        Assertions.assertTrue(jwtrvkset
+                .addAll(Arrays.asList(record1, record2, record3)));
+
+        Assertions.assertTrue(jwtrvkset.contains(token1));
+        Assertions.assertTrue(jwtrvkset.contains(token2));
+        Assertions.assertTrue(jwtrvkset.contains(token3));
+
+        Assertions.assertFalse(jwtrvkset.contains("fake-token"));
+
     }
 
     @Test

@@ -64,9 +64,9 @@ public class JWTRevokedSet {
         return this.set.addAll(records);
     }
 
-    //TODO : to implement/test
     public boolean contains(String token) {
-        return false;
+        return this.set.stream()
+                .anyMatch(r -> r.getToken().equals(token));
     }
 
     //TODO : to implement/test
