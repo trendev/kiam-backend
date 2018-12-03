@@ -66,6 +66,10 @@ public class JWTManager {
         this.verifier = new RSASSAVerifier(this.publicKey);
     }
 
+    public JWTWhiteMap getWhiteMap() {
+        return this.jwtWhiteMap;
+    }
+
     public String generateToken(final String caller,
             final List<String> groups,
             final String xsrf)
@@ -107,7 +111,10 @@ public class JWTManager {
 
         jwtWhiteMap.add(caller, new JWTRecord(token,
                 Date.from(current_time),
-                Date.from(expiration_time)));
+                Date.from(expiration_time)))
+                .ifPresent(s -> s.forEach(
+                        r -> LOG.info("[" + caller + "] : " + r.getToken())
+                ));
 
         return token;
     }

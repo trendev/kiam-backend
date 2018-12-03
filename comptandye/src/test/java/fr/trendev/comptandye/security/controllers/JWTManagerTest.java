@@ -25,8 +25,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
 import org.jboss.weld.junit4.WeldInitiator;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -52,24 +50,11 @@ public class JWTManagerTest {
     @Inject
     private JWTManager jwtManager;
 
-    @Inject
-    private JWTWhiteMap jwtWhiteMap;
-
     private final String caller = "julien.sie@gmail.com";
     private final List<String> groups;
 
     public JWTManagerTest() {
         this.groups = Arrays.asList(new String[]{"Group2", "Group1",});
-    }
-
-    @Before
-    public void init() {
-        this.jwtWhiteMap.clear();
-    }
-
-    @After
-    public void clear() {
-        this.jwtWhiteMap.clear();
     }
 
 //    @Parameterized.Parameters
@@ -84,8 +69,9 @@ public class JWTManagerTest {
             Assertions.assertNotEquals(token.length(), 0);
             Assertions.assertNotNull(token);
 
-            Assertions.assertTrue(this.jwtWhiteMap.getMap().containsKey(
-                    this.caller));
+            Assertions.assertTrue(this.jwtManager.getWhiteMap().getMap().
+                    containsKey(
+                            this.caller));
 
             SignedJWT parsedJWT = SignedJWT.parse(token);
             Assertions.assertNotNull(parsedJWT);

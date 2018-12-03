@@ -18,7 +18,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.enterprise.context.ApplicationScoped;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
 
 /**
  *
@@ -26,7 +27,8 @@ import javax.enterprise.context.ApplicationScoped;
  */
 @Clustered(callPostConstructOnAttach = false, callPreDestoyOnDetach = false,
         lock = DistributedLockType.LOCK, keyName = "revoked-set")
-@ApplicationScoped
+@Singleton
+@Startup
 public class JWTRevokedSet implements Serializable {
 
     private Set<JWTRecord> set;
