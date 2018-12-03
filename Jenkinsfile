@@ -4,7 +4,7 @@ pipeline {
     stage('compile') {
       agent any
       steps {
-        sh '''mvn clean install
+        sh '''mvn --version
 '''
       }
     }
