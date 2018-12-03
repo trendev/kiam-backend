@@ -6,6 +6,7 @@
 package fr.trendev.comptandye.security.controllers;
 
 import fish.payara.cluster.Clustered;
+import fish.payara.cluster.DistributedLockType;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.io.Serializable;
 import java.util.Collections;
@@ -26,7 +27,8 @@ import javax.enterprise.context.ApplicationScoped;
  *
  * @author jsie
  */
-@Clustered
+@Clustered(callPostConstructOnAttach = false, callPreDestoyOnDetach = false,
+        lock = DistributedLockType.LOCK, keyName = "white-map")
 @ApplicationScoped
 public class JWTWhiteMap implements Serializable {
 
@@ -35,11 +37,17 @@ public class JWTWhiteMap implements Serializable {
     private static final Logger LOG = Logger.getLogger(JWTWhiteMap.class.
             getName());
 
-    private final Timer timer;
+    transient private Timer timer;
 
     public JWTWhiteMap() {
         this.map = Collections.synchronizedSortedMap(new TreeMap<>());
-        this.timer = new Timer();
+    }
+
+    private Timer getTimer() {
+        if (this.timer == null) {
+            this.timer = new Timer();
+        }
+        return this.timer;
     }
 
     @PostConstruct
@@ -50,8 +58,8 @@ public class JWTWhiteMap implements Serializable {
 
     @PreDestroy
     public void close() {
-        //TODO : save the map in a DB
-        timer.cancel();
+        //TODO : save the map in a DB and ignore if the map is empty (after test)
+        this.getTimer().cancel();
         LOG.log(Level.INFO, "{0} closed", JWTWhiteMap.class.getName());
     }
 
@@ -84,16 +92,10 @@ public class JWTWhiteMap implements Serializable {
         Set<JWTRecord> records = this.map.getOrDefault(email, new TreeSet<>());
         records.add(record);
 
-        timer.schedule(new TimerTask() {
+        this.getTimer().schedule(new TimerTask() {
             @Override
             public void run() {
-                remove(email, record.getToken())
-                        .ifPresent(r -> LOG.log(Level.INFO, "Token of user ["
-                                + email + "] (..."
-                                + r.getToken().substring(r.getToken().length()
-                                        - 9,
-                                        r.getToken().length() - 1)
-                                + ") expired and removed from JWT White Map"));
+                remove(email, record.getToken());
             }
         }, record.getExpirationDate());
 
@@ -136,7 +138,16 @@ public class JWTWhiteMap implements Serializable {
                 .filter(r -> r.getToken().equals(token))
                 .findFirst();//should be unique
 
-        record.ifPresent(r -> records.remove(r));
+        record.ifPresent(r -> {
+            if (records.remove(r)) {
+                LOG.log(Level.INFO, "Token of user ["
+                        + email + "] (..."
+                        + r.getToken().substring(
+                                r.getToken().length() - 10,
+                                r.getToken().length())
+                        + ") expired and removed from JWT White Map");
+            }
+        });
 
         // logged-out, no more active "session"
         if (records.isEmpty() && record.isPresent()) {

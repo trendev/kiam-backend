@@ -15,6 +15,7 @@ import com.nimbusds.jose.crypto.RSASSASigner;
 import com.nimbusds.jose.crypto.RSASSAVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.security.PrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.text.ParseException;
@@ -52,6 +53,9 @@ public class JWTManager {
 
     private JWSSigner signer;
     private JWSVerifier verifier;
+
+    @Inject
+    private JWTWhiteMap jwtWhiteMap;
 
     public JWTManager() {
     }
@@ -100,6 +104,11 @@ public class JWTManager {
         LOG.log(Level.INFO,
                 "JWT generated for user {0} :\n{1}\njti = {2}\nxsrf = {3}",
                 new Object[]{caller, token, jti, xsrf});
+
+        jwtWhiteMap.add(caller, new JWTRecord(token,
+                Date.from(current_time),
+                Date.from(expiration_time)));
+
         return token;
     }
 

@@ -6,7 +6,9 @@
 package fr.trendev.comptandye.security.controllers;
 
 import fish.payara.cluster.Clustered;
+import fish.payara.cluster.DistributedLockType;
 import fr.trendev.comptandye.security.entities.JWTRecord;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
@@ -22,9 +24,10 @@ import javax.enterprise.context.ApplicationScoped;
  *
  * @author jsie
  */
-@Clustered
+@Clustered(callPostConstructOnAttach = false, callPreDestoyOnDetach = false,
+        lock = DistributedLockType.LOCK, keyName = "revoked-set")
 @ApplicationScoped
-public class JWTRevokedSet {
+public class JWTRevokedSet implements Serializable {
 
     private Set<JWTRecord> set;
 
@@ -43,7 +46,7 @@ public class JWTRevokedSet {
 
     @PreDestroy
     public void close() {
-        //TODO : save the set in a DB
+        //TODO : save the set in a DB and ignore if the set is empty (after test)
         LOG.log(Level.INFO, "{0} closed", JWTRevokedSet.class.getName());
     }
 

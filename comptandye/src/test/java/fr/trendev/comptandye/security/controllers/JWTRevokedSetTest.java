@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.List;
 import javax.inject.Inject;
 import org.jboss.weld.junit4.WeldInitiator;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -59,6 +60,11 @@ public class JWTRevokedSetTest {
         if (jwtrvkset != null) {
             jwtrvkset.clear();
         }
+    }
+
+    @After
+    public void clear() {
+        jwtrvkset.clear();
     }
 
     @Test
