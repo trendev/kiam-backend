@@ -118,6 +118,18 @@ public class JWTRevokedSetTest {
 
     @Test
     public void testRemove_String() {
+        JWTRecord record1 = new JWTRecord(token1, creationDate1, expirationDate1);
+        JWTRecord record2 = new JWTRecord(token2, creationDate2, expirationDate2);
+        JWTRecord record3 = new JWTRecord(token3, creationDate3, expirationDate3);
+
+        Assertions.assertTrue(jwtrvkset
+                .addAll(Arrays.asList(record1, record2, record3)));
+
+        Assertions.assertTrue(jwtrvkset.remove(token1).isPresent());
+        Assertions.assertEquals(jwtrvkset.getSet().size(), 2);
+
+        Assertions.assertFalse(jwtrvkset.remove(token1).isPresent());
+        Assertions.assertEquals(jwtrvkset.getSet().size(), 2);
     }
 
     @Test

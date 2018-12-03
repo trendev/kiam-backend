@@ -69,9 +69,15 @@ public class JWTRevokedSet {
                 .anyMatch(r -> r.getToken().equals(token));
     }
 
-    //TODO : to implement/test
     public Optional<JWTRecord> remove(String token) {
-        return null;
+
+        Optional<JWTRecord> record = this.set.stream()
+                .filter(r -> r.getToken().equals(token))
+                .findFirst();
+
+        record.ifPresent(r -> this.set.remove(r));
+
+        return record;
     }
 
     //TODO : to implement/test
