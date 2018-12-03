@@ -31,31 +31,31 @@ import javax.enterprise.context.ApplicationScoped;
         lock = DistributedLockType.LOCK, keyName = "white-map")
 @ApplicationScoped
 public class JWTWhiteMap implements Serializable {
-
+    
     private final Map<String, Set<JWTRecord>> map;
-
+    
     private static final Logger LOG = Logger.getLogger(JWTWhiteMap.class.
             getName());
-
+    
     transient private Timer timer;
-
+    
     public JWTWhiteMap() {
         this.map = Collections.synchronizedSortedMap(new TreeMap<>());
     }
-
+    
     private Timer getTimer() {
         if (this.timer == null) {
             this.timer = new Timer();
         }
         return this.timer;
     }
-
+    
     @PostConstruct
     public void init() {
         //TODO: load the map from a DB
         LOG.log(Level.INFO, "{0} initialized", JWTWhiteMap.class.getName());
     }
-
+    
     @PreDestroy
     public void close() {
         //TODO : save the map in a DB and ignore if the map is empty (after test)
@@ -91,7 +91,7 @@ public class JWTWhiteMap implements Serializable {
     public Optional<Set<JWTRecord>> add(String email, JWTRecord record) {
         Set<JWTRecord> records = this.map.getOrDefault(email, new TreeSet<>());
         records.add(record);
-
+        
         this.getTimer().schedule(new TimerTask() {
             @Override
             public void run() {
@@ -105,7 +105,7 @@ public class JWTWhiteMap implements Serializable {
                     "First JWT Record added for user [{0}] in the JWT White Map (LOG-IN)",
                     new Object[]{email});
         }
-
+        
         return Optional.ofNullable(this.map.put(email, records));
     }
 
@@ -141,10 +141,8 @@ public class JWTWhiteMap implements Serializable {
         record.ifPresent(r -> {
             if (records.remove(r)) {
                 LOG.log(Level.INFO, "Token of user ["
-                        + email + "] (..."
-                        + r.getToken().substring(
-                                r.getToken().length() - 10,
-                                r.getToken().length())
+                        + email + "] ("
+                        + this.getReducedToken(r.getToken())
                         + ") expired and removed from JWT White Map");
             }
         });
@@ -156,8 +154,14 @@ public class JWTWhiteMap implements Serializable {
                     "Last JWT Record of user [{0}] removed : no more entry in the JWT White Map (LOG-OUT)",
                     new Object[]{email});
         }
-
+        
         return record;
+    }
+    
+    private String getReducedToken(String token) {
+        int l = token.length();
+        int n = 10;
+        return l < n ? token : "..." + token.substring(l - n, l);
     }
 
     /**
@@ -193,5 +197,5 @@ public class JWTWhiteMap implements Serializable {
         }
         return Optional.empty();
     }
-
+    
 }
