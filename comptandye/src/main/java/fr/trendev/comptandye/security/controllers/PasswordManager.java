@@ -8,7 +8,7 @@ package fr.trendev.comptandye.security.controllers;
 import java.security.SecureRandom;
 import java.util.Objects;
 import java.util.Optional;
-import javax.ejb.Singleton;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 
@@ -16,7 +16,7 @@ import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
  *
  * @author jsie
  */
-@Singleton
+@ApplicationScoped
 public class PasswordManager {
 
     private final String sequence;
