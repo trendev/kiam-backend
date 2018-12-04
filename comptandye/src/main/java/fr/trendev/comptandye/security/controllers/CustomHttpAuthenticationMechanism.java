@@ -5,7 +5,6 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
-import static fr.trendev.comptandye.security.controllers.JWTManager.VALID_PERIOD;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -85,6 +84,7 @@ public class CustomHttpAuthenticationMechanism implements
 
             String username = req.getParameter("username");
             String password = req.getParameter("password");
+            boolean rmbme = Boolean.valueOf(req.getParameter("rmbme"));
 
             try {
                 // controls the credential from the IdentityStores (DB is default)
@@ -112,7 +112,8 @@ public class CustomHttpAuthenticationMechanism implements
                 String jwt = jwtManager.generateToken(
                         result.getCallerPrincipal().getName(),
                         new ArrayList<>(result.getCallerGroups()),
-                        xsrf);
+                        xsrf,
+                        rmbme);
                 rsp.addCookie(this.createXSRFCookie(xsrf));
                 rsp.addCookie(this.createJWTCookie(jwt));
 
@@ -190,7 +191,7 @@ public class CustomHttpAuthenticationMechanism implements
         c.setPath("/");
         c.setHttpOnly(false);//should be used by javascript (Angular) scripts
         c.setSecure(true);//requires to use HTTPS
-        c.setMaxAge(60 * VALID_PERIOD); // converts in second
+        c.setMaxAge(Integer.MAX_VALUE); // converts in second
         return c;
     }
 

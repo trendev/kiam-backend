@@ -78,7 +78,8 @@ public class JWTManager {
 
     public String generateToken(final String caller,
             final List<String> groups,
-            final String xsrf)
+            final String xsrf,
+            final boolean rmbme)
             throws JOSEException {
         Instant current_time = Instant.now();
         Instant expiration_time = current_time.plus(VALID_PERIOD,
@@ -119,6 +120,7 @@ public class JWTManager {
                 Date.from(current_time),
                 Date.from(expiration_time)));
 
+        // auto-removes the expired tokens from the JWT White Map
         scheduler.schedule(() -> jwtWhiteMap.remove(caller, token),
                 expiration_time.toEpochMilli() - System.currentTimeMillis(),
                 TimeUnit.MILLISECONDS);

@@ -65,7 +65,7 @@ public class JWTManagerTest {
     public void testGenerateToken() {
         try {
             String token = this.jwtManager.generateToken(this.caller, groups,
-                    "1234567890");
+                    "1234567890", false);
             Assertions.assertNotEquals(token.length(), 0);
             Assertions.assertNotNull(token);
 
@@ -120,7 +120,7 @@ public class JWTManagerTest {
     public void testGetClaimsSet() {
         try {
             String token = this.jwtManager.generateToken(this.caller, groups,
-                    "x-xsrf-token");
+                    "x-xsrf-token", false);
 
             Assertions.assertTrue(
                     this.jwtManager.getClaimsSet(token).isPresent());
@@ -135,7 +135,7 @@ public class JWTManagerTest {
     public void testGetClaimsSetWithNullToken() {
         try {
             String token = this.jwtManager.generateToken(this.caller, groups,
-                    "x-xsrf-token");
+                    "x-xsrf-token", false);
 
             Assertions.assertFalse(
                     this.jwtManager.getClaimsSet(null).isPresent());
@@ -150,7 +150,7 @@ public class JWTManagerTest {
     public void testGetClaimsSetWithJWTCorruption() {
         try {
             String token = this.jwtManager.generateToken(this.caller, groups,
-                    "x-xsrf-token");
+                    "x-xsrf-token", false);
 
             Assertions.assertFalse(
                     this.jwtManager.getClaimsSet(token.replaceFirst("e", "f"))
@@ -166,7 +166,7 @@ public class JWTManagerTest {
     public void testGetClaimsSetWithUnverifiedSignature() {
         try {
             String token = this.jwtManager.generateToken(this.caller, groups,
-                    "x-xsrf-token");
+                    "x-xsrf-token", false);
 
             byte[] bytes = token.getBytes();
             bytes[token.length() - 10]++;
@@ -188,7 +188,7 @@ public class JWTManagerTest {
         Instant futur = Instant.now().plus(VALID_PERIOD * 2, ChronoUnit.MINUTES);
 
         String token = this.jwtManager.generateToken(this.caller, groups,
-                "x-xsrf-token");
+                "x-xsrf-token", false);
         Instant exp = this.jwtManager.getClaimsSet(token)
                 .map(JWTClaimsSet::getExpirationTime)
                 .map(Date::toInstant)
