@@ -117,10 +117,7 @@ public class JWTManager {
 
         jwtWhiteMap.add(caller, new JWTRecord(token,
                 Date.from(current_time),
-                Date.from(expiration_time)))
-                .ifPresent(s -> s.forEach(
-                        r -> LOG.info("[" + caller + "] : " + r.getToken())
-                ));
+                Date.from(expiration_time)));
 
         scheduler.schedule(() -> jwtWhiteMap.remove(caller, token),
                 expiration_time.toEpochMilli() - System.currentTimeMillis(),
@@ -166,6 +163,12 @@ public class JWTManager {
         Instant now = Instant.now();
         // TODO : check if the token will expire soon and must be refreshed
         return false;
+    }
+
+    public static String trunkToken(String token) {
+        int l = token.length();
+        int n = 10;
+        return l < n ? token : "..." + token.substring(l - n, l);
     }
 
 }

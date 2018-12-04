@@ -105,21 +105,6 @@ public class JWTWhiteMap implements Serializable {
         return Optional.ofNullable(this.map.get(email));
     }
 
-    private void displayMap() {
-        this.map.entrySet().
-                forEach((e) -> {
-                    e.getValue().
-                            forEach((r) -> {
-                                LOG.log(Level.WARNING,
-                                        "Thread '{'{0}'}' ENTRY : [{1}] / {2}",
-                                        new Object[]{
-                                            Thread.currentThread().getName(),
-                                            e.getKey(),
-                                            this.trunkToken(r.getToken())});
-                            });
-                });
-    }
-
     /**
      * Searches and removes (if present) a JWT Record from the records and
      * removes the authenticated user from the map if there is no entry anymore
@@ -142,7 +127,7 @@ public class JWTWhiteMap implements Serializable {
             if (records.remove(r)) {
                 LOG.log(Level.INFO, "Token of user ["
                         + email + "] ("
-                        + this.trunkToken(r.getToken())
+                        + JWTManager.trunkToken(r.getToken())
                         + ") removed from JWT White Map");
             }
         });
@@ -158,12 +143,6 @@ public class JWTWhiteMap implements Serializable {
         return record;
     }
 
-    private String trunkToken(String token) {
-        int l = token.length();
-        int n = 10;
-        return l < n ? token : "..." + token.substring(l - n, l);
-    }
-
     /**
      * Removes the JWT record directly from the JWT record set associated to an
      * authenticated user. <\br>
@@ -174,7 +153,6 @@ public class JWTWhiteMap implements Serializable {
      * @return
      */
     public Optional<JWTRecord> remove(String email, String token) {
-        displayMap();
         return this.remove(email,
                 token,
                 this.map.getOrDefault(email, new TreeSet<>()));
