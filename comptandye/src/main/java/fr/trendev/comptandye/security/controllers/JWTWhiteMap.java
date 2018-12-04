@@ -5,14 +5,14 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
+import fish.payara.cluster.Clustered;
+import fish.payara.cluster.DistributedLockType;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.logging.Level;
@@ -26,8 +26,8 @@ import javax.ejb.Startup;
  *
  * @author jsie
  */
-//@Clustered(callPostConstructOnAttach = false, callPreDestoyOnDetach = false,
-//        lock = DistributedLockType.LOCK, keyName = "white-map")
+@Clustered(callPostConstructOnAttach = false, callPreDestoyOnDetach = false,
+        lock = DistributedLockType.LOCK, keyName = "white-map")
 @Singleton
 @Startup
 public class JWTWhiteMap implements Serializable {
@@ -37,17 +37,8 @@ public class JWTWhiteMap implements Serializable {
     private static final Logger LOG = Logger.getLogger(JWTWhiteMap.class.
             getName());
 
-    transient private Timer timer;
-
     public JWTWhiteMap() {
         this.map = Collections.synchronizedSortedMap(new TreeMap<>());
-    }
-
-    private Timer getTimer() {
-        if (this.timer == null) {
-            this.timer = new Timer();
-        }
-        return this.timer;
     }
 
     @PostConstruct
@@ -59,7 +50,6 @@ public class JWTWhiteMap implements Serializable {
     @PreDestroy
     public void close() {
         //TODO : save the map in a DB and ignore if the map is empty (after test)
-        this.getTimer().cancel();
         LOG.log(Level.INFO, "{0} closed", JWTWhiteMap.class.getName());
     }
 
@@ -91,13 +81,6 @@ public class JWTWhiteMap implements Serializable {
     public Optional<Set<JWTRecord>> add(String email, JWTRecord record) {
         Set<JWTRecord> records = this.map.getOrDefault(email, new TreeSet<>());
         records.add(record);
-
-        this.getTimer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                remove(email, record.getToken());
-            }
-        }, record.getExpirationDate());
 
         //logged-in, first active "session"
         if (records.size() == 1) {

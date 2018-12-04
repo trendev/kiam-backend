@@ -24,6 +24,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -57,7 +59,16 @@ public class JWTManager {
     @Inject
     private JWTWhiteMap jwtWhiteMap;
 
+    private Timer timer;
+
     public JWTManager() {
+    }
+
+    private Timer getTimer() {
+        if (this.timer == null) {
+            this.timer = new Timer();
+        }
+        return this.timer;
     }
 
     @PostConstruct
@@ -115,6 +126,14 @@ public class JWTManager {
                 .ifPresent(s -> s.forEach(
                         r -> LOG.info("[" + caller + "] : " + r.getToken())
                 ));
+
+        this.getTimer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                jwtWhiteMap.remove(caller, token);
+            }
+        },
+                Date.from(expiration_time));
 
         return token;
     }
