@@ -43,13 +43,14 @@ public class JWTRevokedSet implements Serializable {
     @PostConstruct
     public void init() {
         //TODO: load the set from a DB
-        LOG.log(Level.INFO, "{0} initialized", JWTRevokedSet.class.getName());
+        LOG.log(Level.INFO, "{0} initialized", JWTRevokedSet.class.
+                getSimpleName());
     }
 
     @PreDestroy
     public void close() {
         //TODO : save the set in a DB and ignore if the set is empty (after test)
-        LOG.log(Level.INFO, "{0} closed", JWTRevokedSet.class.getName());
+        LOG.log(Level.INFO, "{0} closed", JWTRevokedSet.class.getSimpleName());
     }
 
     public Set<JWTRecord> getSet() {

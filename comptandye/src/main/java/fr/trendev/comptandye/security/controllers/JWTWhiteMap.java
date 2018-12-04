@@ -44,13 +44,15 @@ public class JWTWhiteMap implements Serializable {
     @PostConstruct
     public void init() {
         //TODO: load the map from a DB
-        LOG.log(Level.INFO, "{0} initialized", JWTWhiteMap.class.getName());
+        LOG.
+                log(Level.INFO, "{0} initialized", JWTWhiteMap.class.
+                        getSimpleName());
     }
 
     @PreDestroy
     public void close() {
         //TODO : save the map in a DB and ignore if the map is empty (after test)
-        LOG.log(Level.INFO, "{0} closed", JWTWhiteMap.class.getName());
+        LOG.log(Level.INFO, "{0} closed", JWTWhiteMap.class.getSimpleName());
     }
 
     /**
