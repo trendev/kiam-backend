@@ -87,8 +87,19 @@ public class JWTWhiteMap implements Serializable {
         //logged-in, first active "session"
         if (records.size() == 1) {
             LOG.log(Level.INFO,
-                    "First JWT Record added for user [{0}] in the JWT White Map (LOG-IN)",
-                    new Object[]{email});
+                    "First JWT Record ({0}) added for user [{1}] in the JWT White Map (LOG-IN)",
+                    new Object[]{
+                        JWTManager.trunkToken(record.getToken()),
+                        email
+                    });
+        } else {
+            LOG.log(Level.INFO,
+                    "JWT Record ({0}) added for user [{1}] in the JWT White Map : {2}",
+                    new Object[]{
+                        JWTManager.trunkToken(record.getToken()),
+                        email,
+                        records.size()
+                    });
         }
 
         return Optional.ofNullable(this.map.put(email, records));
@@ -125,10 +136,13 @@ public class JWTWhiteMap implements Serializable {
 
         record.ifPresent(r -> {
             if (records.remove(r)) {
-                LOG.log(Level.INFO, "Token of user ["
-                        + email + "] ("
-                        + JWTManager.trunkToken(r.getToken())
-                        + ") removed from JWT White Map");
+                LOG.log(Level.INFO,
+                        "Token of user [{0}] ({1}) removed from JWT White Map : {2}",
+                        new Object[]{
+                            email,
+                            JWTManager.trunkToken(r.getToken()),
+                            records.size()
+                        });
             }
         });
 

@@ -121,7 +121,15 @@ public class JWTManager {
                 Date.from(expiration_time)));
 
         // auto-removes the expired tokens from the JWT White Map
-        scheduler.schedule(() -> jwtWhiteMap.remove(caller, token),
+        scheduler.schedule(() -> {
+            LOG.log(Level.INFO,
+                    "Token of user [{0}] ({1}) has expired...",
+                    new Object[]{
+                        caller,
+                        JWTManager.trunkToken(token)
+                    });
+            jwtWhiteMap.remove(caller, token);
+        },
                 expiration_time.toEpochMilli() - System.currentTimeMillis(),
                 TimeUnit.MILLISECONDS);
 
@@ -169,7 +177,7 @@ public class JWTManager {
 
     public static String trunkToken(String token) {
         int l = token.length();
-        int n = 10;
+        int n = 16;
         return l < n ? token : "..." + token.substring(l - n, l);
     }
 
