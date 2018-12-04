@@ -24,9 +24,10 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.UUID;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -59,16 +60,10 @@ public class JWTManager {
     @Inject
     private JWTWhiteMap jwtWhiteMap;
 
-    private Timer timer;
+    private final ScheduledExecutorService scheduler;
 
     public JWTManager() {
-    }
-
-    private Timer getTimer() {
-        if (this.timer == null) {
-            this.timer = new Timer();
-        }
-        return this.timer;
+        this.scheduler = Executors.newScheduledThreadPool(2);
     }
 
     @PostConstruct
@@ -127,13 +122,9 @@ public class JWTManager {
                         r -> LOG.info("[" + caller + "] : " + r.getToken())
                 ));
 
-        this.getTimer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                jwtWhiteMap.remove(caller, token);
-            }
-        },
-                Date.from(expiration_time));
+        scheduler.schedule(() -> jwtWhiteMap.remove(caller, token),
+                expiration_time.toEpochMilli() - System.currentTimeMillis(),
+                TimeUnit.MILLISECONDS);
 
         return token;
     }
