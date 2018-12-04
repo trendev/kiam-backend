@@ -41,7 +41,7 @@ import javax.inject.Inject;
 @ApplicationScoped
 public class JWTManager {
 
-    public final static int VALID_PERIOD = 1;
+    public final static int VALID_PERIOD = 5;
 
     public final static String ISS = "https://www.comptandye.fr";
 
