@@ -16,6 +16,7 @@ import com.nimbusds.jwt.SignedJWT;
 import static fr.trendev.comptandye.security.controllers.JWTManager.ISS;
 import static fr.trendev.comptandye.security.controllers.JWTManager.SHORT_VALID_PERIOD;
 import static fr.trendev.comptandye.security.controllers.JWTManager.SHORT_VALID_PERIOD_UNIT;
+import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.text.ParseException;
 import java.time.Instant;
 import java.util.Arrays;
@@ -202,6 +203,20 @@ public class JWTManagerTest {
 
     @Test
     public void testIsRevoked() {
+        final String token1 = "token1";
+        final Instant now = Instant.now();
+
+        final Date creationDate1 = Date.from(now);
+        final Date expirationDate1 = Date.from(now.plus(SHORT_VALID_PERIOD,
+                SHORT_VALID_PERIOD_UNIT));
+
+        JWTRecord record1 = new JWTRecord(token1, creationDate1, expirationDate1);
+
+        Assertions.assertFalse(jwtManager.isRevoked(token1));
+        Assertions.assertTrue(jwtManager.getRevokedSet().add(record1));
+        Assertions.assertTrue(jwtManager.getRevokedSet().contains(token1));
+        Assertions.assertTrue(jwtManager.isRevoked(token1));
+
     }
 
     @Test
@@ -234,10 +249,6 @@ public class JWTManagerTest {
         Assertions.assertTrue(jwtManager.
                 canBeRefreshed(claimSetBuilder.build()));
 
-    }
-
-    @Test
-    public void testTrunkToken() {
     }
 
 }

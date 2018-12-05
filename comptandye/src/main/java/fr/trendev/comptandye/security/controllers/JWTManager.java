@@ -64,6 +64,9 @@ public class JWTManager {
     @Inject
     private JWTWhiteMap jwtWhiteMap;
 
+    @Inject
+    private JWTRevokedSet jwtRevokedSet;
+
     private final ScheduledExecutorService scheduler;
 
     public JWTManager() {
@@ -77,7 +80,11 @@ public class JWTManager {
     }
 
     public JWTWhiteMap getWhiteMap() {
-        return this.jwtWhiteMap;
+        return jwtWhiteMap;
+    }
+
+    public JWTRevokedSet getRevokedSet() {
+        return jwtRevokedSet;
     }
 
     public String generateToken(final String caller,
@@ -173,9 +180,8 @@ public class JWTManager {
         return now.isAfter(exp);
     }
 
-    //TODO : implement/test
     public boolean isRevoked(final String token) {
-        return false;
+        return this.jwtRevokedSet.contains(token);
     }
 
     public boolean canBeRefreshed(final JWTClaimsSet claims) {
