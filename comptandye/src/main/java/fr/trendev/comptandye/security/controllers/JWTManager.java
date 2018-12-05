@@ -78,6 +78,12 @@ public class JWTManager {
         this.signer = new RSASSASigner(this.privateKey);
         this.verifier = new RSASSAVerifier(this.publicKey);
     }
+    
+    public static String trunkToken(String token) {
+        int l = token.length();
+        int n = 16;
+        return l < n ? token : "..." + token.substring(l - n, l);
+    }
 
     public JWTWhiteMap getWhiteMap() {
         return jwtWhiteMap;
@@ -196,10 +202,9 @@ public class JWTManager {
                 ));
     }
 
-    public static String trunkToken(String token) {
-        int l = token.length();
-        int n = 16;
-        return l < n ? token : "..." + token.substring(l - n, l);
+    //TODO : implement + test
+    public Optional<JWTRecord> revoke(final String email, final String token){
+        return null;
     }
 
 }
