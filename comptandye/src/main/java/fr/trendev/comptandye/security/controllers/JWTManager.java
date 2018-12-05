@@ -206,5 +206,16 @@ public class JWTManager {
     public Optional<JWTRecord> revoke(final String email, final String token){
         return null;
     }
+    
+    //TODO : implement + test
+    public String refreshToken(final ClaimsSet claimsSet){
+        return null;
+    }
+    
+    //TODO : implement + test
+    public ClaimsSet createClaimsSet(){
+        return null;
+    }
+    
 
 }
