@@ -152,7 +152,8 @@ public class JWTManager {
 
         return token;
     }
-
+    
+    // rename extract instead of get
     public Optional<JWTClaimsSet> getClaimsSet(String token) {
         try {
             if (token != null) {
@@ -203,11 +204,16 @@ public class JWTManager {
     }
 
     //TODO : implement + test
-    public Optional<JWTRecord> revoke(final String email, final String token){
+    public Optional<JWTRecord> revokeToken(final String email, final String token){
         return null;
     }
     
-    public Optional<Set<JWTRecord>> revokeAll(final String email){
+    public Optional<Set<JWTRecord>> revokeAllTokens(final String email){
+    return null;
+    }
+    
+    //TODO : implement + test
+    public String signClaimsSet(final ClaimsSet claimsSet){
     return null;
     }
     
