@@ -93,6 +93,7 @@ public class JWTManager {
         return jwtRevokedSet;
     }
 
+    //rename generateNewToken
     public String generateToken(final String caller,
             final List<String> groups,
             final String xsrf,
