@@ -21,6 +21,7 @@ import java.security.interfaces.RSAPublicKey;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -41,7 +42,10 @@ import javax.inject.Inject;
 @ApplicationScoped
 public class JWTManager {
 
-    public final static int VALID_PERIOD = 5;
+    public final static int SHORT_VALID_PERIOD = 30;
+    public final static TemporalUnit SHORT_VALID_PERIOD_UNIT = ChronoUnit.MINUTES;
+    public final static int LONG_VALID_PERIOD = 2;
+    public final static TemporalUnit LONG_VALID_PERIOD_UNIT = ChronoUnit.MONTHS;
 
     public final static String ISS = "https://www.comptandye.fr";
 
@@ -82,8 +86,8 @@ public class JWTManager {
             final boolean rmbme)
             throws JOSEException {
         Instant current_time = Instant.now();
-        Instant expiration_time = current_time.plus(VALID_PERIOD,
-                ChronoUnit.MINUTES);
+        Instant expiration_time = current_time.plus(SHORT_VALID_PERIOD,
+                SHORT_VALID_PERIOD_UNIT);
 
         final String jti = UUID.randomUUID().toString();
 
@@ -163,16 +167,27 @@ public class JWTManager {
         return Optional.empty();
     }
 
-    public boolean hasExpired(final JWTClaimsSet claims) {
+    public boolean isExpired(final JWTClaimsSet claims) {
         Instant now = Instant.now();
         Instant exp = claims.getExpirationTime().toInstant();
         return now.isAfter(exp);
     }
 
+    //TODO : implement/test
+    public boolean isRevoked(final String token) {
+        return false;
+    }
+
     public boolean canBeRefreshed(final JWTClaimsSet claims) {
         Instant now = Instant.now();
-        // TODO : check if the token will expire soon and must be refreshed
-        return false;
+        Instant issueTime = claims.getIssueTime().toInstant();
+        Instant expirationTime = claims.getExpirationTime().toInstant();
+
+        return now.isAfter(
+                issueTime.plusMillis(
+                        (expirationTime.toEpochMilli()
+                        - issueTime.toEpochMilli()) / 2
+                ));
     }
 
     public static String trunkToken(String token) {

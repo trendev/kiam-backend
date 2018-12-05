@@ -5,9 +5,10 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
+import static fr.trendev.comptandye.security.controllers.JWTManager.SHORT_VALID_PERIOD;
+import static fr.trendev.comptandye.security.controllers.JWTManager.SHORT_VALID_PERIOD_UNIT;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.time.Instant;
-import static java.time.temporal.ChronoUnit.MINUTES;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
@@ -32,17 +33,18 @@ public class JWTRevokedSetTest {
     private final Instant now = Instant.now();
 
     private final Date creationDate1 = Date.from(now);
-    private final Date creationDate2 = Date.from(now.plus(5, MINUTES));
-    private final Date creationDate3 = Date.from(now.plus(10, MINUTES));
-    private final Date expirationDate1 = Date.from(now.plus(
-            JWTManager.VALID_PERIOD,
-            MINUTES));
+    private final Date creationDate2 = Date.from(now.plus(5,
+            SHORT_VALID_PERIOD_UNIT));
+    private final Date creationDate3 = Date.from(now.plus(10,
+            SHORT_VALID_PERIOD_UNIT));
+    private final Date expirationDate1 = Date.from(now.plus(SHORT_VALID_PERIOD,
+            SHORT_VALID_PERIOD_UNIT));
     private final Date expirationDate2 = Date.from(now.plus(
-            JWTManager.VALID_PERIOD + 5,
-            MINUTES));
+            SHORT_VALID_PERIOD + 5,
+            SHORT_VALID_PERIOD_UNIT));
     private final Date expirationDate3 = Date.from(now.plus(
-            JWTManager.VALID_PERIOD + 10,
-            MINUTES));
+            SHORT_VALID_PERIOD + 10,
+            SHORT_VALID_PERIOD_UNIT));
 
     @Rule
     public WeldInitiator weld = WeldInitiator

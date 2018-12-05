@@ -147,7 +147,7 @@ public class CustomHttpAuthenticationMechanism implements
                     .findFirst()
                     .flatMap(c -> this.jwtManager.getClaimsSet(c.getValue()))
                     // JWT is valid and signature is verified
-                    .filter(clmset -> !this.jwtManager.hasExpired(clmset))
+                    .filter(clmset -> !this.jwtManager.isExpired(clmset))
                     .map(clmset -> {
                         try {
                             //share the anti xsrf-token with the filters as a request attribute

@@ -5,9 +5,9 @@
  */
 package fr.trendev.comptandye.security.entities;
 
-import fr.trendev.comptandye.security.controllers.JWTManager;
+import static fr.trendev.comptandye.security.controllers.JWTManager.SHORT_VALID_PERIOD;
+import static fr.trendev.comptandye.security.controllers.JWTManager.SHORT_VALID_PERIOD_UNIT;
 import java.time.Instant;
-import static java.time.temporal.ChronoUnit.MINUTES;
 import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,8 +31,8 @@ public class JWTRecordTest {
     @Test
     public void testConstructor() {
         Date creationDate1 = Date.from(now);
-        Date expirationDate1 = Date.from(now.plus(JWTManager.VALID_PERIOD,
-                MINUTES));
+        Date expirationDate1 = Date.from(now.plus(SHORT_VALID_PERIOD,
+                SHORT_VALID_PERIOD_UNIT));
         Assertions.assertThrows(IllegalArgumentException.class, () ->
                 new JWTRecord(null, creationDate1, expirationDate1));
         Assertions.assertThrows(IllegalArgumentException.class, () ->
@@ -53,10 +53,10 @@ public class JWTRecordTest {
     public void testEquals() {
         Date creationDate1 = Date.from(now);
         Date creationDate2 = Date.from(now);
-        Date expirationDate1 = Date.from(now.plus(JWTManager.VALID_PERIOD,
-                MINUTES));
-        Date expirationDate2 = Date.from(now.plus(JWTManager.VALID_PERIOD,
-                MINUTES));
+        Date expirationDate1 = Date.from(now.plus(SHORT_VALID_PERIOD,
+                SHORT_VALID_PERIOD_UNIT));
+        Date expirationDate2 = Date.from(now.plus(SHORT_VALID_PERIOD,
+                SHORT_VALID_PERIOD_UNIT));
 
         JWTRecord record1 = new JWTRecord(token, creationDate1, expirationDate1);
         JWTRecord record1b = new JWTRecord(token, creationDate1, expirationDate1);
@@ -76,10 +76,10 @@ public class JWTRecordTest {
     public void testHashCode() {
         Date creationDate1 = Date.from(now);
         Date creationDate2 = Date.from(now);
-        Date expirationDate1 = Date.from(now.plus(JWTManager.VALID_PERIOD,
-                MINUTES));
-        Date expirationDate2 = Date.from(now.plus(JWTManager.VALID_PERIOD,
-                MINUTES));
+        Date expirationDate1 = Date.from(now.plus(SHORT_VALID_PERIOD,
+                SHORT_VALID_PERIOD_UNIT));
+        Date expirationDate2 = Date.from(now.plus(SHORT_VALID_PERIOD,
+                SHORT_VALID_PERIOD_UNIT));
 
         JWTRecord record1 = new JWTRecord(token, creationDate1, expirationDate1);
         JWTRecord record1b = new JWTRecord(token, creationDate1, expirationDate1);
@@ -103,11 +103,12 @@ public class JWTRecordTest {
         Instant now = Instant.now();
 
         Date creationDate1 = Date.from(now);
-        Date creationDate2 = Date.from(now.plus(5, MINUTES));
-        Date expirationDate1 = Date.from(now.plus(JWTManager.VALID_PERIOD,
-                MINUTES));
-        Date expirationDate2 = Date.from(now.plus(JWTManager.VALID_PERIOD + 5,
-                MINUTES));
+        Date creationDate2 = Date.from(now.plus(SHORT_VALID_PERIOD,
+                SHORT_VALID_PERIOD_UNIT));
+        Date expirationDate1 = Date.from(now.plus(SHORT_VALID_PERIOD,
+                SHORT_VALID_PERIOD_UNIT));
+        Date expirationDate2 = Date.from(now.plus(SHORT_VALID_PERIOD * 2,
+                SHORT_VALID_PERIOD_UNIT));
 
         Assertions.assertTrue(
                 new JWTRecord(token1, creationDate1, expirationDate1)

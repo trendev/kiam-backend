@@ -36,14 +36,13 @@ public class JWTWhiteMapTest {
     private final Date creationDate1 = Date.from(now);
     private final Date creationDate2 = Date.from(now.plus(5, MINUTES));
     private final Date creationDate3 = Date.from(now.plus(10, MINUTES));
-    private final Date expirationDate1 = Date.from(now.plus(
-            JWTManager.VALID_PERIOD,
+    private final Date expirationDate1 = Date.from(now.plus(JWTManager.SHORT_VALID_PERIOD,
             MINUTES));
     private final Date expirationDate2 = Date.from(now.plus(
-            JWTManager.VALID_PERIOD + 5,
+            JWTManager.SHORT_VALID_PERIOD + 5,
             MINUTES));
     private final Date expirationDate3 = Date.from(now.plus(
-            JWTManager.VALID_PERIOD + 10,
+            JWTManager.SHORT_VALID_PERIOD + 10,
             MINUTES));
 
     @Rule

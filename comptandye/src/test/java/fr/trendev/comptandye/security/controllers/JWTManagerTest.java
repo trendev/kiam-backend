@@ -14,10 +14,10 @@ import com.nimbusds.jose.crypto.RSASSAVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import static fr.trendev.comptandye.security.controllers.JWTManager.ISS;
-import static fr.trendev.comptandye.security.controllers.JWTManager.VALID_PERIOD;
+import static fr.trendev.comptandye.security.controllers.JWTManager.SHORT_VALID_PERIOD;
+import static fr.trendev.comptandye.security.controllers.JWTManager.SHORT_VALID_PERIOD_UNIT;
 import java.text.ParseException;
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -93,10 +93,10 @@ public class JWTManagerTest {
             Instant exp = parsedJWT.getJWTClaimsSet().getExpirationTime().
                     toInstant();
             Assertions.assertTrue(iat.isBefore(now));
-            Assertions.assertTrue(iat.isAfter(now.minus(VALID_PERIOD,
-                    ChronoUnit.MINUTES)));
-            Assertions.assertTrue(exp.equals(iat.plus(VALID_PERIOD,
-                    ChronoUnit.MINUTES)));
+            Assertions.assertTrue(iat.isAfter(now.minus(SHORT_VALID_PERIOD,
+                    SHORT_VALID_PERIOD_UNIT)));
+            Assertions.assertTrue(exp.equals(iat.plus(SHORT_VALID_PERIOD,
+                    SHORT_VALID_PERIOD_UNIT)));
 
             Assertions.assertIterableEquals(this.groups, parsedJWT.
                     getJWTClaimsSet().
@@ -182,10 +182,11 @@ public class JWTManagerTest {
     }
 
     @Test
-    public void testHasExpired() throws JOSEException {
+    public void testIsExpired() throws JOSEException {
 
         Instant now = Instant.now();
-        Instant futur = Instant.now().plus(VALID_PERIOD * 2, ChronoUnit.MINUTES);
+        Instant futur = Instant.now().plus(SHORT_VALID_PERIOD * 2,
+                SHORT_VALID_PERIOD_UNIT);
 
         String token = this.jwtManager.generateToken(this.caller, groups,
                 "x-xsrf-token", false);
@@ -197,6 +198,46 @@ public class JWTManagerTest {
         Assertions.assertTrue(now.isBefore(exp));
         Assertions.assertFalse(exp.isAfter(futur));
 
+    }
+
+    @Test
+    public void testIsRevoked() {
+    }
+
+    @Test
+    public void testCanBeRefreshed() {
+        JWTClaimsSet.Builder claimSetBuilder = new JWTClaimsSet.Builder();
+        Instant now = Instant.now();
+
+        Instant issueTime = now;
+        Instant expirationTime = now.plus(5,
+                SHORT_VALID_PERIOD_UNIT);
+
+        claimSetBuilder.issueTime(Date.from(issueTime));
+        claimSetBuilder.expirationTime(Date.from(expirationTime));
+        Assertions.assertFalse(jwtManager.
+                canBeRefreshed(claimSetBuilder.build()));
+
+        issueTime = now.minus(2, SHORT_VALID_PERIOD_UNIT);
+        expirationTime = issueTime.plus(6, SHORT_VALID_PERIOD_UNIT);
+
+        claimSetBuilder.issueTime(Date.from(issueTime));
+        claimSetBuilder.expirationTime(Date.from(expirationTime));
+        Assertions.assertFalse(jwtManager.
+                canBeRefreshed(claimSetBuilder.build()));
+
+        issueTime = now.minus(4, SHORT_VALID_PERIOD_UNIT);
+        expirationTime = issueTime.plus(6, SHORT_VALID_PERIOD_UNIT);
+
+        claimSetBuilder.issueTime(Date.from(issueTime));
+        claimSetBuilder.expirationTime(Date.from(expirationTime));
+        Assertions.assertTrue(jwtManager.
+                canBeRefreshed(claimSetBuilder.build()));
+
+    }
+
+    @Test
+    public void testTrunkToken() {
     }
 
 }
