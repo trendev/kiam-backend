@@ -145,7 +145,7 @@ public class CustomHttpAuthenticationMechanism implements
                     .filter(Objects::nonNull)// avoid null and empty element
                     .filter(c -> JWT.equals(c.getName()))
                     .findFirst()
-                    .flatMap(c -> this.jwtManager.getClaimsSet(c.getValue()))
+                    .flatMap(c -> this.jwtManager.extractClaimsSet(c.getValue()))
                     // JWT is valid and signature is verified
                     .filter(clmset -> !this.jwtManager.isExpired(clmset))
                     .map(clmset -> {

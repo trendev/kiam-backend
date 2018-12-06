@@ -118,13 +118,13 @@ public class JWTManagerTest {
     }
 
     @Test
-    public void testGetClaimsSet() {
+    public void testExtractClaimsSet() {
         try {
             String token = this.jwtManager.generateToken(this.caller, groups,
                     "x-xsrf-token", false);
 
             Assertions.assertTrue(
-                    this.jwtManager.getClaimsSet(token).isPresent());
+                    this.jwtManager.extractClaimsSet(token).isPresent());
 
         } catch (JOSEException ex) {
             Logger.getLogger(JWTManagerTest.class.getName()).
@@ -133,13 +133,13 @@ public class JWTManagerTest {
     }
 
     @Test
-    public void testGetClaimsSetWithNullToken() {
+    public void testExtractClaimsSetWithNullToken() {
         try {
             String token = this.jwtManager.generateToken(this.caller, groups,
                     "x-xsrf-token", false);
 
             Assertions.assertFalse(
-                    this.jwtManager.getClaimsSet(null).isPresent());
+                    this.jwtManager.extractClaimsSet(null).isPresent());
 
         } catch (JOSEException ex) {
             Logger.getLogger(JWTManagerTest.class.getName()).
@@ -148,13 +148,14 @@ public class JWTManagerTest {
     }
 
     @Test
-    public void testGetClaimsSetWithJWTCorruption() {
+    public void testExtractClaimsSetWithJWTCorruption() {
         try {
             String token = this.jwtManager.generateToken(this.caller, groups,
                     "x-xsrf-token", false);
 
             Assertions.assertFalse(
-                    this.jwtManager.getClaimsSet(token.replaceFirst("e", "f"))
+                    this.jwtManager.extractClaimsSet(token.
+                            replaceFirst("e", "f"))
                             .isPresent());
 
         } catch (JOSEException ex) {
@@ -164,7 +165,7 @@ public class JWTManagerTest {
     }
 
     @Test
-    public void testGetClaimsSetWithUnverifiedSignature() {
+    public void testExtractClaimsSetWithUnverifiedSignature() {
         try {
             String token = this.jwtManager.generateToken(this.caller, groups,
                     "x-xsrf-token", false);
@@ -173,7 +174,7 @@ public class JWTManagerTest {
             bytes[token.length() - 10]++;
 
             Assertions.assertFalse(
-                    this.jwtManager.getClaimsSet(new String(bytes))
+                    this.jwtManager.extractClaimsSet(new String(bytes))
                             .isPresent());
 
         } catch (JOSEException ex) {
@@ -191,7 +192,7 @@ public class JWTManagerTest {
 
         String token = this.jwtManager.generateToken(this.caller, groups,
                 "x-xsrf-token", false);
-        Instant exp = this.jwtManager.getClaimsSet(token)
+        Instant exp = this.jwtManager.extractClaimsSet(token)
                 .map(JWTClaimsSet::getExpirationTime)
                 .map(Date::toInstant)
                 .orElseThrow(AssertionError::new);

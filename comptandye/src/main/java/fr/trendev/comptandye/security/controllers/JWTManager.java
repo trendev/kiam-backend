@@ -100,8 +100,8 @@ public class JWTManager {
             final String xsrf,
             final boolean rmbme)
             throws JOSEException {
-        Instant current_time = Instant.now();
-        Instant expiration_time = current_time.plus(SHORT_VALID_PERIOD,
+        Instant currentTime = Instant.now();
+        Instant expirationTime = currentTime.plus(SHORT_VALID_PERIOD,
                 SHORT_VALID_PERIOD_UNIT);
 
         final String jti = UUID.randomUUID().toString();
@@ -109,8 +109,8 @@ public class JWTManager {
         JWTClaimsSet.Builder claimSetBuilder = new JWTClaimsSet.Builder();
         claimSetBuilder.issuer(ISS);
         claimSetBuilder.subject(caller);
-        claimSetBuilder.issueTime(Date.from(current_time));
-        claimSetBuilder.expirationTime(Date.from(expiration_time));
+        claimSetBuilder.issueTime(Date.from(currentTime));
+        claimSetBuilder.expirationTime(Date.from(expirationTime));
         claimSetBuilder.jwtID(jti);
 
         //MP-JWT specific
@@ -136,27 +136,26 @@ public class JWTManager {
                 new Object[]{caller, token, jti, xsrf});
 
         jwtWhiteMap.add(caller, new JWTRecord(token,
-                Date.from(current_time),
-                Date.from(expiration_time)));
+                Date.from(currentTime),
+                Date.from(expirationTime)));
 
         // auto-removes the expired tokens from the JWT White Map
         scheduler.schedule(() -> {
-            LOG.log(Level.INFO,
-                    "Token of user [{0}] ({1}) has expired...",
-                    new Object[]{
-                        caller,
-                        JWTManager.trunkToken(token)
-                    });
-            jwtWhiteMap.remove(caller, token);
+            jwtWhiteMap.remove(caller, token)
+                    .ifPresent(r -> LOG.log(Level.INFO,
+                            "Token of user [{0}] ({1}) has expired...",
+                            new Object[]{
+                                caller,
+                                JWTManager.trunkToken(r.getToken())
+                            }));
         },
-                expiration_time.toEpochMilli() - System.currentTimeMillis(),
+                expirationTime.toEpochMilli() - System.currentTimeMillis(),
                 TimeUnit.MILLISECONDS);
 
         return token;
     }
 
-    // rename extract instead of get
-    public Optional<JWTClaimsSet> getClaimsSet(String token) {
+    public Optional<JWTClaimsSet> extractClaimsSet(String token) {
         try {
             if (token != null) {
                 SignedJWT parsedJWT = SignedJWT.parse(token);
@@ -208,7 +207,20 @@ public class JWTManager {
     //TODO : implement + test
     public Optional<JWTRecord> revokeToken(final String email,
             final String token) {
-        return null;
+        Optional<JWTRecord> record = this.jwtWhiteMap.remove(email, token);
+        record.ifPresent(r -> {
+            if (this.jwtRevokedSet.add(r)) {
+                LOG.log(Level.WARNING, "Token (" + trunkToken(r.getToken())
+                        + ") has been revoked and addded in JWT RevokedSet");
+                this.extractClaimsSet(r.getToken())
+                        .ifPresent(cs -> {
+                            //TODO : get the expirationTime and schedule remove from JWT revoked set
+                            Date expirationTime = cs.getExpirationTime();
+                        });
+
+            }
+        });
+        return record;
     }
 
     public Optional<Set<JWTRecord>> revokeAllTokens(final String email) {
