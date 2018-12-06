@@ -117,6 +117,25 @@ public class JWTWhiteMap implements Serializable {
     }
 
     /**
+     * Removes the user "email" and its records from the JWT White Map
+     *
+     * @param email the email of the authenticated user
+     * @return an Option with the record set if the user is authenticated, an
+     * empty Optional otherwise
+     */
+    public Optional<Set<JWTRecord>> removeAll(String email) {
+        Optional<Set<JWTRecord>> records =
+                Optional.ofNullable(this.map.remove(email));
+
+        if (records.isPresent()) {
+            LOG.log(Level.INFO,
+                    "All JWT Records of user [{0}] have been removed : no more entry in the JWT White Map (LOG-OUT)",
+                    new Object[]{email});
+        }
+        return records;
+    }
+
+    /**
      * Searches and removes (if present) a JWT Record from the records and
      * removes the authenticated user from the map if there is no entry anymore
      * (cleaning)

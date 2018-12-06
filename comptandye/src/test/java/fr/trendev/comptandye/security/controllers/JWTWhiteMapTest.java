@@ -36,7 +36,8 @@ public class JWTWhiteMapTest {
     private final Date creationDate1 = Date.from(now);
     private final Date creationDate2 = Date.from(now.plus(5, MINUTES));
     private final Date creationDate3 = Date.from(now.plus(10, MINUTES));
-    private final Date expirationDate1 = Date.from(now.plus(JWTManager.SHORT_VALID_PERIOD,
+    private final Date expirationDate1 = Date.from(now.plus(
+            JWTManager.SHORT_VALID_PERIOD,
             MINUTES));
     private final Date expirationDate2 = Date.from(now.plus(
             JWTManager.SHORT_VALID_PERIOD + 5,
@@ -210,6 +211,26 @@ public class JWTWhiteMapTest {
         Assertions.assertTrue(jwtwm.remove(token2).isPresent());
         Assertions.assertFalse(jwtwm.getMap().containsKey(email2));
         Assertions.assertTrue(jwtwm.getMap().isEmpty());
+    }
+
+    @Test
+    public void testRemoveAll() throws Exception {
+        JWTRecord record1 = new JWTRecord(token1, creationDate1, expirationDate1);
+        JWTRecord record2 = new JWTRecord(token2, creationDate2, expirationDate2);
+        JWTRecord record3 = new JWTRecord(token3, creationDate3, expirationDate3);
+
+        jwtwm.add(email1, record1);
+        jwtwm.add(email1, record2);
+        jwtwm.add(email1, record3);
+
+        Set<JWTRecord> records = jwtwm.getRecords(email1).get();
+
+        Assertions.assertEquals(records.size(), 3);
+
+        Optional<Set<JWTRecord>> opt = jwtwm.removeAll(email1);
+        Assertions.assertTrue(opt.isPresent());
+        Assertions.assertEquals(records, opt.get());
+        Assertions.assertTrue(records.containsAll(opt.get()));
     }
 
 }
