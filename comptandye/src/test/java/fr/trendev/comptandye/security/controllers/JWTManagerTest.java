@@ -252,4 +252,34 @@ public class JWTManagerTest {
 
     }
 
+    @Test
+    public void testGetWhiteMap() {
+        Assertions.assertNotNull(this.jwtManager.getWhiteMap());
+    }
+
+    @Test
+    public void testGetRevokedSet() {
+        Assertions.assertNotNull(this.jwtManager.getRevokedSet());
+    }
+
+    @Test
+    public void testRevokeToken() {
+    }
+
+    @Test
+    public void testRevokeAllTokens() {
+    }
+
+    @Test
+    public void testSignClaimsSet() {
+    }
+
+    @Test
+    public void testRefreshToken() {
+    }
+
+    @Test
+    public void testCreateClaimsSet() {
+    }
+
 }
