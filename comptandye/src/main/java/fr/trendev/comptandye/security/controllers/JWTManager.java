@@ -122,15 +122,8 @@ public class JWTManager {
 
         JWTClaimsSet claimsSet = claimSetBuilder.build();
 
-        SignedJWT signedJWT = new SignedJWT(
-                new JWSHeader.Builder(RS256)
-                        .keyID("privateKey.pem")
-                        .type(JWT)
-                        .build(), claimsSet);
+        String token = this.signClaimsSet(claimsSet);
 
-        signedJWT.sign(this.signer);
-
-        String token = signedJWT.serialize();
         LOG.log(Level.INFO,
                 "JWT generated for user {0} :\n{1}\njti = {2}\nxsrf = {3}",
                 new Object[]{caller, token, jti, xsrf});
@@ -153,6 +146,19 @@ public class JWTManager {
                 TimeUnit.MILLISECONDS);
 
         return token;
+    }
+
+    private String signClaimsSet(final JWTClaimsSet claimsSet) throws
+            JOSEException {
+        SignedJWT signedJWT = new SignedJWT(
+                new JWSHeader.Builder(RS256)
+                        .keyID("privateKey.pem")
+                        .type(JWT)
+                        .build(), claimsSet);
+
+        signedJWT.sign(this.signer);
+
+        return signedJWT.serialize();
     }
 
     public Optional<JWTClaimsSet> extractClaimsSet(String token) {
@@ -248,11 +254,6 @@ public class JWTManager {
                     this.scheduleAutoRemovalOfRevokedTokens(email, r));
         });
         return records;
-    }
-
-    //TODO : implement + test
-    public String signClaimsSet(final JWTClaimsSet claimsSet) {
-        return null;
     }
 
     //TODO : implement + test
