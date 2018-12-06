@@ -17,33 +17,33 @@ public class JWTRecord implements Serializable, Comparable<JWTRecord> {
 
     private String token;
     private Date creationTime;
-    private Date expirationDate;
+    private Date expirationTime;
 
-    public JWTRecord(String token, Date creationTime, Date expirationDate) {
+    public JWTRecord(String token, Date creationTime, Date expirationTime) {
 
         if (token == null || token.isEmpty()) {
             throw new IllegalArgumentException(
                     "token String must not be null or empty");
         }
 
-        if (creationTime == null || expirationDate == null) {
+        if (creationTime == null || expirationTime == null) {
             throw new IllegalArgumentException(
-                    "creationTime and expirationDate must not be null");
+                    "creationTime and expirationTime must not be null");
         }
 
-        if (creationTime.equals(expirationDate)) {
+        if (creationTime.equals(expirationTime)) {
             throw new IllegalArgumentException(
-                    "creationTime and expirationDate must not be the same");
+                    "creationTime and expirationTime must not be the same");
         }
 
-        if (expirationDate.before(creationTime)) {
+        if (expirationTime.before(creationTime)) {
             throw new IllegalArgumentException(
-                    "expirationDate must not be before creationTime");
+                    "expirationTime must not be before creationTime");
         }
 
         this.token = token;
         this.creationTime = creationTime;
-        this.expirationDate = expirationDate;
+        this.expirationTime = expirationTime;
     }
 
     public JWTRecord() {
@@ -65,12 +65,12 @@ public class JWTRecord implements Serializable, Comparable<JWTRecord> {
         this.creationTime = creationTime;
     }
 
-    public Date getExpirationDate() {
-        return expirationDate;
+    public Date getExpirationTime() {
+        return expirationTime;
     }
 
-    public void setExpirationDate(Date expirationDate) {
-        this.expirationDate = expirationDate;
+    public void setExpirationTime(Date expirationTime) {
+        this.expirationTime = expirationTime;
     }
 
     @Override
@@ -78,7 +78,7 @@ public class JWTRecord implements Serializable, Comparable<JWTRecord> {
         int hash = 7;
         hash = 97 * hash + Objects.hashCode(this.token);
         hash = 97 * hash + Objects.hashCode(this.creationTime);
-        hash = 97 * hash + Objects.hashCode(this.expirationDate);
+        hash = 97 * hash + Objects.hashCode(this.expirationTime);
         return hash;
     }
 
@@ -100,7 +100,7 @@ public class JWTRecord implements Serializable, Comparable<JWTRecord> {
         if (!Objects.equals(this.creationTime, other.creationTime)) {
             return false;
         }
-        if (!Objects.equals(this.expirationDate, other.expirationDate)) {
+        if (!Objects.equals(this.expirationTime, other.expirationTime)) {
             return false;
         }
         return true;
@@ -116,7 +116,7 @@ public class JWTRecord implements Serializable, Comparable<JWTRecord> {
             if (creationTimeDiff != 0) {
                 return creationTimeDiff;
             } else {
-                return this.expirationDate.compareTo(o.expirationDate);
+                return this.expirationTime.compareTo(o.expirationTime);
             }
         }
     }

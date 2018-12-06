@@ -224,7 +224,7 @@ public class JWTManager {
                                         trunkToken(token)
                                     }));
                 },
-                        r.getExpirationDate().getTime() - System.
+                        r.getExpirationTime().getTime() - System.
                         currentTimeMillis(),
                         TimeUnit.MILLISECONDS);
             }
