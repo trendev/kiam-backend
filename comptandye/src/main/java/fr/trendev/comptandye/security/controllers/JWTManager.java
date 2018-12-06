@@ -45,8 +45,8 @@ public class JWTManager {
 
     public final static int SHORT_VALID_PERIOD = 30;
     public final static TemporalUnit SHORT_VALID_PERIOD_UNIT = ChronoUnit.MINUTES;
-    public final static int LONG_VALID_PERIOD = 2;
-    public final static TemporalUnit LONG_VALID_PERIOD_UNIT = ChronoUnit.MONTHS;
+    public final static int LONG_VALID_PERIOD = 60;
+    public final static TemporalUnit LONG_VALID_PERIOD_UNIT = ChronoUnit.DAYS;
 
     public final static String ISS = "https://www.comptandye.fr";
 
@@ -101,32 +101,21 @@ public class JWTManager {
             final boolean rmbme)
             throws JOSEException {
         Instant currentTime = Instant.now();
-        Instant expirationTime = currentTime.plus(SHORT_VALID_PERIOD,
-                SHORT_VALID_PERIOD_UNIT);
+        Instant expirationTime = currentTime.plus(
+                rmbme ? LONG_VALID_PERIOD : SHORT_VALID_PERIOD,
+                rmbme ? LONG_VALID_PERIOD_UNIT : SHORT_VALID_PERIOD_UNIT);
 
-        final String jti = UUID.randomUUID().toString();
+        JWTClaimsSet.Builder csbuilder = this.createClaimsSetBuilder(caller,
+                groups, xsrf, 0);
 
-        JWTClaimsSet.Builder claimSetBuilder = new JWTClaimsSet.Builder();
-        claimSetBuilder.issuer(ISS);
-        claimSetBuilder.subject(caller);
-        claimSetBuilder.issueTime(Date.from(currentTime));
-        claimSetBuilder.expirationTime(Date.from(expirationTime));
-        claimSetBuilder.jwtID(jti);
+        csbuilder.issueTime(Date.from(currentTime));
+        csbuilder.expirationTime(Date.from(expirationTime));
 
-        //MP-JWT specific
-        claimSetBuilder.claim("upn", caller);
-        claimSetBuilder.claim("groups", groups);
-
-        //XSRF-TOKEN
-        claimSetBuilder.claim("xsrf", xsrf);
-
-        JWTClaimsSet claimsSet = claimSetBuilder.build();
-
-        String token = this.signClaimsSet(claimsSet);
+        String token = this.signClaimsSet(csbuilder.build());
 
         LOG.log(Level.INFO,
-                "JWT generated for user {0} :\n{1}\njti = {2}\nxsrf = {3}",
-                new Object[]{caller, token, jti, xsrf});
+                "JWT generated for user {0} :\n{1}\nGenerated xsrf = {2}",
+                new Object[]{caller, token, xsrf});
 
         jwtWhiteMap.add(caller, new JWTRecord(token,
                 Date.from(currentTime),
@@ -146,6 +135,30 @@ public class JWTManager {
                 TimeUnit.MILLISECONDS);
 
         return token;
+    }
+
+    private JWTClaimsSet.Builder createClaimsSetBuilder(final String caller,
+            final List<String> groups,
+            final String xsrf,
+            final int renewal) {
+        final String jti = UUID.randomUUID().toString();
+
+        JWTClaimsSet.Builder csbuilder = new JWTClaimsSet.Builder();
+        csbuilder.issuer(ISS);
+        csbuilder.subject(caller);
+        csbuilder.jwtID(jti);
+
+        //MP-JWT specific
+        csbuilder.claim("upn", caller);
+        csbuilder.claim("groups", groups);
+
+        //XSRF-TOKEN
+        csbuilder.claim("xsrf", xsrf);
+
+        //Renewal occurency
+        csbuilder.claim("renewal", renewal);
+
+        return csbuilder;
     }
 
     private String signClaimsSet(final JWTClaimsSet claimsSet) throws
@@ -258,11 +271,6 @@ public class JWTManager {
 
     //TODO : implement + test
     public String refreshToken(final JWTClaimsSet claimsSet) {
-        return null;
-    }
-
-    //TODO : implement + test
-    public JWTClaimsSet createClaimsSet() {
         return null;
     }
 

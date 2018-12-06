@@ -14,6 +14,8 @@ import com.nimbusds.jose.crypto.RSASSAVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import static fr.trendev.comptandye.security.controllers.JWTManager.ISS;
+import static fr.trendev.comptandye.security.controllers.JWTManager.LONG_VALID_PERIOD;
+import static fr.trendev.comptandye.security.controllers.JWTManager.LONG_VALID_PERIOD_UNIT;
 import static fr.trendev.comptandye.security.controllers.JWTManager.SHORT_VALID_PERIOD;
 import static fr.trendev.comptandye.security.controllers.JWTManager.SHORT_VALID_PERIOD_UNIT;
 import fr.trendev.comptandye.security.entities.JWTRecord;
@@ -66,10 +68,19 @@ public class JWTManagerTest {
 //        return new Object[3][0];
 //    }
     @Test
-    public void testGenerateToken() {
+    public void testGenerateShortTermToken() {
+        this.testGenerateToken(false);
+    }
+
+    @Test
+    public void testGenerateLongTermToken() {
+        this.testGenerateToken(true);
+    }
+
+    private void testGenerateToken(boolean rmbme) {
         try {
             String token = this.jwtManager.generateToken(this.caller, groups,
-                    "1234567890", false);
+                    "1234567890", rmbme);
             Assertions.assertNotEquals(token.length(), 0);
             Assertions.assertNotNull(token);
 
@@ -97,10 +108,12 @@ public class JWTManagerTest {
             Instant exp = parsedJWT.getJWTClaimsSet().getExpirationTime().
                     toInstant();
             Assertions.assertTrue(iat.isBefore(now));
-            Assertions.assertTrue(iat.isAfter(now.minus(SHORT_VALID_PERIOD,
-                    SHORT_VALID_PERIOD_UNIT)));
-            Assertions.assertTrue(exp.equals(iat.plus(SHORT_VALID_PERIOD,
-                    SHORT_VALID_PERIOD_UNIT)));
+            Assertions.assertTrue(iat.isAfter(now.minus(
+                    rmbme ? LONG_VALID_PERIOD : SHORT_VALID_PERIOD,
+                    rmbme ? LONG_VALID_PERIOD_UNIT : SHORT_VALID_PERIOD_UNIT)));
+            Assertions.assertTrue(exp.equals(iat.plus(
+                    rmbme ? LONG_VALID_PERIOD : SHORT_VALID_PERIOD,
+                    rmbme ? LONG_VALID_PERIOD_UNIT : SHORT_VALID_PERIOD_UNIT)));
 
             Assertions.assertIterableEquals(this.groups, parsedJWT.
                     getJWTClaimsSet().
@@ -343,15 +356,7 @@ public class JWTManagerTest {
     }
 
     @Test
-    public void testSignClaimsSet() {
-    }
-
-    @Test
     public void testRefreshToken() {
-    }
-
-    @Test
-    public void testCreateClaimsSet() {
     }
 
 }
