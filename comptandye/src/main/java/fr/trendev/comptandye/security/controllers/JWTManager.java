@@ -25,6 +25,7 @@ import java.time.temporal.TemporalUnit;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -78,7 +79,7 @@ public class JWTManager {
         this.signer = new RSASSASigner(this.privateKey);
         this.verifier = new RSASSAVerifier(this.publicKey);
     }
-    
+
     public static String trunkToken(String token) {
         int l = token.length();
         int n = 16;
@@ -153,7 +154,7 @@ public class JWTManager {
 
         return token;
     }
-    
+
     // rename extract instead of get
     public Optional<JWTClaimsSet> getClaimsSet(String token) {
         try {
@@ -205,28 +206,28 @@ public class JWTManager {
     }
 
     //TODO : implement + test
-    public Optional<JWTRecord> revokeToken(final String email, final String token){
+    public Optional<JWTRecord> revokeToken(final String email,
+            final String token) {
         return null;
     }
-    
-    public Optional<Set<JWTRecord>> revokeAllTokens(final String email){
-    return null;
-    }
-    
-    //TODO : implement + test
-    public String signClaimsSet(final ClaimsSet claimsSet){
-    return null;
-    }
-    
-    //TODO : implement + test
-    public String refreshToken(final ClaimsSet claimsSet){
+
+    public Optional<Set<JWTRecord>> revokeAllTokens(final String email) {
         return null;
     }
-    
+
     //TODO : implement + test
-    public ClaimsSet createClaimsSet(){
+    public String signClaimsSet(final JWTClaimsSet claimsSet) {
         return null;
     }
-    
+
+    //TODO : implement + test
+    public String refreshToken(final JWTClaimsSet claimsSet) {
+        return null;
+    }
+
+    //TODO : implement + test
+    public JWTClaimsSet createClaimsSet() {
+        return null;
+    }
 
 }
