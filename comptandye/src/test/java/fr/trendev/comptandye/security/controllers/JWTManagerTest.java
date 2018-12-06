@@ -19,10 +19,12 @@ import static fr.trendev.comptandye.security.controllers.JWTManager.SHORT_VALID_
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.text.ParseException;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
@@ -267,7 +269,7 @@ public class JWTManagerTest {
     public void testRevokeToken() {
 
         final String email1 = "skonx2006@hotmail.com";
-        final String token1 = "token1";
+        final String token1 = "token1RevokeToken";
         final Instant now = Instant.now();
 
         final Date creationDate1 = Date.from(now);
@@ -297,7 +299,56 @@ public class JWTManagerTest {
     }
 
     @Test
-    public void testRevokeAllTokens() {
+    public void testRevokeAllTokens() throws InterruptedException {
+        String email1 = "skonx2006@hotmail.com";
+        String token1 = "t1RvkAll";
+        String token2 = "t2RvkAll";
+        String token3 = "t3RvkAll";
+        Instant now = Instant.now();
+
+        Date creationDate1 = Date.from(now);
+        Date creationDate2 = Date.from(now.plus(5, ChronoUnit.SECONDS));
+        Date creationDate3 = Date.from(now.plus(10, ChronoUnit.SECONDS));
+        Date expirationDate1 = Date.from(now.plus(SHORT_VALID_PERIOD,
+                SHORT_VALID_PERIOD_UNIT));
+        Date expirationDate2 = Date.from(now.plus(SHORT_VALID_PERIOD,
+                SHORT_VALID_PERIOD_UNIT).plus(5, ChronoUnit.SECONDS));
+        Date expirationDate3 = Date.from(now.plus(SHORT_VALID_PERIOD,
+                SHORT_VALID_PERIOD_UNIT).plus(10, ChronoUnit.SECONDS));
+
+        JWTRecord record1 = new JWTRecord(token1, creationDate1, expirationDate1);
+        JWTRecord record2 = new JWTRecord(token2, creationDate2, expirationDate2);
+        JWTRecord record3 = new JWTRecord(token3, creationDate3, expirationDate3);
+
+        Assertions.assertFalse(jwtManager.getWhiteMap().add(email1, record1)
+                .isPresent());// empty set at first
+        Assertions.assertTrue(jwtManager.getWhiteMap().add(email1, record2)
+                .isPresent());// empty set at first
+        Assertions.assertTrue(jwtManager.getWhiteMap().add(email1, record3)
+                .isPresent());// empty set at first
+
+        Optional<Set<JWTRecord>> records =
+                this.jwtManager.getWhiteMap().getRecords(email1);
+
+        Assertions.assertTrue(records.isPresent());
+        Assertions.assertEquals(records.get().size(), 3);
+
+        Assertions.assertFalse(this.jwtManager.isRevoked(token1));
+        Assertions.assertFalse(this.jwtManager.isRevoked(token2));
+        Assertions.assertFalse(this.jwtManager.isRevoked(token3));
+
+        Optional<Set<JWTRecord>> opt = this.jwtManager.revokeAllTokens(email1);
+        Assertions.assertTrue(opt.isPresent());
+        Assertions.assertEquals(records.get(), opt.get());
+
+        int i = 0;
+        while (i <= 120) {
+            Thread.sleep(1000l);
+            System.out.println(++i + "s");
+        }
+
+        jwtManager.getTasks().forEach(t -> Assertions.assertTrue(
+                t.isDone()));
     }
 
     @Test

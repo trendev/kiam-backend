@@ -23,12 +23,14 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,7 +45,7 @@ import javax.inject.Inject;
 @ApplicationScoped
 public class JWTManager {
 
-    public final static int SHORT_VALID_PERIOD = 30;
+    public final static int SHORT_VALID_PERIOD = 1;
     public final static TemporalUnit SHORT_VALID_PERIOD_UNIT = ChronoUnit.MINUTES;
     public final static int LONG_VALID_PERIOD = 2;
     public final static TemporalUnit LONG_VALID_PERIOD_UNIT = ChronoUnit.MONTHS;
@@ -70,8 +72,14 @@ public class JWTManager {
 
     private final ScheduledExecutorService scheduler;
 
+    private final List<ScheduledFuture<?>> tasks = new LinkedList<>();
+
     public JWTManager() {
         this.scheduler = Executors.newScheduledThreadPool(2);
+    }
+
+    public List<ScheduledFuture<?>> getTasks() {
+        return tasks;
     }
 
     @PostConstruct
@@ -140,7 +148,7 @@ public class JWTManager {
                 Date.from(expirationTime)));
 
         // auto-removes the expired tokens from the JWT White Map
-        scheduler.schedule(() -> {
+        tasks.add(scheduler.schedule(() -> {
             jwtWhiteMap.remove(caller, token)
                     .ifPresent(r -> LOG.log(Level.INFO,
                             "Token of user [{0}] ({1}) has expired...",
@@ -150,7 +158,7 @@ public class JWTManager {
                             }));
         },
                 expirationTime.toEpochMilli() - System.currentTimeMillis(),
-                TimeUnit.MILLISECONDS);
+                TimeUnit.MILLISECONDS));
 
         return token;
     }
@@ -204,36 +212,50 @@ public class JWTManager {
                 ));
     }
 
-    //TODO : test
+    private void scheduleAutoRemovalOfRevokedTokens(
+            final String email,
+            final JWTRecord record) {
+        // auto-removes the expired tokens from the JWT Revoked List
+        tasks.add(scheduler.schedule(() -> {
+            jwtRevokedSet.remove(record)
+                    .ifPresent(r -> LOG.log(Level.INFO,
+                            "Revoked Token of user [{0}] ({1}) has expired...",
+                            new Object[]{
+                                email,
+                                trunkToken(r.getToken())
+                            }));
+        },
+                record.getExpirationTime().getTime()
+                - System.currentTimeMillis(),
+                TimeUnit.MILLISECONDS));
+    }
+
     public Optional<JWTRecord> revokeToken(final String email,
             final String token) {
         Optional<JWTRecord> record = this.jwtWhiteMap.remove(email, token);
         record.ifPresent(r -> {
             if (this.jwtRevokedSet.add(r)) {
                 LOG.log(Level.WARNING,
-                        "Token ({0}) has been REVOKED and addded in JWT RevokedSet",
+                        "Token ({0}) has been REVOKED and added in JWT RevokedSet",
                         trunkToken(token));
-
-                // auto-removes the expired tokens from the JWT Revoked List
-                scheduler.schedule(() -> {
-                    jwtRevokedSet.remove(r)
-                            .ifPresent(r_ -> LOG.log(Level.INFO,
-                                    "Revoked Token of user [{0}] ({1}) has expired...",
-                                    new Object[]{
-                                        email,
-                                        trunkToken(r_.getToken())
-                                    }));
-                },
-                        r.getExpirationTime().getTime() - System.
-                        currentTimeMillis(),
-                        TimeUnit.MILLISECONDS);
+                this.scheduleAutoRemovalOfRevokedTokens(email, r);
             }
         });
         return record;
     }
 
     public Optional<Set<JWTRecord>> revokeAllTokens(final String email) {
-        return null;
+        Optional<Set<JWTRecord>> records = this.jwtWhiteMap.removeAll(email);
+        records.ifPresent(rs -> {
+            if (this.jwtRevokedSet.addAll(rs)) {
+                LOG.log(Level.WARNING,
+                        "All Tokens of user [{0}] have been REVOKED and added in JWT RevokedSet",
+                        email);
+            }
+            rs.forEach(r ->
+                    this.scheduleAutoRemovalOfRevokedTokens(email, r));
+        });
+        return records;
     }
 
     //TODO : implement + test
