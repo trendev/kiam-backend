@@ -22,6 +22,7 @@ import java.time.Instant;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
@@ -264,6 +265,35 @@ public class JWTManagerTest {
 
     @Test
     public void testRevokeToken() {
+
+        final String email1 = "skonx2006@hotmail.com";
+        final String token1 = "token1";
+        final Instant now = Instant.now();
+
+        final Date creationDate1 = Date.from(now);
+        final Date expirationDate1 = Date.from(now.plus(SHORT_VALID_PERIOD,
+                SHORT_VALID_PERIOD_UNIT));
+
+        JWTRecord record1 = new JWTRecord(token1, creationDate1, expirationDate1);
+
+        Assertions.assertFalse(jwtManager.isRevoked(token1));
+        Assertions.assertFalse(jwtManager.getWhiteMap().add(email1, record1)
+                .isPresent());// empty set at first
+        Assertions.assertTrue(jwtManager.getWhiteMap().getMap().containsKey(
+                email1));
+        Assertions.assertTrue(jwtManager.getWhiteMap().getRecords(email1).
+                isPresent());
+
+        Optional<JWTRecord> opt = jwtManager.revokeToken(email1, token1);
+
+        Assertions.assertTrue(opt.isPresent());
+        Assertions.assertFalse(jwtManager.getWhiteMap().getMap().containsKey(
+                email1));
+        Assertions.assertFalse(jwtManager.getWhiteMap().getRecords(email1).
+                isPresent());
+
+        Assertions.assertTrue(jwtManager.getRevokedSet().contains(token1));
+        Assertions.assertTrue(jwtManager.isRevoked(token1));
     }
 
     @Test

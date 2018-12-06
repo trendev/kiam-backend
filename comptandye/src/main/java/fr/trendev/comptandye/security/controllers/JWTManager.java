@@ -221,7 +221,7 @@ public class JWTManager {
                                     "Revoked Token of user [{0}] ({1}) has expired...",
                                     new Object[]{
                                         email,
-                                        trunkToken(token)
+                                        trunkToken(r_.getToken())
                                     }));
                 },
                         r.getExpirationTime().getTime() - System.
