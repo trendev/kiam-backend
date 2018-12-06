@@ -340,15 +340,6 @@ public class JWTManagerTest {
         Optional<Set<JWTRecord>> opt = this.jwtManager.revokeAllTokens(email1);
         Assertions.assertTrue(opt.isPresent());
         Assertions.assertEquals(records.get(), opt.get());
-
-        int i = 0;
-        while (i <= 120) {
-            Thread.sleep(1000l);
-            System.out.println(++i + "s");
-        }
-
-        jwtManager.getTasks().forEach(t -> Assertions.assertTrue(
-                t.isDone()));
     }
 
     @Test
