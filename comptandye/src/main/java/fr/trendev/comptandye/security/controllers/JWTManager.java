@@ -204,20 +204,21 @@ public class JWTManager {
                 ));
     }
 
-    //TODO : implement + test
+    //TODO : test
     public Optional<JWTRecord> revokeToken(final String email,
             final String token) {
         Optional<JWTRecord> record = this.jwtWhiteMap.remove(email, token);
         record.ifPresent(r -> {
             if (this.jwtRevokedSet.add(r)) {
-                LOG.log(Level.WARNING, "Token (" + trunkToken(token)
-                        + ") has been REVOKED and addded in JWT RevokedSet");
+                LOG.log(Level.WARNING,
+                        "Token ({0}) has been REVOKED and addded in JWT RevokedSet",
+                        trunkToken(token));
 
                 // auto-removes the expired tokens from the JWT Revoked List
                 scheduler.schedule(() -> {
-                    jwtRevokedSet.remove(token)
+                    jwtRevokedSet.remove(r)
                             .ifPresent(r_ -> LOG.log(Level.INFO,
-                                    "Token of user [{0}] ({1}) has expired...",
+                                    "Revoked Token of user [{0}] ({1}) has expired...",
                                     new Object[]{
                                         email,
                                         trunkToken(token)

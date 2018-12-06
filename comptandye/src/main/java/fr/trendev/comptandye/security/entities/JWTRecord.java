@@ -16,33 +16,33 @@ import java.util.Objects;
 public class JWTRecord implements Serializable, Comparable<JWTRecord> {
 
     private String token;
-    private Date creationDate;
+    private Date creationTime;
     private Date expirationDate;
 
-    public JWTRecord(String token, Date creationDate, Date expirationDate) {
+    public JWTRecord(String token, Date creationTime, Date expirationDate) {
 
         if (token == null || token.isEmpty()) {
             throw new IllegalArgumentException(
                     "token String must not be null or empty");
         }
 
-        if (creationDate == null || expirationDate == null) {
+        if (creationTime == null || expirationDate == null) {
             throw new IllegalArgumentException(
-                    "creationDate and expirationDate must not be null");
+                    "creationTime and expirationDate must not be null");
         }
 
-        if (creationDate.equals(expirationDate)) {
+        if (creationTime.equals(expirationDate)) {
             throw new IllegalArgumentException(
-                    "creationDate and expirationDate must not be the same");
+                    "creationTime and expirationDate must not be the same");
         }
 
-        if (expirationDate.before(creationDate)) {
+        if (expirationDate.before(creationTime)) {
             throw new IllegalArgumentException(
-                    "expirationDate must not be before creationDate");
+                    "expirationDate must not be before creationTime");
         }
 
         this.token = token;
-        this.creationDate = creationDate;
+        this.creationTime = creationTime;
         this.expirationDate = expirationDate;
     }
 
@@ -57,12 +57,12 @@ public class JWTRecord implements Serializable, Comparable<JWTRecord> {
         this.token = token;
     }
 
-    public Date getCreationDate() {
-        return creationDate;
+    public Date getCreationTime() {
+        return creationTime;
     }
 
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
+    public void setCreationTime(Date creationTime) {
+        this.creationTime = creationTime;
     }
 
     public Date getExpirationDate() {
@@ -77,7 +77,7 @@ public class JWTRecord implements Serializable, Comparable<JWTRecord> {
     public int hashCode() {
         int hash = 7;
         hash = 97 * hash + Objects.hashCode(this.token);
-        hash = 97 * hash + Objects.hashCode(this.creationDate);
+        hash = 97 * hash + Objects.hashCode(this.creationTime);
         hash = 97 * hash + Objects.hashCode(this.expirationDate);
         return hash;
     }
@@ -97,7 +97,7 @@ public class JWTRecord implements Serializable, Comparable<JWTRecord> {
         if (!Objects.equals(this.token, other.token)) {
             return false;
         }
-        if (!Objects.equals(this.creationDate, other.creationDate)) {
+        if (!Objects.equals(this.creationTime, other.creationTime)) {
             return false;
         }
         if (!Objects.equals(this.expirationDate, other.expirationDate)) {
@@ -112,9 +112,9 @@ public class JWTRecord implements Serializable, Comparable<JWTRecord> {
         if (tokenDiff != 0) {
             return tokenDiff;
         } else {
-            int creationDateDiff = this.creationDate.compareTo(o.creationDate);
-            if (creationDateDiff != 0) {
-                return creationDateDiff;
+            int creationTimeDiff = this.creationTime.compareTo(o.creationTime);
+            if (creationTimeDiff != 0) {
+                return creationTimeDiff;
             } else {
                 return this.expirationDate.compareTo(o.expirationDate);
             }
