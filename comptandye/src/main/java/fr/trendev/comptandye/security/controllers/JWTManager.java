@@ -146,7 +146,7 @@ public class JWTManager {
                             "Token of user [{0}] ({1}) has expired...",
                             new Object[]{
                                 caller,
-                                JWTManager.trunkToken(r.getToken())
+                                trunkToken(r.getToken())
                             }));
         },
                 expirationTime.toEpochMilli() - System.currentTimeMillis(),
@@ -210,14 +210,22 @@ public class JWTManager {
         Optional<JWTRecord> record = this.jwtWhiteMap.remove(email, token);
         record.ifPresent(r -> {
             if (this.jwtRevokedSet.add(r)) {
-                LOG.log(Level.WARNING, "Token (" + trunkToken(r.getToken())
-                        + ") has been revoked and addded in JWT RevokedSet");
-                this.extractClaimsSet(r.getToken())
-                        .ifPresent(cs -> {
-                            //TODO : get the expirationTime and schedule remove from JWT revoked set
-                            Date expirationTime = cs.getExpirationTime();
-                        });
+                LOG.log(Level.WARNING, "Token (" + trunkToken(token)
+                        + ") has been REVOKED and addded in JWT RevokedSet");
 
+                // auto-removes the expired tokens from the JWT Revoked List
+                scheduler.schedule(() -> {
+                    jwtRevokedSet.remove(token)
+                            .ifPresent(r_ -> LOG.log(Level.INFO,
+                                    "Token of user [{0}] ({1}) has expired...",
+                                    new Object[]{
+                                        email,
+                                        trunkToken(token)
+                                    }));
+                },
+                        r.getExpirationDate().getTime() - System.
+                        currentTimeMillis(),
+                        TimeUnit.MILLISECONDS);
             }
         });
         return record;
