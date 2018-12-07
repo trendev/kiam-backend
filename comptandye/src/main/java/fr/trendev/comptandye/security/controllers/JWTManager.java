@@ -21,6 +21,7 @@ import java.security.interfaces.RSAPublicKey;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import static java.time.temporal.ChronoUnit.MILLIS;
 import java.time.temporal.TemporalUnit;
 import java.util.Date;
 import java.util.List;
@@ -105,8 +106,11 @@ public class JWTManager {
                 rmbme ? LONG_VALID_PERIOD : SHORT_VALID_PERIOD,
                 rmbme ? LONG_VALID_PERIOD_UNIT : SHORT_VALID_PERIOD_UNIT);
 
-        JWTClaimsSet.Builder csbuilder = this.createClaimsSetBuilder(caller,
-                groups, xsrf, 0);
+        JWTClaimsSet.Builder csbuilder = this.createClaimsSetBuilder(
+                caller,
+                groups,
+                xsrf,
+                0);
 
         csbuilder.issueTime(Date.from(currentTime));
         csbuilder.expirationTime(Date.from(expirationTime));
@@ -121,18 +125,41 @@ public class JWTManager {
                 Date.from(currentTime),
                 Date.from(expirationTime)));
 
-        // auto-removes the expired tokens from the JWT White Map
-        scheduler.schedule(() -> {
-            jwtWhiteMap.remove(caller, token)
-                    .ifPresent(r -> LOG.log(Level.INFO,
-                            "Token of user [{0}] ({1}) has expired...",
-                            new Object[]{
-                                caller,
-                                trunkToken(r.getToken())
-                            }));
-        },
-                expirationTime.toEpochMilli() - System.currentTimeMillis(),
-                TimeUnit.MILLISECONDS);
+        this.scheduleAutoRemovalOfExpiredTokens(caller, token, expirationTime);
+
+        return token;
+    }
+
+    public String refreshToken(final JWTClaimsSet cs) throws ParseException,
+            JOSEException {
+
+        final String caller = cs.getIssuer();
+
+        Instant currentTime = Instant.now();
+        Instant expirationTime = currentTime.plus(
+                cs.getExpirationTime().getTime() - cs.getIssueTime().getTime(),
+                MILLIS);
+
+        JWTClaimsSet.Builder csbuilder = this.createClaimsSetBuilder(
+                caller,
+                cs.getStringListClaim("groups"),
+                cs.getStringClaim("xsrf"),
+                cs.getIntegerClaim("renewal") + 1);
+
+        csbuilder.issueTime(Date.from(currentTime));
+        csbuilder.expirationTime(Date.from(expirationTime));
+
+        String token = this.signClaimsSet(csbuilder.build());
+
+        LOG.log(Level.INFO,
+                "JWT refreshed for user {0} :\n{1}",
+                new Object[]{caller, token});
+
+        jwtWhiteMap.add(caller, new JWTRecord(token,
+                Date.from(currentTime),
+                Date.from(expirationTime)));
+
+        this.scheduleAutoRemovalOfExpiredTokens(caller, token, expirationTime);
 
         return token;
     }
@@ -141,12 +168,12 @@ public class JWTManager {
             final List<String> groups,
             final String xsrf,
             final int renewal) {
-        final String jti = UUID.randomUUID().toString();
 
         JWTClaimsSet.Builder csbuilder = new JWTClaimsSet.Builder();
+
         csbuilder.issuer(ISS);
         csbuilder.subject(caller);
-        csbuilder.jwtID(jti);
+        csbuilder.jwtID(UUID.randomUUID().toString());
 
         //MP-JWT specific
         csbuilder.claim("upn", caller);
@@ -223,6 +250,23 @@ public class JWTManager {
                 ));
     }
 
+    private void scheduleAutoRemovalOfExpiredTokens(final String caller,
+            final String token,
+            final Instant expirationTime) {
+        // auto-removes the expired tokens from the JWT White Map
+        scheduler.schedule(() -> {
+            jwtWhiteMap.remove(caller, token)
+                    .ifPresent(r -> LOG.log(Level.INFO,
+                            "Token of user [{0}] ({1}) has expired...",
+                            new Object[]{
+                                caller,
+                                trunkToken(r.getToken())
+                            }));
+        },
+                expirationTime.toEpochMilli() - System.currentTimeMillis(),
+                TimeUnit.MILLISECONDS);
+    }
+
     private void scheduleAutoRemovalOfRevokedTokens(
             final String email,
             final JWTRecord record) {
@@ -267,11 +311,6 @@ public class JWTManager {
                     this.scheduleAutoRemovalOfRevokedTokens(email, r));
         });
         return records;
-    }
-
-    //TODO : implement + test
-    public String refreshToken(final JWTClaimsSet claimsSet) {
-        return null;
     }
 
 }

@@ -357,6 +357,55 @@ public class JWTManagerTest {
 
     @Test
     public void testRefreshToken() {
+        try {
+            String token = this.jwtManager.generateToken(this.caller, groups,
+                    "x-xsrf-token", false);
+
+            this.jwtManager.extractClaimsSet(token).ifPresent(cs_ -> {
+
+                JWTClaimsSet cs = cs_;
+
+                try {
+                    for (int i = 0; i < 10; i++) {
+                        String newToken = this.jwtManager.refreshToken(cs);
+                        Assertions.assertNotNull(newToken);
+                        Assertions.assertFalse(newToken.isEmpty());
+
+                        Assertions.assertTrue(this.jwtManager.extractClaimsSet(
+                                newToken).isPresent());
+
+                        JWTClaimsSet ncs = this.jwtManager.extractClaimsSet(
+                                newToken).get();
+
+                        Assertions.assertEquals(ncs.getStringClaim("xsrf"),
+                                "x-xsrf-token");
+                        Assertions.assertEquals(ncs.getIntegerClaim("renewal").
+                                doubleValue(),
+                                i + 1, "renewal = " + ncs.getIntegerClaim(
+                                        "renewal").
+                                        doubleValue() + " / i+1 =" + (i + 1)
+                                + " / i = " + i);
+
+                        Assertions.assertNotEquals(cs.getJWTID(),
+                                ncs.getJWTID());
+
+                        cs = ncs;
+                    }
+
+                } catch (ParseException ex) {
+                    Logger.getLogger(JWTManagerTest.class.getName()).
+                            log(Level.SEVERE, null, ex);
+                } catch (JOSEException ex) {
+                    Logger.getLogger(JWTManagerTest.class.getName()).
+                            log(Level.SEVERE, null, ex);
+                }
+
+            });
+
+        } catch (JOSEException ex) {
+            Logger.getLogger(JWTManagerTest.class.getName()).
+                    log(Level.SEVERE, null, ex);
+        }
     }
 
 }
