@@ -23,10 +23,12 @@ import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
@@ -358,8 +360,9 @@ public class JWTManagerTest {
     @Test
     public void testRefreshToken() {
         try {
+            String xsrf = UUID.randomUUID().toString();
             String token = this.jwtManager.createToken(this.caller, groups,
-                    "x-xsrf-token", false);
+                    xsrf, false);
 
             this.jwtManager.extractClaimsSet(token).ifPresent(cs_ -> {
 
@@ -378,7 +381,7 @@ public class JWTManagerTest {
                                 newToken).get();
 
                         Assertions.assertEquals(ncs.getStringClaim("xsrf"),
-                                "x-xsrf-token");
+                                xsrf);
                         Assertions.assertEquals(ncs.getIntegerClaim("renewal").
                                 doubleValue(),
                                 i + 1, "renewal = " + ncs.getIntegerClaim(
@@ -388,6 +391,20 @@ public class JWTManagerTest {
 
                         Assertions.assertNotEquals(cs.getJWTID(),
                                 ncs.getJWTID());
+
+                        Assertions.assertEquals(cs.getSubject(), ncs.
+                                getSubject());
+                        Assertions.assertEquals(cs.getStringClaim("upn"), ncs.
+                                getStringClaim("upn"));
+                        Assertions.assertFalse(Collections
+                                .disjoint(
+                                        cs.getStringListClaim("groups"),
+                                        ncs.getStringListClaim("groups")));
+                        Assertions.assertEquals(
+                                cs.getExpirationTime().getTime()
+                                - cs.getIssueTime().getTime(),
+                                ncs.getExpirationTime().getTime()
+                                - ncs.getIssueTime().getTime());
 
                         cs = ncs;
                     }

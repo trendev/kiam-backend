@@ -142,7 +142,7 @@ public class JWTManager {
     public String refreshToken(final JWTClaimsSet cs) throws ParseException,
             JOSEException {
 
-        final String caller = cs.getIssuer();
+        final String caller = cs.getSubject();
 
         Instant currentTime = Instant.now();
 
