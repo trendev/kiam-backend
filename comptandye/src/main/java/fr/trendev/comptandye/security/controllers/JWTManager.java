@@ -44,7 +44,7 @@ import javax.inject.Inject;
 @ApplicationScoped
 public class JWTManager {
 
-    public final static int SHORT_VALID_PERIOD = 1;
+    public final static int SHORT_VALID_PERIOD = 30;
     public final static TemporalUnit SHORT_VALID_PERIOD_UNIT = ChronoUnit.MINUTES;
     public final static int LONG_VALID_PERIOD = 60;
     public final static TemporalUnit LONG_VALID_PERIOD_UNIT = ChronoUnit.DAYS;
