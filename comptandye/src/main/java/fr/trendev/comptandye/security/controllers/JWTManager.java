@@ -95,35 +95,19 @@ public class JWTManager {
         return jwtRevokedSet;
     }
 
-    // TODO : refactor createToken() & refreshToken()
-    private String generateToken() {
-        return null;
-    }
-
-    public String createToken(final String caller,
-            final List<String> groups,
-            final String xsrf,
-            final boolean rmbme)
-            throws JOSEException {
-        Instant currentTime = Instant.now();
-        Instant expirationTime = currentTime.plus(
-                rmbme ? LONG_VALID_PERIOD : SHORT_VALID_PERIOD,
-                rmbme ? LONG_VALID_PERIOD_UNIT : SHORT_VALID_PERIOD_UNIT);
-
-        JWTClaimsSet.Builder csbuilder = this.createClaimsSetBuilder(
-                caller,
-                groups,
-                xsrf,
-                0);
+    private String generateToken(
+            String caller,
+            Instant currentTime,
+            Instant expirationTime,
+            JWTClaimsSet.Builder csbuilder,
+            String logFormat) throws JOSEException {
 
         csbuilder.issueTime(Date.from(currentTime));
         csbuilder.expirationTime(Date.from(expirationTime));
 
         String token = this.signClaimsSet(csbuilder.build());
 
-        LOG.log(Level.INFO,
-                "JWT generated for user {0} :\n{1}\nGenerated xsrf = {2}",
-                new Object[]{caller, token, xsrf});
+        LOG.log(Level.INFO, String.format(logFormat, caller, token));
 
         jwtWhiteMap.add(caller, new JWTRecord(token,
                 Date.from(currentTime),
@@ -132,6 +116,27 @@ public class JWTManager {
         this.scheduleAutoRemovalOfExpiredTokens(caller, token, expirationTime);
 
         return token;
+    }
+
+    public String createToken(final String caller,
+            final List<String> groups,
+            final String xsrf,
+            final boolean rmbme)
+            throws JOSEException {
+
+        Instant currentTime = Instant.now();
+
+        return this.generateToken(caller,
+                currentTime,
+                currentTime.plus(
+                        rmbme ? LONG_VALID_PERIOD : SHORT_VALID_PERIOD,
+                        rmbme ? LONG_VALID_PERIOD_UNIT : SHORT_VALID_PERIOD_UNIT),
+                this.createClaimsSetBuilder(
+                        caller,
+                        groups,
+                        xsrf,
+                        0),
+                "JWT created for user %1$s :\n%2$s");
     }
 
     public String refreshToken(final JWTClaimsSet cs) throws ParseException,
@@ -140,32 +145,19 @@ public class JWTManager {
         final String caller = cs.getIssuer();
 
         Instant currentTime = Instant.now();
-        Instant expirationTime = currentTime.plus(
-                cs.getExpirationTime().getTime() - cs.getIssueTime().getTime(),
-                MILLIS);
 
-        JWTClaimsSet.Builder csbuilder = this.createClaimsSetBuilder(
-                caller,
-                cs.getStringListClaim("groups"),
-                cs.getStringClaim("xsrf"),
-                cs.getIntegerClaim("renewal") + 1);
-
-        csbuilder.issueTime(Date.from(currentTime));
-        csbuilder.expirationTime(Date.from(expirationTime));
-
-        String token = this.signClaimsSet(csbuilder.build());
-
-        LOG.log(Level.INFO,
-                "JWT refreshed for user {0} :\n{1}",
-                new Object[]{caller, token});
-
-        jwtWhiteMap.add(caller, new JWTRecord(token,
-                Date.from(currentTime),
-                Date.from(expirationTime)));
-
-        this.scheduleAutoRemovalOfExpiredTokens(caller, token, expirationTime);
-
-        return token;
+        return this.generateToken(caller,
+                currentTime,
+                currentTime.plus(
+                        cs.getExpirationTime().getTime() - cs.getIssueTime().
+                        getTime(),
+                        MILLIS),
+                this.createClaimsSetBuilder(
+                        caller,
+                        cs.getStringListClaim("groups"),
+                        cs.getStringClaim("xsrf"),
+                        cs.getIntegerClaim("renewal") + 1),
+                "JWT refreshed for user %1$s :\n%2$s");
     }
 
     private JWTClaimsSet.Builder createClaimsSetBuilder(final String caller,
