@@ -199,7 +199,7 @@ public class JWTManager {
 
     public Optional<JWTClaimsSet> extractClaimsSet(String token) {
         try {
-            if (token != null) {
+            if (token != null && !token.isEmpty()) {
                 SignedJWT parsedJWT = SignedJWT.parse(token);
 
                 boolean verified = parsedJWT.verify(this.verifier);
@@ -231,6 +231,10 @@ public class JWTManager {
     }
 
     public boolean isRevoked(final String token) {
+        if (token == null || token.isEmpty()) {
+            throw new IllegalArgumentException(
+                    "JWT token cannot be null or empty");
+        }
         return this.jwtRevokedSet.contains(token);
     }
 
