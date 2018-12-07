@@ -156,6 +156,19 @@ public class CustomHttpAuthenticationMechanism implements
                             //share the anti xsrf-token with the filters as a request attribute
                             req.setAttribute("XSRF-TOKEN", clmset.getClaim(
                                     "xsrf"));
+
+                            if (this.jwtManager.canBeRefreshed(clmset)) {
+                                try {
+                                    //x-xsrf-token is reused...
+                                    String jwt = this.jwtManager
+                                            .refreshToken(clmset);
+                                    rsp.addCookie(this.createJWTCookie(jwt));
+                                } catch (Exception ex) {
+                                    LOG.log(Level.SEVERE,
+                                            "Impossible to refresh a JWT", ex);
+                                }
+                            }
+
                             return hmc.notifyContainerAboutLogin(
                                     //get the upn or the subject (MP-JWT)
                                     Optional.
