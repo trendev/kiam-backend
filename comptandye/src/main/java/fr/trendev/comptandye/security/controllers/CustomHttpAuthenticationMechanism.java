@@ -109,7 +109,7 @@ public class CustomHttpAuthenticationMechanism implements
                  * Generates an anti-XSRF token and generate a JWT with it
                  */
                 String xsrf = generator.generate();
-                String jwt = jwtManager.generateToken(
+                String jwt = jwtManager.createToken(
                         result.getCallerPrincipal().getName(),
                         new ArrayList<>(result.getCallerGroups()),
                         xsrf,

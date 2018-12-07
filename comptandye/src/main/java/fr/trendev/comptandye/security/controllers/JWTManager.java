@@ -95,8 +95,12 @@ public class JWTManager {
         return jwtRevokedSet;
     }
 
-    //rename generateNewToken
-    public String generateToken(final String caller,
+    // TODO : refactor createToken() & refreshToken()
+    private String generateToken() {
+        return null;
+    }
+
+    public String createToken(final String caller,
             final List<String> groups,
             final String xsrf,
             final boolean rmbme)

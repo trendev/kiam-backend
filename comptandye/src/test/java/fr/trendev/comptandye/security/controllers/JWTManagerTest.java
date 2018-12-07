@@ -68,18 +68,18 @@ public class JWTManagerTest {
 //        return new Object[3][0];
 //    }
     @Test
-    public void testGenerateShortTermToken() {
-        this.testGenerateToken(false);
+    public void testCreateShortTermToken() {
+        this.testCreateToken(false);
     }
 
     @Test
-    public void testGenerateLongTermToken() {
-        this.testGenerateToken(true);
+    public void testCreateLongTermToken() {
+        this.testCreateToken(true);
     }
 
-    private void testGenerateToken(boolean rmbme) {
+    private void testCreateToken(boolean rmbme) {
         try {
-            String token = this.jwtManager.generateToken(this.caller, groups,
+            String token = this.jwtManager.createToken(this.caller, groups,
                     "1234567890", rmbme);
             Assertions.assertNotEquals(token.length(), 0);
             Assertions.assertNotNull(token);
@@ -136,7 +136,7 @@ public class JWTManagerTest {
     @Test
     public void testExtractClaimsSet() {
         try {
-            String token = this.jwtManager.generateToken(this.caller, groups,
+            String token = this.jwtManager.createToken(this.caller, groups,
                     "x-xsrf-token", false);
 
             Assertions.assertTrue(
@@ -151,7 +151,7 @@ public class JWTManagerTest {
     @Test
     public void testExtractClaimsSetWithNullToken() {
         try {
-            String token = this.jwtManager.generateToken(this.caller, groups,
+            String token = this.jwtManager.createToken(this.caller, groups,
                     "x-xsrf-token", false);
 
             Assertions.assertFalse(
@@ -166,7 +166,7 @@ public class JWTManagerTest {
     @Test
     public void testExtractClaimsSetWithJWTCorruption() {
         try {
-            String token = this.jwtManager.generateToken(this.caller, groups,
+            String token = this.jwtManager.createToken(this.caller, groups,
                     "x-xsrf-token", false);
 
             Assertions.assertFalse(
@@ -183,7 +183,7 @@ public class JWTManagerTest {
     @Test
     public void testExtractClaimsSetWithUnverifiedSignature() {
         try {
-            String token = this.jwtManager.generateToken(this.caller, groups,
+            String token = this.jwtManager.createToken(this.caller, groups,
                     "x-xsrf-token", false);
 
             byte[] bytes = token.getBytes();
@@ -206,7 +206,7 @@ public class JWTManagerTest {
         Instant futur = Instant.now().plus(SHORT_VALID_PERIOD * 2,
                 SHORT_VALID_PERIOD_UNIT);
 
-        String token = this.jwtManager.generateToken(this.caller, groups,
+        String token = this.jwtManager.createToken(this.caller, groups,
                 "x-xsrf-token", false);
         Instant exp = this.jwtManager.extractClaimsSet(token)
                 .map(JWTClaimsSet::getExpirationTime)
@@ -358,7 +358,7 @@ public class JWTManagerTest {
     @Test
     public void testRefreshToken() {
         try {
-            String token = this.jwtManager.generateToken(this.caller, groups,
+            String token = this.jwtManager.createToken(this.caller, groups,
                     "x-xsrf-token", false);
 
             this.jwtManager.extractClaimsSet(token).ifPresent(cs_ -> {
