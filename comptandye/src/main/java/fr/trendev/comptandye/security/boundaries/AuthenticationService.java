@@ -91,14 +91,16 @@ public class AuthenticationService {
 
     private Response profile(SecurityContext sec) {
         return authenticationHelper.getUserEmailFromSecurityContext(sec)
-                .map(email -> {
-                    LOG.log(Level.INFO, "Providing the profile of [{0}]", email);
-                    return Response.ok(userAccountFacade.find(email)).build();
-                })
-                // should never happen (method used by secured methods
+                .map(email -> Optional.ofNullable(
+                        userAccountFacade.find(email))
+                        .map(profile -> Response.ok(profile).build())
+                        .orElse(Response.status(Response.Status.NOT_FOUND).
+                                build())
+                //                    LOG.log(Level.INFO, "Providing the profile of [{0}]", email);
+                )
+                // should never happen (method used by secured methods)
                 .orElseThrow(() -> new NotAuthorizedException(Response.status(
                         Response.Status.UNAUTHORIZED).build()));
-
     }
 
     @Path("login")
