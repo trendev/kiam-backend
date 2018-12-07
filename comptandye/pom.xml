@@ -14,6 +14,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.jackson>2.9.7</version.jackson>
         <version.eclipselink>2.7.3</version.eclipselink>
+        <version.junit>5.3.2</version.junit>
+        <version.stripe>6.12.0</version.stripe>
+        <version.nimbus-jose-jwt>6.4.2</version.nimbus-jose-jwt>
     </properties>
     
     <profiles>
@@ -71,13 +74,13 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.3.1</version>
+            <version>${version.junit}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
-            <version>5.3.1</version>
+            <version>${version.junit}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -121,12 +124,12 @@
         <dependency>
             <groupId>com.stripe</groupId>
             <artifactId>stripe-java</artifactId>
-            <version>6.12.0</version>
+            <version>${version.stripe}</version>
         </dependency>
         <dependency>
             <groupId>com.nimbusds</groupId>
             <artifactId>nimbus-jose-jwt</artifactId>
-            <version>6.3</version>
+            <version>${version.nimbus-jose-jwt}</version>
         </dependency>
     </dependencies>
 
