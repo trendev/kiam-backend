@@ -36,7 +36,16 @@ public class JWTManagerService {
     @Path("whitemap")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJWTWhiteMap() throws JsonProcessingException {
-        return Response.ok(this.jwtManager.getWhiteMap()).build();
+        return Response.ok(this.jwtManager.getJWTWhiteMap().getMap())
+                .build();
+    }
+
+    @GET
+    @Path("revokedset")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getJWTRevokedSet() throws JsonProcessingException {
+        return Response.ok(this.jwtManager.getJWTRevokedSet().getSet())
+                .build();
     }
 
 }

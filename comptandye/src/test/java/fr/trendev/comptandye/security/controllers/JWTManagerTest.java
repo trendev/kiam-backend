@@ -86,7 +86,7 @@ public class JWTManagerTest {
             Assertions.assertNotEquals(token.length(), 0);
             Assertions.assertNotNull(token);
 
-            Assertions.assertTrue(this.jwtManager.getWhiteMap().getMap().
+            Assertions.assertTrue(this.jwtManager.getJWTWhiteMap().getMap().
                     containsKey(
                             this.caller));
 
@@ -232,8 +232,8 @@ public class JWTManagerTest {
         JWTRecord record1 = new JWTRecord(token1, creationDate1, expirationDate1);
 
         Assertions.assertFalse(jwtManager.isRevoked(token1));
-        Assertions.assertTrue(jwtManager.getRevokedSet().add(record1));
-        Assertions.assertTrue(jwtManager.getRevokedSet().contains(token1));
+        Assertions.assertTrue(jwtManager.getJWTRevokedSet().add(record1));
+        Assertions.assertTrue(jwtManager.getJWTRevokedSet().contains(token1));
         Assertions.assertTrue(jwtManager.isRevoked(token1));
 
     }
@@ -271,13 +271,13 @@ public class JWTManagerTest {
     }
 
     @Test
-    public void testGetWhiteMap() {
-        Assertions.assertNotNull(this.jwtManager.getWhiteMap());
+    public void testGetJWTWhiteMap() {
+        Assertions.assertNotNull(this.jwtManager.getJWTWhiteMap());
     }
 
     @Test
-    public void testGetRevokedSet() {
-        Assertions.assertNotNull(this.jwtManager.getRevokedSet());
+    public void testGetJWTRevokedSet() {
+        Assertions.assertNotNull(this.jwtManager.getJWTRevokedSet());
     }
 
     @Test
@@ -294,22 +294,22 @@ public class JWTManagerTest {
         JWTRecord record1 = new JWTRecord(token1, creationDate1, expirationDate1);
 
         Assertions.assertFalse(jwtManager.isRevoked(token1));
-        Assertions.assertFalse(jwtManager.getWhiteMap().add(email1, record1)
+        Assertions.assertFalse(jwtManager.getJWTWhiteMap().add(email1, record1)
                 .isPresent());// empty set at first
-        Assertions.assertTrue(jwtManager.getWhiteMap().getMap().containsKey(
+        Assertions.assertTrue(jwtManager.getJWTWhiteMap().getMap().containsKey(
                 email1));
-        Assertions.assertTrue(jwtManager.getWhiteMap().getRecords(email1).
+        Assertions.assertTrue(jwtManager.getJWTWhiteMap().getRecords(email1).
                 isPresent());
 
         Optional<JWTRecord> opt = jwtManager.revokeToken(email1, token1);
 
         Assertions.assertTrue(opt.isPresent());
-        Assertions.assertFalse(jwtManager.getWhiteMap().getMap().containsKey(
+        Assertions.assertFalse(jwtManager.getJWTWhiteMap().getMap().containsKey(
                 email1));
-        Assertions.assertFalse(jwtManager.getWhiteMap().getRecords(email1).
+        Assertions.assertFalse(jwtManager.getJWTWhiteMap().getRecords(email1).
                 isPresent());
 
-        Assertions.assertTrue(jwtManager.getRevokedSet().contains(token1));
+        Assertions.assertTrue(jwtManager.getJWTRevokedSet().contains(token1));
         Assertions.assertTrue(jwtManager.isRevoked(token1));
     }
 
@@ -335,15 +335,15 @@ public class JWTManagerTest {
         JWTRecord record2 = new JWTRecord(token2, creationDate2, expirationDate2);
         JWTRecord record3 = new JWTRecord(token3, creationDate3, expirationDate3);
 
-        Assertions.assertFalse(jwtManager.getWhiteMap().add(email1, record1)
+        Assertions.assertFalse(jwtManager.getJWTWhiteMap().add(email1, record1)
                 .isPresent());// empty set at first
-        Assertions.assertTrue(jwtManager.getWhiteMap().add(email1, record2)
+        Assertions.assertTrue(jwtManager.getJWTWhiteMap().add(email1, record2)
                 .isPresent());// empty set at first
-        Assertions.assertTrue(jwtManager.getWhiteMap().add(email1, record3)
+        Assertions.assertTrue(jwtManager.getJWTWhiteMap().add(email1, record3)
                 .isPresent());// empty set at first
 
         Optional<Set<JWTRecord>> records =
-                this.jwtManager.getWhiteMap().getRecords(email1);
+                this.jwtManager.getJWTWhiteMap().getRecords(email1);
 
         Assertions.assertTrue(records.isPresent());
         Assertions.assertEquals(records.get().size(), 3);

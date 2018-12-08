@@ -87,11 +87,11 @@ public class JWTManager {
         return l < n ? token : "..." + token.substring(l - n, l);
     }
 
-    public JWTWhiteMap getWhiteMap() {
+    public JWTWhiteMap getJWTWhiteMap() {
         return jwtWhiteMap;
     }
 
-    public JWTRevokedSet getRevokedSet() {
+    public JWTRevokedSet getJWTRevokedSet() {
         return jwtRevokedSet;
     }
 
