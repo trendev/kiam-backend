@@ -1,5 +1,6 @@
 package fr.trendev.comptandye.security.entities;
 
+import java.util.Map;
 import java.util.Set;
 
 public class JWTWhiteMapEntry {
@@ -10,6 +11,13 @@ public class JWTWhiteMapEntry {
     public JWTWhiteMapEntry(String email, Set<JWTRecord> records) {
         this.email = email;
         this.records = records;
+    }
+
+    public JWTWhiteMapEntry() {
+    }
+
+    public JWTWhiteMapEntry(Map.Entry<String, Set<JWTRecord>> entry) {
+        this(entry.getKey(), entry.getValue());
     }
 
     public String getEmail() {

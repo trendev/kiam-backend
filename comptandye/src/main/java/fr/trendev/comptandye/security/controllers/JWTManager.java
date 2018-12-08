@@ -16,6 +16,7 @@ import com.nimbusds.jose.crypto.RSASSAVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import fr.trendev.comptandye.security.entities.JWTRecord;
+import fr.trendev.comptandye.security.entities.JWTWhiteMapEntry;
 import java.security.PrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.text.ParseException;
@@ -33,6 +34,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -89,6 +91,12 @@ public class JWTManager {
 
     public JWTWhiteMap getJWTWhiteMap() {
         return jwtWhiteMap;
+    }
+
+    public Set<JWTWhiteMapEntry> getJWTWhiteMapEntries() {
+        return jwtWhiteMap.getMap().entrySet().stream()
+                .map(JWTWhiteMapEntry::new)
+                .collect(Collectors.toSet());
     }
 
     public JWTRevokedSet getJWTRevokedSet() {
