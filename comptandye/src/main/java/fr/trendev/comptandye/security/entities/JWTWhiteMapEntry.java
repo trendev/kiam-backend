@@ -1,9 +1,12 @@
 package fr.trendev.comptandye.security.entities;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
-public class JWTWhiteMapEntry {
+public class JWTWhiteMapEntry implements Serializable,
+        Comparable<JWTWhiteMapEntry> {
 
     private String email;
     private Set<JWTRecord> records;
@@ -17,7 +20,7 @@ public class JWTWhiteMapEntry {
     }
 
     public JWTWhiteMapEntry(Map.Entry<String, Set<JWTRecord>> entry) {
-        this(entry.getKey(), entry.getValue());
+        this(entry.getKey(), new TreeSet(entry.getValue()));
     }
 
     public String getEmail() {
@@ -35,4 +38,10 @@ public class JWTWhiteMapEntry {
     public void setRecords(Set<JWTRecord> records) {
         this.records = records;
     }
+
+    @Override
+    public int compareTo(JWTWhiteMapEntry o) {
+        return this.email.compareTo(o.email);
+    }
+
 }

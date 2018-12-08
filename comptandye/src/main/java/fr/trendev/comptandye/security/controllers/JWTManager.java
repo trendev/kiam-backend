@@ -28,6 +28,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -94,9 +95,10 @@ public class JWTManager {
     }
 
     public Set<JWTWhiteMapEntry> getJWTWhiteMapEntries() {
-        return jwtWhiteMap.getMap().entrySet().stream()
+        return new TreeSet(jwtWhiteMap.getMap().entrySet().stream()
                 .map(JWTWhiteMapEntry::new)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toSet())
+        );
     }
 
     public JWTRevokedSet getJWTRevokedSet() {
