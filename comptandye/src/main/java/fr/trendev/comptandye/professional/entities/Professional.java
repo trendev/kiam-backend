@@ -92,7 +92,7 @@ public class Professional extends Customer {
     @Column(columnDefinition = "DATETIME(3)")
     @Basic
     @Temporal(TemporalType.TIMESTAMP)
-    private Date rescissionDate = new Date();
+    private Date rescissionDate;
 
     @ManyToOne(targetEntity = VatRates.class)
     private VatRates vatRates;

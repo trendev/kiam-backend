@@ -313,7 +313,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:basic attribute-type="java.util.Date" v="true" xvt="" name="rescissionDate" dv="new Date()" id="_1537623410825101">
+            <jpa:basic attribute-type="java.util.Date" v="true" xvt="" name="rescissionDate" id="_1537623410825101">
                 <jpa:des>When the Stripe Subscription has been rescinded</jpa:des>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>

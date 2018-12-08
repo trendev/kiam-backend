@@ -5,12 +5,13 @@
  */
 package fr.trendev.comptandye.backup.controllers;
 
-import fr.trendev.comptandye.backup.entities.JsonProfessionalBackup;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.trendev.comptandye.professional.entities.Professional;
-import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
 import fr.trendev.comptandye.backup.entities.HashingMechanism;
+import fr.trendev.comptandye.backup.entities.JsonProfessionalBackup;
+import fr.trendev.comptandye.objectmapper.backupcfg.ProfessionalBackup;
+import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
+import fr.trendev.comptandye.professional.entities.Professional;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
@@ -21,7 +22,6 @@ import javax.inject.Inject;
 import javax.json.Json;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
-import fr.trendev.comptandye.objectmapper.backupcfg.ProfessionalBackup;
 
 /**
  *
