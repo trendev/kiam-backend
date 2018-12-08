@@ -73,7 +73,9 @@ public class JWTWhiteMap implements Serializable {
     }
 
     /**
-     * Adds a record for the provided email
+     * Adds a record for the provided email. if the user is not already
+     * authenticated, its records set is initialized with a synchronized sorted
+     * set.
      *
      * @param email the user's email
      * @param record the JWT Record
@@ -81,7 +83,8 @@ public class JWTWhiteMap implements Serializable {
      * an empty Optional otherwise
      */
     public Optional<Set<JWTRecord>> add(String email, JWTRecord record) {
-        Set<JWTRecord> records = this.map.getOrDefault(email, new TreeSet<>());
+        Set<JWTRecord> records = this.map.getOrDefault(email,
+                Collections.synchronizedSortedSet(new TreeSet<>()));
         records.add(record);
 
         //logged-in, first active "session"
