@@ -166,14 +166,14 @@ public class JWTManager {
                         caller,
                         cs.getStringListClaim("groups"),
                         cs.getStringClaim("xsrf"),
-                        cs.getIntegerClaim("renewal") + 1),
-                "JWT refreshed for user %1$s :\n%2$s");
+                        cs.getIntegerClaim("renew") + 1),
+                "JWT renewed for user %1$s :\n%2$s");
     }
 
     private JWTClaimsSet.Builder createClaimsSetBuilder(final String caller,
             final List<String> groups,
             final String xsrf,
-            final int renewal) {
+            final int renew) {
 
         JWTClaimsSet.Builder csbuilder = new JWTClaimsSet.Builder();
 
@@ -189,7 +189,7 @@ public class JWTManager {
         csbuilder.claim("xsrf", xsrf);
 
         //Renewal occurency
-        csbuilder.claim("renewal", renewal);
+        csbuilder.claim("renew", renew);
 
         return csbuilder;
     }

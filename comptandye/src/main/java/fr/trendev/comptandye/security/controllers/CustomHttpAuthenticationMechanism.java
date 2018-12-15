@@ -134,9 +134,6 @@ public class CustomHttpAuthenticationMechanism implements
         }
 
         /**
-         * TODO : handle JWT renewal
-         */
-        /**
          * Checks if the JWT is in a Cookie, gets it, verifies/controls it
          */
         if (req.getCookies() != null) {

@@ -382,10 +382,10 @@ public class JWTManagerTest {
 
                         Assertions.assertEquals(ncs.getStringClaim("xsrf"),
                                 xsrf);
-                        Assertions.assertEquals(ncs.getIntegerClaim("renewal").
+                        Assertions.assertEquals(ncs.getIntegerClaim("renew").
                                 doubleValue(),
-                                i + 1, "renewal = " + ncs.getIntegerClaim(
-                                        "renewal").
+                                i + 1, "renew = " + ncs.getIntegerClaim(
+                                        "renew").
                                         doubleValue() + " / i+1 =" + (i + 1)
                                 + " / i = " + i);
 
