@@ -41,7 +41,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 /**
- *
+ * TODO : schedule remove with EJB timers
  * @author jsie
  */
 @ApplicationScoped
