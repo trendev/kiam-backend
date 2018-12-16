@@ -23,7 +23,7 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
 /**
- *
+ * TODO : schedule remove with EJB timers
  * @author jsie
  */
 @Clustered(callPostConstructOnAttach = false, callPreDestoyOnDetach = false,
