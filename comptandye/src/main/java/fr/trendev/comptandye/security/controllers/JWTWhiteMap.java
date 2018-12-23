@@ -83,7 +83,7 @@ public class JWTWhiteMap implements Serializable {
         @Schedule(second = "*/20", minute = "*", hour = "*", persistent = false)
     })
     public void cleanUp() {
-        this.map.entrySet().removeIf(e -> {
+        this.map.entrySet().forEach(e -> {
             Set<JWTRecord> records = Optional.ofNullable(e.getValue())
                     .orElseGet(Collections::emptySet);
 
@@ -100,8 +100,10 @@ public class JWTWhiteMap implements Serializable {
                     return false;
                 }
             });
+        });
 
-            if (records.isEmpty()) {
+        this.map.entrySet().removeIf(e -> {
+            if (e.getValue().isEmpty()) {
                 LOG.log(Level.INFO,
                         "All JWT Record of user [{0}] cleaned : no more entry in the JWT White Map (LOG-OUT)",
                         new Object[]{e.getKey()});

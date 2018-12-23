@@ -247,7 +247,7 @@ public class JWTWhiteMapTest {
                 creationDate3,
                 expirationDate3);
 
-        IntStream.rangeClosed(1, 100000)
+        IntStream.rangeClosed(1, 10)
                 .parallel()
                 .forEach(i -> jwtwm.add("email" + i, record1));
         jwtwm.add(email2, record2);
