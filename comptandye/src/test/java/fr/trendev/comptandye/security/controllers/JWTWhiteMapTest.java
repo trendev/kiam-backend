@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.IntStream;
 import javax.inject.Inject;
 import org.jboss.weld.junit4.WeldInitiator;
 import org.junit.Before;
@@ -246,10 +247,11 @@ public class JWTWhiteMapTest {
                 creationDate3,
                 expirationDate3);
 
-        jwtwm.add(email1, record1);
+        IntStream.rangeClosed(1, 1000)
+                .parallel()
+                .forEach(i -> jwtwm.add("email" + i, record1));
         jwtwm.add(email2, record2);
         jwtwm.add(email1, record3);
-        jwtwm.add(email2, record1);
 
         System.out.println(jwtwm);
 
