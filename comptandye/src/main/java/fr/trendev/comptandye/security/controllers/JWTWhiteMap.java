@@ -13,6 +13,7 @@ import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -78,7 +79,11 @@ public class JWTWhiteMap implements Serializable {
      * Cleans the map removing expired tokens and entries
      */
     public void clean() {
-        for (Map.Entry<String, Set<JWTRecord>> e : this.map.entrySet()) {
+        for (Iterator<Map.Entry<String, Set<JWTRecord>>> i =
+                this.map.entrySet().iterator(); i.hasNext();) {
+
+            Map.Entry<String, Set<JWTRecord>> e = i.next();
+
             Set<JWTRecord> records = Optional.ofNullable(e.getValue())
                     .orElseGet(Collections::emptySet);
 
