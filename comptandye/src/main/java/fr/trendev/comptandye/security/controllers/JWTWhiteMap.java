@@ -5,12 +5,14 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import fish.payara.cluster.Clustered;
 import fish.payara.cluster.DistributedLockType;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -78,20 +80,21 @@ public class JWTWhiteMap implements Serializable {
     public void clean() {
         for (Map.Entry<String, Set<JWTRecord>> e : this.map.entrySet()) {
             Set<JWTRecord> records = Optional.ofNullable(e.getValue())
-                    .orElseGet(TreeSet::new);
+                    .orElseGet(Collections::emptySet);
 
-            for (Iterator<JWTRecord> i = records.iterator(); i.hasNext();) {
-                JWTRecord record = i.next();
-                if (record.hasExpired()) {
-                    i.remove();
+            records.removeIf(r -> {
+                if (r.hasExpired()) {
                     LOG.log(Level.INFO,
                             "Token of user [{0}] ({1}) has expired and have been cleaned...",
                             new Object[]{
                                 e.getKey(),
-                                JWTManager.trunkToken(record.getToken())
+                                JWTManager.trunkToken(r.getToken())
                             });
+                    return true;
+                } else {
+                    return false;
                 }
-            }
+            });
 
             if (records.isEmpty()) {
                 this.map.entrySet().remove(e);
@@ -243,6 +246,20 @@ public class JWTWhiteMap implements Serializable {
             }
         }
         return Optional.empty();
+    }
+
+    @Override
+    public String toString() {
+        ObjectMapper om = new ObjectMapper();
+        om.setDateFormat(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"));
+        String value = "NO_VALUE";
+        try {
+            value = om.writerWithDefaultPrettyPrinter()
+                    .writeValueAsString(this.map);
+        } catch (JsonProcessingException ex) {
+            LOG.log(Level.SEVERE, "Impossible to display WhiteMap", ex);
+        }
+        return value;
     }
 
 }

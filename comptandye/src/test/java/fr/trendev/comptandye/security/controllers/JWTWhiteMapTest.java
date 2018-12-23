@@ -249,6 +249,9 @@ public class JWTWhiteMapTest {
         jwtwm.add(email1, record1);
         jwtwm.add(email2, record2);
         jwtwm.add(email1, record3);
+        jwtwm.add(email2, record1);
+
+        System.out.println(jwtwm);
 
         Assertions.assertTrue(jwtwm.getRecords(email1).isPresent());
         Assertions.assertTrue(jwtwm.getRecords(email2).isPresent());
@@ -260,6 +263,8 @@ public class JWTWhiteMapTest {
 
         Assertions.assertFalse(jwtwm.getRecords(email1).get().contains(record1));
         Assertions.assertTrue(jwtwm.getRecords(email1).get().contains(record3));
+
+        System.out.println(jwtwm);
     }
 
 }
