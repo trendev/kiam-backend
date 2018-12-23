@@ -6,6 +6,7 @@
 package fr.trendev.comptandye.security.entities;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Date;
 import java.util.Objects;
 
@@ -119,6 +120,12 @@ public class JWTRecord implements Serializable, Comparable<JWTRecord> {
                 return this.expirationTime.compareTo(o.expirationTime);
             }
         }
+    }
+
+    public boolean hasExpired() {
+        Instant now = Instant.now();
+        Instant exp = this.expirationTime.toInstant();
+        return now.isAfter(exp);
     }
 
 }
