@@ -222,7 +222,7 @@ public class JWTManager {
         return Optional.empty();
     }
 
-    public boolean isExpired(final JWTClaimsSet claims) {
+    public boolean hasExpired(final JWTClaimsSet claims) {
         Instant now = Instant.now();
         Instant exp = claims.getExpirationTime().toInstant();
         return now.isAfter(exp);

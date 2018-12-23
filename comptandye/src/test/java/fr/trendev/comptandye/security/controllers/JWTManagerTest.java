@@ -202,7 +202,7 @@ public class JWTManagerTest {
     }
 
     @Test
-    public void testIsExpired() throws JOSEException {
+    public void testHasExpired() throws JOSEException {
 
         Instant now = Instant.now();
         Instant futur = Instant.now().plus(SHORT_VALID_PERIOD * 2,
