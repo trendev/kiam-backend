@@ -13,7 +13,6 @@ import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -23,6 +22,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.ejb.Schedule;
+import javax.ejb.Schedules;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
@@ -78,12 +79,11 @@ public class JWTWhiteMap implements Serializable {
     /**
      * Cleans the map removing expired tokens and entries
      */
-    public void clean() {
-        for (Iterator<Map.Entry<String, Set<JWTRecord>>> i =
-                this.map.entrySet().iterator(); i.hasNext();) {
-
-            Map.Entry<String, Set<JWTRecord>> e = i.next();
-
+    @Schedules({
+        @Schedule(second = "*/20", minute = "*", hour = "*", persistent = false)
+    })
+    public void cleanUp() {
+        this.map.entrySet().removeIf(e -> {
             Set<JWTRecord> records = Optional.ofNullable(e.getValue())
                     .orElseGet(Collections::emptySet);
 
@@ -102,12 +102,14 @@ public class JWTWhiteMap implements Serializable {
             });
 
             if (records.isEmpty()) {
-                i.remove();
                 LOG.log(Level.INFO,
                         "All JWT Record of user [{0}] cleaned : no more entry in the JWT White Map (LOG-OUT)",
                         new Object[]{e.getKey()});
+                return true;
+            } else {
+                return false;
             }
-        }
+        });
     }
 
     /**

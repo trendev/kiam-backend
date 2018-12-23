@@ -235,7 +235,7 @@ public class JWTWhiteMapTest {
     }
 
     @Test
-    public void testClean() {
+    public void testCleanUp() {
 
         JWTRecord record1 = new JWTRecord(token1,
                 Date.from(now.minus(15, MINUTES)),
@@ -254,11 +254,10 @@ public class JWTWhiteMapTest {
         jwtwm.add(email1, record3);
 
         System.out.println(jwtwm);
-
         Assertions.assertTrue(jwtwm.getRecords(email1).isPresent());
         Assertions.assertTrue(jwtwm.getRecords(email2).isPresent());
 
-        Assertions.assertDoesNotThrow(() -> jwtwm.clean());
+        Assertions.assertDoesNotThrow(() -> jwtwm.cleanUp());
 
         Assertions.assertTrue(jwtwm.getRecords(email1).isPresent());
         Assertions.assertFalse(jwtwm.getRecords(email2).isPresent());
