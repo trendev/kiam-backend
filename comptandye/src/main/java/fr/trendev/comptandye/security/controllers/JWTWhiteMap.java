@@ -23,7 +23,6 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
 /**
- * TODO : schedule remove with EJB timers
  * @author jsie
  */
 @Clustered(callPostConstructOnAttach = false, callPreDestoyOnDetach = false,
@@ -69,13 +68,39 @@ public class JWTWhiteMap implements Serializable {
      */
     public void clear() {
         this.map.clear();
-        LOG.info("JWT White Map cleaned");
+        LOG.info("JWT White Map cleared");
     }
-        
+
     /**
-    * Cleans the map removing expired tokens and entries
-    */
-    public void clean() {}
+     * Cleans the map removing expired tokens and entries
+     */
+    public void clean() {
+        for (Map.Entry<String, Set<JWTRecord>> e : this.map.entrySet()) {
+            Set<JWTRecord> records = Optional.ofNullable(e.getValue())
+                    .orElseGet(TreeSet::new);
+
+            for (JWTRecord record : records) {
+                if (record.hasExpired()) {
+                    records.remove(record);
+                    LOG.log(Level.INFO,
+                            "Token of user [{0}] ({1}) has expired and have been cleaned...",
+                            new Object[]{
+                                e.getKey(),
+                                JWTManager.trunkToken(record.getToken())
+                            });
+                }
+            }
+
+            if (records.isEmpty()) {
+                this.map.entrySet().remove(e);
+                LOG.log(Level.INFO,
+                        "All JWT Record of user [{0}] cleaned : no more entry in the JWT White Map (LOG-OUT)",
+                        new Object[]{e.getKey()});
+            }
+
+        }
+
+    }
 
     /**
      * Adds a record for the provided email. if the user is not already
