@@ -71,6 +71,11 @@ public class JWTWhiteMap implements Serializable {
         this.map.clear();
         LOG.info("JWT White Map cleaned");
     }
+        
+    /**
+    * Cleans the map removing expired tokens and entries
+    */
+    public void clean() {}
 
     /**
      * Adds a record for the provided email. if the user is not already
