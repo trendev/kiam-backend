@@ -233,4 +233,33 @@ public class JWTWhiteMapTest {
         Assertions.assertTrue(records.containsAll(opt.get()));
     }
 
+    @Test
+    public void testClean() {
+
+        JWTRecord record1 = new JWTRecord(token1,
+                Date.from(now.minus(15, MINUTES)),
+                Date.from(now.minus(14, MINUTES)));
+        JWTRecord record2 = new JWTRecord(token2,
+                Date.from(now.minus(10, MINUTES)),
+                Date.from(now.minus(9, MINUTES)));
+        JWTRecord record3 = new JWTRecord(token3,
+                creationDate3,
+                expirationDate3);
+
+        jwtwm.add(email1, record1);
+        jwtwm.add(email2, record2);
+        jwtwm.add(email1, record3);
+
+        Assertions.assertTrue(jwtwm.getRecords(email1).isPresent());
+        Assertions.assertTrue(jwtwm.getRecords(email2).isPresent());
+
+        Assertions.assertDoesNotThrow(() -> jwtwm.clean());
+
+        Assertions.assertTrue(jwtwm.getRecords(email1).isPresent());
+        Assertions.assertFalse(jwtwm.getRecords(email2).isPresent());
+
+        Assertions.assertFalse(jwtwm.getRecords(email1).get().contains(record1));
+        Assertions.assertTrue(jwtwm.getRecords(email1).get().contains(record3));
+    }
+
 }
