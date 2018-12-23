@@ -10,6 +10,7 @@ import fish.payara.cluster.DistributedLockType;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -79,9 +80,10 @@ public class JWTWhiteMap implements Serializable {
             Set<JWTRecord> records = Optional.ofNullable(e.getValue())
                     .orElseGet(TreeSet::new);
 
-            for (JWTRecord record : records) {
+            for (Iterator<JWTRecord> i = records.iterator(); i.hasNext();) {
+                JWTRecord record = i.next();
                 if (record.hasExpired()) {
-                    records.remove(record);
+                    i.remove();
                     LOG.log(Level.INFO,
                             "Token of user [{0}] ({1}) has expired and have been cleaned...",
                             new Object[]{
