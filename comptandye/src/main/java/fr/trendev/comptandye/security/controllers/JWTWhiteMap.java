@@ -95,15 +95,18 @@ public class JWTWhiteMap implements Serializable {
                     return false;
                 }
             });
+        }
 
-            if (records.isEmpty()) {
-                this.map.entrySet().remove(e);
+        this.map.entrySet().removeIf(e -> {
+            if (e.getValue().isEmpty()) {
                 LOG.log(Level.INFO,
                         "All JWT Record of user [{0}] cleaned : no more entry in the JWT White Map (LOG-OUT)",
                         new Object[]{e.getKey()});
+                return true;
+            } else {
+                return false;
             }
-
-        }
+        });
 
     }
 
