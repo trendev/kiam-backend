@@ -32,7 +32,7 @@ import java.util.TreeSet;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
+import java.util.stream.Collector;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -85,10 +85,14 @@ public class JWTManager {
     }
 
     public Set<JWTWhiteMapEntry> getJWTWhiteMapEntries() {
-        return new TreeSet(jwtWhiteMap.getMap().entrySet().stream()
+        return jwtWhiteMap.getMap().entrySet().stream()
                 .map(JWTWhiteMapEntry::new)
-                .collect(Collectors.toSet())
-        );
+                .collect(Collector.of(TreeSet::new,
+                        TreeSet::add,
+                        (l, r) -> {
+                    l.addAll(r);
+                    return l;
+                }));
     }
 
     public JWTRevokedSet getJWTRevokedSet() {

@@ -80,7 +80,7 @@ public class JWTWhiteMap implements Serializable {
      * Cleans the map removing expired tokens and entries
      */
     @Schedules({
-        @Schedule(second = "*/20", minute = "*", hour = "*", persistent = false)
+        @Schedule(second = "*/10", minute = "*", hour = "*", persistent = false)
     })
     public void cleanUp() {
         this.map.entrySet().forEach(e -> {
@@ -90,7 +90,7 @@ public class JWTWhiteMap implements Serializable {
             records.removeIf(r -> {
                 if (r.hasExpired()) {
                     LOG.log(Level.INFO,
-                            "Token of user [{0}] ({1}) has expired and have been cleaned...",
+                            "Token of user [{0}] ({1}) has expired and has been cleaned...",
                             new Object[]{
                                 e.getKey(),
                                 JWTManager.trunkToken(r.getToken())
