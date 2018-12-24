@@ -5,10 +5,13 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import fish.payara.cluster.Clustered;
 import fish.payara.cluster.DistributedLockType;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
@@ -62,13 +65,12 @@ public class JWTRevokedSet implements Serializable {
         this.set.clear();
         LOG.info("JWT Revoked Set cleared");
     }
-    
-        // TODO : verify + test
-          @Schedules({
+
+    @Schedules({
         @Schedule(minute = "*", hour = "*", persistent = false)
     })
-    public void cleanUp(){
-            this.set.removeIf(r::hasExpired);
+    public void cleanUp() {
+        this.set.removeIf(JWTRecord::hasExpired);
     }
 
     public boolean add(JWTRecord record) {
@@ -99,6 +101,20 @@ public class JWTRevokedSet implements Serializable {
         return this.set.remove(record)
                 ? Optional.of(record)
                 : Optional.empty();
+    }
+
+    @Override
+    public String toString() {
+        ObjectMapper om = new ObjectMapper();
+        om.setDateFormat(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"));
+        String value = "NO_VALUE";
+        try {
+            value = om.writerWithDefaultPrettyPrinter()
+                    .writeValueAsString(this.set);
+        } catch (JsonProcessingException ex) {
+            LOG.log(Level.SEVERE, "Impossible to display RevokedSet", ex);
+        }
+        return value;
     }
 
 }
