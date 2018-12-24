@@ -65,7 +65,7 @@ public class JWTRevokedSet implements Serializable {
     
         // TODO : verify + test
           @Schedules({
-        @Schedule(second = "*/30", minute = "*", hour = "*", persistent = false)
+        @Schedule(minute = "*", hour = "*", persistent = false)
     })
     public void cleanUp(){
             this.set.removeIf(r::hasExpired);
