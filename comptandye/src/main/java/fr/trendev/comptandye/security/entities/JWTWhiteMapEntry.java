@@ -11,12 +11,12 @@ public class JWTWhiteMapEntry implements Serializable,
     private String email;
     private Set<JWTRecord> records;
 
+    public JWTWhiteMapEntry() {
+    }
+
     public JWTWhiteMapEntry(String email, Set<JWTRecord> records) {
         this.email = email;
         this.records = records;
-    }
-
-    public JWTWhiteMapEntry() {
     }
 
     public JWTWhiteMapEntry(Map.Entry<String, Set<JWTRecord>> entry) {

@@ -9,10 +9,12 @@ import static fr.trendev.comptandye.security.controllers.JWTManager.SHORT_VALID_
 import static fr.trendev.comptandye.security.controllers.JWTManager.SHORT_VALID_PERIOD_UNIT;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.time.Instant;
+import static java.time.temporal.ChronoUnit.MINUTES;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.IntStream;
 import javax.inject.Inject;
 import org.jboss.weld.junit4.WeldInitiator;
 import org.junit.After;
@@ -175,6 +177,42 @@ public class JWTRevokedSetTest {
 
         Assertions.assertFalse(jwtrvkset.addAll(new HashSet<>(records)));
         Assertions.assertEquals(jwtrvkset.getSet().size(), records.size());
+    }
+
+    @Test
+    public void testCleanUp() throws Exception {
+
+        JWTRecord record2 = new JWTRecord(token2,
+                Date.from(now.minus(10, MINUTES)),
+                Date.from(now.minus(9, MINUTES)));
+        JWTRecord record3 = new JWTRecord(token3,
+                creationDate3,
+                expirationDate3);
+
+        final int max = 10;
+
+        IntStream.rangeClosed(1, max)
+                .parallel()
+                .forEach(i -> jwtrvkset.add(new JWTRecord("token_" + i,
+                        Date.from(now.minus(15, MINUTES)),
+                        Date.from(now.minus(14, MINUTES)))));
+        jwtrvkset.add(record2);
+        jwtrvkset.add(record3);
+
+        Assertions.assertTrue(jwtrvkset.contains("token_1"));
+        Assertions.assertTrue(jwtrvkset.contains("token_" + max));
+        Assertions.assertTrue(jwtrvkset.contains(token2));
+        Assertions.assertTrue(jwtrvkset.contains(token3));
+
+        Assertions.assertDoesNotThrow(() -> jwtrvkset.cleanUp());
+
+        Assertions.assertFalse(jwtrvkset.contains("token_1"));
+        Assertions.assertFalse(jwtrvkset.contains("token_" + max));
+        Assertions.assertFalse(jwtrvkset.contains(token2));
+        Assertions.assertTrue(jwtrvkset.contains(token3));
+        Assertions.assertEquals(jwtrvkset.getSet().size(), 1);
+
+        System.out.println(jwtrvkset);
     }
 
 }

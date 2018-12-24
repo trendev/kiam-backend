@@ -5,10 +5,13 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import fish.payara.cluster.Clustered;
 import fish.payara.cluster.DistributedLockType;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
@@ -19,11 +22,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.ejb.Schedule;
+import javax.ejb.Schedules;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
 /**
- *
  * @author jsie
  */
 @Clustered(callPostConstructOnAttach = false, callPreDestoyOnDetach = false,
@@ -69,7 +73,45 @@ public class JWTWhiteMap implements Serializable {
      */
     public void clear() {
         this.map.clear();
-        LOG.info("JWT White Map cleaned");
+        LOG.info("JWT White Map cleared");
+    }
+
+    /**
+     * Cleans the map removing expired tokens and entries
+     */
+    @Schedules({
+        @Schedule(second = "*/10", minute = "*", hour = "*", persistent = false)
+    })
+    public void cleanUp() {
+        this.map.entrySet().forEach(e -> {
+            Set<JWTRecord> records = Optional.ofNullable(e.getValue())
+                    .orElseGet(Collections::emptySet);
+
+            records.removeIf(r -> {
+                if (r.hasExpired()) {
+                    LOG.log(Level.INFO,
+                            "Token of user [{0}] ({1}) has expired and has been cleaned...",
+                            new Object[]{
+                                e.getKey(),
+                                JWTManager.trunkToken(r.getToken())
+                            });
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+
+        this.map.entrySet().removeIf(e -> {
+            if (e.getValue().isEmpty()) {
+                LOG.log(Level.INFO,
+                        "All JWT Record of user [{0}] cleaned : no more entry in the JWT White Map (LOG-OUT)",
+                        new Object[]{e.getKey()});
+                return true;
+            } else {
+                return false;
+            }
+        });
     }
 
     /**
@@ -211,6 +253,20 @@ public class JWTWhiteMap implements Serializable {
             }
         }
         return Optional.empty();
+    }
+
+    @Override
+    public String toString() {
+        ObjectMapper om = new ObjectMapper();
+        om.setDateFormat(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"));
+        String value = "NO_VALUE";
+        try {
+            value = om.writerWithDefaultPrettyPrinter()
+                    .writeValueAsString(this.map);
+        } catch (JsonProcessingException ex) {
+            LOG.log(Level.SEVERE, "Impossible to display WhiteMap", ex);
+        }
+        return value;
     }
 
 }

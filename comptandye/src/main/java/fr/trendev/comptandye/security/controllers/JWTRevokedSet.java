@@ -5,10 +5,13 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import fish.payara.cluster.Clustered;
 import fish.payara.cluster.DistributedLockType;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
@@ -18,11 +21,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.ejb.Schedule;
+import javax.ejb.Schedules;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
 /**
- *
  * @author jsie
  */
 @Clustered(callPostConstructOnAttach = false, callPreDestoyOnDetach = false,
@@ -59,7 +63,25 @@ public class JWTRevokedSet implements Serializable {
 
     public void clear() {
         this.set.clear();
-        LOG.info("JWT Revoked Set cleaned");
+        LOG.info("JWT Revoked Set cleared");
+    }
+
+    @Schedules({
+        @Schedule(minute = "*", hour = "*", persistent = false)
+    })
+    public void cleanUp() {
+        this.set.removeIf(r -> {
+            if (r.hasExpired()) {
+                LOG.log(Level.INFO,
+                        "Revoked Token ({0}) has expired and has been cleaned...",
+                        new Object[]{
+                            JWTManager.trunkToken(r.getToken())
+                        });
+                return true;
+            } else {
+                return false;
+            }
+        });
     }
 
     public boolean add(JWTRecord record) {
@@ -90,6 +112,20 @@ public class JWTRevokedSet implements Serializable {
         return this.set.remove(record)
                 ? Optional.of(record)
                 : Optional.empty();
+    }
+
+    @Override
+    public String toString() {
+        ObjectMapper om = new ObjectMapper();
+        om.setDateFormat(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"));
+        String value = "NO_VALUE";
+        try {
+            value = om.writerWithDefaultPrettyPrinter()
+                    .writeValueAsString(this.set);
+        } catch (JsonProcessingException ex) {
+            LOG.log(Level.SEVERE, "Impossible to display RevokedSet", ex);
+        }
+        return value;
     }
 
 }

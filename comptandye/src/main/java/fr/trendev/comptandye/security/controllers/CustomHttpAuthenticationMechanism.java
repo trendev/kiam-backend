@@ -51,7 +51,7 @@ public class CustomHttpAuthenticationMechanism implements
     private static final Logger LOG = Logger.getLogger(
             CustomHttpAuthenticationMechanism.class.getName());
 
-    private static final String JWT = "JWT";
+    public static final String JWT = "JWT";
 
     @Inject
     private IdentityStoreHandler idStoreHandler;
@@ -147,7 +147,7 @@ public class CustomHttpAuthenticationMechanism implements
                     .flatMap(c -> this.jwtManager
                             .extractClaimsSet(c.getValue()))
                     // JWT is valid and signature is verified
-                    .filter(clmset -> !this.jwtManager.isExpired(clmset))
+                    .filter(clmset -> !this.jwtManager.hasExpired(clmset))
                     .map(clmset -> {
                         try {
                             //share the anti xsrf-token with the filters as a request attribute

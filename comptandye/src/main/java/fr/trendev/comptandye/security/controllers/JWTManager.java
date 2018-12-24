@@ -30,18 +30,14 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
+import java.util.stream.Collector;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 /**
- *
  * @author jsie
  */
 @ApplicationScoped
@@ -72,12 +68,6 @@ public class JWTManager {
     @Inject
     private JWTRevokedSet jwtRevokedSet;
 
-    private final ScheduledExecutorService scheduler;
-
-    public JWTManager() {
-        this.scheduler = Executors.newScheduledThreadPool(2);
-    }
-
     @PostConstruct
     public void init() {
         this.signer = new RSASSASigner(this.privateKey);
@@ -85,6 +75,10 @@ public class JWTManager {
     }
 
     public static String trunkToken(String token) {
+        if (token == null) {
+            throw new IllegalArgumentException(
+                    "token is null and cannot be trunked");
+        }
         int l = token.length();
         int n = 16;
         return l < n ? token : "..." + token.substring(l - n, l);
@@ -95,10 +89,14 @@ public class JWTManager {
     }
 
     public Set<JWTWhiteMapEntry> getJWTWhiteMapEntries() {
-        return new TreeSet(jwtWhiteMap.getMap().entrySet().stream()
+        return jwtWhiteMap.getMap().entrySet().stream()
                 .map(JWTWhiteMapEntry::new)
-                .collect(Collectors.toSet())
-        );
+                .collect(Collector.of(TreeSet::new,
+                        TreeSet::add,
+                        (l, r) -> {
+                    l.addAll(r);
+                    return l;
+                }));
     }
 
     public JWTRevokedSet getJWTRevokedSet() {
@@ -122,8 +120,6 @@ public class JWTManager {
         jwtWhiteMap.add(caller, new JWTRecord(token,
                 Date.from(currentTime),
                 Date.from(expirationTime)));
-
-        this.scheduleAutoRemovalOfExpiredTokens(caller, token, expirationTime);
 
         return token;
     }
@@ -234,7 +230,7 @@ public class JWTManager {
         return Optional.empty();
     }
 
-    public boolean isExpired(final JWTClaimsSet claims) {
+    public boolean hasExpired(final JWTClaimsSet claims) {
         Instant now = Instant.now();
         Instant exp = claims.getExpirationTime().toInstant();
         return now.isAfter(exp);
@@ -260,41 +256,6 @@ public class JWTManager {
                 ));
     }
 
-    private void scheduleAutoRemovalOfExpiredTokens(final String caller,
-            final String token,
-            final Instant expirationTime) {
-        // auto-removes the expired tokens from the JWT White Map
-        scheduler.schedule(() -> {
-            jwtWhiteMap.remove(caller, token)
-                    .ifPresent(r -> LOG.log(Level.INFO,
-                            "Token of user [{0}] ({1}) has expired...",
-                            new Object[]{
-                                caller,
-                                trunkToken(r.getToken())
-                            }));
-        },
-                expirationTime.toEpochMilli() - System.currentTimeMillis(),
-                TimeUnit.MILLISECONDS);
-    }
-
-    private void scheduleAutoRemovalOfRevokedTokens(
-            final String email,
-            final JWTRecord record) {
-        // auto-removes the expired tokens from the JWT Revoked List
-        scheduler.schedule(() -> {
-            jwtRevokedSet.remove(record)
-                    .ifPresent(r -> LOG.log(Level.INFO,
-                            "Revoked Token of user [{0}] ({1}) has expired...",
-                            new Object[]{
-                                email,
-                                trunkToken(r.getToken())
-                            }));
-        },
-                record.getExpirationTime().getTime()
-                - System.currentTimeMillis(),
-                TimeUnit.MILLISECONDS);
-    }
-
     public Optional<JWTRecord> revokeToken(final String email,
             final String token) {
         Optional<JWTRecord> record = this.jwtWhiteMap.remove(email, token);
@@ -303,7 +264,6 @@ public class JWTManager {
                 LOG.log(Level.WARNING,
                         "Token ({0}) has been REVOKED and added in JWT RevokedSet",
                         trunkToken(token));
-                this.scheduleAutoRemovalOfRevokedTokens(email, r);
             }
         });
         return record;
@@ -317,8 +277,6 @@ public class JWTManager {
                         "All Tokens of user [{0}] have been REVOKED and added in JWT RevokedSet",
                         email);
             }
-            rs.forEach(r ->
-                    this.scheduleAutoRemovalOfRevokedTokens(email, r));
         });
         return records;
     }
