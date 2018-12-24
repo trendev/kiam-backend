@@ -189,7 +189,7 @@ public class JWTRevokedSetTest {
                 creationDate3,
                 expirationDate3);
 
-        final int max = 1000;
+        final int max = 10;
 
         IntStream.rangeClosed(1, max)
                 .parallel()

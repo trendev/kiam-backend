@@ -70,7 +70,18 @@ public class JWTRevokedSet implements Serializable {
         @Schedule(minute = "*", hour = "*", persistent = false)
     })
     public void cleanUp() {
-        this.set.removeIf(JWTRecord::hasExpired);
+        this.set.removeIf(r -> {
+            if (r.hasExpired()) {
+                LOG.log(Level.INFO,
+                        "Revoked Token ({0}) has expired and has been cleaned...",
+                        new Object[]{
+                            JWTManager.trunkToken(r.getToken())
+                        });
+                return true;
+            } else {
+                return false;
+            }
+        });
     }
 
     public boolean add(JWTRecord record) {
