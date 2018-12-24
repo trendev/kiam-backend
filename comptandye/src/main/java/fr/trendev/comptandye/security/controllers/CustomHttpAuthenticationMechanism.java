@@ -51,7 +51,7 @@ public class CustomHttpAuthenticationMechanism implements
     private static final Logger LOG = Logger.getLogger(
             CustomHttpAuthenticationMechanism.class.getName());
 
-    private static final String JWT = "JWT";
+    public static final String JWT = "JWT";
 
     @Inject
     private IdentityStoreHandler idStoreHandler;
