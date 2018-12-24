@@ -75,6 +75,10 @@ public class JWTManager {
     }
 
     public static String trunkToken(String token) {
+        if (token == null) {
+            throw new IllegalArgumentException(
+                    "token is null and cannot be trunked");
+        }
         int l = token.length();
         int n = 16;
         return l < n ? token : "..." + token.substring(l - n, l);
