@@ -10,7 +10,6 @@ import javax.inject.Inject;
 import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 import org.glassfish.soteria.identitystores.hash.Pbkdf2PasswordHashImpl;
 import org.jboss.weld.junit4.WeldInitiator;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
