@@ -22,7 +22,6 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
 /**
- * TODO : schedule remove with EJB timers
  * @author jsie
  */
 @Clustered(callPostConstructOnAttach = false, callPreDestoyOnDetach = false,
@@ -59,7 +58,12 @@ public class JWTRevokedSet implements Serializable {
 
     public void clear() {
         this.set.clear();
-        LOG.info("JWT Revoked Set cleaned");
+        LOG.info("JWT Revoked Set cleared");
+    }
+    
+        // TODO : verify + test
+    public void cleanUp(){
+            this.set.removeIf(r::hasExpired);
     }
 
     public boolean add(JWTRecord record) {
