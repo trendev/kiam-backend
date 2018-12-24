@@ -7,9 +7,13 @@ package fr.trendev.comptandye.security.boundaries;
 
 import fr.trendev.comptandye.exceptions.ExceptionHandler;
 import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
+import static fr.trendev.comptandye.security.controllers.CustomHttpAuthenticationMechanism.JWT;
+import fr.trendev.comptandye.security.controllers.JWTManager;
 import fr.trendev.comptandye.security.controllers.PasswordManager;
 import fr.trendev.comptandye.security.entities.NewPassword;
 import fr.trendev.comptandye.useraccount.controllers.UserAccountFacade;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
@@ -58,6 +62,9 @@ public class AuthenticationService {
 
     @Inject
     ExceptionHandler exceptionHandler;
+
+    @Inject
+    JWTManager jwtm;
 
     private final Logger LOG = Logger.getLogger(AuthenticationService.class.
             getName());
@@ -121,25 +128,43 @@ public class AuthenticationService {
             @Context HttpServletRequest req,
             @Context SecurityContext sec) {
 
-        String username = sec.getUserPrincipal().getName();
+        String email = sec.getUserPrincipal().getName();
 
-        return Response.ok(
-                Json.createObjectBuilder()
-                        .add("msg", "user " + username + " is now logged out").
-                        build())
-                .cookie(new NewCookie("JWT",
-                        null,
-                        "/",
-                        null,
-                        null,
-                        0, true, true),
-                        new NewCookie("XSRF-TOKEN",
-                                null,
-                                "/",
-                                null,
-                                null,
-                                0, true, false))
-                .build();
+        if (req.getCookies() != null) {
+            return Arrays.asList(req.getCookies())
+                    .stream()
+                    .filter(Objects::nonNull)// avoid null and empty element
+                    .filter(c -> JWT.equals(c.getName())
+                            && c.getValue() != null)
+                    .findFirst()
+                    .flatMap(c -> jwtm.revokeToken(email, c.getValue()))
+                    .map(r -> Response.ok(
+                            Json.createObjectBuilder()
+                                    .add("msg", "user [" + email
+                                            + "] is now logged out"
+                                            + " and token ("
+                                            + JWTManager.
+                                                    trunkToken(r.getToken())
+                                            + ") is now revoked").
+                                    build())
+                            .cookie(new NewCookie(JWT,
+                                    null,
+                                    "/",
+                                    null,
+                                    null,
+                                    0, true, true),
+                                    new NewCookie("XSRF-TOKEN",
+                                            null,
+                                            "/",
+                                            null,
+                                            null,
+                                            0, true, false))
+                            .build())
+                    .orElseThrow(() -> new WebApplicationException(
+                            "No JWT Cookie provided or token cannot be revoked"));
+        } else {
+            throw new WebApplicationException("No Cookie provided");
+        }
     }
 
     @Path("new-password")
