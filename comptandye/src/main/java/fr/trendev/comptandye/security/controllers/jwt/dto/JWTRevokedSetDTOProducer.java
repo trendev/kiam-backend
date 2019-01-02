@@ -24,7 +24,8 @@ public class JWTRevokedSetDTOProducer {
     @Produces
     @DynamodbDTO
     public JWTRevokedSetDTO getDynamodbJWTRevokedSetDTO() {
-        return null;
+        throw new UnsupportedOperationException(
+                "Cannot produce DynamoDB DTO for the JWT Revoked Set");
     }
 
 }

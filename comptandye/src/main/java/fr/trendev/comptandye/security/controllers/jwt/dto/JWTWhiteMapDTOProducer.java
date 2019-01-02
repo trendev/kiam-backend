@@ -13,7 +13,7 @@ import javax.enterprise.inject.Produces;
  * @author jsie
  */
 @ApplicationScoped
-public class JWTWhiteMapDTODTOProducer {
+public class JWTWhiteMapDTOProducer {
 
     @Produces
     @FirestoreDTO
@@ -24,7 +24,8 @@ public class JWTWhiteMapDTODTOProducer {
     @Produces
     @DynamodbDTO
     public JWTWhiteMapDTO getDynamodbJWTWhiteMapDTO() {
-        return null;
+        throw new UnsupportedOperationException(
+                "Cannot produce DynamoDB DTO for the JWT White Map");
     }
 
 }

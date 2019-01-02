@@ -9,6 +9,6 @@ package fr.trendev.comptandye.security.controllers.jwt.dto;
  *
  * @author jsie
  */
-public class FirstoreJWTWhiteMapDTO {
+public class FirstoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
 
 }
