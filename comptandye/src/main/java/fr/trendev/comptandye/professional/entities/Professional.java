@@ -133,12 +133,12 @@ public class Professional extends Customer {
     @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Product.class,
             mappedBy = "professional")
     @JsonIgnore
-    private List<Product> stock = new LinkedList();
+    private List<Product> stock = new LinkedList<>();
 
     @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Notification.class,
             orphanRemoval = true, mappedBy = "professional")
     @JsonIgnore
-    private List<Notification> notifications = new LinkedList();
+    private List<Notification> notifications = new LinkedList<>();
 
     @ManyToMany(targetEntity = Individual.class, mappedBy = "professionals")
     @JsonIgnore
