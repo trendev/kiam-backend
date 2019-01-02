@@ -17,8 +17,8 @@ public class JWTWhiteMapDTOProducer {
 
     @Produces
     @FirestoreDTO
-    public JWTWhiteMapDTO getFirstoreJWTWhiteMapDTO() {
-        return null;
+    public JWTWhiteMapDTO getFirestoreJWTWhiteMapDTO() {
+        return new FirestoreJWTWhiteMapDTO();
     }
 
     @Produces

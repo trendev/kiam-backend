@@ -9,6 +9,6 @@ package fr.trendev.comptandye.security.controllers.jwt.dto;
  *
  * @author jsie
  */
-public class FirstoreJWTRevokedSetDTO implements JWTRevokedSetDTO {
+public class FirestoreJWTRevokedSetDTO implements JWTRevokedSetDTO {
 
 }

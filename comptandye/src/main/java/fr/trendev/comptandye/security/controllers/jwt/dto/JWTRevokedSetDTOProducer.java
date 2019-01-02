@@ -17,7 +17,7 @@ public class JWTRevokedSetDTOProducer {
 
     @Produces
     @FirestoreDTO
-    public JWTRevokedSetDTO getFirstoreJWTRevokedSetDTO() {
+    public JWTRevokedSetDTO getFirestoreJWTRevokedSetDTO() {
         return null;
     }
 
