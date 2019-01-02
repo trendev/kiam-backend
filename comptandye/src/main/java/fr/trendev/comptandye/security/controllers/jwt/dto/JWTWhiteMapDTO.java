@@ -11,4 +11,8 @@ package fr.trendev.comptandye.security.controllers.jwt.dto;
  */
 public interface JWTWhiteMapDTO {
 
+    public void init();
+
+    public void close();
+
 }

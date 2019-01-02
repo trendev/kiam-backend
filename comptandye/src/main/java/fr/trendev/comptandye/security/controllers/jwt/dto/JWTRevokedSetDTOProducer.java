@@ -5,6 +5,8 @@
  */
 package fr.trendev.comptandye.security.controllers.jwt.dto;
 
+import fr.trendev.comptandye.security.controllers.jwt.dto.dynamodb.DynamodbDTO;
+import fr.trendev.comptandye.security.controllers.jwt.dto.firestore.FirestoreDTO;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 
