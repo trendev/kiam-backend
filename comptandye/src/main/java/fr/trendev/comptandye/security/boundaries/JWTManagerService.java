@@ -7,7 +7,7 @@ package fr.trendev.comptandye.security.boundaries;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.trendev.comptandye.security.controllers.JWTManager;
+import fr.trendev.comptandye.security.controllers.jwt.JWTManager;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;

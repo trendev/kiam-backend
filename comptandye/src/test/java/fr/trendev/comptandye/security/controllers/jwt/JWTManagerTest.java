@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.security.controllers;
+package fr.trendev.comptandye.security.controllers.jwt;
 
 import com.nimbusds.jose.JOSEException;
 import static com.nimbusds.jose.JOSEObjectType.JWT;
@@ -13,11 +13,12 @@ import com.nimbusds.jose.KeyLengthException;
 import com.nimbusds.jose.crypto.RSASSAVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
-import static fr.trendev.comptandye.security.controllers.JWTManager.ISS;
-import static fr.trendev.comptandye.security.controllers.JWTManager.LONG_VALID_PERIOD;
-import static fr.trendev.comptandye.security.controllers.JWTManager.LONG_VALID_PERIOD_UNIT;
-import static fr.trendev.comptandye.security.controllers.JWTManager.SHORT_VALID_PERIOD;
-import static fr.trendev.comptandye.security.controllers.JWTManager.SHORT_VALID_PERIOD_UNIT;
+import fr.trendev.comptandye.security.controllers.RSAKeyProvider;
+import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.ISS;
+import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.LONG_VALID_PERIOD;
+import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.LONG_VALID_PERIOD_UNIT;
+import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_VALID_PERIOD;
+import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_VALID_PERIOD_UNIT;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.text.ParseException;
 import java.time.Instant;

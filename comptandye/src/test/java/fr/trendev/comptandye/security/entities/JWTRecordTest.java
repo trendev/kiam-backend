@@ -5,8 +5,8 @@
  */
 package fr.trendev.comptandye.security.entities;
 
-import static fr.trendev.comptandye.security.controllers.JWTManager.SHORT_VALID_PERIOD;
-import static fr.trendev.comptandye.security.controllers.JWTManager.SHORT_VALID_PERIOD_UNIT;
+import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_VALID_PERIOD;
+import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_VALID_PERIOD_UNIT;
 import java.time.Instant;
 import java.util.Date;
 import org.junit.Before;

@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
+import fr.trendev.comptandye.security.controllers.jwt.JWTManager;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;

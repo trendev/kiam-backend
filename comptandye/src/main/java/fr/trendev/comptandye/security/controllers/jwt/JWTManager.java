@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.security.controllers;
+package fr.trendev.comptandye.security.controllers.jwt;
 
 import com.nimbusds.jose.JOSEException;
 import static com.nimbusds.jose.JOSEObjectType.JWT;
