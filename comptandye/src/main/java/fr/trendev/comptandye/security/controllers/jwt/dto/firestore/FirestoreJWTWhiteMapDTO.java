@@ -11,7 +11,6 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 import fr.trendev.comptandye.security.controllers.jwt.dto.JWTWhiteMapDTO;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
@@ -32,7 +31,9 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
     public void init() {
         InputStream serviceAccount = null;
         try {
-            serviceAccount = new FileInputStream(
+            ClassLoader classloader = Thread.currentThread().
+                    getContextClassLoader();
+            serviceAccount = classloader.getResourceAsStream(
                     "service-account-key.json");
             GoogleCredentials credentials = GoogleCredentials.fromStream(
                     serviceAccount);
@@ -53,16 +54,22 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
                         + " cannot be initialized and InputStream cannot be closed");
             }
         }
+        LOG.info(FirestoreJWTWhiteMapDTO.class.getSimpleName() + " initialized");
     }
 
     @Override
     public void close() {
-        try {
-            this.db.close();
-        } catch (Exception ex) {
-            LOG.
-                    log(Level.SEVERE, "Impossible to close the firestore db !!!",
-                            ex);
+        if (this.db != null) {
+            try {
+                this.db.close();
+                LOG.info(FirestoreJWTWhiteMapDTO.class.getSimpleName()
+                        + " closed");
+            } catch (Exception ex) {
+                LOG.
+                        log(Level.SEVERE,
+                                "Impossible to close the firestore db !!!",
+                                ex);
+            }
         }
     }
 
