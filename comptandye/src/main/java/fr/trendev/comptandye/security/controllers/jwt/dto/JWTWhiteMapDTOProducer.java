@@ -5,9 +5,9 @@
  */
 package fr.trendev.comptandye.security.controllers.jwt.dto;
 
-import fr.trendev.comptandye.security.controllers.jwt.dto.dynamodb.DynamodbDTO;
-import fr.trendev.comptandye.security.controllers.jwt.dto.firestore.FirestoreJWTWhiteMapDTO;
 import fr.trendev.comptandye.security.controllers.jwt.dto.firestore.FirestoreDTO;
+import fr.trendev.comptandye.security.controllers.jwt.dto.firestore.FirestoreJWTWhiteMapDTO;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
@@ -35,18 +35,17 @@ public class JWTWhiteMapDTOProducer {
         return this.jwtwmdto;
     }
 
-    @Produces
-    @DynamodbDTO
-    public JWTWhiteMapDTO getDynamodbJWTWhiteMapDTO() {
-        throw new UnsupportedOperationException(
-                "Cannot produce DynamoDB DTO for the JWT White Map");
-    }
-
+//    @Produces
+//    @DynamodbDTO
+//    public JWTWhiteMapDTO getDynamodbJWTWhiteMapDTO() {
+//        throw new UnsupportedOperationException(
+//                "Cannot produce DynamoDB DTO for the JWT White Map");
+//    }
     @PreDestroy
     public void close() {
         this.jwtwmdto.close();
-        LOG.info(JWTWhiteMapDTOProducer.class.getSimpleName()
-                + " is now closed");
+        LOG.log(Level.INFO, "{0} is now closed",
+                JWTWhiteMapDTOProducer.class.getSimpleName());
     }
 
 }
