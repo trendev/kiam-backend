@@ -7,6 +7,7 @@ package fr.trendev.comptandye.security.controllers.jwt.dto.firestore;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.FirestoreOptions;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
@@ -39,13 +40,15 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
                     .fromStream(serviceAccount);
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(credentials)
+                    .setFirestoreOptions(FirestoreOptions.newBuilder()
+                            .setTimestampsInSnapshotsEnabled(true)
+                            .build())
                     .build();
 
             FirebaseApp.initializeApp(options);
 
             this.db = FirestoreClient.getFirestore();
 
-            // the next calls will generate memory leaks...
 //            // asynchronously retrieve all users
 //            ApiFuture<QuerySnapshot> query = db.collection("users").get();
 //// ...
