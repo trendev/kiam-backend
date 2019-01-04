@@ -5,7 +5,18 @@
  */
 package fr.trendev.comptandye.security.controllers.jwt.dto.firestore;
 
+import com.google.api.core.ApiFuture;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.FirestoreOptions;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.cloud.firestore.QuerySnapshot;
 import fr.trendev.comptandye.security.controllers.jwt.dto.JWTWhiteMapDTO;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -14,13 +25,12 @@ import java.util.logging.Logger;
  */
 public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
 
-//    private Firestore db;
+    private Firestore db;
     private static final Logger LOG = Logger
             .getLogger(FirestoreJWTWhiteMapDTO.class.getName());
 
     @Override
     public void init() {
-        /*
         InputStream serviceAccount = null;
         try {
             ClassLoader classloader = Thread.currentThread().
@@ -75,12 +85,10 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
             }
         }
         LOG.info(FirestoreJWTWhiteMapDTO.class.getSimpleName() + " initialized");
-         */
     }
 
     @Override
     public void close() {
-        /*
         if (this.db != null) {
             try {
                 this.db.close();
@@ -93,7 +101,6 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
                                 ex);
             }
         }
-         */
     }
 
 }
