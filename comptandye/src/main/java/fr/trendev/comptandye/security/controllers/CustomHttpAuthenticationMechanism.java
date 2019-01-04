@@ -6,6 +6,8 @@
 package fr.trendev.comptandye.security.controllers;
 
 import fr.trendev.comptandye.security.controllers.jwt.JWTManager;
+import fr.trendev.comptandye.security.controllers.jwt.dto.JWTWhiteMapDTO;
+import fr.trendev.comptandye.security.controllers.jwt.dto.firestore.FirestoreDTO;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,9 +65,10 @@ public class CustomHttpAuthenticationMechanism implements
     @Inject
     private JWTManager jwtManager;
 
-//    @Inject
-//    @FirestoreDTO
-//    private JWTWhiteMapDTO jwtWhiteMapDTO;
+    @Inject
+    @FirestoreDTO
+    private JWTWhiteMapDTO jwtWhiteMapDTO;
+
     @Override
     public AuthenticationStatus validateRequest(HttpServletRequest req,
             HttpServletResponse rsp, HttpMessageContext hmc) throws
