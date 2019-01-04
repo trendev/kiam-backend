@@ -25,13 +25,13 @@ import java.util.logging.Logger;
  */
 public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
 
+    private InputStream serviceAccount;
     private Firestore db;
     private static final Logger LOG = Logger
             .getLogger(FirestoreJWTWhiteMapDTO.class.getName());
 
     @Override
     public void init() {
-        InputStream serviceAccount = null;
         try {
             ClassLoader classloader = Thread.currentThread().
                     getContextClassLoader();
@@ -72,32 +72,22 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
         } catch (ExecutionException ex) {
             Logger.getLogger(FirestoreJWTWhiteMapDTO.class.getName()).
                     log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                if (db != null && serviceAccount != null) {
-                    db.close();
-                    serviceAccount.close();
-                }
-            } catch (Exception ex) {
-                throw new IllegalStateException(FirestoreJWTWhiteMapDTO.class.
-                        getSimpleName()
-                        + " cannot be initialized and InputStream cannot be closed");
-            }
         }
         LOG.info(FirestoreJWTWhiteMapDTO.class.getSimpleName() + " initialized");
     }
 
     @Override
     public void close() {
-        if (this.db != null) {
+        if (this.db != null && this.serviceAccount != null) {
             try {
-                this.db.close();
+//                this.db.close();
+                serviceAccount.close();
                 LOG.info(FirestoreJWTWhiteMapDTO.class.getSimpleName()
                         + " closed");
             } catch (Exception ex) {
                 LOG.
                         log(Level.SEVERE,
-                                "Impossible to close the firestore db !!!",
+                                "Impossible to close the firestore db or the InputStream!!!",
                                 ex);
             }
         }
