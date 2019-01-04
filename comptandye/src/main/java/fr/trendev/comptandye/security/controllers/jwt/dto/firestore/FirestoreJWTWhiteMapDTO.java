@@ -80,7 +80,7 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
     public void close() {
         if (this.db != null && this.serviceAccount != null) {
             try {
-//                this.db.close();
+                this.db.close();
                 serviceAccount.close();
                 LOG.info(FirestoreJWTWhiteMapDTO.class.getSimpleName()
                         + " closed");
