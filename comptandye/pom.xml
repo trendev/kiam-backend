@@ -12,7 +12,7 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.jackson>2.9.7</version.jackson>
+        <version.jackson>2.9.8</version.jackson>
         <version.eclipselink>2.7.3</version.eclipselink>
         <version.junit>5.3.2</version.junit>
         <version.stripe>6.12.0</version.stripe>
@@ -99,15 +99,15 @@
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>eclipselink</artifactId>
             <version>${version.eclipselink}</version>
-            <scope>provided</scope>
+            <!--<scope>provided</scope>-->
         </dependency>
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
             <version>${version.eclipselink}</version>
-            <scope>provided</scope>
+            <!--<scope>provided</scope>-->
         </dependency>
-        <dependency>
+        <!--        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
             <version>${version.jackson}</version>
@@ -116,11 +116,17 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${version.jackson}</version>
-        </dependency>
-        <dependency>
+        </dependency>-->
+        <!--        <dependency>
             <groupId>com.fasterxml.jackson.jaxrs</groupId>
             <artifactId>jackson-jaxrs-json-provider</artifactId>
             <version>${version.jackson}</version>
+        </dependency>-->
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+            <version>2.27</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.stripe</groupId>
@@ -132,11 +138,11 @@
             <artifactId>nimbus-jose-jwt</artifactId>
             <version>${version.nimbus-jose-jwt}</version>
         </dependency>
-        <dependency>
+        <!--        <dependency>
             <groupId>com.google.firebase</groupId>
             <artifactId>firebase-admin</artifactId>
             <version>${version.firestore}</version>
-        </dependency>
+        </dependency>-->
     </dependencies>
 
     <build>

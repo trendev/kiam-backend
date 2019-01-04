@@ -16,8 +16,10 @@ public class FirestoreJWTWhiteMapDTOTest {
     public FirestoreJWTWhiteMapDTOTest() {
     }
 
-    @Test
+//    @Test
     public void testInit() {
+        FirestoreJWTWhiteMapDTO jWTWhiteMapDTO = new FirestoreJWTWhiteMapDTO();
+        jWTWhiteMapDTO.init();
     }
 
     @Test

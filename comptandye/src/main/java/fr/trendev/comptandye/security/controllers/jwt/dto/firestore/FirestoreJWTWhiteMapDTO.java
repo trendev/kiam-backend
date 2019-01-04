@@ -5,15 +5,7 @@
  */
 package fr.trendev.comptandye.security.controllers.jwt.dto.firestore;
 
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.firestore.Firestore;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import com.google.firebase.cloud.FirestoreClient;
 import fr.trendev.comptandye.security.controllers.jwt.dto.JWTWhiteMapDTO;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -22,43 +14,73 @@ import java.util.logging.Logger;
  */
 public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
 
-    private Firestore db;
-
+//    private Firestore db;
     private static final Logger LOG = Logger
             .getLogger(FirestoreJWTWhiteMapDTO.class.getName());
 
     @Override
     public void init() {
+        /*
         InputStream serviceAccount = null;
         try {
             ClassLoader classloader = Thread.currentThread().
                     getContextClassLoader();
             serviceAccount = classloader.getResourceAsStream(
-                    "service-account-key.json");
-            GoogleCredentials credentials = GoogleCredentials.fromStream(
-                    serviceAccount);
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(credentials)
-                    .build();
-            FirebaseApp.initializeApp(options);
-            this.db = FirestoreClient.getFirestore();
+                    "comptandye-4c50d-firebase-adminsdk-t7vpe-d96038b6f1.json");
+
+            FirestoreOptions options =
+                    FirestoreOptions.newBuilder()
+                            .setCredentials(GoogleCredentials.fromStream(
+                                    serviceAccount))
+                            .setTimestampsInSnapshotsEnabled(true)
+                            .build();
+            Firestore db = options.getService();
+
+            // asynchronously retrieve all users
+            ApiFuture<QuerySnapshot> query = db.collection("users").get();
+// ...
+// query.get() blocks on response
+            QuerySnapshot querySnapshot = query.get();
+            List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
+            for (QueryDocumentSnapshot document : documents) {
+                LOG.info("User: " + document.getId());
+                LOG.info("First: " + document.getString("first"));
+                if (document.contains("middle")) {
+                    System.out.
+                            println("Middle: " + document.getString("middle"));
+                }
+                LOG.info("Last: " + document.getString("last"));
+                LOG.info("Born: " + document.getLong("born"));
+            }
+
         } catch (IOException ex) {
             LOG.log(Level.SEVERE, "Impossible to init "
                     + FirestoreJWTWhiteMapDTO.class.getSimpleName(), ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(FirestoreJWTWhiteMapDTO.class.getName()).
+                    log(Level.SEVERE, null, ex);
+        } catch (ExecutionException ex) {
+            Logger.getLogger(FirestoreJWTWhiteMapDTO.class.getName()).
+                    log(Level.SEVERE, null, ex);
         } finally {
             try {
-                serviceAccount.close();
-            } catch (IOException ex) {
+                if (db != null && serviceAccount != null) {
+                    db.close();
+                    serviceAccount.close();
+                }
+            } catch (Exception ex) {
                 throw new IllegalStateException(FirestoreJWTWhiteMapDTO.class.
                         getSimpleName()
                         + " cannot be initialized and InputStream cannot be closed");
             }
         }
         LOG.info(FirestoreJWTWhiteMapDTO.class.getSimpleName() + " initialized");
+         */
     }
 
     @Override
     public void close() {
+        /*
         if (this.db != null) {
             try {
                 this.db.close();
@@ -71,6 +93,7 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
                                 ex);
             }
         }
+         */
     }
 
 }
