@@ -5,8 +5,6 @@
  */
 package fr.trendev.comptandye.security.controllers.jwt.dto.firestore;
 
-import org.junit.Test;
-
 /**
  *
  * @author jsie
@@ -16,13 +14,13 @@ public class FirestoreJWTWhiteMapDTOTest {
     public FirestoreJWTWhiteMapDTOTest() {
     }
 
-    @Test
+//    @Test
     public void testInit() {
         FirestoreJWTWhiteMapDTO jWTWhiteMapDTO = new FirestoreJWTWhiteMapDTO();
         jWTWhiteMapDTO.init();
     }
 
-    @Test
+//    @Test
     public void testClose() {
     }
 
