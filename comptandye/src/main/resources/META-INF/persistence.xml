@@ -2,8 +2,6 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
     <persistence-unit name="DEFAULT_PU" transaction-type="JTA">
         <jta-data-source>jdbc/MySQLDataSourceComptaNdye</jta-data-source>
-        <class>fr.trendev.comptandye.entities.Purchase</class>
-        <class>fr.trendev.comptandye.entities.SoldBill</class>
         <class>fr.trendev.comptandye.address.entities.Address</class>
         <class>fr.trendev.comptandye.administrator.entities.Administrator</class>
         <class>fr.trendev.comptandye.bill.entities.Bill</class>
@@ -40,48 +38,7 @@
         <class>fr.trendev.comptandye.sale.entities.Sale</class>
         <class>fr.trendev.comptandye.service.entities.Service</class>
         <class>fr.trendev.comptandye.socialnetworkaccounts.entities.SocialNetworkAccounts</class>
-        <class>entities.UserAccount</class>
-        <class>entities.UserGroup</class>
-        <class>entities.Customer</class>
-        <class>entities.Professional</class>
-        <class>entities.Individual</class>
-        <class>entities.Client</class>
-        <class>entities.CustomerDetails</class>
-        <class>entities.toto.tata.Address</class>
-        <class>entities.SocialNetworkAccounts</class>
-        <class>entities.Service</class>
-        <class>entities.Pack</class>
-        <class>entities.Offering</class>
-        <class>entities.Bill</class>
-        <class>entities.IndividualBill</class>
-        <class>entities.ClientBill</class>
-        <class>entities.PaymentMode</class>
-        <class>entities.Payment</class>
-        <class>entities.CollectiveGroup</class>
-        <class>entities.Administrator</class>
-        <class>entities.Category</class>
-        <class>entities.Expense</class>
-        <class>entities.Business</class>
-        <class>entities.CollectiveGroupBill</class>
-        <class>entities.PurchasedOffering</class>
-        <class>entities.VatRates</class>
-        <class>entities.Sale</class>
-        <class>entities.ExpenseItem</class>
-        <class>entities.PurchaseExpense</class>
-        <class>entities.ProductReference</class>
-        <class>entities.Product</class>
-        <class>entities.ProductRecord</class>
-        <class>entities.PurchasedItem</class>
-        <class>entities.UsedItem</class>
-        <class>entities.ReturnedItem</class>
-        <class>entities.SoldItem</class>
-        <class>entities.ClassicExpense</class>
-        <class>entities.Notification</class>
-        <class>entities.ThresholdAlert</class>
         <class>fr.trendev.comptandye.useraccount.entities.Customer</class>
-        <class>fr.trendev.comptandye.classicexpense.entities.comptandye</class>
-        <class>fr.trendev.comptandye</class>
-        <class>fr.trendev.comptandye.expense2.entities.ClassicExpense</class>
         <class>fr.trendev.comptandye.basicexpense.entities.BasicExpense</class>
         <properties>
             <!-- Enable SQL Logging-->
