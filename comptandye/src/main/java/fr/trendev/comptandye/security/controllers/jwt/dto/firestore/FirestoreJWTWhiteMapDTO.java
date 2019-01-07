@@ -26,8 +26,6 @@ import java.util.logging.Logger;
  */
 public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
 
-    private InputStream serviceAccount;
-    private Firestore firestore;
     private static final Logger LOG = Logger
             .getLogger(FirestoreJWTWhiteMapDTO.class.getName());
 
@@ -36,7 +34,7 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
         try {
             ClassLoader classloader = Thread.currentThread().
                     getContextClassLoader();
-            serviceAccount = classloader.getResourceAsStream(
+            InputStream serviceAccount = classloader.getResourceAsStream(
                     "comptandye-4c50d-firebase-adminsdk-t7vpe-d96038b6f1.json");
 
             GoogleCredentials credentials = GoogleCredentials
@@ -51,7 +49,7 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
 
             FirebaseApp fa = FirebaseApp.initializeApp(options);
 
-            this.firestore = FirestoreClient.getFirestore();
+            Firestore firestore = FirestoreClient.getFirestore();
 
             // asynchronously retrieve all users
             ApiFuture<QuerySnapshot> query = firestore.collection("users").get();
@@ -70,14 +68,14 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
                 LOG.info("Born: " + document.getLong("born"));
             }
 
-            this.firestore.close();
-            serviceAccount.close();
-
+//            this.firestore.close();
+//            serviceAccount.close();
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Impossible to init "
                     + FirestoreJWTWhiteMapDTO.class.getSimpleName(), ex);
         }
-        LOG.info(FirestoreJWTWhiteMapDTO.class.getSimpleName() + " initialized");
+        LOG.info(FirestoreJWTWhiteMapDTO.class.getSimpleName()
+                + " initialized");
     }
 
 }
