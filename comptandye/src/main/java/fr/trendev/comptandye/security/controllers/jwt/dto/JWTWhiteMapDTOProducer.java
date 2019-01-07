@@ -43,7 +43,6 @@ public class JWTWhiteMapDTOProducer {
 //    }
     @PreDestroy
     public void close() {
-        this.jwtwmdto.close();
         LOG.log(Level.INFO, "{0} is now closed",
                 JWTWhiteMapDTOProducer.class.getSimpleName());
     }

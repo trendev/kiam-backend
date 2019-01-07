@@ -13,6 +13,4 @@ public interface JWTWhiteMapDTO {
 
     public void init();
 
-    public void close();
-
 }
