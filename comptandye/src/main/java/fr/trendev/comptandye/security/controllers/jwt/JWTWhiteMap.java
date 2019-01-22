@@ -11,9 +11,12 @@ import fish.payara.cluster.Clustered;
 import fish.payara.cluster.DistributedLockType;
 import fr.trendev.comptandye.security.controllers.jwt.dto.JWTWhiteMapDTO;
 import fr.trendev.comptandye.security.entities.JWTRecord;
+import fr.trendev.comptandye.security.entities.JWTWhiteMapEntry;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -52,15 +55,19 @@ public class JWTWhiteMap implements Serializable {
 
     @PostConstruct
     public void init() {
-        //TODO: load the map from a DB
-        LOG.
-                log(Level.INFO, "{0} initialized", JWTWhiteMap.class.
-                        getSimpleName());
+        LOG.log(Level.INFO, "Initializing {0} ...", JWTWhiteMap.class.
+                getSimpleName());
+
+        dto.getAll().forEach(e ->
+                this.map.put(e.getEmail(), e.getRecords())
+        );
+
+        LOG.log(Level.INFO, "{0} initialized", JWTWhiteMap.class.
+                getSimpleName());
     }
 
     @PreDestroy
     public void close() {
-        //TODO : save the map in a DB and ignore if the map is empty (after test)
         LOG.log(Level.INFO, "{0} closed", JWTWhiteMap.class.getSimpleName());
     }
 
@@ -74,7 +81,7 @@ public class JWTWhiteMap implements Serializable {
     }
 
     /**
-     * Clears the map
+     * Clears the map. Use for test purposes.
      */
     public void clear() {
         this.map.clear();
@@ -88,11 +95,15 @@ public class JWTWhiteMap implements Serializable {
         @Schedule(second = "*/10", minute = "*", hour = "*", persistent = false)
     })
     public void cleanUp() {
+
+        List<JWTWhiteMapEntry> dtoUpdates = new LinkedList<>();
+        List<String> dtoRemoves = new LinkedList<>();
+
         this.map.entrySet().forEach(e -> {
             Set<JWTRecord> records = Optional.ofNullable(e.getValue())
                     .orElseGet(Collections::emptySet);
 
-            records.removeIf(r -> {
+            boolean result = records.removeIf(r -> {
                 if (r.hasExpired()) {
                     LOG.log(Level.INFO,
                             "Token of user [{0}] ({1}) has expired and has been cleaned...",
@@ -105,18 +116,29 @@ public class JWTWhiteMap implements Serializable {
                     return false;
                 }
             });
+
+            if (result == true && !records.isEmpty()) {
+                dtoUpdates.add(new JWTWhiteMapEntry(e));
+            }
+
         });
+
+        this.dto.bulkUpdates(dtoUpdates);
 
         this.map.entrySet().removeIf(e -> {
             if (e.getValue().isEmpty()) {
                 LOG.log(Level.INFO,
                         "All JWT Record of user [{0}] cleaned : no more entry in the JWT White Map (LOG-OUT)",
                         new Object[]{e.getKey()});
+                dtoRemoves.add(e.getKey());
                 return true;
             } else {
                 return false;
             }
         });
+
+        this.dto.bulkRemoves(dtoRemoves);
+
     }
 
     /**
@@ -132,7 +154,10 @@ public class JWTWhiteMap implements Serializable {
     public Optional<Set<JWTRecord>> add(String email, JWTRecord record) {
         Set<JWTRecord> records = this.map.getOrDefault(email,
                 Collections.synchronizedSortedSet(new TreeSet<>()));
+
         records.add(record);
+
+        this.dto.add(new JWTWhiteMapEntry(email, records));
 
         //logged-in, first active "session"
         if (records.size() == 1) {

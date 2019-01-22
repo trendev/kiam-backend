@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.security.controllers.jwt;
 
+import fr.trendev.comptandye.security.controllers.jwt.dto.mock.MockJWTWhiteMapDTO;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.time.Instant;
 import static java.time.temporal.ChronoUnit.MINUTES;
@@ -49,7 +50,7 @@ public class JWTWhiteMapTest {
 
     @Rule
     public WeldInitiator weld = WeldInitiator
-            .from(JWTWhiteMap.class)
+            .from(JWTWhiteMap.class, MockJWTWhiteMapDTO.class)
             .inject(this).build();
 
     @Inject

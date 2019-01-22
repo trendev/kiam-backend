@@ -3,41 +3,37 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.security.controllers.jwt.dto.firestore;
+package fr.trendev.comptandye.security.controllers.jwt.dto.mock;
 
 import fr.trendev.comptandye.security.controllers.jwt.dto.JWTWhiteMapDTO;
 import fr.trendev.comptandye.security.entities.JWTWhiteMapEntry;
+import java.util.Collections;
 import java.util.List;
 
 /**
  *
  * @author jsie
  */
-public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
+public class MockJWTWhiteMapDTO implements JWTWhiteMapDTO {
 
     @Override
     public void init() {
-
     }
 
     @Override
     public List<JWTWhiteMapEntry> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return Collections.emptyList();
     }
 
     @Override
     public void bulkUpdates(List<JWTWhiteMapEntry> dtoUpdates) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void bulkRemoves(List<String> dtoRemoves) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void add(JWTWhiteMapEntry jwtWhiteMapEntry) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 }

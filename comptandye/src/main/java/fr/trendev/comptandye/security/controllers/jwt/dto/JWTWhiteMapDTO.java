@@ -5,6 +5,9 @@
  */
 package fr.trendev.comptandye.security.controllers.jwt.dto;
 
+import fr.trendev.comptandye.security.entities.JWTWhiteMapEntry;
+import java.util.List;
+
 /**
  *
  * @author jsie
@@ -12,5 +15,13 @@ package fr.trendev.comptandye.security.controllers.jwt.dto;
 public interface JWTWhiteMapDTO {
 
     public void init();
+
+    public List<JWTWhiteMapEntry> getAll();
+
+    public void bulkUpdates(List<JWTWhiteMapEntry> dtoUpdates);
+
+    public void bulkRemoves(List<String> dtoRemoves);
+
+    public void add(JWTWhiteMapEntry jwtWhiteMapEntry);
 
 }
