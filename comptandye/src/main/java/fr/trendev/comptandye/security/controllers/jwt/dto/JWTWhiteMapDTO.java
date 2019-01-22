@@ -22,6 +22,7 @@ public interface JWTWhiteMapDTO {
 
     public void bulkRemoves(List<String> dtoRemoves);
 
+    //TODO : split into create/update
     public void save(JWTWhiteMapEntry jwtWhiteMapEntry);
 
     public void remove(String email);
