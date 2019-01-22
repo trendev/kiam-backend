@@ -36,7 +36,12 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
     }
 
     @Override
-    public void add(JWTWhiteMapEntry jwtWhiteMapEntry) {
+    public void save(JWTWhiteMapEntry jwtWhiteMapEntry) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void remove(String email) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

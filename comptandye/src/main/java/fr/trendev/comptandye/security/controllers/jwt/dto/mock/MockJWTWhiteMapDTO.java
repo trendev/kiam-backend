@@ -34,6 +34,10 @@ public class MockJWTWhiteMapDTO implements JWTWhiteMapDTO {
     }
 
     @Override
-    public void add(JWTWhiteMapEntry jwtWhiteMapEntry) {
+    public void save(JWTWhiteMapEntry jwtWhiteMapEntry) {
+    }
+
+    @Override
+    public void remove(String email) {
     }
 }

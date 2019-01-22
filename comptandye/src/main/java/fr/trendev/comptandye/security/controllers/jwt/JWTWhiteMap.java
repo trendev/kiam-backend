@@ -81,7 +81,7 @@ public class JWTWhiteMap implements Serializable {
     }
 
     /**
-     * Clears the map. Use for test purposes.
+     * Clears the map. Use for test purposes only.
      */
     public void clear() {
         this.map.clear();
@@ -157,7 +157,7 @@ public class JWTWhiteMap implements Serializable {
 
         records.add(record);
 
-        this.dto.add(new JWTWhiteMapEntry(email, records));
+        this.dto.save(new JWTWhiteMapEntry(email, records));
 
         //logged-in, first active "session"
         if (records.size() == 1) {
@@ -206,6 +206,7 @@ public class JWTWhiteMap implements Serializable {
             LOG.log(Level.INFO,
                     "All JWT Records of user [{0}] have been removed : no more entry in the JWT White Map (LOG-OUT)",
                     new Object[]{email});
+            this.dto.remove(email);
         }
         return records;
     }
@@ -240,12 +241,20 @@ public class JWTWhiteMap implements Serializable {
             }
         });
 
-        // logged-out, no more active "session"
-        if (records.isEmpty() && record.isPresent()) {
-            this.map.remove(email);
-            LOG.log(Level.INFO,
-                    "Last JWT Record of user [{0}] removed : no more entry in the JWT White Map (LOG-OUT)",
-                    new Object[]{email});
+        if (record.isPresent()) {
+            // logged-out, no more active "session"
+            if (records.isEmpty()) {
+
+                this.map.remove(email);
+                this.dto.remove(email);
+
+                LOG.log(Level.INFO,
+                        "Last JWT Record of user [{0}] removed : no more entry in the JWT White Map (LOG-OUT)",
+                        new Object[]{email});
+
+            } else { // save the updated record collection
+                this.dto.save(new JWTWhiteMapEntry(email, records));
+            }
         }
 
         return record;
