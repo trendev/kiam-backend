@@ -7,6 +7,7 @@ package fr.trendev.comptandye.security.controllers.jwt.dto;
 
 import fr.trendev.comptandye.security.entities.JWTWhiteMapEntry;
 import java.util.List;
+import java.util.concurrent.CompletionStage;
 
 /**
  *
@@ -16,7 +17,7 @@ public interface JWTWhiteMapDTO {
 
     public void init();
 
-    public List<JWTWhiteMapEntry> getAll();
+    public CompletionStage<List<JWTWhiteMapEntry>> getAll();
 
     public void bulkUpdates(List<JWTWhiteMapEntry> dtoUpdates);
 

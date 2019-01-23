@@ -8,6 +8,7 @@ package fr.trendev.comptandye.security.controllers.jwt.dto.firestore;
 import fr.trendev.comptandye.security.controllers.jwt.dto.JWTWhiteMapDTO;
 import fr.trendev.comptandye.security.entities.JWTWhiteMapEntry;
 import java.util.List;
+import java.util.concurrent.CompletionStage;
 
 /**
  *
@@ -21,7 +22,7 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
     }
 
     @Override
-    public List<JWTWhiteMapEntry> getAll() {
+    public CompletionStage<List<JWTWhiteMapEntry>> getAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

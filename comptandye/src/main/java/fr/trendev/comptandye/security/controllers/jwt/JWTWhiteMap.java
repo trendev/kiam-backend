@@ -58,9 +58,8 @@ public class JWTWhiteMap implements Serializable {
         LOG.log(Level.INFO, "Initializing {0} ...", JWTWhiteMap.class.
                 getSimpleName());
 
-        dto.getAll().forEach(e ->
-                this.map.put(e.getEmail(), e.getRecords())
-        );
+        dto.getAll().thenAccept(l ->
+                l.forEach(e -> this.map.put(e.getEmail(), e.getRecords())));
 
         LOG.log(Level.INFO, "{0} initialized", JWTWhiteMap.class.
                 getSimpleName());

@@ -16,6 +16,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 /**
  *
@@ -28,22 +30,25 @@ public class MockJWTWhiteMapDTO implements JWTWhiteMapDTO {
     }
 
     @Override
-    public List<JWTWhiteMapEntry> getAll() {
+    public CompletionStage<List<JWTWhiteMapEntry>> getAll() {
 
-        String token = "TK123456789";
+        return CompletableFuture.supplyAsync(() -> {
+            String token = "TK123456789";
 
-        Instant now = Instant.now();
+            Instant now = Instant.now();
 
-        Date creationDate1 = Date.from(now);
-        Date expirationDate1 = Date.from(now.plus(SHORT_VALID_PERIOD,
-                SHORT_VALID_PERIOD_UNIT));
+            Date creationDate1 = Date.from(now);
+            Date expirationDate1 = Date.from(now.plus(SHORT_VALID_PERIOD,
+                    SHORT_VALID_PERIOD_UNIT));
 
-        JWTRecord record1 = new JWTRecord(token, creationDate1, expirationDate1);
+            JWTRecord record1 = new JWTRecord(token, creationDate1,
+                    expirationDate1);
 
-        Set<JWTRecord> records = new HashSet<>();
-        records.add(record1);
+            Set<JWTRecord> records = new HashSet<>();
+            records.add(record1);
 
-        return Arrays.asList(new JWTWhiteMapEntry("testemail01", records));
+            return Arrays.asList(new JWTWhiteMapEntry("testemail01", records));
+        });
     }
 
     @Override

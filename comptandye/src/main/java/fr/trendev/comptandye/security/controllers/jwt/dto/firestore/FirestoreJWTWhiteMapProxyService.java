@@ -27,12 +27,8 @@ import javax.ws.rs.core.MediaType;
 @Consumes(MediaType.APPLICATION_JSON)
 public interface FirestoreJWTWhiteMapProxyService {
 
-    /**
-     * Indirectly used by JWTWhiteMap: should block until JWTWhiteMap is fully
-     * loaded (are not)
-     */
     @GET
-    List<JWTWhiteMapEntry> getAll();
+    CompletionStage<List<JWTWhiteMapEntry>> getAll();
 
     @PUT
     @Path("updates")
