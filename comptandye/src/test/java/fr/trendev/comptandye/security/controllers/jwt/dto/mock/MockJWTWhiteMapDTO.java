@@ -27,7 +27,7 @@ import java.util.logging.Logger;
  */
 public class MockJWTWhiteMapDTO implements JWTWhiteMapDTO {
 
-    public static long LATENCY = 300l;
+    public static long LATENCY = 200l;
     private static final Logger LOG =
             Logger.getLogger(MockJWTWhiteMapDTO.class.getName());
 

@@ -77,7 +77,7 @@ public class JWTWhiteMapTest {
 
     @Test
     public void testInit() {
-        System.out.println("### TEST JWTWHITEMAP INIT ###");
+        LOG.info("### TEST JWTWHITEMAP INIT ###");
         Assertions.assertDoesNotThrow(() -> jwtwm.init());
         Assertions.assertTrue(jwtwm.getMap().isEmpty(),
                 "jwtwm.getMap().isEmpty() should be true");
@@ -92,6 +92,8 @@ public class JWTWhiteMapTest {
         Assertions.assertNotNull(jwtwm.getMap());
         Assertions.assertFalse(jwtwm.getMap().isEmpty(),
                 "jwtwm.getMap().isEmpty() should be false");
+        Assertions.assertTrue(jwtwm.getMap().size() == 1,
+                "jwtwm.getMap().size() should be 1");
     }
 
     @Test
