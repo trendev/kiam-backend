@@ -18,12 +18,18 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author jsie
  */
 public class MockJWTWhiteMapDTO implements JWTWhiteMapDTO {
+
+    public static long LATENCY = 300l;
+    private static final Logger LOG =
+            Logger.getLogger(MockJWTWhiteMapDTO.class.getName());
 
     @Override
     public void init() {
@@ -47,7 +53,26 @@ public class MockJWTWhiteMapDTO implements JWTWhiteMapDTO {
             Set<JWTRecord> records = new HashSet<>();
             records.add(record1);
 
-            return Arrays.asList(new JWTWhiteMapEntry("testemail01", records));
+            List<JWTWhiteMapEntry> list =
+                    Arrays.asList(new JWTWhiteMapEntry("testemail01", records));
+
+            //simulate latency
+            LOG.log(Level.INFO,
+                    "getAll() in {0} : Mock list is ready but wait (simulate latency) {1} ms / Thread = {2}",
+                    new Object[]{
+                        MockJWTWhiteMapDTO.class.getSimpleName(),
+                        LATENCY,
+                        Thread.currentThread().getName()});
+            try {
+                Thread.sleep(LATENCY);
+            } catch (InterruptedException ex) {
+                LOG.log(Level.SEVERE,
+                        MockJWTWhiteMapDTO.class.getSimpleName()
+                        + " must not be interrupted",
+                        ex);
+            }
+
+            return list;
         });
     }
 

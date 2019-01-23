@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.IntStream;
 import javax.inject.Inject;
 import org.jboss.weld.junit4.WeldInitiator;
@@ -47,6 +48,8 @@ public class JWTWhiteMapTest {
     private final Date expirationDate3 = Date.from(now.plus(
             JWTManager.SHORT_VALID_PERIOD + 10,
             MINUTES));
+    private static final Logger LOG = Logger.getLogger(JWTWhiteMapTest.class.
+            getName());
 
     @Rule
     public WeldInitiator weld = WeldInitiator
@@ -74,10 +77,19 @@ public class JWTWhiteMapTest {
 
     @Test
     public void testInit() {
+        System.out.println("### TEST JWTWHITEMAP INIT ###");
         Assertions.assertDoesNotThrow(() -> jwtwm.init());
+        Assertions.assertTrue(jwtwm.getMap().isEmpty(),
+                "jwtwm.getMap().isEmpty() should be true");
+        // The map is reloaded from the MockJWTWhiteMapDTO with 1 element
+        // wait the response from the DTO, assuming a latency
+        LOG.info("Waiting " + MockJWTWhiteMapDTO.LATENCY * 2 + " ms "
+                + "/ Thread = " + Thread.currentThread().getName());
+        Assertions.assertDoesNotThrow(() -> Thread.sleep(
+                MockJWTWhiteMapDTO.LATENCY * 2));
+
         Assertions.assertDoesNotThrow(() -> jwtwm.getMap());
         Assertions.assertNotNull(jwtwm.getMap());
-        // The map is realoaded from the MockJWTWhiteMapDTO with 1 element
         Assertions.assertFalse(jwtwm.getMap().isEmpty(),
                 "jwtwm.getMap().isEmpty() should be false");
     }

@@ -55,14 +55,23 @@ public class JWTWhiteMap implements Serializable {
 
     @PostConstruct
     public void init() {
-        LOG.log(Level.INFO, "Initializing {0} ...", JWTWhiteMap.class.
-                getSimpleName());
+        LOG.log(Level.INFO, "Initializing {0} ...",
+                JWTWhiteMap.class.getSimpleName());
 
-        dto.getAll().thenAccept(l ->
-                l.forEach(e -> this.map.put(e.getEmail(), e.getRecords())));
+        dto.getAll()
+                .thenAccept(saved -> {
+                    LOG.info("Updating " + JWTWhiteMap.class.getSimpleName()
+                            + " from " + dto.getClass().getSimpleName());
+                    saved.forEach(e ->
+                            this.map.put(e.getEmail(), e.getRecords()));
 
-        LOG.log(Level.INFO, "{0} initialized", JWTWhiteMap.class.
-                getSimpleName());
+                });
+
+        LOG.log(Level.INFO, "{0} may be initialized : active users = {1}",
+                new Object[]{
+                    JWTWhiteMap.class.getSimpleName(),
+                    this.map.size()});
+
     }
 
     @PreDestroy
