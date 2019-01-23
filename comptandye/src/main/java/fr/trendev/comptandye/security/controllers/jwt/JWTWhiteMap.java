@@ -69,7 +69,7 @@ public class JWTWhiteMap implements Serializable {
                          * iterates over the DTO's list and merge the entries if
                          * there is already authenticated users in the
                          * jwtwhitemap. Should not happen... if it happens it
-                         * means the api is operationnal before the DTO has
+                         * means the API is operational before the DTO has
                          * provided the saved entries.
                          */
                         saved.forEach(e -> {
