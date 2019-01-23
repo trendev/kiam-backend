@@ -59,12 +59,32 @@ public class JWTWhiteMap implements Serializable {
                 JWTWhiteMap.class.getSimpleName());
 
         dto.getAll()
+                //restores the map
                 .thenAccept(saved -> {
-                    LOG.info("Updating " + JWTWhiteMap.class.getSimpleName()
+                    LOG.info("Restoring " + JWTWhiteMap.class.getSimpleName()
                             + " from " + dto.getClass().getSimpleName());
-                    saved.forEach(e ->
-                            this.map.put(e.getEmail(), e.getRecords()));
-
+                    /**
+                     * iterates over the DTO's list and merge the entries if
+                     * there is already authenticated users in the jwtwhitemap.
+                     * Should not happen... if it happens it means the api is
+                     * operationnal before the DTO has provided the saved
+                     * entries.
+                     */
+                    saved.forEach(e -> {
+                        Set<JWTRecord> records = this.map.getOrDefault(
+                                e.getEmail(),
+                                Collections
+                                        .synchronizedSortedSet(new TreeSet<>()));
+                        if (records.isEmpty()) {
+                            LOG.info("Restoring JWT Records for user " + e.
+                                    getEmail());
+                        } else { // active authenticated user
+                            LOG.warning("Updating JWT Records for user " + e.
+                                    getEmail());
+                        }
+                        records.addAll(e.getRecords());
+                        this.map.put(e.getEmail(), records);
+                    });
                 });
 
         LOG.log(Level.INFO, "{0} may be initialized : active users = {1}",
