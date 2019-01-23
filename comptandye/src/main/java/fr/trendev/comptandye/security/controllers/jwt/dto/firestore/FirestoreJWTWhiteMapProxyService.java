@@ -42,12 +42,14 @@ public interface FirestoreJWTWhiteMapProxyService {
     @Path("removes")
     CompletionStage<Void> bulkRemoves(List<String> dtoRemoves);
 
-    //TODO : split into create/update
     @POST
-    CompletionStage<Void> save(JWTWhiteMapEntry jwtWhiteMapEntry);
+    CompletionStage<Void> create(JWTWhiteMapEntry jwtWhiteMapEntry);
+
+    @PUT
+    CompletionStage<Void> update(JWTWhiteMapEntry jwtWhiteMapEntry);
 
     @DELETE
     @Path("{email}")
-    CompletionStage<Void> remove(@PathParam("email") String email);
+    CompletionStage<Void> delete(@PathParam("email") String email);
 
 }
