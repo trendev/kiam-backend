@@ -74,6 +74,11 @@ public class JWTWhiteMapTest {
 
     @Test
     public void testInit() {
+        Assertions.assertDoesNotThrow(() -> jwtwm.init());
+        Assertions.assertDoesNotThrow(() -> jwtwm.getMap());
+        Assertions.assertNotNull(jwtwm.getMap());
+        // The map is realoaded from the MockJWTWhiteMapDTO with 1 element
+        Assertions.assertFalse(jwtwm.getMap().isEmpty());
     }
 
     @Test

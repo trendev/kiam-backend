@@ -5,10 +5,17 @@
  */
 package fr.trendev.comptandye.security.controllers.jwt.dto.mock;
 
+import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_VALID_PERIOD;
+import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_VALID_PERIOD_UNIT;
 import fr.trendev.comptandye.security.controllers.jwt.dto.JWTWhiteMapDTO;
+import fr.trendev.comptandye.security.entities.JWTRecord;
 import fr.trendev.comptandye.security.entities.JWTWhiteMapEntry;
-import java.util.Collections;
+import java.time.Instant;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -22,7 +29,21 @@ public class MockJWTWhiteMapDTO implements JWTWhiteMapDTO {
 
     @Override
     public List<JWTWhiteMapEntry> getAll() {
-        return Collections.emptyList();
+
+        String token = "TK123456789";
+
+        Instant now = Instant.now();
+
+        Date creationDate1 = Date.from(now);
+        Date expirationDate1 = Date.from(now.plus(SHORT_VALID_PERIOD,
+                SHORT_VALID_PERIOD_UNIT));
+
+        JWTRecord record1 = new JWTRecord(token, creationDate1, expirationDate1);
+
+        Set<JWTRecord> records = new HashSet<>();
+        records.add(record1);
+
+        return Arrays.asList(new JWTWhiteMapEntry("testemail01", records));
     }
 
     @Override
