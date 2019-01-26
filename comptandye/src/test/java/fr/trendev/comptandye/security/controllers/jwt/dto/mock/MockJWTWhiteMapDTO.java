@@ -33,6 +33,12 @@ public class MockJWTWhiteMapDTO implements JWTWhiteMapDTO {
 
     @Override
     public void init() {
+        LOG.info(MockJWTWhiteMapDTO.class.getSimpleName() + " initialized");
+    }
+
+    @Override
+    public void close() {
+        LOG.info(MockJWTWhiteMapDTO.class.getSimpleName() + " closed");
     }
 
     @Override

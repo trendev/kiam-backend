@@ -17,6 +17,8 @@ public interface JWTWhiteMapDTO {
 
     public void init();
 
+    public void close();
+
     public CompletionStage<List<JWTWhiteMapEntry>> getAll();
 
     public void bulkUpdates(List<JWTWhiteMapEntry> dtoUpdates);
