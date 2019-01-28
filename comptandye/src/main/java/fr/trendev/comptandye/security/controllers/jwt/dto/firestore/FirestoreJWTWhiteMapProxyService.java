@@ -25,6 +25,7 @@ import javax.ws.rs.core.MediaType;
 @Path("jwtwhitemap")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@RegisterRestClient
 //TODO : handle errors (HTTP >= 400)
 public interface FirestoreJWTWhiteMapProxyService {
 
