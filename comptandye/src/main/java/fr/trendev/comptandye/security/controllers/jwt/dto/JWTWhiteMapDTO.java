@@ -6,6 +6,7 @@
 package fr.trendev.comptandye.security.controllers.jwt.dto;
 
 import fr.trendev.comptandye.security.entities.JWTWhiteMapEntry;
+import java.io.Serializable;
 import java.util.List;
 import java.util.concurrent.CompletionStage;
 
@@ -13,7 +14,7 @@ import java.util.concurrent.CompletionStage;
  *
  * @author jsie
  */
-public interface JWTWhiteMapDTO {
+public interface JWTWhiteMapDTO extends Serializable {
 
     public void init();
 

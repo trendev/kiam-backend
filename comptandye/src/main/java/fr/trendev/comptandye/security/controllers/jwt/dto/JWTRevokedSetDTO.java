@@ -5,10 +5,12 @@
  */
 package fr.trendev.comptandye.security.controllers.jwt.dto;
 
+import java.io.Serializable;
+
 /**
  *
  * @author jsie
  */
-public interface JWTRevokedSetDTO {
+public interface JWTRevokedSetDTO extends Serializable {
 
 }

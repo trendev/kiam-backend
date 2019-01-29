@@ -6,6 +6,7 @@
 package fr.trendev.comptandye.security.controllers.jwt.dto.firestore;
 
 import fr.trendev.comptandye.security.entities.JWTWhiteMapEntry;
+import java.io.Serializable;
 import java.util.List;
 import java.util.concurrent.CompletionStage;
 import javax.ws.rs.Consumes;
@@ -28,7 +29,7 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 @Consumes(MediaType.APPLICATION_JSON)
 @RegisterRestClient
 //TODO : handle errors (HTTP >= 400)
-public interface FirestoreJWTWhiteMapProxyService {
+public interface FirestoreJWTWhiteMapProxyService extends Serializable {
 
     @GET
     CompletionStage<List<JWTWhiteMapEntry>> getAll();
