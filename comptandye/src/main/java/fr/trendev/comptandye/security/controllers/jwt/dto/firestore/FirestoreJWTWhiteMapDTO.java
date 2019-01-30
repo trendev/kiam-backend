@@ -22,14 +22,14 @@ import org.eclipse.microprofile.rest.client.RestClientBuilder;
  */
 public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
 
-    private static final Logger LOG =
-            Logger.getLogger(FirestoreJWTWhiteMapDTO.class.getName());
+    private final Logger LOG;
 
     private URI apiUri;
 
     private FirestoreJWTWhiteMapProxyService proxy;
 
     public FirestoreJWTWhiteMapDTO() {
+        this.LOG = Logger.getLogger(FirestoreJWTWhiteMapDTO.class.getName());
     }
 
     @Override
