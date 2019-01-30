@@ -144,6 +144,7 @@
                 <filtering>true</filtering>
                 <includes>
                     <include>stripe/*.properties</include>
+                    <include>firestore/*.properties</include>
                 </includes>
             </resource>
         </resources>

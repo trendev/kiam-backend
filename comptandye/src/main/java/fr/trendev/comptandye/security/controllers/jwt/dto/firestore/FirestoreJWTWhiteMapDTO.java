@@ -7,10 +7,13 @@ package fr.trendev.comptandye.security.controllers.jwt.dto.firestore;
 
 import fr.trendev.comptandye.security.controllers.jwt.dto.JWTWhiteMapDTO;
 import fr.trendev.comptandye.security.entities.JWTWhiteMapEntry;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.CompletionStage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,27 +37,46 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
 
     @Override
     public void init() {
-        this.loadUri();
+        this.apiUri = this.loadUri();
         this.proxy = RestClientBuilder.newBuilder()
                 .baseUri(apiUri)
                 .build(FirestoreJWTWhiteMapProxyService.class);
+        LOG.log(Level.INFO, "{0} initialized",
+                FirestoreJWTWhiteMapDTO.class.getSimpleName());
     }
 
-    private void loadUri() {
-        //TODO : load from env properties
-        String uri = "http://localhost:9080/firestore-proxy";
-
+    private URI loadUri() {
         try {
-            this.apiUri = new URI(uri);
-        } catch (URISyntaxException ex) {
-            LOG.log(Level.SEVERE, null, ex);
-            throw new IllegalStateException(uri + "URI is not valid");
+            // loads the properties
+            ClassLoader classloader = Thread.currentThread().
+                    getContextClassLoader();
+            InputStream is = classloader.getResourceAsStream(
+                    "firestore/firestore.properties");
 
+            Properties properties = new Properties();
+            properties.load(is);
+
+            String url = properties.getProperty(
+                    "firestore.proxy.jwtwhitemap.url");
+
+            LOG.
+                    log(Level.INFO, "firestore.proxy.jwtwhitemap.url = \"{0}\"",
+                            url);
+
+            return new URI(url);
+        } catch (URISyntaxException ex) {
+            throw new IllegalStateException(
+                    "Url provided in properties is not valid", ex);
+        } catch (IOException ex) {
+            throw new IllegalStateException(
+                    "IO Errors setting Firestore properties", ex);
         }
     }
 
     @Override
     public void close() {
+        LOG.log(Level.INFO, "{0} closed",
+                FirestoreJWTWhiteMapDTO.class.getSimpleName());
     }
 
     @Override
@@ -62,7 +84,7 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
         return this.proxy
                 .getAll()
                 .exceptionally(ex -> {
-                    LOG.log(Level.SEVERE,
+                    LOG.log(Level.WARNING,
                             "Exception occurs loading JWTWhiteMap entries from "
                             + FirestoreJWTWhiteMapDTO.class.getSimpleName(), ex);
                     return Collections.emptyList();
