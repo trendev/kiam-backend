@@ -156,7 +156,9 @@ public class JWTWhiteMap implements Serializable {
 
         });
 
-        this.dto.bulkUpdates(dtoUpdates);
+        if (!dtoUpdates.isEmpty()) {
+            this.dto.bulkUpdates(dtoUpdates);
+        }
 
         this.map.entrySet().removeIf(e -> {
             if (e.getValue().isEmpty()) {
@@ -170,7 +172,9 @@ public class JWTWhiteMap implements Serializable {
             }
         });
 
-        this.dto.bulkRemoves(dtoRemoves);
+        if (!dtoRemoves.isEmpty()) {
+            this.dto.bulkRemoves(dtoRemoves);
+        }
 
     }
 
