@@ -25,12 +25,22 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
     private static final Logger LOG =
             Logger.getLogger(FirestoreJWTWhiteMapDTO.class.getName());
 
-    private final URI apiUri;
+    private URI apiUri;
 
     private FirestoreJWTWhiteMapProxyService proxy;
 
     public FirestoreJWTWhiteMapDTO() {
+    }
 
+    @Override
+    public void init() {
+        this.loadUri();
+        this.proxy = RestClientBuilder.newBuilder()
+                .baseUri(apiUri)
+                .build(FirestoreJWTWhiteMapProxyService.class);
+    }
+
+    private void loadUri() {
         //TODO : load from env properties
         String uri = "http://localhost:9080/firestore-proxy";
 
@@ -39,14 +49,8 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
         } catch (URISyntaxException ex) {
             LOG.log(Level.SEVERE, null, ex);
             throw new IllegalStateException(uri + "URI is not valid");
-        }
-    }
 
-    @Override
-    public void init() {
-        this.proxy = RestClientBuilder.newBuilder()
-                .baseUri(apiUri)
-                .build(FirestoreJWTWhiteMapProxyService.class);
+        }
     }
 
     @Override
