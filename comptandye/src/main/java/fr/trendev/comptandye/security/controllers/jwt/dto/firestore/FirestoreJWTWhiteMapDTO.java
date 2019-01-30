@@ -13,6 +13,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.concurrent.CompletionStage;
 import java.util.logging.Level;
@@ -83,6 +84,20 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
     public CompletionStage<List<JWTWhiteMapEntry>> getAll() {
         return this.proxy
                 .getAll()
+                .thenApply(list ->
+                        Optional.ofNullable(list)
+                                .map(l -> {
+                                    LOG.log(Level.INFO,
+                                            "JWTWhiteMap list got from Firestore : "
+                                            + l.size() + " entries");
+                                    return l;
+                                })
+                                .orElseGet(() -> {
+                                    LOG.log(Level.WARNING,
+                                            "JWTWhiteMap list got from Firestore is null !!!");
+                                    return Collections.emptyList();
+                                })
+                )
                 .exceptionally(ex -> {
                     LOG.log(Level.WARNING,
                             "Exception occurs loading JWTWhiteMap entries from "
@@ -93,27 +108,48 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
 
     @Override
     public void bulkUpdates(List<JWTWhiteMapEntry> dtoUpdates) {
-        this.proxy.bulkUpdates(dtoUpdates);
+        this.proxy.bulkUpdates(dtoUpdates)
+                .thenAccept(v -> {
+                    LOG.info("Bulk updates in Firestore : OK");
+                });
     }
 
     @Override
     public void bulkRemoves(List<String> dtoRemoves) {
-        this.proxy.bulkRemoves(dtoRemoves);
+        this.proxy.bulkRemoves(dtoRemoves)
+                .thenAccept(v -> {
+                    LOG.info("Bulk removes in Firestore : OK");
+                });;
     }
 
     @Override
     public void create(JWTWhiteMapEntry jwtWhiteMapEntry) {
-        this.proxy.create(jwtWhiteMapEntry);
+        this.proxy.create(jwtWhiteMapEntry)
+                .thenAccept(v -> {
+                    LOG.log(Level.INFO,
+                            "JWTWhiteMapEntry " + jwtWhiteMapEntry.getEmail()
+                            + " has been created in Firestore");
+                });
     }
 
     @Override
     public void update(JWTWhiteMapEntry jwtWhiteMapEntry) {
-        this.update(jwtWhiteMapEntry);
+        this.proxy.update(jwtWhiteMapEntry)
+                .thenAccept(v -> {
+                    LOG.log(Level.INFO,
+                            "JWTWhiteMapEntry " + jwtWhiteMapEntry.getEmail()
+                            + " has been updated in Firestore");
+                });
     }
 
     @Override
     public void delete(String email) {
-        this.delete(email);
+        this.proxy.delete(email)
+                .thenAccept(v -> {
+                    LOG.log(Level.INFO,
+                            "JWTWhiteMapEntry " + email
+                            + " has been deleted in Firestore");
+                });
     }
 
 }
