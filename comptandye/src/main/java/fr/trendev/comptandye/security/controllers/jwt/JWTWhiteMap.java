@@ -58,6 +58,7 @@ public class JWTWhiteMap implements Serializable {
         LOG.log(Level.INFO, "Initializing {0} ...",
                 JWTWhiteMap.class.getSimpleName());
 
+        //TODO : simulate lock with a CompletableFuture using the map
         dto.getAll()
                 //restores the map
                 .thenAccept(saved -> {
