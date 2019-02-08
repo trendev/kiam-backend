@@ -29,19 +29,28 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
     private static final Logger LOG =
             Logger.getLogger(FirestoreJWTWhiteMapDTO.class.getName());
 
-    private FirestoreJWTWhiteMapProxyService proxy;
+    private URI apiUri;
+
+    private transient FirestoreJWTWhiteMapProxyService proxy;
 
     public FirestoreJWTWhiteMapDTO() {
     }
 
     @Override
     public void init() {
-        URI apiUri = this.loadUri();
-        this.proxy = RestClientBuilder.newBuilder()
-                .baseUri(apiUri)
-                .build(FirestoreJWTWhiteMapProxyService.class);
+        this.apiUri = this.loadUri();
+
         LOG.log(Level.INFO, "{0} initialized",
                 FirestoreJWTWhiteMapDTO.class.getSimpleName());
+    }
+
+    private FirestoreJWTWhiteMapProxyService getProxy() {
+        if (this.proxy == null) {
+            this.proxy = RestClientBuilder.newBuilder()
+                    .baseUri(apiUri)
+                    .build(FirestoreJWTWhiteMapProxyService.class);
+        }
+        return this.proxy;
     }
 
     private URI loadUri() {
@@ -80,7 +89,7 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
 
     @Override
     public CompletionStage<List<JWTWhiteMapEntry>> getAll() {
-        return this.proxy
+        return this.getProxy()
                 .getAll()
                 .thenApply(list ->
                         Optional.ofNullable(list)
@@ -106,7 +115,7 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
 
     @Override
     public void bulkUpdates(List<JWTWhiteMapEntry> dtoUpdates) {
-        this.proxy.bulkUpdates(dtoUpdates)
+        this.getProxy().bulkUpdates(dtoUpdates)
                 .thenAccept(v -> {
                     LOG.info("Bulk updates in Firestore : OK");
                 });
@@ -114,7 +123,7 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
 
     @Override
     public void bulkRemoves(List<String> dtoRemoves) {
-        this.proxy.bulkRemoves(dtoRemoves)
+        this.getProxy().bulkRemoves(dtoRemoves)
                 .thenAccept(v -> {
                     LOG.info("Bulk removes in Firestore : OK");
                 });;
@@ -122,7 +131,7 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
 
     @Override
     public void create(JWTWhiteMapEntry jwtWhiteMapEntry) {
-        this.proxy.create(jwtWhiteMapEntry)
+        this.getProxy().create(jwtWhiteMapEntry)
                 .thenAccept(v -> {
                     LOG.log(Level.INFO,
                             "JWTWhiteMapEntry " + jwtWhiteMapEntry.getEmail()
@@ -132,7 +141,7 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
 
     @Override
     public void update(JWTWhiteMapEntry jwtWhiteMapEntry) {
-        this.proxy.update(jwtWhiteMapEntry)
+        this.getProxy().update(jwtWhiteMapEntry)
                 .thenAccept(v -> {
                     LOG.log(Level.INFO,
                             "JWTWhiteMapEntry " + jwtWhiteMapEntry.getEmail()
@@ -142,7 +151,7 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
 
     @Override
     public void delete(String email) {
-        this.proxy.delete(email)
+        this.getProxy().delete(email)
                 .thenAccept(v -> {
                     LOG.log(Level.INFO,
                             "JWTWhiteMapEntry " + email
