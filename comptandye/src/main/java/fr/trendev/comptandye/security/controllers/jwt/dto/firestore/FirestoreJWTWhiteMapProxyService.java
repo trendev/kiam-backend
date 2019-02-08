@@ -32,24 +32,30 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 public interface FirestoreJWTWhiteMapProxyService extends Serializable {
 
     @GET
-    CompletionStage<List<JWTWhiteMapEntry>> getAll();
+    CompletionStage<List<JWTWhiteMapEntry>> getAll() throws
+            FirestoreProxyException;
 
     @PUT
     @Path("updates")
-    CompletionStage<Void> bulkUpdates(List<JWTWhiteMapEntry> dtoUpdates);
+    CompletionStage<Void> bulkUpdates(List<JWTWhiteMapEntry> dtoUpdates) throws
+            FirestoreProxyException;
 
     @DELETE
     @Path("removes")
-    CompletionStage<Void> bulkRemoves(List<String> dtoRemoves);
+    CompletionStage<Void> bulkRemoves(List<String> dtoRemoves) throws
+            FirestoreProxyException;
 
     @POST
-    CompletionStage<Void> create(JWTWhiteMapEntry jwtWhiteMapEntry);
+    CompletionStage<Void> create(JWTWhiteMapEntry jwtWhiteMapEntry) throws
+            FirestoreProxyException;
 
     @PUT
-    CompletionStage<Void> update(JWTWhiteMapEntry jwtWhiteMapEntry);
+    CompletionStage<Void> update(JWTWhiteMapEntry jwtWhiteMapEntry) throws
+            FirestoreProxyException;
 
     @DELETE
     @Path("{email}")
-    CompletionStage<Void> delete(@PathParam("email") String email);
+    CompletionStage<Void> delete(@PathParam("email") String email) throws
+            FirestoreProxyException;
 
 }

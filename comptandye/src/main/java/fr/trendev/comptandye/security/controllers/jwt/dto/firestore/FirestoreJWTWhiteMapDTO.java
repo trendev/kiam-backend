@@ -25,34 +25,35 @@ import org.eclipse.microprofile.rest.client.RestClientBuilder;
  * @author jsie
  */
 public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
-
+    
     private static final Logger LOG =
             Logger.getLogger(FirestoreJWTWhiteMapDTO.class.getName());
-
+    
     private URI apiUri;
-
+    
     private transient FirestoreJWTWhiteMapProxyService proxy;
-
+    
     public FirestoreJWTWhiteMapDTO() {
     }
-
+    
     @Override
     public void init() {
         this.apiUri = this.loadUri();
-
+        
         LOG.log(Level.INFO, "{0} initialized",
                 FirestoreJWTWhiteMapDTO.class.getSimpleName());
     }
-
+    
     private FirestoreJWTWhiteMapProxyService getProxy() {
         if (this.proxy == null) {
             this.proxy = RestClientBuilder.newBuilder()
                     .baseUri(apiUri)
+                    .register(FirestoreProxyExceptionMapper.class)
                     .build(FirestoreJWTWhiteMapProxyService.class);
         }
         return this.proxy;
     }
-
+    
     private URI loadUri() {
         try {
             // loads the properties
@@ -60,17 +61,17 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
                     getContextClassLoader();
             InputStream is = classloader.getResourceAsStream(
                     "firestore/firestore.properties");
-
+            
             Properties properties = new Properties();
             properties.load(is);
-
+            
             String url = properties.getProperty(
                     "firestore.proxy.jwtwhitemap.url");
-
+            
             LOG.
                     log(Level.INFO, "firestore.proxy.jwtwhitemap.url = \"{0}\"",
                             url);
-
+            
             return new URI(url);
         } catch (URISyntaxException ex) {
             throw new IllegalStateException(
@@ -80,13 +81,13 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
                     "IO Errors setting Firestore properties", ex);
         }
     }
-
+    
     @Override
     public void close() {
         LOG.log(Level.INFO, "{0} closed",
                 FirestoreJWTWhiteMapDTO.class.getSimpleName());
     }
-
+    
     @Override
     public CompletionStage<List<JWTWhiteMapEntry>> getAll() {
         return this.getProxy()
@@ -112,19 +113,19 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
                     return Collections.emptyList();
                 });
     }
-
+    
     @Override
     public void bulkUpdates(List<JWTWhiteMapEntry> dtoUpdates) {
         this.getProxy().bulkUpdates(dtoUpdates)
                 .thenRun(() -> LOG.info("Bulk updates in Firestore : OK"));
     }
-
+    
     @Override
     public void bulkRemoves(List<String> dtoRemoves) {
         this.getProxy().bulkRemoves(dtoRemoves)
                 .thenRun(() -> LOG.info("Bulk removes in Firestore : OK"));
     }
-
+    
     @Override
     public void create(JWTWhiteMapEntry jwtWhiteMapEntry) {
         this.getProxy().create(jwtWhiteMapEntry)
@@ -135,7 +136,7 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
                                 + " has been created in Firestore")
                 );
     }
-
+    
     @Override
     public void update(JWTWhiteMapEntry jwtWhiteMapEntry) {
         this.getProxy().update(jwtWhiteMapEntry)
@@ -146,7 +147,7 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
                                 + " has been updated in Firestore")
                 );
     }
-
+    
     @Override
     public void delete(String email) {
         this.getProxy().delete(email)
@@ -157,5 +158,5 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
                                 + " has been created in Firestore")
                 );
     }
-
+    
 }
