@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,25 +26,25 @@ import org.eclipse.microprofile.rest.client.RestClientBuilder;
  * @author jsie
  */
 public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
-    
+
     private static final Logger LOG =
             Logger.getLogger(FirestoreJWTWhiteMapDTO.class.getName());
-    
+
     private URI apiUri;
-    
+
     private transient FirestoreJWTWhiteMapProxyService proxy;
-    
+
     public FirestoreJWTWhiteMapDTO() {
     }
-    
+
     @Override
     public void init() {
         this.apiUri = this.loadUri();
-        
+
         LOG.log(Level.INFO, "{0} initialized",
                 FirestoreJWTWhiteMapDTO.class.getSimpleName());
     }
-    
+
     private FirestoreJWTWhiteMapProxyService getProxy() {
         if (this.proxy == null) {
             this.proxy = RestClientBuilder.newBuilder()
@@ -53,7 +54,7 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
         }
         return this.proxy;
     }
-    
+
     private URI loadUri() {
         try {
             // loads the properties
@@ -61,17 +62,17 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
                     getContextClassLoader();
             InputStream is = classloader.getResourceAsStream(
                     "firestore/firestore.properties");
-            
+
             Properties properties = new Properties();
             properties.load(is);
-            
+
             String url = properties.getProperty(
                     "firestore.proxy.jwtwhitemap.url");
-            
+
             LOG.
                     log(Level.INFO, "firestore.proxy.jwtwhitemap.url = \"{0}\"",
                             url);
-            
+
             return new URI(url);
         } catch (URISyntaxException ex) {
             throw new IllegalStateException(
@@ -81,82 +82,111 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
                     "IO Errors setting Firestore properties", ex);
         }
     }
-    
+
     @Override
     public void close() {
         LOG.log(Level.INFO, "{0} closed",
                 FirestoreJWTWhiteMapDTO.class.getSimpleName());
     }
-    
+
+    private <T> T errorHandler(Throwable ex,
+            String message,
+            T t) {
+        LOG.log(Level.INFO, message, ex);
+        LOG.log(Level.WARNING, message);
+        return t;
+    }
+
+    private final <T> void manageSilentOperations(
+            String successMsg,
+            String errMsg,
+            ThrowingBiFunction<FirestoreJWTWhiteMapProxyService, T, CompletionStage<Void>> fn,
+            T t) {
+        try {
+            fn.applyThrows(this.getProxy(), t)
+                    .thenRun(() -> LOG.info(successMsg))
+                    .exceptionally(ex -> this.errorHandler(ex, errMsg, null));
+        } catch (Throwable ex) {
+            this.errorHandler(ex, errMsg, null);
+        }
+    }
+
     @Override
     public CompletionStage<List<JWTWhiteMapEntry>> getAll() {
-        return this.getProxy()
-                .getAll()
-                .thenApply(list ->
-                        Optional.ofNullable(list)
-                                .map(l -> {
-                                    LOG.log(Level.INFO,
-                                            "JWTWhiteMap list got from Firestore : "
-                                            + l.size() + " entries");
-                                    return l;
-                                })
-                                .orElseGet(() -> {
-                                    LOG.log(Level.WARNING,
-                                            "JWTWhiteMap list got from Firestore is null !!!");
-                                    return Collections.emptyList();
-                                })
-                )
-                .exceptionally(ex -> {
-                    LOG.log(Level.WARNING,
-                            "Exception occurs loading JWTWhiteMap entries from "
-                            + FirestoreJWTWhiteMapDTO.class.getSimpleName(), ex);
-                    return Collections.emptyList();
-                });
+
+        final String errMsg =
+                "Exception occurs getting all JWTWhiteMap entries from Firestore";
+
+        try {
+            return this.getProxy()
+                    .getAll()
+                    .thenApply(list ->
+                            Optional.ofNullable(list)
+                                    .map(l -> {
+                                        LOG.log(Level.INFO,
+                                                "JWTWhiteMap list got from Firestore : "
+                                                + l.size() + " entries");
+                                        return l;
+                                    })
+                                    .orElseGet(() -> {
+                                        LOG.log(Level.WARNING,
+                                                "JWTWhiteMap list got from Firestore is null !!!");
+                                        return Collections.emptyList();
+                                    })
+                    )
+                    .exceptionally(ex -> this.errorHandler(
+                            ex,
+                            errMsg,
+                            Collections.emptyList()));
+        } catch (FirestoreProxyException ex) {
+            return CompletableFuture.completedFuture(this.errorHandler(
+                    ex,
+                    errMsg,
+                    Collections.emptyList()));
+        }
+
     }
-    
+
     @Override
     public void bulkUpdates(List<JWTWhiteMapEntry> dtoUpdates) {
-        this.getProxy().bulkUpdates(dtoUpdates)
-                .thenRun(() -> LOG.info("Bulk updates in Firestore : OK"));
+        manageSilentOperations("Bulk JWTWhiteMap updates in Firestore : OK",
+                "Exception occurs putting multiple JWTWhiteMap updates to Firestore",
+                FirestoreJWTWhiteMapProxyService::bulkUpdates, dtoUpdates);
+
     }
-    
+
     @Override
     public void bulkRemoves(List<String> dtoRemoves) {
-        this.getProxy().bulkRemoves(dtoRemoves)
-                .thenRun(() -> LOG.info("Bulk removes in Firestore : OK"));
+        manageSilentOperations("Bulk JWTWhiteMap removes in Firestore : OK",
+                "Exception occurs deleting multiple JWTWhiteMap entries to Firestore",
+                FirestoreJWTWhiteMapProxyService::bulkRemoves, dtoRemoves);
     }
-    
+
     @Override
     public void create(JWTWhiteMapEntry jwtWhiteMapEntry) {
-        this.getProxy().create(jwtWhiteMapEntry)
-                .thenRun(() ->
-                        LOG.log(Level.INFO,
-                                "JWTWhiteMapEntry "
-                                + jwtWhiteMapEntry.getEmail()
-                                + " has been created in Firestore")
-                );
+        manageSilentOperations("JWTWhiteMapEntry "
+                + jwtWhiteMapEntry.getEmail()
+                + " has been created in Firestore",
+                "Exception occurs creating a JWTWhiteMapEntry in Firestore",
+                FirestoreJWTWhiteMapProxyService::create, jwtWhiteMapEntry);
     }
-    
+
     @Override
     public void update(JWTWhiteMapEntry jwtWhiteMapEntry) {
-        this.getProxy().update(jwtWhiteMapEntry)
-                .thenRun(() ->
-                        LOG.log(Level.INFO,
-                                "JWTWhiteMapEntry "
-                                + jwtWhiteMapEntry.getEmail()
-                                + " has been updated in Firestore")
-                );
+        manageSilentOperations("JWTWhiteMapEntry "
+                + jwtWhiteMapEntry.getEmail()
+                + " has been updated in Firestore",
+                "Exception occurs updating a JWTWhiteMapEntry in Firestore",
+                FirestoreJWTWhiteMapProxyService::update, jwtWhiteMapEntry);
     }
-    
+
     @Override
     public void delete(String email) {
-        this.getProxy().delete(email)
-                .thenRun(() ->
-                        LOG.log(Level.INFO,
-                                "JWTWhiteMapEntry "
-                                + email
-                                + " has been created in Firestore")
-                );
+        manageSilentOperations("JWTWhiteMapEntry "
+                + email
+                + " has been deleted in Firestore",
+                "Exception occurs deleting a JWTWhiteMapEntry in Firestore",
+                FirestoreJWTWhiteMapProxyService::delete, email);
     }
-    
+
 }
