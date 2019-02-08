@@ -116,47 +116,46 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
     @Override
     public void bulkUpdates(List<JWTWhiteMapEntry> dtoUpdates) {
         this.getProxy().bulkUpdates(dtoUpdates)
-                .thenAccept(v -> {
-                    LOG.info("Bulk updates in Firestore : OK");
-                });
+                .thenRun(() -> LOG.info("Bulk updates in Firestore : OK"));
     }
 
     @Override
     public void bulkRemoves(List<String> dtoRemoves) {
         this.getProxy().bulkRemoves(dtoRemoves)
-                .thenAccept(v -> {
-                    LOG.info("Bulk removes in Firestore : OK");
-                });;
+                .thenRun(() -> LOG.info("Bulk removes in Firestore : OK"));
     }
 
     @Override
     public void create(JWTWhiteMapEntry jwtWhiteMapEntry) {
         this.getProxy().create(jwtWhiteMapEntry)
-                .thenAccept(v -> {
-                    LOG.log(Level.INFO,
-                            "JWTWhiteMapEntry " + jwtWhiteMapEntry.getEmail()
-                            + " has been created in Firestore");
-                });
+                .thenRun(() ->
+                        LOG.log(Level.INFO,
+                                "JWTWhiteMapEntry "
+                                + jwtWhiteMapEntry.getEmail()
+                                + " has been created in Firestore")
+                );
     }
 
     @Override
     public void update(JWTWhiteMapEntry jwtWhiteMapEntry) {
         this.getProxy().update(jwtWhiteMapEntry)
-                .thenAccept(v -> {
-                    LOG.log(Level.INFO,
-                            "JWTWhiteMapEntry " + jwtWhiteMapEntry.getEmail()
-                            + " has been updated in Firestore");
-                });
+                .thenRun(() ->
+                        LOG.log(Level.INFO,
+                                "JWTWhiteMapEntry "
+                                + jwtWhiteMapEntry.getEmail()
+                                + " has been updated in Firestore")
+                );
     }
 
     @Override
     public void delete(String email) {
         this.getProxy().delete(email)
-                .thenAccept(v -> {
-                    LOG.log(Level.INFO,
-                            "JWTWhiteMapEntry " + email
-                            + " has been deleted in Firestore");
-                });
+                .thenRun(() ->
+                        LOG.log(Level.INFO,
+                                "JWTWhiteMapEntry "
+                                + email
+                                + " has been created in Firestore")
+                );
     }
 
 }
