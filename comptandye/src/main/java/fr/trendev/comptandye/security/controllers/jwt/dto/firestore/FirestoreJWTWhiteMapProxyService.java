@@ -28,7 +28,6 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RegisterRestClient
-//TODO : handle errors (HTTP >= 400)
 public interface FirestoreJWTWhiteMapProxyService extends Serializable {
 
     @GET
