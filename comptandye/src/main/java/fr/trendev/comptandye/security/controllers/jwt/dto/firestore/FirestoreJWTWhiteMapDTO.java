@@ -51,6 +51,9 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
                     .baseUri(apiUri)
                     .register(FirestoreProxyExceptionMapper.class)
                     .build(FirestoreJWTWhiteMapProxyService.class);
+            LOG.log(Level.INFO, "New instance of "
+                    + FirestoreJWTWhiteMapProxyService.class.getSimpleName()
+                    + " created");
         }
         return this.proxy;
     }
