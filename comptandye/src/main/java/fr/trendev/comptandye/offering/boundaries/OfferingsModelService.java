@@ -160,6 +160,8 @@ public class OfferingsModelService {
 
             return map;
         } catch (IOException ex) {
+            LOG.log(Level.SEVERE,
+                    "Exception occurs parsing services from file : {0}", path);
             throw new IOException(ex);
         }
 
@@ -176,15 +178,16 @@ public class OfferingsModelService {
             String business,
             Map<String, Offering> services)
             throws IOException {
+
         ClassLoader classloader = Thread.currentThread().
                 getContextClassLoader();
-        String path = "json/packs_" + business + ".json";
-        InputStream is = classloader.getResourceAsStream(path);
 
-        if (is != null) {
+        String path = "json/packs_" + business + ".json";
+
+        try (InputStream is = classloader.getResourceAsStream(path)) {
             LOG.log(Level.INFO, "Reading in {0}", path);
-            List<Offering> packs = Arrays.asList(om.readValue(is, Pack[].class)).
-                    stream()
+            List<Offering> packs = Arrays.asList(om.readValue(is, Pack[].class))
+                    .stream()
                     .map(p -> {
                         List<Offering> offerings = p.getOfferings().stream()
                                 //use the managed entity instead of the provided offering
@@ -212,13 +215,11 @@ public class OfferingsModelService {
                     })
                     .collect(Collectors.toList());
 
-            LOG.log(Level.INFO, "Closing {0}", path);
-            is.close();
-            LOG.log(Level.INFO, "{0} is now closed", path);
-
             return packs;
-        } else {
-            return new LinkedList<Offering>();
+        } catch (IOException ex) {
+            LOG.log(Level.SEVERE,
+                    "Exception occurs parsing packs from file : {0}", path);
+            throw new IOException(ex);
         }
 
     }
