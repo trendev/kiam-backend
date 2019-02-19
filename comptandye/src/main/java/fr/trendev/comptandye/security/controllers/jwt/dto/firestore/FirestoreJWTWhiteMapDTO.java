@@ -59,22 +59,23 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
     }
 
     private URI loadUri() {
-        try {
-            // loads the properties
-            ClassLoader classloader = Thread.currentThread().
-                    getContextClassLoader();
-            InputStream is = classloader.getResourceAsStream(
-                    "firestore/firestore.properties");
+
+        ClassLoader classloader = Thread.currentThread().
+                getContextClassLoader();
+
+        try (InputStream is = classloader.getResourceAsStream(
+                "firestore/firestore.properties")) {
 
             Properties properties = new Properties();
             properties.load(is);
 
+            // loads the properties
             String url = properties.getProperty(
                     "firestore.proxy.jwtwhitemap.url");
 
-            LOG.
-                    log(Level.INFO, "firestore.proxy.jwtwhitemap.url = \"{0}\"",
-                            url);
+            LOG.log(Level.INFO,
+                    "firestore.proxy.jwtwhitemap.url = \"{0}\"",
+                    url);
 
             return new URI(url);
         } catch (URISyntaxException ex) {
