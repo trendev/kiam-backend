@@ -7,7 +7,12 @@ package fr.trendev.comptandye.security.controllers.jwt.dto;
 
 import fr.trendev.comptandye.security.controllers.jwt.dto.dynamodb.DynamodbDTO;
 import fr.trendev.comptandye.security.controllers.jwt.dto.firestore.FirestoreDTO;
+import fr.trendev.comptandye.security.controllers.jwt.dto.firestore.FirestoreJWTRevokedSetDTO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Produces;
 
 /**
@@ -17,10 +22,20 @@ import javax.enterprise.inject.Produces;
 @ApplicationScoped
 public class JWTRevokedSetDTOProducer {
 
+    private FirestoreJWTRevokedSetDTO firestoreDTO;
+
+    private static final Logger LOG = Logger.getLogger(
+            JWTRevokedSetDTOProducer.class.getName());
+
     @Produces
+    @Default
     @FirestoreDTO
     public JWTRevokedSetDTO getFirestoreJWTRevokedSetDTO() {
-        return null;
+        if (this.firestoreDTO == null) {
+            this.firestoreDTO = new FirestoreJWTRevokedSetDTO();
+//            this.firestoreDTO.init();
+        }
+        return this.firestoreDTO;
     }
 
     @Produces
@@ -28,6 +43,12 @@ public class JWTRevokedSetDTOProducer {
     public JWTRevokedSetDTO getDynamodbJWTRevokedSetDTO() {
         throw new UnsupportedOperationException(
                 "Cannot produce DynamoDB DTO for the JWT Revoked Set");
+    }
+
+    @PreDestroy
+    public void close() {
+        LOG.log(Level.INFO, "{0} is now closed",
+                JWTRevokedSetDTOProducer.class.getSimpleName());
     }
 
 }

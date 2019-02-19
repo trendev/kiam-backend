@@ -13,4 +13,7 @@ import java.io.Serializable;
  */
 public interface JWTRevokedSetDTO extends Serializable {
 
+//    public void init();
+//
+//    public void close();
 }
