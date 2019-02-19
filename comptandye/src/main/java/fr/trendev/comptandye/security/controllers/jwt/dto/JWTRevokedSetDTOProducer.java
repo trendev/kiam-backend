@@ -33,7 +33,7 @@ public class JWTRevokedSetDTOProducer {
     public JWTRevokedSetDTO getFirestoreJWTRevokedSetDTO() {
         if (this.firestoreDTO == null) {
             this.firestoreDTO = new FirestoreJWTRevokedSetDTO();
-//            this.firestoreDTO.init();
+            this.firestoreDTO.init();
         }
         return this.firestoreDTO;
     }

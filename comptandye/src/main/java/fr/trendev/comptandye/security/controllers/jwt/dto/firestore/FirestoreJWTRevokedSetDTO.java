@@ -6,11 +6,65 @@
 package fr.trendev.comptandye.security.controllers.jwt.dto.firestore;
 
 import fr.trendev.comptandye.security.controllers.jwt.dto.JWTRevokedSetDTO;
+import java.net.URI;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author jsie
  */
 public class FirestoreJWTRevokedSetDTO implements JWTRevokedSetDTO {
+
+    private static final Logger LOG =
+            Logger.getLogger(FirestoreJWTRevokedSetDTO.class.getName());
+
+    private URI apiUri;
+
+    public FirestoreJWTRevokedSetDTO() {
+    }
+
+    @Override
+    public void init() {
+        this.apiUri = this.loadUri();
+
+        LOG.log(Level.INFO, "{0} initialized",
+                FirestoreJWTRevokedSetDTO.class.getSimpleName());
+    }
+
+    private URI loadUri() {
+//        try {
+//            // loads the properties
+//            ClassLoader classloader = Thread.currentThread().
+//                    getContextClassLoader();
+//            InputStream is = classloader.getResourceAsStream(
+//                    "firestore/firestore.properties");
+//
+//            Properties properties = new Properties();
+//            properties.load(is);
+//
+//            String url = properties.getProperty(
+//                    "firestore.proxy.jwtwhitemap.url");
+//
+//            LOG.
+//                    log(Level.INFO, "firestore.proxy.jwtwhitemap.url = \"{0}\"",
+//                            url);
+//
+//            return new URI(url);
+//        } catch (URISyntaxException ex) {
+//            throw new IllegalStateException(
+//                    "Url provided in properties is not valid", ex);
+//        } catch (IOException ex) {
+//            throw new IllegalStateException(
+//                    "IO Errors setting Firestore properties", ex);
+//        }
+        return null;
+    }
+
+    @Override
+    public void close() {
+        LOG.log(Level.INFO, "{0} closed",
+                FirestoreJWTRevokedSetDTO.class.getSimpleName());
+    }
 
 }
