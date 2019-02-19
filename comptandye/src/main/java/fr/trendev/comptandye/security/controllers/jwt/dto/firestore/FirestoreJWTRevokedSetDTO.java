@@ -6,7 +6,11 @@
 package fr.trendev.comptandye.security.controllers.jwt.dto.firestore;
 
 import fr.trendev.comptandye.security.controllers.jwt.dto.JWTRevokedSetDTO;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,32 +37,32 @@ public class FirestoreJWTRevokedSetDTO implements JWTRevokedSetDTO {
     }
 
     private URI loadUri() {
-//        try {
-//            // loads the properties
-//            ClassLoader classloader = Thread.currentThread().
-//                    getContextClassLoader();
-//            InputStream is = classloader.getResourceAsStream(
-//                    "firestore/firestore.properties");
-//
-//            Properties properties = new Properties();
-//            properties.load(is);
-//
-//            String url = properties.getProperty(
-//                    "firestore.proxy.jwtwhitemap.url");
-//
-//            LOG.
-//                    log(Level.INFO, "firestore.proxy.jwtwhitemap.url = \"{0}\"",
-//                            url);
-//
-//            return new URI(url);
-//        } catch (URISyntaxException ex) {
-//            throw new IllegalStateException(
-//                    "Url provided in properties is not valid", ex);
-//        } catch (IOException ex) {
-//            throw new IllegalStateException(
-//                    "IO Errors setting Firestore properties", ex);
-//        }
-        return null;
+        try {
+            // loads the properties
+            ClassLoader classloader = Thread.currentThread().
+                    getContextClassLoader();
+            InputStream is = classloader.getResourceAsStream(
+                    "firestore/firestore.properties");
+
+            Properties properties = new Properties();
+            properties.load(is);
+
+            String url = properties.getProperty(
+                    "firestore.proxy.jwtrevokedset.url");
+
+            LOG.
+                    log(Level.INFO,
+                            "firestore.proxy.jwtrevokedset.url = \"{0}\"",
+                            url);
+
+            return new URI(url);
+        } catch (URISyntaxException ex) {
+            throw new IllegalStateException(
+                    "Url provided in properties is not valid", ex);
+        } catch (IOException ex) {
+            throw new IllegalStateException(
+                    "IO Errors setting Firestore properties", ex);
+        }
     }
 
     @Override
