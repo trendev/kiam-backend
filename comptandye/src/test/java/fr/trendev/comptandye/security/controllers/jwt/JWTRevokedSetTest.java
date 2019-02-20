@@ -7,6 +7,7 @@ package fr.trendev.comptandye.security.controllers.jwt;
 
 import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_VALID_PERIOD;
 import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_VALID_PERIOD_UNIT;
+import fr.trendev.comptandye.security.controllers.jwt.dto.mock.MockJWTRevokedSetDTO;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.time.Instant;
 import static java.time.temporal.ChronoUnit.MINUTES;
@@ -50,7 +51,7 @@ public class JWTRevokedSetTest {
 
     @Rule
     public WeldInitiator weld = WeldInitiator
-            .from(JWTRevokedSet.class)
+            .from(JWTRevokedSet.class, MockJWTRevokedSetDTO.class)
             .inject(this).build();
 
     @Inject
