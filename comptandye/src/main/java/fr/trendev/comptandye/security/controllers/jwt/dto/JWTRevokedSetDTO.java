@@ -5,7 +5,10 @@
  */
 package fr.trendev.comptandye.security.controllers.jwt.dto;
 
+import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.io.Serializable;
+import java.util.Set;
+import java.util.concurrent.CompletionStage;
 
 /**
  *
@@ -16,4 +19,6 @@ public interface JWTRevokedSetDTO extends Serializable {
     public void init();
 
     public void close();
+
+    public CompletionStage<Set<JWTRecord>> getAll();
 }

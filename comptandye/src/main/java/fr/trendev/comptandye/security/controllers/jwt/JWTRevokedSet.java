@@ -51,14 +51,33 @@ public class JWTRevokedSet implements Serializable {
 
     @PostConstruct
     public void init() {
-        //TODO: load the set from a DB
-        LOG.log(Level.INFO, "{0} initialized", JWTRevokedSet.class.
+        LOG.log(Level.INFO, "{0} initializing", JWTRevokedSet.class.
                 getSimpleName());
+
+        this.dto.getAll()
+                //restore the set from a Collection
+                .thenAccept(saved -> {
+                    if (saved != null && !saved.isEmpty()) {
+                        LOG.log(Level.INFO, "Restoring {0} from {1}",
+                                new Object[]{JWTRevokedSet.class.getSimpleName(),
+                                    this.dto.getClass().getSimpleName()});
+                        this.set.addAll(saved);
+                        LOG.log(Level.INFO, "{0} revoked JWT restored in {1}",
+                                new Object[]{saved.size(),
+                                    JWTRevokedSet.class.getSimpleName()});
+                    } else {
+                        LOG.warning("No Revoked JWT found in Firestore...");
+                    }
+                });
+
+        LOG.log(Level.INFO, "{0} may be initialized : revoked tokens = {1}",
+                new Object[]{
+                    JWTRevokedSet.class.getSimpleName(),
+                    this.set.size()});
     }
 
     @PreDestroy
     public void close() {
-        //TODO : save the set in a DB and ignore if the set is empty (after test)
         LOG.log(Level.INFO, "{0} closed", JWTRevokedSet.class.getSimpleName());
     }
 
