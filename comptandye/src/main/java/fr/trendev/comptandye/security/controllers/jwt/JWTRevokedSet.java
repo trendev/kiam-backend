@@ -15,6 +15,8 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
@@ -94,6 +96,9 @@ public class JWTRevokedSet implements Serializable {
         @Schedule(minute = "*", hour = "*", persistent = false)
     })
     public void cleanUp() {
+
+        List<String> dtoRemoves = new LinkedList<>();
+
         this.set.removeIf(r -> {
             if (r.hasExpired()) {
                 LOG.log(Level.INFO,
@@ -101,19 +106,38 @@ public class JWTRevokedSet implements Serializable {
                         new Object[]{
                             JWTManager.trunkToken(r.getToken())
                         });
+                //add the token to the removal list
+                dtoRemoves.add(r.getToken());
+
                 return true;
             } else {
                 return false;
             }
         });
+
+        if (!dtoRemoves.isEmpty()) {
+            this.dto.bulkRemoves(dtoRemoves);
+        }
     }
 
     public boolean add(JWTRecord record) {
-        return this.set.add(record);
+        boolean result = this.set.add(record);
+
+        if (result) {
+            this.dto.create(record);
+        }
+
+        return result;
     }
 
     public boolean addAll(Collection<JWTRecord> records) {
-        return this.set.addAll(records);
+        boolean result = this.set.addAll(records);
+
+        if (result) {
+            this.dto.bulkCreation(records);
+        }
+
+        return result;
     }
 
     public boolean contains(String token) {
@@ -127,13 +151,23 @@ public class JWTRevokedSet implements Serializable {
                 .filter(r -> r.getToken().equals(token))
                 .findFirst();
 
-        record.ifPresent(r -> this.set.remove(r));
+        record.ifPresent(r -> {
+            if (this.set.remove(r)) {
+                this.dto.delete(r.getToken());
+            }
+        });
 
         return record;
     }
 
     public Optional<JWTRecord> remove(JWTRecord record) {
-        return this.set.remove(record)
+        boolean result = this.set.remove(record);
+
+        if (result) {
+            this.dto.delete(record.getToken());
+        }
+
+        return result
                 ? Optional.of(record)
                 : Optional.empty();
     }
