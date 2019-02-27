@@ -22,7 +22,7 @@ import javax.enterprise.inject.Produces;
 @ApplicationScoped
 public class JWTRevokedSetDTOProducer {
 
-    private FirestoreJWTRevokedSetDTO firestoreDTO;
+    private JWTRevokedSetDTO firestoreDTO;
 
     private static final Logger LOG = Logger.getLogger(
             JWTRevokedSetDTOProducer.class.getName());

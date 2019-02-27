@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.security.controllers.jwt.dto.mock;
 
+import fr.trendev.comptandye.security.controllers.jwt.dto.firestore.MockJWTWhiteMapDTO;
 import fr.trendev.comptandye.security.entities.JWTWhiteMapEntry;
 import java.util.Collections;
 import java.util.List;

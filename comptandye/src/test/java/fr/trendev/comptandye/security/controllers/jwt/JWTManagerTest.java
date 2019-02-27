@@ -19,8 +19,8 @@ import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.LONG_VAL
 import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.LONG_VALID_PERIOD_UNIT;
 import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_VALID_PERIOD;
 import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_VALID_PERIOD_UNIT;
-import fr.trendev.comptandye.security.controllers.jwt.dto.mock.MockJWTRevokedSetDTO;
-import fr.trendev.comptandye.security.controllers.jwt.dto.mock.MockJWTWhiteMapDTO;
+import fr.trendev.comptandye.security.controllers.jwt.dto.firestore.MockJWTRevokedSetDTO;
+import fr.trendev.comptandye.security.controllers.jwt.dto.firestore.MockJWTWhiteMapDTO;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.text.ParseException;
 import java.time.Instant;

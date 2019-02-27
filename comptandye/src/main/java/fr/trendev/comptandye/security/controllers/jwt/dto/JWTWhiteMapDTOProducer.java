@@ -22,7 +22,7 @@ import javax.enterprise.inject.Produces;
 @ApplicationScoped
 public class JWTWhiteMapDTOProducer {
 
-    private FirestoreJWTWhiteMapDTO firestoreDTO;
+    private JWTWhiteMapDTO firestoreDTO;
 
     private static final Logger LOG = Logger
             .getLogger(JWTWhiteMapDTOProducer.class.getName());

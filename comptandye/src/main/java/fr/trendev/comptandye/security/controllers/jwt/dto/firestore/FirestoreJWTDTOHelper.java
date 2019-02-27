@@ -10,8 +10,10 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Properties;
+import java.util.concurrent.CompletionStage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.eclipse.microprofile.rest.client.RestClientBuilder;
 
 /**
  *
@@ -19,7 +21,7 @@ import java.util.logging.Logger;
  */
 public class FirestoreJWTDTOHelper {
 
-    public static URI loadUri(Logger LOG, String prop) {
+    static URI loadUri(Logger LOG, String prop) {
 
         ClassLoader classloader = Thread.currentThread().
                 getContextClassLoader();
@@ -42,6 +44,42 @@ public class FirestoreJWTDTOHelper {
         } catch (IOException ex) {
             throw new IllegalStateException(
                     "IO Errors setting Firestore properties", ex);
+        }
+    }
+
+    static <T> T buildProxy(URI apiUri, Class<T> proxyClass, Logger LOG) {
+        T proxy = RestClientBuilder.newBuilder()
+                .baseUri(apiUri)
+                .register(FirestoreProxyExceptionMapper.class)
+                .build(proxyClass);
+        LOG.log(Level.INFO, "New instance of "
+                + proxyClass.getSimpleName()
+                + " created");
+        return proxy;
+    }
+
+    static <T> T errorHandler(Throwable ex,
+            String message,
+            T t,
+            Logger LOG) {
+        LOG.log(Level.INFO, message, ex);
+        LOG.log(Level.WARNING, message);
+        return t;
+    }
+
+    static final <P, T> void manageSilentOperations(
+            P proxy,
+            String successMsg,
+            String errMsg,
+            ThrowingBiFunction<P, T, CompletionStage<Void>> fn,
+            T t,
+            Logger LOG) {
+        try {
+            fn.applyThrows(proxy, t)
+                    .thenRun(() -> LOG.info(successMsg))
+                    .exceptionally(ex -> errorHandler(ex, errMsg, null, LOG));
+        } catch (Throwable ex) {
+            errorHandler(ex, errMsg, null, LOG);
         }
     }
 
