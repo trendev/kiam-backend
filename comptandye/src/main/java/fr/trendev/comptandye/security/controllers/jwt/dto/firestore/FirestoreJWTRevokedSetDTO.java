@@ -26,6 +26,8 @@ public class FirestoreJWTRevokedSetDTO implements JWTRevokedSetDTO {
 
     private URI apiUri;
 
+    private transient FirestoreJWTRevokedSetProxyService proxy;
+
     public FirestoreJWTRevokedSetDTO() {
     }
 
