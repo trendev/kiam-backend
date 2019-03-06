@@ -13,6 +13,7 @@ import java.util.concurrent.CompletionStage;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -34,6 +35,10 @@ public interface FirestoreJWTRevokedSetProxyService extends Serializable {
     @DELETE
     @Path("removes")
     CompletionStage<Void> bulkRemoves(List<String> dtoRemoves) throws
+            FirestoreProxyException;
+
+    @POST
+    CompletionStage<Void> create(JWTRecord record) throws
             FirestoreProxyException;
 
 }

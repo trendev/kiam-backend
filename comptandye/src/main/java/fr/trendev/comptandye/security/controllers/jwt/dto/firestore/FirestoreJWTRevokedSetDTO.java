@@ -106,7 +106,14 @@ public class FirestoreJWTRevokedSetDTO implements JWTRevokedSetDTO {
 
     @Override
     public void create(JWTRecord record) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        FirestoreJWTDTOHelper.manageSilentOperations(this.getProxy(),
+                "Revoked JWT "
+                + record.getToken()
+                + " has been created in Firestore",
+                "Exception occurs creating a Revoked JWT entry in Firestore",
+                FirestoreJWTRevokedSetProxyService::create,
+                record,
+                LOG);
     }
 
     @Override
