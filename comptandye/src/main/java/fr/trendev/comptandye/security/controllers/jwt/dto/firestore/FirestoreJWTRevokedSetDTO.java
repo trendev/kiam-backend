@@ -9,8 +9,11 @@ import fr.trendev.comptandye.security.controllers.jwt.dto.JWTRevokedSetDTO;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.net.URI;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -57,7 +60,39 @@ public class FirestoreJWTRevokedSetDTO implements JWTRevokedSetDTO {
 
     @Override
     public CompletionStage<Set<JWTRecord>> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        final String errMsg =
+                "Exception occurs getting all JWTRevokedSet entries from Firestore";
+
+        try {
+            return this.getProxy()
+                    .getAll()
+                    .thenApply(set ->
+                            Optional.ofNullable(set)
+                                    .map(s -> {
+                                        LOG.log(Level.INFO,
+                                                "Revoked JWT Set got from Firestore : "
+                                                + s.size() + " entries");
+                                        return s;
+                                    })
+                                    .orElseGet(() -> {
+                                        LOG.log(Level.WARNING,
+                                                "Revoked JWT Set got from Firestore is null !!!");
+                                        return Collections.emptySet();
+                                    })
+                    )
+                    .exceptionally(ex -> FirestoreJWTDTOHelper.errorHandler(
+                            ex,
+                            errMsg,
+                            Collections.emptySet(),
+                            LOG));
+        } catch (FirestoreProxyException ex) {
+            return CompletableFuture.completedFuture(
+                    FirestoreJWTDTOHelper.errorHandler(
+                            ex,
+                            errMsg,
+                            Collections.emptySet(),
+                            LOG));
+        }
     }
 
     @Override
