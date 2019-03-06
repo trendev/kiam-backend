@@ -118,12 +118,24 @@ public class FirestoreJWTRevokedSetDTO implements JWTRevokedSetDTO {
 
     @Override
     public void bulkCreation(Set<JWTRecord> records) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        FirestoreJWTDTOHelper.manageSilentOperations(this.getProxy(),
+                "Bulk creation of revoked JWT in Firestore : OK",
+                "Exception occurs creating multiple revoked JWT entries to Firestore",
+                FirestoreJWTRevokedSetProxyService::bulkCreation,
+                records,
+                LOG);
     }
 
     @Override
     public void delete(String token) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//        FirestoreJWTDTOHelper.manageSilentOperations(this.getProxy(),
+//                "Revoked JWT "
+//                + token
+//                + " has been created in Firestore",
+//                "Exception occurs creating a Revoked JWT entry in Firestore",
+//                FirestoreJWTRevokedSetProxyService::delete,
+//                token,
+//                LOG);
     }
 
 }

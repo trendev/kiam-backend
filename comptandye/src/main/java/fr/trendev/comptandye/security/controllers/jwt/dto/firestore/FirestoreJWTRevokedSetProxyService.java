@@ -41,4 +41,9 @@ public interface FirestoreJWTRevokedSetProxyService extends Serializable {
     CompletionStage<Void> create(JWTRecord record) throws
             FirestoreProxyException;
 
+    @POST
+    @Path("bulk-creation")
+    CompletionStage<Void> bulkCreation(Set<JWTRecord> records) throws
+            FirestoreProxyException;
+
 }
