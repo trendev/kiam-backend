@@ -6,7 +6,6 @@
 package fr.trendev.comptandye.security.controllers.jwt;
 
 import fr.trendev.comptandye.security.controllers.jwt.dto.mock.MockErrorsJWTWhiteMapDTO;
-import fr.trendev.comptandye.security.controllers.jwt.dto.mock.MockJWTWhiteMapDTO;
 import java.util.logging.Logger;
 import javax.inject.Inject;
 import org.jboss.weld.junit4.WeldInitiator;
@@ -39,12 +38,7 @@ public class JWTWhiteMapTestWithExceptions {
     public void testInit() {
         Assertions.assertDoesNotThrow(() -> jwtwm.init());
         Assertions.assertTrue(jwtwm.getMap().isEmpty(),
-                "jwtwm.getMap().isEmpty() should be true");
-        // wait the response from the DTO, assuming a latency
-        LOG.info("Waiting " + MockJWTWhiteMapDTO.LATENCY * 2 + " ms "
-                + "/ Thread = " + Thread.currentThread().getName());
-        Assertions.assertDoesNotThrow(() -> Thread.sleep(
-                MockJWTWhiteMapDTO.LATENCY * 2));
+                "jwtwm.getMap() should be empty");
 
         Assertions.assertDoesNotThrow(() -> jwtwm.getMap());
         Assertions.assertNotNull(jwtwm.getMap());
