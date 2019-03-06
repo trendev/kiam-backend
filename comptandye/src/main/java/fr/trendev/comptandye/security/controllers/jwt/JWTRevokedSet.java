@@ -13,7 +13,6 @@ import fr.trendev.comptandye.security.controllers.jwt.dto.JWTRevokedSetDTO;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -130,7 +129,7 @@ public class JWTRevokedSet implements Serializable {
         return result;
     }
 
-    public boolean addAll(Collection<JWTRecord> records) {
+    public boolean addAll(Set<JWTRecord> records) {
         boolean result = this.set.addAll(records);
 
         if (result) {

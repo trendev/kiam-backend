@@ -8,7 +8,6 @@ package fr.trendev.comptandye.security.controllers.jwt.dto.firestore;
 import fr.trendev.comptandye.security.controllers.jwt.dto.JWTRevokedSetDTO;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.net.URI;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -111,7 +110,7 @@ public class FirestoreJWTRevokedSetDTO implements JWTRevokedSetDTO {
     }
 
     @Override
-    public void bulkCreation(Collection<JWTRecord> records) {
+    public void bulkCreation(Set<JWTRecord> records) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -117,7 +117,7 @@ public class JWTRevokedSetTest {
         JWTRecord record3 = new JWTRecord(token3, creationDate3, expirationDate3);
 
         Assertions.assertTrue(jwtrvkset
-                .addAll(Arrays.asList(record1, record2, record3)));
+                .addAll(new HashSet<>(Arrays.asList(record1, record2, record3))));
 
         Assertions.assertTrue(jwtrvkset.contains(token1));
         Assertions.assertTrue(jwtrvkset.contains(token2));
@@ -134,7 +134,7 @@ public class JWTRevokedSetTest {
         JWTRecord record3 = new JWTRecord(token3, creationDate3, expirationDate3);
 
         Assertions.assertTrue(jwtrvkset
-                .addAll(Arrays.asList(record1, record2, record3)));
+                .addAll(new HashSet<>(Arrays.asList(record1, record2, record3))));
 
         Assertions.assertTrue(jwtrvkset.remove(token1).isPresent());
         Assertions.assertEquals(jwtrvkset.getSet().size(), 2);
@@ -150,7 +150,7 @@ public class JWTRevokedSetTest {
         JWTRecord record3 = new JWTRecord(token3, creationDate3, expirationDate3);
 
         Assertions.assertTrue(jwtrvkset
-                .addAll(Arrays.asList(record1, record2, record3)));
+                .addAll(new HashSet<>(Arrays.asList(record1, record2, record3))));
 
         Assertions.assertTrue(jwtrvkset.remove(record1).isPresent());
         Assertions.assertEquals(jwtrvkset.getSet().size(), 2);
@@ -173,7 +173,7 @@ public class JWTRevokedSetTest {
 
         List<JWTRecord> records = Arrays.asList(record1, record2, record3);
 
-        Assertions.assertTrue(jwtrvkset.addAll(records));
+        Assertions.assertTrue(jwtrvkset.addAll(new HashSet<>(records)));
         Assertions.assertEquals(jwtrvkset.getSet().size(), records.size());
 
         Assertions.assertFalse(jwtrvkset.addAll(new HashSet<>(records)));
