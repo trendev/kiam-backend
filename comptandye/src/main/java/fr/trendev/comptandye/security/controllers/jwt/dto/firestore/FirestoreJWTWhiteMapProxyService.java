@@ -35,12 +35,12 @@ public interface FirestoreJWTWhiteMapProxyService extends Serializable {
             FirestoreProxyException;
 
     @PUT
-    @Path("updates")
+    @Path("bulk-updates")
     CompletionStage<Void> bulkUpdates(List<JWTWhiteMapEntry> dtoUpdates) throws
             FirestoreProxyException;
 
     @DELETE
-    @Path("removes")
+    @Path("bulk-removes")
     CompletionStage<Void> bulkRemoves(List<String> dtoRemoves) throws
             FirestoreProxyException;
 

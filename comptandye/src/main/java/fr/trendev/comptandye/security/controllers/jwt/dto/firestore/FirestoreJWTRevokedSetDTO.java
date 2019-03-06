@@ -131,8 +131,8 @@ public class FirestoreJWTRevokedSetDTO implements JWTRevokedSetDTO {
         FirestoreJWTDTOHelper.manageSilentOperations(this.getProxy(),
                 "Revoked JWT "
                 + token
-                + " has been created in Firestore",
-                "Exception occurs creating a Revoked JWT entry in Firestore",
+                + " has been deleted in Firestore",
+                "Exception occurs deleting a Revoked JWT entry in Firestore",
                 FirestoreJWTRevokedSetProxyService::delete,
                 token,
                 LOG);
