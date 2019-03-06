@@ -47,6 +47,9 @@ public class JWTRevokedSetDTOProducer {
 
     @PreDestroy
     public void close() {
+        if (this.firestoreDTO != null) {
+            this.firestoreDTO.close();
+        }
         LOG.log(Level.INFO, "{0} is now closed",
                 JWTRevokedSetDTOProducer.class.getSimpleName());
     }
