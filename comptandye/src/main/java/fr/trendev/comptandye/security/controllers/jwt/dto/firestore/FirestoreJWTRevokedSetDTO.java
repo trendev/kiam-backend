@@ -61,7 +61,7 @@ public class FirestoreJWTRevokedSetDTO implements JWTRevokedSetDTO {
     @Override
     public CompletionStage<Set<JWTRecord>> getAll() {
         final String errMsg =
-                "Exception occurs getting all JWTRevokedSet entries from Firestore";
+                "Exception occurs getting all Revoked JWT entries from Firestore";
 
         try {
             return this.getProxy()
@@ -98,8 +98,8 @@ public class FirestoreJWTRevokedSetDTO implements JWTRevokedSetDTO {
     @Override
     public void bulkRemoves(List<String> dtoRemoves) {
         FirestoreJWTDTOHelper.manageSilentOperations(this.getProxy(),
-                "Bulk revoked jwt removes in Firestore : OK",
-                "Exception occurs deleting multiple revoked jwt entries to Firestore",
+                "Bulk removes of revoked JWT in Firestore : OK",
+                "Exception occurs deleting multiple revoked JWT entries to Firestore",
                 FirestoreJWTRevokedSetProxyService::bulkRemoves,
                 dtoRemoves,
                 LOG);
