@@ -79,19 +79,8 @@ public class JWTWhiteMapTest {
     public void testInit() {
         LOG.info("### TEST JWTWHITEMAP INIT ###");
         Assertions.assertDoesNotThrow(() -> jwtwm.init());
-        Assertions.assertTrue(jwtwm.getMap().isEmpty(),
-                "jwtwm.getMap().isEmpty() should be true");
-        // The map is reloaded from the MockJWTWhiteMapDTO with 1 element
-        // wait the response from the DTO, assuming a latency
-        LOG.info("Waiting " + MockJWTWhiteMapDTO.LATENCY * 2 + " ms "
-                + "/ Thread = " + Thread.currentThread().getName());
-        Assertions.assertDoesNotThrow(() -> Thread.sleep(
-                MockJWTWhiteMapDTO.LATENCY * 2));
-
-        Assertions.assertDoesNotThrow(() -> jwtwm.getMap());
-        Assertions.assertNotNull(jwtwm.getMap());
         Assertions.assertFalse(jwtwm.getMap().isEmpty(),
-                "jwtwm.getMap().isEmpty() should be false");
+                "jwtwm.getMap() should not be empty");
         Assertions.assertTrue(jwtwm.getMap().size() == 1,
                 "jwtwm.getMap().size() should be 1");
     }

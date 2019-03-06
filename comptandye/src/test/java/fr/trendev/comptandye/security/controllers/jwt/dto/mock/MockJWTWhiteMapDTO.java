@@ -27,59 +27,42 @@ import java.util.logging.Logger;
  */
 public class MockJWTWhiteMapDTO implements JWTWhiteMapDTO {
 
-    public static long LATENCY = 200l;
     private static final Logger LOG =
             Logger.getLogger(MockJWTWhiteMapDTO.class.getName());
 
     @Override
     public void init() {
-        LOG.info(MockJWTWhiteMapDTO.class.getSimpleName() + " initialized");
+        LOG.log(Level.INFO, "{0} initialized", MockJWTWhiteMapDTO.class.
+                getSimpleName());
     }
 
     @Override
     public void close() {
-        LOG.info(MockJWTWhiteMapDTO.class.getSimpleName() + " closed");
+        LOG.log(Level.INFO, "{0} closed", MockJWTWhiteMapDTO.class.
+                getSimpleName());
+    }
+
+    private List<JWTWhiteMapEntry> getMockList() {
+        String token = "TK123456789";
+
+        Instant now = Instant.now();
+
+        Date creationDate1 = Date.from(now);
+        Date expirationDate1 = Date.from(now.plus(SHORT_VALID_PERIOD,
+                SHORT_VALID_PERIOD_UNIT));
+
+        JWTRecord record1 = new JWTRecord(token, creationDate1,
+                expirationDate1);
+
+        Set<JWTRecord> records = new HashSet<>();
+        records.add(record1);
+
+        return Arrays.asList(new JWTWhiteMapEntry("testemail01", records));
     }
 
     @Override
     public CompletionStage<List<JWTWhiteMapEntry>> getAll() {
-
-        return CompletableFuture.supplyAsync(() -> {
-            String token = "TK123456789";
-
-            Instant now = Instant.now();
-
-            Date creationDate1 = Date.from(now);
-            Date expirationDate1 = Date.from(now.plus(SHORT_VALID_PERIOD,
-                    SHORT_VALID_PERIOD_UNIT));
-
-            JWTRecord record1 = new JWTRecord(token, creationDate1,
-                    expirationDate1);
-
-            Set<JWTRecord> records = new HashSet<>();
-            records.add(record1);
-
-            List<JWTWhiteMapEntry> list =
-                    Arrays.asList(new JWTWhiteMapEntry("testemail01", records));
-
-            //simulate latency
-            LOG.log(Level.INFO,
-                    "getAll() in {0} : Mock list is ready but wait (simulate latency) {1} ms / Thread = {2}",
-                    new Object[]{
-                        MockJWTWhiteMapDTO.class.getSimpleName(),
-                        LATENCY,
-                        Thread.currentThread().getName()});
-            try {
-                Thread.sleep(LATENCY);
-            } catch (InterruptedException ex) {
-                LOG.log(Level.SEVERE,
-                        MockJWTWhiteMapDTO.class.getSimpleName()
-                        + " must not be interrupted",
-                        ex);
-            }
-
-            return list;
-        });
+        return CompletableFuture.completedFuture(this.getMockList());
     }
 
     @Override

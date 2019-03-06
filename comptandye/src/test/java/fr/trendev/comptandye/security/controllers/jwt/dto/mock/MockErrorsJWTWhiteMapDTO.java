@@ -26,7 +26,7 @@ public class MockErrorsJWTWhiteMapDTO extends MockJWTWhiteMapDTO {
         return super.getAll()
                 .thenApply(list -> {
                     if (!list.isEmpty()) {
-                        throw new RuntimeException("EXCEPTION_DTO");
+                        throw new RuntimeException("UNEXPECTED_DTO_EXCEPTION");
                     }
                     return list;
                 })
