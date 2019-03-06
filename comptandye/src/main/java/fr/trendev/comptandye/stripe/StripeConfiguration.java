@@ -32,16 +32,17 @@ public class StripeConfiguration {
      */
     @PostConstruct
     void init() {
-        try {
-            // loads the properties
-            ClassLoader classloader = Thread.currentThread().
-                    getContextClassLoader();
-            InputStream is = classloader.getResourceAsStream(
-                    "stripe/stripe.properties");
+
+        ClassLoader classloader = Thread.currentThread().
+                getContextClassLoader();
+
+        try (InputStream is = classloader.getResourceAsStream(
+                "stripe/stripe.properties")) {
 
             Properties properties = new Properties();
             properties.load(is);
 
+            // loads the properties
             String key = properties.getProperty("stripe.key");
             String type = properties.getProperty("stripe.type");
 

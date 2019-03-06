@@ -22,7 +22,7 @@ import javax.enterprise.inject.Produces;
 @ApplicationScoped
 public class JWTWhiteMapDTOProducer {
 
-    private FirestoreJWTWhiteMapDTO firestoreDTO;
+    private JWTWhiteMapDTO firestoreDTO;
 
     private static final Logger LOG = Logger
             .getLogger(JWTWhiteMapDTOProducer.class.getName());
@@ -47,6 +47,9 @@ public class JWTWhiteMapDTOProducer {
 
     @PreDestroy
     public void close() {
+        if (this.firestoreDTO != null) {
+            this.firestoreDTO.close();
+        }
         LOG.log(Level.INFO, "{0} is now closed",
                 JWTWhiteMapDTOProducer.class.getSimpleName());
     }

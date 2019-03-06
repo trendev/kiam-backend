@@ -5,15 +5,15 @@
  */
 package fr.trendev.comptandye.security.controllers.jwt.dto.firestore;
 
-import fr.trendev.comptandye.security.entities.JWTWhiteMapEntry;
+import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletionStage;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -24,20 +24,14 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
  *
  * @author jsie
  */
-@Path("jwtwhitemap")
+@Path("jwtrevokedset")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RegisterRestClient
-public interface FirestoreJWTWhiteMapProxyService extends Serializable {
+public interface FirestoreJWTRevokedSetProxyService extends Serializable {
 
     @GET
-    CompletionStage<List<JWTWhiteMapEntry>> getAll() throws
-            FirestoreProxyException;
-
-    @PUT
-    @Path("bulk-updates")
-    CompletionStage<Void> bulkUpdates(List<JWTWhiteMapEntry> dtoUpdates) throws
-            FirestoreProxyException;
+    CompletionStage<Set<JWTRecord>> getAll() throws FirestoreProxyException;
 
     @DELETE
     @Path("bulk-removes")
@@ -45,16 +39,17 @@ public interface FirestoreJWTWhiteMapProxyService extends Serializable {
             FirestoreProxyException;
 
     @POST
-    CompletionStage<Void> create(JWTWhiteMapEntry jwtWhiteMapEntry) throws
+    CompletionStage<Void> create(JWTRecord record) throws
             FirestoreProxyException;
 
-    @PUT
-    CompletionStage<Void> update(JWTWhiteMapEntry jwtWhiteMapEntry) throws
+    @POST
+    @Path("bulk-creation")
+    CompletionStage<Void> bulkCreation(Set<JWTRecord> records) throws
             FirestoreProxyException;
 
     @DELETE
-    @Path("{email}")
-    CompletionStage<Void> delete(@PathParam("email") String email) throws
+    @Path("{token}")
+    CompletionStage<Void> delete(@PathParam("token") String token) throws
             FirestoreProxyException;
 
 }

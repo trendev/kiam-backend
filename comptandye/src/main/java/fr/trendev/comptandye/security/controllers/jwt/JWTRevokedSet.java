@@ -9,11 +9,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fish.payara.cluster.Clustered;
 import fish.payara.cluster.DistributedLockType;
+import fr.trendev.comptandye.security.controllers.jwt.dto.JWTRevokedSetDTO;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
@@ -25,6 +27,7 @@ import javax.ejb.Schedule;
 import javax.ejb.Schedules;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.inject.Inject;
 
 /**
  * @author jsie
@@ -40,20 +43,42 @@ public class JWTRevokedSet implements Serializable {
     private static final Logger LOG = Logger.getLogger(JWTRevokedSet.class.
             getName());
 
+    @Inject
+    JWTRevokedSetDTO dto;
+
     public JWTRevokedSet() {
         this.set = Collections.synchronizedSortedSet(new TreeSet<>());
     }
 
     @PostConstruct
     public void init() {
-        //TODO: load the set from a DB
-        LOG.log(Level.INFO, "{0} initialized", JWTRevokedSet.class.
+        LOG.log(Level.INFO, "{0} initializing", JWTRevokedSet.class.
                 getSimpleName());
+
+        this.dto.getAll()
+                //restore the set from a Collection
+                .thenAccept(saved -> {
+                    if (saved != null && !saved.isEmpty()) {
+                        LOG.log(Level.INFO, "Restoring {0} from {1}",
+                                new Object[]{JWTRevokedSet.class.getSimpleName(),
+                                    this.dto.getClass().getSimpleName()});
+                        this.set.addAll(saved);
+                        LOG.log(Level.INFO, "{0} revoked JWT restored in {1}",
+                                new Object[]{saved.size(),
+                                    JWTRevokedSet.class.getSimpleName()});
+                    } else {
+                        LOG.warning("No Revoked JWT found in Firestore...");
+                    }
+                });
+
+        LOG.log(Level.INFO, "{0} may be initialized : revoked tokens = {1}",
+                new Object[]{
+                    JWTRevokedSet.class.getSimpleName(),
+                    this.set.size()});
     }
 
     @PreDestroy
     public void close() {
-        //TODO : save the set in a DB and ignore if the set is empty (after test)
         LOG.log(Level.INFO, "{0} closed", JWTRevokedSet.class.getSimpleName());
     }
 
@@ -70,6 +95,9 @@ public class JWTRevokedSet implements Serializable {
         @Schedule(minute = "*", hour = "*", persistent = false)
     })
     public void cleanUp() {
+
+        List<String> dtoRemoves = new LinkedList<>();
+
         this.set.removeIf(r -> {
             if (r.hasExpired()) {
                 LOG.log(Level.INFO,
@@ -77,19 +105,38 @@ public class JWTRevokedSet implements Serializable {
                         new Object[]{
                             JWTManager.trunkToken(r.getToken())
                         });
+                //add the token to the removal list
+                dtoRemoves.add(r.getToken());
+
                 return true;
             } else {
                 return false;
             }
         });
+
+        if (!dtoRemoves.isEmpty()) {
+            this.dto.bulkRemoves(dtoRemoves);
+        }
     }
 
     public boolean add(JWTRecord record) {
-        return this.set.add(record);
+        boolean result = this.set.add(record);
+
+        if (result) {
+            this.dto.create(record);
+        }
+
+        return result;
     }
 
-    public boolean addAll(Collection<JWTRecord> records) {
-        return this.set.addAll(records);
+    public boolean addAll(Set<JWTRecord> records) {
+        boolean result = this.set.addAll(records);
+
+        if (result) {
+            this.dto.bulkCreation(records);
+        }
+
+        return result;
     }
 
     public boolean contains(String token) {
@@ -103,13 +150,23 @@ public class JWTRevokedSet implements Serializable {
                 .filter(r -> r.getToken().equals(token))
                 .findFirst();
 
-        record.ifPresent(r -> this.set.remove(r));
+        record.ifPresent(r -> {
+            if (this.set.remove(r)) {
+                this.dto.delete(r.getToken());
+            }
+        });
 
         return record;
     }
 
     public Optional<JWTRecord> remove(JWTRecord record) {
-        return this.set.remove(record)
+        boolean result = this.set.remove(record);
+
+        if (result) {
+            this.dto.delete(record.getToken());
+        }
+
+        return result
                 ? Optional.of(record)
                 : Optional.empty();
     }

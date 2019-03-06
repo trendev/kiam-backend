@@ -7,16 +7,16 @@ package fr.trendev.comptandye.offering.boundaries;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.trendev.comptandye.business.entities.Business;
-import fr.trendev.comptandye.offering.entities.Offering;
-import fr.trendev.comptandye.pack.entities.Pack;
-import fr.trendev.comptandye.professional.entities.Professional;
-import fr.trendev.comptandye.service.entities.Service;
-import fr.trendev.comptandye.pack.controllers.PackFacade;
-import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
-import fr.trendev.comptandye.sale.controllers.SaleFacade;
-import fr.trendev.comptandye.service.controllers.ServiceFacade;
-import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
 import fr.trendev.comptandye.exceptions.ExceptionHelper;
+import fr.trendev.comptandye.offering.entities.Offering;
+import fr.trendev.comptandye.pack.controllers.PackFacade;
+import fr.trendev.comptandye.pack.entities.Pack;
+import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
+import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.comptandye.sale.controllers.SaleFacade;
+import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
+import fr.trendev.comptandye.service.controllers.ServiceFacade;
+import fr.trendev.comptandye.service.entities.Service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -135,17 +135,16 @@ public class OfferingsModelService {
      * @throws IOException if an error occurs reading/parsing the file
      */
     private Map<String, Offering> importServices(Professional pro,
-            String business) throws
-            IOException {
+            String business) throws IOException {
 
         ClassLoader classloader = Thread.currentThread().
                 getContextClassLoader();
         String path = "json/services_" + business + ".json";
-        InputStream is = classloader.getResourceAsStream(path);
 
-        Map<String, Offering> map = new TreeMap<>();
+        try (InputStream is = classloader.getResourceAsStream(path)) {
 
-        if (is != null) {
+            Map<String, Offering> map = new TreeMap<>();
+
             LOG.log(Level.INFO, "Reading in {0}", path);
             Arrays.asList(om.readValue(is, Service[].class)).stream()
                     .map(s -> {
@@ -159,12 +158,13 @@ public class OfferingsModelService {
                         map.put(s.getName(), s);
                     });
 
-            LOG.log(Level.INFO, "Closing {0}", path);
-            is.close();
-            LOG.log(Level.INFO, "{0} is now closed", path);
+            return map;
+        } catch (IOException ex) {
+            LOG.log(Level.SEVERE,
+                    "Exception occurs parsing services from file : {0}", path);
+            throw new IOException(ex);
         }
 
-        return map;
     }
 
     /**
@@ -178,15 +178,16 @@ public class OfferingsModelService {
             String business,
             Map<String, Offering> services)
             throws IOException {
+
         ClassLoader classloader = Thread.currentThread().
                 getContextClassLoader();
-        String path = "json/packs_" + business + ".json";
-        InputStream is = classloader.getResourceAsStream(path);
 
-        if (is != null) {
+        String path = "json/packs_" + business + ".json";
+
+        try (InputStream is = classloader.getResourceAsStream(path)) {
             LOG.log(Level.INFO, "Reading in {0}", path);
-            List<Offering> packs = Arrays.asList(om.readValue(is, Pack[].class)).
-                    stream()
+            List<Offering> packs = Arrays.asList(om.readValue(is, Pack[].class))
+                    .stream()
                     .map(p -> {
                         List<Offering> offerings = p.getOfferings().stream()
                                 //use the managed entity instead of the provided offering
@@ -214,13 +215,11 @@ public class OfferingsModelService {
                     })
                     .collect(Collectors.toList());
 
-            LOG.log(Level.INFO, "Closing {0}", path);
-            is.close();
-            LOG.log(Level.INFO, "{0} is now closed", path);
-
             return packs;
-        } else {
-            return new LinkedList<Offering>();
+        } catch (IOException ex) {
+            LOG.log(Level.SEVERE,
+                    "Exception occurs parsing packs from file : {0}", path);
+            throw new IOException(ex);
         }
 
     }
