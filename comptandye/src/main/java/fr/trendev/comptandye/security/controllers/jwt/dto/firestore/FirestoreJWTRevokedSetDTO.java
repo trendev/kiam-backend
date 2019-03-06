@@ -97,7 +97,12 @@ public class FirestoreJWTRevokedSetDTO implements JWTRevokedSetDTO {
 
     @Override
     public void bulkRemoves(List<String> dtoRemoves) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        FirestoreJWTDTOHelper.manageSilentOperations(this.getProxy(),
+                "Bulk revoked jwt removes in Firestore : OK",
+                "Exception occurs deleting multiple revoked jwt entries to Firestore",
+                FirestoreJWTRevokedSetProxyService::bulkRemoves,
+                dtoRemoves,
+                LOG);
     }
 
     @Override
