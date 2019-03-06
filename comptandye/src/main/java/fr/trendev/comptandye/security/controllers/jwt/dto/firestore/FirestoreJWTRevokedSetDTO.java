@@ -40,6 +40,15 @@ public class FirestoreJWTRevokedSetDTO implements JWTRevokedSetDTO {
                 FirestoreJWTRevokedSetDTO.class.getSimpleName());
     }
 
+    private FirestoreJWTRevokedSetProxyService getProxy() {
+        if (this.proxy == null) {
+            this.proxy = FirestoreJWTDTOHelper.buildProxy(apiUri,
+                    FirestoreJWTRevokedSetProxyService.class,
+                    LOG);
+        }
+        return this.proxy;
+    }
+
     @Override
     public void close() {
         LOG.log(Level.INFO, "{0} closed",
