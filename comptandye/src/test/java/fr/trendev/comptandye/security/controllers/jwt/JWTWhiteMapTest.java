@@ -5,7 +5,7 @@
  */
 package fr.trendev.comptandye.security.controllers.jwt;
 
-import fr.trendev.comptandye.security.controllers.jwt.dto.firestore.MockJWTWhiteMapDTO;
+import fr.trendev.comptandye.security.controllers.jwt.dto.mock.MockJWTWhiteMapDTO;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.time.Instant;
 import static java.time.temporal.ChronoUnit.MINUTES;

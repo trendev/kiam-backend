@@ -6,7 +6,7 @@
 package fr.trendev.comptandye.security.controllers.jwt;
 
 import fr.trendev.comptandye.security.controllers.jwt.dto.mock.MockErrorsJWTWhiteMapDTO;
-import fr.trendev.comptandye.security.controllers.jwt.dto.firestore.MockJWTWhiteMapDTO;
+import fr.trendev.comptandye.security.controllers.jwt.dto.mock.MockJWTWhiteMapDTO;
 import java.util.logging.Logger;
 import javax.inject.Inject;
 import org.jboss.weld.junit4.WeldInitiator;
