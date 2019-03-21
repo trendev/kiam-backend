@@ -35,7 +35,7 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
     @Override
     public void init() {
         this.apiUri = FirestoreJWTDTOHelper.loadUri(LOG,
-                "firestore.proxy.jwtwhitemap.url");
+                "firestore.proxy.url");
 
         LOG.log(Level.INFO, "{0} initialized",
                 FirestoreJWTWhiteMapDTO.class.getSimpleName());

@@ -36,7 +36,7 @@ public class FirestoreJWTRevokedSetDTO implements JWTRevokedSetDTO {
     @Override
     public void init() {
         this.apiUri = FirestoreJWTDTOHelper.loadUri(LOG,
-                "firestore.proxy.jwtrevokedset.url");
+                "firestore.proxy.url");
 
         LOG.log(Level.INFO, "{0} initialized",
                 FirestoreJWTRevokedSetDTO.class.getSimpleName());
