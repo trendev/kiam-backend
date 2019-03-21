@@ -35,21 +35,21 @@ public interface FirestoreJWTRevokedSetProxyService extends Serializable {
 
     @DELETE
     @Path("bulk-removes")
-    CompletionStage<Void> bulkRemoves(List<String> dtoRemoves) throws
+    CompletionStage<List<String>> bulkRemoves(List<String> dtoRemoves) throws
             FirestoreProxyException;
 
     @POST
-    CompletionStage<Void> create(JWTRecord record) throws
+    CompletionStage<JWTRecord> create(JWTRecord record) throws
             FirestoreProxyException;
 
     @POST
     @Path("bulk-creation")
-    CompletionStage<Void> bulkCreation(Set<JWTRecord> records) throws
+    CompletionStage<Set<JWTRecord>> bulkCreation(Set<JWTRecord> records) throws
             FirestoreProxyException;
 
     @DELETE
     @Path("{token}")
-    CompletionStage<Void> delete(@PathParam("token") String token) throws
+    CompletionStage<String> delete(@PathParam("token") String token) throws
             FirestoreProxyException;
 
 }

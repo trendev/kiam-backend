@@ -36,25 +36,29 @@ public interface FirestoreJWTWhiteMapProxyService extends Serializable {
 
     @PUT
     @Path("bulk-updates")
-    CompletionStage<Void> bulkUpdates(List<JWTWhiteMapEntry> dtoUpdates) throws
+    CompletionStage<List<JWTWhiteMapEntry>> bulkUpdates(
+            List<JWTWhiteMapEntry> dtoUpdates)
+            throws
             FirestoreProxyException;
 
     @DELETE
     @Path("bulk-removes")
-    CompletionStage<Void> bulkRemoves(List<String> dtoRemoves) throws
+    CompletionStage<List<String>> bulkRemoves(List<String> dtoRemoves) throws
             FirestoreProxyException;
 
     @POST
-    CompletionStage<Void> create(JWTWhiteMapEntry jwtWhiteMapEntry) throws
+    CompletionStage<JWTWhiteMapEntry> create(JWTWhiteMapEntry jwtWhiteMapEntry)
+            throws
             FirestoreProxyException;
 
     @PUT
-    CompletionStage<Void> update(JWTWhiteMapEntry jwtWhiteMapEntry) throws
+    CompletionStage<JWTWhiteMapEntry> update(JWTWhiteMapEntry jwtWhiteMapEntry)
+            throws
             FirestoreProxyException;
 
     @DELETE
     @Path("{email}")
-    CompletionStage<Void> delete(@PathParam("email") String email) throws
+    CompletionStage<String> delete(@PathParam("email") String email) throws
             FirestoreProxyException;
 
 }

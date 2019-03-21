@@ -71,7 +71,7 @@ public class FirestoreJWTDTOHelper {
             P proxy,
             String successMsg,
             String errMsg,
-            ThrowingBiFunction<P, T, CompletionStage<Void>> fn,
+            ThrowingBiFunction<P, T, CompletionStage<T>> fn,
             T t,
             Logger LOG) {
         try {
