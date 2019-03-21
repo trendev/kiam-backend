@@ -41,7 +41,7 @@ public interface FirestoreJWTWhiteMapProxyService extends Serializable {
             throws
             FirestoreProxyException;
 
-    @DELETE
+    @PUT
     @Path("bulk-removes")
     CompletionStage<List<String>> bulkRemoves(List<String> dtoRemoves) throws
             FirestoreProxyException;
