@@ -67,20 +67,6 @@ public class MockJWTWhiteMapDTO implements JWTWhiteMapDTO {
     }
 
     @Override
-    public void bulkUpdates(List<JWTWhiteMapEntry> dtoUpdates) {
-        LOG.log(Level.INFO,
-                "MOCK - Updating {0} JWTWhiteMap entries in Firestore",
-                dtoUpdates.size());
-    }
-
-    @Override
-    public void bulkRemoves(List<String> dtoRemoves) {
-        LOG.log(Level.INFO,
-                "MOCK - Removing {0} JWTWhiteMap entries from Firestore",
-                dtoRemoves.size());
-    }
-
-    @Override
     public void create(JWTWhiteMapEntry jwtWhiteMapEntry) {
         LOG.log(Level.INFO,
                 "MOCK - Creating a JWTWhiteMap entry for user {0} in Firestore",

@@ -131,6 +131,7 @@ public class JWTWhiteMap implements Serializable {
     })
     public void cleanUp() {
 
+        // TODO : clean up using atomic operation instead of bulks
         List<JWTWhiteMapEntry> dtoUpdates = new LinkedList<>();
         List<String> dtoRemoves = new LinkedList<>();
 
@@ -159,7 +160,7 @@ public class JWTWhiteMap implements Serializable {
         });
 
         if (!dtoUpdates.isEmpty()) {
-            this.dto.bulkUpdates(dtoUpdates);
+            // this.dto.bulkUpdates(dtoUpdates);
         }
 
         this.map.entrySet().removeIf(e -> {
@@ -175,7 +176,7 @@ public class JWTWhiteMap implements Serializable {
         });
 
         if (!dtoRemoves.isEmpty()) {
-            this.dto.bulkRemoves(dtoRemoves);
+            // this.dto.bulkRemoves(dtoRemoves);
         }
 
     }

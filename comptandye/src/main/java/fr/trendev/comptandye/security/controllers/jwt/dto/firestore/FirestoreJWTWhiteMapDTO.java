@@ -96,27 +96,6 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
     }
 
     @Override
-    public void bulkUpdates(List<JWTWhiteMapEntry> dtoUpdates) {
-        FirestoreJWTDTOHelper.manageSilentOperations(this.getProxy(),
-                "Bulk JWTWhiteMap updates in Firestore : OK",
-                "Exception occurs putting multiple JWTWhiteMap updates to Firestore",
-                FirestoreJWTWhiteMapProxyService::bulkUpdates,
-                dtoUpdates,
-                LOG);
-
-    }
-
-    @Override
-    public void bulkRemoves(List<String> dtoRemoves) {
-        FirestoreJWTDTOHelper.manageSilentOperations(this.getProxy(),
-                "Bulk JWTWhiteMap removes in Firestore : OK",
-                "Exception occurs deleting multiple JWTWhiteMap entries to Firestore",
-                FirestoreJWTWhiteMapProxyService::bulkRemoves,
-                dtoRemoves,
-                LOG);
-    }
-
-    @Override
     public void create(JWTWhiteMapEntry jwtWhiteMapEntry) {
         FirestoreJWTDTOHelper.manageSilentOperations(this.getProxy(),
                 "JWTWhiteMapEntry "

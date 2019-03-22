@@ -22,10 +22,6 @@ public interface JWTWhiteMapDTO extends Serializable {
 
     public CompletionStage<List<JWTWhiteMapEntry>> getAll();
 
-    public void bulkUpdates(List<JWTWhiteMapEntry> dtoUpdates);
-
-    public void bulkRemoves(List<String> dtoRemoves);
-
     public void create(JWTWhiteMapEntry jwtWhiteMapEntry);
 
     public void update(JWTWhiteMapEntry jwtWhiteMapEntry);
