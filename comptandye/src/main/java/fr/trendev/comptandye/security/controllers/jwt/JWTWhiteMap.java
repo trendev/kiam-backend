@@ -15,8 +15,6 @@ import fr.trendev.comptandye.security.entities.JWTWhiteMapEntry;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -131,10 +129,9 @@ public class JWTWhiteMap implements Serializable {
     })
     public void cleanUp() {
 
-        List<JWTWhiteMapEntry> dtoUpdates = new LinkedList<>();
-        List<String> dtoRemoves = new LinkedList<>();
-
         this.map.entrySet().forEach(e -> {
+
+            // get the JWTRecords associated with the email or provide an empty Set
             Set<JWTRecord> records = Optional.ofNullable(e.getValue())
                     .orElseGet(Collections::emptySet);
 
@@ -152,32 +149,25 @@ public class JWTWhiteMap implements Serializable {
                 }
             });
 
-            if (result == true && !records.isEmpty()) {
-                dtoUpdates.add(new JWTWhiteMapEntry(e));
-            }
-
-        });
-
-        if (!dtoUpdates.isEmpty()) {
-            this.dto.bulkUpdates(dtoUpdates);
-        }
-
-        this.map.entrySet().removeIf(e -> {
-            if (e.getValue().isEmpty()) {
-                LOG.log(Level.INFO,
-                        "All JWT Record of user [{0}] cleaned : no more entry in the JWT White Map (LOG-OUT)",
-                        new Object[]{e.getKey()});
-                dtoRemoves.add(e.getKey());
-                return true;
-            } else {
-                return false;
+            // some expired records have been found and removed from the Map (cache)
+            if (result == true) {
+                if (records.isEmpty()) { // no more entry, user is logged out
+                    LOG.log(Level.INFO,
+                            "All JWT Record of user [{0}] cleaned : no more entry in the JWT White Map (LOG-OUT)",
+                            new Object[]{e.getKey()});
+                    dto.delete(e.getKey());
+                } else { // there is still some valid JWT in the records
+                    dto.update(new JWTWhiteMapEntry(e));
+                }
             }
         });
 
-        if (!dtoRemoves.isEmpty()) {
-            this.dto.bulkRemoves(dtoRemoves);
-        }
-
+        /**
+         * Records are cleaned during the first iteration. The Set of records
+         * becoming empty, the associated entries must also be removed from the
+         * Map
+         */
+        this.map.entrySet().removeIf(e -> e.getValue().isEmpty());
     }
 
     /**

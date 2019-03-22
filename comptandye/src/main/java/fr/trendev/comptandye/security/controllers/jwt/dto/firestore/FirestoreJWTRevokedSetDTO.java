@@ -9,7 +9,6 @@ import fr.trendev.comptandye.security.controllers.jwt.dto.JWTRevokedSetDTO;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.net.URI;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -92,16 +91,6 @@ public class FirestoreJWTRevokedSetDTO implements JWTRevokedSetDTO {
                             Collections.emptySet(),
                             LOG));
         }
-    }
-
-    @Override
-    public void bulkRemoves(List<String> dtoRemoves) {
-        FirestoreJWTDTOHelper.manageSilentOperations(this.getProxy(),
-                "Bulk removes of revoked JWT in Firestore : OK",
-                "Exception occurs deleting multiple revoked JWT entries to Firestore",
-                FirestoreJWTRevokedSetProxyService::bulkRemoves,
-                dtoRemoves,
-                LOG);
     }
 
     @Override
