@@ -271,8 +271,11 @@ public class JWTWhiteMapTest {
 
         Assertions.assertDoesNotThrow(() -> jwtwm.cleanUp());
 
+        // record3 should remain
         Assertions.assertTrue(jwtwm.getRecords(email1).isPresent());
+        // no more records
         Assertions.assertFalse(jwtwm.getRecords(email2).isPresent());
+        // no more records
         Assertions.assertFalse(jwtwm.getRecords("email" + max).isPresent());
 
         Assertions.assertFalse(jwtwm.getRecords(email1).get().contains(record1));
