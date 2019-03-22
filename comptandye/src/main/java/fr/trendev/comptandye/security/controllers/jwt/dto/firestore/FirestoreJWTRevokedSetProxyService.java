@@ -7,14 +7,12 @@ package fr.trendev.comptandye.security.controllers.jwt.dto.firestore;
 
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletionStage;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -33,11 +31,6 @@ public interface FirestoreJWTRevokedSetProxyService extends Serializable {
 
     @GET
     CompletionStage<Set<JWTRecord>> getAll() throws FirestoreProxyException;
-
-    @PUT
-    @Path("bulk-removes")
-    CompletionStage<List<String>> bulkRemoves(List<String> dtoRemoves) throws
-            FirestoreProxyException;
 
     @POST
     CompletionStage<JWTRecord> create(JWTRecord record) throws

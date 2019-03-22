@@ -14,8 +14,6 @@ import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
@@ -94,10 +92,8 @@ public class JWTRevokedSet implements Serializable {
     @Schedules({
         @Schedule(minute = "*", hour = "*", persistent = false)
     })
+    // second = "*/5", 
     public void cleanUp() {
-
-        List<String> dtoRemoves = new LinkedList<>();
-
         this.set.removeIf(r -> {
             if (r.hasExpired()) {
                 LOG.log(Level.INFO,
@@ -105,18 +101,13 @@ public class JWTRevokedSet implements Serializable {
                         new Object[]{
                             JWTManager.trunkToken(r.getToken())
                         });
-                //add the token to the removal list
-                dtoRemoves.add(r.getToken());
 
+                dto.delete(r.getToken());
                 return true;
             } else {
                 return false;
             }
         });
-
-        if (!dtoRemoves.isEmpty()) {
-            this.dto.bulkRemoves(dtoRemoves);
-        }
     }
 
     public boolean add(JWTRecord record) {
@@ -129,6 +120,13 @@ public class JWTRevokedSet implements Serializable {
         return result;
     }
 
+    /**
+     * Used when multiple records are revoked (ex : force a user to logout from
+     * all devices).
+     *
+     * @param records the JWT records to add
+     * @return if the operation is successful, true, or otherwise, false
+     */
     public boolean addAll(Set<JWTRecord> records) {
         boolean result = this.set.addAll(records);
 

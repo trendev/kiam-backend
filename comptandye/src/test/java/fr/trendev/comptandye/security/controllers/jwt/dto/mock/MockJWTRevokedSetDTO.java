@@ -8,7 +8,6 @@ package fr.trendev.comptandye.security.controllers.jwt.dto.mock;
 import fr.trendev.comptandye.security.controllers.jwt.dto.JWTRevokedSetDTO;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
@@ -40,13 +39,6 @@ public class MockJWTRevokedSetDTO implements JWTRevokedSetDTO {
     public CompletionStage<Set<JWTRecord>> getAll() {
         LOG.info("MOCK - Getting all revoked token from Firestore");
         return CompletableFuture.completedFuture(Collections.emptySet());
-    }
-
-    @Override
-    public void bulkRemoves(List<String> dtoRemoves) {
-        LOG.log(Level.INFO,
-                "MOCK - Removing {0} revoked (expired) token from Firestore",
-                dtoRemoves.size());
     }
 
     @Override
