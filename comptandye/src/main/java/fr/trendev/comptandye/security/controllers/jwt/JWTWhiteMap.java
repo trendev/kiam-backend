@@ -62,7 +62,8 @@ public class JWTWhiteMap implements Serializable {
                     if (saved != null && !saved.isEmpty()) {
                         LOG.info("Restoring " + JWTWhiteMap.class.
                                 getSimpleName()
-                                + " from " + dto.getClass().getSimpleName());
+                                + " from " + dto.getClass().getSimpleName()
+                                + " and parsing " + saved.size() + " documents");
                         /**
                          * iterates over the DTO's list and merge the entries if
                          * there is already authenticated users in the
@@ -76,6 +77,12 @@ public class JWTWhiteMap implements Serializable {
                                     Collections
                                             .synchronizedSortedSet(
                                                     new TreeSet<>()));
+
+                            LOG.log(Level.INFO,
+                                    "{0} records found for user [{1}]",
+                                    new Object[]{e.getRecords().size(),
+                                        e.getEmail()});
+
                             if (records.isEmpty()) {
                                 LOG.info("Restoring JWT Records for user " + e.
                                         getEmail());
@@ -84,7 +91,10 @@ public class JWTWhiteMap implements Serializable {
                                         + e.
                                                 getEmail());
                             }
-                            records.addAll(e.getRecords());
+                            boolean result = records.addAll(e.getRecords());
+
+                            LOG.info("Records added = " + result);
+
                             this.map.put(e.getEmail(), records);
                         });
                     } else {
