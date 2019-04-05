@@ -39,6 +39,7 @@ import javax.inject.Inject;
 @Startup
 public class JWTWhiteMap implements Serializable {
 
+    //TODO : volatile static
     private final Map<String, Set<JWTRecord>> map;
 
     private static final Logger LOG = Logger.getLogger(JWTWhiteMap.class.
