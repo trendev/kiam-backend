@@ -36,6 +36,9 @@ import javax.inject.Inject;
 @Startup
 public class JWTRevokedSet implements Serializable {
 
+    /**
+     * SET MUST HAVE ONE MAIN COPY
+     */
     private static volatile Set<JWTRecord> SET =
             Collections.synchronizedSortedSet(new TreeSet<>());
 
