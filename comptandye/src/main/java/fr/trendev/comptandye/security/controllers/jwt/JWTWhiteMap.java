@@ -39,8 +39,11 @@ import javax.inject.Inject;
 @Startup
 public class JWTWhiteMap implements Serializable {
 
-    //TODO : volatile static
-    private final Map<String, Set<JWTRecord>> map;
+    /**
+     * MAP MUST HAVE ONE MAIN COPY
+     */
+    private static volatile Map<String, Set<JWTRecord>> MAP =
+            Collections.synchronizedSortedMap(new TreeMap<>());
 
     private static final Logger LOG = Logger.getLogger(JWTWhiteMap.class.
             getName());
@@ -49,7 +52,6 @@ public class JWTWhiteMap implements Serializable {
     JWTWhiteMapDTO dto;
 
     public JWTWhiteMap() {
-        this.map = Collections.synchronizedSortedMap(new TreeMap<>());
     }
 
     @PostConstruct
@@ -73,7 +75,7 @@ public class JWTWhiteMap implements Serializable {
                          * provided the saved entries.
                          */
                         saved.forEach(e -> {
-                            Set<JWTRecord> records = this.map.getOrDefault(
+                            Set<JWTRecord> records = MAP.getOrDefault(
                                     e.getEmail(),
                                     Collections
                                             .synchronizedSortedSet(
@@ -92,11 +94,9 @@ public class JWTWhiteMap implements Serializable {
                                         + e.
                                                 getEmail());
                             }
-                            boolean result = records.addAll(e.getRecords());
 
-                            LOG.info("Records added = " + result);
-
-                            this.map.put(e.getEmail(), records);
+                            records.addAll(e.getRecords());
+                            MAP.put(e.getEmail(), records);
                         });
                     } else {
                         LOG.warning("No JWTWhiteMap entries to restore !");
@@ -106,7 +106,7 @@ public class JWTWhiteMap implements Serializable {
         LOG.log(Level.INFO, "{0} may be initialized : active users = {1}",
                 new Object[]{
                     JWTWhiteMap.class.getSimpleName(),
-                    this.map.size()});
+                    MAP.size()});
 
     }
 
@@ -121,14 +121,14 @@ public class JWTWhiteMap implements Serializable {
      * @return the map
      */
     public Map<String, Set<JWTRecord>> getMap() {
-        return this.map;
+        return MAP;
     }
 
     /**
      * Clears the map. Use for test purposes only.
      */
     public void clear() {
-        this.map.clear();
+        MAP.clear();
         LOG.info("JWT White Map cleared");
     }
 
@@ -140,7 +140,7 @@ public class JWTWhiteMap implements Serializable {
     })
     public void cleanUp() {
 
-        this.map.entrySet().forEach(e -> {
+        MAP.entrySet().forEach(e -> {
 
             // get the JWTRecords associated with the email or provide an empty Set
             Set<JWTRecord> records = Optional.ofNullable(e.getValue())
@@ -178,7 +178,7 @@ public class JWTWhiteMap implements Serializable {
          * becoming empty, the associated entries must also be removed from the
          * Map
          */
-        this.map.entrySet().removeIf(e -> e.getValue().isEmpty());
+        MAP.entrySet().removeIf(e -> e.getValue().isEmpty());
     }
 
     /**
@@ -192,7 +192,7 @@ public class JWTWhiteMap implements Serializable {
      * an empty Optional otherwise
      */
     public Optional<Set<JWTRecord>> add(String email, JWTRecord record) {
-        Set<JWTRecord> records = this.map.getOrDefault(email,
+        Set<JWTRecord> records = MAP.getOrDefault(email,
                 Collections.synchronizedSortedSet(new TreeSet<>()));
 
         records.add(record);
@@ -221,7 +221,7 @@ public class JWTWhiteMap implements Serializable {
                     });
         }
 
-        return Optional.ofNullable(this.map.put(email, records));
+        return Optional.ofNullable(MAP.put(email, records));
     }
 
     /**
@@ -232,7 +232,7 @@ public class JWTWhiteMap implements Serializable {
      * empty Optional otherwise
      */
     public Optional<Set<JWTRecord>> getRecords(String email) {
-        return Optional.ofNullable(this.map.get(email));
+        return Optional.ofNullable(MAP.get(email));
     }
 
     /**
@@ -244,7 +244,7 @@ public class JWTWhiteMap implements Serializable {
      */
     public Optional<Set<JWTRecord>> removeAll(String email) {
         Optional<Set<JWTRecord>> records =
-                Optional.ofNullable(this.map.remove(email));
+                Optional.ofNullable(MAP.remove(email));
 
         if (records.isPresent()) {
             LOG.log(Level.INFO,
@@ -289,7 +289,7 @@ public class JWTWhiteMap implements Serializable {
             // logged-out, no more active "session"
             if (records.isEmpty()) {
 
-                this.map.remove(email);
+                MAP.remove(email);
                 this.dto.delete(email);
 
                 LOG.log(Level.INFO,
@@ -316,7 +316,7 @@ public class JWTWhiteMap implements Serializable {
     public Optional<JWTRecord> remove(String email, String token) {
         return this.remove(email,
                 token,
-                this.map.getOrDefault(email, new TreeSet<>()));
+                MAP.getOrDefault(email, new TreeSet<>()));
     }
 
     /**
@@ -327,7 +327,7 @@ public class JWTWhiteMap implements Serializable {
      * @return
      */
     public Optional<JWTRecord> remove(String token) {
-        for (Map.Entry<String, Set<JWTRecord>> e : this.map.entrySet()) {
+        for (Map.Entry<String, Set<JWTRecord>> e : MAP.entrySet()) {
             Optional<JWTRecord> record = this.remove(e.getKey(),
                     token,
                     e.getValue());
@@ -345,7 +345,7 @@ public class JWTWhiteMap implements Serializable {
         String value = "NO_VALUE";
         try {
             value = om.writerWithDefaultPrettyPrinter()
-                    .writeValueAsString(this.map);
+                    .writeValueAsString(MAP);
         } catch (JsonProcessingException ex) {
             LOG.log(Level.SEVERE, "Impossible to display WhiteMap", ex);
         }
