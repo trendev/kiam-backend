@@ -8,7 +8,7 @@ package fr.trendev.comptandye.security.boundaries;
 import fr.trendev.comptandye.exceptions.ExceptionHandler;
 import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
 import static fr.trendev.comptandye.security.controllers.CustomHttpAuthenticationMechanism.JWT;
-import fr.trendev.comptandye.security.controllers.JWTManager;
+import fr.trendev.comptandye.security.controllers.jwt.JWTManager;
 import fr.trendev.comptandye.security.controllers.PasswordManager;
 import fr.trendev.comptandye.security.entities.NewPassword;
 import fr.trendev.comptandye.useraccount.controllers.UserAccountFacade;

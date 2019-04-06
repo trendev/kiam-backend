@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.security.controllers;
+package fr.trendev.comptandye.security.controllers.jwt;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fish.payara.cluster.Clustered;
 import fish.payara.cluster.DistributedLockType;
+import fr.trendev.comptandye.security.controllers.jwt.dto.JWTRevokedSetDTO;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
@@ -25,6 +25,7 @@ import javax.ejb.Schedule;
 import javax.ejb.Schedules;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.inject.Inject;
 
 /**
  * @author jsie
@@ -35,48 +36,75 @@ import javax.ejb.Startup;
 @Startup
 public class JWTRevokedSet implements Serializable {
 
-    private final Set<JWTRecord> set;
+    /**
+     * SET MUST HAVE ONE MAIN COPY
+     */
+    private static volatile Set<JWTRecord> SET =
+            Collections.synchronizedSortedSet(new TreeSet<>());
 
     private static final Logger LOG = Logger.getLogger(JWTRevokedSet.class.
             getName());
 
+    @Inject
+    JWTRevokedSetDTO dto;
+
     public JWTRevokedSet() {
-        this.set = Collections.synchronizedSortedSet(new TreeSet<>());
     }
 
     @PostConstruct
     public void init() {
-        //TODO: load the set from a DB
-        LOG.log(Level.INFO, "{0} initialized", JWTRevokedSet.class.
+        LOG.log(Level.INFO, "{0} initializing", JWTRevokedSet.class.
                 getSimpleName());
+
+        this.dto.getAll()
+                //restore the SET from a Collection
+                .thenAccept(saved -> {
+                    if (saved != null && !saved.isEmpty()) {
+                        LOG.log(Level.INFO, "Restoring {0} from {1}",
+                                new Object[]{JWTRevokedSet.class.getSimpleName(),
+                                    this.dto.getClass().getSimpleName()});
+                        SET.addAll(saved);
+                        LOG.log(Level.INFO, "{0} revoked JWT restored in {1}",
+                                new Object[]{saved.size(),
+                                    JWTRevokedSet.class.getSimpleName()});
+                    } else {
+                        LOG.warning("No Revoked JWT found in Firestore...");
+                    }
+                });
+
+        LOG.log(Level.INFO, "{0} may be initialized : revoked tokens = {1}",
+                new Object[]{
+                    JWTRevokedSet.class.getSimpleName(),
+                    SET.size()});
     }
 
     @PreDestroy
     public void close() {
-        //TODO : save the set in a DB and ignore if the set is empty (after test)
         LOG.log(Level.INFO, "{0} closed", JWTRevokedSet.class.getSimpleName());
     }
 
     public Set<JWTRecord> getSet() {
-        return this.set;
+        return SET;
     }
 
     public void clear() {
-        this.set.clear();
+        SET.clear();
         LOG.info("JWT Revoked Set cleared");
     }
 
     @Schedules({
-        @Schedule(minute = "*", hour = "*", persistent = false)
+        @Schedule(second = "*/5", minute = "*", hour = "*", persistent = false)
     })
     public void cleanUp() {
-        this.set.removeIf(r -> {
+        SET.removeIf(r -> {
             if (r.hasExpired()) {
                 LOG.log(Level.INFO,
                         "Revoked Token ({0}) has expired and has been cleaned...",
                         new Object[]{
                             JWTManager.trunkToken(r.getToken())
                         });
+
+                dto.delete(r.getToken());
                 return true;
             } else {
                 return false;
@@ -85,31 +113,60 @@ public class JWTRevokedSet implements Serializable {
     }
 
     public boolean add(JWTRecord record) {
-        return this.set.add(record);
+        boolean result = SET.add(record);
+
+        if (result) {
+            this.dto.create(record);
+        }
+
+        return result;
     }
 
-    public boolean addAll(Collection<JWTRecord> records) {
-        return this.set.addAll(records);
+    /**
+     * Used when multiple records are revoked (ex : force a user to logout from
+     * all devices).
+     *
+     * @param records the JWT records to add
+     * @return if the operation is successful, true, or otherwise, false
+     */
+    public boolean addAll(Set<JWTRecord> records) {
+        boolean result = SET.addAll(records);
+
+        if (result) {
+            this.dto.bulkCreation(records);
+        }
+
+        return result;
     }
 
     public boolean contains(String token) {
-        return this.set.stream()
+        return SET.stream()
                 .anyMatch(r -> r.getToken().equals(token));
     }
 
     public Optional<JWTRecord> remove(String token) {
 
-        Optional<JWTRecord> record = this.set.stream()
+        Optional<JWTRecord> record = SET.stream()
                 .filter(r -> r.getToken().equals(token))
                 .findFirst();
 
-        record.ifPresent(r -> this.set.remove(r));
+        record.ifPresent(r -> {
+            if (SET.remove(r)) {
+                this.dto.delete(r.getToken());
+            }
+        });
 
         return record;
     }
 
     public Optional<JWTRecord> remove(JWTRecord record) {
-        return this.set.remove(record)
+        boolean result = SET.remove(record);
+
+        if (result) {
+            this.dto.delete(record.getToken());
+        }
+
+        return result
                 ? Optional.of(record)
                 : Optional.empty();
     }
@@ -121,7 +178,7 @@ public class JWTRevokedSet implements Serializable {
         String value = "NO_VALUE";
         try {
             value = om.writerWithDefaultPrettyPrinter()
-                    .writeValueAsString(this.set);
+                    .writeValueAsString(SET);
         } catch (JsonProcessingException ex) {
             LOG.log(Level.SEVERE, "Impossible to display RevokedSet", ex);
         }

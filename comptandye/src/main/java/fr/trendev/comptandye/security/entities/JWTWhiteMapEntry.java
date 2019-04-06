@@ -20,7 +20,7 @@ public class JWTWhiteMapEntry implements Serializable,
     }
 
     public JWTWhiteMapEntry(Map.Entry<String, Set<JWTRecord>> entry) {
-        this(entry.getKey(), new TreeSet(entry.getValue()));
+        this(entry.getKey(), new TreeSet<>(entry.getValue()));
     }
 
     public String getEmail() {

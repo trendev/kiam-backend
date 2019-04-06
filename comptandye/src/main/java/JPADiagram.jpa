@@ -376,7 +376,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-many>
-            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1524841860187" connected-attribute-id="_1524841981057164" v="true" xvt="" name="stock" dv="new LinkedList()" id="_1524841981058165">
+            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1524841860187" connected-attribute-id="_1524841981057164" v="true" xvt="" name="stock" dv="new LinkedList&lt;&gt;()" id="_1524841981058165">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -384,7 +384,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-many>
-            <jpa:one-to-many orp="true" collection-type="java.util.List" connected-entity-id="_1528899065548" connected-attribute-id="_1528899165846100" v="true" xvt="" name="notifications" dv="new LinkedList()" id="_1528899165848101">
+            <jpa:one-to-many orp="true" collection-type="java.util.List" connected-entity-id="_1528899065548" connected-attribute-id="_1528899165846100" v="true" xvt="" name="notifications" dv="new LinkedList&lt;&gt;()" id="_1528899165848101">
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>

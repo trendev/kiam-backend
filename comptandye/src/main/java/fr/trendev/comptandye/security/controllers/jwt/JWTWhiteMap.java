@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.security.controllers;
+package fr.trendev.comptandye.security.controllers.jwt;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fish.payara.cluster.Clustered;
 import fish.payara.cluster.DistributedLockType;
+import fr.trendev.comptandye.security.controllers.jwt.dto.JWTWhiteMapDTO;
 import fr.trendev.comptandye.security.entities.JWTRecord;
+import fr.trendev.comptandye.security.entities.JWTWhiteMapEntry;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -26,6 +28,7 @@ import javax.ejb.Schedule;
 import javax.ejb.Schedules;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.inject.Inject;
 
 /**
  * @author jsie
@@ -36,26 +39,79 @@ import javax.ejb.Startup;
 @Startup
 public class JWTWhiteMap implements Serializable {
 
-    private final Map<String, Set<JWTRecord>> map;
+    /**
+     * MAP MUST HAVE ONE MAIN COPY
+     */
+    private static volatile Map<String, Set<JWTRecord>> MAP =
+            Collections.synchronizedSortedMap(new TreeMap<>());
 
     private static final Logger LOG = Logger.getLogger(JWTWhiteMap.class.
             getName());
 
+    @Inject
+    JWTWhiteMapDTO dto;
+
     public JWTWhiteMap() {
-        this.map = Collections.synchronizedSortedMap(new TreeMap<>());
     }
 
     @PostConstruct
     public void init() {
-        //TODO: load the map from a DB
-        LOG.
-                log(Level.INFO, "{0} initialized", JWTWhiteMap.class.
-                        getSimpleName());
+        LOG.log(Level.INFO, "Initializing {0} ...",
+                JWTWhiteMap.class.getSimpleName());
+
+        dto.getAll()
+                //restores the map
+                .thenAccept(saved -> {
+                    if (saved != null && !saved.isEmpty()) {
+                        LOG.info("Restoring " + JWTWhiteMap.class.
+                                getSimpleName()
+                                + " from " + dto.getClass().getSimpleName()
+                                + " and parsing " + saved.size() + " documents");
+                        /**
+                         * iterates over the DTO's list and merge the entries if
+                         * there is already authenticated users in the
+                         * jwtwhitemap. Should not happen... if it happens it
+                         * means the API is operational before the DTO has
+                         * provided the saved entries.
+                         */
+                        saved.forEach(e -> {
+                            Set<JWTRecord> records = MAP.getOrDefault(
+                                    e.getEmail(),
+                                    Collections
+                                            .synchronizedSortedSet(
+                                                    new TreeSet<>()));
+
+                            LOG.log(Level.INFO,
+                                    "{0} records found for user [{1}]",
+                                    new Object[]{e.getRecords().size(),
+                                        e.getEmail()});
+
+                            if (records.isEmpty()) {
+                                LOG.info("Restoring JWT Records for user " + e.
+                                        getEmail());
+                            } else { // active authenticated user
+                                LOG.warning("Updating JWT Records for user "
+                                        + e.
+                                                getEmail());
+                            }
+
+                            records.addAll(e.getRecords());
+                            MAP.put(e.getEmail(), records);
+                        });
+                    } else {
+                        LOG.warning("No JWTWhiteMap entries to restore !");
+                    }
+                });
+
+        LOG.log(Level.INFO, "{0} may be initialized : active users = {1}",
+                new Object[]{
+                    JWTWhiteMap.class.getSimpleName(),
+                    MAP.size()});
+
     }
 
     @PreDestroy
     public void close() {
-        //TODO : save the map in a DB and ignore if the map is empty (after test)
         LOG.log(Level.INFO, "{0} closed", JWTWhiteMap.class.getSimpleName());
     }
 
@@ -65,14 +121,14 @@ public class JWTWhiteMap implements Serializable {
      * @return the map
      */
     public Map<String, Set<JWTRecord>> getMap() {
-        return this.map;
+        return MAP;
     }
 
     /**
-     * Clears the map
+     * Clears the map. Use for test purposes only.
      */
     public void clear() {
-        this.map.clear();
+        MAP.clear();
         LOG.info("JWT White Map cleared");
     }
 
@@ -83,11 +139,14 @@ public class JWTWhiteMap implements Serializable {
         @Schedule(second = "*/10", minute = "*", hour = "*", persistent = false)
     })
     public void cleanUp() {
-        this.map.entrySet().forEach(e -> {
+
+        MAP.entrySet().forEach(e -> {
+
+            // get the JWTRecords associated with the email or provide an empty Set
             Set<JWTRecord> records = Optional.ofNullable(e.getValue())
                     .orElseGet(Collections::emptySet);
 
-            records.removeIf(r -> {
+            boolean result = records.removeIf(r -> {
                 if (r.hasExpired()) {
                     LOG.log(Level.INFO,
                             "Token of user [{0}] ({1}) has expired and has been cleaned...",
@@ -100,18 +159,26 @@ public class JWTWhiteMap implements Serializable {
                     return false;
                 }
             });
-        });
 
-        this.map.entrySet().removeIf(e -> {
-            if (e.getValue().isEmpty()) {
-                LOG.log(Level.INFO,
-                        "All JWT Record of user [{0}] cleaned : no more entry in the JWT White Map (LOG-OUT)",
-                        new Object[]{e.getKey()});
-                return true;
-            } else {
-                return false;
+            // some expired records have been found and removed from the Map (cache)
+            if (result == true) {
+                if (records.isEmpty()) { // no more entry, user is logged out
+                    LOG.log(Level.INFO,
+                            "All JWT Record of user [{0}] cleaned : no more entry in the JWT White Map (LOG-OUT)",
+                            new Object[]{e.getKey()});
+                    dto.delete(e.getKey());
+                } else { // there is still some valid JWT in the records
+                    dto.update(new JWTWhiteMapEntry(e));
+                }
             }
         });
+
+        /**
+         * Records are cleaned during the first iteration. The Set of records
+         * becoming empty, the associated entries must also be removed from the
+         * Map
+         */
+        MAP.entrySet().removeIf(e -> e.getValue().isEmpty());
     }
 
     /**
@@ -125,12 +192,16 @@ public class JWTWhiteMap implements Serializable {
      * an empty Optional otherwise
      */
     public Optional<Set<JWTRecord>> add(String email, JWTRecord record) {
-        Set<JWTRecord> records = this.map.getOrDefault(email,
+        Set<JWTRecord> records = MAP.getOrDefault(email,
                 Collections.synchronizedSortedSet(new TreeSet<>()));
+
         records.add(record);
 
         //logged-in, first active "session"
         if (records.size() == 1) {
+
+            this.dto.create(new JWTWhiteMapEntry(email, records));
+
             LOG.log(Level.INFO,
                     "First JWT Record ({0}) added for user [{1}] in the JWT White Map (LOG-IN)",
                     new Object[]{
@@ -138,6 +209,9 @@ public class JWTWhiteMap implements Serializable {
                         email
                     });
         } else {
+
+            this.dto.update(new JWTWhiteMapEntry(email, records));
+
             LOG.log(Level.INFO,
                     "JWT Record ({0}) added for user [{1}] in the JWT White Map : {2}",
                     new Object[]{
@@ -147,7 +221,7 @@ public class JWTWhiteMap implements Serializable {
                     });
         }
 
-        return Optional.ofNullable(this.map.put(email, records));
+        return Optional.ofNullable(MAP.put(email, records));
     }
 
     /**
@@ -158,7 +232,7 @@ public class JWTWhiteMap implements Serializable {
      * empty Optional otherwise
      */
     public Optional<Set<JWTRecord>> getRecords(String email) {
-        return Optional.ofNullable(this.map.get(email));
+        return Optional.ofNullable(MAP.get(email));
     }
 
     /**
@@ -170,12 +244,13 @@ public class JWTWhiteMap implements Serializable {
      */
     public Optional<Set<JWTRecord>> removeAll(String email) {
         Optional<Set<JWTRecord>> records =
-                Optional.ofNullable(this.map.remove(email));
+                Optional.ofNullable(MAP.remove(email));
 
         if (records.isPresent()) {
             LOG.log(Level.INFO,
                     "All JWT Records of user [{0}] have been removed : no more entry in the JWT White Map (LOG-OUT)",
                     new Object[]{email});
+            this.dto.delete(email);
         }
         return records;
     }
@@ -210,12 +285,20 @@ public class JWTWhiteMap implements Serializable {
             }
         });
 
-        // logged-out, no more active "session"
-        if (records.isEmpty() && record.isPresent()) {
-            this.map.remove(email);
-            LOG.log(Level.INFO,
-                    "Last JWT Record of user [{0}] removed : no more entry in the JWT White Map (LOG-OUT)",
-                    new Object[]{email});
+        if (record.isPresent()) {
+            // logged-out, no more active "session"
+            if (records.isEmpty()) {
+
+                MAP.remove(email);
+                this.dto.delete(email);
+
+                LOG.log(Level.INFO,
+                        "Last JWT Record of user [{0}] removed : no more entry in the JWT White Map (LOG-OUT)",
+                        new Object[]{email});
+
+            } else { // save the updated record collection
+                this.dto.update(new JWTWhiteMapEntry(email, records));
+            }
         }
 
         return record;
@@ -233,7 +316,7 @@ public class JWTWhiteMap implements Serializable {
     public Optional<JWTRecord> remove(String email, String token) {
         return this.remove(email,
                 token,
-                this.map.getOrDefault(email, new TreeSet<>()));
+                MAP.getOrDefault(email, new TreeSet<>()));
     }
 
     /**
@@ -244,7 +327,7 @@ public class JWTWhiteMap implements Serializable {
      * @return
      */
     public Optional<JWTRecord> remove(String token) {
-        for (Map.Entry<String, Set<JWTRecord>> e : this.map.entrySet()) {
+        for (Map.Entry<String, Set<JWTRecord>> e : MAP.entrySet()) {
             Optional<JWTRecord> record = this.remove(e.getKey(),
                     token,
                     e.getValue());
@@ -262,7 +345,7 @@ public class JWTWhiteMap implements Serializable {
         String value = "NO_VALUE";
         try {
             value = om.writerWithDefaultPrettyPrinter()
-                    .writeValueAsString(this.map);
+                    .writeValueAsString(MAP);
         } catch (JsonProcessingException ex) {
             LOG.log(Level.SEVERE, "Impossible to display WhiteMap", ex);
         }

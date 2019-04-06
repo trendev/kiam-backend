@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.security.controllers;
+package fr.trendev.comptandye.security.controllers.jwt;
 
+import fr.trendev.comptandye.security.controllers.jwt.dto.mock.MockJWTWhiteMapDTO;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.time.Instant;
 import static java.time.temporal.ChronoUnit.MINUTES;
@@ -12,6 +13,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.IntStream;
 import javax.inject.Inject;
 import org.jboss.weld.junit4.WeldInitiator;
@@ -46,10 +48,12 @@ public class JWTWhiteMapTest {
     private final Date expirationDate3 = Date.from(now.plus(
             JWTManager.SHORT_VALID_PERIOD + 10,
             MINUTES));
+    private static final Logger LOG = Logger.getLogger(JWTWhiteMapTest.class.
+            getName());
 
     @Rule
     public WeldInitiator weld = WeldInitiator
-            .from(JWTWhiteMap.class)
+            .from(JWTWhiteMap.class, MockJWTWhiteMapDTO.class)
             .inject(this).build();
 
     @Inject
@@ -73,6 +77,12 @@ public class JWTWhiteMapTest {
 
     @Test
     public void testInit() {
+        LOG.info("### TEST JWTWHITEMAP INIT ###");
+        Assertions.assertDoesNotThrow(() -> jwtwm.init());
+        Assertions.assertFalse(jwtwm.getMap().isEmpty(),
+                "jwtwm.getMap() should not be empty");
+        Assertions.assertTrue(jwtwm.getMap().size() == 1,
+                "jwtwm.getMap().size() should be 1");
     }
 
     @Test
@@ -261,8 +271,11 @@ public class JWTWhiteMapTest {
 
         Assertions.assertDoesNotThrow(() -> jwtwm.cleanUp());
 
+        // record3 should remain
         Assertions.assertTrue(jwtwm.getRecords(email1).isPresent());
+        // no more records
         Assertions.assertFalse(jwtwm.getRecords(email2).isPresent());
+        // no more records
         Assertions.assertFalse(jwtwm.getRecords("email" + max).isPresent());
 
         Assertions.assertFalse(jwtwm.getRecords(email1).get().contains(record1));
