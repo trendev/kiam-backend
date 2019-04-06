@@ -36,7 +36,8 @@ import javax.inject.Inject;
 @Startup
 public class JWTRevokedSet implements Serializable {
 
-    private final Set<JWTRecord> set;
+    private static volatile Set<JWTRecord> SET =
+            Collections.synchronizedSortedSet(new TreeSet<>());
 
     private static final Logger LOG = Logger.getLogger(JWTRevokedSet.class.
             getName());
@@ -45,7 +46,6 @@ public class JWTRevokedSet implements Serializable {
     JWTRevokedSetDTO dto;
 
     public JWTRevokedSet() {
-        this.set = Collections.synchronizedSortedSet(new TreeSet<>());
     }
 
     @PostConstruct
@@ -54,13 +54,13 @@ public class JWTRevokedSet implements Serializable {
                 getSimpleName());
 
         this.dto.getAll()
-                //restore the set from a Collection
+                //restore the SET from a Collection
                 .thenAccept(saved -> {
                     if (saved != null && !saved.isEmpty()) {
                         LOG.log(Level.INFO, "Restoring {0} from {1}",
                                 new Object[]{JWTRevokedSet.class.getSimpleName(),
                                     this.dto.getClass().getSimpleName()});
-                        this.set.addAll(saved);
+                        SET.addAll(saved);
                         LOG.log(Level.INFO, "{0} revoked JWT restored in {1}",
                                 new Object[]{saved.size(),
                                     JWTRevokedSet.class.getSimpleName()});
@@ -72,7 +72,7 @@ public class JWTRevokedSet implements Serializable {
         LOG.log(Level.INFO, "{0} may be initialized : revoked tokens = {1}",
                 new Object[]{
                     JWTRevokedSet.class.getSimpleName(),
-                    this.set.size()});
+                    SET.size()});
     }
 
     @PreDestroy
@@ -81,11 +81,11 @@ public class JWTRevokedSet implements Serializable {
     }
 
     public Set<JWTRecord> getSet() {
-        return this.set;
+        return SET;
     }
 
     public void clear() {
-        this.set.clear();
+        SET.clear();
         LOG.info("JWT Revoked Set cleared");
     }
 
@@ -93,7 +93,7 @@ public class JWTRevokedSet implements Serializable {
         @Schedule(second = "*/5", minute = "*", hour = "*", persistent = false)
     })
     public void cleanUp() {
-        this.set.removeIf(r -> {
+        SET.removeIf(r -> {
             if (r.hasExpired()) {
                 LOG.log(Level.INFO,
                         "Revoked Token ({0}) has expired and has been cleaned...",
@@ -110,7 +110,7 @@ public class JWTRevokedSet implements Serializable {
     }
 
     public boolean add(JWTRecord record) {
-        boolean result = this.set.add(record);
+        boolean result = SET.add(record);
 
         if (result) {
             this.dto.create(record);
@@ -127,7 +127,7 @@ public class JWTRevokedSet implements Serializable {
      * @return if the operation is successful, true, or otherwise, false
      */
     public boolean addAll(Set<JWTRecord> records) {
-        boolean result = this.set.addAll(records);
+        boolean result = SET.addAll(records);
 
         if (result) {
             this.dto.bulkCreation(records);
@@ -137,18 +137,18 @@ public class JWTRevokedSet implements Serializable {
     }
 
     public boolean contains(String token) {
-        return this.set.stream()
+        return SET.stream()
                 .anyMatch(r -> r.getToken().equals(token));
     }
 
     public Optional<JWTRecord> remove(String token) {
 
-        Optional<JWTRecord> record = this.set.stream()
+        Optional<JWTRecord> record = SET.stream()
                 .filter(r -> r.getToken().equals(token))
                 .findFirst();
 
         record.ifPresent(r -> {
-            if (this.set.remove(r)) {
+            if (SET.remove(r)) {
                 this.dto.delete(r.getToken());
             }
         });
@@ -157,7 +157,7 @@ public class JWTRevokedSet implements Serializable {
     }
 
     public Optional<JWTRecord> remove(JWTRecord record) {
-        boolean result = this.set.remove(record);
+        boolean result = SET.remove(record);
 
         if (result) {
             this.dto.delete(record.getToken());
@@ -175,7 +175,7 @@ public class JWTRevokedSet implements Serializable {
         String value = "NO_VALUE";
         try {
             value = om.writerWithDefaultPrettyPrinter()
-                    .writeValueAsString(this.set);
+                    .writeValueAsString(SET);
         } catch (JsonProcessingException ex) {
             LOG.log(Level.SEVERE, "Impossible to display RevokedSet", ex);
         }
