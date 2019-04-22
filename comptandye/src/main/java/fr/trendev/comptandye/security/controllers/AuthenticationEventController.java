@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
+import java.io.Serializable;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.enterprise.event.Event;
@@ -19,7 +20,7 @@ import javax.json.JsonObject;
  */
 @Singleton
 @Startup
-public class AuthenticationEventController {
+public class AuthenticationEventController implements Serializable {
 
     @Inject
     @LoginDetected
