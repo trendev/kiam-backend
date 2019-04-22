@@ -13,6 +13,7 @@ import com.nimbusds.jose.KeyLengthException;
 import com.nimbusds.jose.crypto.RSASSAVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import fr.trendev.comptandye.security.controllers.MockAuthenticationEventController;
 import fr.trendev.comptandye.security.controllers.RSAKeyProvider;
 import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.ISS;
 import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.LONG_VALID_PERIOD;
@@ -52,6 +53,7 @@ public class JWTManagerTest {
             .from(RSAKeyProvider.class,
                     JWTManager.class,
                     JWTWhiteMap.class,
+                    MockAuthenticationEventController.class,
                     MockJWTWhiteMapDTO.class,
                     JWTRevokedSet.class,
                     MockJWTRevokedSetDTO.class)
