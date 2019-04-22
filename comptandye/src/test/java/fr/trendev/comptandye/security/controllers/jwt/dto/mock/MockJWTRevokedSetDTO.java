@@ -48,12 +48,6 @@ public class MockJWTRevokedSetDTO implements JWTRevokedSetDTO {
     }
 
     @Override
-    public void bulkCreation(Set<JWTRecord> records) {
-        LOG.log(Level.INFO, "MOCK - Adding {0} revoked token in Firestore",
-                records.size());
-    }
-
-    @Override
     public void delete(String token) {
         LOG.log(Level.INFO, "MOCK - Removing revoked token {0} from Firestore",
                 token);

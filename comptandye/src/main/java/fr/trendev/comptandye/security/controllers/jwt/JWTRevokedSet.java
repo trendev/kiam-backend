@@ -132,8 +132,12 @@ public class JWTRevokedSet implements Serializable {
     public boolean addAll(Set<JWTRecord> records) {
         boolean result = SET.addAll(records);
 
+        /**
+         * If all or some records are added in the revoked set cache, they are
+         * also added in the remote database.
+         */
         if (result) {
-            this.dto.bulkCreation(records);
+            records.forEach(r -> this.dto.create(r));
         }
 
         return result;

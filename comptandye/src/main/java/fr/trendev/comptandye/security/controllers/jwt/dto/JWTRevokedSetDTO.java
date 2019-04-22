@@ -24,7 +24,5 @@ public interface JWTRevokedSetDTO extends Serializable {
 
     public void create(JWTRecord record);
 
-    public void bulkCreation(Set<JWTRecord> records);
-
     public void delete(String token);
 }
