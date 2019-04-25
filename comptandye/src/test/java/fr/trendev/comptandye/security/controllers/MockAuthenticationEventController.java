@@ -12,7 +12,8 @@ import java.util.logging.Logger;
  *
  * @author jsie
  */
-public class MockAuthenticationEventController extends AuthenticationEventController {
+public class MockAuthenticationEventController implements
+        AuthenticationEventController {
 
     private static final Logger LOG = Logger.getLogger(
             MockAuthenticationEventController.class.getName());
