@@ -39,7 +39,7 @@ public class AuthenticationEventController {
         this.getBeanManager()
                 .getEvent()
                 .select(JsonObject.class, new LoginDetectedLiteral())
-                .fireAsync(this.buildText(email, "CONNECTED"));
+                .fire(this.buildText(email, "CONNECTED"));
     }
 
     public void logout(String email) {
