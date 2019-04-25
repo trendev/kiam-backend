@@ -35,7 +35,10 @@ public class SlackAuthenticationEventController implements
 
     @Override
     public void logout(String email) {
-//        logoutEvent.fire(this.buildText(email, "EXITED"));
+        this.getBeanManager()
+                .getEvent()
+                .select(new LoginDetectedLiteral())
+                .fire(this.buildText(email, "EXITED"));
     }
 
     private JsonObject buildText(String email, String status) {
