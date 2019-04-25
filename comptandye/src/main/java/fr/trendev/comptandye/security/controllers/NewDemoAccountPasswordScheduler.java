@@ -100,9 +100,12 @@ public class NewDemoAccountPasswordScheduler {
     private JsonObject buildText(String password) {
         return Json.createObjectBuilder()
                 .add("pretext",
-                        "New password for user `"
-                        + DEMO_ACCOUNT_EMAIL + "`")
+                        "_A new password has been set for the demo account_")
+                .add("color", "#673ab7")
                 .add("text", "*" + password + "*")
+                .add("footer",
+                        "this is the new password for `" + DEMO_ACCOUNT_EMAIL
+                        + "`")
                 .build();
     }
 
