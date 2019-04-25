@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.entities;
 
+import fr.trendev.comptandye.productreference.entities.ProductReference;
 import org.junit.Test;
 
 /**

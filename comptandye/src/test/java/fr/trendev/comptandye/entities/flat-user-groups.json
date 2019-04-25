@@ -1,1 +1,82 @@
-[{"name":"Administrator","description":"This is the Administrator Group","userAccounts":[{"email":"comptandye@gmail.com","password":"mZWR4R0bp5EPs9xfOwUPu3n/06LOL+wHK6BuUBsHgQM=","username":"comptandye_admin","uuid":"ADMIN_35779ccfe7d04b0294a3d9b33e497cac","registrationDate":1502551534000,"userGroups":["Administrator"]},{"email":"julien.sie@gmail.com","password":"RrYJsV8xV7fsJkzgrFqGwiZzvIGEFan6e0ANYPcJhrI=","username":"jsie","uuid":"ADMIN_9b3bee3222114002a34bd128b4f72410","registrationDate":1502551534000,"userGroups":["Administrator"]},{"email":"trendevfr@gmail.com","password":"ts15qkBmihdtvmkKXPgVmbPGeyQU6aKd5XNd5HwOzu0=","username":"trendevfr_admin","uuid":"ADMIN_44d72ff9ef824d7fb1dce20d1a427760","registrationDate":1502551534000,"userGroups":["Administrator"]}]},{"name":"Individual","description":"This is the Individual User Group","userAccounts":[]},{"name":"Professional","description":"This is the Professional User Group","userAccounts":[{"email":"vanessa.gay@gmail.com","password":"EUrVrX4nfmYYFxpMyRX93OlkJxNZv9mkMGfirZKbhWI=","username":"Vaness","uuid":"PRO_eeeb9c97c29e4776b5add680040f1016","registrationDate":1502551534000,"userGroups":["Professional"],"customerDetails":null,"socialNetworkAccounts":null,"address":null,"website":null,"business":null,"companyID":null,"offerings":[],"bills":[],"clients":[],"collectiveGroups":[],"categories":[],"expenses":[],"individuals":[],"paymentModes":[]}]}]
+[
+    {
+        "name": "Administrator",
+        "description": "This is the Administrator Group",
+        "userAccounts": [
+            {
+                "email": "comptandye@gmail.com",
+                "password": "mZWR4R0bp5EPs9xfOwUPu3n/06LOL+wHK6BuUBsHgQM=",
+                "username": "comptandye_admin",
+                "uuid": "ADMIN_35779ccfe7d04b0294a3d9b33e497cac",
+                "registrationDate": 1502551534000,
+                "userGroups": [
+                    "Administrator"
+                ]
+            },
+            {
+                "email": "julien.sie@gmail.com",
+                "password": "RrYJsV8xV7fsJkzgrFqGwiZzvIGEFan6e0ANYPcJhrI=",
+                "username": "jsie",
+                "uuid": "ADMIN_9b3bee3222114002a34bd128b4f72410",
+                "registrationDate": 1502551534000,
+                "userGroups": [
+                    "Administrator"
+                ]
+            },
+            {
+                "email": "trendevfr@gmail.com",
+                "password": "ts15qkBmihdtvmkKXPgVmbPGeyQU6aKd5XNd5HwOzu0=",
+                "username": "trendevfr_admin",
+                "uuid": "ADMIN_44d72ff9ef824d7fb1dce20d1a427760",
+                "registrationDate": 1502551534000,
+                "userGroups": [
+                    "Administrator"
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Individual",
+        "description": "This is the Individual User Group",
+        "userAccounts": [
+        ]
+    },
+    {
+        "name": "Professional",
+        "description": "This is the Professional User Group",
+        "userAccounts": [
+            {
+                "email": "vanessa.gay@gmail.com",
+                "password": "EUrVrX4nfmYYFxpMyRX93OlkJxNZv9mkMGfirZKbhWI=",
+                "username": "Vaness",
+                "uuid": "PRO_eeeb9c97c29e4776b5add680040f1016",
+                "registrationDate": 1502551534000,
+                "userGroups": [
+                    "Professional"
+                ],
+                "customerDetails": null,
+                "socialNetworkAccounts": null,
+                "address": null,
+                "website": null,
+                "business": null,
+                "companyID": null,
+                "offerings": [
+                ],
+                "bills": [
+                ],
+                "clients": [
+                ],
+                "collectiveGroups": [
+                ],
+                "categories": [
+                ],
+                "expenses": [
+                ],
+                "individuals": [
+                ],
+                "paymentModes": [
+                ]
+            }
+        ]
+    }
+]

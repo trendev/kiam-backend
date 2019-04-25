@@ -5,12 +5,13 @@
  */
 package fr.trendev.comptandye.utils.visitors;
 
-import fr.trendev.comptandye.entities.Pack;
-import fr.trendev.comptandye.entities.Sale;
-import fr.trendev.comptandye.entities.Service;
+import fr.trendev.comptandye.offering.entities.DiscoverSalesVisitor;
+import fr.trendev.comptandye.pack.entities.Pack;
+import fr.trendev.comptandye.sale.entities.Sale;
+import fr.trendev.comptandye.service.entities.Service;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *

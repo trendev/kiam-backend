@@ -5,16 +5,18 @@
  */
 package fr.trendev.comptandye.entities;
 
-import fr.trendev.comptandye.utils.UUIDGenerator;
+import fr.trendev.comptandye.bill.entities.Bill;
+import fr.trendev.comptandye.payment.entities.Payment;
+import fr.trendev.comptandye.paymentmode.entities.PaymentMode;
+import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.comptandye.purchasedoffering.entities.PurchasedOffering;
+import fr.trendev.comptandye.service.entities.Service;
+import fr.trendev.comptandye.useraccount.controllers.UUIDGenerator;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -24,22 +26,6 @@ import org.junit.Test;
 public class BillTest {
 
     public BillTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
     }
 
     @Test

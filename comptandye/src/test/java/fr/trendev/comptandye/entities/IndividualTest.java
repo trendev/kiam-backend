@@ -5,12 +5,9 @@
  */
 package fr.trendev.comptandye.entities;
 
-import fr.trendev.comptandye.utils.UserAccountType;
+import fr.trendev.comptandye.individual.entities.Individual;
+import fr.trendev.comptandye.useraccount.entities.UserAccountType;
 import java.util.Date;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -20,22 +17,6 @@ import org.junit.Test;
 public class IndividualTest {
 
     public IndividualTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
     }
 
     /**
@@ -65,51 +46,6 @@ public class IndividualTest {
         assert instance.isBlocked() == true;
         assert UserAccountType.INDIVIDUAL.equals(instance.getCltype());
 
-        String email = "individual@procompany.com";
-        String password = "encrypted_pwd";
-        String username = "IND01";
-        String uuid = "IND_0001";
-        instance = new Individual(email, password, username, uuid);
-        instance.setBlocked(false);
-
-        assert instance.getEmail().equals(email);
-        assert instance.getPassword().equals(password);
-        assert instance.getUsername().equals(username);
-        assert instance.getUuid().equals(uuid);
-        assert instance.getRegistrationDate() != null;
-        assert instance.getUserGroups() != null;
-        assert instance.getUserGroups().isEmpty();
-        assert instance.getCustomerDetails() != null;
-        assert instance.getAddress() != null;
-        assert instance.getSocialNetworkAccounts() != null;
-        assert instance.getProfessionals() != null;
-        assert instance.getProfessionals().isEmpty();
-        assert instance.getIndividualBills() != null;
-        assert instance.getIndividualBills().isEmpty();
-        assert instance.isBlocked() == false;
-        assert UserAccountType.INDIVIDUAL.equals(instance.getCltype());
-
-        instance = new Individual(email, password, username, uuid,
-                new CustomerDetails(), new Address(),
-                new SocialNetworkAccounts());
-        instance.setBlocked(false);
-
-        assert instance.getEmail().equals(email);
-        assert instance.getPassword().equals(password);
-        assert instance.getUsername().equals(username);
-        assert instance.getUuid().equals(uuid);
-        assert instance.getRegistrationDate() != null;
-        assert instance.getUserGroups() != null;
-        assert instance.getUserGroups().isEmpty();
-        assert instance.getCustomerDetails() != null;
-        assert instance.getAddress() != null;
-        assert instance.getSocialNetworkAccounts() != null;
-        assert instance.getProfessionals() != null;
-        assert instance.getProfessionals().isEmpty();
-        assert instance.getIndividualBills() != null;
-        assert instance.getIndividualBills().isEmpty();
-        assert instance.isBlocked() == false;
-        assert UserAccountType.INDIVIDUAL.equals(instance.getCltype());
     }
 
 }

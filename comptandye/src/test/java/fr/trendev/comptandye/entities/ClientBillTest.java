@@ -5,17 +5,19 @@
  */
 package fr.trendev.comptandye.entities;
 
-import fr.trendev.comptandye.utils.BillType;
-import fr.trendev.comptandye.utils.UUIDGenerator;
+import fr.trendev.comptandye.bill.entities.BillType;
+import fr.trendev.comptandye.clientbill.entities.ClientBill;
+import fr.trendev.comptandye.payment.entities.Payment;
+import fr.trendev.comptandye.paymentmode.entities.PaymentMode;
+import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.comptandye.purchasedoffering.entities.PurchasedOffering;
+import fr.trendev.comptandye.service.entities.Service;
+import fr.trendev.comptandye.useraccount.controllers.UUIDGenerator;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -25,22 +27,6 @@ import org.junit.Test;
 public class ClientBillTest {
 
     public ClientBillTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
     }
 
     @Test
@@ -83,39 +69,5 @@ public class ClientBillTest {
                 .map(o -> new PurchasedOffering(1, o))
                 .collect(Collectors.toList());
 
-        instance = new ClientBill(reference, deliveryDate, amount,
-                discount,
-                paymentDate,
-                comments, professional, payments, purchasedOfferings,
-                new Client());
-
-        assert instance.getReference().equals(reference);
-        assert instance.getDeliveryDate() != null;
-        assert instance.getAmount() == amount;
-        assert instance.getCurrency().equals("EUR");
-        assert instance.getDiscount() == discount;
-        assert instance.getPaymentDate() != null;
-        assert instance.getComments() != null;
-        assert instance.getComments().size() == 2;
-        assert instance.getProfessional().equals(professional);
-        assert instance.getPayments() != null;
-
-        assert instance.getPayments().contains(payment);
-        assert instance.getPurchasedOfferings() != null;
-        assert instance.getPurchasedOfferings().size() == 10;
-
-        assert instance.getPurchasedOfferings().stream().mapToInt(po -> po.
-                getOffering().getPrice()).
-                sum() == totalAmount;
-
-        assert instance.getPayments().stream().mapToInt(p -> p.getAmount()).
-                sum() == amount;
-
-        assert amount == (totalAmount - (discount * totalAmount / 100));
-
-        assert instance.getClient() != null;
-
-        assert BillType.CLIENT.equals(instance.getCltype());
     }
-
 }

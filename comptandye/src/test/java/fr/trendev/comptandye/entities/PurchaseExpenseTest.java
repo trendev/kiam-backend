@@ -5,7 +5,8 @@
  */
 package fr.trendev.comptandye.entities;
 
-import fr.trendev.comptandye.utils.ExpenseType;
+import fr.trendev.comptandye.expense.entities.ExpenseType;
+import fr.trendev.comptandye.purchaseexpense.entities.PurchaseExpense;
 import org.junit.Test;
 
 /**

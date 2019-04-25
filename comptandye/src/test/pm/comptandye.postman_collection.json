@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "16903cd8-6275-40d8-9852-e8f87bde7a2a",
+		"_postman_id": "1e1dc69e-9ab1-41c2-923a-07aff3538a3a",
 		"name": "comptandye",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -15,18 +15,19 @@
 							"listen": "test",
 							"script": {
 								"id": "29402ced-a91e-4c5d-b9e6-347e1b641b8b",
-								"type": "text/javascript",
 								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200 ;",
+									"pm.test(\"Status code is 200\", function(){",
+									"    pm.response.to.be.ok;",
+									"});",
 									"",
-									" pm.test(\"JSESSIONID cookie is present\", function () {",
+									"pm.test(\"JWT cookie is present\", function () {",
 									"      pm.response.to.not.be.error;",
-									"      pm.cookies.has(\"JSESSIONID\");",
+									"      pm.expect(pm.cookies.has(\"JWT\")).to.be.true;",
 									"  });",
 									"",
-									"if(pm.cookies.has(\"JSESSIONID\")){",
-									"    console.log(pm.cookies.get(\"JSESSIONID\"));",
-									"    pm.environment.set(\"JSESSIONID\", pm.cookies.get(\"JSESSIONID\"))",
+									"if(pm.cookies.has(\"JWT\")){",
+									"    console.log(pm.cookies.get(\"JWT\"));",
+									"    pm.environment.set(\"JWT\", pm.cookies.get(\"JWT\"))",
 									"}",
 									"",
 									" pm.test(\"XSRF-TOKEN cookie is present\", function () {",
@@ -41,16 +42,9 @@
 									"",
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"cltype is Administrator or Professional or Individual ==> \"+jsonData.cltype] = jsonData.cltype === (\"Administrator\" || \"Professional\" || \"Individual\");",
-									"",
-									"",
-									"/*if(postman.getResponseHeader(\"Set-Cookie\")){",
-									"    tests[\"Set-Cookie is present\"] = postman.getResponseHeader(\"Set-Cookie\");",
-									"    ",
-									"    postman.setEnvironmentVariable(\"XSRF-TOKEN\",postman.getResponseHeader(\"Set-Cookie\").split(\";\")[0].split(\"=\")[1]);",
-									"    console.log(postman.getEnvironmentVariable(\"XSRF-TOKEN\"));",
-									"}*/",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -135,12 +129,19 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "4b2f35fd-8a76-47a9-bb98-b6ea89eebed4",
 								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;",
-									"tests[\"Total count lenght is 100\"] = responseBody.length === 100;",
+									"pm.test(\"Status code is 200\", function(){",
+									"    pm.response.to.be.ok;",
+									"});",
+									"",
+									"pm.test(\"Password size is 100\", function(){",
+									"    pm.expect(pm.response.text().length).to.equal(100);",
+									"});",
+									"",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -176,18 +177,63 @@
 					"response": []
 				},
 				{
+					"name": "hashpwd",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4b2f35fd-8a76-47a9-bb98-b6ea89eebed4",
+								"exec": [
+									"pm.test(\"Status code is 200\", function(){",
+									"    pm.response.to.be.ok;",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/Authentication/hash/easy_password",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Authentication",
+								"hash",
+								"easy_password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "newPassword",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "50d169f5-04d1-46e9-b0ee-20408932469f",
 								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;",
-									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"encrypted password is the right one\"] = jsonData.password === \"eVgyxb4vqO/zASQ7SkHckVGO7km4zUXxgevZwRdXzlM=\";",
+									"pm.test(\"Status code is 200\", function(){",
+									"    pm.response.to.be.ok;",
+									"});",
+									"",
+									"pm.test(\"A new hashed password is saved\", function(){",
+									"   pm.expect(pm.response.json().password !== undefined).to.be.true;",
+									"});",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -226,13 +272,14 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "62bc81ff-9134-4a86-8796-f658b3278233",
 								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;",
-									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"encrypted password is the right one\"] = jsonData.password === \"mZWR4R0bp5EPs9xfOwUPu3n/06LOL+wHK6BuUBsHgQM=\";",
+									"pm.test(\"Status code is 200\", function(){",
+									"    pm.response.to.be.ok;",
+									"});",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -14252,10 +14299,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"type": "text/javascript",
+						"id": "101d7241-45c6-488d-b76e-3f7f9d20c718",
 						"exec": [
-							"tests[\"Status code is 200\"] = responseCode.code === 200;"
-						]
+							"pm.test(\"Status code is 200\",function(){",
+							"    pm.response.to.be.ok;",
+							"})"
+						],
+						"type": "text/javascript"
 					}
 				}
 			],

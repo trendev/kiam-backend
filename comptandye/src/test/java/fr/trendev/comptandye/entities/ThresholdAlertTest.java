@@ -5,9 +5,11 @@
  */
 package fr.trendev.comptandye.entities;
 
-import fr.trendev.comptandye.utils.NotificationLevelEnum;
-import fr.trendev.comptandye.utils.NotificationType;
-import fr.trendev.comptandye.utils.ThresholdAlertQualifierEnum;
+import fr.trendev.comptandye.notification.entities.NotificationLevelEnum;
+import fr.trendev.comptandye.notification.entities.NotificationType;
+import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.comptandye.thresholdalert.entities.ThresholdAlert;
+import fr.trendev.comptandye.thresholdalert.entities.ThresholdAlertQualifierEnum;
 import org.junit.Test;
 
 /**

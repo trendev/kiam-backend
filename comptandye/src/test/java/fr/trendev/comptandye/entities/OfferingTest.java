@@ -5,6 +5,8 @@
  */
 package fr.trendev.comptandye.entities;
 
+import fr.trendev.comptandye.offering.entities.Offering;
+import fr.trendev.comptandye.professional.entities.Professional;
 import org.junit.Test;
 
 /**

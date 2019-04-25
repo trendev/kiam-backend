@@ -5,7 +5,11 @@
  */
 package fr.trendev.comptandye.entities;
 
-import fr.trendev.comptandye.utils.OfferingType;
+import fr.trendev.comptandye.business.entities.Business;
+import fr.trendev.comptandye.offering.entities.OfferingType;
+import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.comptandye.purchasedoffering.entities.OfferingSnapshot;
+import fr.trendev.comptandye.service.entities.Service;
 import org.junit.Test;
 
 /**

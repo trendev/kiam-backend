@@ -5,10 +5,10 @@
  */
 package fr.trendev.comptandye.entities;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import fr.trendev.comptandye.address.entities.Address;
+import fr.trendev.comptandye.customerdetails.entities.CustomerDetails;
+import fr.trendev.comptandye.socialnetworkaccounts.entities.SocialNetworkAccounts;
+import fr.trendev.comptandye.useraccount.entities.Customer;
 import org.junit.Test;
 
 /**
@@ -18,22 +18,6 @@ import org.junit.Test;
 public class CustomerTest {
 
     public CustomerTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
     }
 
     /**
