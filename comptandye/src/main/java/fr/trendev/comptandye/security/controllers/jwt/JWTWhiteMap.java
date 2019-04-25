@@ -53,7 +53,7 @@ public class JWTWhiteMap implements Serializable {
     JWTWhiteMapDTO dto;
 
     @Inject
-    AuthenticationEventController aec;
+    private AuthenticationEventController aec;
 
     public JWTWhiteMap() {
     }
@@ -140,7 +140,7 @@ public class JWTWhiteMap implements Serializable {
      * Cleans the map removing expired tokens and entries
      */
     @Schedules({
-        @Schedule(second = "*/10", minute = "*", hour = "*", persistent = false)
+        @Schedule(second = "*/10", minute = "*", hour = "*")
     })
     public void cleanUp() {
 

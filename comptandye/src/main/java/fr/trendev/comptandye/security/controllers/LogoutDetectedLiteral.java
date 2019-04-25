@@ -5,15 +5,12 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
-import java.io.Serializable;
+import javax.enterprise.util.AnnotationLiteral;
 
 /**
  *
  * @author jsie
  */
-public interface AuthenticationEventController extends Serializable {
-
-    public void login(String email);
-
-    public void logout(String email);
+public class LogoutDetectedLiteral extends AnnotationLiteral<LogoutDetected>
+        implements LogoutDetected {
 }
