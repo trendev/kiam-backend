@@ -26,18 +26,18 @@ public class SlackAuthenticationEventController implements
             SlackAuthenticationEventController.class.getName());
 
     public SlackAuthenticationEventController() {
-        LOG.log(Level.SEVERE, "Constructing {0}",
+        LOG.log(Level.SEVERE, "######## Constructing {0} ########",
                 SlackAuthenticationEventController.class.getName());
     }
 
     private BeanManager getBeanManager() {
-        LOG.severe("Getting a Bean Manager");
+        LOG.severe("######## Getting a Bean Manager ########");
         return CDI.current().getBeanManager();
     }
 
     @Override
     public void login(String email) {
-        LOG.severe("#### login detected ####");
+        LOG.severe("######## login detected ########");
         this.getBeanManager()
                 .getEvent()
                 .select(new LoginDetectedLiteral())
@@ -46,7 +46,7 @@ public class SlackAuthenticationEventController implements
 
     @Override
     public void logout(String email) {
-        LOG.severe("#### logout detected ####");
+        LOG.severe("######## logout detected ########");
 //        logoutEvent.fire(this.buildText(email, "EXITED"));
     }
 
