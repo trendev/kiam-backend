@@ -9,6 +9,7 @@ import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.CDI;
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 
 /**
  * Controls the logins/logout directly in the active session tracker.
@@ -42,12 +43,18 @@ public class SlackAuthenticationEventController implements
     }
 
     private JsonObject buildText(String email, String status) {
-        return Json.createObjectBuilder()
+        JsonObjectBuilder builder = Json.createObjectBuilder()
                 .add("text",
                         "User `"
-                        + email + "` : *" + status + "*")
-                //                .add("text", "*" + status + "*")
-                .build();
+                        + email + "` : *" + status + "*");
+
+        if ("CONNECTED".equals(status)) {
+            builder.add("color", "#36a64f");
+        } else {
+            builder.add("color", "#fbb040");
+        }
+
+        return builder.build();
     }
 
 }
