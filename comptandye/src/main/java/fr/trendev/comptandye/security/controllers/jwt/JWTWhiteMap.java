@@ -9,7 +9,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fish.payara.cluster.Clustered;
 import fish.payara.cluster.DistributedLockType;
-import fr.trendev.comptandye.security.controllers.AuthenticationEventController;
 import fr.trendev.comptandye.security.controllers.jwt.dto.JWTWhiteMapDTO;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import fr.trendev.comptandye.security.entities.JWTWhiteMapEntry;
@@ -52,9 +51,8 @@ public class JWTWhiteMap implements Serializable {
     @Inject
     JWTWhiteMapDTO dto;
 
-    @Inject
-    AuthenticationEventController aec;
-
+//    @Inject
+//    AuthenticationEventController aec;
     public JWTWhiteMap() {
     }
 
@@ -172,7 +170,7 @@ public class JWTWhiteMap implements Serializable {
                             "All JWT Record of user [{0}] cleaned : no more entry in the JWT White Map (LOG-OUT)",
                             new Object[]{email});
                     dto.delete(email);
-                    this.aec.logout(email); // emits a LOG-OUT event
+//                    this.aec.logout(email); // emits a LOG-OUT event
                 } else { // there is still some valid JWT in the records
                     dto.update(new JWTWhiteMapEntry(e));
                 }
@@ -214,7 +212,7 @@ public class JWTWhiteMap implements Serializable {
                         JWTManager.trunkToken(record.getToken()),
                         email
                     });
-            this.aec.login(email); // emits LOG-IN event
+//            this.aec.login(email); // emits LOG-IN event
         } else {
 
             this.dto.update(new JWTWhiteMapEntry(email, records));
@@ -258,7 +256,7 @@ public class JWTWhiteMap implements Serializable {
                     "All JWT Records of user [{0}] have been removed : no more entry in the JWT White Map (LOG-OUT)",
                     new Object[]{email});
             this.dto.delete(email);
-            this.aec.logout(email); // emits a LOG-OUT event
+//            this.aec.logout(email); // emits a LOG-OUT event
         }
         return records;
     }
@@ -303,7 +301,7 @@ public class JWTWhiteMap implements Serializable {
                 LOG.log(Level.INFO,
                         "Last JWT Record of user [{0}] removed : no more entry in the JWT White Map (LOG-OUT)",
                         new Object[]{email});
-                this.aec.logout(email); // emits a LOG-OUT event
+//                this.aec.logout(email); // emits a LOG-OUT event
 
             } else { // save the updated record collection
                 this.dto.update(new JWTWhiteMapEntry(email, records));

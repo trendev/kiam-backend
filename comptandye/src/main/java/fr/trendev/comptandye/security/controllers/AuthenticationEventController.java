@@ -5,11 +5,10 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
-import java.io.Serializable;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
-import javax.enterprise.event.Event;
-import javax.inject.Inject;
+import java.util.logging.Logger;
+import javax.ejb.Stateless;
+import javax.enterprise.inject.spi.BeanManager;
+import javax.enterprise.inject.spi.CDI;
 import javax.json.Json;
 import javax.json.JsonObject;
 
@@ -18,24 +17,33 @@ import javax.json.JsonObject;
  *
  * @author jsie
  */
-@Singleton
-@Startup
-public class AuthenticationEventController implements Serializable {
+@Stateless
+public class AuthenticationEventController {
 
-    @Inject
-    @LoginDetected
-    private Event<JsonObject> loginEvent;
+    private static final Logger LOG = Logger.getLogger(
+            AuthenticationEventController.class.getName());
 
-    @Inject
-    @LogoutDetected
-    private Event<JsonObject> logoutEvent;
+//    @Inject
+//    @LoginDetected
+//    private Event<JsonObject> loginEvent;
+//    @Inject
+//    @LogoutDetected
+//    private Event<JsonObject> logoutEvent;
+    private BeanManager getBeanManager() {
+        LOG.severe("Getting a Bean Manager");
+        return CDI.current().getBeanManager();
+    }
 
     public void login(String email) {
-        loginEvent.fire(this.buildText(email, "CONNECTED"));
+        LOG.severe("#### login detected ####");
+        this.getBeanManager()
+                .getEvent()
+                .select(JsonObject.class, new LoginDetectedLiteral())
+                .fireAsync(this.buildText(email, "CONNECTED"));
     }
 
     public void logout(String email) {
-        logoutEvent.fire(this.buildText(email, "EXITED"));
+//        logoutEvent.fire(this.buildText(email, "EXITED"));
     }
 
     private JsonObject buildText(String email, String status) {
