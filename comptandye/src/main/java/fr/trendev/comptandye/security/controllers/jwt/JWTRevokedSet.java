@@ -93,7 +93,7 @@ public class JWTRevokedSet implements Serializable {
     }
 
     @Schedules({
-        @Schedule(second = "*/5", minute = "*", hour = "*", persistent = false)
+        @Schedule(second = "*/5", minute = "*", hour = "*")
     })
     public void cleanUp() {
         SET.removeIf(r -> {
