@@ -25,6 +25,14 @@ public class FirestoreJWTDTOHelper {
 
     private static AuthenticationEventController AEC = new SlackAuthenticationEventController();
 
+    /**
+     * Creates an URI from the property of a local property file. The property
+     * file should be managed by environments.
+     *
+     * @param LOG the logger of method caller
+     * @param prop the property to get from the property file
+     * @return the build URI
+     */
     static URI loadUri(Logger LOG, String prop) {
 
         ClassLoader classloader = Thread.currentThread().
@@ -51,6 +59,15 @@ public class FirestoreJWTDTOHelper {
         }
     }
 
+    /**
+     * Programmatically builds an instance of a MicroProfile Rest Client.
+     *
+     * @param <T> the type of the microprofile rest client
+     * @param apiUri the URI of the remote service
+     * @param proxyClass the class of the microprofile rest client
+     * @param LOG the logger
+     * @return an instance of the microprofile rest client
+     */
     static <T> T buildProxy(URI apiUri, Class<T> proxyClass, Logger LOG) {
         T proxy = RestClientBuilder.newBuilder()
                 .baseUri(apiUri)
@@ -62,6 +79,16 @@ public class FirestoreJWTDTOHelper {
         return proxy;
     }
 
+    /**
+     * Logs the Exception and sends in Slack
+     *
+     * @param <T> the type of the returned object
+     * @param ex the exception to log
+     * @param message the error message
+     * @param t the object to return, can be null
+     * @param LOG the logger of the method caller
+     * @return a default response if an error occurs
+     */
     static <T> T errorHandler(Throwable ex,
             String message,
             T t,
@@ -71,6 +98,18 @@ public class FirestoreJWTDTOHelper {
         return t;
     }
 
+    /**
+     * Manages silent operations of the rest client implementation.
+     *
+     * @param <P> the type of the microprofile rest client
+     * @param <T> the type of the response
+     * @param proxy the microprofile rest client, used a classic proxy
+     * @param successMsg the success message
+     * @param errMsg the error message
+     * @param fn the method to call on the microprofile rest client
+     * @param t the response object
+     * @param LOG the logger
+     */
     static final <P, T> void manageSilentOperations(
             P proxy,
             String successMsg,
