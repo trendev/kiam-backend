@@ -1,3 +1,19 @@
+###############
+# Build the war
+###############
+FROM maven:3.6 as maven
+
+COPY ./pom.xml ./pom.xml
+
+RUN mvn dependency:go-offline -B
+
+COPY ./src ./src
+
+RUN mvn install -Pprod
+
+#########################################
+# Configure the server and deploy the war
+#########################################
 FROM payara/server-full:5.184
 
 MAINTAINER TRENDev trendevfr@gmail.com
@@ -49,4 +65,4 @@ RUN chmod +x /opt/tuning-script.sh
 USER payara
 
 # Autodeploy the project
-COPY ./target/$COMPTANDYE.war $DEPLOY_DIR/$COMPTANDYE.war
+COPY --from=maven ./target/*.war $DEPLOY_DIR/
