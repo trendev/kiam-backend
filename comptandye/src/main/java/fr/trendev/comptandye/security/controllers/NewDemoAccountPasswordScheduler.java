@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.security.controllers.qualifiers;
+package fr.trendev.comptandye.security.controllers;
 
 import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
-import fr.trendev.comptandye.security.controllers.PasswordManager;
+import fr.trendev.comptandye.security.controllers.qualifiers.NewDemoAccountPassword;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
