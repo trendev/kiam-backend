@@ -5,6 +5,8 @@
  */
 package fr.trendev.comptandye.security.controllers.jwt.dto.firestore;
 
+import fr.trendev.comptandye.security.controllers.AuthenticationEventController;
+import fr.trendev.comptandye.security.controllers.SlackAuthenticationEventController;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -20,6 +22,8 @@ import org.eclipse.microprofile.rest.client.RestClientBuilder;
  * @author jsie
  */
 public class FirestoreJWTDTOHelper {
+
+    private static AuthenticationEventController AEC = new SlackAuthenticationEventController();
 
     static URI loadUri(Logger LOG, String prop) {
 
@@ -62,8 +66,8 @@ public class FirestoreJWTDTOHelper {
             String message,
             T t,
             Logger LOG) {
-        LOG.log(Level.INFO, message, ex);
-        LOG.log(Level.WARNING, message);
+        LOG.log(Level.WARNING, message, ex);
+        AEC.postFirestoreIssue(message, ex.getMessage());
         return t;
     }
 
