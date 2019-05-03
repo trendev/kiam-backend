@@ -9,7 +9,7 @@ ENV AS_ADMIN $PAYARA_DIR/bin/asadmin
 ENV DOMAIN production
 ENV ADMIN_USER admin
 ENV ADMIN_PASSWORD admin
-#ENV NEW_ADMIN_PASSWORD qsec0fr
+ENV NEW_ADMIN_PASSWORD qsec0fr
 ENV JCONNECTOR_VERSION 5.1.47
 ENV MEMORY_SIZE 4096
 
@@ -18,19 +18,19 @@ ENV MEMORY_SIZE 4096
 COPY mysql-connector-java-$JCONNECTOR_VERSION.jar $PAYARA_DIR/glassfish/domains/$DOMAIN/lib
 
 # Reset the admin password
-#RUN echo 'AS_ADMIN_PASSWORD='$ADMIN_PASSWORD'\n\
-#AS_ADMIN_NEWPASSWORD='$NEW_ADMIN_PASSWORD'\n\
-#EOF\n'\
-#> ${PASSWORD_FILE}
+RUN echo 'AS_ADMIN_PASSWORD='$ADMIN_PASSWORD'\n\
+AS_ADMIN_NEWPASSWORD='$NEW_ADMIN_PASSWORD'\n\
+EOF\n'\
+> /tmp/tmpfile
 
-#RUN echo 'AS_ADMIN_PASSWORD='$NEW_ADMIN_PASSWORD'\n\
-#EOF\n'\
-#> ${PASSWORD_FILE}
+RUN echo 'AS_ADMIN_PASSWORD='$NEW_ADMIN_PASSWORD'\n\
+EOF\n'\
+> ${PASSWORD_FILE}
 
 RUN $AS_ADMIN start-domain $DOMAIN && \
-#$AS_ADMIN --user $ADMIN_USER --passwordfile=/opt/tmpfile change-admin-password && \
-#$AS_ADMIN --user $ADMIN_USER --passwordfile=${PASSWORD_FILE} enable-secure-admin && \
-#$AS_ADMIN restart-domain $DOMAIN && \
+$AS_ADMIN --user $ADMIN_USER --passwordfile=/tmp/tmpfile change-admin-password && \
+$AS_ADMIN --user $ADMIN_USER --passwordfile=${PASSWORD_FILE} enable-secure-admin && \
+$AS_ADMIN restart-domain $DOMAIN && \
 $AS_ADMIN create-javamail-resource --passwordfile=${PASSWORD_FILE} --mailhost smtp\.gmail\.com --mailuser comptandye\@gmail\.com --fromaddress comptandye\@gmail\.com --debug=true --enabled=true --property="mail-password=ptNIDIFKMX4MACaJCwpo:mail-auth=true:mail.smtp.user=comptandye@gmail.com:mail.smtp.password=ptNIDIFKMX4MACaJCwpo:mail.smtp.auth=true:mail.smtp.port=465:mail.smtp.socketFactory.port=465:mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory" java/mail/comptandye && \
 $AS_ADMIN create-jdbc-connection-pool --passwordfile=${PASSWORD_FILE} --allownoncomponentcallers=false --associatewiththread=false --creationretryattempts=0 --creationretryinterval=10 --leakreclaim=false --leaktimeout=0 --validationmethod=auto-commit --datasourceclassname=com.mysql.jdbc.jdbc2.optional.MysqlDataSource --failconnection=false --idletimeout=300 --isconnectvalidatereq=false --isisolationguaranteed=false --lazyconnectionassociation=false --lazyconnectionenlistment=false --matchconnections=false --maxconnectionusagecount=0 --maxpoolsize=100 --maxwait=0 --nontransactionalconnections=false --poolresize=20 --restype=javax.sql.DataSource --statementtimeout=-1 --steadypoolsize=20 --validateatmostonceperiod=0 --wrapjdbcobjects=true --property serverName=db-mysql:portNumber=3306:databaseName=comptandye_master:User=admin_comptandye_20170328:Password=SfBuVPRw0S:URL=jdbc\\:mysql\\://db-mysql\\:3306/comptandye_master?zeroDateTimeBehavior\\=convertToNull\&useSSL\\=false:driverClass=com.mysql.jdbc.Driver mysql_comptandye_master_admin_comptandye_20170328Pool && \
 $AS_ADMIN create-jdbc-resource --passwordfile=${PASSWORD_FILE} --enabled=true --connectionpoolid=mysql_comptandye_master_admin_comptandye_20170328Pool jdbc/MySQLDataSourceComptaNdye && \
@@ -42,6 +42,7 @@ $AS_ADMIN create-jvm-options --passwordfile=${PASSWORD_FILE} -server:-Xmx${MEMOR
 $AS_ADMIN restart-domain $DOMAIN
 
 # Copy the tuning script
+# TODO : copy this file in $CONFIG_DIR
 COPY ./tuning-script.sh /opt
 USER root
 RUN chmod +x /opt/tuning-script.sh
@@ -49,7 +50,3 @@ USER payara
 
 # Autodeploy the project
 COPY ./target/$COMPTANDYE.war $DEPLOY_DIR/$COMPTANDYE.war
-# RUN $AS_ADMIN restart-domain $DOMAIN
-
-# Start the server in verbose mode
-# ENTRYPOINT $AS_ADMIN start-domain -v $DOMAIN
