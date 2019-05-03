@@ -7,8 +7,9 @@ package fr.trendev.comptandye.slack;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.trendev.comptandye.security.controllers.LoginDetected;
-import fr.trendev.comptandye.security.controllers.LogoutDetected;
+import fr.trendev.comptandye.security.controllers.qualifiers.LoginDetected;
+import fr.trendev.comptandye.security.controllers.qualifiers.LogoutDetected;
+import fr.trendev.comptandye.security.controllers.qualifiers.NewDemoAccountPassword;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -23,7 +24,6 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import fr.trendev.comptandye.security.controllers.NewDemoAccountPassword;
 
 /**
  *
@@ -34,6 +34,7 @@ public class SlackController {
 
     private final String SLACK_URL;
     private final String AUTHENTICATION_CHANNEL;
+    private final String FIRESTORE_CHANNEL;
     private final String LOGINS_CHANNEL;
     private final String TOKEN;
 
@@ -48,6 +49,7 @@ public class SlackController {
         this.SLACK_URL = "https://slack.com/api/chat.postMessage";
         this.AUTHENTICATION_CHANNEL = "GB1R67HL2"; // slack channel: "authentication"
         this.LOGINS_CHANNEL = "GC0K0E00P"; // slack channel : "logins"
+        this.FIRESTORE_CHANNEL = "GF6D78C6A"; // slack channel : "firestore"
         this.TOKEN = "xoxa-320251608305-395708530182-394370785636-d227cf997e97f4d4b650e4ed31d48434";
         this.client = ClientBuilder.newClient();
     }

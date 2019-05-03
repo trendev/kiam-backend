@@ -5,6 +5,8 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
+import fr.trendev.comptandye.security.controllers.qualifiers.LoginDetectedLiteral;
+import fr.trendev.comptandye.security.controllers.qualifiers.LogoutDetectedLiteral;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.CDI;
 import javax.json.Json;
@@ -38,7 +40,7 @@ public class SlackAuthenticationEventController implements
     public void logout(String email) {
         this.getBeanManager()
                 .getEvent()
-                .select(new LoginDetectedLiteral())
+                .select(new LogoutDetectedLiteral())
                 .fire(this.buildText(email, "EXITED"));
     }
 
