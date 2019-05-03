@@ -7,6 +7,7 @@ package fr.trendev.comptandye.slack;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.trendev.comptandye.security.controllers.qualifiers.FirestoreIssue;
 import fr.trendev.comptandye.security.controllers.qualifiers.LoginDetected;
 import fr.trendev.comptandye.security.controllers.qualifiers.LogoutDetected;
 import fr.trendev.comptandye.security.controllers.qualifiers.NewDemoAccountPassword;
@@ -77,6 +78,11 @@ public class SlackController {
 
     public void observeLogouts(@Observes @LogoutDetected JsonObject object) {
         this.controlPostMessage(object, LOGINS_CHANNEL);
+    }
+
+    public void observeFirestoreIssues(
+            @Observes @FirestoreIssue JsonObject object) {
+        this.controlPostMessage(object, FIRESTORE_CHANNEL);
     }
 
     private void controlPostMessage(JsonObject object, final String channel) {
