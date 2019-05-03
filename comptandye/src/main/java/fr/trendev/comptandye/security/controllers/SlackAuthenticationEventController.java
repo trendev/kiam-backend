@@ -8,6 +8,7 @@ package fr.trendev.comptandye.security.controllers;
 import fr.trendev.comptandye.security.controllers.qualifiers.FirestoreIssueLiteral;
 import fr.trendev.comptandye.security.controllers.qualifiers.LoginDetectedLiteral;
 import fr.trendev.comptandye.security.controllers.qualifiers.LogoutDetectedLiteral;
+import java.util.concurrent.CompletableFuture;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.CDI;
 import javax.json.Json;
@@ -31,18 +32,18 @@ public class SlackAuthenticationEventController implements
 
     @Override
     public void login(String email) {
-        this.getBeanManager()
+        CompletableFuture.runAsync(() -> this.getBeanManager()
                 .getEvent()
                 .select(new LoginDetectedLiteral())
-                .fire(this.buildText(email, "CONNECTED"));
+                .fire(this.buildText(email, "CONNECTED")));
     }
 
     @Override
     public void logout(String email) {
-        this.getBeanManager()
+        CompletableFuture.runAsync(() -> this.getBeanManager()
                 .getEvent()
                 .select(new LogoutDetectedLiteral())
-                .fire(this.buildText(email, "EXITED"));
+                .fire(this.buildText(email, "EXITED")));
     }
 
     private JsonObject buildText(String email, String status) {
@@ -62,16 +63,17 @@ public class SlackAuthenticationEventController implements
 
     @Override
     public void postFirestoreIssue(String message, String details) {
+        CompletableFuture.runAsync(() -> {
+            JsonObjectBuilder builder = Json.createObjectBuilder()
+                    .add("text", message)
+                    .add("footer", details)
+                    .add("color", "#B33A3A");
 
-        JsonObjectBuilder builder = Json.createObjectBuilder()
-                .add("text", message)
-                .add("footer", details)
-                .add("color", "#B33A3A");
-
-        this.getBeanManager()
-                .getEvent()
-                .select(new FirestoreIssueLiteral())
-                .fire(builder.build());
+            this.getBeanManager()
+                    .getEvent()
+                    .select(new FirestoreIssueLiteral())
+                    .fire(builder.build());
+        });
     }
 
 }
