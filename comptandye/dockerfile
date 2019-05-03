@@ -54,7 +54,7 @@ $AS_ADMIN create-auth-realm --passwordfile=${PASSWORD_FILE} --classname com.sun.
 $AS_ADMIN set configs.config.server-config.security-service.activate-default-principal-to-role-mapping=true --passwordfile=${PASSWORD_FILE} && \
 $AS_ADMIN set configs.config.server-config.admin-service.das-config.dynamic-reload-enabled=false --passwordfile=${PASSWORD_FILE} && \
 $AS_ADMIN delete-jvm-options --passwordfile=${PASSWORD_FILE} -client:-Xmx512m && \
-$AS_ADMIN create-jvm-options --passwordfile=${PASSWORD_FILE} -server:-Xmx${MEMORY_SIZE}m:-Xms${MEMORY_SIZE}m:-Dfish.payara.classloading.delegate=false:-Duser.timezone=Europe/Paris  && \
+$AS_ADMIN create-jvm-options --passwordfile=${PASSWORD_FILE} -server:-Xmx${MEMORY_SIZE}m:-Xms${MEMORY_SIZE}m:-Dfish.payara.classloading.delegate=false:-Duser.timezone=Europe/Paris
 #$AS_ADMIN restart-domain $DOMAIN
 
 # Copy the tuning script
