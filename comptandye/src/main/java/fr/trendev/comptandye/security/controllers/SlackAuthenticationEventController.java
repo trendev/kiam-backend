@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
+import fr.trendev.comptandye.security.controllers.qualifiers.FirestoreIssueLiteral;
 import fr.trendev.comptandye.security.controllers.qualifiers.LoginDetectedLiteral;
 import fr.trendev.comptandye.security.controllers.qualifiers.LogoutDetectedLiteral;
 import javax.enterprise.inject.spi.BeanManager;
@@ -57,6 +58,20 @@ public class SlackAuthenticationEventController implements
         }
 
         return builder.build();
+    }
+
+    @Override
+    public void postFirestoreIssue(String message, String details) {
+
+        JsonObjectBuilder builder = Json.createObjectBuilder()
+                .add("text", message)
+                .add("footer", details)
+                .add("color", "#B33A3A");
+
+        this.getBeanManager()
+                .getEvent()
+                .select(new FirestoreIssueLiteral())
+                .fire(builder.build());
     }
 
 }

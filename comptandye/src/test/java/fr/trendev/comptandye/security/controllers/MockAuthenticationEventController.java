@@ -28,4 +28,12 @@ public class MockAuthenticationEventController implements
         LOG.log(Level.INFO, "Mocking LOG-OUT event for user {0}", email);
     }
 
+    @Override
+    public void postFirestoreIssue(String message, String details) {
+        LOG.log(Level.INFO,
+                "Mocking FIRESTORE-ISSUE event with message :\n{0} and details :\n{1}",
+                new Object[]{message,
+                    details});
+    }
+
 }

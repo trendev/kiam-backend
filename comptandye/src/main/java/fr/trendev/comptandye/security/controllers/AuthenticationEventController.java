@@ -16,4 +16,6 @@ public interface AuthenticationEventController extends Serializable {
     public void login(String email);
 
     public void logout(String email);
+
+    public void postFirestoreIssue(String message, String details);
 }
