@@ -58,10 +58,9 @@ $AS_ADMIN create-jvm-options --passwordfile=${PASSWORD_FILE} -server:-Xmx${MEMOR
 #$AS_ADMIN restart-domain $DOMAIN
 
 # Copy the tuning script
-# TODO : copy this file in $CONFIG_DIR
-COPY ./tuning-script.sh /opt
 USER root
-RUN chmod +x /opt/tuning-script.sh
+COPY tuning-script.sh ${SCRIPT_DIR}
+RUN chmod +x ${SCRIPT_DIR}/tuning-script.sh
 USER payara
 
 # Autodeploy the project
