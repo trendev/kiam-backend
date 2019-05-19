@@ -37,7 +37,7 @@
                 <env>prod</env>
             </properties>
         </profile>
-<profile>
+        <profile>
             <id>preprod</id>
             <properties>
                 <maven.test.skip>true</maven.test.skip>
