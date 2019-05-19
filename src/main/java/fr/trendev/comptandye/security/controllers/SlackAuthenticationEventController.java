@@ -35,7 +35,7 @@ public class SlackAuthenticationEventController implements
         CompletableFuture.runAsync(() -> this.getBeanManager()
                 .getEvent()
                 .select(new LoginDetectedLiteral())
-                .fire(this.buildText(email, "CONNECTED")));
+                .fire(this.buildText(email, "LOGIN")));
     }
 
     @Override
@@ -43,7 +43,7 @@ public class SlackAuthenticationEventController implements
         CompletableFuture.runAsync(() -> this.getBeanManager()
                 .getEvent()
                 .select(new LogoutDetectedLiteral())
-                .fire(this.buildText(email, "EXITED")));
+                .fire(this.buildText(email, "LOGOUT")));
     }
 
     private JsonObject buildText(String email, String status) {
@@ -52,7 +52,7 @@ public class SlackAuthenticationEventController implements
                         "User `"
                         + email + "` : *" + status + "*");
 
-        if ("CONNECTED".equals(status)) {
+        if ("LOGIN".equals(status)) {
             builder.add("color", "#36a64f");
         } else {
             builder.add("color", "#fbb040");
