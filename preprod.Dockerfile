@@ -54,6 +54,7 @@ $AS_ADMIN delete-jvm-options --passwordfile=${PASSWORD_FILE} -client:-Xmx512m &&
 $AS_ADMIN create-jvm-options --passwordfile=${PASSWORD_FILE} -server:-Xmx${MEMORY_SIZE}m:-Xms${MEMORY_SIZE}m:-Dfish.payara.classloading.delegate=false:-Duser.timezone=Europe/Paris
 #$AS_ADMIN restart-domain $DOMAIN
 
+# TODO : improve tuning script with $POST_SCRIPT
 # Copy the tuning script
 USER root
 COPY tuning-script.sh ${SCRIPT_DIR}
