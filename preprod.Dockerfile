@@ -54,12 +54,27 @@ $AS_ADMIN delete-jvm-options --passwordfile=${PASSWORD_FILE} -client:-Xmx512m &&
 $AS_ADMIN create-jvm-options --passwordfile=${PASSWORD_FILE} -server:-Xmx${MEMORY_SIZE}m:-Xms${MEMORY_SIZE}m:-Dfish.payara.classloading.delegate=false:-Duser.timezone=Europe/Paris
 #$AS_ADMIN restart-domain $DOMAIN
 
-# TODO : improve tuning script with $POST_SCRIPT
+# Configure the EJB container
+RUN echo 'set configs.config.server-config.ejb-container.pool-resize-quantity=20' >> $POSTBOOT_COMMANDS
+RUN echo 'set configs.config.server-config.ejb-container.max-pool-size=250' >> $POSTBOOT_COMMANDS
+RUN echo 'set configs.config.server-config.ejb-container.steady-pool-size=50' >> $POSTBOOT_COMMANDS
+
+# Configure the HTTP listeners
+RUN echo 'set configs.config.server-config.network-config.network-listeners.network-listener.http-listener-1.jk-enabled=true' >> $POSTBOOT_COMMANDS
+RUN echo 'set configs.config.server-config.network-config.network-listeners.network-listener.http-listener-2.enabled=false' >> $POSTBOOT_COMMANDS
+RUN echo 'set configs.config.server-config.network-config.protocols.protocol.http-listener-1.http.max-connections=500' >> $POSTBOOT_COMMANDS
+RUN echo 'set configs.config.server-config.network-config.protocols.protocol.http-listener-1.http.timeout-seconds=60' >> $POSTBOOT_COMMANDS
+RUN echo 'set configs.config.server-config.network-config.protocols.protocol.http-listener-1.http.file-cache.enabled=true' >> $POSTBOOT_COMMANDS
+RUN echo 'set configs.config.server-config.network-config.protocols.protocol.http-listener-1.http.file-cache.max-age-seconds=36000' >> $POSTBOOT_COMMANDS
+RUN echo 'set configs.config.server-config.network-config.transports.transport.tcp.acceptor-threads=4' >> $POSTBOOT_COMMANDS
+RUN echo 'set configs.config.server-config.thread-pools.thread-pool.http-thread-pool.max-thread-pool-size=350' >> $POSTBOOT_COMMANDS
+RUN echo 'set configs.config.server-config.thread-pools.thread-pool.http-thread-pool.min-thread-pool-size=25' >> $POSTBOOT_COMMANDS
+
 # Copy the tuning script
-USER root
-COPY tuning-script.sh ${SCRIPT_DIR}
-RUN chmod +x ${SCRIPT_DIR}/tuning-script.sh
-USER payara
+#USER root
+#COPY tuning-script.sh ${SCRIPT_DIR}
+#RUN chmod +x ${SCRIPT_DIR}/tuning-script.sh
+#USER payara
 
 # Autodeploy the project
 COPY --from=maven ./target/*.war $DEPLOY_DIR/
