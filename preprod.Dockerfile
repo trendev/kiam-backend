@@ -70,11 +70,5 @@ RUN echo 'set configs.config.server-config.network-config.transports.transport.t
 RUN echo 'set configs.config.server-config.thread-pools.thread-pool.http-thread-pool.max-thread-pool-size=350' >> $POSTBOOT_COMMANDS
 RUN echo 'set configs.config.server-config.thread-pools.thread-pool.http-thread-pool.min-thread-pool-size=25' >> $POSTBOOT_COMMANDS
 
-# Copy the tuning script
-#USER root
-#COPY tuning-script.sh ${SCRIPT_DIR}
-#RUN chmod +x ${SCRIPT_DIR}/tuning-script.sh
-#USER payara
-
 # Autodeploy the project
 COPY --from=maven ./target/*.war $DEPLOY_DIR/
