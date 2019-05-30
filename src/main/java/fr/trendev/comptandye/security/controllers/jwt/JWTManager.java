@@ -47,6 +47,7 @@ public class JWTManager {
     public final static TemporalUnit SHORT_TERM_VALIDITY_UNIT = ChronoUnit.MINUTES;
     public final static int LONG_TERM_VALIDITY = 60;
     public final static TemporalUnit LONG_TERM_VALIDITY_UNIT = ChronoUnit.DAYS;
+    public final static int SLOT = 8;
 
     public final static String ISS = "https://www.comptandye.fr";
 
@@ -134,7 +135,8 @@ public class JWTManager {
 
         return this.generateToken(caller,
                 currentTime,
-                currentTime.plus(rmbme ? LONG_TERM_VALIDITY : SHORT_TERM_VALIDITY,
+                currentTime.plus(
+                        rmbme ? LONG_TERM_VALIDITY : SHORT_TERM_VALIDITY,
                         rmbme ? LONG_TERM_VALIDITY_UNIT : SHORT_TERM_VALIDITY_UNIT),
                 this.createClaimsSetBuilder(
                         caller,
@@ -235,6 +237,12 @@ public class JWTManager {
         return now.isAfter(exp);
     }
 
+    /**
+     * Checks in the revoked set if a JWT is revoked
+     *
+     * @param token the token to control
+     * @return true if the token has been revoked, false otherwise
+     */
     public boolean isRevoked(final String token) {
         if (token == null || token.isEmpty()) {
             throw new IllegalArgumentException(
@@ -243,17 +251,32 @@ public class JWTManager {
         return this.jwtRevokedSet.contains(token);
     }
 
-    // TODO : refresh should be performed 10 seconds before expiration
+    /**
+     * Checks if a token can be refreshed
+     *
+     * @param claims the claims associated to the token (JWT)
+     * @return true if the token can be refreshed, false otherwise
+     */
     public boolean canBeRefreshed(final JWTClaimsSet claims) {
         Instant now = Instant.now();
-        Instant issueTime = claims.getIssueTime().toInstant();
-        Instant expirationTime = claims.getExpirationTime().toInstant();
+        Instant iat = claims.getIssueTime().toInstant();
+        Instant exp = claims.getExpirationTime().toInstant();
+        Instant refreshZone = this.refreshZone(iat, exp);
 
-        return now.isAfter(
-                issueTime.plusMillis(
-                        (expirationTime.toEpochMilli()
-                        - issueTime.toEpochMilli()) / 2
-                ));
+        return now.equals(refreshZone) || now.isAfter(refreshZone);
+    }
+
+    /**
+     * Computes the refresh zone between the issue time and the expiration time.
+     * The difference between the issue time and the expiration time is split
+     * into slots and the refresh zone matches the last slot.
+     *
+     * @param iat the issue time
+     * @param exp the expiration time
+     * @return the Instant when the refresh zone starts
+     */
+    public Instant refreshZone(Instant iat, Instant exp) {
+        return exp.minusMillis((exp.toEpochMilli() - iat.toEpochMilli()) / SLOT);
     }
 
     public Optional<JWTRecord> revokeToken(final String email,

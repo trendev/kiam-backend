@@ -243,34 +243,27 @@ public class JWTManagerTest {
 
     }
 
-    //TODO : update this test as well
     @Test
     public void testCanBeRefreshed() {
         JWTClaimsSet.Builder claimSetBuilder = new JWTClaimsSet.Builder();
         Instant now = Instant.now();
 
-        Instant issueTime = now;
-        Instant expirationTime = now.plus(5,
-                SHORT_TERM_VALIDITY_UNIT);
+        // controls a fresh new token cannot be refreshed
+        Instant iat = now;
+        Instant exp = now.plus(SHORT_TERM_VALIDITY, SHORT_TERM_VALIDITY_UNIT);
 
-        claimSetBuilder.issueTime(Date.from(issueTime));
-        claimSetBuilder.expirationTime(Date.from(expirationTime));
+        claimSetBuilder.issueTime(Date.from(iat));
+        claimSetBuilder.expirationTime(Date.from(exp));
         Assertions.assertFalse(jwtManager.
                 canBeRefreshed(claimSetBuilder.build()));
 
-        issueTime = now.minus(2, SHORT_TERM_VALIDITY_UNIT);
-        expirationTime = issueTime.plus(6, SHORT_TERM_VALIDITY_UNIT);
+        // controls a token in the refresh zone can be refreshed
+        Instant refreshzone = this.jwtManager.refreshZone(iat, exp);
+        exp = now.plusMillis(exp.toEpochMilli() - refreshzone.toEpochMilli());
+        iat = exp.minus(SHORT_TERM_VALIDITY, SHORT_TERM_VALIDITY_UNIT);
 
-        claimSetBuilder.issueTime(Date.from(issueTime));
-        claimSetBuilder.expirationTime(Date.from(expirationTime));
-        Assertions.assertFalse(jwtManager.
-                canBeRefreshed(claimSetBuilder.build()));
-
-        issueTime = now.minus(4, SHORT_TERM_VALIDITY_UNIT);
-        expirationTime = issueTime.plus(6, SHORT_TERM_VALIDITY_UNIT);
-
-        claimSetBuilder.issueTime(Date.from(issueTime));
-        claimSetBuilder.expirationTime(Date.from(expirationTime));
+        claimSetBuilder.issueTime(Date.from(iat));
+        claimSetBuilder.expirationTime(Date.from(exp));
         Assertions.assertTrue(jwtManager.
                 canBeRefreshed(claimSetBuilder.build()));
 
