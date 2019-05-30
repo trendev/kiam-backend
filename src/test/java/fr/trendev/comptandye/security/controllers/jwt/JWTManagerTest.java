@@ -245,6 +245,7 @@ public class JWTManagerTest {
 
     }
 
+    //TODO : update this test as well
     @Test
     public void testCanBeRefreshed() {
         JWTClaimsSet.Builder claimSetBuilder = new JWTClaimsSet.Builder();

@@ -43,7 +43,7 @@ import javax.inject.Inject;
 @ApplicationScoped
 public class JWTManager {
 
-    public final static int SHORT_VALID_PERIOD = 30;
+    public final static int SHORT_VALID_PERIOD = 20;
     public final static TemporalUnit SHORT_VALID_PERIOD_UNIT = ChronoUnit.MINUTES;
     public final static int LONG_VALID_PERIOD = 60;
     public final static TemporalUnit LONG_VALID_PERIOD_UNIT = ChronoUnit.DAYS;
@@ -244,6 +244,7 @@ public class JWTManager {
         return this.jwtRevokedSet.contains(token);
     }
 
+    // TODO : refresh should be performed 10 seconds before expiration
     public boolean canBeRefreshed(final JWTClaimsSet claims) {
         Instant now = Instant.now();
         Instant issueTime = claims.getIssueTime().toInstant();
