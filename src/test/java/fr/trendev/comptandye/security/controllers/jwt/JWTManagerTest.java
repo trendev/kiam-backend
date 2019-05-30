@@ -16,6 +16,10 @@ import com.nimbusds.jwt.SignedJWT;
 import fr.trendev.comptandye.security.controllers.MockAuthenticationEventController;
 import fr.trendev.comptandye.security.controllers.RSAKeyProvider;
 import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.ISS;
+import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.LONG_TERM_VALIDITY;
+import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.LONG_TERM_VALIDITY_UNIT;
+import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_TERM_VALIDITY;
+import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_TERM_VALIDITY_UNIT;
 import fr.trendev.comptandye.security.controllers.jwt.dto.mock.MockJWTRevokedSetDTO;
 import fr.trendev.comptandye.security.controllers.jwt.dto.mock.MockJWTWhiteMapDTO;
 import fr.trendev.comptandye.security.entities.JWTRecord;
@@ -36,10 +40,6 @@ import org.jboss.weld.junit4.WeldInitiator;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_TERM_VALIDITY;
-import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_TERM_VALIDITY_UNIT;
-import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.LONG_TERM_VALIDITY;
-import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.LONG_TERM_VALIDITY_UNIT;
 
 /**
  *
@@ -117,9 +117,11 @@ public class JWTManagerTest {
             Instant exp = parsedJWT.getJWTClaimsSet().getExpirationTime().
                     toInstant();
             Assertions.assertTrue(iat.isBefore(now));
-            Assertions.assertTrue(iat.isAfter(now.minus(rmbme ? LONG_TERM_VALIDITY : SHORT_TERM_VALIDITY,
+            Assertions.assertTrue(iat.isAfter(now.minus(
+                    rmbme ? LONG_TERM_VALIDITY : SHORT_TERM_VALIDITY,
                     rmbme ? LONG_TERM_VALIDITY_UNIT : SHORT_TERM_VALIDITY_UNIT)));
-            Assertions.assertTrue(exp.equals(iat.plus(rmbme ? LONG_TERM_VALIDITY : SHORT_TERM_VALIDITY,
+            Assertions.assertTrue(exp.equals(iat.plus(
+                    rmbme ? LONG_TERM_VALIDITY : SHORT_TERM_VALIDITY,
                     rmbme ? LONG_TERM_VALIDITY_UNIT : SHORT_TERM_VALIDITY_UNIT)));
 
             Assertions.assertIterableEquals(this.groups, parsedJWT.
@@ -209,20 +211,18 @@ public class JWTManagerTest {
     @Test
     public void testHasExpired() throws JOSEException {
 
-        Instant now = Instant.now();
-        Instant futur = Instant.now().plus(SHORT_TERM_VALIDITY * 2,
-                SHORT_TERM_VALIDITY_UNIT);
-
         String token = this.jwtManager.createToken(this.caller, groups,
                 "x-xsrf-token", false);
-        Instant exp = this.jwtManager.extractClaimsSet(token)
-                .map(JWTClaimsSet::getExpirationTime)
-                .map(Date::toInstant)
-                .orElseThrow(AssertionError::new);
+        JWTClaimsSet claimsSet = this.jwtManager.extractClaimsSet(token).get();
 
-        Assertions.assertTrue(now.isBefore(exp));
-        Assertions.assertFalse(exp.isAfter(futur));
+        Assertions.assertFalse(this.jwtManager.hasExpired(claimsSet));
 
+        JWTClaimsSet.Builder builder = new JWTClaimsSet.Builder();
+        Instant now = Instant.now();
+        Instant exp = now.minus(SHORT_TERM_VALIDITY, SHORT_TERM_VALIDITY_UNIT);
+        builder.expirationTime(Date.from(exp));
+
+        Assertions.assertTrue(this.jwtManager.hasExpired(builder.build()));
     }
 
     @Test
