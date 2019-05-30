@@ -6,6 +6,8 @@
 package fr.trendev.comptandye.security.controllers.jwt;
 
 import fr.trendev.comptandye.security.controllers.MockAuthenticationEventController;
+import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_TERM_VALIDITY;
+import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_TERM_VALIDITY_UNIT;
 import fr.trendev.comptandye.security.controllers.jwt.dto.mock.MockJWTWhiteMapDTO;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.time.Instant;
@@ -40,13 +42,14 @@ public class JWTWhiteMapTest {
     private final Date creationDate1 = Date.from(now);
     private final Date creationDate2 = Date.from(now.plus(5, MINUTES));
     private final Date creationDate3 = Date.from(now.plus(10, MINUTES));
-    private final Date expirationDate1 = Date.from(now.plus(JWTManager.SHORT_TERM_VALIDITY,
+    private final Date expirationDate1 = Date.from(now.plus(
+            SHORT_TERM_VALIDITY,
             MINUTES));
     private final Date expirationDate2 = Date.from(now.plus(
-            JWTManager.SHORT_TERM_VALIDITY + 5,
+            SHORT_TERM_VALIDITY + 5,
             MINUTES));
     private final Date expirationDate3 = Date.from(now.plus(
-            JWTManager.SHORT_TERM_VALIDITY + 10,
+            SHORT_TERM_VALIDITY + 10,
             MINUTES));
     private static final Logger LOG = Logger.getLogger(JWTWhiteMapTest.class.
             getName());
@@ -249,12 +252,23 @@ public class JWTWhiteMapTest {
     @Test
     public void testCleanUp() {
 
+        Instant iat = now.minus(SHORT_TERM_VALIDITY * 3,
+                SHORT_TERM_VALIDITY_UNIT);
+
         JWTRecord record1 = new JWTRecord(token1,
-                Date.from(now.minus(15, MINUTES)),
-                Date.from(now.minus(14, MINUTES)));
+                Date.from(iat),
+                Date.from(iat.plus(SHORT_TERM_VALIDITY,
+                        SHORT_TERM_VALIDITY_UNIT)));
+
+        iat = now.minus(SHORT_TERM_VALIDITY * 2,
+                SHORT_TERM_VALIDITY_UNIT);
+
         JWTRecord record2 = new JWTRecord(token2,
-                Date.from(now.minus(10, MINUTES)),
-                Date.from(now.minus(9, MINUTES)));
+                Date.from(iat),
+                Date.from(iat.plus(SHORT_TERM_VALIDITY,
+                        SHORT_TERM_VALIDITY_UNIT)));
+
+        // future token
         JWTRecord record3 = new JWTRecord(token3,
                 creationDate3,
                 expirationDate3);
@@ -273,7 +287,7 @@ public class JWTWhiteMapTest {
 
         Assertions.assertDoesNotThrow(() -> jwtwm.cleanUp());
 
-        // record3 should remain
+        // record3 of email1 should remain...
         Assertions.assertTrue(jwtwm.getRecords(email1).isPresent());
         // no more records
         Assertions.assertFalse(jwtwm.getRecords(email2).isPresent());
