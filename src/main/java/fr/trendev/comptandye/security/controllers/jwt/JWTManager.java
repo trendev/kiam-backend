@@ -151,26 +151,26 @@ public class JWTManager {
 
         final String caller = cs.getSubject();
 
-        Instant currentTime = Instant.now();
+        Instant now = Instant.now();
 
         return this.generateToken(caller,
-                currentTime,
-                currentTime.plus(
-                        cs.getExpirationTime().getTime() - cs.getIssueTime().
-                        getTime(),
+                now,
+                now.plus(
+                        cs.getExpirationTime().getTime()
+                        - cs.getIssueTime().getTime(),
                         MILLIS),
                 this.createClaimsSetBuilder(
                         caller,
                         cs.getStringListClaim("groups"),
                         cs.getStringClaim("xsrf"),
-                        cs.getIntegerClaim("renew") + 1),
-                "JWT renewed for user %1$s :\n%2$s");
+                        cs.getIntegerClaim("refresh") + 1),
+                "JWT refreshed for user %1$s :\n%2$s");
     }
 
     private JWTClaimsSet.Builder createClaimsSetBuilder(final String caller,
             final List<String> groups,
             final String xsrf,
-            final int renew) {
+            final int refresh) {
 
         JWTClaimsSet.Builder csbuilder = new JWTClaimsSet.Builder();
 
@@ -186,7 +186,7 @@ public class JWTManager {
         csbuilder.claim("xsrf", xsrf);
 
         //Renewal occurency
-        csbuilder.claim("renew", renew);
+        csbuilder.claim("refresh", refresh);
 
         return csbuilder;
     }
