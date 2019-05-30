@@ -5,8 +5,6 @@
  */
 package fr.trendev.comptandye.security.controllers.jwt.dto.mock;
 
-import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_VALID_PERIOD;
-import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_VALID_PERIOD_UNIT;
 import fr.trendev.comptandye.security.controllers.jwt.dto.JWTWhiteMapDTO;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import fr.trendev.comptandye.security.entities.JWTWhiteMapEntry;
@@ -20,6 +18,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_TERM_VALIDITY;
+import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_TERM_VALIDITY_UNIT;
 
 /**
  *
@@ -48,8 +48,8 @@ public class MockJWTWhiteMapDTO implements JWTWhiteMapDTO {
         Instant now = Instant.now();
 
         Date creationDate1 = Date.from(now);
-        Date expirationDate1 = Date.from(now.plus(SHORT_VALID_PERIOD,
-                SHORT_VALID_PERIOD_UNIT));
+        Date expirationDate1 = Date.from(now.plus(SHORT_TERM_VALIDITY,
+                SHORT_TERM_VALIDITY_UNIT));
 
         JWTRecord record1 = new JWTRecord(token, creationDate1,
                 expirationDate1);

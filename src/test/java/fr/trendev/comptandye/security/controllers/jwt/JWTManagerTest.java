@@ -16,10 +16,6 @@ import com.nimbusds.jwt.SignedJWT;
 import fr.trendev.comptandye.security.controllers.MockAuthenticationEventController;
 import fr.trendev.comptandye.security.controllers.RSAKeyProvider;
 import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.ISS;
-import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.LONG_VALID_PERIOD;
-import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.LONG_VALID_PERIOD_UNIT;
-import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_VALID_PERIOD;
-import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_VALID_PERIOD_UNIT;
 import fr.trendev.comptandye.security.controllers.jwt.dto.mock.MockJWTRevokedSetDTO;
 import fr.trendev.comptandye.security.controllers.jwt.dto.mock.MockJWTWhiteMapDTO;
 import fr.trendev.comptandye.security.entities.JWTRecord;
@@ -40,6 +36,10 @@ import org.jboss.weld.junit4.WeldInitiator;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_TERM_VALIDITY;
+import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_TERM_VALIDITY_UNIT;
+import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.LONG_TERM_VALIDITY;
+import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.LONG_TERM_VALIDITY_UNIT;
 
 /**
  *
@@ -117,12 +117,10 @@ public class JWTManagerTest {
             Instant exp = parsedJWT.getJWTClaimsSet().getExpirationTime().
                     toInstant();
             Assertions.assertTrue(iat.isBefore(now));
-            Assertions.assertTrue(iat.isAfter(now.minus(
-                    rmbme ? LONG_VALID_PERIOD : SHORT_VALID_PERIOD,
-                    rmbme ? LONG_VALID_PERIOD_UNIT : SHORT_VALID_PERIOD_UNIT)));
-            Assertions.assertTrue(exp.equals(iat.plus(
-                    rmbme ? LONG_VALID_PERIOD : SHORT_VALID_PERIOD,
-                    rmbme ? LONG_VALID_PERIOD_UNIT : SHORT_VALID_PERIOD_UNIT)));
+            Assertions.assertTrue(iat.isAfter(now.minus(rmbme ? LONG_TERM_VALIDITY : SHORT_TERM_VALIDITY,
+                    rmbme ? LONG_TERM_VALIDITY_UNIT : SHORT_TERM_VALIDITY_UNIT)));
+            Assertions.assertTrue(exp.equals(iat.plus(rmbme ? LONG_TERM_VALIDITY : SHORT_TERM_VALIDITY,
+                    rmbme ? LONG_TERM_VALIDITY_UNIT : SHORT_TERM_VALIDITY_UNIT)));
 
             Assertions.assertIterableEquals(this.groups, parsedJWT.
                     getJWTClaimsSet().
@@ -212,8 +210,8 @@ public class JWTManagerTest {
     public void testHasExpired() throws JOSEException {
 
         Instant now = Instant.now();
-        Instant futur = Instant.now().plus(SHORT_VALID_PERIOD * 2,
-                SHORT_VALID_PERIOD_UNIT);
+        Instant futur = Instant.now().plus(SHORT_TERM_VALIDITY * 2,
+                SHORT_TERM_VALIDITY_UNIT);
 
         String token = this.jwtManager.createToken(this.caller, groups,
                 "x-xsrf-token", false);
@@ -233,8 +231,8 @@ public class JWTManagerTest {
         final Instant now = Instant.now();
 
         final Date creationDate1 = Date.from(now);
-        final Date expirationDate1 = Date.from(now.plus(SHORT_VALID_PERIOD,
-                SHORT_VALID_PERIOD_UNIT));
+        final Date expirationDate1 = Date.from(now.plus(SHORT_TERM_VALIDITY,
+                SHORT_TERM_VALIDITY_UNIT));
 
         JWTRecord record1 = new JWTRecord(token1, creationDate1, expirationDate1);
 
@@ -253,23 +251,23 @@ public class JWTManagerTest {
 
         Instant issueTime = now;
         Instant expirationTime = now.plus(5,
-                SHORT_VALID_PERIOD_UNIT);
+                SHORT_TERM_VALIDITY_UNIT);
 
         claimSetBuilder.issueTime(Date.from(issueTime));
         claimSetBuilder.expirationTime(Date.from(expirationTime));
         Assertions.assertFalse(jwtManager.
                 canBeRefreshed(claimSetBuilder.build()));
 
-        issueTime = now.minus(2, SHORT_VALID_PERIOD_UNIT);
-        expirationTime = issueTime.plus(6, SHORT_VALID_PERIOD_UNIT);
+        issueTime = now.minus(2, SHORT_TERM_VALIDITY_UNIT);
+        expirationTime = issueTime.plus(6, SHORT_TERM_VALIDITY_UNIT);
 
         claimSetBuilder.issueTime(Date.from(issueTime));
         claimSetBuilder.expirationTime(Date.from(expirationTime));
         Assertions.assertFalse(jwtManager.
                 canBeRefreshed(claimSetBuilder.build()));
 
-        issueTime = now.minus(4, SHORT_VALID_PERIOD_UNIT);
-        expirationTime = issueTime.plus(6, SHORT_VALID_PERIOD_UNIT);
+        issueTime = now.minus(4, SHORT_TERM_VALIDITY_UNIT);
+        expirationTime = issueTime.plus(6, SHORT_TERM_VALIDITY_UNIT);
 
         claimSetBuilder.issueTime(Date.from(issueTime));
         claimSetBuilder.expirationTime(Date.from(expirationTime));
@@ -296,8 +294,8 @@ public class JWTManagerTest {
         final Instant now = Instant.now();
 
         final Date creationDate1 = Date.from(now);
-        final Date expirationDate1 = Date.from(now.plus(SHORT_VALID_PERIOD,
-                SHORT_VALID_PERIOD_UNIT));
+        final Date expirationDate1 = Date.from(now.plus(SHORT_TERM_VALIDITY,
+                SHORT_TERM_VALIDITY_UNIT));
 
         JWTRecord record1 = new JWTRecord(token1, creationDate1, expirationDate1);
 
@@ -332,12 +330,12 @@ public class JWTManagerTest {
         Date creationDate1 = Date.from(now);
         Date creationDate2 = Date.from(now.plus(5, ChronoUnit.SECONDS));
         Date creationDate3 = Date.from(now.plus(10, ChronoUnit.SECONDS));
-        Date expirationDate1 = Date.from(now.plus(SHORT_VALID_PERIOD,
-                SHORT_VALID_PERIOD_UNIT));
-        Date expirationDate2 = Date.from(now.plus(SHORT_VALID_PERIOD,
-                SHORT_VALID_PERIOD_UNIT).plus(5, ChronoUnit.SECONDS));
-        Date expirationDate3 = Date.from(now.plus(SHORT_VALID_PERIOD,
-                SHORT_VALID_PERIOD_UNIT).plus(10, ChronoUnit.SECONDS));
+        Date expirationDate1 = Date.from(now.plus(SHORT_TERM_VALIDITY,
+                SHORT_TERM_VALIDITY_UNIT));
+        Date expirationDate2 = Date.from(now.plus(SHORT_TERM_VALIDITY,
+                SHORT_TERM_VALIDITY_UNIT).plus(5, ChronoUnit.SECONDS));
+        Date expirationDate3 = Date.from(now.plus(SHORT_TERM_VALIDITY,
+                SHORT_TERM_VALIDITY_UNIT).plus(10, ChronoUnit.SECONDS));
 
         JWTRecord record1 = new JWTRecord(token1, creationDate1, expirationDate1);
         JWTRecord record2 = new JWTRecord(token2, creationDate2, expirationDate2);

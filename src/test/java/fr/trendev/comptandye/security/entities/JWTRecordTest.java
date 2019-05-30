@@ -5,13 +5,13 @@
  */
 package fr.trendev.comptandye.security.entities;
 
-import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_VALID_PERIOD;
-import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_VALID_PERIOD_UNIT;
 import java.time.Instant;
 import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_TERM_VALIDITY;
+import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_TERM_VALIDITY_UNIT;
 
 /**
  *
@@ -31,8 +31,8 @@ public class JWTRecordTest {
     @Test
     public void testConstructor() {
         Date creationDate1 = Date.from(now);
-        Date expirationDate1 = Date.from(now.plus(SHORT_VALID_PERIOD,
-                SHORT_VALID_PERIOD_UNIT));
+        Date expirationDate1 = Date.from(now.plus(SHORT_TERM_VALIDITY,
+                SHORT_TERM_VALIDITY_UNIT));
         Assertions.assertThrows(IllegalArgumentException.class, () ->
                 new JWTRecord(null, creationDate1, expirationDate1));
         Assertions.assertThrows(IllegalArgumentException.class, () ->
@@ -53,10 +53,10 @@ public class JWTRecordTest {
     public void testEquals() {
         Date creationDate1 = Date.from(now);
         Date creationDate2 = Date.from(now);
-        Date expirationDate1 = Date.from(now.plus(SHORT_VALID_PERIOD,
-                SHORT_VALID_PERIOD_UNIT));
-        Date expirationDate2 = Date.from(now.plus(SHORT_VALID_PERIOD,
-                SHORT_VALID_PERIOD_UNIT));
+        Date expirationDate1 = Date.from(now.plus(SHORT_TERM_VALIDITY,
+                SHORT_TERM_VALIDITY_UNIT));
+        Date expirationDate2 = Date.from(now.plus(SHORT_TERM_VALIDITY,
+                SHORT_TERM_VALIDITY_UNIT));
         
         JWTRecord record1 = new JWTRecord(token, creationDate1, expirationDate1);
         JWTRecord record1b = new JWTRecord(token, creationDate1, expirationDate1);
@@ -76,10 +76,10 @@ public class JWTRecordTest {
     public void testHashCode() {
         Date creationDate1 = Date.from(now);
         Date creationDate2 = Date.from(now);
-        Date expirationDate1 = Date.from(now.plus(SHORT_VALID_PERIOD,
-                SHORT_VALID_PERIOD_UNIT));
-        Date expirationDate2 = Date.from(now.plus(SHORT_VALID_PERIOD,
-                SHORT_VALID_PERIOD_UNIT));
+        Date expirationDate1 = Date.from(now.plus(SHORT_TERM_VALIDITY,
+                SHORT_TERM_VALIDITY_UNIT));
+        Date expirationDate2 = Date.from(now.plus(SHORT_TERM_VALIDITY,
+                SHORT_TERM_VALIDITY_UNIT));
         
         JWTRecord record1 = new JWTRecord(token, creationDate1, expirationDate1);
         JWTRecord record1b = new JWTRecord(token, creationDate1, expirationDate1);
@@ -103,12 +103,12 @@ public class JWTRecordTest {
         Instant now = Instant.now();
         
         Date creationDate1 = Date.from(now);
-        Date creationDate2 = Date.from(now.plus(SHORT_VALID_PERIOD,
-                SHORT_VALID_PERIOD_UNIT));
-        Date expirationDate1 = Date.from(now.plus(SHORT_VALID_PERIOD,
-                SHORT_VALID_PERIOD_UNIT));
-        Date expirationDate2 = Date.from(now.plus(SHORT_VALID_PERIOD * 2,
-                SHORT_VALID_PERIOD_UNIT));
+        Date creationDate2 = Date.from(now.plus(SHORT_TERM_VALIDITY,
+                SHORT_TERM_VALIDITY_UNIT));
+        Date expirationDate1 = Date.from(now.plus(SHORT_TERM_VALIDITY,
+                SHORT_TERM_VALIDITY_UNIT));
+        Date expirationDate2 = Date.from(now.plus(SHORT_TERM_VALIDITY * 2,
+                SHORT_TERM_VALIDITY_UNIT));
         
         Assertions.assertTrue(
                 new JWTRecord(token1, creationDate1, expirationDate1)
@@ -143,15 +143,15 @@ public class JWTRecordTest {
     @Test
     public void testHasExpired() {
         JWTRecord record = new JWTRecord(token,
-                Date.from(now.minus(SHORT_VALID_PERIOD * 2,
-                        SHORT_VALID_PERIOD_UNIT)),
-                Date.from(now.minus(SHORT_VALID_PERIOD,
-                        SHORT_VALID_PERIOD_UNIT)));
+                Date.from(now.minus(SHORT_TERM_VALIDITY * 2,
+                        SHORT_TERM_VALIDITY_UNIT)),
+                Date.from(now.minus(SHORT_TERM_VALIDITY,
+                        SHORT_TERM_VALIDITY_UNIT)));
         Assertions.assertTrue(record.hasExpired());
         
         record = new JWTRecord(token,
                 Date.from(now),
-                Date.from(now.plus(SHORT_VALID_PERIOD, SHORT_VALID_PERIOD_UNIT)));
+                Date.from(now.plus(SHORT_TERM_VALIDITY, SHORT_TERM_VALIDITY_UNIT)));
         
         Assertions.assertFalse(record.hasExpired());
     }

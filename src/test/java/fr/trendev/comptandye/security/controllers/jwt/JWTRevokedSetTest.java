@@ -5,8 +5,6 @@
  */
 package fr.trendev.comptandye.security.controllers.jwt;
 
-import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_VALID_PERIOD;
-import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_VALID_PERIOD_UNIT;
 import fr.trendev.comptandye.security.controllers.jwt.dto.mock.MockJWTRevokedSetDTO;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.time.Instant;
@@ -23,6 +21,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_TERM_VALIDITY;
+import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_TERM_VALIDITY_UNIT;
 
 /**
  *
@@ -37,17 +37,15 @@ public class JWTRevokedSetTest {
 
     private final Date creationDate1 = Date.from(now);
     private final Date creationDate2 = Date.from(now.plus(5,
-            SHORT_VALID_PERIOD_UNIT));
+            SHORT_TERM_VALIDITY_UNIT));
     private final Date creationDate3 = Date.from(now.plus(10,
-            SHORT_VALID_PERIOD_UNIT));
-    private final Date expirationDate1 = Date.from(now.plus(SHORT_VALID_PERIOD,
-            SHORT_VALID_PERIOD_UNIT));
-    private final Date expirationDate2 = Date.from(now.plus(
-            SHORT_VALID_PERIOD + 5,
-            SHORT_VALID_PERIOD_UNIT));
-    private final Date expirationDate3 = Date.from(now.plus(
-            SHORT_VALID_PERIOD + 10,
-            SHORT_VALID_PERIOD_UNIT));
+            SHORT_TERM_VALIDITY_UNIT));
+    private final Date expirationDate1 = Date.from(now.plus(SHORT_TERM_VALIDITY,
+            SHORT_TERM_VALIDITY_UNIT));
+    private final Date expirationDate2 = Date.from(now.plus(SHORT_TERM_VALIDITY + 5,
+            SHORT_TERM_VALIDITY_UNIT));
+    private final Date expirationDate3 = Date.from(now.plus(SHORT_TERM_VALIDITY + 10,
+            SHORT_TERM_VALIDITY_UNIT));
 
     @Rule
     public WeldInitiator weld = WeldInitiator

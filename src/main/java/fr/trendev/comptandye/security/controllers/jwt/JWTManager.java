@@ -43,10 +43,10 @@ import javax.inject.Inject;
 @ApplicationScoped
 public class JWTManager {
 
-    public final static int SHORT_VALID_PERIOD = 20;
-    public final static TemporalUnit SHORT_VALID_PERIOD_UNIT = ChronoUnit.MINUTES;
-    public final static int LONG_VALID_PERIOD = 60;
-    public final static TemporalUnit LONG_VALID_PERIOD_UNIT = ChronoUnit.DAYS;
+    public final static int SHORT_TERM_VALIDITY = 20;
+    public final static TemporalUnit SHORT_TERM_VALIDITY_UNIT = ChronoUnit.MINUTES;
+    public final static int LONG_TERM_VALIDITY = 60;
+    public final static TemporalUnit LONG_TERM_VALIDITY_UNIT = ChronoUnit.DAYS;
 
     public final static String ISS = "https://www.comptandye.fr";
 
@@ -134,9 +134,8 @@ public class JWTManager {
 
         return this.generateToken(caller,
                 currentTime,
-                currentTime.plus(
-                        rmbme ? LONG_VALID_PERIOD : SHORT_VALID_PERIOD,
-                        rmbme ? LONG_VALID_PERIOD_UNIT : SHORT_VALID_PERIOD_UNIT),
+                currentTime.plus(rmbme ? LONG_TERM_VALIDITY : SHORT_TERM_VALIDITY,
+                        rmbme ? LONG_TERM_VALIDITY_UNIT : SHORT_TERM_VALIDITY_UNIT),
                 this.createClaimsSetBuilder(
                         caller,
                         groups,
