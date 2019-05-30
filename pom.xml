@@ -4,7 +4,7 @@
 
     <groupId>fr.trendev</groupId>
     <artifactId>comptandye</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.1</version>
     <packaging>war</packaging>
 
     <name>comptandye</name>
@@ -13,10 +13,10 @@
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.jackson>2.9.8</version.jackson>
-        <version.eclipselink>2.7.3</version.eclipselink>
-        <version.junit>5.3.2</version.junit>
-        <version.stripe>6.12.0</version.stripe>
-        <version.nimbus-jose-jwt>6.4.2</version.nimbus-jose-jwt>
+        <version.eclipselink>2.7.4</version.eclipselink>
+        <version.junit>5.4.2</version.junit>
+        <version.stripe>10.0.2</version.stripe>
+        <version.nimbus-jose-jwt>7.2.1</version.nimbus-jose-jwt>
     </properties>
     
     <profiles>
@@ -50,7 +50,7 @@
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
-            <version>8.0</version>
+            <version>8.0.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -99,13 +99,13 @@
         <dependency>
             <groupId>org.jboss.weld.se</groupId>
             <artifactId>weld-se-core</artifactId>
-            <version>3.0.5.Final</version>
+            <version>3.1.1.Final</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.weld</groupId>
             <artifactId>weld-junit4</artifactId>
-            <version>1.3.1.Final</version>
+            <version>2.0.0.Final</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -123,7 +123,7 @@
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-json-jackson</artifactId>
-            <version>2.27</version>
+            <version>2.28</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -159,7 +159,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>3.8.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -171,7 +171,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>3.2.2</version>
+                <version>3.2.3</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                     <!--Renames the compiled archive-->
@@ -206,7 +206,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-help-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.2.0</version>
                 <executions>
                     <execution>
                         <id>show-profiles</id>
