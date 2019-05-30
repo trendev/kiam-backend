@@ -5,10 +5,11 @@
  */
 package fr.trendev.comptandye.security.controllers.jwt;
 
+import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_TERM_VALIDITY;
+import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_TERM_VALIDITY_UNIT;
 import fr.trendev.comptandye.security.controllers.jwt.dto.mock.MockJWTRevokedSetDTO;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.time.Instant;
-import static java.time.temporal.ChronoUnit.MINUTES;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
@@ -21,8 +22,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_TERM_VALIDITY;
-import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_TERM_VALIDITY_UNIT;
 
 /**
  *
@@ -42,9 +41,11 @@ public class JWTRevokedSetTest {
             SHORT_TERM_VALIDITY_UNIT));
     private final Date expirationDate1 = Date.from(now.plus(SHORT_TERM_VALIDITY,
             SHORT_TERM_VALIDITY_UNIT));
-    private final Date expirationDate2 = Date.from(now.plus(SHORT_TERM_VALIDITY + 5,
+    private final Date expirationDate2 = Date.from(now.plus(SHORT_TERM_VALIDITY
+            + 5,
             SHORT_TERM_VALIDITY_UNIT));
-    private final Date expirationDate3 = Date.from(now.plus(SHORT_TERM_VALIDITY + 10,
+    private final Date expirationDate3 = Date.from(now.plus(SHORT_TERM_VALIDITY
+            + 10,
             SHORT_TERM_VALIDITY_UNIT));
 
     @Rule
@@ -181,9 +182,14 @@ public class JWTRevokedSetTest {
     @Test
     public void testCleanUp() throws Exception {
 
+        final Instant iat = now.minus(SHORT_TERM_VALIDITY * 3,
+                SHORT_TERM_VALIDITY_UNIT);
         JWTRecord record2 = new JWTRecord(token2,
-                Date.from(now.minus(10, MINUTES)),
-                Date.from(now.minus(9, MINUTES)));
+                Date.from(iat),
+                Date.from(iat.plus(SHORT_TERM_VALIDITY,
+                        SHORT_TERM_VALIDITY_UNIT)));
+
+        // future token
         JWTRecord record3 = new JWTRecord(token3,
                 creationDate3,
                 expirationDate3);
@@ -193,8 +199,9 @@ public class JWTRevokedSetTest {
         IntStream.rangeClosed(1, max)
                 .parallel()
                 .forEach(i -> jwtrvkset.add(new JWTRecord("token_" + i,
-                        Date.from(now.minus(15, MINUTES)),
-                        Date.from(now.minus(14, MINUTES)))));
+                        Date.from(iat),
+                        Date.from(iat.plus(SHORT_TERM_VALIDITY,
+                                SHORT_TERM_VALIDITY_UNIT)))));
         jwtrvkset.add(record2);
         jwtrvkset.add(record3);
 
