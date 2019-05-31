@@ -117,6 +117,7 @@ public class CustomHttpAuthenticationMechanism implements
                         rmbme);
                 rsp.addCookie(this.createXSRFCookie(xsrf));
                 rsp.addCookie(this.createJWTCookie(jwt));
+                rsp.addHeader(JWT, jwt);
 
                 /**
                  * Confirm the access
