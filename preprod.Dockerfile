@@ -16,7 +16,7 @@ RUN mvn install -Ppreprod
 #########################################
 FROM payara/server-full:5.192
 
-MAINTAINER TRENDev trendevfr@gmail.com
+LABEL maintainer="jsie@trendev.fr"
 
 ENV AS_ADMIN $PAYARA_DIR/bin/asadmin
 ENV DOMAIN production
