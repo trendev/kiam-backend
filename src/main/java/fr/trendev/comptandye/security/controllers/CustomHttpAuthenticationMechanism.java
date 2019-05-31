@@ -239,7 +239,49 @@ public class CustomHttpAuthenticationMechanism implements
             HttpServletRequest req,
             HttpServletResponse rsp,
             HttpMessageContext hmc) {
-        return Optional.empty();
+
+        return Optional.ofNullable(req.getHeader("Authorization"))
+                .filter(Objects::nonNull)// avoid null and empty element
+                .map(a -> a.substring(7, a.length()))// get the JWT
+                .filter(jwt -> !this.jwtManager.isRevoked(jwt))
+                .flatMap(jwt -> this.jwtManager.extractClaimsSet(jwt))
+                // JWT is valid and signature is verified
+                .filter(clmset -> !this.jwtManager.hasExpired(clmset))
+                .map(clmset -> {
+                    try {
+                        //TODO : remove the xsrf-token when jwt header will be supported
+                        //share the anti xsrf-token with the filters as a request attribute
+                        req.setAttribute("XSRF-TOKEN", clmset.getClaim(
+                                "xsrf"));
+                        if (this.jwtManager.canBeRefreshed(clmset)) {
+                            try {
+                                //x-xsrf-token is reused...
+                                String jwt = this.jwtManager.
+                                        refreshToken(clmset);
+                                rsp.addHeader(JWT, jwt);
+                            } catch (Exception ex) {
+                                LOG.log(Level.SEVERE,
+                                        "Impossible to refresh a JWT", ex);
+                            }
+                        }
+
+                        return hmc.notifyContainerAboutLogin(
+                                //get the upn or the subject (MP-JWT)
+                                Optional.
+                                        ofNullable(clmset.getStringClaim(
+                                                "upn"))
+                                        .filter(s -> !s.isEmpty())
+                                        .orElse(clmset.getSubject()),
+                                new HashSet<>(clmset.
+                                        getStringListClaim("groups")));
+                    } catch (ParseException ex) {
+                        LOG.log(Level.SEVERE,
+                                "A valid JWT with a verified signature cannot be parsed: for Security reasons, access will be refused !",
+                                ex);
+                        return hmc.responseUnauthorized();
+                    }
+                });
+
     }
 
 }
