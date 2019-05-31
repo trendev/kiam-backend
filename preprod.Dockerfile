@@ -24,7 +24,7 @@ ENV ADMIN_USER admin
 ENV ADMIN_PASSWORD admin
 ENV NEW_ADMIN_PASSWORD qsec0fr
 ENV JCONNECTOR_VERSION 5.1.47
-ENV MEMORY_SIZE 4096
+ENV MEMORY_SIZE 2048
 
 # Copy the mysql connector to the Glassfish libs
 # Check the libs path before uncomment
