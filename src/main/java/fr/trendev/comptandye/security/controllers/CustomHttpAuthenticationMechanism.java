@@ -135,56 +135,17 @@ public class CustomHttpAuthenticationMechanism implements
             }
         }
 
-        /**
-         * Checks if the JWT is in a Cookie, gets it, verifies/controls it
-         */
-        if (req.getCookies() != null) {
-            return Arrays.asList(req.getCookies())
-                    .stream()
-                    .filter(Objects::nonNull)// avoid null and empty element
-                    .filter(c -> JWT.equals(c.getName()))
-                    .findFirst()
-                    //check if the token is revoked
-                    .filter(c -> !this.jwtManager.isRevoked(c.getValue()))
-                    .flatMap(c -> this.jwtManager
-                            .extractClaimsSet(c.getValue()))
-                    // JWT is valid and signature is verified
-                    .filter(clmset -> !this.jwtManager.hasExpired(clmset))
-                    .map(clmset -> {
-                        try {
-                            //share the anti xsrf-token with the filters as a request attribute
-                            req.setAttribute("XSRF-TOKEN", clmset.getClaim(
-                                    "xsrf"));
+        Optional<AuthenticationStatus> as = this.controlHeaders(req, rsp, hmc);
 
-                            if (this.jwtManager.canBeRefreshed(clmset)) {
-                                try {
-                                    //x-xsrf-token is reused...
-                                    String jwt = this.jwtManager
-                                            .refreshToken(clmset);
-                                    rsp.addCookie(this.createJWTCookie(jwt));
-                                } catch (Exception ex) {
-                                    LOG.log(Level.SEVERE,
-                                            "Impossible to refresh a JWT", ex);
-                                }
-                            }
+        // Headers control is not supported now
+        // Cookies control instead
+        // Should be removed when Headers control will be fully supported
+        if (!as.isPresent()) {
+            as = this.controlCookies(req, rsp, hmc);
+        }
 
-                            return hmc.notifyContainerAboutLogin(
-                                    //get the upn or the subject (MP-JWT)
-                                    Optional.
-                                            ofNullable(clmset.getStringClaim(
-                                                    "upn"))
-                                            .filter(s -> !s.isEmpty())
-                                            .orElse(clmset.getSubject()),
-                                    new HashSet<>(clmset.
-                                            getStringListClaim("groups")));
-                        } catch (ParseException ex) {
-                            LOG.log(Level.SEVERE,
-                                    "A valid JWT with a verified signature cannot be parsed: for Security reasons, access will be refused !",
-                                    ex);
-                            return hmc.responseUnauthorized();
-                        }
-                    })
-                    .orElseGet(() -> this.controlProtectedResource(hmc));
+        if (as.isPresent()) {
+            return as.get();
         }
 
         return this.controlProtectedResource(hmc);
@@ -216,6 +177,69 @@ public class CustomHttpAuthenticationMechanism implements
 
     private Cookie createJWTCookie(String token) {
         return createAuthenticationCookie(JWT, token);
+    }
+
+    private Optional<AuthenticationStatus> controlCookies(
+            HttpServletRequest req,
+            HttpServletResponse rsp,
+            HttpMessageContext hmc) {
+
+        if (req.getCookies() == null || req.getCookies().length == 0) {
+            return Optional.empty();
+        }
+
+        return Arrays.asList(req.getCookies())
+                .stream()
+                .filter(Objects::nonNull)// avoid null and empty element
+                .filter(c -> JWT.equals(c.getName()))
+                .findFirst()
+                //check if the token is revoked
+                .filter(c -> !this.jwtManager.isRevoked(c.getValue()))
+                .flatMap(c -> this.jwtManager
+                        .extractClaimsSet(c.getValue()))
+                // JWT is valid and signature is verified
+                .filter(clmset -> !this.jwtManager.hasExpired(clmset))
+                .map(clmset -> {
+                    try {
+                        //share the anti xsrf-token with the filters as a request attribute
+                        req.setAttribute("XSRF-TOKEN", clmset.getClaim(
+                                "xsrf"));
+
+                        if (this.jwtManager.canBeRefreshed(clmset)) {
+                            try {
+                                //x-xsrf-token is reused...
+                                String jwt = this.jwtManager
+                                        .refreshToken(clmset);
+                                rsp.addCookie(this.createJWTCookie(jwt));
+                            } catch (Exception ex) {
+                                LOG.log(Level.SEVERE,
+                                        "Impossible to refresh a JWT", ex);
+                            }
+                        }
+
+                        return hmc.notifyContainerAboutLogin(
+                                //get the upn or the subject (MP-JWT)
+                                Optional.
+                                        ofNullable(clmset.getStringClaim(
+                                                "upn"))
+                                        .filter(s -> !s.isEmpty())
+                                        .orElse(clmset.getSubject()),
+                                new HashSet<>(clmset.
+                                        getStringListClaim("groups")));
+                    } catch (ParseException ex) {
+                        LOG.log(Level.SEVERE,
+                                "A valid JWT with a verified signature cannot be parsed: for Security reasons, access will be refused !",
+                                ex);
+                        return hmc.responseUnauthorized();
+                    }
+                });
+    }
+
+    private Optional<AuthenticationStatus> controlHeaders(
+            HttpServletRequest req,
+            HttpServletResponse rsp,
+            HttpMessageContext hmc) {
+        return Optional.empty();
     }
 
 }
