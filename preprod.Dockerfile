@@ -31,19 +31,14 @@ ENV MEMORY_SIZE 4096
 COPY mysql-connector-java-$JCONNECTOR_VERSION.jar $PAYARA_DIR/glassfish/domains/$DOMAIN/lib
 
 # Reset the admin password
-# RUN echo 'AS_ADMIN_PASSWORD='$ADMIN_PASSWORD'\n\
-# AS_ADMIN_NEWPASSWORD='$NEW_ADMIN_PASSWORD'\n\
-# EOF\n'\
-# > /tmp/tmpfile
-
-# RUN echo 'AS_ADMIN_PASSWORD='$NEW_ADMIN_PASSWORD'\n\
-# EOF\n'\
-# > ${PASSWORD_FILE}
+RUN echo 'AS_ADMIN_PASSWORD='$ADMIN_PASSWORD'\nAS_ADMIN_NEWPASSWORD='$NEW_ADMIN_PASSWORD'\n' > /tmp/tmpfile
+RUN echo 'AS_ADMIN_PASSWORD='$NEW_ADMIN_PASSWORD'\n' > ${PASSWORD_FILE}
 
 RUN $AS_ADMIN start-domain $DOMAIN && \
-# $AS_ADMIN --user $ADMIN_USER --passwordfile=/tmp/tmpfile change-admin-password && \
-# $AS_ADMIN --user $ADMIN_USER --passwordfile=${PASSWORD_FILE} enable-secure-admin && \
-# $AS_ADMIN restart-domain $DOMAIN && \
+$AS_ADMIN --user $ADMIN_USER  --passwordfile=/tmp/tmpfile disable-secure-admin && \
+$AS_ADMIN --user $ADMIN_USER  --passwordfile=/tmp/tmpfile change-admin-password && \
+$AS_ADMIN --user $ADMIN_USER --passwordfile=${PASSWORD_FILE} enable-secure-admin && \
+$AS_ADMIN restart-domain $DOMAIN && \
 $AS_ADMIN create-javamail-resource --passwordfile=${PASSWORD_FILE} --mailhost smtp\.gmail\.com --mailuser comptandye\@gmail\.com --fromaddress comptandye\@gmail\.com --debug=true --enabled=true --property="mail-password=ptNIDIFkmx4MACaJCwpo:mail-auth=true:mail.smtp.user=comptandye@gmail.com:mail.smtp.password=ptNIDIFkmx4MACaJCwpo:mail.smtp.auth=true:mail.smtp.port=465:mail.smtp.socketFactory.port=465:mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory" java/mail/comptandye && \
 $AS_ADMIN create-jdbc-connection-pool --passwordfile=${PASSWORD_FILE} --allownoncomponentcallers=false --associatewiththread=false --creationretryattempts=0 --creationretryinterval=10 --leakreclaim=false --leaktimeout=0 --validationmethod=auto-commit --datasourceclassname=com.mysql.jdbc.jdbc2.optional.MysqlDataSource --failconnection=false --idletimeout=300 --isconnectvalidatereq=false --isisolationguaranteed=false --lazyconnectionassociation=false --lazyconnectionenlistment=false --matchconnections=false --maxconnectionusagecount=0 --maxpoolsize=100 --maxwait=0 --nontransactionalconnections=false --poolresize=20 --restype=javax.sql.DataSource --statementtimeout=-1 --steadypoolsize=20 --validateatmostonceperiod=0 --wrapjdbcobjects=true --property serverName=db-mysql-preprod:portNumber=3306:databaseName=comptandye_master:User=admin_comptandye_20170328:Password=SfBuVPRw0S:URL=jdbc\\:mysql\\://db-mysql-preprod\\:3306/comptandye_master?zeroDateTimeBehavior\\=convertToNull\&useSSL\\=false:driverClass=com.mysql.jdbc.Driver mysql_comptandye_master_admin_comptandye_20170328Pool && \
 $AS_ADMIN create-jdbc-resource --passwordfile=${PASSWORD_FILE} --enabled=true --connectionpoolid=mysql_comptandye_master_admin_comptandye_20170328Pool jdbc/MySQLDataSourceComptaNdye && \
