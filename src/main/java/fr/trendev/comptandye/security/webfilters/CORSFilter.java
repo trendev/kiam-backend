@@ -8,12 +8,12 @@ package fr.trendev.comptandye.security.webfilters;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author jsie
  */
 //@WebFilter(urlPatterns = {"/restapi/*"}, asyncSupported = true)
-public class CORSFilter extends ApiFilter {
+public class CORSFilter implements Filter {
 
     private static final Logger LOG = Logger.getLogger(CORSFilter.class.
             getName());
@@ -44,23 +44,14 @@ public class CORSFilter extends ApiFilter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
 
-        HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
 
-        String origin = req.getHeader("Origin");
-
-        if (isOriginAllowed(origin)) {
-            resp.addHeader("Access-Control-Allow-Origin", origin);
-        } else {
-            resp.addHeader("Access-Control-Allow-Origin",
-                    "https://www.comptandye.fr:443");
-        }
-
+        resp.addHeader("Access-Control-Allow-Origin", "*");
         resp.addHeader("Access-Control-Allow-Credentials", "true");
         resp.addHeader("Access-Control-Allow-Methods",
                 "OPTIONS, GET, POST, PUT, DELETE");
         resp.addHeader("Access-Control-Allow-Headers",
-                "Content-Type, Accept");
+                "origin, content-type, accept, authorization");
 
         LOG.log(Level.INFO, "- Adding CORS -");
 
