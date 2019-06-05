@@ -104,7 +104,6 @@ public class CustomHttpAuthenticationMechanism implements
                 String jwt = jwtManager.createToken(
                         result.getCallerPrincipal().getName(),
                         new ArrayList<>(result.getCallerGroups()),
-                        "TO_REMOVE",
                         rmbme);
 
                 rsp.addHeader(JWT, jwt);

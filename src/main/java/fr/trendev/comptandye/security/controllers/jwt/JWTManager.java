@@ -127,7 +127,6 @@ public class JWTManager {
 
     public String createToken(final String caller,
             final List<String> groups,
-            final String xsrf,
             final boolean rmbme)
             throws JOSEException {
 
@@ -141,7 +140,6 @@ public class JWTManager {
                 this.createClaimsSetBuilder(
                         caller,
                         groups,
-                        xsrf,
                         0),
                 "JWT created for user %1$s :\n%2$s");
     }
@@ -162,14 +160,12 @@ public class JWTManager {
                 this.createClaimsSetBuilder(
                         caller,
                         cs.getStringListClaim("groups"),
-                        cs.getStringClaim("xsrf"),
                         cs.getIntegerClaim("refresh") + 1),
                 "JWT refreshed for user %1$s :\n%2$s");
     }
 
     private JWTClaimsSet.Builder createClaimsSetBuilder(final String caller,
             final List<String> groups,
-            final String xsrf,
             final int refresh) {
 
         JWTClaimsSet.Builder csbuilder = new JWTClaimsSet.Builder();
@@ -181,9 +177,6 @@ public class JWTManager {
         //MP-JWT specific
         csbuilder.claim("upn", caller);
         csbuilder.claim("groups", groups);
-
-        //XSRF-TOKEN
-        csbuilder.claim("xsrf", xsrf);
 
         //Renewal occurency
         csbuilder.claim("refresh", refresh);

@@ -32,7 +32,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
@@ -88,8 +87,9 @@ public class JWTManagerTest {
 
     private void testCreateToken(boolean rmbme) {
         try {
-            String token = this.jwtManager.createToken(this.caller, groups,
-                    "1234567890", rmbme);
+            String token = this.jwtManager.createToken(this.caller,
+                    groups,
+                    rmbme);
             Assertions.assertNotEquals(token.length(), 0);
             Assertions.assertNotNull(token);
 
@@ -145,8 +145,9 @@ public class JWTManagerTest {
     @Test
     public void testExtractClaimsSet() {
         try {
-            String token = this.jwtManager.createToken(this.caller, groups,
-                    "x-xsrf-token", false);
+            String token = this.jwtManager.createToken(this.caller,
+                    groups,
+                    false);
 
             Assertions.assertTrue(
                     this.jwtManager.extractClaimsSet(token).isPresent());
@@ -160,8 +161,9 @@ public class JWTManagerTest {
     @Test
     public void testExtractClaimsSetWithNullToken() {
         try {
-            String token = this.jwtManager.createToken(this.caller, groups,
-                    "x-xsrf-token", false);
+            String token = this.jwtManager.createToken(this.caller,
+                    groups,
+                    false);
 
             Assertions.assertFalse(
                     this.jwtManager.extractClaimsSet(null).isPresent());
@@ -175,8 +177,9 @@ public class JWTManagerTest {
     @Test
     public void testExtractClaimsSetWithJWTCorruption() {
         try {
-            String token = this.jwtManager.createToken(this.caller, groups,
-                    "x-xsrf-token", false);
+            String token = this.jwtManager.createToken(this.caller,
+                    groups,
+                    false);
 
             Assertions.assertFalse(
                     this.jwtManager.extractClaimsSet(token.
@@ -192,8 +195,9 @@ public class JWTManagerTest {
     @Test
     public void testExtractClaimsSetWithUnverifiedSignature() {
         try {
-            String token = this.jwtManager.createToken(this.caller, groups,
-                    "x-xsrf-token", false);
+            String token = this.jwtManager.createToken(this.caller,
+                    groups,
+                    false);
 
             byte[] bytes = token.getBytes();
             bytes[token.length() - 10]++;
@@ -211,8 +215,9 @@ public class JWTManagerTest {
     @Test
     public void testHasExpired() throws JOSEException {
 
-        String token = this.jwtManager.createToken(this.caller, groups,
-                "x-xsrf-token", false);
+        String token = this.jwtManager.createToken(this.caller,
+                groups,
+                false);
         JWTClaimsSet claimsSet = this.jwtManager.extractClaimsSet(token).get();
 
         Assertions.assertFalse(this.jwtManager.hasExpired(claimsSet));
@@ -359,9 +364,9 @@ public class JWTManagerTest {
     @Test
     public void testRefreshToken() {
         try {
-            String xsrf = UUID.randomUUID().toString();
-            String token = this.jwtManager.createToken(this.caller, groups,
-                    xsrf, false);
+            String token = this.jwtManager.createToken(this.caller,
+                    groups,
+                    false);
 
             this.jwtManager.extractClaimsSet(token).ifPresent(cs_ -> {
 
@@ -379,8 +384,6 @@ public class JWTManagerTest {
                         JWTClaimsSet ncs = this.jwtManager.extractClaimsSet(
                                 newToken).get();
 
-                        Assertions.assertEquals(ncs.getStringClaim("xsrf"),
-                                xsrf);
                         Assertions.assertEquals(ncs.getIntegerClaim("refresh").
                                 doubleValue(),
                                 i + 1, "refresh = " + ncs.getIntegerClaim(
