@@ -52,6 +52,7 @@ public class CORSFilter implements Filter {
                 "OPTIONS, GET, POST, PUT, DELETE");
         resp.addHeader("Access-Control-Allow-Headers",
                 "origin, content-type, accept, authorization");
+        resp.addHeader("Access-Control-Expose-Headers", "jwt");
 
         LOG.log(Level.INFO, "- Adding CORS -");
 
