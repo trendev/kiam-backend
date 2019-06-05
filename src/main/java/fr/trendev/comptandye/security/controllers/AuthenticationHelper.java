@@ -6,9 +6,11 @@
 package fr.trendev.comptandye.security.controllers;
 
 import fr.trendev.comptandye.useraccount.entities.UserAccountType;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 import javax.ejb.Stateless;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.SecurityContext;
 
@@ -72,6 +74,13 @@ public class AuthenticationHelper {
                 .orElseThrow(() ->
                         new BadRequestException(
                                 "Impossible to find the professional's email from the SecurityContext or from the Query Parameters"));
+    }
+
+    public Optional<String> getJWTFromRequestHeader(
+            HttpServletRequest req) {
+        return Optional.ofNullable(req.getHeader("Authorization"))
+                .filter(Objects::nonNull)// avoid null and empty element
+                .map(a -> a.substring("Bearer ".length(), a.length())); // get the JWT
     }
 
 }

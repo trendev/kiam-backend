@@ -9,7 +9,6 @@ import fr.trendev.comptandye.security.controllers.jwt.JWTManager;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,18 +45,21 @@ import javax.servlet.http.HttpServletResponse;
 @ApplicationScoped
 public class CustomHttpAuthenticationMechanism implements
         HttpAuthenticationMechanism {
-
+    
     private static final Logger LOG = Logger.getLogger(
             CustomHttpAuthenticationMechanism.class.getName());
-
+    
     public static final String JWT = "JWT";
-
+    
     @Inject
     private IdentityStoreHandler idStoreHandler;
-
+    
     @Inject
     private JWTManager jwtManager;
-
+    
+    @Inject
+    private AuthenticationHelper authHelper;
+    
     @Override
     public AuthenticationStatus validateRequest(HttpServletRequest req,
             HttpServletResponse rsp, HttpMessageContext hmc) throws
@@ -77,11 +79,11 @@ public class CustomHttpAuthenticationMechanism implements
                 && req.getParameter("password") != null
                 // path should ends with login...
                 && req.getPathInfo().endsWith("login")) {
-
+            
             String username = req.getParameter("username");
             String password = req.getParameter("password");
             boolean rmbme = Boolean.valueOf(req.getParameter("rmbme"));
-
+            
             try {
                 // controls the credential from the IdentityStores (DB is default)
                 CredentialValidationResult result = idStoreHandler.validate(
@@ -100,12 +102,12 @@ public class CustomHttpAuthenticationMechanism implements
                                         toString()});
                     return hmc.responseUnauthorized();
                 }
-
+                
                 String jwt = jwtManager.createToken(
                         result.getCallerPrincipal().getName(),
                         new ArrayList<>(result.getCallerGroups()),
                         rmbme);
-
+                
                 rsp.addHeader(JWT, jwt);
 
                 /**
@@ -123,15 +125,15 @@ public class CustomHttpAuthenticationMechanism implements
                 return hmc.responseUnauthorized();
             }
         }
-
+        
         Optional<AuthenticationStatus> as = this.controlHeaders(req, rsp, hmc);
-
+        
         if (as.isPresent()) {
             return as.get();
         }
-
+        
         return this.controlProtectedResource(hmc);
-
+        
     }
 
     /**
@@ -143,15 +145,13 @@ public class CustomHttpAuthenticationMechanism implements
     private AuthenticationStatus controlProtectedResource(HttpMessageContext hmc) {
         return hmc.isProtected() ? hmc.responseUnauthorized() : hmc.doNothing();
     }
-
+    
     private Optional<AuthenticationStatus> controlHeaders(
             HttpServletRequest req,
             HttpServletResponse rsp,
             HttpMessageContext hmc) {
-
-        return Optional.ofNullable(req.getHeader("Authorization"))
-                .filter(Objects::nonNull)// avoid null and empty element
-                .map(a -> a.substring(7, a.length()))// get the JWT
+        
+        return this.authHelper.getJWTFromRequestHeader(req)
                 .filter(jwt -> !this.jwtManager.isRevoked(jwt))
                 .flatMap(jwt -> this.jwtManager.extractClaimsSet(jwt))
                 // JWT is valid and signature is verified
@@ -168,7 +168,7 @@ public class CustomHttpAuthenticationMechanism implements
                                         "Impossible to refresh a JWT", ex);
                             }
                         }
-
+                        
                         return hmc.notifyContainerAboutLogin(
                                 //get the upn or the subject (MP-JWT)
                                 Optional.
@@ -185,7 +185,7 @@ public class CustomHttpAuthenticationMechanism implements
                         return hmc.responseUnauthorized();
                     }
                 });
-
+        
     }
-
+    
 }

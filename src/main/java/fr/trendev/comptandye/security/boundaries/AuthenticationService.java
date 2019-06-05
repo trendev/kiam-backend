@@ -7,13 +7,10 @@ package fr.trendev.comptandye.security.boundaries;
 
 import fr.trendev.comptandye.exceptions.ExceptionHandler;
 import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
-import static fr.trendev.comptandye.security.controllers.CustomHttpAuthenticationMechanism.JWT;
-import fr.trendev.comptandye.security.controllers.jwt.JWTManager;
 import fr.trendev.comptandye.security.controllers.PasswordManager;
+import fr.trendev.comptandye.security.controllers.jwt.JWTManager;
 import fr.trendev.comptandye.security.entities.NewPassword;
 import fr.trendev.comptandye.useraccount.controllers.UserAccountFacade;
-import java.util.Arrays;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
@@ -38,7 +35,6 @@ import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
@@ -58,7 +54,7 @@ public class AuthenticationService {
     UserAccountFacade userAccountFacade;
 
     @Inject
-    AuthenticationHelper authenticationHelper;
+    AuthenticationHelper authHelper;
 
     @Inject
     ExceptionHandler exceptionHandler;
@@ -97,7 +93,7 @@ public class AuthenticationService {
     }
 
     private Response profile(SecurityContext sec) {
-        return authenticationHelper.getUserEmailFromSecurityContext(sec)
+        return authHelper.getUserEmailFromSecurityContext(sec)
                 .map(email -> Optional.ofNullable(
                         userAccountFacade.find(email))
                         .map(profile -> Response.ok(profile).build())
@@ -130,41 +126,21 @@ public class AuthenticationService {
 
         String email = sec.getUserPrincipal().getName();
 
-        if (req.getCookies() != null) {
-            return Arrays.asList(req.getCookies())
-                    .stream()
-                    .filter(Objects::nonNull)// avoid null and empty element
-                    .filter(c -> JWT.equals(c.getName())
-                            && c.getValue() != null)
-                    .findFirst()
-                    .flatMap(c -> jwtm.revokeToken(email, c.getValue()))
-                    .map(r -> Response.ok(
-                            Json.createObjectBuilder()
-                                    .add("msg", "user [" + email
-                                            + "] is now logged out"
-                                            + " and token ("
-                                            + JWTManager.
-                                                    trunkToken(r.getToken())
-                                            + ") is now revoked").
-                                    build())
-                            .cookie(new NewCookie(JWT,
-                                    null,
-                                    "/",
-                                    null,
-                                    null,
-                                    0, true, true),
-                                    new NewCookie("XSRF-TOKEN",
-                                            null,
-                                            "/",
-                                            null,
-                                            null,
-                                            0, true, false))
-                            .build())
-                    .orElseThrow(() -> new WebApplicationException(
-                            "No JWT Cookie provided or token cannot be revoked"));
-        } else {
-            throw new WebApplicationException("No Cookie provided");
-        }
+        return this.authHelper.getJWTFromRequestHeader(req)
+                .flatMap(t -> jwtm.revokeToken(email, t))
+                .map(r -> Response.ok(
+                        Json.createObjectBuilder()
+                                .add("msg", "user [" + email
+                                        + "] is now logged out"
+                                        + " and token ("
+                                        + JWTManager.
+                                                trunkToken(r.getToken())
+                                        + ") is now revoked").
+                                build())
+                        .build())
+                .orElseThrow(() -> new WebApplicationException(
+                        "No JWT header provided or Impossible to revoke the JWT during logout"));
+
     }
 
     @Path("new-password")
@@ -175,7 +151,7 @@ public class AuthenticationService {
 
         String password = this.readNewPassword(npwd);
 
-        return authenticationHelper.getUserEmailFromSecurityContext(sec)
+        return authHelper.getUserEmailFromSecurityContext(sec)
                 .map(email ->
                         Optional.ofNullable(this.userAccountFacade.find(email))
                                 .map(user -> {
