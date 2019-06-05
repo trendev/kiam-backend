@@ -8,7 +8,6 @@ package fr.trendev.comptandye.security.controllers;
 import fr.trendev.comptandye.security.controllers.jwt.JWTManager;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
@@ -26,7 +25,6 @@ import javax.security.enterprise.credential.UsernamePasswordCredential;
 import javax.security.enterprise.identitystore.CredentialValidationResult;
 import javax.security.enterprise.identitystore.DatabaseIdentityStoreDefinition;
 import javax.security.enterprise.identitystore.IdentityStoreHandler;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -56,9 +54,6 @@ public class CustomHttpAuthenticationMechanism implements
 
     @Inject
     private IdentityStoreHandler idStoreHandler;
-
-    @Inject
-    private XSRFTokenGenerator generator;
 
     @Inject
     private JWTManager jwtManager;
@@ -106,17 +101,12 @@ public class CustomHttpAuthenticationMechanism implements
                     return hmc.responseUnauthorized();
                 }
 
-                /**
-                 * Generates an anti-XSRF token and generate a JWT with it
-                 */
-                String xsrf = generator.generate();
                 String jwt = jwtManager.createToken(
                         result.getCallerPrincipal().getName(),
                         new ArrayList<>(result.getCallerGroups()),
-                        xsrf,
+                        "TO_REMOVE",
                         rmbme);
-                rsp.addCookie(this.createXSRFCookie(xsrf));
-                rsp.addCookie(this.createJWTCookie(jwt));
+
                 rsp.addHeader(JWT, jwt);
 
                 /**
@@ -137,13 +127,6 @@ public class CustomHttpAuthenticationMechanism implements
 
         Optional<AuthenticationStatus> as = this.controlHeaders(req, rsp, hmc);
 
-        // Headers control is not supported now
-        // Cookies control instead
-        // Should be removed when Headers control will be fully supported
-        if (!as.isPresent()) {
-            as = this.controlCookies(req, rsp, hmc);
-        }
-
         if (as.isPresent()) {
             return as.get();
         }
@@ -162,79 +145,6 @@ public class CustomHttpAuthenticationMechanism implements
         return hmc.isProtected() ? hmc.responseUnauthorized() : hmc.doNothing();
     }
 
-    private Cookie createAuthenticationCookie(String name, String token) {
-        Cookie c = new Cookie(name, token);
-        c.setPath("/");
-        c.setHttpOnly(false);//should be used by javascript (Angular) scripts
-        c.setSecure(true);//requires to use HTTPS
-        c.setMaxAge(Integer.MAX_VALUE); // converts in second
-        return c;
-    }
-
-    private Cookie createXSRFCookie(String token) {
-        return createAuthenticationCookie("XSRF-TOKEN", token);
-    }
-
-    private Cookie createJWTCookie(String token) {
-        return createAuthenticationCookie(JWT, token);
-    }
-
-    private Optional<AuthenticationStatus> controlCookies(
-            HttpServletRequest req,
-            HttpServletResponse rsp,
-            HttpMessageContext hmc) {
-
-        if (req.getCookies() == null || req.getCookies().length == 0) {
-            return Optional.empty();
-        }
-
-        return Arrays.asList(req.getCookies())
-                .stream()
-                .filter(Objects::nonNull)// avoid null and empty element
-                .filter(c -> JWT.equals(c.getName()))
-                .findFirst()
-                //check if the token is revoked
-                .filter(c -> !this.jwtManager.isRevoked(c.getValue()))
-                .flatMap(c -> this.jwtManager
-                        .extractClaimsSet(c.getValue()))
-                // JWT is valid and signature is verified
-                .filter(clmset -> !this.jwtManager.hasExpired(clmset))
-                .map(clmset -> {
-                    try {
-                        //share the anti xsrf-token with the filters as a request attribute
-                        req.setAttribute("XSRF-TOKEN", clmset.getClaim(
-                                "xsrf"));
-
-                        if (this.jwtManager.canBeRefreshed(clmset)) {
-                            try {
-                                //x-xsrf-token is reused...
-                                String jwt = this.jwtManager
-                                        .refreshToken(clmset);
-                                rsp.addCookie(this.createJWTCookie(jwt));
-                            } catch (Exception ex) {
-                                LOG.log(Level.SEVERE,
-                                        "Impossible to refresh a JWT", ex);
-                            }
-                        }
-
-                        return hmc.notifyContainerAboutLogin(
-                                //get the upn or the subject (MP-JWT)
-                                Optional.
-                                        ofNullable(clmset.getStringClaim(
-                                                "upn"))
-                                        .filter(s -> !s.isEmpty())
-                                        .orElse(clmset.getSubject()),
-                                new HashSet<>(clmset.
-                                        getStringListClaim("groups")));
-                    } catch (ParseException ex) {
-                        LOG.log(Level.SEVERE,
-                                "A valid JWT with a verified signature cannot be parsed: for Security reasons, access will be refused !",
-                                ex);
-                        return hmc.responseUnauthorized();
-                    }
-                });
-    }
-
     private Optional<AuthenticationStatus> controlHeaders(
             HttpServletRequest req,
             HttpServletResponse rsp,
@@ -249,13 +159,8 @@ public class CustomHttpAuthenticationMechanism implements
                 .filter(clmset -> !this.jwtManager.hasExpired(clmset))
                 .map(clmset -> {
                     try {
-                        //TODO : remove the xsrf-token when jwt header will be supported
-                        //share the anti xsrf-token with the filters as a request attribute
-                        req.setAttribute("XSRF-TOKEN", clmset.getClaim(
-                                "xsrf"));
                         if (this.jwtManager.canBeRefreshed(clmset)) {
                             try {
-                                //x-xsrf-token is reused...
                                 String jwt = this.jwtManager.
                                         refreshToken(clmset);
                                 rsp.addHeader(JWT, jwt);
