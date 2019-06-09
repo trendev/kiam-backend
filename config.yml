@@ -1,0 +1,42 @@
+version: 2
+jobs:
+  build_master:
+    machine:
+      docker_layer_caching: true
+    steps:
+      - checkout
+      - run:
+          name: docker build
+          command: docker build -t $DOCKER_IMAGE .
+      - run:
+          name : docker login
+          command: docker login -u $DOCKER_USER -p $DOCKER_PASS
+      - run:
+          name: docker push
+          command: docker push $DOCKER_IMAGE:latest
+  build: # generic job for other branches
+    machine:
+      docker_layer_caching: true
+    steps:
+      - checkout
+      - run:
+          name: docker build
+          command: docker build -t $DOCKER_IMAGE:$CIRCLE_BRANCH -f $CIRCLE_BRANCH.Dockerfile .
+      - run:
+          name : docker login
+          command: docker login -u $DOCKER_USER -p $DOCKER_PASS
+      - run:
+          name: docker push
+          command: docker push $DOCKER_IMAGE:$CIRCLE_BRANCH
+workflows:
+  version: 2
+  commit:
+    jobs:
+    - build_master:
+        filters:
+            branches:
+              only: master
+    - build:
+        filters:
+            branches:
+              ignore: master
