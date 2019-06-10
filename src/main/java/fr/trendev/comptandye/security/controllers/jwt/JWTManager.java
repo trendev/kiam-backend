@@ -47,7 +47,7 @@ public class JWTManager {
     public final static TemporalUnit SHORT_TERM_VALIDITY_UNIT = ChronoUnit.MINUTES;
     public final static int LONG_TERM_VALIDITY = 60;
     public final static TemporalUnit LONG_TERM_VALIDITY_UNIT = ChronoUnit.DAYS;
-    public final static int SLOT = 10;
+    public final static int PERIOD = 10;
 
     public final static String ISS = "https://www.comptandye.fr";
 
@@ -269,7 +269,7 @@ public class JWTManager {
      * @return the Instant when the refresh zone starts
      */
     public Instant refreshZone(Instant iat, Instant exp) {
-        return exp.minusMillis((exp.toEpochMilli() - iat.toEpochMilli()) / SLOT);
+        return exp.minusMillis((exp.toEpochMilli() - iat.toEpochMilli()) / PERIOD);
     }
 
     public Optional<JWTRecord> revokeToken(final String email,
