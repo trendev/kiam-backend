@@ -38,7 +38,6 @@ $AS_ADMIN create-jdbc-resource --passwordfile=${PASSWORD_FILE} --enabled=true --
 $AS_ADMIN create-auth-realm --passwordfile=${PASSWORD_FILE} --classname com.sun.enterprise.security.auth.realm.jdbc.JDBCRealm --property="jaas-context=jdbcRealm:encoding=Base64:password-column=PASSWORD:datasource-jndi=jdbc/MySQLDataSourceComptaNdye:group-table=USER_ACCOUNT_USER_GROUP:charset=UTF-8:user-table=USER_ACCOUNT:group-name-column=userGroups_NAME:group-table-user-name-column=userAccounts_EMAIL:digest-algorithm=SHA-256:user-name-column=EMAIL" comptandye-security-realm && \
 $AS_ADMIN delete-jvm-options --passwordfile=${PASSWORD_FILE} -client:-Xmx512m && \
 $AS_ADMIN create-jvm-options --passwordfile=${PASSWORD_FILE} -server:-Xmx${MEMORY_SIZE}m:-Xms${MEMORY_SIZE}m:-Dfish.payara.classloading.delegate=false:-Duser.timezone=Europe/Paris && \
-# Reset the admin password
 echo 'AS_ADMIN_PASSWORD='${ADMIN_PASSWORD}'\nAS_ADMIN_NEWPASSWORD='${NEW_ADMIN_PASSWORD}'\n' > /tmp/tmpfile && \
 echo 'AS_ADMIN_PASSWORD='${NEW_ADMIN_PASSWORD}'\n' > ${PASSWORD_FILE} && \
 $AS_ADMIN --user $ADMIN_USER  --passwordfile=/tmp/tmpfile disable-secure-admin && \
