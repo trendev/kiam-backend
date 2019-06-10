@@ -44,7 +44,8 @@ echo 'AS_ADMIN_PASSWORD='${ADMIN_PASSWORD}'\nAS_ADMIN_NEWPASSWORD='${NEW_ADMIN_P
 echo 'AS_ADMIN_PASSWORD='${NEW_ADMIN_PASSWORD}'\n' > ${PASSWORD_FILE} && \
 $AS_ADMIN --user $ADMIN_USER  --passwordfile=/tmp/tmpfile disable-secure-admin && \
 $AS_ADMIN --user $ADMIN_USER  --passwordfile=/tmp/tmpfile change-admin-password && \
-$AS_ADMIN --user $ADMIN_USER --passwordfile=${PASSWORD_FILE} enable-secure-admin
+$AS_ADMIN --user $ADMIN_USER --passwordfile=${PASSWORD_FILE} enable-secure-admin && \
+$AS_ADMIN --user $ADMIN_USER --passwordfile=${PASSWORD_FILE} stop-domain
 
 # Configure the HTTP listeners
 RUN echo 'set configs.config.server-config.network-config.network-listeners.network-listener.http-listener-1.jk-enabled=true' >> $POSTBOOT_COMMANDS
