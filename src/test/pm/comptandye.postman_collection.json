@@ -347,6 +347,24 @@
 					"response": []
 				},
 				{
+					"name": "legal-tokens",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/JWTManager/legal-tokens",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"JWTManager",
+								"legal-tokens"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "revokedset",
 					"request": {
 						"method": "GET",
@@ -13859,12 +13877,7 @@
 			],
 			"request": {
 				"method": "POST",
-				"header": [
-					{
-						"key": "X-XSRF-TOKEN",
-						"value": "{{XSRF-TOKEN}}"
-					}
-				],
+				"header": [],
 				"body": {
 					"mode": "raw",
 					"raw": ""

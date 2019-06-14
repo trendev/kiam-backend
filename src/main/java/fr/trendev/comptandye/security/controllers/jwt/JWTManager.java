@@ -100,6 +100,10 @@ public class JWTManager {
                 }));
     }
 
+    public Set<String> getLegalTokens() {
+        return this.jwtWhiteMap.getLegalTokens();
+    }
+
     public JWTRevokedSet getJWTRevokedSet() {
         return jwtRevokedSet;
     }
@@ -269,7 +273,8 @@ public class JWTManager {
      * @return the Instant when the refresh zone starts
      */
     public Instant refreshZone(Instant iat, Instant exp) {
-        return exp.minusMillis((exp.toEpochMilli() - iat.toEpochMilli()) / PERIOD);
+        return exp.minusMillis((exp.toEpochMilli() - iat.toEpochMilli())
+                / PERIOD);
     }
 
     public Optional<JWTRecord> revokeToken(final String email,

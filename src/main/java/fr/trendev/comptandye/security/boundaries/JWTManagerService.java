@@ -48,4 +48,12 @@ public class JWTManagerService {
                 .build();
     }
 
+    @GET
+    @Path("legal-tokens")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getLegalTokens() throws JsonProcessingException {
+        return Response.ok(this.jwtManager.getLegalTokens())
+                .build();
+    }
+
 }
