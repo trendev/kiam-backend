@@ -255,9 +255,8 @@ public class JWTManager {
      * @param token the token to control
      * @return true if the token is legal
      */
-    // TODO : emit a specific slack event if the used token is not legal
     public boolean isForgery(final String token) {
-        return false;
+        return this.jwtWhiteMap.isForgery(token);
     }
 
     /**
