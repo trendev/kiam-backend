@@ -154,6 +154,7 @@ public class CustomHttpAuthenticationMechanism implements
 
         return this.authHelper.getJWTFromRequestHeader(req)
                 .filter(jwt -> !this.jwtManager.isRevoked(jwt))
+                .filter(jwt -> !this.jwtManager.isForgery(jwt))
                 .flatMap(jwt -> this.jwtManager.extractClaimsSet(jwt))
                 // JWT is valid and signature is verified
                 .filter(clmset -> !this.jwtManager.hasExpired(clmset))
