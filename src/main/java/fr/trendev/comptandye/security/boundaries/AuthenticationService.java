@@ -139,7 +139,9 @@ public class AuthenticationService {
                                 build())
                         .build())
                 .orElseThrow(() -> new WebApplicationException(
-                        "No JWT header provided or Impossible to revoke the JWT during logout"));
+                        "INVALID JWT Header (NOT PRESENT or NOT FORMAL): "
+                        + "Impossible to revoke the JWT of user ["
+                        + email + "] during processing its logout"));
 
     }
 
