@@ -398,7 +398,8 @@ public class JWTWhiteMap implements Serializable {
             LOG.log(Level.SEVERE,
                     "JWT FORGERY DETECTED : the following token is not in the Legal Token Set :\n[{0}]",
                     token);
-            this.aec.emitJWTForgeryDetectedEvent(JWTManager.trunkToken(token));
+            this.aec.emitJWTForgeryDetectedEvent(
+                    "[" + JWTManager.trunkToken(token) + "]");
         }
         return !result;
     }
