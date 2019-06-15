@@ -81,9 +81,10 @@ public class SlackAuthenticationEventController implements
     public void emitJWTForgeryDetectedEvent(String token) {
         CompletableFuture.runAsync(() -> {
             JsonObjectBuilder builder = Json.createObjectBuilder()
-                    .add("text", "*JWT FORGERY DETECTED*")
-                    .add("footer", token)
-                    .add("color", "#B33A3A");
+                    .add("pretext", "*JWT FORGERY DETECTED*")
+                    .add("text", token)
+                    .add("footer", "Please, check the server logs")
+                    .add("color", "#FF0000");
 
             this.getBeanManager()
                     .getEvent()
