@@ -6,6 +6,7 @@
 package fr.trendev.comptandye.security.controllers;
 
 import fr.trendev.comptandye.security.controllers.qualifiers.FirestoreIssueLiteral;
+import fr.trendev.comptandye.security.controllers.qualifiers.JWTForgeryDetectedLiteral;
 import fr.trendev.comptandye.security.controllers.qualifiers.LoginDetectedLiteral;
 import fr.trendev.comptandye.security.controllers.qualifiers.LogoutDetectedLiteral;
 import java.util.concurrent.CompletableFuture;
@@ -78,6 +79,16 @@ public class SlackAuthenticationEventController implements
 
     @Override
     public void emitJWTForgeryDetectedEvent(String token) {
-        // TODO : Emit an event
+        CompletableFuture.runAsync(() -> {
+            JsonObjectBuilder builder = Json.createObjectBuilder()
+                    .add("text", "*JWT FORGERY DETECTED*")
+                    .add("footer", token)
+                    .add("color", "#B33A3A");
+
+            this.getBeanManager()
+                    .getEvent()
+                    .select(new JWTForgeryDetectedLiteral())
+                    .fire(builder.build());
+        });
     }
 }
