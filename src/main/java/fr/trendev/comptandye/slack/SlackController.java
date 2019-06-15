@@ -8,13 +8,14 @@ package fr.trendev.comptandye.slack;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.trendev.comptandye.security.controllers.qualifiers.FirestoreIssue;
+import fr.trendev.comptandye.security.controllers.qualifiers.JWTForgeryDetected;
 import fr.trendev.comptandye.security.controllers.qualifiers.LoginDetected;
 import fr.trendev.comptandye.security.controllers.qualifiers.LogoutDetected;
 import fr.trendev.comptandye.security.controllers.qualifiers.NewDemoAccountPassword;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
-import javax.ejb.Singleton;
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.enterprise.event.TransactionPhase;
 import javax.inject.Inject;
@@ -30,7 +31,7 @@ import javax.ws.rs.core.Response;
  *
  * @author jsie
  */
-@Singleton
+@ApplicationScoped
 public class SlackController {
 
     private final String SLACK_URL;
@@ -64,25 +65,30 @@ public class SlackController {
      * Observes if a new password is created for the demo account and send it to
      * slack channel (authentication)
      *
-     * @param object the content of the slack message
+     * @param jo the content of the slack message
      */
     public void observeDemoAccountNewPassword(
             @Observes(during = TransactionPhase.AFTER_SUCCESS)
-            @NewDemoAccountPassword JsonObject object) {
-        this.controlPostMessage(object, AUTHENTICATION_CHANNEL);
+            @NewDemoAccountPassword JsonObject jo) {
+        this.controlPostMessage(jo, AUTHENTICATION_CHANNEL);
     }
 
-    public void observeLogins(@Observes @LoginDetected JsonObject object) {
-        this.controlPostMessage(object, LOGINS_CHANNEL);
+    public void observeLogins(@Observes @LoginDetected JsonObject jo) {
+        this.controlPostMessage(jo, LOGINS_CHANNEL);
     }
 
-    public void observeLogouts(@Observes @LogoutDetected JsonObject object) {
-        this.controlPostMessage(object, LOGINS_CHANNEL);
+    public void observeLogouts(@Observes @LogoutDetected JsonObject jo) {
+        this.controlPostMessage(jo, LOGINS_CHANNEL);
     }
 
     public void observeFirestoreIssues(
-            @Observes @FirestoreIssue JsonObject object) {
-        this.controlPostMessage(object, FIRESTORE_CHANNEL);
+            @Observes @FirestoreIssue JsonObject jo) {
+        this.controlPostMessage(jo, FIRESTORE_CHANNEL);
+    }
+
+    public void observeJWTForgery(
+            @Observes @JWTForgeryDetected JsonObject jo) {
+        this.controlPostMessage(jo, AUTHENTICATION_CHANNEL);
     }
 
     private void controlPostMessage(JsonObject object, final String channel) {
