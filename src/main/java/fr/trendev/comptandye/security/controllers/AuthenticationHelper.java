@@ -80,7 +80,8 @@ public class AuthenticationHelper {
             HttpServletRequest req) {
         return Optional.ofNullable(req.getHeader("Authorization"))
                 .filter(Objects::nonNull)// avoid null and empty element
-                .map(a -> a.substring("Bearer ".length(), a.length())); // get the JWT
+                // get the token (JWT)
+                .map(a -> a.substring("Bearer ".length(), a.length()));
     }
 
 }
