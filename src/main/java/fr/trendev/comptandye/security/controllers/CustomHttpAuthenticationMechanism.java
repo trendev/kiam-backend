@@ -147,6 +147,7 @@ public class CustomHttpAuthenticationMechanism implements
         return hmc.isProtected() ? hmc.responseUnauthorized() : hmc.doNothing();
     }
 
+    // TODO : refactor this method in order to differentiate expired token and forged token
     private Optional<AuthenticationStatus> controlHeaders(
             HttpServletRequest req,
             HttpServletResponse rsp,
@@ -159,7 +160,8 @@ public class CustomHttpAuthenticationMechanism implements
 
         return this.authHelper.getJWTFromRequestHeader(req)
                 .filter(jwt -> !this.jwtManager.isRevoked(jwt))
-                .filter(jwt -> !this.jwtManager.isForgery(jwt))
+                // remove this filter here, otherwise expired token will be detected as forged token : wrong positive
+                //.filter(jwt -> !this.jwtManager.isForgery(jwt))
                 .flatMap(jwt -> this.jwtManager.extractClaimsSet(jwt))
                 // JWT is valid and signature is verified
                 .filter(clmset -> !this.jwtManager.hasExpired(clmset))
