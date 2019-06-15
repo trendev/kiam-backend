@@ -65,7 +65,6 @@ public class CustomHttpAuthenticationMechanism implements
             HttpServletResponse rsp, HttpMessageContext hmc) throws
             AuthenticationException {
 
-        // DEBUG Purposes
         LOG.log(Level.INFO, "Validating a request : {0} / {1}",
                 new Object[]{
                     hmc.isProtected() ? "PROTECTED" : "UNPROTECTED",
@@ -147,24 +146,27 @@ public class CustomHttpAuthenticationMechanism implements
         return hmc.isProtected() ? hmc.responseUnauthorized() : hmc.doNothing();
     }
 
-    // TODO : refactor this method in order to differentiate expired token and forged token
     private Optional<AuthenticationStatus> controlHeaders(
             HttpServletRequest req,
             HttpServletResponse rsp,
             HttpMessageContext hmc) {
 
-        // prevent to analyse the token on unprotected requests
-        if (!hmc.isProtected()) {
+        Optional<String> optionalJWT =
+                this.authHelper.getJWTFromRequestHeader(req);
+
+        // controls if a token is provided
+        // and prevents to analyse the token for unprotected incoming requests
+        if (!optionalJWT.isPresent() || !hmc.isProtected()) {
             return Optional.empty();
         }
 
-        return this.authHelper.getJWTFromRequestHeader(req)
+        return optionalJWT
                 .filter(jwt -> !this.jwtManager.isRevoked(jwt))
-                // remove this filter here, otherwise expired token will be detected as forged token : wrong positive
-                //.filter(jwt -> !this.jwtManager.isForgery(jwt))
                 .flatMap(jwt -> this.jwtManager.extractClaimsSet(jwt))
                 // JWT is valid and signature is verified
                 .filter(clmset -> !this.jwtManager.hasExpired(clmset))
+                .filter(clmset ->
+                        !this.jwtManager.isForgery(optionalJWT.get()))
                 .map(clmset -> {
                     try {
                         if (this.jwtManager.canBeRefreshed(clmset)) {
