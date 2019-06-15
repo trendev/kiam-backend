@@ -13,9 +13,11 @@ import java.io.Serializable;
  */
 public interface AuthenticationEventController extends Serializable {
 
-    public void login(String email);
+    public void emitLoginEvent(String email);
 
-    public void logout(String email);
+    public void emitLogoutEvent(String email);
 
-    public void postFirestoreIssue(String message, String details);
+    public void emitFirestoreIssue(String message, String details);
+
+    public void emitJWTForgeryDetectedEvent(String token);
 }

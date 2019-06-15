@@ -16,7 +16,7 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
 /**
- * Controls the logins/logout directly in the active session tracker.
+ * Controls the logins/emitLogoutEvent directly in the active session tracker.
  *
  * @author jsie
  */
@@ -31,7 +31,7 @@ public class SlackAuthenticationEventController implements
     }
 
     @Override
-    public void login(String email) {
+    public void emitLoginEvent(String email) {
         CompletableFuture.runAsync(() -> this.getBeanManager()
                 .getEvent()
                 .select(new LoginDetectedLiteral())
@@ -39,7 +39,7 @@ public class SlackAuthenticationEventController implements
     }
 
     @Override
-    public void logout(String email) {
+    public void emitLogoutEvent(String email) {
         CompletableFuture.runAsync(() -> this.getBeanManager()
                 .getEvent()
                 .select(new LogoutDetectedLiteral())
@@ -62,7 +62,7 @@ public class SlackAuthenticationEventController implements
     }
 
     @Override
-    public void postFirestoreIssue(String message, String details) {
+    public void emitFirestoreIssue(String message, String details) {
         CompletableFuture.runAsync(() -> {
             JsonObjectBuilder builder = Json.createObjectBuilder()
                     .add("text", message)
@@ -76,4 +76,8 @@ public class SlackAuthenticationEventController implements
         });
     }
 
+    @Override
+    public void emitJWTForgeryDetectedEvent(String token) {
+        // TODO : Emit an event
+    }
 }

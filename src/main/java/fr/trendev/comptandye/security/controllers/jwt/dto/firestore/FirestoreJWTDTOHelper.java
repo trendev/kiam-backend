@@ -94,7 +94,7 @@ public class FirestoreJWTDTOHelper {
             T t,
             Logger LOG) {
         LOG.log(Level.WARNING, message, ex);
-        AEC.postFirestoreIssue(message, ex.getMessage());
+        AEC.emitFirestoreIssue(message, ex.getMessage());
         return t;
     }
 

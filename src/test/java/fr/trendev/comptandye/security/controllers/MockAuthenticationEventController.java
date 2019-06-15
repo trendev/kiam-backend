@@ -19,21 +19,26 @@ public class MockAuthenticationEventController implements
             MockAuthenticationEventController.class.getName());
 
     @Override
-    public void logout(String email) {
+    public void emitLogoutEvent(String email) {
         LOG.log(Level.INFO, "Mocking LOG-IN event for user {0}", email);
     }
 
     @Override
-    public void login(String email) {
+    public void emitLoginEvent(String email) {
         LOG.log(Level.INFO, "Mocking LOG-OUT event for user {0}", email);
     }
 
     @Override
-    public void postFirestoreIssue(String message, String details) {
+    public void emitFirestoreIssue(String message, String details) {
         LOG.log(Level.INFO,
                 "Mocking FIRESTORE-ISSUE event with message :\n{0} and details :\n{1}",
                 new Object[]{message,
                     details});
+    }
+
+    @Override
+    public void emitJWTForgeryDetectedEvent(String token) {
+        LOG.log(Level.SEVERE, "### JWT FORGERY DETECTED ###\n{0}", token);
     }
 
 }
