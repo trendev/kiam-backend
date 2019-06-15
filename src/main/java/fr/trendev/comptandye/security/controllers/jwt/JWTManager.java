@@ -228,6 +228,17 @@ public class JWTManager {
         return Optional.empty();
     }
 
+    /**
+     * Controls the token
+     *
+     * @param token the token to control and convert in claims set
+     * @return true if the token is extracted, verified and legal
+     */
+    public Optional<JWTClaimsSet> extractLegalClaimsSet(String token) {
+        return this.extractClaimsSet(token).filter(
+                clmset -> !this.hasExpired(clmset) && !this.isForgery(token));
+    }
+
     public boolean hasExpired(final JWTClaimsSet claims) {
         Instant now = Instant.now();
         Instant exp = claims.getExpirationTime().toInstant();

@@ -151,22 +151,15 @@ public class CustomHttpAuthenticationMechanism implements
             HttpServletResponse rsp,
             HttpMessageContext hmc) {
 
-        Optional<String> optionalJWT =
-                this.authHelper.getJWTFromRequestHeader(req);
-
-        // controls if a token is provided
-        // and prevents to analyse the token for unprotected incoming requests
-        if (!optionalJWT.isPresent() || !hmc.isProtected()) {
+        // prevents to analyse the token for unprotected incoming requests
+        if (!hmc.isProtected()) {
             return Optional.empty();
         }
 
-        return optionalJWT
+        return this.authHelper.getJWTFromRequestHeader(req)
                 .filter(jwt -> !this.jwtManager.isRevoked(jwt))
-                .flatMap(jwt -> this.jwtManager.extractClaimsSet(jwt))
+                .flatMap(jwt -> this.jwtManager.extractLegalClaimsSet(jwt))
                 // JWT is valid and signature is verified
-                .filter(clmset -> !this.jwtManager.hasExpired(clmset))
-                .filter(clmset ->
-                        !this.jwtManager.isForgery(optionalJWT.get()))
                 .map(clmset -> {
                     try {
                         if (this.jwtManager.canBeRefreshed(clmset)) {
