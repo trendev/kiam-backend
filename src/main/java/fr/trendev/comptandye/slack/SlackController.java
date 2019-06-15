@@ -15,7 +15,8 @@ import fr.trendev.comptandye.security.controllers.qualifiers.NewDemoAccountPassw
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.enterprise.event.Observes;
 import javax.enterprise.event.TransactionPhase;
 import javax.inject.Inject;
@@ -31,7 +32,8 @@ import javax.ws.rs.core.Response;
  *
  * @author jsie
  */
-@ApplicationScoped
+@Singleton
+@Startup
 public class SlackController {
 
     private final String SLACK_URL;
