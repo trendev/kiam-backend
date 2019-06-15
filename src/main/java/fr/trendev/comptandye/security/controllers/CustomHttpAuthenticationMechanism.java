@@ -152,6 +152,11 @@ public class CustomHttpAuthenticationMechanism implements
             HttpServletResponse rsp,
             HttpMessageContext hmc) {
 
+        // prevent to analyse the token on unprotected requests
+        if (!hmc.isProtected()) {
+            return Optional.empty();
+        }
+
         return this.authHelper.getJWTFromRequestHeader(req)
                 .filter(jwt -> !this.jwtManager.isRevoked(jwt))
                 .filter(jwt -> !this.jwtManager.isForgery(jwt))
