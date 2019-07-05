@@ -71,6 +71,7 @@ public class CustomHttpAuthenticationMechanism implements
                     hmc.isAuthenticationRequest() ? "AUTHENTICATION" : "NORMAL"
                 });
 
+        // TODO : control the JWT token first
         /**
          * Checks if the request is a login request
          */
