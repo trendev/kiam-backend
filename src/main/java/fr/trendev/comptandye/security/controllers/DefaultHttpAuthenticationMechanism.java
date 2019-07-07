@@ -46,7 +46,8 @@ import javax.servlet.http.HttpServletResponse;
 public class DefaultHttpAuthenticationMechanism implements
         HttpAuthenticationMechanism {
 
-    private static final Logger LOG = Logger.getLogger(DefaultHttpAuthenticationMechanism.class.getName());
+    private static final Logger LOG = Logger.getLogger(
+            DefaultHttpAuthenticationMechanism.class.getName());
 
     public static final String JWT = "JWT";
 
@@ -70,11 +71,22 @@ public class DefaultHttpAuthenticationMechanism implements
                     hmc.isAuthenticationRequest() ? "AUTHENTICATION" : "NORMAL"
                 });
 
-        // TODO : control the JWT token first
         /**
-         * Checks if the request is a login request
+         * control the authorization token first : prevent to login
+         * authenticated users
          */
-        if (req.getParameter("username") != null
+        Optional<AuthenticationStatus> as = this.controlHeaders(req, rsp, hmc);
+        if (as.isPresent()) {
+            LOG.severe("Authentication Status is present...");
+            return as.get();
+        }
+
+        /**
+         * if authorization token is not present or not valid, control if the
+         * request is a login request
+         */
+        if (hmc.isAuthenticationRequest() && hmc.isProtected()
+                && req.getParameter("username") != null
                 && req.getParameter("password") != null
                 && req.getMethod().equals("GET")
                 // path should ends with login...
@@ -124,12 +136,6 @@ public class DefaultHttpAuthenticationMechanism implements
                         + " FAILED : INTERNAL ERROR", ex);
                 return hmc.responseUnauthorized();
             }
-        }
-
-        Optional<AuthenticationStatus> as = this.controlHeaders(req, rsp, hmc);
-
-        if (as.isPresent()) {
-            return as.get();
         }
 
         return this.controlProtectedResource(hmc);
