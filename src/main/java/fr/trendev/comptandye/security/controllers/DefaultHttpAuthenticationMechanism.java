@@ -65,10 +65,10 @@ public class DefaultHttpAuthenticationMechanism implements
             HttpServletResponse rsp, HttpMessageContext hmc) throws
             AuthenticationException {
 
-        LOG.log(Level.INFO, "Validating a request : {0} / {1}",
+        LOG.log(Level.INFO, "{0} {1}",
                 new Object[]{
-                    hmc.isProtected() ? "PROTECTED" : "UNPROTECTED",
-                    hmc.isAuthenticationRequest() ? "AUTHENTICATION" : "NORMAL"
+                    req.getMethod(),
+                    req.getRequestURL()
                 });
 
         /**
@@ -77,7 +77,6 @@ public class DefaultHttpAuthenticationMechanism implements
          */
         Optional<AuthenticationStatus> as = this.controlHeaders(req, rsp, hmc);
         if (as.isPresent()) {
-            LOG.severe("Authentication Status is present...");
             return as.get();
         }
 
@@ -156,11 +155,6 @@ public class DefaultHttpAuthenticationMechanism implements
             HttpServletRequest req,
             HttpServletResponse rsp,
             HttpMessageContext hmc) {
-
-        // prevents to analyse the token for unprotected incoming requests
-        if (!hmc.isProtected()) {
-            return Optional.empty();
-        }
 
         return this.authHelper.getJWTFromRequestHeader(req)
                 .filter(jwt -> !this.jwtManager.isRevoked(jwt))
