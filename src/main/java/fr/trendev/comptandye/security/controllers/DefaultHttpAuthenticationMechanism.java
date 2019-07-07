@@ -43,11 +43,10 @@ import javax.servlet.http.HttpServletResponse;
         priority = 1
 )
 @ApplicationScoped
-public class CustomHttpAuthenticationMechanism implements
+public class DefaultHttpAuthenticationMechanism implements
         HttpAuthenticationMechanism {
 
-    private static final Logger LOG = Logger.getLogger(
-            CustomHttpAuthenticationMechanism.class.getName());
+    private static final Logger LOG = Logger.getLogger(DefaultHttpAuthenticationMechanism.class.getName());
 
     public static final String JWT = "JWT";
 

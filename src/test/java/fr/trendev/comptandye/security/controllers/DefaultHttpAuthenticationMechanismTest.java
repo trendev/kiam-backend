@@ -12,9 +12,9 @@ import org.junit.jupiter.api.Assertions;
  *
  * @author jsie
  */
-public class CustomHttpAuthenticationMechanismTest {
+public class DefaultHttpAuthenticationMechanismTest {
 
-    public CustomHttpAuthenticationMechanismTest() {
+    public DefaultHttpAuthenticationMechanismTest() {
     }
 
     @Test
