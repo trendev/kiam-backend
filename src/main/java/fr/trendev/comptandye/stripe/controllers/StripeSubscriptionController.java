@@ -33,7 +33,7 @@ public class StripeSubscriptionController {
     public Subscription createDefaultSubscription(Customer customer,
             Professional pro) throws StripeException {
         Map<String, Object> item = new HashMap<>();
-        item.put("plan", "classic");
+        item.put("plan", "basic");
         Map<String, Object> items = new HashMap<>();
         items.put("0", item);
         Map<String, Object> params = new HashMap<>();
