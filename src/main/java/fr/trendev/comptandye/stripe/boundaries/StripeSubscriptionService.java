@@ -6,7 +6,7 @@
 package fr.trendev.comptandye.stripe.boundaries;
 
 import com.stripe.model.Customer;
-import com.stripe.model.Invoice;
+import com.stripe.model.InvoiceCollection;
 import com.stripe.model.Subscription;
 import fr.trendev.comptandye.exceptions.ThrowingFunction;
 import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
@@ -15,7 +15,6 @@ import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
 import fr.trendev.comptandye.stripe.controllers.StripeCustomerController;
 import fr.trendev.comptandye.stripe.controllers.StripeSubscriptionController;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
@@ -261,19 +260,18 @@ public class StripeSubscriptionService {
             String proEmail = authenticationHelper.
                     getProEmail(sec, email);
             Professional pro = professionalFacade.find(proEmail);
-            List<Invoice> invoices = this.stripeCustomerUtils
+            InvoiceCollection invoices = this.stripeCustomerUtils
                     .getInvoices(pro);
 
-            int size = invoices.size();
+            int size = invoices.getData().size();
 
             LOG.log(Level.INFO,
-                    "Providing invoices of Stripe Customer {0}/{1}: {2} invoice{3}",
+                    "Providing invoices of Stripe Customer {0}/{1}: {2}",
                     new Object[]{
                         pro.getStripeCustomerId(),
                         pro.getEmail(),
-                        size,
-                        size > 1 ? "s" : ""});
-            return Response.ok(invoices).build();
+                        size});
+            return Response.ok(invoices.toJson()).build();
         } catch (Exception ex) {
             throw new WebApplicationException(
                     "Error providing Invoices", ex);

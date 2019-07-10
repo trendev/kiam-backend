@@ -8,6 +8,7 @@ package fr.trendev.comptandye.stripe.controllers;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
 import com.stripe.model.Invoice;
+import com.stripe.model.InvoiceCollection;
 import com.stripe.model.Source;
 import fr.trendev.comptandye.professional.entities.Professional;
 import java.util.HashMap;
@@ -157,18 +158,22 @@ public class StripeCustomerController {
      * @return the Stripe Invoice list
      * @throws StripeException if errors occur from the Stripe services
      */
-    public List<Invoice> getInvoices(Professional pro) throws
+    public InvoiceCollection getInvoices(Professional pro) throws
             StripeException {
 
         Map<String, Object> invoiceParams = new HashMap<>();
         invoiceParams.put("limit", 100);
         invoiceParams.put("customer", pro.getStripeCustomerId());
 
-        List<Invoice> invoices = new LinkedList<>();
+        List<Invoice> list = new LinkedList<>();
 
         for (Invoice i : Invoice.list(invoiceParams).autoPagingIterable()) {
-            invoices.add(i);
+            list.add(i);
         }
+
+        InvoiceCollection invoices = new InvoiceCollection();
+        invoices.setData(list);
+
         return invoices;
     }
 }
