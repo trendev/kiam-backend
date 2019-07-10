@@ -12,6 +12,8 @@ import com.stripe.model.InvoiceCollection;
 import com.stripe.model.Source;
 import fr.trendev.comptandye.professional.entities.Professional;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import javax.ejb.Singleton;
 import javax.ws.rs.WebApplicationException;
@@ -107,10 +109,10 @@ public class StripeCustomerController {
     public Customer addSource(String sourceId, Professional pro) throws
             StripeException {
         Customer customer = this.retrieveCustomer(pro);
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         params.put("source", sourceId);
         customer.getSources().create(params);
-        params = new HashMap<String, Object>();
+        params = new HashMap<>();
         params.put("default_source", sourceId);
         return customer.update(params);
     }
@@ -126,7 +128,7 @@ public class StripeCustomerController {
     public Customer defaultSource(String sourceId, Professional pro) throws
             StripeException {
         Customer customer = this.retrieveCustomer(pro);
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         params.put("default_source", sourceId);
         return customer.update(params);
     }
@@ -159,13 +161,20 @@ public class StripeCustomerController {
     public InvoiceCollection getInvoices(Professional pro) throws
             StripeException {
 
-        int r = 5; // retention period of 5 years 
-        int n = r * 12;
-        Map<String, Object> invoiceParams = new HashMap<String, Object>();
-        //TODO: manage this limit if the Professional has more than 100 invoices
-        invoiceParams.put("limit", (n > 100) ? 100 : n);
+        Map<String, Object> invoiceParams = new HashMap<>();
+        invoiceParams.put("limit", 100);
         invoiceParams.put("customer", pro.getStripeCustomerId());
 
-        return Invoice.list(invoiceParams);
+        List<Invoice> list = new LinkedList<>();
+
+        for (Invoice i : Invoice.list(invoiceParams).autoPagingIterable()) {
+            list.add(i);
+        }
+
+        InvoiceCollection invoices = new InvoiceCollection();
+        invoices.setData(list);
+
+        System.out.println("INVOICES : " + invoices.toJson());
+        return invoices;
     }
 }
