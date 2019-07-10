@@ -6,15 +6,16 @@
 package fr.trendev.comptandye.stripe.boundaries;
 
 import com.stripe.model.Customer;
-import com.stripe.model.InvoiceCollection;
+import com.stripe.model.Invoice;
 import com.stripe.model.Subscription;
-import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.exceptions.ThrowingFunction;
-import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
 import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
+import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
 import fr.trendev.comptandye.stripe.controllers.StripeCustomerController;
 import fr.trendev.comptandye.stripe.controllers.StripeSubscriptionController;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
@@ -260,10 +261,10 @@ public class StripeSubscriptionService {
             String proEmail = authenticationHelper.
                     getProEmail(sec, email);
             Professional pro = professionalFacade.find(proEmail);
-            InvoiceCollection invoices = this.stripeCustomerUtils
+            List<Invoice> invoices = this.stripeCustomerUtils
                     .getInvoices(pro);
 
-            int size = invoices.getData().size();
+            int size = invoices.size();
 
             LOG.log(Level.INFO,
                     "Providing invoices of Stripe Customer {0}/{1}: {2} invoice{3}",
@@ -272,7 +273,7 @@ public class StripeSubscriptionService {
                         pro.getEmail(),
                         size,
                         size > 1 ? "s" : ""});
-            return Response.ok(invoices.toJson()).build();
+            return Response.ok(invoices).build();
         } catch (Exception ex) {
             throw new WebApplicationException(
                     "Error providing Invoices", ex);
