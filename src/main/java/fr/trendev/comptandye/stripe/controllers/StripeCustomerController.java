@@ -151,8 +151,7 @@ public class StripeCustomerController {
 
     /**
      * Provides the Stripe Invoices of the Stripe Customer linked to the
-     * Professional. Retention period is 5 years. Stripe limits the response to
-     * a max of 100 invoices.
+     * Professional.
      *
      * @param pro the Professional
      * @return the Stripe Invoice list
@@ -167,10 +166,21 @@ public class StripeCustomerController {
 
         List<Invoice> list = new LinkedList<>();
 
+        /**
+         * Gather the Stripe Invoices using the auto paging iteration. It will
+         * request ALL invoices compared to Invoice.list() which request only
+         * 100 max invoices.
+         */
         for (Invoice i : Invoice.list(invoiceParams).autoPagingIterable()) {
             list.add(i);
         }
 
+        /**
+         * For JSON serialization purposes, use an InvoiceCollection instead of
+         * returning a List<Invoice>. Invoices will be serialized and the fields
+         * won't fit with the Stripe JSON serialization. Ex: amount_due becomes
+         * amountDue.
+         */
         InvoiceCollection invoices = new InvoiceCollection();
         invoices.setData(list);
 
