@@ -11,6 +11,8 @@ import com.stripe.model.Subscription;
 import fr.trendev.comptandye.professional.entities.Professional;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import javax.ejb.Singleton;
 
@@ -36,10 +38,15 @@ public class StripeSubscriptionController {
         item.put("plan", "basic");
         Map<String, Object> items = new HashMap<>();
         items.put("0", item);
+        // attempt payment
+        List<String> expandList = new LinkedList<>();
+        expandList.add("latest_invoice.payment_intent");
+
         Map<String, Object> params = new HashMap<>();
         params.put("customer", customer.getId());
         params.put("items", items);
         params.put("tax_percent", 20);// VAT in France for web services
+        params.put("expand", expandList);
 
         // checks if Professional is in the Ambassador User Group
         // if yes, the Subscription is linked with a discount (100% free)
