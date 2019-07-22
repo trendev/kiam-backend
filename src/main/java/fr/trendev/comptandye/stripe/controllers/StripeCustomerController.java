@@ -29,15 +29,15 @@ public class StripeCustomerController {
      * Creates a Stripe Customer from a Stripe Source, the data of the
      * Professional.
      *
-     * @param sourceId the id of the Stripe Source
+     * @param token the id of the Stripe Token
      * @param pro the Professional
      * @return the new Stripe Customer
      * @throws StripeException if errors occur from Stripe services
      */
-    public Customer create(String sourceId, Professional pro) throws
+    public Customer create(String token, Professional pro) throws
             StripeException {
         Map<String, Object> params = new HashMap<>();
-        params.put("source", sourceId);
+        params.put("source", token);
         params.put("email", pro.getEmail());
         params.put("description", pro.getCustomerDetails().getFirstName()
                 + " " + pro.getCustomerDetails().getLastName());

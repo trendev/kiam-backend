@@ -32,13 +32,13 @@ public class StripeSubscriptionController {
      * @return the active Stripe Subscription to the Stripe Plan "classic"
      * @throws StripeException if errors occur from the Stripe services
      */
-    public Subscription createDefaultSubscription(Customer customer,
+    public Subscription createBasicSubscription(Customer customer,
             Professional pro) throws StripeException {
         Map<String, Object> item = new HashMap<>();
         item.put("plan", "basic");
         Map<String, Object> items = new HashMap<>();
         items.put("0", item);
-        // attempt payment
+        // attempt payment, required for further 3DS validation
         List<String> expandList = new LinkedList<>();
         expandList.add("latest_invoice.payment_intent");
 

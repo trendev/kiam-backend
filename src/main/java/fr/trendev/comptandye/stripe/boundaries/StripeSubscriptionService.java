@@ -64,7 +64,7 @@ public class StripeSubscriptionService {
      * with the Stripe Customer
      *
      * @param sec the Security Context
-     * @param stripeSourceJson the Stripe Source provided as JSON object
+     * @param payload the Stripe Source provided as JSON object
      * @param email the email of the Professional if the service is called by an
      * Administrator
      * @return the Stripe Subscription if successful, an Error otherwise
@@ -74,7 +74,7 @@ public class StripeSubscriptionService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response subscription(@Context SecurityContext sec,
-            JsonObject stripeSourceJson,
+            JsonObject payload,
             @QueryParam("email") String email) {
         try {
 
@@ -82,13 +82,13 @@ public class StripeSubscriptionService {
                     getProEmail(sec, email);
             Professional pro = professionalFacade.find(proEmail);
 
-            String sourceId = stripeSourceJson.getString("id");
-            Customer customer = this.stripeCustomerUtils.create(sourceId, pro);
+            String token = payload.getString("id");
+            Customer customer = this.stripeCustomerUtils.create(token, pro);
 
             LOG.log(Level.INFO, "Stripe Customer {0} created", customer.getId());
 
             Subscription subscription = this.stripeSubscriptionUtils
-                    .createDefaultSubscription(customer, pro);
+                    .createBasicSubscription(customer, pro);
 
             LOG.log(Level.INFO,
                     "Stripe Subscription {0} created and linked with Stripe Customer {1}",
