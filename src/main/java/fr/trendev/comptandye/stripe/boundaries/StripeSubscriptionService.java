@@ -87,9 +87,25 @@ public class StripeSubscriptionService {
             return Response.ok(si.toJson()).build();
         } catch (StripeException ex) {
             throw new WebApplicationException(
-                    "Error creating a creating Stripe SetupIntent", ex);
+                    "Error creating a Stripe SetupIntent", ex);
         }
-    }// TODO : cancel a setup-intent
+    }
+
+    @Path("cancel-setup-intent/{id}")
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response cancelSetupIntent(
+            @PathParam("id") String id) {
+        try {
+            SetupIntent intent = SetupIntent.retrieve(id);
+            SetupIntent canceledSetupIntent = intent.cancel();
+            return Response.ok(canceledSetupIntent.toJson()).build();
+        } catch (StripeException ex) {
+            throw new WebApplicationException(
+                    "Error canceling a Stripe SetupIntent", ex);
+        }
+    }
 
     /**
      * Creates a Stripe Customer, creates a Stripe Subscription and links it
