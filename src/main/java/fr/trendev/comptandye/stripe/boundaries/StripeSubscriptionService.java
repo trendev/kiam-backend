@@ -67,19 +67,29 @@ public class StripeSubscriptionService {
     @Path("create-setup-intent")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createSetupIntent() {
+    public Response createSetupIntent(
+            @QueryParam("payment_method_types") String payment_method_types) {
         try {
             Map<String, Object> setupIntentParams = new HashMap<>();
-            ArrayList<String> paymentMethodTypes = new ArrayList<>();
-            paymentMethodTypes.add("card");
-            setupIntentParams.put("payment_method_types", paymentMethodTypes);
+
+            // https://stripe.com/docs/api/setup_intents/create?lang=java#create_setup_intent-payment_method_types
+            if (payment_method_types != null
+                    && !payment_method_types.isEmpty()) {
+                ArrayList<String> paymentMethodTypes = new ArrayList<>();
+                paymentMethodTypes.add(payment_method_types);
+                setupIntentParams.
+                        put("payment_method_types", paymentMethodTypes);
+            }
+
+            setupIntentParams.put("confirm", true);
             SetupIntent si = SetupIntent.create(setupIntentParams);
+
             return Response.ok(si.toJson()).build();
         } catch (StripeException ex) {
             throw new WebApplicationException(
                     "Error creating a creating Stripe SetupIntent", ex);
         }
-    }
+    }// TODO : cancel a setup-intent
 
     /**
      * Creates a Stripe Customer, creates a Stripe Subscription and links it
