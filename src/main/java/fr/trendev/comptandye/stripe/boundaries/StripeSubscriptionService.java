@@ -100,7 +100,8 @@ public class StripeSubscriptionService {
             @PathParam("id") String id) {
         try {
             SetupIntent intent = SetupIntent.retrieve(id);
-            SetupIntent canceledSetupIntent = intent.cancel();
+Map<String, Object> setupIntentParams = new HashMap<>();
+            SetupIntent canceledSetupIntent = intent.cancel(setupIntentParams);
             return Response.ok(canceledSetupIntent.toJson()).build();
         } catch (StripeException ex) {
             throw new WebApplicationException(
