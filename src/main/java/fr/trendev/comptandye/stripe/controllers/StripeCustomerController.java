@@ -37,7 +37,13 @@ public class StripeCustomerController {
     public Customer create(String token, Professional pro) throws
             StripeException {
         Map<String, Object> params = new HashMap<>();
+
         params.put("source", token);
+
+        Map<String, Object> invoicesSettings = new HashMap<>();
+        invoicesSettings.put("footer", "comptandye"); // add TRENDev SASU legals
+        params.put("invoice_settings", invoicesSettings);
+
         params.put("email", pro.getEmail());
         params.put("description", pro.getCustomerDetails().getFirstName()
                 + " " + pro.getCustomerDetails().getLastName());
