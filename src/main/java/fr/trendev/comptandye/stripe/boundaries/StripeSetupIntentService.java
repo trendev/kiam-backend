@@ -13,8 +13,8 @@ import java.util.Map;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -34,7 +34,7 @@ public class StripeSetupIntentService {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createSetupIntent(
+    public Response create(
             @QueryParam("payment_method_types") String payment_method_types) {
         try {
             Map<String, Object> setupIntentParams = new HashMap<>();
@@ -48,7 +48,6 @@ public class StripeSetupIntentService {
                         put("payment_method_types", paymentMethodTypes);
             }
 
-            setupIntentParams.put("confirm", true);
             SetupIntent si = SetupIntent.create(setupIntentParams);
 
             return Response.ok(si.toJson()).build();
@@ -59,11 +58,11 @@ public class StripeSetupIntentService {
     }
 
     @Path("cancel/{id}")
-    @PUT
+    @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed({"Administrator"})
-    public Response cancelSetupIntent(
+    public Response cancel(
             @PathParam("id") String id) {
         try {
             SetupIntent intent = SetupIntent.retrieve(id);
