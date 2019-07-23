@@ -13860,6 +13860,121 @@
 			]
 		},
 		{
+			"name": "Stripe",
+			"item": [
+				{
+					"name": "SetupIntent",
+					"item": [
+						{
+							"name": "create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ea457b4a-1af8-4988-b120-6b890413b19a",
+										"exec": [
+											"pm.test(\"response is 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"    pm.response.to.be.ok;",
+											"});",
+											"",
+											"pm.test('response has a body',function(){",
+											"    pm.response.to.have.body();",
+											"});",
+											"",
+											"pm.test('id is defined',function(){",
+											"    pm.response.to.have.jsonBody('id');",
+											"    pm.environment.set('setup_intent_id',pm.response.json().id)",
+											"});",
+											"",
+											"pm.test('object is setup_intent',function(){",
+											"    pm.response.to.have.jsonBody('object');",
+											"    pm.expect(pm.response.json().object).to.equal('setup_intent');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/setup-intent",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"setup-intent"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "cancel",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "4cd5274f-04a2-4438-9dcf-2fa9ee45acd0",
+										"exec": [
+											"pm.test(\"response is 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"    pm.response.to.be.ok;",
+											"});",
+											"",
+											"pm.test('response has a body',function(){",
+											"    pm.response.to.have.body();",
+											"});",
+											"",
+											"pm.test('id is defined',function(){",
+											"    pm.response.to.have.jsonBody('id');",
+											"    pm.expect(pm.environment.get('setup_intent_id')).to.equal(pm.response.json().id)",
+											"});",
+											"",
+											"pm.test('object is setup_intent',function(){",
+											"    pm.response.to.have.jsonBody('object');",
+											"    pm.expect(pm.response.json().object).to.equal('setup_intent');",
+											"});",
+											"",
+											"pm.test('status is canceled',function(){",
+											"    pm.response.to.have.jsonBody('status');",
+											"    pm.expect(pm.response.json().status).to.equal('canceled');",
+											"});",
+											"",
+											"pm.test('cancellation_reason is abandoned',function(){",
+											"    pm.response.to.have.jsonBody('cancellation_reason');",
+											"    pm.expect(pm.response.json().cancellation_reason).to.equal('abandoned');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/setup-intent/cancel/{{setup_intent_id}}",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"setup-intent",
+										"cancel",
+										"{{setup_intent_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
 			"name": "logout",
 			"event": [
 				{
