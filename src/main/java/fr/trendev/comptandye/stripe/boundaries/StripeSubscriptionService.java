@@ -95,6 +95,7 @@ public class StripeSubscriptionService {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"Administrator"})
     public Response cancelSetupIntent(
             @PathParam("id") String id) {
         try {
