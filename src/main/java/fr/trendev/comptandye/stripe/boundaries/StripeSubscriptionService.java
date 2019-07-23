@@ -100,7 +100,8 @@ public class StripeSubscriptionService {
             @PathParam("id") String id) {
         try {
             SetupIntent intent = SetupIntent.retrieve(id);
-Map<String, Object> setupIntentParams = new HashMap<>();
+            Map<String, Object> setupIntentParams = new HashMap<>();
+            setupIntentParams.put("cancellation_reason", "abandoned");
             SetupIntent canceledSetupIntent = intent.cancel(setupIntentParams);
             return Response.ok(canceledSetupIntent.toJson()).build();
         } catch (StripeException ex) {
