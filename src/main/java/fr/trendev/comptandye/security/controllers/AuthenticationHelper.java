@@ -53,9 +53,19 @@ public class AuthenticationHelper {
             String email,
             String type) {
 
-        return Optional.ofNullable(sec != null && sec.isSecure()
-                && sec.isUserInRole(type)
-                ? sec.getUserPrincipal().getName() : email);
+        if (sec != null
+                && sec.isSecure()
+                && sec.isUserInRole(UserAccountType.ADMINISTRATOR)) {
+            return Optional.ofNullable(email);
+        }
+
+        if ((sec != null
+                && sec.isSecure()
+                && sec.isUserInRole(type))) {
+            return Optional.ofNullable(sec.getUserPrincipal().getName());
+        }
+
+        return Optional.empty();
 
     }
 
