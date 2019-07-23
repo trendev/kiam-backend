@@ -5,8 +5,10 @@
  */
 package fr.trendev.comptandye.stripe.boundaries;
 
+import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
 import com.stripe.model.InvoiceCollection;
+import com.stripe.model.SetupIntent;
 import com.stripe.model.Subscription;
 import fr.trendev.comptandye.exceptions.ThrowingFunction;
 import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
@@ -14,7 +16,10 @@ import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
 import fr.trendev.comptandye.stripe.controllers.StripeCustomerController;
 import fr.trendev.comptandye.stripe.controllers.StripeSubscriptionController;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
@@ -58,6 +63,23 @@ public class StripeSubscriptionService {
 
     private final Logger LOG = Logger.getLogger(StripeSubscriptionService.class.
             getName());
+
+    @Path("create-setup-intent")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createSetupIntent() {
+        try {
+            Map<String, Object> setupIntentParams = new HashMap<>();
+            ArrayList<String> paymentMethodTypes = new ArrayList<>();
+            paymentMethodTypes.add("card");
+            setupIntentParams.put("payment_method_types", paymentMethodTypes);
+            SetupIntent si = SetupIntent.create(setupIntentParams);
+            return Response.ok(si.toJson()).build();
+        } catch (StripeException ex) {
+            throw new WebApplicationException(
+                    "Error creating a creating Stripe SetupIntent", ex);
+        }
+    }
 
     /**
      * Creates a Stripe Customer, creates a Stripe Subscription and links it
