@@ -26,6 +26,8 @@ public class StripeConfiguration {
     private final Logger LOG = Logger.getLogger(StripeConfiguration.class.
             getName());
 
+    private String defaultTaxRateID;
+
     /**
      * Loads and Initializes the Stripe API KEY with the TEST or LIVE Stripe Key
      * (depending of the PROD or DEV environment)
@@ -45,6 +47,11 @@ public class StripeConfiguration {
             // loads the properties
             String key = properties.getProperty("stripe.key");
             String type = properties.getProperty("stripe.type");
+            this.defaultTaxRateID = properties.getProperty(
+                    "stripe.default.tax.rate.id");
+
+            LOG.log(Level.INFO, "stripe.default.tax.rate.id = [{0}]",
+                    this.defaultTaxRateID);
 
             // sets the stripe api key
             Stripe.apiKey = key;
@@ -56,6 +63,10 @@ public class StripeConfiguration {
         } catch (IOException ex) { //should not happen
             LOG.log(Level.SEVERE, "STRIPE API KEY IS NOT SET", ex);
         }
+    }
+
+    public String getDefaultTaxRateID() {
+        return this.defaultTaxRateID;
     }
 
 }

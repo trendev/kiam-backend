@@ -9,12 +9,14 @@ import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
 import com.stripe.model.Subscription;
 import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.comptandye.stripe.StripeConfiguration;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Singleton;
+import javax.inject.Inject;
 
 /**
  *
@@ -22,6 +24,9 @@ import javax.ejb.Singleton;
  */
 @Singleton
 public class StripeSubscriptionController {
+
+    @Inject
+    StripeConfiguration config;
 
     /**
      * Creates a default Stripe Subscription to Stripe Plan "classic", adds a
@@ -47,7 +52,7 @@ public class StripeSubscriptionController {
         params.put("items", items);
 
         Map<String, Object> taxes = new HashMap<>();
-        taxes.put("0", "txr_1CwVyCI8ga14lIqa7F9I3JJy");//TODO : set the TaxRate id from the env context
+        taxes.put("0", config.getDefaultTaxRateID());
         params.put("default_tax_rates", taxes);
         params.put("expand", expandList);
 
