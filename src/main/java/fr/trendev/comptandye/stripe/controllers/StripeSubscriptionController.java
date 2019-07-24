@@ -45,7 +45,10 @@ public class StripeSubscriptionController {
         Map<String, Object> params = new HashMap<>();
         params.put("customer", customer.getId());
         params.put("items", items);
-        params.put("tax_percent", 20);// VAT in France for web services
+
+        Map<String, Object> taxes = new HashMap<>();
+        taxes.put("0", "txr_1CwVyCI8ga14lIqa7F9I3JJy");//TODO : set the TaxRate id from the env context
+        params.put("default_tax_rates", taxes);
         params.put("expand", expandList);
 
         // checks if Professional is in the Ambassador User Group
