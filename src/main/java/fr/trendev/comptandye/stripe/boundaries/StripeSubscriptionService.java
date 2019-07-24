@@ -40,7 +40,7 @@ import javax.ws.rs.core.SecurityContext;
  * @author jsie
  */
 @Stateless
-@Path("StripeSubscription")
+@Path("stipe-subscription")
 @RolesAllowed({"Administrator", "Professional"})
 public class StripeSubscriptionService {
 
