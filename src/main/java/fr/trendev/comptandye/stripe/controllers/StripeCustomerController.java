@@ -104,7 +104,7 @@ public class StripeCustomerController {
             throw new WebApplicationException(
                     "Error retrieving a Stripe Customer: Professional "
                     + pro.getEmail()
-                    + "has no Customer id !");
+                    + " has no Customer id !");
         } else {
             return Customer.retrieve(id);
         }

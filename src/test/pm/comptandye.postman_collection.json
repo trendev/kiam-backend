@@ -14012,7 +14012,12 @@
 						"exec": [
 							"pm.test(\"Status code is 200\",function(){",
 							"    pm.response.to.be.ok;",
-							"})"
+							"})",
+							"",
+							"if(pm.response.code === 200){",
+							"   pm.environment.unset(\"JWT\"); ",
+							"}",
+							""
 						],
 						"type": "text/javascript"
 					}
