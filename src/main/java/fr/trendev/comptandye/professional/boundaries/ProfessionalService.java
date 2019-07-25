@@ -503,12 +503,18 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
         LOG.log(Level.WARNING, "Clearing Stripe information of user {0}", email);
         try {
             Professional pro = professionalFacade.find(email);
-            pro.setStripeCustomerId(null);
-            pro.setStripeSubscriptionId(null);
-            pro.setTos(false);
-            LOG.log(Level.INFO, "Stripe information of user [{0}] : CLEARED",
-                    email);
-            return Response.noContent().build();
+            if (pro == null) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            } else {
+                pro.setStripeCustomerId(null);
+                pro.setStripeSubscriptionId(null);
+                pro.setTos(false);
+                LOG.
+                        log(Level.INFO,
+                                "Stripe information of user [{0}] : CLEARED",
+                                email);
+                return Response.accepted(pro).build();
+            }
         } catch (Exception ex) {
             throw new WebApplicationException(
                     "Error clearing Subscription information of user ["

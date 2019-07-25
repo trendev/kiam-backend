@@ -8287,6 +8287,52 @@
 					"response": []
 				},
 				{
+					"name": "clear-subscription-info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "aab74da9-e25f-4c4d-bc11-3fb113d7646e",
+								"exec": [
+									"pm.test(\"response is 202 Accepted\", function () {",
+									"    pm.response.to.have.status(202);",
+									"    pm.response.to.be.accepted",
+									"});",
+									"",
+									"",
+									"pm.test('response has body',function(){",
+									"    pm.response.to.have.body();",
+									"});",
+									"",
+									"pm.test('subscription info are CLEARED',function(){",
+									"    pm.response.to.have.jsonBody('tos');",
+									"    pm.expect(pm.response.json().tos).to.equal(false);",
+									"    pm.response.to.not.have.jsonBody('stripeCustomerId');",
+									"    pm.response.to.not.have.jsonBody('stripeSubscriptionId');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/Professional/clear-subscription-info/demo@comptandye.fr",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Professional",
+								"clear-subscription-info",
+								"demo@comptandye.fr"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "delete",
 					"event": [
 						{
