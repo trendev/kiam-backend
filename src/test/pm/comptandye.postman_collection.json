@@ -25,31 +25,12 @@
 									"   pm.response.to.have.header(\"JWT\");",
 									"});",
 									"",
+									"// intercepted in comptandye collection test",
+									"/*",
 									"if(pm.response.headers.has(\"JWT\")){",
 									"    console.log(\"JWT read from header : \"+pm.response.headers.get(\"JWT\"));",
 									"    pm.environment.set(\"JWT\", pm.response.headers.get(\"JWT\"));",
-									"}",
-									"",
-									"//TODO : remove cookies",
-									"pm.test(\"JWT cookie is present\", function () {",
-									"      pm.response.to.not.be.error;",
-									"      pm.expect(pm.cookies.has(\"JWT\")).to.be.true;",
-									"  });",
-									"",
-									"if(pm.cookies.has(\"JWT\")){",
-									"    console.log(pm.cookies.get(\"JWT\"));",
-									"    pm.environment.set(\"JWT\", pm.cookies.get(\"JWT\"));",
-									"}",
-									"",
-									" pm.test(\"XSRF-TOKEN cookie is present\", function () {",
-									"      pm.response.to.not.be.error;",
-									"      pm.cookies.has(\"XSRF-TOKEN\");",
-									"  });",
-									"",
-									"if(pm.cookies.has(\"XSRF-TOKEN\")){",
-									"    console.log(pm.cookies.get(\"XSRF-TOKEN\"));",
-									"    pm.environment.set(\"XSRF-TOKEN\", pm.cookies.get(\"XSRF-TOKEN\"))",
-									"}",
+									"}*/",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"cltype is Administrator or Professional or Individual ==> \"+jsonData.cltype] = jsonData.cltype === (\"Administrator\" || \"Professional\" || \"Individual\");",
@@ -8309,7 +8290,8 @@
 									"    pm.expect(pm.response.json().tos).to.equal(false);",
 									"    pm.response.to.not.have.jsonBody('stripeCustomerId');",
 									"    pm.response.to.not.have.jsonBody('stripeSubscriptionId');",
-									"});"
+									"});",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -14084,7 +14066,11 @@
 				"id": "c79b13b5-2254-459f-afdb-d6ccc1b2be0a",
 				"type": "text/javascript",
 				"exec": [
-					""
+					"// intercept JWT",
+					"if(pm.response.headers.has(\"JWT\")){",
+					"    console.log(\"JWT read from header : \"+pm.response.headers.get(\"JWT\"));",
+					"    pm.environment.set(\"JWT\", pm.response.headers.get(\"JWT\"));",
+					"}"
 				]
 			}
 		}
