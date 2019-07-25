@@ -13999,6 +13999,35 @@
 						}
 					],
 					"_postman_isSubFolder": true
+				},
+				{
+					"name": "PaymentMethod",
+					"item": [
+						{
+							"name": "getPaymentMethods",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/stripe-payment-method?email=demo@comptandye.fr",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"stripe-payment-method"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "demo@comptandye.fr"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
 				}
 			]
 		},
