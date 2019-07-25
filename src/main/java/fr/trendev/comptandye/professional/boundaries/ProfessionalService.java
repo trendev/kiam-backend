@@ -5,27 +5,27 @@
  */
 package fr.trendev.comptandye.professional.boundaries;
 
-import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.bill.entities.Bill;
 import fr.trendev.comptandye.category.entities.Category;
 import fr.trendev.comptandye.client.entities.Client;
 import fr.trendev.comptandye.collectivegroup.entities.CollectiveGroup;
+import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
+import fr.trendev.comptandye.common.boundaries.AssociationManagementEnum;
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.expense.entities.Expense;
+import fr.trendev.comptandye.individual.controllers.IndividualFacade;
 import fr.trendev.comptandye.individual.entities.Individual;
 import fr.trendev.comptandye.notification.entities.Notification;
 import fr.trendev.comptandye.offering.entities.Offering;
 import fr.trendev.comptandye.product.entities.Product;
-import fr.trendev.comptandye.professional.entities.Professional;
-import fr.trendev.comptandye.usergroup.entities.UserGroup;
-import fr.trendev.comptandye.vatrates.entities.VatRates;
-import fr.trendev.comptandye.security.controllers.PasswordManager;
-import fr.trendev.comptandye.individual.controllers.IndividualFacade;
 import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
-import fr.trendev.comptandye.usergroup.controllers.UserGroupFacade;
-import fr.trendev.comptandye.vatrates.controllers.VatRatesFacade;
-import fr.trendev.comptandye.common.boundaries.AssociationManagementEnum;
+import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.comptandye.security.controllers.PasswordManager;
 import fr.trendev.comptandye.useraccount.controllers.UUIDGenerator;
+import fr.trendev.comptandye.usergroup.controllers.UserGroupFacade;
+import fr.trendev.comptandye.usergroup.entities.UserGroup;
+import fr.trendev.comptandye.vatrates.controllers.VatRatesFacade;
+import fr.trendev.comptandye.vatrates.entities.VatRates;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
@@ -494,4 +494,28 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 (p, i) ->
                 p.getIndividuals().remove(i) & i.getProfessionals().remove(p));
     }
+
+    @Path("clear-subscription-info/{email}")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"Administrator"})
+    public Response clearSubscriptionInfo(@PathParam("email") String email) {
+        LOG.log(Level.WARNING, "Clearing Stripe information of user {0}", email);
+        try {
+            Professional pro = professionalFacade.find(email);
+            pro.setStripeCustomerId(null);
+            pro.setStripeSubscriptionId(null);
+            pro.setTos(false);
+            LOG.log(Level.INFO, "Stripe information of user [{0}] : CLEARED",
+                    email);
+            return Response.noContent().build();
+        } catch (Exception ex) {
+            throw new WebApplicationException(
+                    "Error clearing Subscription information of user ["
+                    + email + "]",
+                    ex);
+        }
+
+    }
+
 }
