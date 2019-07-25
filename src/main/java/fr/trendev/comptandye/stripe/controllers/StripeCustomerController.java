@@ -69,14 +69,16 @@ public class StripeCustomerController {
         customerShipping.put("address", customerShippingAddress);
         params.put("shipping", customerShipping);
 
+        Customer customer = Customer.create(params);
+
         if (pro.getVatcode() != null && !pro.getVatcode().isEmpty()) {
-            Map<String, String> customerTaxInfo = new HashMap<>();
-            customerTaxInfo.put("type", "vat");
-            customerTaxInfo.put("tax_id", pro.getVatcode());
-            params.put("tax_info", customerTaxInfo);
+            Map<String, Object> taxID = new HashMap<>();
+            taxID.put("type", "eu_vat");
+            taxID.put("value", pro.getVatcode());
+            customer.getTaxIds().create(taxID);
         }
 
-        return Customer.create(params);
+        return customer;
 
     }
 
