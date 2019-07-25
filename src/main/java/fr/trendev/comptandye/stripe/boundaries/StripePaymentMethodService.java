@@ -31,7 +31,7 @@ import javax.ws.rs.core.SecurityContext;
 @Stateless
 @Path("stripe-payment-method")
 @RolesAllowed({"Administrator", "Professional"})
-public class StripePaymentMethod {
+public class StripePaymentMethodService {
 
     @Inject
     ProfessionalFacade professionalFacade;
