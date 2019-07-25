@@ -61,6 +61,10 @@ public class StripeCustomerController {
         customerShipping.put("phone", pro.getCustomerDetails().getPhone());
         Map<String, String> customerShippingAddress = new HashMap<>();
         customerShippingAddress.put("line1", pro.getAddress().getStreet());
+        if (pro.getAddress().getOptional() != null
+                && !pro.getAddress().getOptional().isEmpty()) {
+            customerShippingAddress.put("line2", pro.getAddress().getOptional());
+        }
         customerShippingAddress.put("city", pro.getAddress().getCity());
         customerShippingAddress.
                 put("country", pro.getAddress().getCountry());
@@ -69,16 +73,16 @@ public class StripeCustomerController {
         customerShipping.put("address", customerShippingAddress);
         params.put("shipping", customerShipping);
 
-        Customer customer = Customer.create(params);
-
         if (pro.getVatcode() != null && !pro.getVatcode().isEmpty()) {
             Map<String, Object> taxID = new HashMap<>();
             taxID.put("type", "eu_vat");
             taxID.put("value", pro.getVatcode());
-            customer.getTaxIds().create(taxID);
+            Map<String, Object> taxIDs = new HashMap<>();
+            taxIDs.put("0", taxID);
+            params.put("tax_id_data", taxIDs);
         }
 
-        return customer;
+        return Customer.create(params);
 
     }
 
