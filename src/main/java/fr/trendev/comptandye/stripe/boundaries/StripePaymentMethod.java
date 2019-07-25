@@ -42,7 +42,8 @@ public class StripePaymentMethod {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPaymentMethods(@Context SecurityContext sec,
-            @QueryParam("email") String email) {
+            @QueryParam("email") String email,
+            @QueryParam("t") String t) {
 
         String proEmail = authenticationHelper.getProEmail(sec, email);
 
@@ -51,7 +52,8 @@ public class StripePaymentMethod {
 
             Map<String, Object> paymentmethodParams = new HashMap<>();
             paymentmethodParams.put("customer", pro.getStripeCustomerId());
-            paymentmethodParams.put("type", "card");
+            paymentmethodParams.put("type",
+                    (t != null && !t.isEmpty()) ? t : "card");
 
             return Response.ok(PaymentMethod.list(paymentmethodParams).toJson()).
                     build();
