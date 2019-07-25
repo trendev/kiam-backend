@@ -38,10 +38,11 @@ public class StripeCustomerController {
             StripeException {
         Map<String, Object> params = new HashMap<>();
 
-        params.put("source", token);
+        params.put("payment_method", token);
 
         Map<String, Object> invoicesSettings = new HashMap<>();
         invoicesSettings.put("footer", "comptandye"); // add TRENDev SASU legals
+        invoicesSettings.put("default_payment_method", token);
         params.put("invoice_settings", invoicesSettings);
 
         params.put("email", pro.getEmail());
