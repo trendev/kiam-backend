@@ -29,20 +29,20 @@ public class StripeCustomerController {
      * Creates a Stripe Customer from a Stripe Source, the data of the
      * Professional.
      *
-     * @param token the id of the Stripe Token
+     * @param paymentMethod the id of the Stripe Payment Method
      * @param pro the Professional
      * @return the new Stripe Customer
      * @throws StripeException if errors occur from Stripe services
      */
-    public Customer create(String token, Professional pro) throws
+    public Customer create(String paymentMethod, Professional pro) throws
             StripeException {
         Map<String, Object> params = new HashMap<>();
 
-        params.put("payment_method", token);
+        params.put("payment_method", paymentMethod);
 
         Map<String, Object> invoicesSettings = new HashMap<>();
         invoicesSettings.put("footer", "comptandye"); // add TRENDev SASU legals
-        invoicesSettings.put("default_payment_method", token);
+        invoicesSettings.put("default_payment_method", paymentMethod);
         params.put("invoice_settings", invoicesSettings);
 
         params.put("email", pro.getEmail());
