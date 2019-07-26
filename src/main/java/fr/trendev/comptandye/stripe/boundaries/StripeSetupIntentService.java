@@ -39,7 +39,6 @@ public class StripeSetupIntentService {
         try {
             Map<String, Object> setupIntentParams = new HashMap<>();
 
-            // https://stripe.com/docs/api/setup_intents/create?lang=java#create_setup_intent-payment_method_types
             if (payment_method_types != null
                     && !payment_method_types.isEmpty()) {
                 ArrayList<String> paymentMethodTypes = new ArrayList<>();
