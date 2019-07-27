@@ -9,7 +9,7 @@ import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
 import com.stripe.model.Invoice;
 import com.stripe.model.InvoiceCollection;
-import com.stripe.model.Source;
+import com.stripe.model.PaymentMethod;
 import fr.trendev.comptandye.professional.entities.Professional;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -111,55 +111,29 @@ public class StripeCustomerController {
         }
     }
 
-    /**
-     * Adds a new Source and sets it as the default one.
-     *
-     * @param sourceId the id of the Stripe Source
-     * @param pro the Professional
-     * @return the updated Stripe Customer
-     * @throws StripeException if errors occur from Stripe
-     */
-    public Customer addSource(String sourceId, Professional pro) throws
-            StripeException {
-        Customer customer = this.retrieveCustomer(pro);
-        Map<String, Object> params = new HashMap<>();
-        params.put("source", sourceId);
-        customer.getSources().create(params);
-        params = new HashMap<>();
-        params.put("default_source", sourceId);
-        return customer.update(params);
-    }
-
-    /**
-     * Sets a Stripe source as the default one.
-     *
-     * @param sourceId the id of the Stripe Source
-     * @param pro the Professional
-     * @return the updated Stripe Customer
-     * @throws StripeException if errors occur from Stripe
-     */
     public Customer defaultSource(String sourceId, Professional pro) throws
             StripeException {
-        Customer customer = this.retrieveCustomer(pro);
-        Map<String, Object> params = new HashMap<>();
-        params.put("default_source", sourceId);
-        return customer.update(params);
+        return null;
     }
 
-    /**
-     * Detaches (removes) a Stripe Source from a Stripe Customer.
-     *
-     * @param sourceId
-     * @param pro
-     * @return
-     * @throws StripeException
-     */
-    public Customer detachSource(String sourceId, Professional pro) throws
+    public PaymentMethod addPaymentMethod(String id, Professional pro) throws
             StripeException {
-        Source source = Source.retrieve(sourceId);
-        source.detach();// will set the source status with consumed (cannot be used anymore)
-        Customer customer = this.retrieveCustomer(pro);
-        return customer;
+
+        Customer customer = Customer.retrieve(pro.getStripeCustomerId());
+        Map<String, Object> params = new HashMap<>();
+        Map<String, Object> invoicesSettings = new HashMap<>();
+        invoicesSettings.put("default_payment_method", id);
+        params.put("invoice_settings", invoicesSettings);
+        customer.update(params);
+
+        return PaymentMethod.retrieve(id); // should have been updated
+    }
+
+    public Customer detachPaymentMethod(String id, Professional pro) throws
+            StripeException {
+        PaymentMethod paymentMethod = PaymentMethod.retrieve(id);
+        paymentMethod.detach();
+        return Customer.retrieve(pro.getStripeCustomerId());
     }
 
     /**

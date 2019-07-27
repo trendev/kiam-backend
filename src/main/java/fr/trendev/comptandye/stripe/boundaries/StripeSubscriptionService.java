@@ -135,46 +135,6 @@ public class StripeSubscriptionService {
     }
 
     /**
-     * Adds a Stripe Source to an exising Stripe Customer
-     *
-     * @param sec the Security Context
-     * @param stripeSourceJson the new Stripe Source
-     * @param email the email of the Professional if the service is called by an
-     * Administrator
-     * @return the Stripe Customer (should contain the new Stripe Source in its
-     * sources)
-     */
-    @Path("add-source")
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response addSource(@Context SecurityContext sec,
-            JsonObject stripeSourceJson,
-            @QueryParam("email") String email) {
-        try {
-
-            String proEmail = authenticationHelper.
-                    getProEmail(sec, email);
-            Professional pro = professionalFacade.find(proEmail);
-
-            String sourceId = stripeSourceJson.getString("id");
-
-            Customer customer = this.stripeCustomerUtils.
-                    addSource(sourceId, pro);
-
-            LOG.log(Level.INFO,
-                    "Stripe Source {0} added to Stripe Customer {1}/{2}",
-                    new Object[]{sourceId,
-                        customer.getId(), proEmail});
-
-            return Response.ok(customer.toJson()).build();
-        } catch (Exception ex) {
-            throw new WebApplicationException(
-                    "Error adding a Source to an existing Customer", ex);
-        }
-    }
-
-    /**
      * Sets a Stripe Source as the default Stripe Source which will be used for
      * the future Subscriptions/Charges
      *
@@ -209,44 +169,6 @@ public class StripeSubscriptionService {
         } catch (Exception ex) {
             throw new WebApplicationException(
                     "Error setting the default Source of an existing Customer",
-                    ex);
-        }
-    }
-
-    /**
-     * Detaches (removes) a Stripe Source from a Stripe Customer
-     *
-     * @param sec the Security Context
-     * @param sourceId the id of the Stripe Source to detach(remove)
-     * @param email the email of the Professional if the service is called by an
-     * Administrator
-     * @return the Stripe Customer (should contain the updated sources list)
-     */
-    @Path("detach/{source}")
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response detachSource(@Context SecurityContext sec,
-            @PathParam("source") String sourceId,
-            @QueryParam("email") String email) {
-        try {
-
-            String proEmail = authenticationHelper.
-                    getProEmail(sec, email);
-            Professional pro = professionalFacade.find(proEmail);
-
-            Customer customer = this.stripeCustomerUtils.
-                    detachSource(sourceId, pro);
-
-            LOG.log(Level.INFO,
-                    "Stripe Source {0} is now detached from Stripe Customer {1}/{2}",
-                    new Object[]{sourceId,
-                        customer.getId(), proEmail});
-
-            return Response.ok(customer.toJson()).build();
-        } catch (Exception ex) {
-            throw new WebApplicationException(
-                    "Error detaching a Source of an existing Customer",
                     ex);
         }
     }
