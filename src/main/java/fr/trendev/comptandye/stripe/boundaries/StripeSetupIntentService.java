@@ -10,6 +10,8 @@ import com.stripe.model.SetupIntent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -20,8 +22,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
 /**
  *
@@ -32,9 +36,13 @@ import javax.ws.rs.core.Response;
 @RolesAllowed({"Administrator", "Professional"})
 public class StripeSetupIntentService {
 
+    private static final Logger LOG = Logger.getLogger(
+            StripeSetupIntentService.class.getName());
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response create(
+            @Context SecurityContext sec,
             @QueryParam("payment_method_types") String payment_method_types) {
         try {
             Map<String, Object> setupIntentParams = new HashMap<>();
@@ -47,9 +55,13 @@ public class StripeSetupIntentService {
                         put("payment_method_types", paymentMethodTypes);
             }
 
-            SetupIntent si = SetupIntent.create(setupIntentParams);
+            SetupIntent seti = SetupIntent.create(setupIntentParams);
 
-            return Response.ok(si.toJson()).build();
+            LOG.log(Level.INFO,
+                    "User [{0}] has created the following Stripe SetupIntent {1}",
+                    new Object[]{sec.getUserPrincipal().getName(), seti.toJson()});
+
+            return Response.ok(seti.toJson()).build();
         } catch (StripeException ex) {
             throw new WebApplicationException(
                     "Error creating a Stripe SetupIntent", ex);
