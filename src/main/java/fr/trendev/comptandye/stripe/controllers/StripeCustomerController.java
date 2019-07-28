@@ -111,22 +111,25 @@ public class StripeCustomerController {
         }
     }
 
-    public Customer defaultSource(String sourceId, Professional pro) throws
+    public Customer defaultPaymentMethod(String id, Professional pro) throws
             StripeException {
-        return null;
-    }
-
-    public PaymentMethod addPaymentMethod(String id, Professional pro) throws
-            StripeException {
-
         Customer customer = Customer.retrieve(pro.getStripeCustomerId());
         Map<String, Object> params = new HashMap<>();
         Map<String, Object> invoicesSettings = new HashMap<>();
         invoicesSettings.put("default_payment_method", id);
         params.put("invoice_settings", invoicesSettings);
-        customer.update(params);
+        return customer.update(params);
+    }
 
-        return PaymentMethod.retrieve(id); // should have been updated
+    public Customer addPaymentMethod(String id, Professional pro) throws
+            StripeException {
+
+        PaymentMethod paymentMethod = PaymentMethod.retrieve(id);
+        Map<String, Object> params = new HashMap<>();
+        params.put("customer", pro.getStripeCustomerId());
+        paymentMethod.attach(params);
+
+        return this.defaultPaymentMethod(id, pro);
     }
 
     public Customer detachPaymentMethod(String id, Professional pro) throws

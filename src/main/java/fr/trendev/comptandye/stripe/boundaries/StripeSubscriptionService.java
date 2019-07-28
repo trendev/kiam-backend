@@ -26,7 +26,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
@@ -131,45 +130,6 @@ public class StripeSubscriptionService {
         } catch (Exception ex) {
             throw new WebApplicationException(
                     "Error providing Customer's details on", ex);
-        }
-    }
-
-    /**
-     * Sets a Stripe Source as the default Stripe Source which will be used for
-     * the future Subscriptions/Charges
-     *
-     * @param sec the Security Context
-     * @param sourceId the id of the Stripe Source to set as default source
-     * @param email the email of the Professional if the service is called by an
-     * Administrator
-     * @return the Stripe Customer (should contain the updated sources list)
-     */
-    @Path("default_source/{default_source}")
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response defaultSource(@Context SecurityContext sec,
-            @PathParam("default_source") String sourceId,
-            @QueryParam("email") String email) {
-        try {
-
-            String proEmail = authenticationHelper.
-                    getProEmail(sec, email);
-            Professional pro = professionalFacade.find(proEmail);
-
-            Customer customer = this.stripeCustomerUtils.
-                    defaultSource(sourceId, pro);
-
-            LOG.log(Level.INFO,
-                    "Stripe Source {0} is the new default source of Stripe Customer {1}/{2}",
-                    new Object[]{sourceId,
-                        customer.getId(), proEmail});
-
-            return Response.ok(customer.toJson()).build();
-        } catch (Exception ex) {
-            throw new WebApplicationException(
-                    "Error setting the default Source of an existing Customer",
-                    ex);
         }
     }
 

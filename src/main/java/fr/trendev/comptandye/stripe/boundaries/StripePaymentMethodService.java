@@ -18,7 +18,6 @@ import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -79,29 +78,27 @@ public class StripePaymentMethodService {
 
     }
 
-    @Path("add")
+    @Path("add/{id}")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addPaymentMethod(@Context SecurityContext sec,
-            JsonObject payload,
+            @PathParam("id") String id,
             @QueryParam("email") String email) {
         try {
             String proEmail = authenticationHelper.
                     getProEmail(sec, email);
             Professional pro = professionalFacade.find(proEmail);
 
-            String id = payload.getString("payment_method");
-
-            PaymentMethod pm = this.stripeCustomerCtrl.
+            Customer customer = this.stripeCustomerCtrl.
                     addPaymentMethod(id, pro);
 
             LOG.log(Level.INFO,
                     "Stripe PaymentMethod {0} added to Stripe Customer {1}/{2}",
-                    new Object[]{pm.getId(),
-                        pro.getStripeCustomerId(), proEmail});
+                    new Object[]{id,
+                        customer.getId(), proEmail});
 
-            return Response.ok(pm.toJson()).build();
+            return Response.ok(customer.toJson()).build();
         } catch (Exception ex) {
             throw new WebApplicationException(
                     "Error adding a PaymentMethod to an existing Customer", ex);
@@ -134,6 +131,35 @@ public class StripePaymentMethodService {
         } catch (Exception ex) {
             throw new WebApplicationException(
                     "Error detaching a PaymentMethod of an existing Customer",
+                    ex);
+        }
+    }
+
+    @Path("default/{id}")
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response defaultPaymentMethod(@Context SecurityContext sec,
+            @PathParam("id") String id,
+            @QueryParam("email") String email) {
+        try {
+
+            String proEmail = authenticationHelper.
+                    getProEmail(sec, email);
+            Professional pro = professionalFacade.find(proEmail);
+
+            Customer customer = this.stripeCustomerCtrl.
+                    defaultPaymentMethod(id, pro);
+
+            LOG.log(Level.INFO,
+                    "Stripe PaymentMethod {0} is the new default source of Stripe Customer {1}/{2}",
+                    new Object[]{id,
+                        customer.getId(), proEmail});
+
+            return Response.ok(customer.toJson()).build();
+        } catch (Exception ex) {
+            throw new WebApplicationException(
+                    "Error setting the default PaymentMethod of an existing Customer",
                     ex);
         }
     }
