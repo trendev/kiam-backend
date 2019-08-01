@@ -14028,6 +14028,55 @@
 						}
 					],
 					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Plan",
+					"item": [
+						{
+							"name": "getPlans",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7db21a20-c397-4ba2-91dc-4c9ca44a8b18",
+										"exec": [
+											"pm.test(\"response is 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"    pm.response.to.be.ok;",
+											"});",
+											"",
+											"pm.test('response has a body',function(){",
+											"    pm.response.to.have.body();",
+											"});",
+											"",
+											"pm.test('data arrays is defined and length >= 1',function(){",
+											"    pm.response.to.have.jsonBody('data');",
+											"    pm.expect(pm.response.json().data).to.be.an('array');",
+											"    pm.expect(pm.response.json().data.length).to.be.gte(1);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/stripe-plan",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"stripe-plan"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
 				}
 			]
 		},
