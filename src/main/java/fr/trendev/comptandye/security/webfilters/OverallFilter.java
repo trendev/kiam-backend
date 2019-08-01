@@ -40,7 +40,7 @@ public class OverallFilter implements Filter {
 
         LOG.log(Level.INFO, "{3} / [{1}] has requested {2} {0}",
                 new Object[]{req.getRequestURL(), (user != null) ? user.
-                    getName() : "an ANONYMOUS user", req.getMethod(), req.
+                    getName() : "an ANONYMOUS user", req.getMethod().toUpperCase(), req.
                     getRemoteAddr()});
 
         chain.doFilter(request, response);
