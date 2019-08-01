@@ -32,7 +32,7 @@ import javax.ws.rs.core.SecurityContext;
  * @author jsie
  */
 @Stateless
-@Path("setup-intent")
+@Path("stripe-setup-intent")
 @RolesAllowed({"Administrator", "Professional"})
 public class StripeSetupIntentService {
 
