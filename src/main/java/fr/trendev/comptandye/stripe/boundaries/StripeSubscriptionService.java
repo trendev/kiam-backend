@@ -26,6 +26,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
@@ -64,16 +65,18 @@ public class StripeSubscriptionService {
      *
      * @param sec the Security Context
      * @param payload the Stripe Source provided as JSON object
+     * @param plan the Stripe Plan ID to subscribe
      * @param email the email of the Professional if the service is called by an
      * Administrator
      * @return the Stripe Subscription if successful, an Error otherwise
      */
-    @Path("std-subscription")
+    @Path("subscribe/{plan}")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response subscription(@Context SecurityContext sec,
             JsonObject payload,
+            @PathParam("plan") String plan,
             @QueryParam("email") String email) {
         try {
 
@@ -87,7 +90,7 @@ public class StripeSubscriptionService {
             LOG.log(Level.INFO, "Stripe Customer {0} created", customer.getId());
 
             Subscription subscription = this.stripeSubscriptionUtils
-                    .createBasicSubscription(customer, pro);
+                    .createBasicSubscription(customer, pro,plan);
 
             LOG.log(Level.INFO,
                     "Stripe Subscription {0} created and linked with Stripe Customer {1}",

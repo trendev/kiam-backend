@@ -34,13 +34,14 @@ public class StripeSubscriptionController {
      *
      * @param customer the Stripe Customer created for the Professional
      * @param pro the Professional
+     * @param plan the Stripe Plan to subscribe
      * @return the active Stripe Subscription to the Stripe Plan "classic"
      * @throws StripeException if errors occur from the Stripe services
      */
     public Subscription createBasicSubscription(Customer customer,
-            Professional pro) throws StripeException {
+            Professional pro, String plan) throws StripeException {
         Map<String, Object> item = new HashMap<>();
-        item.put("plan", "basic");
+        item.put("plan", plan);
         Map<String, Object> items = new HashMap<>();
         items.put("0", item);
         // attempt payment, required for further 3DS validation
