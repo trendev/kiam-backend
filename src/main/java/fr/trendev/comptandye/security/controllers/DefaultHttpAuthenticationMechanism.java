@@ -65,10 +65,12 @@ public class DefaultHttpAuthenticationMechanism implements
             HttpServletResponse rsp, HttpMessageContext hmc) throws
             AuthenticationException {
 
-        LOG.log(Level.INFO, "{0} {1}",
+        LOG.log(Level.INFO, "{3} - {2} : {0} {1}",
                 new Object[]{
                     req.getMethod(),
-                    req.getRequestURL()
+                    req.getRequestURL(),
+                    hmc.isProtected() ? "PROTECTED" : "UNPROTECTED",
+                    hmc.isAuthenticationRequest() ? "AUTHENTICATION" : "NORMAL"
                 });
 
         /**
