@@ -22,6 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 //@WebFilter(urlPatterns = {"/restapi/*"}, asyncSupported = true)
 public class CORSFilter implements Filter {
+    
+    private final String className = CORSFilter.class.getSimpleName();
 
     private static final Logger LOG = Logger.getLogger(CORSFilter.class.
             getName());
@@ -54,7 +56,7 @@ public class CORSFilter implements Filter {
                 "origin, content-type, accept, authorization");
         resp.addHeader("Access-Control-Expose-Headers", "jwt");
 
-        LOG.log(Level.INFO, "- Adding CORS -");
+        LOG.log(Level.INFO, "{0} : Adding CORS", className);
 
         chain.doFilter(request, response);
 
@@ -68,8 +70,7 @@ public class CORSFilter implements Filter {
      */
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        LOG.log(Level.INFO,
-                "CORSFilter : init in progress...");
+        LOG.log(Level.INFO, "{0} : init in progress...", className);
     }
 
     /**
@@ -77,7 +78,7 @@ public class CORSFilter implements Filter {
      */
     @Override
     public void destroy() {
-        LOG.log(Level.INFO, "CORSFilter : destroyed...");
+        LOG.log(Level.INFO, "{0} : destroyed...", className);
     }
 
 }

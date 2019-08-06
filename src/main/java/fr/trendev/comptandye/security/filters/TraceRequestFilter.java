@@ -21,14 +21,16 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author jsie
  */
-public class OverallFilter implements Filter {
+public class TraceRequestFilter implements Filter {
 
-    private static final Logger LOG = Logger.getLogger(OverallFilter.class.
+    private static final Logger LOG = Logger.getLogger(TraceRequestFilter.class.
             getName());
+
+    private final String className = TraceRequestFilter.class.getSimpleName();
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        LOG.log(Level.INFO, "OverallFilter initialized");
+        LOG.log(Level.INFO, "{0} : initialized", className);
     }
 
     @Override
@@ -38,17 +40,20 @@ public class OverallFilter implements Filter {
 
         Principal user = req.getUserPrincipal();
 
-        LOG.log(Level.INFO, "{3} / [{1}] has requested {2} {0}",
-                new Object[]{req.getRequestURL(), (user != null) ? user.
-                    getName() : "an ANONYMOUS user", req.getMethod().toUpperCase(), req.
-                    getRemoteAddr()});
+        LOG.log(Level.INFO, "{4} : Request from [{1}] | {2} {0} | RemoteAddr = {3}",
+                new Object[]{
+                    req.getRequestURL(),
+                    (user != null) ? user.getName() : "an ANONYMOUS user",
+                    req.getMethod().toUpperCase(),
+                    req.getRemoteAddr(),
+                    className});
 
         chain.doFilter(request, response);
     }
 
     @Override
     public void destroy() {
-        LOG.log(Level.INFO, "OverallFilter destroyed");
+        LOG.log(Level.INFO, "{0} : destroyed", className);
     }
 
 }

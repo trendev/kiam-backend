@@ -114,6 +114,7 @@ public class AuthenticationService {
             @Context SecurityContext sec,
             @QueryParam("username") String username,
             @QueryParam("password") String password) {
+        LOG.log(Level.INFO, "{0} is authenticating...", username);
         return this.profile(sec);
     }
 
