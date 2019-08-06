@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+	 version="4.0">
     <display-name>comptandye</display-name>
     <!--    <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
@@ -16,13 +20,13 @@
     <filter>
         <description>Filters all http/https requests and check session validity</description>
         <filter-name>OverallFilter</filter-name>
-        <filter-class>fr.trendev.comptandye.security.webfilters.OverallFilter</filter-class>
+        <filter-class>fr.trendev.comptandye.security.filters.OverallFilter</filter-class>
         <async-supported>true</async-supported>
     </filter>
     <filter>
         <description>apply Cross Origin Resource Sharing on restapi requests/responses</description>
         <filter-name>CORS</filter-name>
-        <filter-class>fr.trendev.comptandye.security.webfilters.CORSFilter</filter-class>
+        <filter-class>fr.trendev.comptandye.security.filters.CORSFilter</filter-class>
         <async-supported>true</async-supported>
     </filter>
     <filter-mapping>
