@@ -5,10 +5,10 @@
  */
 package fr.trendev.comptandye.security.filters;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.trendev.comptandye.security.controllers.ratelimit.RateLimitController;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,24 +42,31 @@ public class RateLimitFilter implements ContainerRequestFilter {
 
     @Inject
     private RateLimitController arc;
-  
+
     @Override
     public void filter(ContainerRequestContext cr) {
 
-        Optional<Boolean> result = arc.control(req.getRemoteAddr(),
+        Optional<Map<String, List<Date>>> result = arc.control(req.getRemoteAddr(),
                 cr.getUriInfo().getPath());
 
         if (result.isPresent()) {
-            LOG.log(Level.WARNING, "{1} : RemoteAddr {0} >>> TOO_MANY_REQUESTS {2}/{2}",
+
+            String path = cr.getUriInfo().getPath();
+            List<Date> lastAccessList = result.get().get(path);
+            int limit = lastAccessList.size();
+
+            LOG.log(Level.WARNING, "{1} : RemoteAddr {0} | accessing PATH {3} >>> TOO_MANY_REQUESTS {2}/{2}",
                     new Object[]{
                         req.getRemoteAddr(),
                         className,
-                        result.get()});
+                        limit, path});
             cr.abortWith(Response
                     .status(Response.Status.TOO_MANY_REQUESTS)
                     .type(MediaType.APPLICATION_JSON)
                     .entity(Json.createObjectBuilder()
                             .add("error", "TOO_MANY_REQUESTS")
+                            .add("path", path)
+                            .add("limit", limit)
                             .build())
                     .build());
         }

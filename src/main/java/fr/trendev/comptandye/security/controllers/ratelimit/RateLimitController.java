@@ -103,7 +103,7 @@ public class RateLimitController implements Serializable {
                 : Optional.empty();
     }
 
-    private Optional<Boolean> controlAccess(String address,
+    private Optional<Map<String,List<Date>>> controlAccess(String address,
             String path,
             int limit) {
         if (limit == NO_LIMIT) {
@@ -111,20 +111,20 @@ public class RateLimitController implements Serializable {
         } else {
             return Optional.ofNullable(ACCESS_RECORDS.get(address))
                     .map(
-                            m -> Optional.ofNullable(m.get(path))
+                            records -> Optional.ofNullable(records.get(path))
                                     .map(list -> {
                                         if (list.size() < limit) {
                                             list.add(new Date());
-                                            return Optional.<Boolean>empty();
+                                            return Optional.<Map<String,List<Date>>>empty();
                                         } else {
-                                            return Optional.of(Boolean.TRUE);
+                                            return Optional.of(records);
                                         }
                                     })
                                     .orElseGet(() -> {
                                         List<Date> list = new LinkedList<>();
                                         list.add(new Date());
-                                        m.put(path, list);
-                                        return Optional.<Boolean>empty();
+                                        records.put(path, list);
+                                        return Optional.<Map<String,List<Date>>>empty();
                                     })
                     )
                     .orElseGet(() -> {
@@ -133,12 +133,12 @@ public class RateLimitController implements Serializable {
                         Map<String, List<Date>> map = new TreeMap<>();
                         map.put(path, list);
                         ACCESS_RECORDS.put(address, map);
-                        return Optional.<Boolean>empty();
+                        return Optional.<Map<String,List<Date>>>empty();
                     });
         }
     }
 
-    public Optional<Boolean> control(String address, String path) {
+    public Optional<Map<String,List<Date>>> control(String address, String path) {
         return this.controlPath(path)
                 .map(limit -> this.controlAccess(address, path, limit))
                 .orElseGet(() -> this.controlAccess(address, path, DEFAULT_LIMIT));
