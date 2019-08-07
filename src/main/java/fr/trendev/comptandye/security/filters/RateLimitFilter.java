@@ -6,15 +6,20 @@
 package fr.trendev.comptandye.security.filters;
 
 import fr.trendev.comptandye.security.controllers.ratelimit.RateLimitController;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -23,6 +28,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
+import net.minidev.json.JSONObject;
 
 /**
  *
@@ -60,16 +66,32 @@ public class RateLimitFilter implements ContainerRequestFilter {
                         req.getRemoteAddr(),
                         className,
                         limit, path});
-            cr.abortWith(Response
-                    .status(Response.Status.TOO_MANY_REQUESTS)
-                    .type(MediaType.APPLICATION_JSON)
-                    .entity(Json.createObjectBuilder()
-                            .add("error", "TOO_MANY_REQUESTS")
-                            .add("path", path)
-                            .add("limit", limit)
-                            .build())
-                    .build());
+            cr.abortWith(this.buildTooManyRequestsResponse(path,
+                    limit,
+                    lastAccessList));
         }
+
+    }
+
+    private Response buildTooManyRequestsResponse(String path,
+            int limit,
+            List<Date> lastAccessList) {
+
+        JsonObject jo = Json.createObjectBuilder()
+                .add("error", "TOO_MANY_REQUESTS")
+                .add("path", path)
+                .add("limit", limit)
+                .add("last_access_list", Json.createArrayBuilder(
+                        lastAccessList.stream().map(d -> {
+                            return d.getTime();
+                        }).collect(Collectors.toList())).build())
+                .build();
+
+        return Response
+                .status(Response.Status.TOO_MANY_REQUESTS)
+                .type(MediaType.APPLICATION_JSON)
+                .entity(jo)
+                .build();
     }
 
 }
