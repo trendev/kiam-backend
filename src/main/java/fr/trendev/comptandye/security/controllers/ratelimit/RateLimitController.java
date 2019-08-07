@@ -8,6 +8,7 @@ package fr.trendev.comptandye.security.controllers.ratelimit;
 import fish.payara.cluster.Clustered;
 import fish.payara.cluster.DistributedLockType;
 import java.io.Serializable;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -40,6 +41,10 @@ public class RateLimitController implements Serializable {
     @PreDestroy
     public void destroy() {
         LOG.log(Level.INFO, "{0} : destroyed", className);
+    }
+    
+    public Optional<Boolean> control(String path){
+        return Optional.empty();
     }
 
 

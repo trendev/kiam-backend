@@ -46,7 +46,7 @@ public class RateLimitFilter implements ContainerRequestFilter {
                     cr.getLength(),
                     className});
         
-        LOG.log(Level.WARNING, "PATH = {0}", cr.getUriInfo().getPath());
+       arc.control(cr.getUriInfo().getPath());
     }
 
 }
