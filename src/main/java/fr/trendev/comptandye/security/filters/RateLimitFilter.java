@@ -15,6 +15,7 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.PreMatching;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
 /**
@@ -25,28 +26,27 @@ import javax.ws.rs.ext.Provider;
 @Provider
 @RequestScoped
 public class RateLimitFilter implements ContainerRequestFilter {
-
+    
     private static final Logger LOG = Logger.getLogger(RateLimitFilter.class.getName());
-
+    
     private final String className = RateLimitFilter.class.getSimpleName();
-
+    
     @Context
     private HttpServletRequest req;
-
+    
     @Inject
     private RateLimitController arc;
-
+    
     @Override
     public void filter(ContainerRequestContext cr) {
-        LOG.log(Level.INFO, ">>>{4} : {1} {2} | content-length = {3} | RemoteAddr = {0} >>>",
+        if (arc.control(req.getRemoteAddr(),
+                cr.getUriInfo().getPath()).isPresent()) {
+            LOG.log(Level.WARNING, "{1} : RemoteAddr {0} >>> TOO_MANY_REQUESTS",
                 new Object[]{
                     req.getRemoteAddr(),
-                    req.getMethod(),
-                    req.getRequestURL(),
-                    cr.getLength(),
                     className});
-        
-       arc.control(cr.getUriInfo().getPath());
+            cr.abortWith(Response.status(Response.Status.TOO_MANY_REQUESTS).build());
+        }
     }
-
+    
 }
