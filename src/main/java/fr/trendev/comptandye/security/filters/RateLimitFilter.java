@@ -5,9 +5,11 @@
  */
 package fr.trendev.comptandye.security.filters;
 
+import fr.trendev.comptandye.security.controllers.ratelimit.RateLimitController;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -31,15 +33,20 @@ public class RateLimitFilter implements ContainerRequestFilter {
     @Context
     private HttpServletRequest req;
 
+    @Inject
+    private RateLimitController arc;
+
     @Override
     public void filter(ContainerRequestContext cr) {
-        LOG.log(Level.INFO, ">>> {4} : {1} {2} | content-length = {3} | RemoteAddr = {0} >>>",
+        LOG.log(Level.INFO, ">>>{4} : {1} {2} | content-length = {3} | RemoteAddr = {0} >>>",
                 new Object[]{
                     req.getRemoteAddr(),
                     req.getMethod(),
                     req.getRequestURL(),
                     cr.getLength(),
                     className});
+        
+        LOG.log(Level.WARNING, "PATH = {0}", cr.getUriInfo().getPath());
     }
 
 }
