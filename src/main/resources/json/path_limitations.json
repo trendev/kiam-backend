@@ -1,0 +1,18 @@
+[
+    {
+        "path": "Authentication/login",
+        "limit": 5
+    },
+    {
+        "path": "Authentication/logout",
+        "limit": 5
+    },
+    {
+        "path": "Authentication/password",
+        "limit": 5
+    },
+    {
+        "path": "Authentication/profile",
+        "limit": 20
+    }
+]
