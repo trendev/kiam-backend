@@ -155,7 +155,6 @@ public class RateLimitController implements Serializable {
     })
     void reset() {
         ACCESS_RECORDS.clear();
-        LOG.info("ACCESS_RECORDS has been reset");
     }
     
 }
