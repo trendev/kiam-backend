@@ -138,39 +138,36 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
      * userGroups if inactivate is not specified or false.
      *
      * @param entity the Professional to persist
-     * @param inactivate grant the Professional or not. If true, the persisted
-     * professional won't be added in the Professional's group. This QueryParam
-     * is optional.
      * @return
      */
     @RolesAllowed({"Administrator"})
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response post(Professional entity,
-            @QueryParam("inactivate") boolean inactivate) {
+    public Response create(Professional entity) {
         LOG.log(Level.INFO, "Creating Professional {0}", entity.getEmail());
 
         return super.post(entity, e -> {
 
-            //Reset the id (if provided)
+            //Cleans the sub object id (if provided)
             entity.getCustomerDetails().setId(null);
             entity.getAddress().setId(null);
             entity.getSocialNetworkAccounts().setId(null);
 
+            //Generates a new UUID
             e.setUuid(UUIDGenerator.generate("PRO-", true));
 
-            //hashs the provided password
+            //Generates + Hashes the provided password
             String hpwd = passwordManager.hashPassword(e.
                     getPassword());
             e.setPassword(hpwd);
 
-            if (!inactivate) {
-                this.grantAsProfessional(e);
-                e.setBlocked(false);
-            }
+            // Puts the Professional in the Professional's UserGroup and links the Professional with the UserGroup
+            this.grantAsProfessional(e);
+            // Unblocks the user
+            e.setBlocked(false);
 
-            //Reset bills count and ref date if provided with the POST
+            //Reset bills count and ref date (if provided)
             //Values ignored in PUT
             e.setBillsCount(0);
             e.setBillsRefDate(null);
@@ -238,8 +235,8 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
 
         LOG.log(Level.INFO, "Updating Professional {0}", proEmail);
 
-        return super.put(entity, proEmail, e ->
-        {
+        return super.put(entity, proEmail, e
+                -> {
             // hashes the provided password
             if (entity.getPassword() != null && !entity.getPassword().isEmpty()) {
                 String hpwd = passwordManager.hashPassword(
@@ -333,8 +330,8 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 email,
                 userGroupFacade,
                 name, UserGroup.class,
-                (e, a) ->
-                e.getUserGroups().add(a) & a.getUserAccounts().add(e));
+                (e, a)
+                -> e.getUserGroups().add(a) & a.getUserAccounts().add(e));
     }
 
     @RolesAllowed({"Administrator"})
@@ -357,8 +354,8 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 email,
                 userGroupFacade,
                 name, UserGroup.class,
-                (e, a) ->
-                e.getUserGroups().remove(a) & a.getUserAccounts().remove(e));
+                (e, a)
+                -> e.getUserGroups().remove(a) & a.getUserAccounts().remove(e));
     }
 
     @Path("bills")
@@ -471,8 +468,8 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 proEmail,
                 individualFacade,
                 indEmail, Individual.class,
-                (p, i) ->
-                p.getIndividuals().add(i) & i.getProfessionals().add(p));
+                (p, i)
+                -> p.getIndividuals().add(i) & i.getProfessionals().add(p));
     }
 
     @RolesAllowed({"Administrator"})
@@ -491,8 +488,8 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 proEmail,
                 individualFacade,
                 indEmail, Individual.class,
-                (p, i) ->
-                p.getIndividuals().remove(i) & i.getProfessionals().remove(p));
+                (p, i)
+                -> p.getIndividuals().remove(i) & i.getProfessionals().remove(p));
     }
 
     @Path("clear-subscription-info/{email}")
