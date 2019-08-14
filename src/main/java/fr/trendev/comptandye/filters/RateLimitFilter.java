@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.security.filters;
+package fr.trendev.comptandye.filters;
 
 import fr.trendev.comptandye.security.controllers.ratelimit.RateLimitController;
 import java.util.Date;
