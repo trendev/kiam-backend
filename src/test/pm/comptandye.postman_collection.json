@@ -12906,6 +12906,40 @@
 			"description": "Manage Addresses.\nRequires Administrator Authorization."
 		},
 		{
+			"name": "UserAccount",
+			"item": [
+				{
+					"name": "create-professional",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"skonx2006@hotmail.com\",\n    \"cltype\": \"Professional\",\n    \"businesses\": [\n        {\n            \"designation\": \"Coiffure\"\n        }\n    ],\n    \"paymentModes\": [\n        {\n            \"name\": \"Espèces\"\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/user-account/create-professional",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"user-account",
+								"create-professional"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "UserGroup",
 			"item": [
 				{
