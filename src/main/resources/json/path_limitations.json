@@ -12,7 +12,12 @@
         {
             "path": "Authentication/password",
             "limit": 10
+        },
+        {
+            "path": "user-account/create-professional",
+            "limit": 2
         }
+        
     ]
 }
 
