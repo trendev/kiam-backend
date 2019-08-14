@@ -6,7 +6,6 @@
 package fr.trendev.comptandye.utils.misc;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Properties;
 import javax.annotation.Resource;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
