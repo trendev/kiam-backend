@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 import javax.annotation.security.PermitAll;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.json.Json;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -25,6 +26,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import net.minidev.json.JSONArray;
 
 /**
  *
@@ -77,15 +79,13 @@ public class UserAccountService extends AbstractCommonService<UserAccount, Strin
 
             String pwd = passwordManager.autoGenerate();
             pro.setPassword(passwordManager.hashPassword(pwd));
-            LOG.log(Level.WARNING, "Password {0} has been generated for email {1}",
-                    new Object[]{pwd,
-                        payload.getEmail()
-                    }
-            );
-
+            
             professionalFacade.create(pro);
 
-            return Response.ok(pro).build();
+            return Response.ok(Json.createObjectBuilder()
+                    .add("email", payload.getEmail())
+                    .add("password", pwd)
+                    .build()).build();
         } catch (Exception ex) {
             throw new WebApplicationException("Error processing Professional creation", ex);
         }
