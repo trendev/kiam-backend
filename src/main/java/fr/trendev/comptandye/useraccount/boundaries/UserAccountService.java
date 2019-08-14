@@ -13,7 +13,6 @@ import fr.trendev.comptandye.security.controllers.PasswordManager;
 import fr.trendev.comptandye.useraccount.controllers.UserAccountFacade;
 import fr.trendev.comptandye.useraccount.entities.UserAccount;
 import fr.trendev.comptandye.usergroup.controllers.UserGroupFacade;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.PermitAll;
 import javax.ejb.Stateless;
@@ -26,7 +25,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import net.minidev.json.JSONArray;
 
 /**
  *
@@ -80,6 +78,7 @@ public class UserAccountService extends AbstractCommonService<UserAccount, Strin
             String pwd = passwordManager.autoGenerate();
             pro.setPassword(passwordManager.hashPassword(pwd));
             
+            //TODO : add professional in Professional's Group and link the group with the professional
             professionalFacade.create(pro);
 
             return Response.ok(Json.createObjectBuilder()
