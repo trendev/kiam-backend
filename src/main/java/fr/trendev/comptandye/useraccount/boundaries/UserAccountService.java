@@ -74,8 +74,6 @@ public class UserAccountService extends AbstractCommonService<UserAccount, Strin
             Professional pro = new Professional();
 
             pro.setEmail(payload.getEmail());
-            pro.setBusinesses(payload.getBusinesses());
-            pro.setPaymentModes(payload.getPaymentModes());
 
             String pwd = passwordManager.autoGenerate();
             pro.setPassword(passwordManager.hashPassword(pwd));
