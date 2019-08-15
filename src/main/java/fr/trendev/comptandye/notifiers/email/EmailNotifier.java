@@ -55,7 +55,7 @@ public class EmailNotifier {
                     + "<div>\n"
                     + "<span>Tu peux d'ores et déjà les utiliser sur <a href=\"https://www.comptandye.fr\">l'appli</a> \uD83D\uDE80</span>\n"
                     + "</div>\n"
-                    + "<span>Si tu rencontres des difficultés, n'hésite surtout pas à nous <a href=\"mailto:support@comptandye.fr\">contacter</a> \uD83D\uDE09</span>"
+                    + "<span>Si tu rencontres des difficultés, n'hésite surtout pas à <a href=\"mailto:support@comptandye.fr\">nous contacter</a> \uD83D\uDE09</span>"
                     + "</body>\n"
                     + "\n"
                     + "</html>",
