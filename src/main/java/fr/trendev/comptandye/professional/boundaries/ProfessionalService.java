@@ -163,7 +163,14 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
             e.setPassword(hpwd);
 
             // Puts the Professional in the Professional's UserGroup and links the Professional with the UserGroup
-            this.grantAsProfessional(e);
+            String groupName = Professional.class.getSimpleName();
+
+            UserGroup proGroup = userGroupFacade.find(groupName);
+            if (!proGroup.getUserAccounts().add(e) || !e.getUserGroups().add(proGroup)) {
+                String errMsg = "User " + e.getEmail() + " cannot be added in the group " + groupName;
+                LOG.log(Level.SEVERE, errMsg);
+                throw new WebApplicationException(errMsg);
+            }
             // Unblocks the user
             e.setBlocked(false);
 
@@ -209,12 +216,6 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
         } else {
             pro.setVatRates(null);
         }
-    }
-
-    private boolean grantAsProfessional(Professional pro) {
-        UserGroup proGroup = userGroupFacade.find("Professional");
-        return proGroup.getUserAccounts().add(pro) & pro.getUserGroups().add(
-                proGroup);
     }
 
     /**

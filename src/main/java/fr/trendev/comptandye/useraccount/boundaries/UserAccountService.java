@@ -13,6 +13,8 @@ import fr.trendev.comptandye.security.controllers.PasswordManager;
 import fr.trendev.comptandye.useraccount.controllers.UserAccountFacade;
 import fr.trendev.comptandye.useraccount.entities.UserAccount;
 import fr.trendev.comptandye.usergroup.controllers.UserGroupFacade;
+import fr.trendev.comptandye.usergroup.entities.UserGroup;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.PermitAll;
 import javax.ejb.Stateless;
@@ -77,8 +79,18 @@ public class UserAccountService extends AbstractCommonService<UserAccount, Strin
 
             String pwd = passwordManager.autoGenerate();
             pro.setPassword(passwordManager.hashPassword(pwd));
-            
-            //TODO : add professional in Professional's Group and link the group with the professional
+
+            // Puts the Professional in the Professional's UserGroup and links the Professional with the UserGroup
+            String groupName = Professional.class.getSimpleName();
+            UserGroup proGroup = userGroupFacade.find(groupName);
+            if (!proGroup.getUserAccounts().add(pro) || !pro.getUserGroups().add(proGroup)) {
+                String errMsg = "User " + pro.getEmail() + " cannot be added in the group " + groupName;
+                LOG.log(Level.SEVERE, errMsg);
+                throw new WebApplicationException(errMsg);
+            }
+            // Unblocks the user
+            pro.setBlocked(false);
+
             professionalFacade.create(pro);
 
             return Response.ok(Json.createObjectBuilder()
