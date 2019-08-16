@@ -10,6 +10,7 @@ import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
 import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.security.controllers.PasswordManager;
+import fr.trendev.comptandye.useraccount.controllers.EmailValidator;
 import fr.trendev.comptandye.useraccount.controllers.UserAccountFacade;
 import fr.trendev.comptandye.useraccount.entities.UserAccount;
 import fr.trendev.comptandye.usergroup.controllers.UserGroupFacade;
@@ -20,6 +21,7 @@ import javax.annotation.security.PermitAll;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.Json;
+import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -39,6 +41,9 @@ public class UserAccountService extends AbstractCommonService<UserAccount, Strin
 
     @Inject
     PasswordManager passwordManager;
+
+    @Inject
+    EmailValidator emailValidator;
 
     @Inject
     ProfessionalFacade professionalFacade;
@@ -69,12 +74,22 @@ public class UserAccountService extends AbstractCommonService<UserAccount, Strin
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createProfessional(Professional payload) {
+    public Response createProfessional(JsonObject payload) {
         try {
+
+            // collect data from the payload
+            String email = payload.getString("email");
+
+            if (!emailValidator.valid(email)) {
+                throw new IllegalArgumentException("the provided email is not a valid email");
+            }
+
+            // instantiate a new Professional entity
             Professional pro = new Professional();
 
-            pro.setEmail(payload.getEmail());
+            pro.setEmail(email);
 
+            // auto-generate and hash a password
             String pwd = passwordManager.autoGenerate();
             pro.setPassword(passwordManager.hashPassword(pwd));
 
@@ -82,17 +97,26 @@ public class UserAccountService extends AbstractCommonService<UserAccount, Strin
             String groupName = Professional.class.getSimpleName();
             UserGroup proGroup = userGroupFacade.find(groupName);
             if (!proGroup.getUserAccounts().add(pro) || !pro.getUserGroups().add(proGroup)) {
-                String errMsg = "User " + pro.getEmail() + " cannot be added in the group " + groupName;
+                String errMsg = "User " + email + " cannot be added in the group " + groupName;
                 LOG.log(Level.SEVERE, errMsg);
                 throw new WebApplicationException(errMsg);
             }
-            // Unblocks the user
+            // unblock the user
             pro.setBlocked(false);
 
+            // persist the professional
             professionalFacade.create(pro);
 
+            /**
+             * The response is used and its content is overridden in the
+             * UserAccountFilter. JAX-RS will send a valid response if the
+             * professional has been persisted. This approach fixes an issue
+             * where a email will be send with the credentials even if the
+             * professional cannot be persisted (MySql constraints violation for
+             * example).
+             */
             return Response.ok(Json.createObjectBuilder()
-                    .add("email", payload.getEmail())
+                    .add("email", email)
                     .add("password", pwd)
                     .build()).build();
         } catch (Exception ex) {
