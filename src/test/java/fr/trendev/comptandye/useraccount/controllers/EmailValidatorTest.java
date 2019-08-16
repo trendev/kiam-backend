@@ -32,7 +32,9 @@ public class EmailValidatorTest {
                 "username@yahoo.corporate.in",
                 "user?name@domain.co.in",
                 "name.name@name-names.domain.no",
-                "firstname-lastname@name2.names.domain.no"
+                "firstname-lastname@name2.names.domain.no",
+                "demo@comptandye.fr",
+                "skonx2006@hotmail.com"
         ).forEach(e
                 -> Assertions.assertTrue(validator.valid(e),
                         e + " should be valid"));
