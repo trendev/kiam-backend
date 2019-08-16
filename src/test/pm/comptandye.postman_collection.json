@@ -12922,7 +12922,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"skonx2006@hotmail.com\",\n    \"cltype\": \"Professional\",\n    \"businesses\": [\n        {\n            \"designation\": \"Coiffure\"\n        }\n    ],\n    \"paymentModes\": [\n        {\n            \"name\": \"Espèces\"\n        }\n    ]\n}"
+							"raw": "{\n    \"email\": \"skonx2006@hotmail.com\"\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/user-account/create-professional",
