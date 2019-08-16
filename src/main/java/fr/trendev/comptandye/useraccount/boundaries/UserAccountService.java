@@ -80,8 +80,8 @@ public class UserAccountService extends AbstractCommonService<UserAccount, Strin
             // collect data from the payload
             String email = payload.getString("email");
 
-            if (!emailValidator.valid(email)) {
-                throw new IllegalArgumentException("the provided email is not a valid email");
+            if (!emailValidator.valid(email) || email.length() > 100) {
+                throw new IllegalArgumentException("[" + email + "] is not a valid email");
             }
 
             // instantiate a new Professional entity
