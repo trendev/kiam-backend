@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.enterprise.concurrent.ManagedExecutorService;
-import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -27,7 +26,6 @@ import javax.ws.rs.ext.Provider;
  * @author jsie
  */
 @Provider
-@ApplicationScoped
 public class UserAccountFilter implements ContainerResponseFilter {
 
     private static final Logger LOG = Logger.getLogger(UserAccountFilter.class.getName());
