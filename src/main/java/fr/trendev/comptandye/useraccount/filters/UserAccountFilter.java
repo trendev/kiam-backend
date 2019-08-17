@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.enterprise.concurrent.ManagedExecutorService;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -26,6 +27,7 @@ import javax.ws.rs.ext.Provider;
  * @author jsie
  */
 @Provider
+@Singleton
 public class UserAccountFilter implements ContainerResponseFilter {
 
     private static final Logger LOG = Logger.getLogger(UserAccountFilter.class.getName());
