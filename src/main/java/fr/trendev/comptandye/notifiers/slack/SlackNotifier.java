@@ -37,7 +37,7 @@ import javax.ws.rs.core.Response;
  */
 @Singleton
 @Startup
-public class SlackController {
+public class SlackNotifier {
 
     private final String SLACK_URL;
     private final String AUTHENTICATION_CHANNEL;
@@ -47,13 +47,12 @@ public class SlackController {
     private final String TOKEN;
 
     private final Client client;
-    private static final Logger LOG = Logger.getLogger(
-            SlackController.class.getName());
+    private static final Logger LOG = Logger.getLogger(SlackNotifier.class.getName());
 
     @Inject
     ObjectMapper om;
 
-    public SlackController() {
+    public SlackNotifier() {
         this.SLACK_URL = "https://slack.com/api/chat.postMessage";
         this.AUTHENTICATION_CHANNEL = "GB1R67HL2"; // slack channel: "authentication"
         this.LOGINS_CHANNEL = "GC0K0E00P"; // slack channel : "logins"
