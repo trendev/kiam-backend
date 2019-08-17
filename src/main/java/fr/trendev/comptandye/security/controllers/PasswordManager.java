@@ -27,7 +27,7 @@ public class PasswordManager {
     private Pbkdf2PasswordHash pbkdf2PasswordHash;
 
     public PasswordManager() {
-        sequence = "azertyuiopmlkjhgfdsqwxcvbn0123456789._-!?@AZERTYUIOPMLKJHGFDSQWXCVBN";
+        sequence = "azertyuiopmlkjhgfdsqwxcvbn0123456789AZERTYUIOPMLKJHGFDSQWXCVBN";
         random = new SecureRandom();
         default_size = 10;
     }
