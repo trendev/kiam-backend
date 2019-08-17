@@ -12,16 +12,19 @@ import fr.trendev.comptandye.security.controllers.qualifiers.JWTForgeryDetected;
 import fr.trendev.comptandye.security.controllers.qualifiers.LoginDetected;
 import fr.trendev.comptandye.security.controllers.qualifiers.LogoutDetected;
 import fr.trendev.comptandye.security.controllers.qualifiers.NewDemoAccountPassword;
+import fr.trendev.comptandye.useraccount.entities.NewProfessionalCreated;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.enterprise.event.Observes;
+import javax.enterprise.event.ObservesAsync;
 import javax.enterprise.event.TransactionPhase;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -40,6 +43,7 @@ public class SlackController {
     private final String AUTHENTICATION_CHANNEL;
     private final String FIRESTORE_CHANNEL;
     private final String LOGINS_CHANNEL;
+    private final String NEW_PROFESSIONAL_CHANNEL;
     private final String TOKEN;
 
     private final Client client;
@@ -54,6 +58,7 @@ public class SlackController {
         this.AUTHENTICATION_CHANNEL = "GB1R67HL2"; // slack channel: "authentication"
         this.LOGINS_CHANNEL = "GC0K0E00P"; // slack channel : "logins"
         this.FIRESTORE_CHANNEL = "GF6D78C6A"; // slack channel : "firestore"
+        this.NEW_PROFESSIONAL_CHANNEL = "GMFLQ53PF"; // slack channel : "new-password"
         this.TOKEN = "xoxa-320251608305-395708530182-394370785636-d227cf997e97f4d4b650e4ed31d48434";
         this.client = ClientBuilder.newClient();
     }
@@ -93,11 +98,28 @@ public class SlackController {
         this.controlPostMessage(jo, AUTHENTICATION_CHANNEL);
     }
 
+    public void observeNewProfessionalCreated(
+            @ObservesAsync @NewProfessionalCreated JsonObject entity) {
+
+        String email = entity.getString("email");
+        String password = entity.getString("password");
+
+        JsonObjectBuilder builder = Json.createObjectBuilder()
+                .add("pretext", "Professional Account created")
+                .add("text", "*" + email + "*")
+                .add("footer", "tmp password = " + password)
+                .add("color", "#673ab7");
+
+        JsonObject jo = builder.build();
+
+        this.controlPostMessage(jo, NEW_PROFESSIONAL_CHANNEL);
+
+    }
+
     private void controlPostMessage(JsonObject object, final String channel) {
         try {
-            Response response = postMessage(
-                    buildPostMessage(object, channel)
-            );
+            Response response = postMessage(buildPostMessage(object, channel));
+
             if (response.getStatus() != 200) {
                 throw new IllegalStateException(
                         "Slack message error. Status = " + response.getStatus());

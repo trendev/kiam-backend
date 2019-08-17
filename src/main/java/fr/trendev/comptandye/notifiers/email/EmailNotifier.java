@@ -70,7 +70,7 @@ public class EmailNotifier {
         }
     }
 
-    public void onFireNewProfessionalCreated(
+    public void observeNewProfessionalCreated(
             @ObservesAsync @NewProfessionalCreated JsonObject entity) {
 
         String email = entity.getString("email");
