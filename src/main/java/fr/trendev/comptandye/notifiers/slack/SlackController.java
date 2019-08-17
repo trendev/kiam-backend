@@ -105,9 +105,9 @@ public class SlackController {
         String password = entity.getString("password");
 
         JsonObjectBuilder builder = Json.createObjectBuilder()
-                .add("pretext", "Professional Account created")
-                .add("text", "*" + email + "*")
-                .add("footer", "tmp password = " + password)
+                .add("pretext", "*Professional Account created*")
+                .add("text", "email : " + email)
+                .add("footer", "password : " + password)
                 .add("color", "#673ab7");
 
         JsonObject jo = builder.build();
