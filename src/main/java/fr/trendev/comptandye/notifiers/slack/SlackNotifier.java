@@ -52,6 +52,9 @@ public class SlackNotifier {
     @Inject
     ObjectMapper om;
 
+    @Inject
+    EnvironmentConfiguration env;
+
     public SlackNotifier() {
         this.SLACK_URL = "https://slack.com/api/chat.postMessage";
         this.AUTHENTICATION_CHANNEL = "GB1R67HL2"; // slack channel: "authentication"
@@ -169,7 +172,7 @@ public class SlackNotifier {
     private JsonObject buildPostMessage(JsonObject object, final String channel) {
         return Json.createObjectBuilder()
                 .add("channel", channel)
-                .add("text","Environment")//TODO : add the specific env
+                .add("text", "Environment : " + env.getType())
                 .add("attachments", Json.createArrayBuilder()
                         .add(object))
                 .build();
