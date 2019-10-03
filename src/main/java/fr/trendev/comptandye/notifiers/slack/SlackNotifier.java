@@ -172,7 +172,7 @@ public class SlackNotifier {
     private JsonObject buildPostMessage(JsonObject object, final String channel) {
         return Json.createObjectBuilder()
                 .add("channel", channel)
-                .add("text", "Environment : " + env.getType())
+                .add("text", "Environment : *" + env.getType()+"*")
                 .add("attachments", Json.createArrayBuilder()
                         .add(object))
                 .build();
