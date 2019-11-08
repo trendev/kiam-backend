@@ -152,7 +152,6 @@
                 <filtering>true</filtering>
                 <includes>
                     <include>env/environment.properties</include>
-                    <include>stripe/*.properties</include>
                     <include>firestore/*.properties</include>
                 </includes>
             </resource>
