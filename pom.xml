@@ -151,7 +151,6 @@
                 <directory>src/main/filtered-resources</directory>
                 <filtering>true</filtering>
                 <includes>
-                    <include>env/environment.properties</include>
                     <include>firestore/*.properties</include>
                 </includes>
             </resource>

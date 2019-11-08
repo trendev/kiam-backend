@@ -30,6 +30,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 /**
  *
@@ -53,7 +54,8 @@ public class SlackNotifier {
     ObjectMapper om;
 
     @Inject
-    EnvironmentConfiguration env;
+    @ConfigProperty(name = "env")
+    private String env;
 
     public SlackNotifier() {
         this.SLACK_URL = "https://slack.com/api/chat.postMessage";
@@ -67,7 +69,7 @@ public class SlackNotifier {
 
     @PostConstruct
     public void init() {
-        LOG.info("SlackServiceObserver initialized");
+        LOG.log(Level.INFO, "SlackServiceObserver initialized for Environment [{0}]", this.env);
     }
 
     /**
@@ -172,7 +174,7 @@ public class SlackNotifier {
     private JsonObject buildPostMessage(JsonObject object, final String channel) {
         return Json.createObjectBuilder()
                 .add("channel", channel)
-                .add("text", "Environment : *" + env.getType()+"*")
+                .add("text", "Environment : *" + env + "*")
                 .add("attachments", Json.createArrayBuilder()
                         .add(object))
                 .build();
