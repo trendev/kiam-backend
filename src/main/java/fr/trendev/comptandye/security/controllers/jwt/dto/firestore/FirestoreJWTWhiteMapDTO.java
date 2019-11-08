@@ -22,8 +22,8 @@ import java.util.logging.Logger;
  */
 public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
 
-    private static final Logger LOG =
-            Logger.getLogger(FirestoreJWTWhiteMapDTO.class.getName());
+    private static final Logger LOG
+            = Logger.getLogger(FirestoreJWTWhiteMapDTO.class.getName());
 
     private URI apiUri;
 
@@ -34,8 +34,7 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
 
     @Override
     public void init() {
-        this.apiUri = FirestoreJWTDTOHelper.loadUri(LOG,
-                "firestore.proxy.url");
+        this.apiUri = FirestoreJWTDTOHelper.loadUri();
 
         LOG.log(Level.INFO, "{0} initialized",
                 FirestoreJWTWhiteMapDTO.class.getSimpleName());
@@ -44,8 +43,7 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
     private FirestoreJWTWhiteMapProxyService getProxy() {
         if (this.proxy == null) {
             this.proxy = FirestoreJWTDTOHelper.buildProxy(apiUri,
-                    FirestoreJWTWhiteMapProxyService.class,
-                    LOG);
+                    FirestoreJWTWhiteMapProxyService.class);
         }
         return this.proxy;
     }
@@ -59,38 +57,36 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
     @Override
     public CompletionStage<List<JWTWhiteMapEntry>> getAll() {
 
-        final String errMsg =
-                "Exception occurs getting all JWTWhiteMap entries from Firestore";
+        final String errMsg
+                = "Exception occurs getting all JWTWhiteMap entries from Firestore";
 
         try {
             return this.getProxy()
                     .getAll()
-                    .thenApply(list ->
-                            Optional.ofNullable(list)
-                                    .map(l -> {
-                                        LOG.log(Level.INFO,
-                                                "JWTWhiteMap list got from Firestore : "
-                                                + l.size() + " entries");
-                                        return l;
-                                    })
-                                    .orElseGet(() -> {
-                                        LOG.log(Level.WARNING,
-                                                "JWTWhiteMap list got from Firestore is null !!!");
-                                        return Collections.emptyList();
-                                    })
+                    .thenApply(list
+                            -> Optional.ofNullable(list)
+                            .map(l -> {
+                                LOG.log(Level.INFO,
+                                        "JWTWhiteMap list got from Firestore : "
+                                        + l.size() + " entries");
+                                return l;
+                            })
+                            .orElseGet(() -> {
+                                LOG.log(Level.WARNING,
+                                        "JWTWhiteMap list got from Firestore is null !!!");
+                                return Collections.emptyList();
+                            })
                     )
                     .exceptionally(ex -> FirestoreJWTDTOHelper.errorHandler(
-                            ex,
-                            errMsg,
-                            Collections.emptyList(),
-                            LOG));
+                    ex,
+                    errMsg,
+                    Collections.emptyList()));
         } catch (FirestoreProxyException ex) {
             return CompletableFuture.completedFuture(
                     FirestoreJWTDTOHelper.errorHandler(
                             ex,
                             errMsg,
-                            Collections.emptyList(),
-                            LOG));
+                            Collections.emptyList()));
         }
 
     }
@@ -103,8 +99,7 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
                 + " has been created in Firestore",
                 "Exception occurs creating a JWTWhiteMapEntry in Firestore",
                 FirestoreJWTWhiteMapProxyService::create,
-                jwtWhiteMapEntry,
-                LOG);
+                jwtWhiteMapEntry);
     }
 
     @Override
@@ -115,8 +110,7 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
                 + " has been updated in Firestore",
                 "Exception occurs updating a JWTWhiteMapEntry in Firestore",
                 FirestoreJWTWhiteMapProxyService::update,
-                jwtWhiteMapEntry,
-                LOG);
+                jwtWhiteMapEntry);
     }
 
     @Override
@@ -127,8 +121,7 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
                 + " has been deleted in Firestore",
                 "Exception occurs deleting a JWTWhiteMapEntry in Firestore",
                 FirestoreJWTWhiteMapProxyService::delete,
-                email,
-                LOG);
+                email);
     }
 
 }

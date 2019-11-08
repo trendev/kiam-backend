@@ -22,8 +22,8 @@ import java.util.logging.Logger;
  */
 public class FirestoreJWTRevokedSetDTO implements JWTRevokedSetDTO {
 
-    private static final Logger LOG =
-            Logger.getLogger(FirestoreJWTRevokedSetDTO.class.getName());
+    private static final Logger LOG
+            = Logger.getLogger(FirestoreJWTRevokedSetDTO.class.getName());
 
     private URI apiUri;
 
@@ -34,8 +34,7 @@ public class FirestoreJWTRevokedSetDTO implements JWTRevokedSetDTO {
 
     @Override
     public void init() {
-        this.apiUri = FirestoreJWTDTOHelper.loadUri(LOG,
-                "firestore.proxy.url");
+        this.apiUri = FirestoreJWTDTOHelper.loadUri();
 
         LOG.log(Level.INFO, "{0} initialized",
                 FirestoreJWTRevokedSetDTO.class.getSimpleName());
@@ -44,8 +43,7 @@ public class FirestoreJWTRevokedSetDTO implements JWTRevokedSetDTO {
     private FirestoreJWTRevokedSetProxyService getProxy() {
         if (this.proxy == null) {
             this.proxy = FirestoreJWTDTOHelper.buildProxy(apiUri,
-                    FirestoreJWTRevokedSetProxyService.class,
-                    LOG);
+                    FirestoreJWTRevokedSetProxyService.class);
         }
         return this.proxy;
     }
@@ -58,38 +56,36 @@ public class FirestoreJWTRevokedSetDTO implements JWTRevokedSetDTO {
 
     @Override
     public CompletionStage<Set<JWTRecord>> getAll() {
-        final String errMsg =
-                "Exception occurs getting all Revoked JWT entries from Firestore";
+        final String errMsg
+                = "Exception occurs getting all Revoked JWT entries from Firestore";
 
         try {
             return this.getProxy()
                     .getAll()
-                    .thenApply(set ->
-                            Optional.ofNullable(set)
-                                    .map(s -> {
-                                        LOG.log(Level.INFO,
-                                                "Revoked JWT Set got from Firestore : "
-                                                + s.size() + " entries");
-                                        return s;
-                                    })
-                                    .orElseGet(() -> {
-                                        LOG.log(Level.WARNING,
-                                                "Revoked JWT Set got from Firestore is null !!!");
-                                        return Collections.emptySet();
-                                    })
+                    .thenApply(set
+                            -> Optional.ofNullable(set)
+                            .map(s -> {
+                                LOG.log(Level.INFO,
+                                        "Revoked JWT Set got from Firestore : "
+                                        + s.size() + " entries");
+                                return s;
+                            })
+                            .orElseGet(() -> {
+                                LOG.log(Level.WARNING,
+                                        "Revoked JWT Set got from Firestore is null !!!");
+                                return Collections.emptySet();
+                            })
                     )
                     .exceptionally(ex -> FirestoreJWTDTOHelper.errorHandler(
-                            ex,
-                            errMsg,
-                            Collections.emptySet(),
-                            LOG));
+                    ex,
+                    errMsg,
+                    Collections.emptySet()));
         } catch (FirestoreProxyException ex) {
             return CompletableFuture.completedFuture(
                     FirestoreJWTDTOHelper.errorHandler(
                             ex,
                             errMsg,
-                            Collections.emptySet(),
-                            LOG));
+                            Collections.emptySet()));
         }
     }
 
@@ -101,8 +97,7 @@ public class FirestoreJWTRevokedSetDTO implements JWTRevokedSetDTO {
                 + " has been created in Firestore",
                 "Exception occurs creating a Revoked JWT entry in Firestore",
                 FirestoreJWTRevokedSetProxyService::create,
-                record,
-                LOG);
+                record);
     }
 
     @Override
@@ -113,8 +108,7 @@ public class FirestoreJWTRevokedSetDTO implements JWTRevokedSetDTO {
                 + " has been deleted in Firestore",
                 "Exception occurs deleting a Revoked JWT entry in Firestore",
                 FirestoreJWTRevokedSetProxyService::delete,
-                token,
-                LOG);
+                token);
     }
 
 }

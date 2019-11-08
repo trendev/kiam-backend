@@ -140,19 +140,12 @@
 
     <build>
         <filters>
-            <filter>src/main/filtered-resources/env/config.${env}.properties</filter>
+            <filter>src/main/filtered-resources/config.${env}.properties</filter>
         </filters>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
-            </resource>
-            <resource>
-                <directory>src/main/filtered-resources</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>firestore/*.properties</include>
-                </includes>
             </resource>
         </resources>
         <plugins>
