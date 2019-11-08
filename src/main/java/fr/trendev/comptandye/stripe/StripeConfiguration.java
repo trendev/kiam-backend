@@ -14,6 +14,8 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.inject.Inject;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 /**
  *
@@ -26,7 +28,17 @@ public class StripeConfiguration {
     private final Logger LOG = Logger.getLogger(StripeConfiguration.class.
             getName());
 
+    @Inject
+    @ConfigProperty(name = "stripe.default.tax.rate.id")
     private String defaultTaxRateID;
+
+    @Inject
+    @ConfigProperty(name = "stripe.key")
+    private String key;
+
+    @Inject
+    @ConfigProperty(name = "stripe.type")
+    private String type;
 
     /**
      * Loads and Initializes the Stripe API KEY with the TEST or LIVE Stripe Key
@@ -35,34 +47,16 @@ public class StripeConfiguration {
     @PostConstruct
     void init() {
 
-        ClassLoader classloader = Thread.currentThread().
-                getContextClassLoader();
+        LOG.log(Level.INFO, "stripe.default.tax.rate.id = [{0}]",
+                this.defaultTaxRateID);
 
-        try (InputStream is = classloader.getResourceAsStream(
-                "stripe/stripe.properties")) {
+        // sets the stripe api key
+        Stripe.apiKey = this.key;
 
-            Properties properties = new Properties();
-            properties.load(is);
+        LOG.log(Level.INFO, "Stripe {0} key is set ({1})",
+                new Object[]{this.type,
+                    this.key});
 
-            // loads the properties
-            String key = properties.getProperty("stripe.key");
-            String type = properties.getProperty("stripe.type");
-            this.defaultTaxRateID = properties.getProperty(
-                    "stripe.default.tax.rate.id");
-
-            LOG.log(Level.INFO, "stripe.default.tax.rate.id = [{0}]",
-                    this.defaultTaxRateID);
-
-            // sets the stripe api key
-            Stripe.apiKey = key;
-
-            LOG.log(Level.INFO, "Stripe {0} key is set ({1})",
-                    new Object[]{type,
-                        key});
-
-        } catch (IOException ex) { //should not happen
-            LOG.log(Level.SEVERE, "STRIPE API KEY IS NOT SET", ex);
-        }
     }
 
     public String getDefaultTaxRateID() {
