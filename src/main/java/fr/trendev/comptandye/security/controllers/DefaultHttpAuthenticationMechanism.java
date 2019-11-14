@@ -37,7 +37,7 @@ import javax.servlet.http.HttpServletResponse;
     "Individual"
 })
 @DatabaseIdentityStoreDefinition(
-        dataSourceLookup = "java:app/jdbc/MySQLDataSource-comptandye",
+        dataSourceLookup = "java:global/comptandye/MySQLDataSource",
         callerQuery = "select PASSWORD from USER_ACCOUNT where EMAIL=? and BLOCKED is FALSE",
         groupsQuery = "select userGroups_NAME from USER_ACCOUNT_USER_GROUP where userAccounts_EMAIL = ?",
         priority = 1
