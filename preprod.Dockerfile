@@ -51,6 +51,7 @@ $AS_ADMIN --user $ADMIN_USER --passwordfile=${PASSWORD_FILE} stop-domain
 
 # Configure MicroProfile property
 RUN echo 'set-config-property --propertyName=db_host --propertyValue=localhost' >> $POSTBOOT_COMMANDS
+RUN echo 'get-config-property --propertyName=db_host' >> $POSTBOOT_COMMANDS
 
 # Configure the HTTP listeners
 RUN echo 'set configs.config.server-config.network-config.network-listeners.network-listener.http-listener-1.jk-enabled=true' >> $POSTBOOT_COMMANDS
