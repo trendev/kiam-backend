@@ -26,10 +26,6 @@ ENV NEW_ADMIN_PASSWORD qsec0fr
 
 # Tune the production settings
 RUN $AS_ADMIN start-domain $DOMAIN && \
-# $AS_ADMIN create-javamail-resource --passwordfile=${PASSWORD_FILE} --mailhost smtp\.gmail\.com --mailuser no\-reply\@comptandye\.fr --fromaddress support\@comptandye\.fr --storeprotocol=imap --storeprotocolclass=com.sun.mail.imap.IMAPStore --transprotocol=smtp --transprotocolclass=com.sun.mail.smtp.SMTPTransport --password kmpnfpoojsqtjibn --auth true  --property="mail.from=support@comptandye.fr:mail-auth=true:mail.smtp.auth=true:mail.smtp.port=465:mail.smtp.socketFactory.port=465:mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory" java/mail/google-comptandye && \
-$AS_ADMIN create-auth-realm --passwordfile=${PASSWORD_FILE} --classname com.sun.enterprise.security.auth.realm.jdbc.JDBCRealm --property="jaas-context=jdbcRealm:encoding=Base64:password-column=PASSWORD:datasource-jndi=jdbc/MySQLDataSourceComptaNdye:group-table=USER_ACCOUNT_USER_GROUP:charset=UTF-8:user-table=USER_ACCOUNT:group-name-column=userGroups_NAME:group-table-user-name-column=userAccounts_EMAIL:digest-algorithm=SHA-256:user-name-column=EMAIL" comptandye-security-realm && \
-$AS_ADMIN set configs.config.server-config.security-service.activate-default-principal-to-role-mapping=true --passwordfile=${PASSWORD_FILE} && \
-$AS_ADMIN set configs.config.server-config.admin-service.das-config.dynamic-reload-enabled=false --passwordfile=${PASSWORD_FILE} && \
 $AS_ADMIN delete-jvm-options --passwordfile=${PASSWORD_FILE} -client:-Xmx512m && \
 $AS_ADMIN create-jvm-options --passwordfile=${PASSWORD_FILE} "-XX\:MaxRAMPercentage=10.0" && \
 $AS_ADMIN create-jvm-options --passwordfile=${PASSWORD_FILE} "-XX\:+UseContainerSupport" && \
@@ -46,6 +42,9 @@ RUN echo 'set-config-property --propertyName=comptandye_db_host --propertyValue=
 RUN echo 'set-config-property --propertyName=comptandye_db_name --propertyValue=comptandye_master' >> $POSTBOOT_COMMANDS
 RUN echo 'set-config-property --propertyName=comptandye_db_user --propertyValue=admin_comptandye_20170328' >> $POSTBOOT_COMMANDS
 RUN echo 'set-config-property --propertyName=comptandye_db_password --propertyValue=SfBuVPRw0S' >> $POSTBOOT_COMMANDS
+
+# Disable dynamic reloading of applications
+RUN echo 'set configs.config.server-config.admin-service.das-config.dynamic-reload-enabled=false' >> $POSTBOOT_COMMANDS
 
 # Configure the HTTP listeners
 RUN echo 'set configs.config.server-config.network-config.network-listeners.network-listener.http-listener-1.jk-enabled=true' >> $POSTBOOT_COMMANDS
