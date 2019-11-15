@@ -23,15 +23,10 @@ ENV DOMAIN production
 ENV ADMIN_USER admin
 ENV ADMIN_PASSWORD admin
 ENV NEW_ADMIN_PASSWORD qsec0fr
-# ENV JCONNECTOR_VERSION 5.1.48
-
-# Copy the mysql connector to the Glassfish libs
-# Check the libs path before uncomment
-# COPY mysql-connector-java-$JCONNECTOR_VERSION.jar $PAYARA_DIR/glassfish/domains/$DOMAIN/lib
 
 # Tune the production settings
 RUN $AS_ADMIN start-domain $DOMAIN && \
-$AS_ADMIN create-javamail-resource --passwordfile=${PASSWORD_FILE} --mailhost smtp\.gmail\.com --mailuser no\-reply\@comptandye\.fr --fromaddress support\@comptandye\.fr --storeprotocol=imap --storeprotocolclass=com.sun.mail.imap.IMAPStore --transprotocol=smtp --transprotocolclass=com.sun.mail.smtp.SMTPTransport --password kmpnfpoojsqtjibn --auth true  --property="mail.from=support@comptandye.fr:mail-auth=true:mail.smtp.auth=true:mail.smtp.port=465:mail.smtp.socketFactory.port=465:mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory" java/mail/google-comptandye && \
+# $AS_ADMIN create-javamail-resource --passwordfile=${PASSWORD_FILE} --mailhost smtp\.gmail\.com --mailuser no\-reply\@comptandye\.fr --fromaddress support\@comptandye\.fr --storeprotocol=imap --storeprotocolclass=com.sun.mail.imap.IMAPStore --transprotocol=smtp --transprotocolclass=com.sun.mail.smtp.SMTPTransport --password kmpnfpoojsqtjibn --auth true  --property="mail.from=support@comptandye.fr:mail-auth=true:mail.smtp.auth=true:mail.smtp.port=465:mail.smtp.socketFactory.port=465:mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory" java/mail/google-comptandye && \
 $AS_ADMIN create-auth-realm --passwordfile=${PASSWORD_FILE} --classname com.sun.enterprise.security.auth.realm.jdbc.JDBCRealm --property="jaas-context=jdbcRealm:encoding=Base64:password-column=PASSWORD:datasource-jndi=jdbc/MySQLDataSourceComptaNdye:group-table=USER_ACCOUNT_USER_GROUP:charset=UTF-8:user-table=USER_ACCOUNT:group-name-column=userGroups_NAME:group-table-user-name-column=userAccounts_EMAIL:digest-algorithm=SHA-256:user-name-column=EMAIL" comptandye-security-realm && \
 $AS_ADMIN set configs.config.server-config.security-service.activate-default-principal-to-role-mapping=true --passwordfile=${PASSWORD_FILE} && \
 $AS_ADMIN set configs.config.server-config.admin-service.das-config.dynamic-reload-enabled=false --passwordfile=${PASSWORD_FILE} && \
