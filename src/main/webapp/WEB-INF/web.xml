@@ -1,23 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
     <display-name>comptandye</display-name>
-    <data-source>
-        <name>java:global/comptandye/MySQLDataSource</name>
-        <class-name>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</class-name>
-        <server-name>${MPCONFIG=db_host}</server-name>
-        <port-number>3306</port-number>
-        <database-name>comptandye_master</database-name>
-        <user>admin_comptandye_20170328</user>
-        <password>SfBuVPRw0S</password>
-        <property>
-            <name>useSSL</name>
-            <value>false</value>
-        </property>
-        <property>
-            <name>zeroDateTimeBehavior</name>
-            <value>convertToNull</value>
-        </property>
-    </data-source>
     <filter>
         <description>Filters all http/https requests and check session validity</description>
         <filter-name>TraceRequestFilter</filter-name>
@@ -46,24 +29,6 @@
         <dispatcher>INCLUDE</dispatcher>
         <dispatcher>ERROR</dispatcher>
     </filter-mapping>
-    <!--    <servlet>
-        <servlet-name>Faces Servlet</servlet-name>
-        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>/faces/*</url-pattern>
-        <url-pattern>*.jsf</url-pattern>
-        <url-pattern>*.faces</url-pattern>
-        <url-pattern>*.xhtml</url-pattern>
-    </servlet-mapping>-->
-    <!--    <session-config>
-        <session-timeout>60</session-timeout>
-        <cookie-config>
-            <path>/</path>
-        </cookie-config>
-    </session-config>-->
     <welcome-file-list>
         <welcome-file>/index.html</welcome-file>
     </welcome-file-list>
