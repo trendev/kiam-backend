@@ -20,11 +20,15 @@ import javax.ejb.Startup;
 @Startup
 @DataSourceDefinition(name = "java:global/comptandye/MySQLDataSource",
         className = "com.mysql.jdbc.jdbc2.optional.MysqlXADataSource",
-        user = "admin_comptandye_20170328",
-        password = "SfBuVPRw0S",
-        databaseName = "comptandye_master",
-        serverName = "${ENV=DB_HOST}",
+        user = "${MPCONFIG=comptandye_db_user}",
+        password = "${MPCONFIG=comptandye_db_password}",
+        databaseName = "${MPCONFIG=comptandye_db_name}",
+        serverName = "${MPCONFIG=comptandye_db_host}",
         portNumber = 3306,
+        maxIdleTime = 300,
+        maxPoolSize = 200,
+        maxStatements = 20,
+        initialPoolSize = 20,
         properties = {
             "useSSL=false",
             "zeroDateTimeBehavior=convertToNull"
