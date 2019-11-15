@@ -23,7 +23,7 @@ import javax.ejb.Startup;
         user = "admin_comptandye_20170328",
         password = "SfBuVPRw0S",
         databaseName = "comptandye_master",
-        serverName = "${MPCONFIG=db_host}", // asadmin set-config-property
+        serverName = "${ENV=DB_HOST}",
         portNumber = 3306,
         properties = {
             "useSSL=false",
