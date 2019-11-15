@@ -25,9 +25,9 @@ import javax.ejb.Startup;
         databaseName = "${MPCONFIG=comptandye_db_name}",
         serverName = "${MPCONFIG=comptandye_db_host}",
         portNumber = 3306,
-        maxIdleTime = 300,
+        minPoolSize = 20,
         maxPoolSize = 200,
-        maxStatements = 20,
+        maxIdleTime = 300,
         initialPoolSize = 20,
         properties = {
             "useSSL=false",
