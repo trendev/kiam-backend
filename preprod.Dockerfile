@@ -31,10 +31,7 @@ ENV NEW_ADMIN_PASSWORD qsec0fr
 
 # Tune the production settings
 RUN $AS_ADMIN start-domain $DOMAIN && \
-# $AS_ADMIN set-config-property --passwordfile=${PASSWORD_FILE} --propertyName=db_host --propertyValue=localhost && \
 $AS_ADMIN create-javamail-resource --passwordfile=${PASSWORD_FILE} --mailhost smtp\.gmail\.com --mailuser no\-reply\@comptandye\.fr --fromaddress support\@comptandye\.fr --storeprotocol=imap --storeprotocolclass=com.sun.mail.imap.IMAPStore --transprotocol=smtp --transprotocolclass=com.sun.mail.smtp.SMTPTransport --password kmpnfpoojsqtjibn --auth true  --property="mail.from=support@comptandye.fr:mail-auth=true:mail.smtp.auth=true:mail.smtp.port=465:mail.smtp.socketFactory.port=465:mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory" java/mail/google-comptandye && \
-# $AS_ADMIN create-jdbc-connection-pool --passwordfile=${PASSWORD_FILE} --allownoncomponentcallers=false --associatewiththread=false --creationretryattempts=0 --creationretryinterval=10 --leakreclaim=false --leaktimeout=0 --validationmethod=auto-commit --datasourceclassname=com.mysql.jdbc.jdbc2.optional.MysqlDataSource --failconnection=false --idletimeout=300 --isconnectvalidatereq=false --isisolationguaranteed=false --lazyconnectionassociation=false --lazyconnectionenlistment=false --matchconnections=false --maxconnectionusagecount=0 --maxpoolsize=100 --maxwait=0 --nontransactionalconnections=false --poolresize=20 --restype=javax.sql.DataSource --statementtimeout=-1 --steadypoolsize=20 --validateatmostonceperiod=0 --wrapjdbcobjects=true --property serverName=db-mysql-preprod:portNumber=3306:databaseName=comptandye_master:User=admin_comptandye_20170328:Password=SfBuVPRw0S:URL=jdbc\\:mysql\\://db-mysql-preprod\\:3306/comptandye_master?zeroDateTimeBehavior\\=convertToNull\&useSSL\\=false:driverClass=com.mysql.jdbc.Driver mysql_comptandye_master_admin_comptandye_20170328Pool && \
-# $AS_ADMIN create-jdbc-resource --passwordfile=${PASSWORD_FILE} --enabled=true --connectionpoolid=mysql_comptandye_master_admin_comptandye_20170328Pool jdbc/MySQLDataSourceComptaNdye && \
 $AS_ADMIN create-auth-realm --passwordfile=${PASSWORD_FILE} --classname com.sun.enterprise.security.auth.realm.jdbc.JDBCRealm --property="jaas-context=jdbcRealm:encoding=Base64:password-column=PASSWORD:datasource-jndi=jdbc/MySQLDataSourceComptaNdye:group-table=USER_ACCOUNT_USER_GROUP:charset=UTF-8:user-table=USER_ACCOUNT:group-name-column=userGroups_NAME:group-table-user-name-column=userAccounts_EMAIL:digest-algorithm=SHA-256:user-name-column=EMAIL" comptandye-security-realm && \
 $AS_ADMIN set configs.config.server-config.security-service.activate-default-principal-to-role-mapping=true --passwordfile=${PASSWORD_FILE} && \
 $AS_ADMIN set configs.config.server-config.admin-service.das-config.dynamic-reload-enabled=false --passwordfile=${PASSWORD_FILE} && \
@@ -50,8 +47,10 @@ $AS_ADMIN --user $ADMIN_USER --passwordfile=${PASSWORD_FILE} enable-secure-admin
 $AS_ADMIN --user $ADMIN_USER --passwordfile=${PASSWORD_FILE} stop-domain
 
 # Configure MicroProfile property
-RUN echo 'set-config-property --propertyName=db_host --propertyValue=localhost' >> $POSTBOOT_COMMANDS
-RUN echo 'get-config-property --propertyName=db_host' >> $POSTBOOT_COMMANDS
+RUN echo 'set-config-property --propertyName=comptandye_db_host --propertyValue=db-mysql-preprod' >> $POSTBOOT_COMMANDS
+RUN echo 'set-config-property --propertyName=comptandye_db_name --propertyValue=comptandye_master' >> $POSTBOOT_COMMANDS
+RUN echo 'set-config-property --propertyName=comptandye_db_user --propertyValue=admin_comptandye_20170328' >> $POSTBOOT_COMMANDS
+RUN echo 'set-config-property --propertyName=comptandye_db_password --propertyValue=SfBuVPRw0S' >> $POSTBOOT_COMMANDS
 
 # Configure the HTTP listeners
 RUN echo 'set configs.config.server-config.network-config.network-listeners.network-listener.http-listener-1.jk-enabled=true' >> $POSTBOOT_COMMANDS
@@ -61,12 +60,12 @@ RUN echo 'set configs.config.server-config.network-config.protocols.protocol.htt
 RUN echo 'set configs.config.server-config.network-config.protocols.protocol.http-listener-1.http.file-cache.enabled=true' >> $POSTBOOT_COMMANDS
 RUN echo 'set configs.config.server-config.network-config.protocols.protocol.http-listener-1.http.file-cache.max-age-seconds=36000' >> $POSTBOOT_COMMANDS
 RUN echo 'set configs.config.server-config.network-config.transports.transport.tcp.acceptor-threads=4' >> $POSTBOOT_COMMANDS
-RUN echo 'set configs.config.server-config.thread-pools.thread-pool.http-thread-pool.max-thread-pool-size=350' >> $POSTBOOT_COMMANDS
+RUN echo 'set configs.config.server-config.thread-pools.thread-pool.http-thread-pool.max-thread-pool-size=500' >> $POSTBOOT_COMMANDS
 RUN echo 'set configs.config.server-config.thread-pools.thread-pool.http-thread-pool.min-thread-pool-size=25' >> $POSTBOOT_COMMANDS
 
 # Configure the EJB container
 RUN echo 'set configs.config.server-config.ejb-container.pool-resize-quantity=20' >> $POSTBOOT_COMMANDS
-RUN echo 'set configs.config.server-config.ejb-container.max-pool-size=250' >> $POSTBOOT_COMMANDS
+RUN echo 'set configs.config.server-config.ejb-container.max-pool-size=500' >> $POSTBOOT_COMMANDS
 RUN echo 'set configs.config.server-config.ejb-container.steady-pool-size=50' >> $POSTBOOT_COMMANDS
 
 # Configure Monitoring and Slack notifications
