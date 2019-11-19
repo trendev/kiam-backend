@@ -24,6 +24,12 @@ ENV ADMIN_USER admin
 ENV ADMIN_PASSWORD admin
 ENV NEW_ADMIN_PASSWORD qsec0fr
 
+# DB config
+ENV COMPTANDYE_DB_HOST db-mysql-preprod
+ENV COMPTANDYE_DB_NAME comptandye_master
+ENV COMPTANDYE_DB_USER admin_comptandye_20170328
+ENV COMPTANDYE_DB_PASSWORD SfBuVPRw0S
+
 # Tune the production settings
 RUN $AS_ADMIN start-domain $DOMAIN && \
 $AS_ADMIN create-jvm-options --passwordfile=${PASSWORD_FILE} "-XX\:MaxRAMPercentage=10.0" && \
@@ -35,12 +41,6 @@ $AS_ADMIN --user $ADMIN_USER  --passwordfile=/tmp/tmpfile disable-secure-admin &
 $AS_ADMIN --user $ADMIN_USER  --passwordfile=/tmp/tmpfile change-admin-password && \
 $AS_ADMIN --user $ADMIN_USER --passwordfile=${PASSWORD_FILE} enable-secure-admin && \
 $AS_ADMIN --user $ADMIN_USER --passwordfile=${PASSWORD_FILE} stop-domain
-
-# Configure MicroProfile property
-RUN echo 'set-config-property --propertyName=comptandye_db_host --propertyValue=db-mysql-preprod' >> $POSTBOOT_COMMANDS
-RUN echo 'set-config-property --propertyName=comptandye_db_name --propertyValue=comptandye_master' >> $POSTBOOT_COMMANDS
-RUN echo 'set-config-property --propertyName=comptandye_db_user --propertyValue=admin_comptandye_20170328' >> $POSTBOOT_COMMANDS
-RUN echo 'set-config-property --propertyName=comptandye_db_password --propertyValue=SfBuVPRw0S' >> $POSTBOOT_COMMANDS
 
 # Disable dynamic reloading of applications
 RUN echo 'set configs.config.server-config.admin-service.das-config.dynamic-reload-enabled=false' >> $POSTBOOT_COMMANDS
