@@ -7,7 +7,7 @@ jobs:
       - checkout
       - run:
           name: docker build
-          command: DOCKER_BUILDKIT=1 docker build -t $DOCKER_IMAGE .
+          command: DOCKER_BUILDKIT=1 docker build -t $DOCKER_IMAGE --build-arg BUILDKIT_INLINE_CACHE=1 .
       - run:
           name : docker login
           command: docker login -u $DOCKER_USER -p $DOCKER_PASS
@@ -21,7 +21,7 @@ jobs:
       - checkout
       - run:
           name: docker build
-          command: DOCKER_BUILDKIT=1 docker build -t $DOCKER_IMAGE:$CIRCLE_BRANCH -f $CIRCLE_BRANCH.Dockerfile .
+          command: DOCKER_BUILDKIT=1 docker build -t $DOCKER_IMAGE:$CIRCLE_BRANCH -f $CIRCLE_BRANCH.Dockerfile --build-arg BUILDKIT_INLINE_CACHE=1 .
       - run:
           name : docker login
           command: docker login -u $DOCKER_USER -p $DOCKER_PASS
