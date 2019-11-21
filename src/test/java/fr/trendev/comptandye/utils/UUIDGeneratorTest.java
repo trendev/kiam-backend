@@ -14,8 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
  * @author jsie
  */
 public class UUIDGeneratorTest {
+    
+    private UUIDGenerator UUIDGenerator;
 
     public UUIDGeneratorTest() {
+         this.UUIDGenerator = new UUIDGenerator();
     }
 
     /**

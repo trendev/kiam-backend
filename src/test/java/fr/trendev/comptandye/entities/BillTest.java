@@ -24,8 +24,11 @@ import org.junit.Test;
  * @author jsie
  */
 public class BillTest {
+    
+    private UUIDGenerator UUIDGenerator;
 
     public BillTest() {
+        this.UUIDGenerator = new UUIDGenerator();
     }
 
     @Test

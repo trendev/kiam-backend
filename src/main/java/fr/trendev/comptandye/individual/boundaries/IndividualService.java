@@ -16,7 +16,6 @@ import fr.trendev.comptandye.individual.controllers.IndividualFacade;
 import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
 import fr.trendev.comptandye.usergroup.controllers.UserGroupFacade;
 import fr.trendev.comptandye.common.boundaries.AssociationManagementEnum;
-import fr.trendev.comptandye.useraccount.controllers.UUIDGenerator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

@@ -26,7 +26,10 @@ import org.junit.Test;
  */
 public class ClientBillTest {
 
+    private UUIDGenerator UUIDGenerator;
+
     public ClientBillTest() {
+        this.UUIDGenerator = new UUIDGenerator();
     }
 
     @Test
@@ -65,7 +68,7 @@ public class ClientBillTest {
         List<PurchasedOffering> purchasedOfferings = IntStream
                 .range(0, 10)
                 .mapToObj(i -> new Service("Service #" + i, 1000, 10,
-                        professional))
+                professional))
                 .map(o -> new PurchasedOffering(1, o))
                 .collect(Collectors.toList());
 

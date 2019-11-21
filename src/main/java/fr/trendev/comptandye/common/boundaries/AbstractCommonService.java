@@ -12,6 +12,7 @@ import fr.trendev.comptandye.exceptions.ExceptionHandler;
 import fr.trendev.comptandye.exceptions.ExceptionHelper;
 import fr.trendev.comptandye.exceptions.InvalidDeliveryDateException;
 import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
+import fr.trendev.comptandye.useraccount.controllers.UUIDGenerator;
 import fr.trendev.comptandye.useraccount.entities.UserAccountType;
 import java.net.URI;
 import java.util.Collection;
@@ -43,7 +44,7 @@ import javax.ws.rs.core.SecurityContext;
 public abstract class AbstractCommonService<E, P> {
 
     /**
-     * Used only in stringify. Easiest than creating/parsing Json Objects.
+     * Used only in stringify. Easiest than creating/parsing JSON Objects.
      */
     @Inject
     private ObjectMapper om;
@@ -53,6 +54,9 @@ public abstract class AbstractCommonService<E, P> {
 
     @Inject
     protected ExceptionHandler exceptionHandler;
+    
+    @Inject
+    protected UUIDGenerator UUIDGenerator;
 
     @Resource
     private ManagedExecutorService managedExecutorService;

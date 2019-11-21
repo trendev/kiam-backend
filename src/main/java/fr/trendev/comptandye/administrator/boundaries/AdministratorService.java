@@ -13,7 +13,6 @@ import fr.trendev.comptandye.security.controllers.PasswordManager;
 import fr.trendev.comptandye.administrator.controllers.AdministratorFacade;
 import fr.trendev.comptandye.usergroup.controllers.UserGroupFacade;
 import fr.trendev.comptandye.common.boundaries.AssociationManagementEnum;
-import fr.trendev.comptandye.useraccount.controllers.UUIDGenerator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

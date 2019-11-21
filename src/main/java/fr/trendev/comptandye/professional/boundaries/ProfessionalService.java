@@ -21,7 +21,6 @@ import fr.trendev.comptandye.product.entities.Product;
 import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
 import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.security.controllers.PasswordManager;
-import fr.trendev.comptandye.useraccount.controllers.UUIDGenerator;
 import fr.trendev.comptandye.usergroup.controllers.UserGroupFacade;
 import fr.trendev.comptandye.usergroup.entities.UserGroup;
 import fr.trendev.comptandye.vatrates.controllers.VatRatesFacade;

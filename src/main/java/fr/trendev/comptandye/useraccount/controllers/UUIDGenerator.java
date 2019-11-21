@@ -6,23 +6,25 @@
 package fr.trendev.comptandye.useraccount.controllers;
 
 import java.util.UUID;
+import javax.ejb.Stateless;
 
 /**
  *
  * @author jsie
  */
+@Stateless
 public class UUIDGenerator {
 
-    public static String generate() {
+    public String generate() {
         return UUID.randomUUID().toString();
     }
 
-    public static String generate(boolean compact) {
+    public String generate(boolean compact) {
         String uuid = generate();
         return compact ? uuid.replaceAll("-", "") : uuid;
     }
 
-    public static String generate(String header, boolean compact) {
+    public String generate(String header, boolean compact) {
         String uuid = generate(compact);
         return (header != null) ? header.concat(uuid) : uuid;
     }
