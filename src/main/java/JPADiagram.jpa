@@ -1594,13 +1594,13 @@
         </jpa:nq>
         <jpa:discriminator-column/>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="BusinessPK" abs="false" class="Business" v="true" gen="false" pkg="business.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1503060694288">
+    <jpa:entity compositePrimaryKeyClass="BusinessPK" abs="false" class="Business" v="true" pkg="business.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1503060694288">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1503060753512132</jpa:a>
         </jpa:con>
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.Visitor;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -2578,7 +2578,7 @@ import fr.trendev.comptandye.offering.entities.OfferingExtentsVisitor;</jpa:snp>
                     </e>
                 </el>
             </i>
-            <i ref="_1503060694288" x="-534" y="238"/>
+            <i ref="_1503060694288" x="-533" y="238"/>
             <i ref="_1525251875162" x="232" y="2271"/>
             <i ref="_1524923958426" x="232" y="1894">
                 <el>

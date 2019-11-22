@@ -27,7 +27,7 @@ public class Business {
     }
 
     public String getDesignation() {
-        return this.designation;
+        return designation;
     }
 
     public void setDesignation(String designation) {
