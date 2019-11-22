@@ -125,7 +125,6 @@
             <jpa:query>Select u from UserAccount u where u.lastAccessedTime=:lastAccessedTime</jpa:query>
         </jpa:nq>
         <jpa:table name="USER_ACCOUNT"/>
-        <jpa:inheritance strategy="SINGLE_TABLE"/>
     </jpa:entity>
     <jpa:entity lbl-ref="_14901008529027" compositePrimaryKeyClass="UserGroupPK" abs="false" class="UserGroup" v="true" pkg="usergroup.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490100852900">
         <jpa:con am="PUBLIC" e="true">

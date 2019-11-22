@@ -18,8 +18,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -34,7 +32,6 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "USER_ACCOUNT")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "cltype", visible = true)
 @JsonSubTypes({
