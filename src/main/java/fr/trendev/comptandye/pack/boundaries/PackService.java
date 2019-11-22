@@ -90,7 +90,7 @@ public class PackService extends AbstractOfferingService<Pack> {
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response find(@PathParam("id") Long id,
+    public Response find(@PathParam("id") String id,
             @QueryParam("professional") String professional,
             @QueryParam("refresh") boolean refresh) {
         OfferingPK pk = new OfferingPK(id, professional);
@@ -116,7 +116,7 @@ public class PackService extends AbstractOfferingService<Pack> {
                 Professional.class,
                 professionalFacade, Pack::setProfessional,
                 Professional::getOfferings, e -> {
-            e.setId(null);
+            e.setId(UUIDGenerator.generateID());
 
             if (!e.getOfferings().isEmpty()) {
                 //checks provided offerings are owned by the professional
@@ -195,7 +195,7 @@ public class PackService extends AbstractOfferingService<Pack> {
     @Path("{id}")
     @DELETE
     public Response delete(@Context SecurityContext sec,
-            @PathParam("id") Long id,
+            @PathParam("id") String id,
             @QueryParam("professional") String professional) {
 
         OfferingPK pk = new OfferingPK(id, this.getProEmail(sec,
@@ -213,8 +213,8 @@ public class PackService extends AbstractOfferingService<Pack> {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public Response addService(@Context SecurityContext sec,
-            @PathParam("packid") Long packid,
-            @PathParam("offeringid") Long offeringid,
+            @PathParam("packid") String packid,
+            @PathParam("offeringid") String offeringid,
             @QueryParam("professional") String professional) {
 
         OfferingPK packPK = new OfferingPK(packid, this.getProEmail(sec,
@@ -236,8 +236,8 @@ public class PackService extends AbstractOfferingService<Pack> {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public Response removeService(@Context SecurityContext sec,
-            @PathParam("packid") Long packid,
-            @PathParam("offeringid") Long offeringid,
+            @PathParam("packid") String packid,
+            @PathParam("offeringid") String offeringid,
             @QueryParam("professional") String professional) {
 
         OfferingPK packPK = new OfferingPK(packid, this.getProEmail(sec,
@@ -259,8 +259,8 @@ public class PackService extends AbstractOfferingService<Pack> {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public Response addPack(@Context SecurityContext sec,
-            @PathParam("packid") Long packid,
-            @PathParam("offeringid") Long offeringid,
+            @PathParam("packid") String packid,
+            @PathParam("offeringid") String offeringid,
             @QueryParam("professional") String professional) {
 
         OfferingPK packPK = new OfferingPK(packid, this.getProEmail(sec,
@@ -301,8 +301,8 @@ public class PackService extends AbstractOfferingService<Pack> {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public Response removePack(@Context SecurityContext sec,
-            @PathParam("packid") Long packid,
-            @PathParam("offeringid") Long offeringid,
+            @PathParam("packid") String packid,
+            @PathParam("offeringid") String offeringid,
             @QueryParam("professional") String professional) {
 
         OfferingPK packPK = new OfferingPK(packid, this.getProEmail(sec,
@@ -324,8 +324,8 @@ public class PackService extends AbstractOfferingService<Pack> {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public Response addSale(@Context SecurityContext sec,
-            @PathParam("packid") Long packid,
-            @PathParam("offeringid") Long offeringid,
+            @PathParam("packid") String packid,
+            @PathParam("offeringid") String offeringid,
             @QueryParam("professional") String professional) {
 
         OfferingPK packPK = new OfferingPK(packid, this.getProEmail(sec,
@@ -347,8 +347,8 @@ public class PackService extends AbstractOfferingService<Pack> {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public Response removeSale(@Context SecurityContext sec,
-            @PathParam("packid") Long packid,
-            @PathParam("offeringid") Long offeringid,
+            @PathParam("packid") String packid,
+            @PathParam("offeringid") String offeringid,
             @QueryParam("professional") String professional) {
 
         OfferingPK packPK = new OfferingPK(packid, this.getProEmail(sec,
@@ -371,7 +371,7 @@ public class PackService extends AbstractOfferingService<Pack> {
     @Produces(MediaType.APPLICATION_JSON)
     public void getPurchasedOfferings(@Suspended final AsyncResponse ar,
             @Context SecurityContext sec,
-            @PathParam("id") Long id,
+            @PathParam("id") String id,
             @QueryParam("professional") String professional) {
         OfferingPK pk = new OfferingPK(id, this.getProEmail(sec,
                 professional));
@@ -383,7 +383,7 @@ public class PackService extends AbstractOfferingService<Pack> {
     @Produces(MediaType.APPLICATION_JSON)
     public void getParentPacks(@Suspended final AsyncResponse ar,
             @Context SecurityContext sec,
-            @PathParam("id") Long id,
+            @PathParam("id") String id,
             @QueryParam("professional") String professional) {
         OfferingPK pk = new OfferingPK(id, this.getProEmail(sec,
                 professional));

@@ -18,8 +18,6 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -35,19 +33,17 @@ import javax.validation.constraints.NotNull;
 @IdClass(OfferingPK.class)
 @DiscriminatorColumn(length = 31)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "cltype",
-        visible = true)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "cltype", visible = true)
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = Service.class, name = OfferingType.SERVICE)
-    ,   @JsonSubTypes.Type(value = Pack.class, name = OfferingType.PACK)
-    ,  @JsonSubTypes.Type(value = Sale.class, name = OfferingType.SALE)})
+    @JsonSubTypes.Type(value = Service.class, name = OfferingType.SERVICE),
+    @JsonSubTypes.Type(value = Pack.class, name = OfferingType.PACK),
+    @JsonSubTypes.Type(value = Sale.class, name = OfferingType.SALE)})
 public abstract class Offering {
 
-    @Column(name = "OFFERING_ID")
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @Column(name = "OFFERING_ID")
+    @NotNull(message = "Offering ID cannot be null")
+    private String id;
 
     @Basic
     @NotNull(message = "cltype field in Offering cannot be null")
@@ -72,25 +68,23 @@ public abstract class Offering {
     private int duration;
 
     @Id
-    @ManyToOne(targetEntity = Professional.class)
-    @JoinColumn(name = "OFFERING_PRO_EMAIL", referencedColumnName = "EMAIL",
-            nullable = false, updatable = false)
+    @ManyToOne
+    @JoinColumn(name = "OFFERING_PRO_EMAIL", referencedColumnName = "EMAIL", nullable = false, updatable = false)
     @JsonIgnore
     private Professional professional;
 
-    @OneToMany(targetEntity = Business.class)
+    @OneToMany
     private List<Business> businesses = new LinkedList<>();
 
-    @OneToMany(targetEntity = PurchasedOffering.class, mappedBy = "offering")
+    @OneToMany(mappedBy = "offering")
     @JsonIgnore
     private List<PurchasedOffering> purchasedOfferings = new LinkedList<>();
 
-    @ManyToMany(targetEntity = Pack.class, mappedBy = "offerings")
+    @ManyToMany(mappedBy = "offerings")
     @JsonIgnore
     private List<Pack> parentPacks = new LinkedList<>();
 
-    public Offering(String name, int price, int duration,
-            Professional professional) {
+    public Offering(String name, int price, int duration, Professional professional) {
         this.name = name;
         this.price = price;
         this.duration = duration;
@@ -100,16 +94,16 @@ public abstract class Offering {
     public Offering() {
     }
 
-    public Long getId() {
-        return this.id;
+    public String getId() {
+        return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     public String getCltype() {
-        return this.cltype;
+        return cltype;
     }
 
     public void setCltype(String cltype) {
@@ -117,7 +111,7 @@ public abstract class Offering {
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public void setName(String name) {
@@ -125,7 +119,7 @@ public abstract class Offering {
     }
 
     public String getShortname() {
-        return this.shortname;
+        return shortname;
     }
 
     public void setShortname(String shortname) {
@@ -133,7 +127,7 @@ public abstract class Offering {
     }
 
     public int getPrice() {
-        return this.price;
+        return price;
     }
 
     public void setPrice(int price) {
@@ -141,7 +135,7 @@ public abstract class Offering {
     }
 
     public int getDuration() {
-        return this.duration;
+        return duration;
     }
 
     public void setDuration(int duration) {
@@ -149,7 +143,7 @@ public abstract class Offering {
     }
 
     public Professional getProfessional() {
-        return this.professional;
+        return professional;
     }
 
     public void setProfessional(Professional professional) {
@@ -157,7 +151,7 @@ public abstract class Offering {
     }
 
     public List<Business> getBusinesses() {
-        return this.businesses;
+        return businesses;
     }
 
     public void setBusinesses(List<Business> businesses) {
@@ -165,7 +159,7 @@ public abstract class Offering {
     }
 
     public List<PurchasedOffering> getPurchasedOfferings() {
-        return this.purchasedOfferings;
+        return purchasedOfferings;
     }
 
     public void setPurchasedOfferings(List<PurchasedOffering> purchasedOfferings) {
@@ -173,7 +167,7 @@ public abstract class Offering {
     }
 
     public List<Pack> getParentPacks() {
-        return this.parentPacks;
+        return parentPacks;
     }
 
     public void setParentPacks(List<Pack> parentPacks) {

@@ -21,7 +21,7 @@ public class Sale extends Offering {
     @Basic
     private int qty;
 
-    @ManyToOne(targetEntity = Product.class)
+    @ManyToOne
     private Product product;
 
     public Sale(String name, int price, int duration, Professional professional) {
@@ -34,7 +34,7 @@ public class Sale extends Offering {
     }
 
     public int getQty() {
-        return this.qty;
+        return qty;
     }
 
     public void setQty(int qty) {
@@ -42,7 +42,7 @@ public class Sale extends Offering {
     }
 
     public Product getProduct() {
-        return this.product;
+        return product;
     }
 
     public void setProduct(Product product) {

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.trendev.comptandye.offering.entities.Offering;
 import fr.trendev.comptandye.offering.entities.OfferingType;
 import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.utils.Visitor;
 import javax.persistence.Entity;
 
@@ -15,8 +16,7 @@ import javax.persistence.Entity;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Service extends Offering {
 
-    public Service(String name, int price, int duration,
-            Professional professional) {
+    public Service(String name, int price, int duration, Professional professional) {
         super(name, price, duration, professional);
         this.cltype = OfferingType.SERVICE;
     }

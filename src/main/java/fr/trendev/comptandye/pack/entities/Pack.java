@@ -20,12 +20,10 @@ import javax.persistence.ManyToMany;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Pack extends Offering {
 
-    @ManyToMany(targetEntity = Offering.class)
+    @ManyToMany
     @JoinTable(name = "PACK_CONTENT", joinColumns = {
-        @JoinColumn(name = "PACK_ID", referencedColumnName = "OFFERING_ID",
-                table = "OFFERING")
-        ,@JoinColumn(name = "PACK_PROFESSIONAL_EMAIL",
-                referencedColumnName = "OFFERING_PRO_EMAIL", table = "OFFERING")})
+        @JoinColumn(name = "PACK_ID", referencedColumnName = "OFFERING_ID", table = "OFFERING"),
+        @JoinColumn(name = "PACK_PROFESSIONAL_EMAIL", referencedColumnName = "OFFERING_PRO_EMAIL", table = "OFFERING")})
     private List<Offering> offerings = new LinkedList<>();
 
     public Pack(String name, int price, int duration, Professional professional) {
@@ -38,7 +36,7 @@ public class Pack extends Offering {
     }
 
     public List<Offering> getOfferings() {
-        return this.offerings;
+        return offerings;
     }
 
     public void setOfferings(List<Offering> offerings) {

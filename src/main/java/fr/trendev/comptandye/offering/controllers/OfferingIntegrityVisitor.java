@@ -152,6 +152,7 @@ public class OfferingIntegrityVisitor implements Visitor<Offering> {
         return Optional.ofNullable(packFacade.find(new OfferingPK(pack.getId(),
                 proEmail)))
                 .map(p -> {
+                    // explore offerings contained in the pack
                     pack.getOfferings().forEach(o -> o.accept(this));
                     return p;
                 })

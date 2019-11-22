@@ -87,7 +87,7 @@ public class SaleService extends AbstractOfferingService<Sale> {
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response find(@PathParam("id") Long id,
+    public Response find(@PathParam("id") String id,
             @QueryParam("professional") String professional,
             @QueryParam("refresh") boolean refresh) {
         OfferingPK pk = new OfferingPK(id, professional);
@@ -114,9 +114,10 @@ public class SaleService extends AbstractOfferingService<Sale> {
                 Professional.class,
                 professionalFacade, Sale::setProfessional,
                 Professional::getOfferings, e -> {
-            e.setId(null);
+            e.setId(UUIDGenerator.generateID());
 
-            //search and link the Product with the current Sale
+            // search and link the Product with the current Sale
+            // a existing product must be provided
             Product product = productFinder.findProduct(e,
                     email,
                     productFacade,
@@ -143,6 +144,7 @@ public class SaleService extends AbstractOfferingService<Sale> {
 
         LOG.log(Level.INFO, "Updating Sale {0}", saleFacade.
                 prettyPrintPK(pk));
+        // product is not updated
         return super.put(entity, pk, e -> {
             e.setName(entity.getName());
             e.setShortname(entity.getShortname());
@@ -169,7 +171,7 @@ public class SaleService extends AbstractOfferingService<Sale> {
     @Path("{id}")
     @DELETE
     public Response delete(@Context SecurityContext sec,
-            @PathParam("id") Long id,
+            @PathParam("id") String id,
             @QueryParam("professional") String professional) {
 
         OfferingPK pk = new OfferingPK(id, this.getProEmail(sec, professional));
@@ -189,7 +191,7 @@ public class SaleService extends AbstractOfferingService<Sale> {
     @Produces(MediaType.APPLICATION_JSON)
     public void getPurchasedOfferings(@Suspended final AsyncResponse ar,
             @Context SecurityContext sec,
-            @PathParam("id") Long id,
+            @PathParam("id") String id,
             @QueryParam("professional") String professional) {
         OfferingPK pk = new OfferingPK(id, this.getProEmail(sec,
                 professional));
@@ -201,7 +203,7 @@ public class SaleService extends AbstractOfferingService<Sale> {
     @Produces(MediaType.APPLICATION_JSON)
     public void getParentPacks(@Suspended final AsyncResponse ar,
             @Context SecurityContext sec,
-            @PathParam("id") Long id,
+            @PathParam("id") String id,
             @QueryParam("professional") String professional) {
         OfferingPK pk = new OfferingPK(id, this.getProEmail(sec,
                 professional));
