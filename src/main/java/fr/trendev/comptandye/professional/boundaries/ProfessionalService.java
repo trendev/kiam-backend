@@ -150,7 +150,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
 
             //Cleans the sub object id (if provided)
             entity.getCustomerDetails().setId(null);
-            entity.getAddress().setId(null);
+            entity.getAddress().setId(UUIDGenerator.generateID());
             entity.getSocialNetworkAccounts().setId(null);
 
             //Generates a new UUID
