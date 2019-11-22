@@ -19,16 +19,13 @@ import javax.persistence.OneToOne;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public abstract class Customer extends UserAccount {
 
-    @OneToOne(orphanRemoval = true, cascade = {CascadeType.ALL},
-            targetEntity = CustomerDetails.class)
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
     private CustomerDetails customerDetails;
 
-    @OneToOne(orphanRemoval = true, cascade = {CascadeType.ALL},
-            targetEntity = Address.class)
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
     private Address address;
 
-    @OneToOne(orphanRemoval = true, cascade = {CascadeType.ALL},
-            targetEntity = SocialNetworkAccounts.class)
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
     private SocialNetworkAccounts socialNetworkAccounts;
 
     public Customer(String email, String password, String username, String uuid) {
@@ -38,9 +35,7 @@ public abstract class Customer extends UserAccount {
         this.socialNetworkAccounts = new SocialNetworkAccounts();
     }
 
-    public Customer(String email, String password, String username, String uuid,
-            CustomerDetails customerDetails, Address address,
-            SocialNetworkAccounts socialNetworkAccounts) {
+    public Customer(String email, String password, String username, String uuid, CustomerDetails customerDetails, Address address, SocialNetworkAccounts socialNetworkAccounts) {
         super(email, password, username, uuid);
         this.customerDetails = customerDetails;
         this.address = address;
@@ -55,7 +50,7 @@ public abstract class Customer extends UserAccount {
     }
 
     public CustomerDetails getCustomerDetails() {
-        return this.customerDetails;
+        return customerDetails;
     }
 
     public void setCustomerDetails(CustomerDetails customerDetails) {
@@ -63,7 +58,7 @@ public abstract class Customer extends UserAccount {
     }
 
     public Address getAddress() {
-        return this.address;
+        return address;
     }
 
     public void setAddress(Address address) {
@@ -71,11 +66,10 @@ public abstract class Customer extends UserAccount {
     }
 
     public SocialNetworkAccounts getSocialNetworkAccounts() {
-        return this.socialNetworkAccounts;
+        return socialNetworkAccounts;
     }
 
-    public void setSocialNetworkAccounts(
-            SocialNetworkAccounts socialNetworkAccounts) {
+    public void setSocialNetworkAccounts(SocialNetworkAccounts socialNetworkAccounts) {
         this.socialNetworkAccounts = socialNetworkAccounts;
     }
 
