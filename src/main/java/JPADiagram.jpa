@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jpa:entity-mappings ptype="MONOLITH" ppkg="fr.trendev" epkg="comptandye" v="3.6" rws="_14901008082912" Pws="_14901008082912" cws="_14901008082912" thm="PDarkColorScheme" dbthm="PLightColorScheme" persistenceUnitName="DEFAULT_PU" sm="false" xs="false" id="_14901008082901" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <jpa:entity lbl-ref="_14901008440196" compositePrimaryKeyClass="UserAccountPK" abs="true" class="UserAccount" v="true" pkg="useraccount.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490100823157">
+    <jpa:entity lbl-ref="_14901008440196" compositePrimaryKeyClass="UserAccountPK" abs="true" class="UserAccount" v="true" gen="false" pkg="useraccount.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490100823157">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_14901149376313047</jpa:a>
             <jpa:a>_14901008440196</jpa:a>
@@ -127,7 +127,7 @@
         <jpa:table name="USER_ACCOUNT"/>
         <jpa:inheritance strategy="SINGLE_TABLE"/>
     </jpa:entity>
-    <jpa:entity lbl-ref="_14901008529027" compositePrimaryKeyClass="UserGroupPK" abs="false" class="UserGroup" v="true" gen="false" pkg="usergroup.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490100852900">
+    <jpa:entity lbl-ref="_14901008529027" compositePrimaryKeyClass="UserGroupPK" abs="false" class="UserGroup" v="true" pkg="usergroup.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490100852900">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_14901008529027</jpa:a>
             <jpa:a>_149062419655951</jpa:a>
@@ -138,12 +138,12 @@
             <jpa:post></jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
-            import fr.trendev.comptandye.utils.Visitor;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">java.util.LinkedList</jpa:snp>
         <jpa:snp e="true">
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
         <jpa:des>User groups should be linked to User Accounts type but it's still possible to create many usergroup. This class is linked to jdbc-realm authentication.</jpa:des>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -694,7 +694,7 @@
         </jpa:nq>
         <jpa:table name="CUSTOMER_DETAILS"/>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="AddressPK" abs="false" class="Address" v="true" pkg="address.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101737208">
+    <jpa:entity compositePrimaryKeyClass="AddressPK" abs="false" class="Address" v="true" gen="false" pkg="address.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101737208">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_149010174910869</jpa:a>
             <jpa:a>_149331184908654</jpa:a>
@@ -1342,7 +1342,7 @@
         </jpa:nq>
         <jpa:table name="COLLECTIVE_GROUP"/>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="AdministratorPK" abs="false" class="Administrator" superclassId="_1490100823157" v="true" pkg="administrator.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490704123469">
+    <jpa:entity compositePrimaryKeyClass="AdministratorPK" abs="false" class="Administrator" superclassId="_1490100823157" v="true" gen="false" pkg="administrator.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490704123469">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_14901149376313047</jpa:a>
             <jpa:a>_14901008440196</jpa:a>

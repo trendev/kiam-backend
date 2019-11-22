@@ -31,8 +31,7 @@ public class UserGroup {
     @Basic
     private String description;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST},
-            targetEntity = UserAccount.class, mappedBy = "userGroups")
+    @ManyToMany(mappedBy = "userGroups", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonIgnore
     private List<UserAccount> userAccounts = new LinkedList<>();
 
@@ -45,7 +44,7 @@ public class UserGroup {
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public void setName(String name) {
@@ -53,7 +52,7 @@ public class UserGroup {
     }
 
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     public void setDescription(String description) {
@@ -61,7 +60,7 @@ public class UserGroup {
     }
 
     public List<UserAccount> getUserAccounts() {
-        return this.userAccounts;
+        return userAccounts;
     }
 
     public void setUserAccounts(List<UserAccount> userAccounts) {
