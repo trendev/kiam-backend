@@ -5,20 +5,23 @@
  */
 package fr.trendev.comptandye.utils;
 
-import fr.trendev.comptandye.useraccount.controllers.UUIDGenerator;
+import java.util.Arrays;
 import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
  * @author jsie
  */
 public class UUIDGeneratorTest {
-    
+
     private UUIDGenerator UUIDGenerator;
 
     public UUIDGeneratorTest() {
-         this.UUIDGenerator = new UUIDGenerator();
+        this.UUIDGenerator = new UUIDGenerator();
     }
 
     /**
@@ -41,6 +44,8 @@ public class UUIDGeneratorTest {
         String s1 = UUIDGenerator.generate(compact);
         String s2 = UUIDGenerator.generate(compact);
         assertNotEquals(s1, s2);
+        assertFalse(s1.contains("-"));
+        assertFalse(s2.contains("-"));
     }
 
     /**
@@ -48,11 +53,38 @@ public class UUIDGeneratorTest {
      */
     @Test
     public void testGenerate_String_boolean() {
-        String header = null;
+        String header = "HEADER";
         boolean compact = true;
         String s1 = UUIDGenerator.generate(header, compact);
         String s2 = UUIDGenerator.generate(header, compact);
         assertNotEquals(s1, s2);
+        assertFalse(s1.contains("-"));
+        assertFalse(s2.contains("-"));
+        assertTrue(s1.contains(header));
+        assertTrue(s2.contains(header));
+    }
+
+    /**
+     * Test ID Generator
+     */
+    @Test
+    public void testGenerateID() {
+
+        int SIZE = 30;
+
+        String[] ids = new String[SIZE];
+
+        for (int i = 0; i < SIZE; i++) {
+            ids[i] = UUIDGenerator.generateID();
+            String id = ids[i];
+            assertFalse(id.contains("-"));
+            assertEquals(id.length(), 32);
+        }
+
+        Arrays.asList(ids)
+                .stream()
+                .sorted()
+                .forEach(System.out::println);
 
     }
 

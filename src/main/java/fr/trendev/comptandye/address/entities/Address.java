@@ -5,9 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.trendev.comptandye.utils.Visitor;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author jsie
@@ -17,8 +16,8 @@ import javax.persistence.Id;
 public class Address {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @NotNull(message = "Address ID cannot be null")
+    private String id;
 
     @Basic
     private String street;
@@ -35,8 +34,7 @@ public class Address {
     @Basic
     private String country = "France";
 
-    public Address(String street, String optional, String postalCode,
-            String city, String country) {
+    public Address(String street, String optional, String postalCode, String city, String country) {
         this.street = street;
         this.optional = optional;
         this.postalCode = postalCode;
@@ -47,24 +45,23 @@ public class Address {
     public Address() {
     }
 
-    public Address(String street, String optional, String postalCode,
-            String city) {
+    public Address(String street, String optional, String postalCode, String city) {
         this.street = street;
         this.optional = optional;
         this.postalCode = postalCode;
         this.city = city;
     }
 
-    public Long getId() {
-        return this.id;
+    public String getId() {
+        return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     public String getStreet() {
-        return this.street;
+        return street;
     }
 
     public void setStreet(String street) {
@@ -72,7 +69,7 @@ public class Address {
     }
 
     public String getOptional() {
-        return this.optional;
+        return optional;
     }
 
     public void setOptional(String optional) {
@@ -80,7 +77,7 @@ public class Address {
     }
 
     public String getPostalCode() {
-        return this.postalCode;
+        return postalCode;
     }
 
     public void setPostalCode(String postalCode) {
@@ -88,7 +85,7 @@ public class Address {
     }
 
     public String getCity() {
-        return this.city;
+        return city;
     }
 
     public void setCity(String city) {
@@ -96,7 +93,7 @@ public class Address {
     }
 
     public String getCountry() {
-        return this.country;
+        return country;
     }
 
     public void setCountry(String country) {

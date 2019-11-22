@@ -35,7 +35,7 @@ import javax.ws.rs.core.Response;
 @Stateless
 @Path("Address")
 @RolesAllowed({"Administrator"})
-public class AddressService extends AbstractCommonService<Address, Long> {
+public class AddressService extends AbstractCommonService<Address, String> {
 
     @Inject
     AddressFacade addressFacade;
@@ -54,7 +54,7 @@ public class AddressService extends AbstractCommonService<Address, Long> {
     }
 
     @Override
-    protected AbstractFacade<Address, Long> getFacade() {
+    protected AbstractFacade<Address, String> getFacade() {
         return addressFacade;
     }
 
@@ -76,7 +76,7 @@ public class AddressService extends AbstractCommonService<Address, Long> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public Response find(@PathParam("id") Long id,
+    public Response find(@PathParam("id") String id,
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get Address : {0}", id);
         return super.find(id, refresh);
@@ -88,7 +88,7 @@ public class AddressService extends AbstractCommonService<Address, Long> {
     public Response post(Address entity) {
         LOG.log(Level.INFO, "Creating Address {0}", super.stringify(entity));
         return super.post(entity, e -> {
-            e.setId(null);
+            e.setId(UUIDGenerator.generateID());
         });
     }
 
@@ -109,7 +109,7 @@ public class AddressService extends AbstractCommonService<Address, Long> {
 
     @Path("{id}")
     @DELETE
-    public Response delete(@PathParam("id") Long id) {
+    public Response delete(@PathParam("id") String id) {
         LOG.log(Level.INFO, "Deleting Address {0}", id);
         return super.delete(id, e -> {
         });

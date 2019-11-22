@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<jpa:entity-mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" pkg="fr.trendev.comptandye" v="3.6" rws="_14901008082912" Pws="_14901008082912" cws="_14901008082912" thm="PDarkColorScheme" dbthm="PLightColorScheme" ee="JAVA_EE_8" sm="false" xs="false" id="_14901008082901" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd">
-    <jpa:entity lbl-ref="_14901008440196" compositePrimaryKeyClass="UserAccountPK" abs="true" class="UserAccount" v="true" pkg="useraccount.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490100823157">
+<jpa:entity-mappings ptype="MONOLITH" ppkg="fr.trendev" epkg="comptandye" v="3.6" rws="_14901008082912" Pws="_14901008082912" cws="_14901008082912" thm="PDarkColorScheme" dbthm="PLightColorScheme" persistenceUnitName="DEFAULT_PU" sm="false" xs="false" id="_14901008082901" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <jpa:entity lbl-ref="_14901008440196" compositePrimaryKeyClass="UserAccountPK" abs="true" class="UserAccount" v="true" gen="false" pkg="useraccount.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490100823157">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_14901149376313047</jpa:a>
             <jpa:a>_14901008440196</jpa:a>
@@ -14,8 +14,8 @@
             <jpa:post></jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonTypeInfo(use = JsonTypeInfo.Id.NAME,&#xA;        include = JsonTypeInfo.As.EXISTING_PROPERTY,&#xA;        property = &quot;cltype&quot;,&#xA;        visible = true)"/>
-        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({&#xA;  @JsonSubTypes.Type(value = Administrator.class, name = UserAccountType.ADMINISTRATOR), &#xA;  @JsonSubTypes.Type(value = Individual.class, name = UserAccountType.INDIVIDUAL),&#xA;  @JsonSubTypes.Type(value = Professional.class, name = UserAccountType.PROFESSIONAL)&#xA;})"/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonTypeInfo(use = JsonTypeInfo.Id.NAME,         include = JsonTypeInfo.As.EXISTING_PROPERTY,         property = &quot;cltype&quot;,         visible = true)"/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({   @JsonSubTypes.Type(value = Administrator.class, name = UserAccountType.ADMINISTRATOR),    @JsonSubTypes.Type(value = Individual.class, name = UserAccountType.INDIVIDUAL),   @JsonSubTypes.Type(value = Professional.class, name = UserAccountType.PROFESSIONAL) })"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
             import fr.trendev.comptandye.utils.Visitor;
 import fr.trendev.comptandye.administrator.entities.Administrator;
@@ -61,14 +61,14 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
             <jpa:basic attribute-type="long" v="true" xvt="" name="lastAccessedTime" dv="System.currentTimeMillis()" id="_150807874242070">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
             </jpa:basic>
             <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490100852900" connected-attribute-id="_14901160469883436" v="true" xvt="" name="userGroups" dv="new LinkedList&lt;&gt;()" id="_14901160469863435">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:cascade>
                     <jpa:cascade-persist/>
                     <jpa:cascade-merge/>
@@ -128,7 +128,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
         <jpa:inheritance strategy="SINGLE_TABLE"/>
         <jpa:discriminator-column/>
     </jpa:entity>
-    <jpa:entity lbl-ref="_14901008529027" compositePrimaryKeyClass="UserGroupPK" abs="false" class="UserGroup" v="true" pkg="usergroup.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490100852900">
+    <jpa:entity lbl-ref="_14901008529027" compositePrimaryKeyClass="UserGroupPK" abs="false" class="UserGroup" v="true" gen="false" pkg="usergroup.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490100852900">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_14901008529027</jpa:a>
             <jpa:a>_149062419655951</jpa:a>
@@ -153,9 +153,9 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
             <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490100823157" connected-attribute-id="_14901160469863435" v="true" xvt="" name="userAccounts" dv="new LinkedList&lt;&gt;()" id="_14901160469883436">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:cascade>
                     <jpa:cascade-persist/>
                     <jpa:cascade-merge/>
@@ -179,7 +179,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
         </jpa:nq>
         <jpa:table name="USER_GROUP"/>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="CustomerPK" abs="true" class="Customer" superclassId="_1490100823157" v="true" pkg="useraccount.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101376664">
+    <jpa:entity compositePrimaryKeyClass="CustomerPK" abs="true" class="Customer" superclassId="_1490100823157" v="true" gen="false" pkg="useraccount.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101376664">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_14901149376313047</jpa:a>
             <jpa:a>_14901008440196</jpa:a>
@@ -244,7 +244,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
             <jpa:query>Select c from Customer c where c.username=:username</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity lbl-ref="_14901008440196" compositePrimaryKeyClass="ProfessionalPK" abs="false" class="Professional" superclassId="_1490101376664" v="true" pkg="professional.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101456632">
+    <jpa:entity lbl-ref="_14901008440196" compositePrimaryKeyClass="ProfessionalPK" abs="false" class="Professional" superclassId="_1490101376664" v="true" gen="false" pkg="professional.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101456632">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_14901149376313047</jpa:a>
             <jpa:a>_14901008440196</jpa:a>
@@ -325,9 +325,9 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
                 <jpa:xm nil="false" req="false"/>
             </jpa:many-to-one>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490178979567" connected-attribute-id="_1490179812677393" v="true" xvt="" name="bills" dv="new LinkedList&lt;&gt;()" id="_1490179812678394">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:cascade>
                     <jpa:cascade-all/>
                 </jpa:cascade>
@@ -337,74 +337,74 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
                 <jpa:xm nil="false" req="false"/>
             </jpa:one-to-many>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490101555530" connected-attribute-id="_1504895192868452" v="true" xvt="" name="clients" dv="new LinkedList&lt;&gt;()" id="_1504895192869453">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:cascade>
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-many>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490172966686" connected-attribute-id="_15049019949221632" v="true" xvt="" name="offerings" dv="new LinkedList&lt;&gt;()" id="_15049019949231633">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:cascade>
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-many>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490704206844" connected-attribute-id="_15049038294552105" v="true" xvt="" name="categories" dv="new LinkedList&lt;&gt;()" id="_15049038294572106">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:cascade>
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-many>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1499512549878" connected-attribute-id="_150513285565066" v="true" xvt="" name="expenses" dv="new LinkedList&lt;&gt;()" id="_150513285566867">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:cascade>
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-many>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490281931338" connected-attribute-id="_150513719043493" v="true" xvt="" name="collectiveGroups" dv="new LinkedList&lt;&gt;()" id="_150513719043594">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:cascade>
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-many>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1524841860187" connected-attribute-id="_1524841981057164" v="true" xvt="" name="stock" dv="new LinkedList&lt;&gt;()" id="_1524841981058165">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:cascade>
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-many>
             <jpa:one-to-many orp="true" collection-type="java.util.List" connected-entity-id="_1528899065548" connected-attribute-id="_1528899165846100" v="true" xvt="" name="notifications" dv="new LinkedList&lt;&gt;()" id="_1528899165848101">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:cascade>
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-many>
             <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490101520286" connected-attribute-id="_1490180547173493" v="true" xvt="" name="individuals" dv="new LinkedList&lt;&gt;()" id="_1490180547178494">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
             </jpa:many-to-many>
             <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490184243036" v="true" xvt="" name="paymentModes" dv="new LinkedList&lt;&gt;()" id="_149020649962680">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:many-to-many>
             <jpa:version attribute-type="long" v="true" xvt="" name="version" dv="0l" id="_1514559136297133">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
             </jpa:version>
         </jpa:attributes>
         <jpa:nq e="false" name="Professional.findAll">
@@ -468,7 +468,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
             <jpa:query>Select p from Professional p where p.rescissionDate=:rescissionDate</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="IndividualPK" abs="false" class="Individual" superclassId="_1490101376664" v="true" pkg="individual.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101520286">
+    <jpa:entity compositePrimaryKeyClass="IndividualPK" abs="false" class="Individual" superclassId="_1490101376664" v="true" gen="false" pkg="individual.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101520286">
         <jpa:con am="PUBLIC" e="true">
             <jpa:post>super();
                 this.cltype = UserAccountType.INDIVIDUAL;</jpa:post>
@@ -484,24 +484,24 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490180671085" connected-attribute-id="_150652336702164" v="true" xvt="" name="individualBills" dv="new LinkedList&lt;&gt;()" id="_150652336703465">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:cascade>
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-many>
             <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490101456632" connected-attribute-id="_1490180547178494" v="true" xvt="" name="professionals" dv="new LinkedList&lt;&gt;()" id="_1490180547173493">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
             </jpa:many-to-many>
         </jpa:attributes>
         <jpa:nq e="false" name="Individual.findAll">
             <jpa:query>Select e from Individual e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="ClientPK" abs="false" class="Client" v="true" pkg="client.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101555530">
+    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="ClientPK" abs="false" class="Client" v="true" gen="false" pkg="client.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101555530">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490283378549192</jpa:a>
             <jpa:a>_1504895192868452</jpa:a>
@@ -534,15 +534,15 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
             <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_1504895192869453" v="true" xvt="" name="professional" id="_1504895192868452">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:join-column name="CLIENT_PRO_EMAIL" rc="EMAIL" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table=""/>
             </jpa:many-to-one>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490180682743" connected-attribute-id="_1490181195212606" v="true" xvt="" name="clientBills" dv="new LinkedList&lt;&gt;()" id="_1490181195213607">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:cascade>
                     <jpa:cascade-all/>
                 </jpa:cascade>
@@ -595,7 +595,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
             <jpa:query>Select c from Client c where c.email=:email</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="CustomerDetailsPK" abs="false" class="CustomerDetails" v="true" pkg="customerdetails.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101578444">
+    <jpa:entity compositePrimaryKeyClass="CustomerDetailsPK" abs="false" class="CustomerDetails" v="true" gen="false" pkg="customerdetails.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101578444">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_149010159285359</jpa:a>
             <jpa:a>_149010160079560</jpa:a>
@@ -711,7 +711,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
             <jpa:a>_149010176456971</jpa:a>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.Visitor;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -737,10 +737,13 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_149010173721267">
+            <jpa:id attribute-type="String" v="true" xvt="" name="id" id="_149010173721267">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:generated-value strategy="AUTO"/>
+                <jpa:bv>
+                    <jpa:nn m="Address ID cannot be null"/>
+                </jpa:bv>
+                <jpa:generated-value/>
             </jpa:id>
         </jpa:attributes>
         <jpa:nq e="false" name="Address.findAll">
@@ -762,7 +765,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
             <jpa:query>Select a from Address a where a.optional=:optional</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="SocialNetworkAccountsPK" abs="false" class="SocialNetworkAccounts" v="true" pkg="socialnetworkaccounts.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490104062170">
+    <jpa:entity compositePrimaryKeyClass="SocialNetworkAccountsPK" abs="false" class="SocialNetworkAccounts" v="true" gen="false" pkg="socialnetworkaccounts.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490104062170">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490104873485484</jpa:a>
             <jpa:a>_1490104876952485</jpa:a>
@@ -816,7 +819,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
         </jpa:nq>
         <jpa:table name="SOCIAL_NETWORK_ACCOUNT"/>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="ServicePK" abs="false" class="Service" superclassId="_1490172966686" v="true" pkg="service.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490113751330">
+    <jpa:entity compositePrimaryKeyClass="ServicePK" abs="false" class="Service" superclassId="_1490172966686" v="true" gen="false" pkg="service.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490113751330">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490176760174139</jpa:a>
             <jpa:a>_1490176780392140</jpa:a>
@@ -853,7 +856,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
             <jpa:query>Select s from Service s where s.duration=:duration</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="PackPK" abs="false" class="Pack" superclassId="_1490172966686" v="true" pkg="pack.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490113906035">
+    <jpa:entity compositePrimaryKeyClass="PackPK" abs="false" class="Pack" superclassId="_1490172966686" v="true" gen="false" pkg="pack.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490113906035">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490176760174139</jpa:a>
             <jpa:a>_1490176780392140</jpa:a>
@@ -894,7 +897,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
             <jpa:query>Select s from Pack s where s.totalPrice=:totalPrice</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="OfferingPK" abs="true" class="Offering" v="true" pkg="offering.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490172966686">
+    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="OfferingPK" abs="true" class="Offering" v="true" gen="false" pkg="offering.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490172966686">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490176760174139</jpa:a>
             <jpa:a>_1490176780392140</jpa:a>
@@ -903,8 +906,8 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
         </jpa:con>
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonTypeInfo(use = JsonTypeInfo.Id.NAME,&#xA;        include = JsonTypeInfo.As.EXISTING_PROPERTY,&#xA;        property = &quot;cltype&quot;,&#xA;        visible = true)"/>
-        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({&#xA;  @JsonSubTypes.Type(value = Service.class, name = OfferingType.SERVICE), &#xA;  @JsonSubTypes.Type(value = Pack.class, name = OfferingType.PACK),&#xA;  @JsonSubTypes.Type(value = Sale.class, name = OfferingType.SALE)&#xA;})"/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonTypeInfo(use = JsonTypeInfo.Id.NAME,         include = JsonTypeInfo.As.EXISTING_PROPERTY,         property = &quot;cltype&quot;,         visible = true)"/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({   @JsonSubTypes.Type(value = Service.class, name = OfferingType.SERVICE),    @JsonSubTypes.Type(value = Pack.class, name = OfferingType.PACK),   @JsonSubTypes.Type(value = Sale.class, name = OfferingType.SALE) })"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
             import fr.trendev.comptandye.utils.Visitor;
             import fr.trendev.comptandye.service.entities.Service;
@@ -940,9 +943,9 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
             <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_15049019949231633" v="true" xvt="" name="professional" id="_15049019949221632">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:join-column name="OFFERING_PRO_EMAIL" rc="EMAIL" unique="false" nullable="false" insertable="true" updatable="false" column-definition="" table=""/>
             </jpa:many-to-one>
             <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1503060694288" v="true" xvt="" name="businesses" dv="new LinkedList&lt;&gt;()" id="_150537690133858">
@@ -950,14 +953,14 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
                 <jpa:xm nil="false" req="false"/>
             </jpa:one-to-many>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1506344869339" connected-attribute-id="_1512851997729268" v="true" xvt="" name="purchasedOfferings" dv="new LinkedList&lt;&gt;()" id="_1512851997730269">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
             </jpa:one-to-many>
             <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490113906035" connected-attribute-id="_1513010994290214" v="true" xvt="" name="parentPacks" dv="new LinkedList&lt;&gt;()" id="_1513010994296215">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
             </jpa:many-to-many>
             <jpa:id attribute-type="Long" v="true" xvt="" name="id" ft="true" id="_149017296671124">
                 <jpa:xwm nil="false" req="false"/>
@@ -992,7 +995,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
         </jpa:nq>
         <jpa:discriminator-column/>
     </jpa:entity>
-    <jpa:entity lbl-ref="_149017899245630" compositePrimaryKeyType="D" compositePrimaryKeyClass="BillPK" abs="true" class="Bill" v="true" pkg="bill.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490178979567">
+    <jpa:entity lbl-ref="_149017899245630" compositePrimaryKeyType="D" compositePrimaryKeyClass="BillPK" abs="true" class="Bill" v="true" gen="false" pkg="bill.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490178979567">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490181067111504</jpa:a>
             <jpa:a>_1490181108037605</jpa:a>
@@ -1007,8 +1010,8 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:annotation e="true" n="@java.lang.SuppressWarnings(&quot;unchecked&quot;)"/>
-        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonTypeInfo(use = JsonTypeInfo.Id.NAME,&#xA;        include = JsonTypeInfo.As.EXISTING_PROPERTY,&#xA;        property = &quot;cltype&quot;,&#xA;        visible = true)&#xA;"/>
-        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({&#xA;    @JsonSubTypes.Type(value = ClientBill.class,&#xA;            name = BillType.CLIENT)&#xA;    ,   @JsonSubTypes.Type(value = IndividualBill.class,&#xA;            name = BillType.INDIVIDUAL)&#xA;    ,  @JsonSubTypes.Type(value = CollectiveGroupBill.class,&#xA;            name = BillType.COLLECTIVEGROUP)})"/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonTypeInfo(use = JsonTypeInfo.Id.NAME,         include = JsonTypeInfo.As.EXISTING_PROPERTY,         property = &quot;cltype&quot;,         visible = true) "/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({     @JsonSubTypes.Type(value = ClientBill.class,             name = BillType.CLIENT)     ,   @JsonSubTypes.Type(value = IndividualBill.class,             name = BillType.INDIVIDUAL)     ,  @JsonSubTypes.Type(value = CollectiveGroupBill.class,             name = BillType.COLLECTIVEGROUP)})"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
             import fr.trendev.comptandye.utils.Visitor;
             import fr.trendev.comptandye.clientbill.entities.ClientBill;
@@ -1070,10 +1073,14 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
                 <jpa:temporal>TIMESTAMP</jpa:temporal>
                 <jpa:column unique="false" nullable="true" insertable="true" updatable="true" column-definition="DATETIME(3)"/>
             </jpa:basic>
-            <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_1490179812678394" v="true" xvt="" name="professional" id="_1490179812677393">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
+            <jpa:element-collection target-class="java.lang.String" collection-type="java.util.List" v="true" xvt="" name="comments" dv="new LinkedList&lt;&gt;()" id="_1503066002122403">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+            </jpa:element-collection>
+            <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_1490179812678394" v="true" xvt="" name="professional" id="_1490179812677393">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:join-column name="PROFESSIONAL_EMAIL" rc="EMAIL" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table=""/>
             </jpa:many-to-one>
             <jpa:one-to-many orp="true" own="true" collection-type="java.util.List" connected-entity-id="_1490206901623" v="true" xvt="" name="payments" dv="new LinkedList&lt;&gt;()" id="_150365567487858">
@@ -1097,10 +1104,6 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
                     <jpa:cascade-detach/>
                 </jpa:cascade>
             </jpa:one-to-many>
-            <jpa:element-collection target-class="java.lang.String" collection-type="java.util.List" v="true" xvt="" name="comments" dv="new LinkedList&lt;&gt;()" id="_1503066002122403">
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:element-collection>
             <jpa:id attribute-type="String" v="true" xvt="" name="reference" id="_1490181067111504">
                 <jpa:des>Will be automatically generated based on the deliveryDate, the Professional email and a timestamp.</jpa:des>
                 <jpa:xwm nil="false" req="false"/>
@@ -1153,7 +1156,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
         </jpa:nq>
         <jpa:discriminator-column/>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="IndividualBillPK" abs="false" class="IndividualBill" superclassId="_1490178979567" v="true" pkg="individualbill.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490180671085">
+    <jpa:entity compositePrimaryKeyClass="IndividualBillPK" abs="false" class="IndividualBill" superclassId="_1490178979567" v="true" gen="false" pkg="individualbill.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490180671085">
         <jpa:con am="PUBLIC" e="true">
             <jpa:post>this.cltype = BillType.INDIVIDUAL;</jpa:post>
         </jpa:con>
@@ -1177,7 +1180,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
             <jpa:query>Select e from IndividualBill e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="ClientBillPK" abs="false" class="ClientBill" superclassId="_1490178979567" v="true" pkg="clientbill.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490180682743">
+    <jpa:entity compositePrimaryKeyClass="ClientBillPK" abs="false" class="ClientBill" superclassId="_1490178979567" v="true" gen="false" pkg="clientbill.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490180682743">
         <jpa:con am="PUBLIC" e="true">
             <jpa:post>this.cltype = BillType.CLIENT;</jpa:post>
         </jpa:con>
@@ -1201,7 +1204,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
             <jpa:query>Select e from ClientBill e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="PaymentModePK" abs="false" class="PaymentMode" v="true" pkg="paymentmode.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490184243036">
+    <jpa:entity compositePrimaryKeyClass="PaymentModePK" abs="false" class="PaymentMode" v="true" gen="false" pkg="paymentmode.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490184243036">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_149020688052381</jpa:a>
         </jpa:con>
@@ -1229,7 +1232,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
             <jpa:query>Select p from PaymentMode p where p.name=:name</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="PaymentPK" abs="false" class="Payment" v="true" pkg="payment.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490206901623">
+    <jpa:entity compositePrimaryKeyClass="PaymentPK" abs="false" class="Payment" v="true" gen="false" pkg="payment.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490206901623">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_149020701195485</jpa:a>
             <jpa:a>_1503081214518630</jpa:a>
@@ -1269,7 +1272,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
             <jpa:query>Select p from Payment p where p.currency=:currency</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="CollectiveGroupPK" abs="false" class="CollectiveGroup" v="true" pkg="collectivegroup.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490281931338">
+    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="CollectiveGroupPK" abs="false" class="CollectiveGroup" v="true" gen="false" pkg="collectivegroup.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490281931338">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490282399999187</jpa:a>
             <jpa:a>_1505826302473119</jpa:a>
@@ -1302,15 +1305,15 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
             <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_150513719043594" v="true" xvt="" name="professional" id="_150513719043493">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:join-column name="COLLECTIVE_GROUP_PRO_EMAIL" rc="EMAIL" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table=""/>
             </jpa:many-to-one>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1506009883340" connected-attribute-id="_1506010011239530" v="true" xvt="" name="collectiveGroupBills" dv="new LinkedList&lt;&gt;()" id="_1506010011241531">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:cascade>
                     <jpa:cascade-all/>
                 </jpa:cascade>
@@ -1340,7 +1343,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
         </jpa:nq>
         <jpa:table name="COLLECTIVE_GROUP"/>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="AdministratorPK" abs="false" class="Administrator" superclassId="_1490100823157" v="true" pkg="administrator.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490704123469">
+    <jpa:entity compositePrimaryKeyClass="AdministratorPK" abs="false" class="Administrator" superclassId="_1490100823157" v="true" gen="false" pkg="administrator.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490704123469">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_14901149376313047</jpa:a>
             <jpa:a>_14901008440196</jpa:a>
@@ -1366,7 +1369,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
             <jpa:query>Select e from Administrator e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="CategoryPK" abs="false" class="Category" v="true" pkg="category.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490704206844">
+    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="CategoryPK" abs="false" class="Category" v="true" gen="false" pkg="category.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490704206844">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490704221835111</jpa:a>
             <jpa:a>_1490704473418120</jpa:a>
@@ -1390,15 +1393,15 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
             <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_15049038294572106" v="true" xvt="" name="professional" id="_15049038294552105">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:join-column name="CATEGORY_PRO_EMAIL" rc="EMAIL" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table=""/>
             </jpa:many-to-one>
             <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1490101555530" connected-attribute-id="_1503077170356624" v="true" xvt="" name="clients" dv="new LinkedList&lt;&gt;()" id="_1503077170376625">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
             </jpa:many-to-many>
             <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_1490704207066109">
                 <jpa:xwm nil="false" req="false"/>
@@ -1417,12 +1420,12 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
             <jpa:query>Select c from Category c where c.name=:name</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="ExpensePK" abs="true" class="Expense" v="true" pkg="expense.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1499512549878">
+    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="ExpensePK" abs="true" class="Expense" v="true" gen="false" pkg="expense.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1499512549878">
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:annotation e="true" n="@java.lang.SuppressWarnings(&quot;unchecked&quot;)"/>
-        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonTypeInfo(use = JsonTypeInfo.Id.NAME,&#xA;        include = JsonTypeInfo.As.EXISTING_PROPERTY,&#xA;        property = &quot;cltype&quot;,&#xA;        visible = true)"/>
-        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({&#xA;    @JsonSubTypes.Type(value = BasicExpense.class,&#xA;            name = ExpenseType.BASIC_EXPENSE)&#xA;    ,   @JsonSubTypes.Type(value = PurchaseExpense.class,&#xA;            name = ExpenseType.PURCHASE_EXPENSE)})"/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonTypeInfo(use = JsonTypeInfo.Id.NAME,         include = JsonTypeInfo.As.EXISTING_PROPERTY,         property = &quot;cltype&quot;,         visible = true)"/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({     @JsonSubTypes.Type(value = BasicExpense.class,             name = ExpenseType.BASIC_EXPENSE)     ,   @JsonSubTypes.Type(value = PurchaseExpense.class,             name = ExpenseType.PURCHASE_EXPENSE)})"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
             import fr.trendev.comptandye.basicexpense.entities.BasicExpense;
             import fr.trendev.comptandye.purchaseexpense.entities.PurchaseExpense;
@@ -1502,10 +1505,17 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_150513285566867" v="true" xvt="" name="professional" id="_150513285565066">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
+            <jpa:element-collection target-class="java.lang.String" collection-type="java.util.List" v="true" xvt="" name="categories" dv="new LinkedList&lt;&gt;()" id="_149951274256360">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:bv>
+                    <jpa:nn m="comments field in Expense must not be null"/>
+                </jpa:bv>
+            </jpa:element-collection>
+            <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_150513285566867" v="true" xvt="" name="professional" id="_150513285565066">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:join-column name="EXPENSE_PRO_EMAIL" rc="EMAIL" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table=""/>
             </jpa:many-to-one>
             <jpa:one-to-many orp="true" own="true" collection-type="java.util.List" connected-entity-id="_1490206901623" v="true" xvt="" name="payments" dv="new LinkedList&lt;&gt;()" id="_1505144351224341">
@@ -1533,13 +1543,6 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-many>
-            <jpa:element-collection target-class="java.lang.String" collection-type="java.util.List" v="true" xvt="" name="categories" dv="new LinkedList&lt;&gt;()" id="_149951274256360">
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-                <jpa:bv>
-                    <jpa:nn m="comments field in Expense must not be null"/>
-                </jpa:bv>
-            </jpa:element-collection>
             <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_149951255029954">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -1591,7 +1594,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
         </jpa:nq>
         <jpa:discriminator-column/>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="BusinessPK" abs="false" class="Business" v="true" pkg="business.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1503060694288">
+    <jpa:entity compositePrimaryKeyClass="BusinessPK" abs="false" class="Business" v="true" gen="false" pkg="business.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1503060694288">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1503060753512132</jpa:a>
         </jpa:con>
@@ -1617,7 +1620,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
             <jpa:query>Select b from Business b where b.description=:description</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="CollectiveGroupBillPK" abs="false" class="CollectiveGroupBill" superclassId="_1490178979567" v="true" pkg="collectivegroupbill.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1506009883340">
+    <jpa:entity compositePrimaryKeyClass="CollectiveGroupBillPK" abs="false" class="CollectiveGroupBill" superclassId="_1490178979567" v="true" gen="false" pkg="collectivegroupbill.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1506009883340">
         <jpa:con am="PUBLIC" e="true">
             <jpa:post>this.cltype = BillType.COLLECTIVEGROUP;</jpa:post>
         </jpa:con>
@@ -1648,7 +1651,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
             <jpa:query>Select c from CollectiveGroupBill c where c.recipient=:recipient</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="PurchasedOfferingPK" abs="false" class="PurchasedOffering" v="true" pkg="purchasedoffering.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1506344869339">
+    <jpa:entity compositePrimaryKeyClass="PurchasedOfferingPK" abs="false" class="PurchasedOffering" v="true" gen="false" pkg="purchasedoffering.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1506344869339">
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_15063452150691272</jpa:a>
@@ -1678,10 +1681,6 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:column unique="false" nullable="true" insertable="true" updatable="false" precision="5" scale="2"/>
             </jpa:basic>
-            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490172966686" connected-attribute-id="_1512851997730269" v="true" xvt="" name="offering" id="_1512851997729268">
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:many-to-one>
             <jpa:embedded connected-class-id="_1512853437669" v="true" xvt="" name="offeringSnapshot" dv="new OfferingSnapshot()" id="_1512854117900652">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -1690,6 +1689,10 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:embedded>
+            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490172966686" connected-attribute-id="_1512851997730269" v="true" xvt="" name="offering" id="_1512851997729268">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:many-to-one>
             <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_15063448694401262">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -1715,7 +1718,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
             <jpa:query>Select p from PurchasedOffering p where p.extentSales=:extentSales</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="VatRatesPK" abs="false" class="VatRates" v="true" pkg="vatrates.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1521215136542">
+    <jpa:entity compositePrimaryKeyClass="VatRatesPK" abs="false" class="VatRates" v="true" gen="false" pkg="vatrates.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1521215136542">
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.ArrayList;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
@@ -1746,7 +1749,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
             <jpa:query>Select v from VatRates v where v.country=:country</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="SalePK" abs="false" class="Sale" superclassId="_1490172966686" v="true" pkg="sale.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1522937360932">
+    <jpa:entity compositePrimaryKeyClass="SalePK" abs="false" class="Sale" superclassId="_1490172966686" v="true" gen="false" pkg="sale.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1522937360932">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490176760174139</jpa:a>
             <jpa:a>_1490176780392140</jpa:a>
@@ -1786,7 +1789,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
             <jpa:query>Select s from Sale s where s.resellingPrice=:resellingPrice</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="ExpenseItemPK" abs="false" class="ExpenseItem" v="true" pkg="expenseitem.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524835087412">
+    <jpa:entity compositePrimaryKeyClass="ExpenseItemPK" abs="false" class="ExpenseItem" v="true" gen="false" pkg="expenseitem.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524835087412">
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -1839,7 +1842,7 @@ import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
             <jpa:query>Select e from ExpenseItem e where e.vatRate=:vatRate</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="PurchaseExpensePK" abs="false" class="PurchaseExpense" superclassId="_1499512549878" v="true" pkg="purchaseexpense.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524836293670">
+    <jpa:entity compositePrimaryKeyClass="PurchaseExpensePK" abs="false" class="PurchaseExpense" superclassId="_1499512549878" v="true" gen="false" pkg="purchaseexpense.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524836293670">
         <jpa:con am="PUBLIC" e="true">
             <jpa:post>this.cltype = ExpenseType.PURCHASE_EXPENSE;</jpa:post>
         </jpa:con>
@@ -1857,9 +1860,9 @@ import fr.trendev.comptandye.expense.entities.ExpenseType;
                 </jpa:bv>
             </jpa:basic>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1524924325129" connected-attribute-id="_15249248621511435" v="true" xvt="" name="purchasedItems" dv="new LinkedList&lt;&gt;()" id="_15249248621531436">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
             </jpa:one-to-many>
         </jpa:attributes>
         <jpa:nq e="false" name="PurchaseExpense.findAll">
@@ -1869,7 +1872,7 @@ import fr.trendev.comptandye.expense.entities.ExpenseType;
             <jpa:query>Select p from PurchaseExpense p where p.invoiceRef=:invoiceRef</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="ProductReferencePK" abs="false" class="ProductReference" v="true" pkg="productreference.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524840332929">
+    <jpa:entity compositePrimaryKeyClass="ProductReferencePK" abs="false" class="ProductReference" v="true" gen="false" pkg="productreference.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524840332929">
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -1911,7 +1914,7 @@ import fr.trendev.comptandye.expense.entities.ExpenseType;
             <jpa:query>Select p from ProductReference p where p.brand=:brand</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="ProductPK" abs="false" class="Product" v="true" pkg="product.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524841860187">
+    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="ProductPK" abs="false" class="Product" v="true" gen="false" pkg="product.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524841860187">
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
@@ -1935,10 +1938,14 @@ import fr.trendev.comptandye.expense.entities.ExpenseType;
                     <jpa:mi v="0" m="thresholdSevere in Product cannot be less than 0"/>
                 </jpa:bv>
             </jpa:basic>
-            <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_1524841981058165" v="true" xvt="" name="professional" id="_1524841981057164">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
+            <jpa:element-collection target-class="java.lang.String" collection-type="java.util.List" v="true" xvt="" name="comments" dv="new LinkedList&lt;&gt;()" id="_1524842604860171">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+            </jpa:element-collection>
+            <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_1524841981058165" v="true" xvt="" name="professional" id="_1524841981057164">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:join-column name="PRODUCT_PRO_EMAIL" rc="EMAIL" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table=""/>
             </jpa:many-to-one>
             <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1524840332929" v="true" xvt="" name="productReference" id="_1524911242644950">
@@ -1949,22 +1956,18 @@ import fr.trendev.comptandye.expense.entities.ExpenseType;
                 </jpa:cascade>
             </jpa:many-to-one>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1522937360932" connected-attribute-id="_1524907636303593" v="true" xvt="" name="sales" dv="new LinkedList&lt;&gt;()" id="_1524907636328594">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
             </jpa:one-to-many>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1524923958426" connected-attribute-id="_15249290639991474" v="true" xvt="" name="productRecords" dv="new LinkedList&lt;&gt;()" id="_15249290640001475">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:cascade>
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-many>
-            <jpa:element-collection target-class="java.lang.String" collection-type="java.util.List" v="true" xvt="" name="comments" dv="new LinkedList&lt;&gt;()" id="_1524842604860171">
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:element-collection>
         </jpa:attributes>
         <jpa:nq e="false" name="Product.findAll">
             <jpa:query>Select e from Product e</jpa:query>
@@ -1982,7 +1985,7 @@ import fr.trendev.comptandye.expense.entities.ExpenseType;
             <jpa:ln e="true" n="fr.trendev.comptandye.product.controllers.ProductEntityListener"/>
         </jpa:el>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="ProductRecordPK" abs="true" class="ProductRecord" v="true" pkg="productrecord.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524923958426">
+    <jpa:entity compositePrimaryKeyClass="ProductRecordPK" abs="true" class="ProductRecord" v="true" gen="false" pkg="productrecord.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524923958426">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_15249240375981409</jpa:a>
             <jpa:a>_15249241966021417</jpa:a>
@@ -1990,8 +1993,8 @@ import fr.trendev.comptandye.expense.entities.ExpenseType;
         </jpa:con>
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonTypeInfo(use = JsonTypeInfo.Id.NAME,&#xA;        include = JsonTypeInfo.As.EXISTING_PROPERTY,&#xA;        property = &quot;cltype&quot;,&#xA;        visible = true)"/>
-        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({&#xA;    @JsonSubTypes.Type(value = PurchasedItem.class,&#xA;            name = ProductRecordType.PURCHASED_ITEM)&#xA;    ,   @JsonSubTypes.Type(value = UsedItem.class,&#xA;            name = ProductRecordType.USED_ITEM)&#xA;    ,  @JsonSubTypes.Type(value = ReturnedItem.class,&#xA;            name = ProductRecordType.RETURNED_ITEM)&#xA;    ,  @JsonSubTypes.Type(value = SoldItem.class,&#xA;            name = ProductRecordType.SOLD_ITEM)})&#xA;"/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonTypeInfo(use = JsonTypeInfo.Id.NAME,         include = JsonTypeInfo.As.EXISTING_PROPERTY,         property = &quot;cltype&quot;,         visible = true)"/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({     @JsonSubTypes.Type(value = PurchasedItem.class,             name = ProductRecordType.PURCHASED_ITEM)     ,   @JsonSubTypes.Type(value = UsedItem.class,             name = ProductRecordType.USED_ITEM)     ,  @JsonSubTypes.Type(value = ReturnedItem.class,             name = ProductRecordType.RETURNED_ITEM)     ,  @JsonSubTypes.Type(value = SoldItem.class,             name = ProductRecordType.SOLD_ITEM)}) "/>
         <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.Visitor;
             import fr.trendev.comptandye.purchaseditem.entities.PurchasedItem;
             import fr.trendev.comptandye.returneditem.entities.ReturnedItem;
@@ -2070,7 +2073,7 @@ import fr.trendev.comptandye.expense.entities.ExpenseType;
         </jpa:nq>
         <jpa:discriminator-column/>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="PurchasedItemPK" abs="false" class="PurchasedItem" superclassId="_1524923958426" v="true" pkg="purchaseditem.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524924325129">
+    <jpa:entity compositePrimaryKeyClass="PurchasedItemPK" abs="false" class="PurchasedItem" superclassId="_1524923958426" v="true" gen="false" pkg="purchaseditem.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524924325129">
         <jpa:con am="PUBLIC" e="true">
             <jpa:pre>super();</jpa:pre>
             <jpa:post>this.cltype = ProductRecordType.PURCHASED_ITEM;</jpa:post>
@@ -2093,7 +2096,7 @@ import fr.trendev.comptandye.expense.entities.ExpenseType;
             <jpa:query>Select e from PurchasedItem e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="UsedItemPK" abs="false" class="UsedItem" superclassId="_1524923958426" v="true" pkg="useditem.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1525251875162">
+    <jpa:entity compositePrimaryKeyClass="UsedItemPK" abs="false" class="UsedItem" superclassId="_1524923958426" v="true" gen="false" pkg="useditem.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1525251875162">
         <jpa:con am="PUBLIC" e="true">
             <jpa:pre>super();</jpa:pre>
             <jpa:post>this.cltype = ProductRecordType.USED_ITEM;</jpa:post>
@@ -2111,7 +2114,7 @@ import fr.trendev.comptandye.expense.entities.ExpenseType;
             <jpa:query>Select e from UsedItem e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="ReturnedItemPK" abs="false" class="ReturnedItem" superclassId="_1524923958426" v="true" pkg="returneditem.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1525253236164">
+    <jpa:entity compositePrimaryKeyClass="ReturnedItemPK" abs="false" class="ReturnedItem" superclassId="_1524923958426" v="true" gen="false" pkg="returneditem.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1525253236164">
         <jpa:con am="PUBLIC" e="true">
             <jpa:pre>super();</jpa:pre>
             <jpa:post>this.cltype = ProductRecordType.RETURNED_ITEM;</jpa:post>
@@ -2137,7 +2140,7 @@ import fr.trendev.comptandye.expense.entities.ExpenseType;
             <jpa:query>Select e from ReturnedItem e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="SoldItemPK" abs="false" class="SoldItem" superclassId="_1524923958426" v="true" pkg="solditem.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1525258966197">
+    <jpa:entity compositePrimaryKeyClass="SoldItemPK" abs="false" class="SoldItem" superclassId="_1524923958426" v="true" gen="false" pkg="solditem.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1525258966197">
         <jpa:con am="PUBLIC" e="true">
             <jpa:pre>super();</jpa:pre>
             <jpa:post>this.cltype = ProductRecordType.SOLD_ITEM;</jpa:post>
@@ -2163,7 +2166,7 @@ import fr.trendev.comptandye.expense.entities.ExpenseType;
             <jpa:query>Select e from SoldItem e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="BasicExpensePK" abs="false" class="BasicExpense" superclassId="_1499512549878" v="true" pkg="basicexpense.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1527253885059">
+    <jpa:entity compositePrimaryKeyClass="BasicExpensePK" abs="false" class="BasicExpense" superclassId="_1499512549878" v="true" gen="false" pkg="basicexpense.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1527253885059">
         <jpa:con am="PUBLIC" e="true">
             <jpa:post>this.cltype = ExpenseType.BASIC_EXPENSE;</jpa:post>
         </jpa:con>
@@ -2175,7 +2178,7 @@ import fr.trendev.comptandye.expense.entities.ExpenseType;
             <jpa:query>Select e from BasicExpense e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="NotificationPK" abs="true" class="Notification" v="true" pkg="notification.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1528899065548">
+    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="NotificationPK" abs="true" class="Notification" v="true" gen="false" pkg="notification.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1528899065548">
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1528899988622110</jpa:a>
@@ -2183,8 +2186,8 @@ import fr.trendev.comptandye.expense.entities.ExpenseType;
             <jpa:post>this.professional.getNotifications().add(this);</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonTypeInfo(use = JsonTypeInfo.Id.NAME,&#xA;        include = JsonTypeInfo.As.EXISTING_PROPERTY,&#xA;        property = &quot;cltype&quot;,&#xA;        visible = true)"/>
-        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({&#xA;    @JsonSubTypes.Type(value = ThresholdAlert.class,&#xA;            name = NotificationType.THRESHOLD_ALERT)})&#xA;"/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonTypeInfo(use = JsonTypeInfo.Id.NAME,         include = JsonTypeInfo.As.EXISTING_PROPERTY,         property = &quot;cltype&quot;,         visible = true)"/>
+        <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({     @JsonSubTypes.Type(value = ThresholdAlert.class,             name = NotificationType.THRESHOLD_ALERT)}) "/>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -2209,9 +2212,9 @@ import fr.trendev.comptandye.thresholdalert.entities.ThresholdAlert;</jpa:snp>
                 <jpa:enumerated>STRING</jpa:enumerated>
             </jpa:basic>
             <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_1528899165848101" v="true" xvt="" name="professional" id="_1528899165846100">
-                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
+                <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
             </jpa:many-to-one>
             <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_152889906588197">
                 <jpa:xwm nil="false" req="false"/>
@@ -2230,7 +2233,7 @@ import fr.trendev.comptandye.thresholdalert.entities.ThresholdAlert;</jpa:snp>
         </jpa:nq>
         <jpa:discriminator-column/>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="ThresholdAlertPK" abs="false" class="ThresholdAlert" superclassId="_1528899065548" v="true" pkg="thresholdalert.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1528899529391">
+    <jpa:entity compositePrimaryKeyClass="ThresholdAlertPK" abs="false" class="ThresholdAlert" superclassId="_1528899065548" v="true" gen="false" pkg="thresholdalert.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1528899529391">
         <jpa:con am="PUBLIC" e="true">
             <jpa:pre>super();</jpa:pre>
             <jpa:post>this.cltype = NotificationType.THRESHOLD_ALERT;</jpa:post>
@@ -2317,7 +2320,7 @@ import fr.trendev.comptandye.thresholdalert.entities.ThresholdAlert;</jpa:snp>
             <jpa:query>Select t from ThresholdAlert t where t.brand=:brand</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:embeddable abs="false" class="OfferingSnapshot" v="true" pkg="purchasedoffering.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1512853437669">
+    <jpa:embeddable abs="false" class="OfferingSnapshot" v="true" gen="false" pkg="purchasedoffering.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1512853437669">
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
@@ -2360,7 +2363,7 @@ import fr.trendev.comptandye.offering.entities.Offering;</jpa:snp>
             </jpa:one-to-many>
         </jpa:attributes>
     </jpa:embeddable>
-    <jpa:embeddable abs="false" class="OfferingExtents" v="true" pkg="purchasedoffering.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524046966670">
+    <jpa:embeddable abs="false" class="OfferingExtents" v="true" gen="false" pkg="purchasedoffering.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524046966670">
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_152404700574475</jpa:a>
