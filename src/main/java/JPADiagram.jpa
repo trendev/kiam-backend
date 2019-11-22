@@ -1342,7 +1342,7 @@
         </jpa:nq>
         <jpa:table name="COLLECTIVE_GROUP"/>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="AdministratorPK" abs="false" class="Administrator" superclassId="_1490100823157" v="true" gen="false" pkg="administrator.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490704123469">
+    <jpa:entity compositePrimaryKeyClass="AdministratorPK" abs="false" class="Administrator" superclassId="_1490100823157" v="true" pkg="administrator.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490704123469">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_14901149376313047</jpa:a>
             <jpa:a>_14901008440196</jpa:a>
@@ -1356,17 +1356,18 @@
             <jpa:post>this.cltype = UserAccountType.ADMINISTRATOR;</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.Visitor;
-            import fr.trendev.comptandye.useraccount.entities.UserAccountType;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.useraccount.entities.UserAccountType</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes/>
         <jpa:nq e="false" name="Administrator.findAll">
             <jpa:query>Select e from Administrator e</jpa:query>
         </jpa:nq>
+        <jpa:discriminator-value></jpa:discriminator-value>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="CategoryPK" abs="false" class="Category" v="true" gen="false" pkg="category.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490704206844">
         <jpa:con am="PUBLIC" e="true">

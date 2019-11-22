@@ -14,8 +14,7 @@ import javax.persistence.Entity;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Administrator extends UserAccount {
 
-    public Administrator(String email, String password, String username,
-            String uuid) {
+    public Administrator(String email, String password, String username, String uuid) {
         super(email, password, username, uuid);
         this.cltype = UserAccountType.ADMINISTRATOR;
     }
