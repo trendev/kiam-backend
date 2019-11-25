@@ -47,12 +47,13 @@ public class CustomerDetailsTest {
         char sex = 'H';
         String picturePath = "/home/user01/Pictures/profil.jpg";
 
-        List<String> comments = IntStream.range(0, 100).mapToObj(i ->
-                ("Comment #" + (i + 1))).
+        List<String> comments = IntStream.range(0, 100).mapToObj(i
+                -> ("Comment #" + (i + 1))).
                 collect(Collectors.toList());
 
         instance = new CustomerDetails(firstName, lastName, nickname, phone,
                 birthdate, sex, picturePath);
+        instance.setComments(comments);
 
         assert instance.getId() == null;
         assert firstName.equals(instance.getFirstName());
@@ -62,7 +63,9 @@ public class CustomerDetailsTest {
         assert birthdate.equals(instance.getBirthdate());
         assert sex == instance.getSex();
         assert picturePath.equals(instance.getPicturePath());
-        assert comments.containsAll(instance.getComments());
+        assert instance.getComments() != null;
+        assert instance.getComments().isEmpty() == false;
+        assert instance.getComments().containsAll(comments);
     }
 
 }
