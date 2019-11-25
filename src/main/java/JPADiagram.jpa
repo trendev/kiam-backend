@@ -1730,9 +1730,9 @@
             <jpa:query>Select p from PurchasedOffering p where p.extentSales=:extentSales</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="VatRatesPK" abs="false" class="VatRates" v="true" gen="false" pkg="vatrates.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1521215136542">
+    <jpa:entity compositePrimaryKeyClass="VatRatesPK" abs="false" class="VatRates" v="true" pkg="vatrates.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1521215136542">
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import java.util.ArrayList;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">java.util.ArrayList</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="country" id="_1521219938937744">
@@ -1748,7 +1748,7 @@
                 <jpa:des>the country's id (ex: France -&gt; FR)</jpa:des>
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:generated-value strategy="AUTO"/>
+                <jpa:generated-value/>
             </jpa:id>
         </jpa:attributes>
         <jpa:nq e="false" name="VatRates.findAll">
@@ -2732,7 +2732,7 @@
                 </el>
             </i>
             <i ref="_1524046966670" x="9" y="1514"/>
-            <i ref="_1521215136542" x="150" y="304"/>
+            <i ref="_1521215136542" x="155" y="304"/>
         </jpa:ws>
     </jpa:wsl>
 </jpa:entity-mappings>

@@ -9,8 +9,6 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
@@ -24,18 +22,17 @@ public class VatRates {
      * the country's id (ex: France -> FR)
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private String countryId;
 
     @Basic
     private String country;
 
-    @Column(scale = 2, precision = 5)
     @ElementCollection
+    @Column(scale = 2, precision = 5)
     private List<BigDecimal> rates = new ArrayList<>();
 
     public String getCountryId() {
-        return this.countryId;
+        return countryId;
     }
 
     public void setCountryId(String countryId) {
@@ -43,7 +40,7 @@ public class VatRates {
     }
 
     public String getCountry() {
-        return this.country;
+        return country;
     }
 
     public void setCountry(String country) {
@@ -51,7 +48,7 @@ public class VatRates {
     }
 
     public List<BigDecimal> getRates() {
-        return this.rates;
+        return rates;
     }
 
     public void setRates(List<BigDecimal> rates) {
