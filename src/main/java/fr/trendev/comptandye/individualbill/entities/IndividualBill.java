@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class IndividualBill extends Bill {
 
-    @ManyToOne(targetEntity = Individual.class)
+    @ManyToOne
     private Individual individual;
 
     public IndividualBill() {
@@ -24,7 +24,7 @@ public class IndividualBill extends Bill {
     }
 
     public Individual getIndividual() {
-        return this.individual;
+        return individual;
     }
 
     public void setIndividual(Individual individual) {
