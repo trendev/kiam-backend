@@ -1212,13 +1212,13 @@
             <jpa:query>Select e from ClientBill e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="PaymentModePK" abs="false" class="PaymentMode" v="true" gen="false" pkg="paymentmode.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490184243036">
+    <jpa:entity compositePrimaryKeyClass="PaymentModePK" abs="false" class="PaymentMode" v="true" pkg="paymentmode.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490184243036">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_149020688052381</jpa:a>
         </jpa:con>
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.Visitor;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
