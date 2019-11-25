@@ -468,19 +468,21 @@
             <jpa:query>Select p from Professional p where p.rescissionDate=:rescissionDate</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="IndividualPK" abs="false" class="Individual" superclassId="_1490101376664" v="true" gen="false" pkg="individual.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101520286">
+    <jpa:entity compositePrimaryKeyClass="IndividualPK" abs="false" class="Individual" superclassId="_1490101376664" v="true" pkg="individual.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101520286">
         <jpa:con am="PUBLIC" e="true">
             <jpa:post>super();
                 this.cltype = UserAccountType.INDIVIDUAL;</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
-            import fr.trendev.comptandye.utils.Visitor;
-            import fr.trendev.comptandye.useraccount.entities.UserAccountType;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">java.util.LinkedList
+</jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor
+</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.useraccount.entities.UserAccountType</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490180671085" connected-attribute-id="_150652336702164" v="true" xvt="" name="individualBills" dv="new LinkedList&lt;&gt;()" id="_150652336703465">

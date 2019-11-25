@@ -22,12 +22,11 @@ import javax.persistence.OneToMany;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Individual extends Customer {
 
-    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = IndividualBill.class,
-            mappedBy = "individual")
+    @OneToMany(mappedBy = "individual", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<IndividualBill> individualBills = new LinkedList<>();
 
-    @ManyToMany(targetEntity = Professional.class)
+    @ManyToMany
     @JsonIgnore
     private List<Professional> professionals = new LinkedList<>();
 
@@ -37,7 +36,7 @@ public class Individual extends Customer {
     }
 
     public List<IndividualBill> getIndividualBills() {
-        return this.individualBills;
+        return individualBills;
     }
 
     public void setIndividualBills(List<IndividualBill> individualBills) {
@@ -45,7 +44,7 @@ public class Individual extends Customer {
     }
 
     public List<Professional> getProfessionals() {
-        return this.professionals;
+        return professionals;
     }
 
     public void setProfessionals(List<Professional> professionals) {
