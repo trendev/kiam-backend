@@ -85,7 +85,7 @@ public class PurchaseExpenseService extends AbstractExpenseService<PurchaseExpen
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response find(@PathParam("id") Long id,
+    public Response find(@PathParam("id") String id,
             @QueryParam("professional") String professional,
             @QueryParam("refresh") boolean refresh) {
         ExpensePK pk = new ExpensePK(id, professional);
@@ -149,7 +149,7 @@ public class PurchaseExpenseService extends AbstractExpenseService<PurchaseExpen
     @Path("{id}")
     @DELETE
     public Response delete(@Context SecurityContext sec,
-            @PathParam("id") Long id,
+            @PathParam("id") String id,
             @QueryParam("professional") String professional) {
 
         ExpensePK pk = new ExpensePK(id, this.getProEmail(sec,
@@ -172,10 +172,9 @@ public class PurchaseExpenseService extends AbstractExpenseService<PurchaseExpen
     @Produces(MediaType.APPLICATION_JSON)
     public void getPurchasedItems(@Suspended final AsyncResponse ar,
             @Context SecurityContext sec,
-            @PathParam("id") Long id,
+            @PathParam("id") String id,
             @QueryParam("professional") String professional) {
-        ExpensePK pk = new ExpensePK(id, this.getProEmail(sec,
-                professional));
+        ExpensePK pk = new ExpensePK(id, this.getProEmail(sec, professional));
 
         this.provideRelation(ar, pk,
                 PurchaseExpense::getPurchasedItems, PurchasedItem.class);

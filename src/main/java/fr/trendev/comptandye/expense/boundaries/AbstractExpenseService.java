@@ -54,91 +54,108 @@ public abstract class AbstractExpenseService<T extends Expense> extends Abstract
                 Professional.class,
                 professionalFacade, T::setProfessional,
                 Professional::getExpenses, e -> {
-            e.setId(null);
-            e.setCancelled(false);
-            e.setCancellationDate(null);
-            e.setIssueDate(new Date());
+                    e.setId(UUIDGenerator.generateID());
+                    e.setCancelled(false);
+                    e.setCancellationDate(null);
+                    e.setIssueDate(new Date());
 
-            if (e.getBusinesses() == null || e.getBusinesses().isEmpty()) {
-                String errmsg = "Businesses in " + entity.getClass().
-                        getSimpleName() + " must be provided";
-                LOG.log(Level.WARNING, errmsg);
-                throw new WebApplicationException(errmsg);
-            }
+                    if (e.getBusinesses() == null || e.getBusinesses().isEmpty()) {
+                        String errmsg = "Businesses in " + entity.getClass().
+                                getSimpleName() + " must be provided";
+                        LOG.log(Level.WARNING, errmsg);
+                        throw new WebApplicationException(errmsg);
+                    }
 
-            if (e.getAmount() <= 0) {
-                String errmsg = "Amount in " + entity.getClass().getSimpleName()
+                    if (e.getAmount() <= 0) {
+                        String errmsg = "Amount in " + entity.getClass().getSimpleName()
                         + " must be greater than 0";
-                LOG.log(Level.WARNING, errmsg);
-                throw new WebApplicationException(errmsg);
-            }
+                        LOG.log(Level.WARNING, errmsg);
+                        throw new WebApplicationException(errmsg);
+                    }
 
-            if (e.getPayments() == null || e.getPayments().isEmpty()) {
-                String errmsg = "Payments in " + entity.getClass().
-                        getSimpleName() + " must be provided";
-                LOG.log(Level.WARNING, errmsg);
-                throw new WebApplicationException(errmsg);
-            }
+                    if (e.getPayments() == null || e.getPayments().isEmpty()) {
+                        String errmsg = "Payments in " + entity.getClass().
+                                getSimpleName() + " must be provided";
+                        LOG.log(Level.WARNING, errmsg);
+                        throw new WebApplicationException(errmsg);
+                    }
 
-            int total = e.getPayments().stream()
-                    .mapToInt(Payment::getAmount)
-                    .sum();
+                    int total = e.getPayments().stream()
+                            .mapToInt(Payment::getAmount)
+                            .sum();
 
-            if (total != e.getAmount()) {
-                String errmsg = "Amount is " + e.getAmount()
+                    if (total != e.getAmount()) {
+                        String errmsg = "Amount is " + e.getAmount()
                         + " but the total amount computed is " + total;
-                LOG.log(Level.WARNING, errmsg);
-                throw new WebApplicationException(errmsg);
-            }
+                        LOG.log(Level.WARNING, errmsg);
+                        throw new WebApplicationException(errmsg);
+                    }
 
-            if (e.isVatInclusive() && (e.getExpenseItems() == null || e.
-                    getExpenseItems().isEmpty())) {
-                LOG.log(Level.INFO,
-                        "vatInclusive field is reset to false in {0}: no ExpenseItem found",
-                        entity.
-                                getClass().getSimpleName());
-                e.setVatInclusive(false);
-            }
+                    if (e.isVatInclusive()
+                    && (e.getExpenseItems() == null || e.getExpenseItems().isEmpty())) {
+                        LOG.log(Level.INFO,
+                                "vatInclusive field is reset to false in {0}: no ExpenseItem found",
+                                entity.
+                                        getClass().getSimpleName());
+                        e.setVatInclusive(false);
+                    }
 
-            /**
-             * Checks accuracy of the provided amount and the total computed
-             * amount from the ExpenseItems. Total computed amount from the
-             * ExpenseItemsProvided amount should be between
-             */
-            if (e.getExpenseItems() != null && !e.getExpenseItems().isEmpty()) {
-                e.setVatInclusive(true);
-                // computes how many items are found in this Expense 
-                int n = e.getExpenseItems().stream()
-                        .mapToInt(ExpenseItem::getQty)
-                        .sum();
-                LOG.log(Level.INFO, "Checking ExpenseItems... n = {0}",
-                        n);
+                    /**
+                     * Checks accuracy of the provided amount and the total
+                     * computed amount from the ExpenseItems. Total computed
+                     * amount from the ExpenseItemsProvided amount should be
+                     * between
+                     */
+                    if (e.getExpenseItems() != null
+                    && !e.getExpenseItems().isEmpty()) {
+                        e.setVatInclusive(true);
+                        // computes how many items are found in this Expense 
+                        int n = e.getExpenseItems().stream()
+                                .mapToInt(ExpenseItem::getQty)
+                                .sum();
+                        LOG.log(Level.INFO, "Checking ExpenseItems... n = {0}",
+                                n);
 
-                total = e.getExpenseItems().stream()
-                        .mapToInt(ei ->
-                                ei.getQty() * new BigDecimal(ei.getAmount()).
+                        total = e.getExpenseItems().stream()
+                                .mapToInt(ei
+                                        -> ei.getQty() * new BigDecimal(ei.getAmount()).
                                 multiply(ei.getVatRate()
                                         .add(new BigDecimal(100)))
                                 .divide(new BigDecimal(100))
                                 .setScale(0, RoundingMode.HALF_UP).intValue()
-                        )
-                        .sum();
+                                )
+                                .sum();
 
-                LOG.log(Level.INFO, "Computed Total of ExpenseItems = {0}",
-                        total);
+                        LOG.log(Level.INFO, "Computed Total of ExpenseItems = {0}",
+                                total);
 
-                if ((total > e.getAmount() + n) || (total < e.getAmount() - n)) {
-                    String errmsg = entity.getClass().getSimpleName()
+                        if ((total > e.getAmount() + n) || (total < e.getAmount() - n)) {
+                            String errmsg = entity.getClass().getSimpleName()
                             + " details are not accurate: computed total =  "
                             + total + " / provided amount = " + e.getAmount();
-                    LOG.log(Level.WARNING, errmsg);
-                    throw new WebApplicationException(errmsg);
-                }
-            }
+                            LOG.log(Level.WARNING, errmsg);
+                            throw new WebApplicationException(errmsg);
+                        }
 
-        });
+                        // Security : reset provided IDs
+                        for (ExpenseItem ei : e.getExpenseItems()) {
+                            ei.setId(UUIDGenerator.generateID());
+                        }
+                    }
+
+                });
     }
 
+    /**
+     * Update an Expense. Updated fields depend on the Expense Type.
+     * expenseItems cannot be updated using this method
+     *
+     * @param updateActions the update actions
+     * @param sec the security context
+     * @param entity the payload
+     * @param professional the owner of the Expense
+     * @return HTTP 200 OK if successful, an error message otherwise
+     */
     public Response put(Consumer<T> updateActions, SecurityContext sec, T entity,
             String professional) {
 

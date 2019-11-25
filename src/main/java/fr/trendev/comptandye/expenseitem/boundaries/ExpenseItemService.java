@@ -35,7 +35,7 @@ import javax.ws.rs.core.Response;
 @Stateless
 @Path("ExpenseItem")
 @RolesAllowed({"Administrator"})
-public class ExpenseItemService extends AbstractCommonService<ExpenseItem, Long> {
+public class ExpenseItemService extends AbstractCommonService<ExpenseItem, String> {
 
     @Inject
     ExpenseItemFacade expenseItemFacade;
@@ -53,7 +53,7 @@ public class ExpenseItemService extends AbstractCommonService<ExpenseItem, Long>
     }
 
     @Override
-    protected AbstractFacade<ExpenseItem, Long> getFacade() {
+    protected AbstractFacade<ExpenseItem, String> getFacade() {
         return expenseItemFacade;
     }
 
@@ -75,7 +75,7 @@ public class ExpenseItemService extends AbstractCommonService<ExpenseItem, Long>
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public Response find(@PathParam("id") Long id,
+    public Response find(@PathParam("id") String id,
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get ExpenseItem : {0}", id);
         return super.find(id, refresh);
@@ -87,7 +87,7 @@ public class ExpenseItemService extends AbstractCommonService<ExpenseItem, Long>
     public Response post(ExpenseItem entity) {
         LOG.log(Level.INFO, "Creating ExpenseItem {0}", super.stringify(entity));
         return super.post(entity, e -> {
-            e.setId(null);
+            e.setId(UUIDGenerator.generateID());
         });
     }
 
@@ -98,16 +98,16 @@ public class ExpenseItemService extends AbstractCommonService<ExpenseItem, Long>
         LOG.log(Level.INFO, "Updating ExpenseItem {0}", entity.getId());
         return super.put(entity, entity.getId(),
                 e -> {
-            e.setDescription(entity.getDescription());
-            e.setAmount(entity.getAmount());
-            e.setQty(entity.getQty());
-            e.setVatRate(entity.getVatRate());
-        });
+                    e.setDescription(entity.getDescription());
+                    e.setAmount(entity.getAmount());
+                    e.setQty(entity.getQty());
+                    e.setVatRate(entity.getVatRate());
+                });
     }
 
     @Path("{id}")
     @DELETE
-    public Response delete(@PathParam("id") Long id) {
+    public Response delete(@PathParam("id") String id) {
         LOG.log(Level.INFO, "Deleting ExpenseItem {0}", id);
         return super.delete(id, e -> {
         });

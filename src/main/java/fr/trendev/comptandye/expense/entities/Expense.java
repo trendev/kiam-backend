@@ -21,8 +21,6 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -41,20 +39,16 @@ import javax.validation.constraints.Past;
 @DiscriminatorColumn(length = 31)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @SuppressWarnings("unchecked")
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "cltype",
-        visible = true)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "cltype", visible = true)
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = BasicExpense.class,
-            name = ExpenseType.BASIC_EXPENSE)
-    ,   @JsonSubTypes.Type(value = PurchaseExpense.class,
-            name = ExpenseType.PURCHASE_EXPENSE)})
+    @JsonSubTypes.Type(value = BasicExpense.class, name = ExpenseType.BASIC_EXPENSE),
+    @JsonSubTypes.Type(value = PurchaseExpense.class, name = ExpenseType.PURCHASE_EXPENSE)})
 public abstract class Expense {
 
-    @Column(name = "EXPENSE_ID")
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @Column(name = "EXPENSE_ID")
+    @NotNull(message = "Expense ID cannot be null")
+    private String id;
 
     @Basic
     @NotNull(message = "cltype field in Expense must not be null")
@@ -77,8 +71,8 @@ public abstract class Expense {
     @NotNull(message = "currency field in Expense must not be null")
     private String currency = "EUR";
 
-    @Column(columnDefinition = "DATETIME(3)")
     @Basic
+    @Column(columnDefinition = "DATETIME(3)")
     @Temporal(TemporalType.TIMESTAMP)
     @NotNull(message = "paymentDate field in Expense must not be null")
     @Past(message = "paymentDate field in Expense must not be a futur date")
@@ -87,8 +81,8 @@ public abstract class Expense {
     /**
      * used for audit and sort the bills
      */
-    @Column(columnDefinition = "DATETIME(3)")
     @Basic
+    @Column(columnDefinition = "DATETIME(3)")
     @Temporal(TemporalType.TIMESTAMP)
     @NotNull(message = "issueDate field in Expense must not be null")
     private Date issueDate = new Date();
@@ -103,8 +97,8 @@ public abstract class Expense {
     @Basic
     private boolean cancelled = false;
 
-    @Column(columnDefinition = "DATETIME(3)")
     @Basic
+    @Column(columnDefinition = "DATETIME(3)")
     @Temporal(TemporalType.TIMESTAMP)
     private Date cancellationDate;
 
@@ -115,11 +109,10 @@ public abstract class Expense {
     private boolean vatInclusive = false;
 
     @ElementCollection
-    @NotNull(message = "comments field in Expense must not be null")
     private List<String> categories = new LinkedList<>();
 
     @Id
-    @ManyToOne(targetEntity = Professional.class)
+    @ManyToOne
     @JoinColumn(name = "EXPENSE_PRO_EMAIL", referencedColumnName = "EMAIL")
     @JsonIgnore
     private Professional professional;
@@ -127,32 +120,30 @@ public abstract class Expense {
     /**
      * Should be ignored during a PUT
      */
-    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Payment.class,
-            orphanRemoval = true)
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
     @NotNull(message = "payments field in Expense must not be null")
     private List<Payment> payments = new LinkedList<>();
 
-    @OneToMany(targetEntity = Business.class)
+    @OneToMany
     @NotNull(message = "businesses field in Expense must not be null")
     private List<Business> businesses = new LinkedList<>();
 
-    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = ExpenseItem.class,
-            orphanRemoval = true)
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
     private List<ExpenseItem> expenseItems = new LinkedList<>();
 
     public Expense() {
     }
 
-    public Long getId() {
-        return this.id;
+    public String getId() {
+        return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     public String getCltype() {
-        return this.cltype;
+        return cltype;
     }
 
     public void setCltype(String cltype) {
@@ -160,7 +151,7 @@ public abstract class Expense {
     }
 
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     public void setDescription(String description) {
@@ -168,7 +159,7 @@ public abstract class Expense {
     }
 
     public int getAmount() {
-        return this.amount;
+        return amount;
     }
 
     public void setAmount(int amount) {
@@ -176,7 +167,7 @@ public abstract class Expense {
     }
 
     public String getCurrency() {
-        return this.currency;
+        return currency;
     }
 
     public void setCurrency(String currency) {
@@ -184,7 +175,7 @@ public abstract class Expense {
     }
 
     public Date getPaymentDate() {
-        return this.paymentDate;
+        return paymentDate;
     }
 
     public void setPaymentDate(Date paymentDate) {
@@ -192,7 +183,7 @@ public abstract class Expense {
     }
 
     public Date getIssueDate() {
-        return this.issueDate;
+        return issueDate;
     }
 
     public void setIssueDate(Date issueDate) {
@@ -200,7 +191,7 @@ public abstract class Expense {
     }
 
     public String getProvider() {
-        return this.provider;
+        return provider;
     }
 
     public void setProvider(String provider) {
@@ -208,7 +199,7 @@ public abstract class Expense {
     }
 
     public boolean isCancelled() {
-        return this.cancelled;
+        return cancelled;
     }
 
     public void setCancelled(boolean cancelled) {
@@ -216,7 +207,7 @@ public abstract class Expense {
     }
 
     public Date getCancellationDate() {
-        return this.cancellationDate;
+        return cancellationDate;
     }
 
     public void setCancellationDate(Date cancellationDate) {
@@ -224,7 +215,7 @@ public abstract class Expense {
     }
 
     public boolean isVatInclusive() {
-        return this.vatInclusive;
+        return vatInclusive;
     }
 
     public void setVatInclusive(boolean vatInclusive) {
@@ -232,7 +223,7 @@ public abstract class Expense {
     }
 
     public List<String> getCategories() {
-        return this.categories;
+        return categories;
     }
 
     public void setCategories(List<String> categories) {
@@ -240,7 +231,7 @@ public abstract class Expense {
     }
 
     public Professional getProfessional() {
-        return this.professional;
+        return professional;
     }
 
     public void setProfessional(Professional professional) {
@@ -248,7 +239,7 @@ public abstract class Expense {
     }
 
     public List<Payment> getPayments() {
-        return this.payments;
+        return payments;
     }
 
     public void setPayments(List<Payment> payments) {
@@ -256,7 +247,7 @@ public abstract class Expense {
     }
 
     public List<Business> getBusinesses() {
-        return this.businesses;
+        return businesses;
     }
 
     public void setBusinesses(List<Business> businesses) {
@@ -264,7 +255,7 @@ public abstract class Expense {
     }
 
     public List<ExpenseItem> getExpenseItems() {
-        return this.expenseItems;
+        return expenseItems;
     }
 
     public void setExpenseItems(List<ExpenseItem> expenseItems) {

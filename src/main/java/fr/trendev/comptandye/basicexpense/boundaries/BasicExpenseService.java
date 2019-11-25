@@ -41,7 +41,7 @@ import javax.ws.rs.core.SecurityContext;
 public class BasicExpenseService extends AbstractExpenseService<BasicExpense> {
 
     @Inject
-    private BasicExpenseFacade classicFacade;
+    private BasicExpenseFacade basicExpenseFacade;
 
     private final Logger LOG = Logger.getLogger(BasicExpenseService.class.
             getName());
@@ -57,7 +57,7 @@ public class BasicExpenseService extends AbstractExpenseService<BasicExpense> {
 
     @Override
     protected AbstractFacade<BasicExpense, ExpensePK> getFacade() {
-        return classicFacade;
+        return basicExpenseFacade;
     }
 
     @RolesAllowed({"Administrator"})
@@ -80,12 +80,12 @@ public class BasicExpenseService extends AbstractExpenseService<BasicExpense> {
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response find(@PathParam("id") Long id,
+    public Response find(@PathParam("id") String id,
             @QueryParam("professional") String professional,
             @QueryParam("refresh") boolean refresh) {
         ExpensePK pk = new ExpensePK(id, professional);
         LOG.log(Level.INFO, "REST request to get ClassicExpense : {0}",
-                classicFacade.prettyPrintPK(pk));
+                basicExpenseFacade.prettyPrintPK(pk));
         return super.find(pk, refresh);
     }
 
@@ -123,13 +123,13 @@ public class BasicExpenseService extends AbstractExpenseService<BasicExpense> {
     @Path("{id}")
     @DELETE
     public Response delete(@Context SecurityContext sec,
-            @PathParam("id") Long id,
+            @PathParam("id") String id,
             @QueryParam("professional") String professional) {
 
         ExpensePK pk = new ExpensePK(id, this.getProEmail(sec,
                 professional));
 
-        LOG.log(Level.INFO, "Deleting Expense {0}", classicFacade.
+        LOG.log(Level.INFO, "Deleting Expense {0}", basicExpenseFacade.
                 prettyPrintPK(pk));
         return super.delete(pk, e -> e.getProfessional().getExpenses().remove(
                 e));

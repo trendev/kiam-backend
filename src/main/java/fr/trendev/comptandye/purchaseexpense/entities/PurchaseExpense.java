@@ -13,8 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
-;
-
 /**
  * @author jsie
  */
@@ -23,11 +21,10 @@ import javax.validation.constraints.NotNull;
 public class PurchaseExpense extends Expense {
 
     @Basic
-    @NotNull(
-            message = "The invoice reference cannot be null in a Purchase (extending an Expense)")
+    @NotNull(message = "The invoice reference cannot be null in a Purchase (extending an Expense)")
     private String invoiceRef;
 
-    @OneToMany(targetEntity = PurchasedItem.class, mappedBy = "purchaseExpense")
+    @OneToMany(mappedBy = "purchaseExpense")
     @JsonIgnore
     private List<PurchasedItem> purchasedItems = new LinkedList<>();
 
@@ -36,7 +33,7 @@ public class PurchaseExpense extends Expense {
     }
 
     public String getInvoiceRef() {
-        return this.invoiceRef;
+        return invoiceRef;
     }
 
     public void setInvoiceRef(String invoiceRef) {
@@ -44,7 +41,7 @@ public class PurchaseExpense extends Expense {
     }
 
     public List<PurchasedItem> getPurchasedItems() {
-        return this.purchasedItems;
+        return purchasedItems;
     }
 
     public void setPurchasedItems(List<PurchasedItem> purchasedItems) {

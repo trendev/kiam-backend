@@ -6,8 +6,6 @@ import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -20,8 +18,8 @@ import javax.validation.constraints.NotNull;
 public class ExpenseItem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @NotNull(message = "ExpenseItem ID cannot be null")
+    private String id;
 
     @Basic
     @NotNull(message = "description field in ExpenseItem must not be null")
@@ -37,21 +35,21 @@ public class ExpenseItem {
     @Min(value = 1, message = "A quantity must be provided in the ExpenseItem")
     private int qty;
 
-    @Column(scale = 2, precision = 5)
     @Basic
+    @Column(scale = 2, precision = 5)
     @NotNull(message = "vatrate field in ExpenseItem must not be null")
     private BigDecimal vatRate;
 
-    public Long getId() {
-        return this.id;
+    public String getId() {
+        return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     public void setDescription(String description) {
@@ -59,7 +57,7 @@ public class ExpenseItem {
     }
 
     public int getAmount() {
-        return this.amount;
+        return amount;
     }
 
     public void setAmount(int amount) {
@@ -67,7 +65,7 @@ public class ExpenseItem {
     }
 
     public int getQty() {
-        return this.qty;
+        return qty;
     }
 
     public void setQty(int qty) {
@@ -75,7 +73,7 @@ public class ExpenseItem {
     }
 
     public BigDecimal getVatRate() {
-        return this.vatRate;
+        return vatRate;
     }
 
     public void setVatRate(BigDecimal vatRate) {
