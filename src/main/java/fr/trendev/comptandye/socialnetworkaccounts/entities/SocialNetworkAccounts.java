@@ -5,10 +5,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.trendev.comptandye.utils.Visitor;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author jsie
@@ -19,8 +18,8 @@ import javax.persistence.Table;
 public class SocialNetworkAccounts {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @NotNull(message = "SocialNetworkAccounts ID cannot be null")
+    private String id;
 
     @Basic
     private String facebook;
@@ -34,8 +33,7 @@ public class SocialNetworkAccounts {
     @Basic
     private String pinterest;
 
-    public SocialNetworkAccounts(String facebook, String twitter,
-            String instagram, String pinterest) {
+    public SocialNetworkAccounts(String facebook, String twitter, String instagram, String pinterest) {
         this.facebook = facebook;
         this.twitter = twitter;
         this.instagram = instagram;
@@ -45,16 +43,16 @@ public class SocialNetworkAccounts {
     public SocialNetworkAccounts() {
     }
 
-    public Long getId() {
-        return this.id;
+    public String getId() {
+        return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     public String getFacebook() {
-        return this.facebook;
+        return facebook;
     }
 
     public void setFacebook(String facebook) {
@@ -62,7 +60,7 @@ public class SocialNetworkAccounts {
     }
 
     public String getTwitter() {
-        return this.twitter;
+        return twitter;
     }
 
     public void setTwitter(String twitter) {
@@ -70,7 +68,7 @@ public class SocialNetworkAccounts {
     }
 
     public String getInstagram() {
-        return this.instagram;
+        return instagram;
     }
 
     public void setInstagram(String instagram) {
@@ -78,7 +76,7 @@ public class SocialNetworkAccounts {
     }
 
     public String getPinterest() {
-        return this.pinterest;
+        return pinterest;
     }
 
     public void setPinterest(String pinterest) {

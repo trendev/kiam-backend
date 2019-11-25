@@ -35,7 +35,7 @@ import javax.ws.rs.core.Response;
 @Stateless
 @Path("SocialNetworkAccounts")
 @RolesAllowed({"Administrator"})
-public class SocialNetworkAccountsService extends AbstractCommonService<SocialNetworkAccounts, Long> {
+public class SocialNetworkAccountsService extends AbstractCommonService<SocialNetworkAccounts, String> {
 
     @Inject
     SocialNetworkAccountsFacade socialNetworkAccountsFacade;
@@ -54,7 +54,7 @@ public class SocialNetworkAccountsService extends AbstractCommonService<SocialNe
     }
 
     @Override
-    protected AbstractFacade<SocialNetworkAccounts, Long> getFacade() {
+    protected AbstractFacade<SocialNetworkAccounts, String> getFacade() {
         return socialNetworkAccountsFacade;
     }
 
@@ -76,7 +76,7 @@ public class SocialNetworkAccountsService extends AbstractCommonService<SocialNe
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public Response find(@PathParam("id") Long id,
+    public Response find(@PathParam("id") String id,
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get SocialNetworkAccounts : {0}",
                 id);
@@ -91,7 +91,7 @@ public class SocialNetworkAccountsService extends AbstractCommonService<SocialNe
                 stringify(entity));
 
         return super.post(entity, e -> {
-            e.setId(null);
+            e.setId(UUIDGenerator.generateID());
         });
     }
 
@@ -104,16 +104,16 @@ public class SocialNetworkAccountsService extends AbstractCommonService<SocialNe
                         getId());
         return super.put(entity, entity.getId(),
                 e -> {
-            e.setFacebook(entity.getFacebook());
-            e.setTwitter(entity.getTwitter());
-            e.setInstagram(entity.getInstagram());
-            e.setPinterest(entity.getPinterest());
-        });
+                    e.setFacebook(entity.getFacebook());
+                    e.setTwitter(entity.getTwitter());
+                    e.setInstagram(entity.getInstagram());
+                    e.setPinterest(entity.getPinterest());
+                });
     }
 
     @Path("{id}")
     @DELETE
-    public Response delete(@PathParam("id") Long id) {
+    public Response delete(@PathParam("id") String id) {
         LOG.log(Level.INFO, "Deleting SocialNetworkAccounts {0}", id);
         return super.delete(id, e -> {
         });

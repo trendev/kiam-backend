@@ -9,7 +9,7 @@ import javax.persistence.EntityManager;
 
 @Stateless
 @Named("socialNetworkAccounts")
-public class SocialNetworkAccountsFacade extends AbstractFacade<SocialNetworkAccounts, Long> {
+public class SocialNetworkAccountsFacade extends AbstractFacade<SocialNetworkAccounts, String> {
 
     @Inject
     private EntityManager em;
@@ -24,8 +24,8 @@ public class SocialNetworkAccountsFacade extends AbstractFacade<SocialNetworkAcc
     }
 
     @Override
-    public String prettyPrintPK(Long pk) {
-        return pk.toString();
+    public String prettyPrintPK(String pk) {
+        return pk;
     }
 
 }

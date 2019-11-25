@@ -765,7 +765,7 @@
             <jpa:query>Select a from Address a where a.optional=:optional</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="SocialNetworkAccountsPK" abs="false" class="SocialNetworkAccounts" v="true" gen="false" pkg="socialnetworkaccounts.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490104062170">
+    <jpa:entity compositePrimaryKeyClass="SocialNetworkAccountsPK" abs="false" class="SocialNetworkAccounts" v="true" pkg="socialnetworkaccounts.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490104062170">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490104873485484</jpa:a>
             <jpa:a>_1490104876952485</jpa:a>
@@ -774,7 +774,7 @@
         </jpa:con>
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.Visitor;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -796,10 +796,13 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_1490104062174399">
+            <jpa:id attribute-type="String" v="true" xvt="" name="id" id="_1490104062174399">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:generated-value strategy="AUTO"/>
+                <jpa:bv>
+                    <jpa:nn m="SocialNetworkAccounts ID cannot be null"/>
+                </jpa:bv>
+                <jpa:generated-value/>
             </jpa:id>
         </jpa:attributes>
         <jpa:nq e="false" name="SocialNetworkAccountses.findAll">
