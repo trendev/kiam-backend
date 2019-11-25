@@ -11,13 +11,12 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author jsie
@@ -27,10 +26,10 @@ import javax.persistence.ManyToOne;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Category {
 
-    @Column(name = "CATEGORY_ID")
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @Column(name = "CATEGORY_ID")
+    @NotNull(message = "Category ID cannot be null")
+    private String id;
 
     @Basic
     private String description;
@@ -39,12 +38,12 @@ public class Category {
     private String name;
 
     @Id
-    @ManyToOne(targetEntity = Professional.class)
+    @ManyToOne
     @JoinColumn(name = "CATEGORY_PRO_EMAIL", referencedColumnName = "EMAIL")
     @JsonIgnore
     private Professional professional;
 
-    @ManyToMany(targetEntity = Client.class, mappedBy = "categories")
+    @ManyToMany(mappedBy = "categories")
     @JsonIgnore
     private List<Client> clients = new LinkedList<>();
 
@@ -57,16 +56,16 @@ public class Category {
     public Category() {
     }
 
-    public Long getId() {
-        return this.id;
+    public String getId() {
+        return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     public void setDescription(String description) {
@@ -74,7 +73,7 @@ public class Category {
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public void setName(String name) {
@@ -82,7 +81,7 @@ public class Category {
     }
 
     public Professional getProfessional() {
-        return this.professional;
+        return professional;
     }
 
     public void setProfessional(Professional professional) {
@@ -90,7 +89,7 @@ public class Category {
     }
 
     public List<Client> getClients() {
-        return this.clients;
+        return clients;
     }
 
     public void setClients(List<Client> clients) {

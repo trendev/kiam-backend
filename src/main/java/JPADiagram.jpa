@@ -1382,7 +1382,7 @@
         </jpa:nq>
         <jpa:discriminator-value></jpa:discriminator-value>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="CategoryPK" abs="false" class="Category" v="true" gen="false" pkg="category.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490704206844">
+    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="CategoryPK" abs="false" class="Category" v="true" pkg="category.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490704206844">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490704221835111</jpa:a>
             <jpa:a>_1490704473418120</jpa:a>
@@ -1390,11 +1390,12 @@
         </jpa:con>
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
-            import fr.trendev.comptandye.utils.Visitor;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">java.util.LinkedList
+</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="description" id="_1490704221835111">
@@ -1416,11 +1417,14 @@
                 <jpa:xm nil="false" req="false"/>
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
             </jpa:many-to-many>
-            <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_1490704207066109">
+            <jpa:id attribute-type="String" v="true" xvt="" name="id" id="_1490704207066109">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:column name="CATEGORY_ID" unique="false" nullable="true" insertable="true" updatable="true"/>
-                <jpa:generated-value strategy="AUTO"/>
+                <jpa:bv>
+                    <jpa:nn m="Category ID cannot be null"/>
+                </jpa:bv>
+                <jpa:column name="CATEGORY_ID" unique="false" nullable="true" insertable="true" updatable="true" length="255"/>
+                <jpa:generated-value/>
             </jpa:id>
         </jpa:attributes>
         <jpa:nq e="false" name="Category.findAll">

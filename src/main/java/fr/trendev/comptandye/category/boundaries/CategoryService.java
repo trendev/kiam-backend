@@ -92,7 +92,7 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response find(@PathParam("id") Long id,
+    public Response find(@PathParam("id") String id,
             @QueryParam("professional") String professional,
             @QueryParam("refresh") boolean refresh) {
         CategoryPK pk = new CategoryPK(id, professional);
@@ -116,8 +116,8 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
                 Professional.class,
                 professionalFacade, Category::setProfessional,
                 Professional::getCategories, e -> {
-            e.setId(null);
-        });
+                    e.setId(UUIDGenerator.generateID());
+                });
 
     }
 
@@ -141,7 +141,7 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
     @Path("{id}")
     @DELETE
     public Response delete(@Context SecurityContext sec,
-            @PathParam("id") Long id,
+            @PathParam("id") String id,
             @QueryParam("professional") String professional) {
 
         CategoryPK pk = new CategoryPK(id, this.getProEmail(sec,
@@ -151,16 +151,16 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
                 prettyPrintPK(pk));
         return super.delete(pk,
                 e -> {
-            e.getProfessional().getCategories().remove(e);
-            e.getClients().forEach(cl -> cl.getCategories().remove(e));
-        });
+                    e.getProfessional().getCategories().remove(e);
+                    e.getClients().forEach(cl -> cl.getCategories().remove(e));
+                });
     }
 
     @Path("{categoryid}/addClient/{clientid}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public Response addClient(@Context SecurityContext sec,
-            @PathParam("categoryid") Long categoryid,
+            @PathParam("categoryid") String categoryid,
             @PathParam("clientid") Long clientid,
             @QueryParam("professional") String professional) {
 
@@ -183,7 +183,7 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public Response removeClient(@Context SecurityContext sec,
-            @PathParam("categoryid") Long categoryid,
+            @PathParam("categoryid") String categoryid,
             @PathParam("clientid") Long clientid,
             @QueryParam("professional") String professional) {
 
@@ -207,7 +207,7 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
     @Produces(MediaType.APPLICATION_JSON)
     public void getClients(@Suspended final AsyncResponse ar,
             @Context SecurityContext sec,
-            @PathParam("id") Long id,
+            @PathParam("id") String id,
             @QueryParam("professional") String professional) {
         CategoryPK pk = new CategoryPK(id, this.getProEmail(sec, professional));
         super.provideRelation(ar, pk, Category::getClients, Client.class);
