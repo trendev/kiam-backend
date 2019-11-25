@@ -23,7 +23,6 @@ import javax.validation.constraints.Past;
 @Entity
 @Table(name = "CUSTOMER_DETAILS")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@SuppressWarnings("unchecked")
 public class CustomerDetails {
 
     @Id

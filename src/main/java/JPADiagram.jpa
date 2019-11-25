@@ -595,7 +595,7 @@
             <jpa:query>Select c from Client c where c.email=:email</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="CustomerDetailsPK" abs="false" class="CustomerDetails" v="true" gen="false" pkg="customerdetails.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101578444">
+    <jpa:entity compositePrimaryKeyClass="CustomerDetailsPK" abs="false" class="CustomerDetails" v="true" pkg="customerdetails.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101578444">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_149010159285359</jpa:a>
             <jpa:a>_149010160079560</jpa:a>
@@ -604,7 +604,6 @@
             <jpa:a>_149010163896262</jpa:a>
             <jpa:a>_149010166120363</jpa:a>
             <jpa:a>_149010168028264</jpa:a>
-            <jpa:pre></jpa:pre>
         </jpa:con>
         <jpa:con am="PUBLIC" e="true">
             <jpa:post></jpa:post>
@@ -654,7 +653,7 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:element-collection target-class="java.lang.String" collection-type="java.util.List" cit="java.util.ArrayList" v="true" xvt="" name="comments" id="_149098087463456">
+            <jpa:element-collection target-class="String" collection-type="java.util.List" v="true" xvt="" name="comments" dv="new ArrayList&lt;&gt;()" id="_149098087463456">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:element-collection>
