@@ -503,7 +503,7 @@
             <jpa:query>Select e from Individual e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="ClientPK" abs="false" class="Client" v="true" gen="false" pkg="client.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101555530">
+    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="ClientPK" abs="false" class="Client" v="true" pkg="client.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101555530">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490283378549192</jpa:a>
             <jpa:a>_1504895192868452</jpa:a>
@@ -524,11 +524,12 @@
             <jpa:a>_1504895192868452</jpa:a>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
-            import fr.trendev.comptandye.utils.Visitor;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">java.util.LinkedList
+</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="email" id="_1490283378549192">
@@ -574,11 +575,14 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:many-to-many>
-            <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_149010155553255">
+            <jpa:id attribute-type="String" v="true" xvt="" name="id" id="_149010155553255">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:column name="CLIENT_ID" unique="false" nullable="true" insertable="true" updatable="true"/>
-                <jpa:generated-value strategy="AUTO"/>
+                <jpa:bv>
+                    <jpa:nn m="Client ID cannot be null"/>
+                </jpa:bv>
+                <jpa:column name="CLIENT_ID" unique="false" nullable="true" insertable="true" updatable="true" length="255"/>
+                <jpa:generated-value/>
             </jpa:id>
         </jpa:attributes>
         <jpa:nq e="false" name="Client.findAll">

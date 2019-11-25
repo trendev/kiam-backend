@@ -161,7 +161,7 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
     @Produces(MediaType.APPLICATION_JSON)
     public Response addClient(@Context SecurityContext sec,
             @PathParam("categoryid") String categoryid,
-            @PathParam("clientid") Long clientid,
+            @PathParam("clientid") String clientid,
             @QueryParam("professional") String professional) {
 
         CategoryPK categoryPK = new CategoryPK(categoryid, this.getProEmail(sec,
@@ -184,7 +184,7 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
     @Produces(MediaType.APPLICATION_JSON)
     public Response removeClient(@Context SecurityContext sec,
             @PathParam("categoryid") String categoryid,
-            @PathParam("clientid") Long clientid,
+            @PathParam("clientid") String clientid,
             @QueryParam("professional") String professional) {
 
         CategoryPK categoryPK = new CategoryPK(categoryid, this.getProEmail(sec,

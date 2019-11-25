@@ -16,8 +16,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -25,6 +23,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author jsie
@@ -34,38 +33,34 @@ import javax.persistence.OneToOne;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Client {
 
-    @Column(name = "CLIENT_ID")
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @Column(name = "CLIENT_ID")
+    @NotNull(message = "Client ID cannot be null")
+    private String id;
 
     @Basic
     private String email;
 
-    @OneToOne(orphanRemoval = true, cascade = {CascadeType.ALL},
-            targetEntity = SocialNetworkAccounts.class)
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
     private SocialNetworkAccounts socialNetworkAccounts;
 
-    @OneToOne(orphanRemoval = true, cascade = {CascadeType.ALL},
-            targetEntity = CustomerDetails.class)
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
     private CustomerDetails customerDetails;
 
-    @OneToOne(orphanRemoval = true, cascade = {CascadeType.ALL},
-            targetEntity = Address.class)
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
     private Address address;
 
     @Id
-    @ManyToOne(targetEntity = Professional.class)
+    @ManyToOne
     @JoinColumn(name = "CLIENT_PRO_EMAIL", referencedColumnName = "EMAIL")
     @JsonIgnore
     private Professional professional;
 
-    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = ClientBill.class,
-            mappedBy = "client")
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<ClientBill> clientBills = new LinkedList<>();
 
-    @ManyToMany(targetEntity = Category.class)
+    @ManyToMany
     private List<Category> categories = new LinkedList<>();
 
     public Client(String email, Professional professional) {
@@ -82,9 +77,7 @@ public class Client {
         this.socialNetworkAccounts = new SocialNetworkAccounts();
     }
 
-    public Client(String email, SocialNetworkAccounts socialNetworkAccounts,
-            CustomerDetails customerDetails, Address address,
-            Professional professional) {
+    public Client(String email, SocialNetworkAccounts socialNetworkAccounts, CustomerDetails customerDetails, Address address, Professional professional) {
         this.email = email;
         this.socialNetworkAccounts = socialNetworkAccounts;
         this.customerDetails = customerDetails;
@@ -92,16 +85,16 @@ public class Client {
         this.professional = professional;
     }
 
-    public Long getId() {
-        return this.id;
+    public String getId() {
+        return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     public String getEmail() {
-        return this.email;
+        return email;
     }
 
     public void setEmail(String email) {
@@ -109,16 +102,15 @@ public class Client {
     }
 
     public SocialNetworkAccounts getSocialNetworkAccounts() {
-        return this.socialNetworkAccounts;
+        return socialNetworkAccounts;
     }
 
-    public void setSocialNetworkAccounts(
-            SocialNetworkAccounts socialNetworkAccounts) {
+    public void setSocialNetworkAccounts(SocialNetworkAccounts socialNetworkAccounts) {
         this.socialNetworkAccounts = socialNetworkAccounts;
     }
 
     public CustomerDetails getCustomerDetails() {
-        return this.customerDetails;
+        return customerDetails;
     }
 
     public void setCustomerDetails(CustomerDetails customerDetails) {
@@ -126,7 +118,7 @@ public class Client {
     }
 
     public Address getAddress() {
-        return this.address;
+        return address;
     }
 
     public void setAddress(Address address) {
@@ -134,7 +126,7 @@ public class Client {
     }
 
     public Professional getProfessional() {
-        return this.professional;
+        return professional;
     }
 
     public void setProfessional(Professional professional) {
@@ -142,7 +134,7 @@ public class Client {
     }
 
     public List<ClientBill> getClientBills() {
-        return this.clientBills;
+        return clientBills;
     }
 
     public void setClientBills(List<ClientBill> clientBills) {
@@ -150,7 +142,7 @@ public class Client {
     }
 
     public List<Category> getCategories() {
-        return this.categories;
+        return categories;
     }
 
     public void setCategories(List<Category> categories) {

@@ -105,7 +105,7 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response find(@PathParam("id") Long id,
+    public Response find(@PathParam("id") String id,
             @QueryParam("professional") String professional,
             @QueryParam("refresh") boolean refresh) {
         ClientPK pk = new ClientPK(id, professional);
@@ -130,31 +130,35 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
                 professionalFacade,
                 Client::setProfessional,
                 Professional::getClients, e -> {
-            e.setId(null); //ignores the id provided
+                    //ignores the provided IDs
+                    e.setId(UUIDGenerator.generateID());
+                    e.getCustomerDetails().setId(UUIDGenerator.generateID());
+                    e.getAddress().setId(UUIDGenerator.generateID());
+                    e.getSocialNetworkAccounts().setId(UUIDGenerator.generateID());
 
-            /**
-             * Merge the categories with the existing and throw an Exception if
-             * a category is not owned or found
-             */
-            List<Category> categories =
-                    entity.getCategories().stream()
+                    /**
+                     * Links the new client with existing categories or throws
+                     * an Exception if a category is not owned or found
+                     */
+                    List<Category> categories
+                    = entity.getCategories().stream()
                             .map(ct -> Optional.ofNullable(
-                                    categoryFacade.find(
-                                            new CategoryPK(ct.getId(),
-                                                    email)))
-                                    .map(Function.identity())
-                                    .orElseThrow(() ->
-                                            new WebApplicationException(
-                                                    "Category " + ct.
-                                                            getId()
-                                                    + " has not been found and cannot be added during Client creation"))
+                            categoryFacade.find(
+                                    new CategoryPK(ct.getId(),
+                                            email)))
+                            .map(Function.identity())
+                            .orElseThrow(()
+                                    -> new WebApplicationException(
+                                    "Category " + ct.
+                                            getId()
+                                    + " has not been found and cannot be added during Client creation"))
                             )
                             .collect(Collectors.toList());
 
-            // complete the relationship with Category
-            categories.forEach(ct -> ct.getClients().add(e));
-            e.setCategories(categories);
-        });
+                    // complete the relationship with Category
+                    categories.forEach(ct -> ct.getClients().add(e));
+                    e.setCategories(categories);
+                });
 
     }
 
@@ -176,9 +180,10 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
              * to hack another object swapping the current saved (or not) object
              * by an existing one.
              */
-            entity.getCustomerDetails().setId(null);
-            entity.getAddress().setId(null);
-            entity.getSocialNetworkAccounts().setId(null);
+            // ignores the provided IDs
+            entity.getCustomerDetails().setId(UUIDGenerator.generateID());
+            entity.getAddress().setId(UUIDGenerator.generateID());
+            entity.getSocialNetworkAccounts().setId(UUIDGenerator.generateID());
 
             e.setCustomerDetails(entity.getCustomerDetails());
             e.setAddress(entity.getAddress());
@@ -190,18 +195,18 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
              * Merge the categories with the existing and throw an Exception if
              * a category is not owned or found
              */
-            List<Category> categories =
-                    entity.getCategories().stream()
+            List<Category> categories
+                    = entity.getCategories().stream()
                             .map(ct -> Optional.ofNullable(
-                                    categoryFacade.find(
-                                            new CategoryPK(ct.getId(),
-                                                    pk.getProfessional())))
-                                    .map(Function.identity())
-                                    .orElseThrow(() ->
-                                            new WebApplicationException(
-                                                    "Category " + ct.
-                                                            getId()
-                                                    + " has not been found and cannot be added during Client creation"))
+                            categoryFacade.find(
+                                    new CategoryPK(ct.getId(),
+                                            pk.getProfessional())))
+                            .map(Function.identity())
+                            .orElseThrow(()
+                                    -> new WebApplicationException(
+                                    "Category " + ct.
+                                            getId()
+                                    + " has not been found and cannot be added during Client creation"))
                             )
                             .collect(Collectors.toList());
 
@@ -217,7 +222,7 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
     @Path("{id}")
     @DELETE
     public Response delete(@Context SecurityContext sec,
-            @PathParam("id") Long id,
+            @PathParam("id") String id,
             @QueryParam("professional") String professional) {
 
         ClientPK pk = new ClientPK(id, this.getProEmail(sec,
@@ -228,10 +233,10 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
                         prettyPrintPK(pk));
         return super.delete(pk,
                 e -> {
-            e.getProfessional().getClients().remove(e);
-            e.getProfessional().getBills().removeAll(e.getClientBills());
-            e.getCategories().forEach(ct -> ct.getClients().remove(e));
-        });
+                    e.getProfessional().getClients().remove(e);
+                    e.getProfessional().getBills().removeAll(e.getClientBills());
+                    e.getCategories().forEach(ct -> ct.getClients().remove(e));
+                });
     }
 
     @Path("{id}/clientBills")
@@ -239,7 +244,7 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
     @Produces(MediaType.APPLICATION_JSON)
     public void getClientBills(@Suspended final AsyncResponse ar,
             @Context SecurityContext sec,
-            @PathParam("id") Long id,
+            @PathParam("id") String id,
             @QueryParam("professional") String professional) {
         ClientPK pk = new ClientPK(id, this.getProEmail(sec, professional));
         super.provideRelation(ar, pk, Client::getClientBills,
@@ -251,7 +256,7 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
     @Produces(MediaType.APPLICATION_JSON)
     public void getCategories(@Suspended final AsyncResponse ar,
             @Context SecurityContext sec,
-            @PathParam("id") Long id,
+            @PathParam("id") String id,
             @QueryParam("professional") String professional) {
         ClientPK pk = new ClientPK(id, this.getProEmail(sec, professional));
         super.provideRelation(ar, pk, Client::getCategories, Category.class);
