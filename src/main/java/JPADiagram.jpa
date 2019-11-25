@@ -242,7 +242,7 @@
             <jpa:query>Select c from Customer c where c.username=:username</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity lbl-ref="_14901008440196" compositePrimaryKeyClass="ProfessionalPK" abs="false" class="Professional" superclassId="_1490101376664" v="true" gen="false" pkg="professional.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101456632">
+    <jpa:entity lbl-ref="_14901008440196" compositePrimaryKeyClass="ProfessionalPK" abs="false" class="Professional" superclassId="_1490101376664" v="true" pkg="professional.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490101456632">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_14901149376313047</jpa:a>
             <jpa:a>_14901008440196</jpa:a>
@@ -255,13 +255,15 @@
                 this.cltype = UserAccountType.PROFESSIONAL;</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
-            import fr.trendev.comptandye.utils.Visitor;
-            import fr.trendev.comptandye.useraccount.entities.UserAccountType;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">java.util.LinkedList
+</jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor
+</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.useraccount.entities.UserAccountType</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="website" id="_1490104021917395">

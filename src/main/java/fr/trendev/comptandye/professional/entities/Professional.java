@@ -69,8 +69,8 @@ public class Professional extends Customer {
      * The reference date on the Bill timeline. Must be only updated when a Bill
      * is persisted.
      */
-    @Column(columnDefinition = "DATETIME(3)")
     @Basic
+    @Column(columnDefinition = "DATETIME(3)")
     @Temporal(TemporalType.TIMESTAMP)
     private Date billsRefDate;
 
@@ -89,70 +89,61 @@ public class Professional extends Customer {
     /**
      * When the Stripe Subscription has been rescinded
      */
-    @Column(columnDefinition = "DATETIME(3)")
     @Basic
+    @Column(columnDefinition = "DATETIME(3)")
     @Temporal(TemporalType.TIMESTAMP)
     private Date rescissionDate;
 
-    @ManyToOne(targetEntity = VatRates.class)
+    @ManyToOne
     private VatRates vatRates;
 
-    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Bill.class,
-            mappedBy = "professional")
+    @OneToMany(mappedBy = "professional", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Bill> bills = new LinkedList<>();
 
-    @OneToMany(targetEntity = Business.class)
+    @OneToMany
     private List<Business> businesses = new LinkedList<>();
 
-    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Client.class,
-            mappedBy = "professional")
+    @OneToMany(mappedBy = "professional", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Client> clients = new LinkedList<>();
 
-    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Offering.class,
-            mappedBy = "professional")
+    @OneToMany(mappedBy = "professional", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Offering> offerings = new LinkedList<>();
 
-    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Category.class,
-            mappedBy = "professional")
+    @OneToMany(mappedBy = "professional", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Category> categories = new LinkedList<>();
 
-    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Expense.class,
-            mappedBy = "professional")
+    @OneToMany(mappedBy = "professional", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Expense> expenses = new LinkedList<>();
 
-    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = CollectiveGroup.class,
-            mappedBy = "professional")
+    @OneToMany(mappedBy = "professional", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<CollectiveGroup> collectiveGroups = new LinkedList<>();
 
-    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Product.class,
-            mappedBy = "professional")
+    @OneToMany(mappedBy = "professional", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Product> stock = new LinkedList<>();
 
-    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Notification.class,
-            orphanRemoval = true, mappedBy = "professional")
+    @OneToMany(mappedBy = "professional", orphanRemoval = true, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Notification> notifications = new LinkedList<>();
 
-    @ManyToMany(targetEntity = Individual.class, mappedBy = "professionals")
+    @ManyToMany(mappedBy = "professionals")
     @JsonIgnore
     private List<Individual> individuals = new LinkedList<>();
 
-    @ManyToMany(targetEntity = PaymentMode.class)
+    @ManyToMany
     private List<PaymentMode> paymentModes = new LinkedList<>();
 
     @Version
     @JsonIgnore
     private long version = 0l;
 
-    public Professional(String email, String password, String username,
-            String uuid) {
+    public Professional(String email, String password, String username, String uuid) {
         super(email, password, username, uuid);
         this.cltype = UserAccountType.PROFESSIONAL;
     }
@@ -163,7 +154,7 @@ public class Professional extends Customer {
     }
 
     public String getWebsite() {
-        return this.website;
+        return website;
     }
 
     public void setWebsite(String website) {
@@ -171,7 +162,7 @@ public class Professional extends Customer {
     }
 
     public String getCompanyName() {
-        return this.companyName;
+        return companyName;
     }
 
     public void setCompanyName(String companyName) {
@@ -179,7 +170,7 @@ public class Professional extends Customer {
     }
 
     public String getCompanyID() {
-        return this.companyID;
+        return companyID;
     }
 
     public void setCompanyID(String companyID) {
@@ -187,7 +178,7 @@ public class Professional extends Customer {
     }
 
     public String getVatcode() {
-        return this.vatcode;
+        return vatcode;
     }
 
     public void setVatcode(String vatcode) {
@@ -195,7 +186,7 @@ public class Professional extends Customer {
     }
 
     public Date getCreationDate() {
-        return this.creationDate;
+        return creationDate;
     }
 
     public void setCreationDate(Date creationDate) {
@@ -203,7 +194,7 @@ public class Professional extends Customer {
     }
 
     public long getBillsCount() {
-        return this.billsCount;
+        return billsCount;
     }
 
     public void setBillsCount(long billsCount) {
@@ -211,7 +202,7 @@ public class Professional extends Customer {
     }
 
     public Date getBillsRefDate() {
-        return this.billsRefDate;
+        return billsRefDate;
     }
 
     public void setBillsRefDate(Date billsRefDate) {
@@ -219,7 +210,7 @@ public class Professional extends Customer {
     }
 
     public String getStripeCustomerId() {
-        return this.stripeCustomerId;
+        return stripeCustomerId;
     }
 
     public void setStripeCustomerId(String stripeCustomerId) {
@@ -227,7 +218,7 @@ public class Professional extends Customer {
     }
 
     public String getStripeSubscriptionId() {
-        return this.stripeSubscriptionId;
+        return stripeSubscriptionId;
     }
 
     public void setStripeSubscriptionId(String stripeSubscriptionId) {
@@ -235,7 +226,7 @@ public class Professional extends Customer {
     }
 
     public boolean isTos() {
-        return this.tos;
+        return tos;
     }
 
     public void setTos(boolean tos) {
@@ -243,7 +234,7 @@ public class Professional extends Customer {
     }
 
     public Date getRescissionDate() {
-        return this.rescissionDate;
+        return rescissionDate;
     }
 
     public void setRescissionDate(Date rescissionDate) {
@@ -251,7 +242,7 @@ public class Professional extends Customer {
     }
 
     public VatRates getVatRates() {
-        return this.vatRates;
+        return vatRates;
     }
 
     public void setVatRates(VatRates vatRates) {
@@ -259,7 +250,7 @@ public class Professional extends Customer {
     }
 
     public List<Bill> getBills() {
-        return this.bills;
+        return bills;
     }
 
     public void setBills(List<Bill> bills) {
@@ -267,7 +258,7 @@ public class Professional extends Customer {
     }
 
     public List<Business> getBusinesses() {
-        return this.businesses;
+        return businesses;
     }
 
     public void setBusinesses(List<Business> businesses) {
@@ -275,7 +266,7 @@ public class Professional extends Customer {
     }
 
     public List<Client> getClients() {
-        return this.clients;
+        return clients;
     }
 
     public void setClients(List<Client> clients) {
@@ -283,7 +274,7 @@ public class Professional extends Customer {
     }
 
     public List<Offering> getOfferings() {
-        return this.offerings;
+        return offerings;
     }
 
     public void setOfferings(List<Offering> offerings) {
@@ -291,7 +282,7 @@ public class Professional extends Customer {
     }
 
     public List<Category> getCategories() {
-        return this.categories;
+        return categories;
     }
 
     public void setCategories(List<Category> categories) {
@@ -299,7 +290,7 @@ public class Professional extends Customer {
     }
 
     public List<Expense> getExpenses() {
-        return this.expenses;
+        return expenses;
     }
 
     public void setExpenses(List<Expense> expenses) {
@@ -307,7 +298,7 @@ public class Professional extends Customer {
     }
 
     public List<CollectiveGroup> getCollectiveGroups() {
-        return this.collectiveGroups;
+        return collectiveGroups;
     }
 
     public void setCollectiveGroups(List<CollectiveGroup> collectiveGroups) {
@@ -315,7 +306,7 @@ public class Professional extends Customer {
     }
 
     public List<Product> getStock() {
-        return this.stock;
+        return stock;
     }
 
     public void setStock(List<Product> stock) {
@@ -323,7 +314,7 @@ public class Professional extends Customer {
     }
 
     public List<Notification> getNotifications() {
-        return this.notifications;
+        return notifications;
     }
 
     public void setNotifications(List<Notification> notifications) {
@@ -331,7 +322,7 @@ public class Professional extends Customer {
     }
 
     public List<Individual> getIndividuals() {
-        return this.individuals;
+        return individuals;
     }
 
     public void setIndividuals(List<Individual> individuals) {
@@ -339,7 +330,7 @@ public class Professional extends Customer {
     }
 
     public List<PaymentMode> getPaymentModes() {
-        return this.paymentModes;
+        return paymentModes;
     }
 
     public void setPaymentModes(List<PaymentMode> paymentModes) {
@@ -347,7 +338,7 @@ public class Professional extends Customer {
     }
 
     public long getVersion() {
-        return this.version;
+        return version;
     }
 
     public void setVersion(long version) {
