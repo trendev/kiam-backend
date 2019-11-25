@@ -35,7 +35,7 @@ import javax.ws.rs.core.Response;
 @Stateless
 @Path("CustomerDetails")
 @RolesAllowed({"Administrator"})
-public class CustomerDetailsService extends AbstractCommonService<CustomerDetails, Long> {
+public class CustomerDetailsService extends AbstractCommonService<CustomerDetails, String> {
 
     @Inject
     CustomerDetailsFacade customerDetailsFacade;
@@ -54,7 +54,7 @@ public class CustomerDetailsService extends AbstractCommonService<CustomerDetail
     }
 
     @Override
-    protected AbstractFacade<CustomerDetails, Long> getFacade() {
+    protected AbstractFacade<CustomerDetails, String> getFacade() {
         return customerDetailsFacade;
     }
 
@@ -76,7 +76,7 @@ public class CustomerDetailsService extends AbstractCommonService<CustomerDetail
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public Response find(@PathParam("id") Long id,
+    public Response find(@PathParam("id") String id,
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get CustomerDetails : {0}", id);
         return super.find(id, refresh);
@@ -90,7 +90,7 @@ public class CustomerDetailsService extends AbstractCommonService<CustomerDetail
                 entity));
 
         return super.post(entity, e -> {
-            e.setId(null);
+            e.setId(UUIDGenerator.generateID());
         });
     }
 
@@ -101,20 +101,20 @@ public class CustomerDetailsService extends AbstractCommonService<CustomerDetail
         LOG.log(Level.INFO, "Updating CustomerDetails {0}", entity.getId());
         return super.put(entity, entity.getId(),
                 e -> {
-            e.setFirstName(entity.getFirstName());
-            e.setLastName(entity.getLastName());
-            e.setNickname(entity.getNickname());
-            e.setPhone(entity.getPhone());
-            e.setBirthdate(entity.getBirthdate());
-            e.setSex(entity.getSex());
-            e.setPicturePath(entity.getPicturePath());
-            e.setComments(entity.getComments());
-        });
+                    e.setFirstName(entity.getFirstName());
+                    e.setLastName(entity.getLastName());
+                    e.setNickname(entity.getNickname());
+                    e.setPhone(entity.getPhone());
+                    e.setBirthdate(entity.getBirthdate());
+                    e.setSex(entity.getSex());
+                    e.setPicturePath(entity.getPicturePath());
+                    e.setComments(entity.getComments());
+                });
     }
 
     @Path("{id}")
     @DELETE
-    public Response delete(@PathParam("id") Long id) {
+    public Response delete(@PathParam("id") String id) {
         LOG.log(Level.INFO, "Deleting CustomerDetails {0}", id);
         return super.delete(id, e -> {
         });

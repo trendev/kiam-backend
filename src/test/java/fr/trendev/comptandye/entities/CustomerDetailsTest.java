@@ -52,7 +52,7 @@ public class CustomerDetailsTest {
                 collect(Collectors.toList());
 
         instance = new CustomerDetails(firstName, lastName, nickname, phone,
-                birthdate, sex, picturePath, comments);
+                birthdate, sex, picturePath);
 
         assert instance.getId() == null;
         assert firstName.equals(instance.getFirstName());

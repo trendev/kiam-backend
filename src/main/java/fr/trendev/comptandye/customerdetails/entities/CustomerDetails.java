@@ -10,12 +10,11 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 /**
@@ -28,8 +27,8 @@ import javax.validation.constraints.Past;
 public class CustomerDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @NotNull(message = "CustomerDetails ID cannot be null")
+    private String id;
 
     @Basic
     private String firstName;
@@ -52,8 +51,8 @@ public class CustomerDetails {
      * javascript/JAVA conversion on Dates before 1970 and earlier, we've
      * decided to store the DATETIME and let down the DATE only.
      */
-    @Column(columnDefinition = "DATETIME(3)")
     @Basic
+    @Column(columnDefinition = "DATETIME(3)")
     @Temporal(TemporalType.TIMESTAMP)
     @Past(message = "Birthdate cannot be today or in the future...")
     private Date birthdate;
@@ -73,9 +72,7 @@ public class CustomerDetails {
     @ElementCollection
     private List<String> comments = new ArrayList<>();
 
-    public CustomerDetails(String firstName, String lastName, String nickname,
-            String phone, Date birthdate, char sex, String picturePath,
-            List comments) {
+    public CustomerDetails(String firstName, String lastName, String nickname, String phone, Date birthdate, char sex, String picturePath) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.nickname = nickname;
@@ -83,22 +80,21 @@ public class CustomerDetails {
         this.birthdate = birthdate;
         this.sex = sex;
         this.picturePath = picturePath;
-        this.comments = comments;
     }
 
     public CustomerDetails() {
     }
 
-    public Long getId() {
-        return this.id;
+    public String getId() {
+        return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     public String getFirstName() {
-        return this.firstName;
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
@@ -106,7 +102,7 @@ public class CustomerDetails {
     }
 
     public String getLastName() {
-        return this.lastName;
+        return lastName;
     }
 
     public void setLastName(String lastName) {
@@ -114,7 +110,7 @@ public class CustomerDetails {
     }
 
     public String getNickname() {
-        return this.nickname;
+        return nickname;
     }
 
     public void setNickname(String nickname) {
@@ -122,7 +118,7 @@ public class CustomerDetails {
     }
 
     public String getPhone() {
-        return this.phone;
+        return phone;
     }
 
     public void setPhone(String phone) {
@@ -130,7 +126,7 @@ public class CustomerDetails {
     }
 
     public Date getBirthdate() {
-        return this.birthdate;
+        return birthdate;
     }
 
     public void setBirthdate(Date birthdate) {
@@ -138,7 +134,7 @@ public class CustomerDetails {
     }
 
     public char getSex() {
-        return this.sex;
+        return sex;
     }
 
     public void setSex(char sex) {
@@ -146,7 +142,7 @@ public class CustomerDetails {
     }
 
     public String getPicturePath() {
-        return this.picturePath;
+        return picturePath;
     }
 
     public void setPicturePath(String picturePath) {
@@ -154,7 +150,7 @@ public class CustomerDetails {
     }
 
     public List<String> getComments() {
-        return this.comments;
+        return comments;
     }
 
     public void setComments(List<String> comments) {
