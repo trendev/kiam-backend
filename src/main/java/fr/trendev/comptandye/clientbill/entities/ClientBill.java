@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ClientBill extends Bill {
 
-    @ManyToOne(targetEntity = Client.class)
+    @ManyToOne
     private Client client;
 
     public ClientBill() {
@@ -24,7 +24,7 @@ public class ClientBill extends Bill {
     }
 
     public Client getClient() {
-        return this.client;
+        return client;
     }
 
     public void setClient(Client client) {
