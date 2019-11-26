@@ -1643,19 +1643,18 @@
             <jpa:query>Select b from Business b where b.description=:description</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="CollectiveGroupBillPK" abs="false" class="CollectiveGroupBill" superclassId="_1490178979567" v="true" gen="false" pkg="collectivegroupbill.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1506009883340">
+    <jpa:entity compositePrimaryKeyClass="CollectiveGroupBillPK" abs="false" class="CollectiveGroupBill" superclassId="_1490178979567" v="true" pkg="collectivegroupbill.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1506009883340">
         <jpa:con am="PUBLIC" e="true">
             <jpa:post>this.cltype = BillType.COLLECTIVEGROUP;</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import java.util.Date;
-            import java.util.List;
-            import fr.trendev.comptandye.utils.Visitor;
-            import fr.trendev.comptandye.bill.entities.BillType;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor
+</jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.bill.entities.BillType</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="recipient" id="_1519918697987139">

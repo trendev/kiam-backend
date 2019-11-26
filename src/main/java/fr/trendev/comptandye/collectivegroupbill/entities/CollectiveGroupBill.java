@@ -20,7 +20,7 @@ public class CollectiveGroupBill extends Bill {
     @Basic
     private String recipient;
 
-    @ManyToOne(targetEntity = CollectiveGroup.class)
+    @ManyToOne
     private CollectiveGroup collectiveGroup;
 
     public CollectiveGroupBill() {
@@ -28,7 +28,7 @@ public class CollectiveGroupBill extends Bill {
     }
 
     public String getRecipient() {
-        return this.recipient;
+        return recipient;
     }
 
     public void setRecipient(String recipient) {
@@ -36,7 +36,7 @@ public class CollectiveGroupBill extends Bill {
     }
 
     public CollectiveGroup getCollectiveGroup() {
-        return this.collectiveGroup;
+        return collectiveGroup;
     }
 
     public void setCollectiveGroup(CollectiveGroup collectiveGroup) {
