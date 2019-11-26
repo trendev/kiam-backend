@@ -17,8 +17,8 @@ import javax.validation.constraints.NotNull;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ProductReference {
 
-    @Column(updatable = false, nullable = false)
     @Id
+    @Column(nullable = false, updatable = false)
     private String barcode;
 
     @Basic
@@ -29,12 +29,12 @@ public class ProductReference {
     @NotNull(message = "brand field in ProductReference must not be null")
     private String brand;
 
-    @OneToOne(targetEntity = Business.class)
+    @OneToOne
     @NotNull(message = "business field in ProductReference must not be null")
     private Business business;
 
     public String getBarcode() {
-        return this.barcode;
+        return barcode;
     }
 
     public void setBarcode(String barcode) {
@@ -42,7 +42,7 @@ public class ProductReference {
     }
 
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     public void setDescription(String description) {
@@ -50,7 +50,7 @@ public class ProductReference {
     }
 
     public String getBrand() {
-        return this.brand;
+        return brand;
     }
 
     public void setBrand(String brand) {
@@ -58,7 +58,7 @@ public class ProductReference {
     }
 
     public Business getBusiness() {
-        return this.business;
+        return business;
     }
 
     public void setBusiness(Business business) {

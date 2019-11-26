@@ -1900,7 +1900,7 @@
             <jpa:query>Select p from PurchaseExpense p where p.invoiceRef=:invoiceRef</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="ProductReferencePK" abs="false" class="ProductReference" v="true" gen="false" pkg="productreference.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524840332929">
+    <jpa:entity compositePrimaryKeyClass="ProductReferencePK" abs="false" class="ProductReference" v="true" pkg="productreference.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524840332929">
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -1942,9 +1942,9 @@
             <jpa:query>Select p from ProductReference p where p.brand=:brand</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="ProductPK" abs="false" class="Product" v="true" gen="false" pkg="product.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524841860187">
+    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="ProductPK" abs="false" class="Product" v="true" pkg="product.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524841860187">
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">java.util.LinkedList</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="int" v="true" xvt="" name="availableQty" id="_1524842384764168">
@@ -1966,7 +1966,7 @@
                     <jpa:mi v="0" m="thresholdSevere in Product cannot be less than 0"/>
                 </jpa:bv>
             </jpa:basic>
-            <jpa:element-collection target-class="java.lang.String" collection-type="java.util.List" v="true" xvt="" name="comments" dv="new LinkedList&lt;&gt;()" id="_1524842604860171">
+            <jpa:element-collection target-class="String" collection-type="java.util.List" v="true" xvt="" name="comments" dv="new LinkedList&lt;&gt;()" id="_1524842604860171">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:element-collection>
@@ -2692,7 +2692,7 @@
                 </el>
             </i>
             <i ref="_1490101737208" x="-430" y="1"/>
-            <i ref="_1524841860187" x="-305" y="1460">
+            <i ref="_1524841860187" x="-304" y="1460">
                 <el>
                     <e ref="_1524907636328594">
                         <v st="1" si="12.0" cl="#ff0000"/>

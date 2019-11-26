@@ -38,8 +38,7 @@ public class Product {
     private int availableQty;
 
     @Basic
-    @Min(value = 0,
-            message = "thresholdWarning in Product cannot be less than 0")
+    @Min(value = 0, message = "thresholdWarning in Product cannot be less than 0")
     private int thresholdWarning;
 
     @Basic
@@ -50,27 +49,25 @@ public class Product {
     private List<String> comments = new LinkedList<>();
 
     @Id
-    @ManyToOne(targetEntity = Professional.class)
+    @ManyToOne
     @JoinColumn(name = "PRODUCT_PRO_EMAIL", referencedColumnName = "EMAIL")
     @JsonIgnore
     private Professional professional;
 
     @Id
-    @ManyToOne(cascade = {CascadeType.PERSIST},
-            targetEntity = ProductReference.class)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private ProductReference productReference;
 
-    @OneToMany(targetEntity = Sale.class, mappedBy = "product")
+    @OneToMany(mappedBy = "product")
     @JsonIgnore
     private List<Sale> sales = new LinkedList<>();
 
-    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = ProductRecord.class,
-            mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<ProductRecord> productRecords = new LinkedList<>();
 
     public int getAvailableQty() {
-        return this.availableQty;
+        return availableQty;
     }
 
     public void setAvailableQty(int availableQty) {
@@ -78,7 +75,7 @@ public class Product {
     }
 
     public int getThresholdWarning() {
-        return this.thresholdWarning;
+        return thresholdWarning;
     }
 
     public void setThresholdWarning(int thresholdWarning) {
@@ -86,7 +83,7 @@ public class Product {
     }
 
     public int getThresholdSevere() {
-        return this.thresholdSevere;
+        return thresholdSevere;
     }
 
     public void setThresholdSevere(int thresholdSevere) {
@@ -94,7 +91,7 @@ public class Product {
     }
 
     public List<String> getComments() {
-        return this.comments;
+        return comments;
     }
 
     public void setComments(List<String> comments) {
@@ -102,7 +99,7 @@ public class Product {
     }
 
     public Professional getProfessional() {
-        return this.professional;
+        return professional;
     }
 
     public void setProfessional(Professional professional) {
@@ -110,7 +107,7 @@ public class Product {
     }
 
     public ProductReference getProductReference() {
-        return this.productReference;
+        return productReference;
     }
 
     public void setProductReference(ProductReference productReference) {
@@ -118,7 +115,7 @@ public class Product {
     }
 
     public List<Sale> getSales() {
-        return this.sales;
+        return sales;
     }
 
     public void setSales(List<Sale> sales) {
@@ -126,7 +123,7 @@ public class Product {
     }
 
     public List<ProductRecord> getProductRecords() {
-        return this.productRecords;
+        return productRecords;
     }
 
     public void setProductRecords(List<ProductRecord> productRecords) {
