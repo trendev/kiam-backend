@@ -2393,7 +2393,7 @@
             </jpa:one-to-many>
         </jpa:attributes>
     </jpa:embeddable>
-    <jpa:embeddable abs="false" class="OfferingExtents" v="true" gen="false" pkg="purchasedoffering.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524046966670">
+    <jpa:embeddable abs="false" class="OfferingExtents" v="true" pkg="purchasedoffering.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524046966670">
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_152404700574475</jpa:a>
@@ -2406,8 +2406,9 @@
             this.services = oe.services;
             this.sales = oe.sales;
             }</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.offering.entities.Offering;
-            import fr.trendev.comptandye.offering.entities.OfferingExtentsVisitor;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.offering.entities.Offering
+</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.offering.entities.OfferingExtentsVisitor</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="int" v="true" xvt="" name="services" id="_152404700574475">

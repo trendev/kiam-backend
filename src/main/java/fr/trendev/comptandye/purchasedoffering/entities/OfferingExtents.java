@@ -42,7 +42,7 @@ public class OfferingExtents {
     }
 
     public int getServices() {
-        return this.services;
+        return services;
     }
 
     public void setServices(int services) {
@@ -50,7 +50,7 @@ public class OfferingExtents {
     }
 
     public int getSales() {
-        return this.sales;
+        return sales;
     }
 
     public void setSales(int sales) {
