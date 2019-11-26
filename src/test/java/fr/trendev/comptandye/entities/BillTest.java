@@ -24,7 +24,7 @@ import org.junit.Test;
  * @author jsie
  */
 public class BillTest {
-    
+
     private UUIDGenerator UUIDGenerator;
 
     public BillTest() {
@@ -67,15 +67,17 @@ public class BillTest {
         List<PurchasedOffering> purchasedOfferings = IntStream
                 .range(0, 10)
                 .mapToObj(i -> new Service("Service #" + i, 1000, 10,
-                        professional))
+                professional))
                 .map(o -> new PurchasedOffering(1, o))
                 .collect(Collectors.toList());
 
         instance = new BillImpl(reference, deliveryDate, amount,
                 discount,
                 paymentDate,
-                comments,
-                professional, payments, purchasedOfferings);
+                professional);
+        instance.setComments(comments);
+        instance.setPayments(payments);
+        instance.setPurchasedOfferings(purchasedOfferings);
 
         assert instance.getReference().equals(reference);
         assert instance.getDeliveryDate() != null;
@@ -110,11 +112,11 @@ public class BillTest {
     public class BillImpl extends Bill {
 
         public BillImpl(String reference, Date deliveryDate, int amount,
-                int discount, Date paymentDate, List comments,
-                Professional professional, List payments, List offerings) {
+                int discount, Date paymentDate,
+                Professional professional) {
             super(reference, deliveryDate, amount, discount,
-                    paymentDate,
-                    comments, professional, payments, offerings);
+                    paymentDate, professional);
+
         }
 
         public BillImpl() {

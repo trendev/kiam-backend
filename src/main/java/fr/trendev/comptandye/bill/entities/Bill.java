@@ -37,15 +37,11 @@ import javax.validation.constraints.NotNull;
 @IdClass(BillPK.class)
 @DiscriminatorColumn(length = 31)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@SuppressWarnings("unchecked")
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "cltype",
-        visible = true)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "cltype", visible = true)
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = ClientBill.class, name = BillType.CLIENT)
-    ,   @JsonSubTypes.Type(value = IndividualBill.class, name = BillType.INDIVIDUAL)
-    ,  @JsonSubTypes.Type(value = CollectiveGroupBill.class,
-            name = BillType.COLLECTIVEGROUP)})
+    @JsonSubTypes.Type(value = ClientBill.class, name = BillType.CLIENT),
+    @JsonSubTypes.Type(value = IndividualBill.class, name = BillType.INDIVIDUAL),
+    @JsonSubTypes.Type(value = CollectiveGroupBill.class, name = BillType.COLLECTIVEGROUP)})
 public abstract class Bill {
 
     /**
@@ -55,8 +51,8 @@ public abstract class Bill {
     @Id
     private String reference;
 
-    @Column(columnDefinition = "DATETIME(3) NOT NULL")
     @Id
+    @Column(columnDefinition = "DATETIME(3) NOT NULL")
     @Temporal(TemporalType.TIMESTAMP)
     private Date deliveryDate;
 
@@ -82,16 +78,16 @@ public abstract class Bill {
     @Basic
     private int discount;
 
-    @Column(columnDefinition = "DATETIME(3)")
     @Basic
+    @Column(columnDefinition = "DATETIME(3)")
     @Temporal(TemporalType.TIMESTAMP)
     private Date paymentDate;
 
     /**
      * used for audit and sort the bills
      */
-    @Column(columnDefinition = "DATETIME(3)")
     @Basic
+    @Column(columnDefinition = "DATETIME(3)")
     @Temporal(TemporalType.TIMESTAMP)
     private Date issueDate = new Date();
 
@@ -107,8 +103,8 @@ public abstract class Bill {
     @Basic
     private boolean cancelled = false;
 
-    @Column(columnDefinition = "DATETIME(3)")
     @Basic
+    @Column(columnDefinition = "DATETIME(3)")
     @Temporal(TemporalType.TIMESTAMP)
     private Date cancellationDate;
 
@@ -116,7 +112,7 @@ public abstract class Bill {
     private List<String> comments = new LinkedList<>();
 
     @Id
-    @ManyToOne(targetEntity = Professional.class)
+    @ManyToOne
     @JoinColumn(name = "PROFESSIONAL_EMAIL", referencedColumnName = "EMAIL")
     @JsonIgnore
     private Professional professional;
@@ -124,34 +120,26 @@ public abstract class Bill {
     /**
      * Should be ignored during a PUT
      */
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
-        CascadeType.REMOVE}, targetEntity = Payment.class, orphanRemoval = true)
+    @OneToMany(orphanRemoval = true, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Payment> payments = new LinkedList<>();
 
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
-        CascadeType.REMOVE}, targetEntity = PurchasedOffering.class,
-            orphanRemoval = true)
+    @OneToMany(orphanRemoval = true, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
     private List<PurchasedOffering> purchasedOfferings = new LinkedList<>();
 
-    public Bill(String reference, Date deliveryDate, int amount, int discount,
-            Date paymentDate, List comments, Professional professional,
-            List payments, List purchasedOfferings) {
+    public Bill(String reference, Date deliveryDate, int amount, int discount, Date paymentDate, Professional professional) {
         this.reference = reference;
         this.deliveryDate = deliveryDate;
         this.amount = amount;
         this.discount = discount;
         this.paymentDate = paymentDate;
-        this.comments = comments;
         this.professional = professional;
-        this.payments = payments;
-        this.purchasedOfferings = purchasedOfferings;
     }
 
     public Bill() {
     }
 
     public String getReference() {
-        return this.reference;
+        return reference;
     }
 
     public void setReference(String reference) {
@@ -159,7 +147,7 @@ public abstract class Bill {
     }
 
     public Date getDeliveryDate() {
-        return this.deliveryDate;
+        return deliveryDate;
     }
 
     public void setDeliveryDate(Date deliveryDate) {
@@ -167,7 +155,7 @@ public abstract class Bill {
     }
 
     public String getCltype() {
-        return this.cltype;
+        return cltype;
     }
 
     public void setCltype(String cltype) {
@@ -175,7 +163,7 @@ public abstract class Bill {
     }
 
     public int getAmount() {
-        return this.amount;
+        return amount;
     }
 
     public void setAmount(int amount) {
@@ -183,7 +171,7 @@ public abstract class Bill {
     }
 
     public String getCurrency() {
-        return this.currency;
+        return currency;
     }
 
     public void setCurrency(String currency) {
@@ -191,7 +179,7 @@ public abstract class Bill {
     }
 
     public int getDiscount() {
-        return this.discount;
+        return discount;
     }
 
     public void setDiscount(int discount) {
@@ -199,7 +187,7 @@ public abstract class Bill {
     }
 
     public Date getPaymentDate() {
-        return this.paymentDate;
+        return paymentDate;
     }
 
     public void setPaymentDate(Date paymentDate) {
@@ -207,7 +195,7 @@ public abstract class Bill {
     }
 
     public Date getIssueDate() {
-        return this.issueDate;
+        return issueDate;
     }
 
     public void setIssueDate(Date issueDate) {
@@ -215,7 +203,7 @@ public abstract class Bill {
     }
 
     public boolean isVatInclusive() {
-        return this.vatInclusive;
+        return vatInclusive;
     }
 
     public void setVatInclusive(boolean vatInclusive) {
@@ -223,7 +211,7 @@ public abstract class Bill {
     }
 
     public boolean isCancelled() {
-        return this.cancelled;
+        return cancelled;
     }
 
     public void setCancelled(boolean cancelled) {
@@ -231,7 +219,7 @@ public abstract class Bill {
     }
 
     public Date getCancellationDate() {
-        return this.cancellationDate;
+        return cancellationDate;
     }
 
     public void setCancellationDate(Date cancellationDate) {
@@ -239,7 +227,7 @@ public abstract class Bill {
     }
 
     public List<String> getComments() {
-        return this.comments;
+        return comments;
     }
 
     public void setComments(List<String> comments) {
@@ -247,7 +235,7 @@ public abstract class Bill {
     }
 
     public Professional getProfessional() {
-        return this.professional;
+        return professional;
     }
 
     public void setProfessional(Professional professional) {
@@ -255,7 +243,7 @@ public abstract class Bill {
     }
 
     public List<Payment> getPayments() {
-        return this.payments;
+        return payments;
     }
 
     public void setPayments(List<Payment> payments) {
@@ -263,7 +251,7 @@ public abstract class Bill {
     }
 
     public List<PurchasedOffering> getPurchasedOfferings() {
-        return this.purchasedOfferings;
+        return purchasedOfferings;
     }
 
     public void setPurchasedOfferings(List<PurchasedOffering> purchasedOfferings) {
