@@ -475,13 +475,13 @@
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">java.util.LinkedList
-</jpa:snp>
+        </jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
         <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor
-</jpa:snp>
+        </jpa:snp>
         <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.useraccount.entities.UserAccountType</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -525,7 +525,7 @@
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">java.util.LinkedList
-</jpa:snp>
+        </jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -1179,7 +1179,7 @@
             return v.visit(this);
             }</jpa:snp>
         <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor
-</jpa:snp>
+        </jpa:snp>
         <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.bill.entities.BillType</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -1202,7 +1202,7 @@
             return v.visit(this);
             }</jpa:snp>
         <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor
-</jpa:snp>
+        </jpa:snp>
         <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.bill.entities.BillType</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -1305,7 +1305,7 @@
             return v.visit(this);
             }</jpa:snp>
         <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor
-</jpa:snp>
+        </jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="groupName" id="_1490282399999187">
@@ -1394,7 +1394,7 @@
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">java.util.LinkedList
-</jpa:snp>
+        </jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -1447,14 +1447,14 @@
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonTypeInfo(use = JsonTypeInfo.Id.NAME,         include = JsonTypeInfo.As.EXISTING_PROPERTY,         property = &quot;cltype&quot;,         visible = true)"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({     @JsonSubTypes.Type(value = BasicExpense.class,             name = ExpenseType.BASIC_EXPENSE)     ,   @JsonSubTypes.Type(value = PurchaseExpense.class,             name = ExpenseType.PURCHASE_EXPENSE)})"/>
         <jpa:snp loc="IMPORT" e="true">java.util.LinkedList
-</jpa:snp>
+        </jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
         <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.basicexpense.entities.BasicExpense
-</jpa:snp>
+        </jpa:snp>
         <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.purchaseexpense.entities.PurchaseExpense
-</jpa:snp>
+        </jpa:snp>
         <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -1649,7 +1649,7 @@
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor
-</jpa:snp>
+        </jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
@@ -1877,7 +1877,7 @@
         <jpa:snp loc="IMPORT" e="true">java.util.LinkedList
         </jpa:snp>
         <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.expense.entities.ExpenseType
-</jpa:snp>
+        </jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="invoiceRef" id="_1524836395765710">
@@ -2261,7 +2261,7 @@
         </jpa:nq>
         <jpa:discriminator-column/>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="ThresholdAlertPK" abs="false" class="ThresholdAlert" superclassId="_1528899065548" v="true" gen="false" pkg="thresholdalert.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1528899529391">
+    <jpa:entity compositePrimaryKeyClass="ThresholdAlertPK" abs="false" class="ThresholdAlert" superclassId="_1528899065548" v="true" pkg="thresholdalert.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1528899529391">
         <jpa:con am="PUBLIC" e="true">
             <jpa:pre>super();</jpa:pre>
             <jpa:post>this.cltype = NotificationType.THRESHOLD_ALERT;</jpa:post>
@@ -2279,10 +2279,12 @@
             <jpa:post>this.cltype = NotificationType.THRESHOLD_ALERT;</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.notification.entities.NotificationType;
-            import fr.trendev.comptandye.utils.Visitor;
-            import fr.trendev.comptandye.notification.entities.NotificationLevelEnum;
-            import fr.trendev.comptandye.professional.entities.Professional;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.notification.entities.NotificationType</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.notification.entities.NotificationLevelEnum</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.professional.entities.Professional</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">javax.persistence.EnumType</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">javax.persistence.Enumerated</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -2323,7 +2325,7 @@
             <jpa:basic attribute-type="fr.trendev.comptandye.thresholdalert.entities.ThresholdAlertQualifierEnum" v="true" xvt="" name="qualifier" id="_15289082626011767">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:enumerated>STRING</jpa:enumerated>
+                <jpa:an e="true" n="@Enumerated(EnumType.STRING)"/>
             </jpa:basic>
         </jpa:attributes>
         <jpa:nq e="false" name="ThresholdAlert.findAll">

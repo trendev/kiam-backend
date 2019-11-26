@@ -34,8 +34,7 @@ public class ThresholdAlert extends Notification {
     private String brand;
 
     @Basic
-    @Min(value = 0,
-            message = "threshold field in ThresholdAlert must not be less than 0")
+    @Min(value = 0, message = "threshold field in ThresholdAlert must not be less than 0")
     private int threshold;
 
     @Basic
@@ -50,10 +49,7 @@ public class ThresholdAlert extends Notification {
         this.cltype = NotificationType.THRESHOLD_ALERT;
     }
 
-    public ThresholdAlert(NotificationLevelEnum levelRank,
-            Professional professional, String barcode, String description,
-            String brand, int threshold, int qty,
-            ThresholdAlertQualifierEnum qualifier) {
+    public ThresholdAlert(NotificationLevelEnum levelRank, Professional professional, String barcode, String description, String brand, int threshold, int qty, ThresholdAlertQualifierEnum qualifier) {
         super(levelRank, professional);
         this.barcode = barcode;
         this.description = description;
@@ -65,7 +61,7 @@ public class ThresholdAlert extends Notification {
     }
 
     public String getBarcode() {
-        return this.barcode;
+        return barcode;
     }
 
     public void setBarcode(String barcode) {
@@ -73,7 +69,7 @@ public class ThresholdAlert extends Notification {
     }
 
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     public void setDescription(String description) {
@@ -81,7 +77,7 @@ public class ThresholdAlert extends Notification {
     }
 
     public String getBrand() {
-        return this.brand;
+        return brand;
     }
 
     public void setBrand(String brand) {
@@ -89,7 +85,7 @@ public class ThresholdAlert extends Notification {
     }
 
     public int getThreshold() {
-        return this.threshold;
+        return threshold;
     }
 
     public void setThreshold(int threshold) {
@@ -97,7 +93,7 @@ public class ThresholdAlert extends Notification {
     }
 
     public int getQty() {
-        return this.qty;
+        return qty;
     }
 
     public void setQty(int qty) {
@@ -105,7 +101,7 @@ public class ThresholdAlert extends Notification {
     }
 
     public ThresholdAlertQualifierEnum getQualifier() {
-        return this.qualifier;
+        return qualifier;
     }
 
     public void setQualifier(ThresholdAlertQualifierEnum qualifier) {
