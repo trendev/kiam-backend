@@ -74,6 +74,7 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
     @RolesAllowed({"Administrator"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public void findAll(@Suspended final AsyncResponse ar) {
         super.findAll(ar);
     }
@@ -91,7 +92,7 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response find(@PathParam("id") Long id,
+    public Response find(@PathParam("id") String id,
             @QueryParam("professional") String professional,
             @QueryParam("refresh") boolean refresh) {
         CollectiveGroupPK pk = new CollectiveGroupPK(id, professional);
@@ -116,8 +117,9 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
                 professionalFacade,
                 CollectiveGroup::setProfessional,
                 Professional::getCollectiveGroups, e -> {
-            e.setId(null);
-        });
+                    e.setId(UUIDGenerator.generateID());
+                    e.getAddress().setId(UUIDGenerator.generateID());
+                });
 
     }
 
@@ -135,7 +137,11 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
                 collectiveGroupFacade.
                         prettyPrintPK(pk));
         return super.put(entity, pk, e -> {
-            entity.getAddress().setId(null);
+            /**
+             * Address should not be null and its ID has been set during the
+             * creation (POST)
+             */
+            entity.getAddress().setId(e.getAddress().getId()); //override the provided ID
             e.setAddress(entity.getAddress());
 
             e.setGroupName(entity.getGroupName());
@@ -147,7 +153,7 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
     @Path("{id}")
     @DELETE
     public Response delete(@Context SecurityContext sec,
-            @PathParam("id") Long id,
+            @PathParam("id") String id,
             @QueryParam("professional") String professional) {
 
         CollectiveGroupPK pk = new CollectiveGroupPK(id, this.getProEmail(sec,
@@ -158,8 +164,8 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
                         prettyPrintPK(pk));
         return super.delete(pk,
                 e -> {
-            e.getProfessional().getCollectiveGroups().remove(e);
-        });
+                    e.getProfessional().getCollectiveGroups().remove(e);
+                });
     }
 
     @Path("{id}/collectiveGroupBills")
@@ -167,7 +173,7 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
     @Produces(MediaType.APPLICATION_JSON)
     public void getCollectiveGroupBills(@Suspended final AsyncResponse ar,
             @Context SecurityContext sec,
-            @PathParam("id") Long id,
+            @PathParam("id") String id,
             @QueryParam("professional") String professional) {
         CollectiveGroupPK pk = new CollectiveGroupPK(id, this.getProEmail(sec,
                 professional));

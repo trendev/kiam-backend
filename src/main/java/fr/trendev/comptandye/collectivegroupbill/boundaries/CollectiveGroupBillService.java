@@ -117,19 +117,14 @@ public class CollectiveGroupBillService extends AbstractBillService<CollectiveGr
                         "A valid CollectiveGroup must be provided !");
             }
 
-            /**
-             * The CollectiveGroupBill must have the same professional than the
-             * CollectiveGroup of the Bill. This is why we use proEmail instead
-             * of e.getCollectiveGroup().getProfessional().getEmail()
-             */
             CollectiveGroupPK collectiveGroupPK = new CollectiveGroupPK(e.
                     getCollectiveGroup().getId(), proEmail);
 
             e.setCollectiveGroup(
                     Optional.ofNullable(collectiveGroupFacade.find(
                             collectiveGroupPK))
-                            .map(Function.identity()).orElseThrow(() ->
-                            new WebApplicationException(
+                            .map(Function.identity()).orElseThrow(()
+                            -> new WebApplicationException(
                                     "CollectiveGroup " + collectiveGroupFacade.
                                             prettyPrintPK(
                                                     collectiveGroupPK)

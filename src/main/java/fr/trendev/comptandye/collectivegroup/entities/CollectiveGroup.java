@@ -13,8 +13,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -22,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author jsie
@@ -32,10 +31,10 @@ import javax.persistence.Table;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CollectiveGroup {
 
-    @Column(name = "COLLECTIVE_GROUP_ID")
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @Column(name = "COLLECTIVE_GROUP_ID")
+    @NotNull(message = "CollectiveGroup ID cannot be null")
+    private String id;
 
     @Basic
     private String groupName;
@@ -43,33 +42,27 @@ public class CollectiveGroup {
     @Basic
     private String phone;
 
-    @OneToOne(orphanRemoval = true, cascade = {CascadeType.ALL},
-            targetEntity = Address.class)
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
     private Address address;
 
     @Id
-    @ManyToOne(targetEntity = Professional.class)
-    @JoinColumn(name = "COLLECTIVE_GROUP_PRO_EMAIL",
-            referencedColumnName = "EMAIL")
+    @ManyToOne
+    @JoinColumn(name = "COLLECTIVE_GROUP_PRO_EMAIL", referencedColumnName = "EMAIL")
     @JsonIgnore
     private Professional professional;
 
-    @OneToMany(cascade = {CascadeType.ALL},
-            targetEntity = CollectiveGroupBill.class,
-            mappedBy = "collectiveGroup")
+    @OneToMany(mappedBy = "collectiveGroup", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<CollectiveGroupBill> collectiveGroupBills = new LinkedList<>();
 
-    public CollectiveGroup(String groupName, String phone,
-            Professional professional) {
+    public CollectiveGroup(String groupName, String phone, Professional professional) {
         this.groupName = groupName;
         this.phone = phone;
         this.professional = professional;
         this.address = new Address();
     }
 
-    public CollectiveGroup(String groupName, String phone, Address address,
-            Professional professional) {
+    public CollectiveGroup(String groupName, String phone, Address address, Professional professional) {
         this.groupName = groupName;
         this.phone = phone;
         this.address = address;
@@ -80,16 +73,16 @@ public class CollectiveGroup {
         this.address = new Address();
     }
 
-    public Long getId() {
-        return this.id;
+    public String getId() {
+        return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     public String getGroupName() {
-        return this.groupName;
+        return groupName;
     }
 
     public void setGroupName(String groupName) {
@@ -97,7 +90,7 @@ public class CollectiveGroup {
     }
 
     public String getPhone() {
-        return this.phone;
+        return phone;
     }
 
     public void setPhone(String phone) {
@@ -105,7 +98,7 @@ public class CollectiveGroup {
     }
 
     public Address getAddress() {
-        return this.address;
+        return address;
     }
 
     public void setAddress(Address address) {
@@ -113,7 +106,7 @@ public class CollectiveGroup {
     }
 
     public Professional getProfessional() {
-        return this.professional;
+        return professional;
     }
 
     public void setProfessional(Professional professional) {
@@ -121,11 +114,10 @@ public class CollectiveGroup {
     }
 
     public List<CollectiveGroupBill> getCollectiveGroupBills() {
-        return this.collectiveGroupBills;
+        return collectiveGroupBills;
     }
 
-    public void setCollectiveGroupBills(
-            List<CollectiveGroupBill> collectiveGroupBills) {
+    public void setCollectiveGroupBills(List<CollectiveGroupBill> collectiveGroupBills) {
         this.collectiveGroupBills = collectiveGroupBills;
     }
 

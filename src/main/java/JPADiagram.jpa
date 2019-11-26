@@ -1287,7 +1287,7 @@
             <jpa:query>Select p from Payment p where p.currency=:currency</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="CollectiveGroupPK" abs="false" class="CollectiveGroup" v="true" gen="false" pkg="collectivegroup.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490281931338">
+    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="CollectiveGroupPK" abs="false" class="CollectiveGroup" v="true" pkg="collectivegroup.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490281931338">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1490282399999187</jpa:a>
             <jpa:a>_1505826302473119</jpa:a>
@@ -1304,11 +1304,12 @@
             <jpa:post>this.address = new Address();</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
-            import fr.trendev.comptandye.utils.Visitor;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">java.util.LinkedList</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor
+</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="groupName" id="_1490282399999187">
@@ -1340,11 +1341,14 @@
                     <jpa:cascade-all/>
                 </jpa:cascade>
             </jpa:one-to-one>
-            <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_1490283461395196">
+            <jpa:id attribute-type="String" v="true" xvt="" name="id" id="_1490283461395196">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:column name="COLLECTIVE_GROUP_ID" unique="false" nullable="true" insertable="true" updatable="true"/>
-                <jpa:generated-value strategy="AUTO"/>
+                <jpa:bv>
+                    <jpa:nn m="CollectiveGroup ID cannot be null"/>
+                </jpa:bv>
+                <jpa:column name="COLLECTIVE_GROUP_ID" unique="false" nullable="true" insertable="true" updatable="true" length="255"/>
+                <jpa:generated-value/>
             </jpa:id>
         </jpa:attributes>
         <jpa:nq e="false" name="CollectiveGroup.findAll">
