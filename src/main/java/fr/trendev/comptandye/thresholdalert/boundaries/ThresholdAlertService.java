@@ -74,7 +74,7 @@ public class ThresholdAlertService extends AbstractCommonService<ThresholdAlert,
                 professionalFacade,
                 ThresholdAlert::setProfessional,
                 Professional::getNotifications, e -> {
-            e.setId(null);
+            e.setId(UUIDGenerator.generateID());
         });
         
     }

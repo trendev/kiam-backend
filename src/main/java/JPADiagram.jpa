@@ -2206,7 +2206,7 @@
             <jpa:query>Select e from BasicExpense e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="NotificationPK" abs="true" class="Notification" v="true" gen="false" pkg="notification.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1528899065548">
+    <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="NotificationPK" abs="true" class="Notification" v="true" pkg="notification.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1528899065548">
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_1528899988622110</jpa:a>
@@ -2219,8 +2219,12 @@
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.Visitor;
-            import fr.trendev.comptandye.thresholdalert.entities.ThresholdAlert;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor
+</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.thresholdalert.entities.ThresholdAlert</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">javax.persistence.EnumType</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">javax.persistence.Enumerated
+</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" am="PROTECTED" name="cltype" id="_1528899379066102">
@@ -2237,17 +2241,20 @@
             <jpa:basic attribute-type="fr.trendev.comptandye.notification.entities.NotificationLevelEnum" v="true" xvt="" name="levelRank" id="_1528899988622110">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:enumerated>STRING</jpa:enumerated>
+                <jpa:an e="true" n="@Enumerated(EnumType.STRING)"/>
             </jpa:basic>
             <jpa:many-to-one optional="true" primaryKey="true" connected-entity-id="_1490101456632" connected-attribute-id="_1528899165848101" v="true" xvt="" name="professional" id="_1528899165846100">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:an e="true" n="@com.fasterxml.jackson.annotation.JsonIgnore"/>
             </jpa:many-to-one>
-            <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_152889906588197">
+            <jpa:id attribute-type="String" v="true" xvt="" name="id" id="_152889906588197">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:generated-value strategy="AUTO"/>
+                <jpa:bv>
+                    <jpa:nn m="Notification ID cannot be null"/>
+                </jpa:bv>
+                <jpa:generated-value/>
             </jpa:id>
         </jpa:attributes>
         <jpa:nq e="false" name="Notification.findAll">

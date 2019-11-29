@@ -71,6 +71,7 @@ public class NotificationService extends AbstractCommonService<Notification, Not
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public void findAll(@Suspended final AsyncResponse ar) {
         super.findAll(ar);
     }
@@ -86,7 +87,7 @@ public class NotificationService extends AbstractCommonService<Notification, Not
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response find(@PathParam("id") Long id,
+    public Response find(@PathParam("id") String id,
             @QueryParam("professional") String professional,
             @QueryParam("refresh") boolean refresh) {
         NotificationPK pk = new NotificationPK(id, professional);
@@ -97,51 +98,12 @@ public class NotificationService extends AbstractCommonService<Notification, Not
         return super.find(pk, refresh);
     }
 
-//    @POST
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response post(@Context SecurityContext sec, Notification entity,
-//            @QueryParam("professional") String professional) {
-//
-//        String email = this.getProEmail(sec, professional);
-//
-//        return super.<Professional, String>post(entity, email,
-//                AbstractFacade::prettyPrintPK,
-//                Professional.class,
-//                professionalFacade,
-//                Notification::setProfessional,
-//                Professional::getNotifications, e -> {
-//            e.setId(null);
-//        });
-//
-//    }
-//    @RolesAllowed({"Administrator", "Professional"})
-//    @Path("check")
-//    @PUT
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response put(@Context SecurityContext sec, Notification entity,
-//            @QueryParam("professional") String professional) {
-//
-//        NotificationPK pk = new NotificationPK(entity.getId(), this.
-//                getProEmail(sec,
-//                        professional));
-//
-//        LOG.log(Level.INFO, "Updating Notification {0}",
-//                notificationFacade.
-//                        prettyPrintPK(pk));
-//        return super.put(entity, pk, e -> {
-//            if (!e.isChecked()) {
-//                e.setChecked(true);
-//            }// else do nothing
-//        });
-//    }
     @RolesAllowed({"Administrator", "Professional"})
     @Path("check/{id}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(@Context SecurityContext sec,
-            @PathParam("id") Long id,
+            @PathParam("id") String id,
             @QueryParam("professional") String professional) {
 
         NotificationPK pk = new NotificationPK(id, this.
@@ -154,12 +116,12 @@ public class NotificationService extends AbstractCommonService<Notification, Not
         try {
             return Optional.ofNullable(notificationFacade.find(pk))
                     .map(result -> {
-                        if (!result.isChecked()) {
+                        if (!result.isChecked()) { // cannot be unchecked
                             result.setChecked(true);
                             LOG.log(Level.INFO,
                                     "Notification {0} checked",
                                     notificationFacade.prettyPrintPK(pk));
-                        }// else do nothing
+                        }
                         return Response.status(Response.Status.OK).entity(
                                 result).build();
                     })
@@ -222,7 +184,7 @@ public class NotificationService extends AbstractCommonService<Notification, Not
     @Path("{id}")
     @DELETE
     public Response delete(@Context SecurityContext sec,
-            @PathParam("id") Long id,
+            @PathParam("id") String id,
             @QueryParam("professional") String professional) {
 
         NotificationPK pk = new NotificationPK(id, this.getProEmail(sec,
@@ -274,7 +236,7 @@ public class NotificationService extends AbstractCommonService<Notification, Not
                                 "Deleting All Notifications of Professional Account {0}",
                                 proEmail);
                         // using Orphan Removal attribute on Professional.notifications 
-                        pro.setNotifications(new ArrayList<Notification>());
+                        pro.setNotifications(new ArrayList<>());
                         return Response.ok().build();
                     })
                     .orElse(Response.status(Response.Status.NOT_FOUND).entity(

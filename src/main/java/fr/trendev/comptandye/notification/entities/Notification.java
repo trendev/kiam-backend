@@ -13,8 +13,6 @@ import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
@@ -27,17 +25,14 @@ import javax.validation.constraints.NotNull;
 @IdClass(NotificationPK.class)
 @DiscriminatorColumn(length = 31)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "cltype",
-        visible = true)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "cltype", visible = true)
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = ThresholdAlert.class,
-            name = NotificationType.THRESHOLD_ALERT)})
+    @JsonSubTypes.Type(value = ThresholdAlert.class, name = NotificationType.THRESHOLD_ALERT)})
 public abstract class Notification {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @NotNull(message = "Notification ID cannot be null")
+    private String id;
 
     @Basic
     @NotNull(message = "cltype field in Notification cannot be null")
@@ -51,30 +46,29 @@ public abstract class Notification {
     private NotificationLevelEnum levelRank;
 
     @Id
-    @ManyToOne(targetEntity = Professional.class)
+    @ManyToOne
     @JsonIgnore
     private Professional professional;
 
     public Notification() {
     }
 
-    public Notification(NotificationLevelEnum levelRank,
-            Professional professional) {
+    public Notification(NotificationLevelEnum levelRank, Professional professional) {
         this.levelRank = levelRank;
         this.professional = professional;
         this.professional.getNotifications().add(this);
     }
 
-    public Long getId() {
-        return this.id;
+    public String getId() {
+        return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     public String getCltype() {
-        return this.cltype;
+        return cltype;
     }
 
     public void setCltype(String cltype) {
@@ -82,7 +76,7 @@ public abstract class Notification {
     }
 
     public boolean isChecked() {
-        return this.checked;
+        return checked;
     }
 
     public void setChecked(boolean checked) {
@@ -90,7 +84,7 @@ public abstract class Notification {
     }
 
     public NotificationLevelEnum getLevelRank() {
-        return this.levelRank;
+        return levelRank;
     }
 
     public void setLevelRank(NotificationLevelEnum levelRank) {
@@ -98,7 +92,7 @@ public abstract class Notification {
     }
 
     public Professional getProfessional() {
-        return this.professional;
+        return professional;
     }
 
     public void setProfessional(Professional professional) {
