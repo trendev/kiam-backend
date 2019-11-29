@@ -2019,7 +2019,7 @@
             <jpa:ln e="true" n="fr.trendev.comptandye.product.controllers.ProductEntityListener"/>
         </jpa:el>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="ProductRecordPK" abs="true" class="ProductRecord" v="true" gen="false" pkg="productrecord.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524923958426">
+    <jpa:entity compositePrimaryKeyClass="ProductRecordPK" abs="true" class="ProductRecord" v="true" pkg="productrecord.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524923958426">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_15249240375981409</jpa:a>
             <jpa:a>_15249241966021417</jpa:a>
@@ -2029,11 +2029,11 @@
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonTypeInfo(use = JsonTypeInfo.Id.NAME,         include = JsonTypeInfo.As.EXISTING_PROPERTY,         property = &quot;cltype&quot;,         visible = true)"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({     @JsonSubTypes.Type(value = PurchasedItem.class,             name = ProductRecordType.PURCHASED_ITEM)     ,   @JsonSubTypes.Type(value = UsedItem.class,             name = ProductRecordType.USED_ITEM)     ,  @JsonSubTypes.Type(value = ReturnedItem.class,             name = ProductRecordType.RETURNED_ITEM)     ,  @JsonSubTypes.Type(value = SoldItem.class,             name = ProductRecordType.SOLD_ITEM)}) "/>
-        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.Visitor;
-            import fr.trendev.comptandye.purchaseditem.entities.PurchasedItem;
-            import fr.trendev.comptandye.returneditem.entities.ReturnedItem;
-            import fr.trendev.comptandye.solditem.entities.SoldItem;
-            import fr.trendev.comptandye.useditem.entities.UsedItem;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.purchaseditem.entities.PurchasedItem</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.returneditem.entities.ReturnedItem</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.solditem.entities.SoldItem</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.useditem.entities.UsedItem</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -2081,10 +2081,13 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:many-to-one>
-            <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_15249239586001407">
+            <jpa:id attribute-type="String" v="true" xvt="" name="id" id="_15249239586001407">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:generated-value strategy="AUTO"/>
+                <jpa:bv>
+                    <jpa:nn m="ProductRecord ID cannot be null"/>
+                </jpa:bv>
+                <jpa:generated-value/>
             </jpa:id>
         </jpa:attributes>
         <jpa:nq e="false" name="ProductRecord.findAll">
@@ -2107,14 +2110,14 @@
         </jpa:nq>
         <jpa:discriminator-column/>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="PurchasedItemPK" abs="false" class="PurchasedItem" superclassId="_1524923958426" v="true" gen="false" pkg="purchaseditem.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524924325129">
+    <jpa:entity compositePrimaryKeyClass="PurchasedItemPK" abs="false" class="PurchasedItem" superclassId="_1524923958426" v="true" pkg="purchaseditem.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524924325129">
         <jpa:con am="PUBLIC" e="true">
             <jpa:pre>super();</jpa:pre>
             <jpa:post>this.cltype = ProductRecordType.PURCHASED_ITEM;</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.productrecord.entities.ProductRecordType;
-            import fr.trendev.comptandye.utils.Visitor;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.productrecord.entities.ProductRecordType</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -2130,14 +2133,14 @@
             <jpa:query>Select e from PurchasedItem e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="UsedItemPK" abs="false" class="UsedItem" superclassId="_1524923958426" v="true" gen="false" pkg="useditem.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1525251875162">
+    <jpa:entity compositePrimaryKeyClass="UsedItemPK" abs="false" class="UsedItem" superclassId="_1524923958426" v="true" pkg="useditem.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1525251875162">
         <jpa:con am="PUBLIC" e="true">
             <jpa:pre>super();</jpa:pre>
             <jpa:post>this.cltype = ProductRecordType.USED_ITEM;</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.productrecord.entities.ProductRecordType;
-            import fr.trendev.comptandye.utils.Visitor;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.productrecord.entities.ProductRecordType</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -2148,14 +2151,14 @@
             <jpa:query>Select e from UsedItem e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="ReturnedItemPK" abs="false" class="ReturnedItem" superclassId="_1524923958426" v="true" gen="false" pkg="returneditem.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1525253236164">
+    <jpa:entity compositePrimaryKeyClass="ReturnedItemPK" abs="false" class="ReturnedItem" superclassId="_1524923958426" v="true" pkg="returneditem.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1525253236164">
         <jpa:con am="PUBLIC" e="true">
             <jpa:pre>super();</jpa:pre>
             <jpa:post>this.cltype = ProductRecordType.RETURNED_ITEM;</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.productrecord.entities.ProductRecordType;
-            import fr.trendev.comptandye.utils.Visitor;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.productrecord.entities.ProductRecordType</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -2174,14 +2177,14 @@
             <jpa:query>Select e from ReturnedItem e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="SoldItemPK" abs="false" class="SoldItem" superclassId="_1524923958426" v="true" gen="false" pkg="solditem.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1525258966197">
+    <jpa:entity compositePrimaryKeyClass="SoldItemPK" abs="false" class="SoldItem" superclassId="_1524923958426" v="true" pkg="solditem.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1525258966197">
         <jpa:con am="PUBLIC" e="true">
             <jpa:pre>super();</jpa:pre>
             <jpa:post>this.cltype = ProductRecordType.SOLD_ITEM;</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.productrecord.entities.ProductRecordType;
-            import fr.trendev.comptandye.utils.Visitor;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.productrecord.entities.ProductRecordType</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -2226,11 +2229,11 @@
             return v.visit(this);
             }</jpa:snp>
         <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor
-</jpa:snp>
+        </jpa:snp>
         <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.thresholdalert.entities.ThresholdAlert</jpa:snp>
         <jpa:snp loc="IMPORT" e="true">javax.persistence.EnumType</jpa:snp>
         <jpa:snp loc="IMPORT" e="true">javax.persistence.Enumerated
-</jpa:snp>
+        </jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" am="PROTECTED" name="cltype" id="_1528899379066102">
@@ -2367,7 +2370,7 @@
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">java.util.LinkedList
-</jpa:snp>
+        </jpa:snp>
         <jpa:snp loc="BEFORE_METHOD" e="true">public OfferingSnapshot(Offering offering) {
             this.cltype = offering.getCltype();
             this.name = offering.getName();
@@ -2421,7 +2424,7 @@
             this.sales = oe.sales;
             }</jpa:snp>
         <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.offering.entities.Offering
-</jpa:snp>
+        </jpa:snp>
         <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.offering.entities.OfferingExtentsVisitor</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>

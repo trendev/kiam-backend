@@ -59,9 +59,6 @@ public class ProductService extends AbstractCommonService<Product, ProductPK> {
     SaleFacade saleFacade;
 
     @Inject
-    ProductRecordFacade productRecordFacade;
-
-    @Inject
     ProductReferenceFacade productReferenceFacade;
 
     private final Logger LOG = Logger.getLogger(ProductService.class.

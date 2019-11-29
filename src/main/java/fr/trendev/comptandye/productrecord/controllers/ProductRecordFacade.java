@@ -2,20 +2,16 @@ package fr.trendev.comptandye.productrecord.controllers;
 
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.productrecord.entities.ProductRecord;
-import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.persistence.EntityManager;
 
-@Stateless
-@Named("productrecord")
-public class ProductRecordFacade extends AbstractFacade<ProductRecord, Long> {
+public abstract class ProductRecordFacade<T extends ProductRecord> extends AbstractFacade<T, String> {
 
     @Inject
     private EntityManager em;
 
-    public ProductRecordFacade() {
-        super(ProductRecord.class);
+    public ProductRecordFacade(Class<T> entityClass) {
+        super(entityClass);
     }
 
     @Override
@@ -24,8 +20,8 @@ public class ProductRecordFacade extends AbstractFacade<ProductRecord, Long> {
     }
 
     @Override
-    public String prettyPrintPK(Long pk) {
-        return pk.toString();
+    public String prettyPrintPK(String pk) {
+        return pk;
     }
 
 }

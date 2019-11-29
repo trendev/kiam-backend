@@ -24,7 +24,7 @@ import javax.ws.rs.core.Response;
  * @author jsie
  */
 public abstract class AbstractProductRecordService<T extends ProductRecord>
-        extends AbstractCommonService<T, Long> {
+        extends AbstractCommonService<T, String> {
 
     @Inject
     ProductFacade productFacade;
@@ -44,7 +44,7 @@ public abstract class AbstractProductRecordService<T extends ProductRecord>
             Consumer<T> createActions) {
         return super.post(entity, e -> {
             //inits the product record
-            e.setId(null);
+            e.setId(UUIDGenerator.generateID());
             e.setRecordDate(new Date());
             e.setCancelled(false);
             e.setCancellationDate(null);
@@ -83,32 +83,32 @@ public abstract class AbstractProductRecordService<T extends ProductRecord>
             String professional) {
         return super.put(entity, entity.getId(),
                 e -> {
-            if (entity.isCancelled() && !e.isCancelled()) {
+                    if (entity.isCancelled() && !e.isCancelled()) {
 
-                //should come from the cache
-                Product product = productFacade.find(
-                        new ProductPK(professional,
-                                e.getProduct().getProductReference().
-                                        getBarcode()));
+                        //should come from the cache
+                        Product product = productFacade.find(
+                                new ProductPK(professional,
+                                        e.getProduct().getProductReference().
+                                                getBarcode()));
 
-                // controls the Product and ProductRecord owner
-                if (product == null
+                        // controls the Product and ProductRecord owner
+                        if (product == null
                         || e.getProduct() == null
                         || !e.getProduct().equals(product)) {
-                    throw new WebApplicationException(
-                            "A valid Product must be provided !");
-                }
+                            throw new WebApplicationException(
+                                    "A valid Product must be provided !");
+                        }
 
-                e.cancel(visitor);
+                        e.cancel(visitor);
 
-                this.getLogger().log(Level.INFO,
-                        "ProductRecord {0} is now cancelled", this.
-                                getFacade().prettyPrintPK(e.getId()));
-            }// else, do nothing
-        });
+                        this.getLogger().log(Level.INFO,
+                                "ProductRecord {0} is now cancelled", this.
+                                        getFacade().prettyPrintPK(e.getId()));
+                    }// else, do nothing
+                });
     }
 
-    public Response delete(Long id, Consumer<T> deleteActions) {
+    public Response delete(String id, Consumer<T> deleteActions) {
         return super.delete(id, e -> {
 
             // updates availableQty in Product if the product record is not cancelled

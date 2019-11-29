@@ -15,8 +15,6 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -29,30 +27,24 @@ import javax.validation.constraints.NotNull;
 @Entity
 @DiscriminatorColumn(length = 31)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "cltype",
-        visible = true)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "cltype", visible = true)
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = PurchasedItem.class,
-            name = ProductRecordType.PURCHASED_ITEM)
-    ,   @JsonSubTypes.Type(value = UsedItem.class,
-            name = ProductRecordType.USED_ITEM)
-    ,  @JsonSubTypes.Type(value = ReturnedItem.class,
-            name = ProductRecordType.RETURNED_ITEM)
-    ,  @JsonSubTypes.Type(value = SoldItem.class,
-            name = ProductRecordType.SOLD_ITEM)})
+    @JsonSubTypes.Type(value = PurchasedItem.class, name = ProductRecordType.PURCHASED_ITEM),
+    @JsonSubTypes.Type(value = UsedItem.class, name = ProductRecordType.USED_ITEM),
+    @JsonSubTypes.Type(value = ReturnedItem.class, name = ProductRecordType.RETURNED_ITEM),
+    @JsonSubTypes.Type(value = SoldItem.class, name = ProductRecordType.SOLD_ITEM)})
 public abstract class ProductRecord {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @NotNull(message = "ProductRecord ID cannot be null")
+    private String id;
 
     @Basic
     @NotNull(message = "cltype field in ProductRecord cannot be null")
     protected String cltype;
 
-    @Column(columnDefinition = "DATETIME(3)")
     @Basic
+    @Column(columnDefinition = "DATETIME(3)")
     @Temporal(TemporalType.TIMESTAMP)
     @NotNull(message = "recordDate field in ProductRecard cannot be null")
     private Date recordDate = new Date();
@@ -66,12 +58,12 @@ public abstract class ProductRecord {
     @Basic
     private boolean cancelled = false;
 
-    @Column(columnDefinition = "DATETIME(3)")
     @Basic
+    @Column(columnDefinition = "DATETIME(3)")
     @Temporal(TemporalType.TIMESTAMP)
     private Date cancellationDate;
 
-    @ManyToOne(targetEntity = Product.class)
+    @ManyToOne
     private Product product;
 
     public ProductRecord(String cltype, Date recordDate, int qty) {
@@ -83,16 +75,16 @@ public abstract class ProductRecord {
     public ProductRecord() {
     }
 
-    public Long getId() {
-        return this.id;
+    public String getId() {
+        return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     public String getCltype() {
-        return this.cltype;
+        return cltype;
     }
 
     public void setCltype(String cltype) {
@@ -100,7 +92,7 @@ public abstract class ProductRecord {
     }
 
     public Date getRecordDate() {
-        return this.recordDate;
+        return recordDate;
     }
 
     public void setRecordDate(Date recordDate) {
@@ -108,7 +100,7 @@ public abstract class ProductRecord {
     }
 
     public int getQty() {
-        return this.qty;
+        return qty;
     }
 
     public void setQty(int qty) {
@@ -116,7 +108,7 @@ public abstract class ProductRecord {
     }
 
     public boolean isCancelled() {
-        return this.cancelled;
+        return cancelled;
     }
 
     public void setCancelled(boolean cancelled) {
@@ -124,7 +116,7 @@ public abstract class ProductRecord {
     }
 
     public Date getCancellationDate() {
-        return this.cancellationDate;
+        return cancellationDate;
     }
 
     public void setCancellationDate(Date cancellationDate) {
@@ -132,7 +124,7 @@ public abstract class ProductRecord {
     }
 
     public Product getProduct() {
-        return this.product;
+        return product;
     }
 
     public void setProduct(Product product) {

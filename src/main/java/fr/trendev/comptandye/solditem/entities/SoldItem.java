@@ -20,10 +20,8 @@ import javax.persistence.OneToOne;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class SoldItem extends ProductRecord {
 
-    @OneToOne(targetEntity = Bill.class)
-    @JoinTable(name = "SOLD_ITEM", joinColumns = {
-        @JoinColumn(name = "ID", referencedColumnName = "ID",
-                table = "PRODUCTRECORD")})
+    @OneToOne
+    @JoinTable(name = "SOLD_ITEM", joinColumns = @JoinColumn(name = "ID", referencedColumnName = "ID", table = "PRODUCTRECORD"))
     private Bill bill;
 
     public SoldItem() {
@@ -32,7 +30,7 @@ public class SoldItem extends ProductRecord {
     }
 
     public Bill getBill() {
-        return this.bill;
+        return bill;
     }
 
     public void setBill(Bill bill) {
