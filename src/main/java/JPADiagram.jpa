@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<jpa:entity-mappings ptype="MONOLITH" ppkg="fr.trendev" epkg="comptandye" v="3.6" rws="_14901008082912" Pws="_14901008082912" cws="_14901008082912" thm="PMacColorScheme" dbthm="PLightColorScheme" persistenceUnitName="DEFAULT_PU" sm="false" xs="false" id="_14901008082901" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<jpa:entity-mappings ptype="MONOLITH" ppkg="fr.trendev" epkg="comptandye" v="3.6" rws="_14901008082912" Pws="_14901008082912" cws="_14901008082912" thm="PDarkColorScheme" dbthm="PLightColorScheme" persistenceUnitName="DEFAULT_PU" sm="false" xs="false" id="_14901008082901" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <jpa:entity lbl-ref="_14901008440196" compositePrimaryKeyClass="UserAccountPK" abs="true" class="UserAccount" v="true" pkg="useraccount.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490100823157">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_14901149376313047</jpa:a>
@@ -1676,7 +1676,7 @@
             <jpa:query>Select c from CollectiveGroupBill c where c.recipient=:recipient</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="PurchasedOfferingPK" abs="false" class="PurchasedOffering" v="true" gen="false" pkg="purchasedoffering.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1506344869339">
+    <jpa:entity compositePrimaryKeyClass="PurchasedOfferingPK" abs="false" class="PurchasedOffering" v="true" pkg="purchasedoffering.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1506344869339">
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_15063452150691272</jpa:a>
@@ -1693,7 +1693,7 @@
         <jpa:snp e="false">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
-        <jpa:snp loc="IMPORT" e="false">import fr.trendev.comptandye.utils.Visitor;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="false">fr.trendev.comptandye.utils.Visitor</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="int" v="true" xvt="" name="qty" dv="1" id="_15063452150691272">
@@ -1718,10 +1718,13 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:many-to-one>
-            <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_15063448694401262">
+            <jpa:id attribute-type="String" v="true" xvt="" name="id" id="_15063448694401262">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:generated-value strategy="AUTO"/>
+                <jpa:bv>
+                    <jpa:nn m="PurchasedOffering ID cannot be null"/>
+                </jpa:bv>
+                <jpa:generated-value/>
             </jpa:id>
         </jpa:attributes>
         <jpa:nq e="false" name="PurchasedOffering.findAll">

@@ -40,7 +40,7 @@ import javax.ws.rs.core.Response;
 @Stateless
 @Path("PurchasedOffering")
 @RolesAllowed({"Administrator"})
-public class PurchasedOfferingService extends AbstractCommonService<PurchasedOffering, Long> {
+public class PurchasedOfferingService extends AbstractCommonService<PurchasedOffering, String> {
 
     @Inject
     PurchasedOfferingFacade purchasedOfferingFacade;
@@ -62,7 +62,7 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
     }
 
     @Override
-    protected AbstractFacade<PurchasedOffering, Long> getFacade() {
+    protected AbstractFacade<PurchasedOffering, String> getFacade() {
         return purchasedOfferingFacade;
     }
 
@@ -84,7 +84,7 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public Response find(@PathParam("id") Long id,
+    public Response find(@PathParam("id") String id,
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get PurchasedOffering : {0}", id);
         return super.find(id, refresh);
@@ -104,7 +104,7 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
         }
 
         return super.post(entity, e -> {
-            e.setId(null);
+            e.setId(UUIDGenerator.generateID());
 
             if (e.getOffering() == null) {
                 throw new WebApplicationException("No Offering provided !");
@@ -171,7 +171,7 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
      */
     @Path("{id}")
     @DELETE
-    public Response delete(@PathParam("id") Long id) {
+    public Response delete(@PathParam("id") String id) {
         LOG.log(Level.INFO, "Deleting PurchasedOffering {0}", id);
         return super.delete(id, e -> {
             e.getOffering().getPurchasedOfferings().remove(e);

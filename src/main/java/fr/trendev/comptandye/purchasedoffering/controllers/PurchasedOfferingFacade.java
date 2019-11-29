@@ -9,7 +9,7 @@ import javax.persistence.EntityManager;
 
 @Stateless
 @Named("purchasedOffering")
-public class PurchasedOfferingFacade extends AbstractFacade<PurchasedOffering, Long> {
+public class PurchasedOfferingFacade extends AbstractFacade<PurchasedOffering, String> {
 
     @Inject
     private EntityManager em;
@@ -24,8 +24,8 @@ public class PurchasedOfferingFacade extends AbstractFacade<PurchasedOffering, L
     }
 
     @Override
-    public String prettyPrintPK(Long pk) {
-        return pk.toString();
+    public String prettyPrintPK(String pk) {
+        return pk;
     }
 
 }

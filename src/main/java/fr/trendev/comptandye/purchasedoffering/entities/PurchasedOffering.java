@@ -8,10 +8,9 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author jsie
@@ -21,8 +20,8 @@ import javax.persistence.ManyToOne;
 public class PurchasedOffering {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @NotNull(message = "PurchasedOffering ID cannot be null")
+    private String id;
 
     /**
      * Quantity
@@ -30,8 +29,8 @@ public class PurchasedOffering {
     @Basic
     private int qty = 1;
 
-    @Column(updatable = false, scale = 2, precision = 5)
     @Basic
+    @Column(updatable = false, scale = 2, precision = 5)
     private BigDecimal vatRate;
 
     @Embedded
@@ -40,7 +39,7 @@ public class PurchasedOffering {
     @Embedded
     private OfferingExtents offeringExtents;
 
-    @ManyToOne(targetEntity = Offering.class)
+    @ManyToOne
     private Offering offering;
 
     public PurchasedOffering() {
@@ -56,16 +55,16 @@ public class PurchasedOffering {
         // this.offering.getPurchasedOfferings().add(this); */
     }
 
-    public Long getId() {
-        return this.id;
+    public String getId() {
+        return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     public int getQty() {
-        return this.qty;
+        return qty;
     }
 
     public void setQty(int qty) {
@@ -73,7 +72,7 @@ public class PurchasedOffering {
     }
 
     public BigDecimal getVatRate() {
-        return this.vatRate;
+        return vatRate;
     }
 
     public void setVatRate(BigDecimal vatRate) {
@@ -81,7 +80,7 @@ public class PurchasedOffering {
     }
 
     public OfferingSnapshot getOfferingSnapshot() {
-        return this.offeringSnapshot;
+        return offeringSnapshot;
     }
 
     public void setOfferingSnapshot(OfferingSnapshot offeringSnapshot) {
@@ -89,7 +88,7 @@ public class PurchasedOffering {
     }
 
     public OfferingExtents getOfferingExtents() {
-        return this.offeringExtents;
+        return offeringExtents;
     }
 
     public void setOfferingExtents(OfferingExtents offeringExtents) {
@@ -97,7 +96,7 @@ public class PurchasedOffering {
     }
 
     public Offering getOffering() {
-        return this.offering;
+        return offering;
     }
 
     public void setOffering(Offering offering) {
