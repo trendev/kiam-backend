@@ -26,7 +26,6 @@ import fr.trendev.comptandye.pack.entities.Pack;
 import fr.trendev.comptandye.payment.entities.Payment;
 import fr.trendev.comptandye.paymentmode.entities.PaymentMode;
 import fr.trendev.comptandye.product.entities.Product;
-import fr.trendev.comptandye.productrecord.entities.ProductRecord;
 import fr.trendev.comptandye.productreference.entities.ProductReference;
 import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.purchaseexpense.entities.PurchaseExpense;
