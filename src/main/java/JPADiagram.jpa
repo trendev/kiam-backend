@@ -2357,11 +2357,11 @@
             <jpa:query>Select t from ThresholdAlert t where t.brand=:brand</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:embeddable abs="false" class="OfferingSnapshot" v="true" gen="false" pkg="purchasedoffering.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1512853437669">
+    <jpa:embeddable abs="false" class="OfferingSnapshot" v="true" pkg="purchasedoffering.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1512853437669">
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import java.util.LinkedList;
-            import fr.trendev.comptandye.offering.entities.Offering;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">java.util.LinkedList
+</jpa:snp>
         <jpa:snp loc="BEFORE_METHOD" e="true">public OfferingSnapshot(Offering offering) {
             this.cltype = offering.getCltype();
             this.name = offering.getName();
@@ -2370,6 +2370,7 @@
             this.duration = offering.getDuration();
             this.businesses = offering.getBusinesses();
             }</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.offering.entities.Offering</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="cltype" id="_1512853518502564">

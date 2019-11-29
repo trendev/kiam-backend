@@ -38,7 +38,7 @@ public class OfferingSnapshot {
     @Basic
     private int duration;
 
-    @OneToMany(targetEntity = Business.class)
+    @OneToMany
     private List<Business> businesses = new LinkedList<>();
 
     public OfferingSnapshot() {
@@ -54,7 +54,7 @@ public class OfferingSnapshot {
     }
 
     public String getCltype() {
-        return this.cltype;
+        return cltype;
     }
 
     public void setCltype(String cltype) {
@@ -62,7 +62,7 @@ public class OfferingSnapshot {
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public void setName(String name) {
@@ -70,7 +70,7 @@ public class OfferingSnapshot {
     }
 
     public String getShortname() {
-        return this.shortname;
+        return shortname;
     }
 
     public void setShortname(String shortname) {
@@ -78,7 +78,7 @@ public class OfferingSnapshot {
     }
 
     public int getPrice() {
-        return this.price;
+        return price;
     }
 
     public void setPrice(int price) {
@@ -86,7 +86,7 @@ public class OfferingSnapshot {
     }
 
     public int getDuration() {
-        return this.duration;
+        return duration;
     }
 
     public void setDuration(int duration) {
@@ -94,7 +94,7 @@ public class OfferingSnapshot {
     }
 
     public List<Business> getBusinesses() {
-        return this.businesses;
+        return businesses;
     }
 
     public void setBusinesses(List<Business> businesses) {
