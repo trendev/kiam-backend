@@ -35,7 +35,7 @@ import javax.ws.rs.core.Response;
 @Stateless
 @Path("Payment")
 @RolesAllowed({"Administrator"})
-public class PaymentService extends AbstractCommonService<Payment, Long> {
+public class PaymentService extends AbstractCommonService<Payment, String> {
 
     @Inject
     PaymentFacade paymentFacade;
@@ -53,7 +53,7 @@ public class PaymentService extends AbstractCommonService<Payment, Long> {
     }
 
     @Override
-    protected AbstractFacade<Payment, Long> getFacade() {
+    protected AbstractFacade<Payment, String> getFacade() {
         return paymentFacade;
     }
 
@@ -75,7 +75,7 @@ public class PaymentService extends AbstractCommonService<Payment, Long> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public Response find(@PathParam("id") Long id,
+    public Response find(@PathParam("id") String id,
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get Payment : {0}", id);
         return super.find(id, refresh);
@@ -88,7 +88,7 @@ public class PaymentService extends AbstractCommonService<Payment, Long> {
         LOG.log(Level.INFO, "Creating Payment {0}", super.stringify(entity));
 
         return super.post(entity, e -> {
-            e.setId(null);
+            e.setId(UUIDGenerator.generateID());
         });
     }
 
@@ -106,7 +106,7 @@ public class PaymentService extends AbstractCommonService<Payment, Long> {
 
     @Path("{id}")
     @DELETE
-    public Response delete(@PathParam("id") Long id) {
+    public Response delete(@PathParam("id") String id) {
         LOG.log(Level.INFO, "Deleting Payment {0}", id);
         return super.delete(id, e -> {
         });

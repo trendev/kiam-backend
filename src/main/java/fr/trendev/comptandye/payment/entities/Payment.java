@@ -6,10 +6,9 @@ import fr.trendev.comptandye.paymentmode.entities.PaymentMode;
 import fr.trendev.comptandye.utils.Visitor;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author jsie
@@ -19,8 +18,8 @@ import javax.persistence.OneToOne;
 public class Payment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @NotNull(message = "Payment ID cannot be null")
+    private String id;
 
     /**
      * Amount in cents (1/100 of the currency)
@@ -28,7 +27,7 @@ public class Payment {
     @Basic
     private int amount;
 
-    @OneToOne(optional = false, targetEntity = PaymentMode.class)
+    @OneToOne(optional = false)
     private PaymentMode paymentMode;
 
     public Payment(int amount, PaymentMode paymentMode) {
@@ -39,16 +38,16 @@ public class Payment {
     public Payment() {
     }
 
-    public Long getId() {
-        return this.id;
+    public String getId() {
+        return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     public int getAmount() {
-        return this.amount;
+        return amount;
     }
 
     public void setAmount(int amount) {
@@ -56,7 +55,7 @@ public class Payment {
     }
 
     public PaymentMode getPaymentMode() {
-        return this.paymentMode;
+        return paymentMode;
     }
 
     public void setPaymentMode(PaymentMode paymentMode) {

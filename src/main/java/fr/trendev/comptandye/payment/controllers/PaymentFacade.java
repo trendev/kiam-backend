@@ -9,7 +9,7 @@ import javax.persistence.EntityManager;
 
 @Stateless
 @Named("payment")
-public class PaymentFacade extends AbstractFacade<Payment, Long> {
+public class PaymentFacade extends AbstractFacade<Payment, String> {
 
     @Inject
     private EntityManager em;
@@ -24,8 +24,8 @@ public class PaymentFacade extends AbstractFacade<Payment, Long> {
     }
 
     @Override
-    public String prettyPrintPK(Long pk) {
-        return pk.toString();
+    public String prettyPrintPK(String pk) {
+        return pk;
     }
 
 }

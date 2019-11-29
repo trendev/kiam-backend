@@ -1243,7 +1243,7 @@
             <jpa:query>Select p from PaymentMode p where p.name=:name</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="PaymentPK" abs="false" class="Payment" v="true" gen="false" pkg="payment.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490206901623">
+    <jpa:entity compositePrimaryKeyClass="PaymentPK" abs="false" class="Payment" v="true" pkg="payment.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490206901623">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_149020701195485</jpa:a>
             <jpa:a>_1503081214518630</jpa:a>
@@ -1252,7 +1252,7 @@
             <jpa:post></jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">import fr.trendev.comptandye.utils.Visitor;</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -1267,10 +1267,13 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:one-to-one>
-            <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_149020690169583">
+            <jpa:id attribute-type="String" v="true" xvt="" name="id" id="_149020690169583">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
-                <jpa:generated-value strategy="AUTO"/>
+                <jpa:bv>
+                    <jpa:nn m="Payment ID cannot be null"/>
+                </jpa:bv>
+                <jpa:generated-value/>
             </jpa:id>
         </jpa:attributes>
         <jpa:nq e="false" name="Payment.findAll">
