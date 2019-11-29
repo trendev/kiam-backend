@@ -6,6 +6,7 @@
 package fr.trendev.comptandye.productrecord.boundaries;
 
 import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.product.entities.Product;
 import fr.trendev.comptandye.product.entities.ProductPK;
 import fr.trendev.comptandye.productrecord.entities.ProductRecord;
@@ -38,6 +39,9 @@ public abstract class AbstractProductRecordService<T extends ProductRecord>
     public AbstractProductRecordService(Class<T> entityClass) {
         super(entityClass);
     }
+
+    @Override
+    protected abstract AbstractFacade<T, String> getFacade();
 
     public Response post(T entity,
             String professional,

@@ -62,7 +62,7 @@ public class SoldItemService extends AbstractProductRecordService<SoldItem> {
     }
 
     @Override
-    protected AbstractFacade<SoldItem, Long> getFacade() {
+    protected SoldItemFacade getFacade() {
         return soldItemFacade;
     }
 
@@ -84,7 +84,7 @@ public class SoldItemService extends AbstractProductRecordService<SoldItem> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public Response find(@PathParam("id") Long id,
+    public Response find(@PathParam("id") String id,
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get SoldItem : {0}", id);
         return super.find(id, refresh);
@@ -161,7 +161,7 @@ public class SoldItemService extends AbstractProductRecordService<SoldItem> {
      */
     @Path("{id}")
     @DELETE
-    public Response delete(@PathParam("id") Long id) {
+    public Response delete(@PathParam("id") String id) {
         LOG.log(Level.INFO, "Deleting SoldItem {0}", id);
         return super.delete(id, e -> {
         });

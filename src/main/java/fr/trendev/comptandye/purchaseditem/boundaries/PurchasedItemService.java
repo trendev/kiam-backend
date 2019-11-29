@@ -9,7 +9,6 @@ import fr.trendev.comptandye.productrecord.boundaries.AbstractProductRecordServi
 import fr.trendev.comptandye.expense.entities.ExpensePK;
 import fr.trendev.comptandye.purchaseexpense.entities.PurchaseExpense;
 import fr.trendev.comptandye.purchaseditem.entities.PurchasedItem;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.purchaseexpense.controllers.PurchaseExpenseFacade;
 import fr.trendev.comptandye.purchaseditem.controllers.PurchasedItemFacade;
 import java.util.logging.Level;
@@ -62,7 +61,7 @@ public class PurchasedItemService extends AbstractProductRecordService<Purchased
     }
 
     @Override
-    protected AbstractFacade<PurchasedItem, Long> getFacade() {
+    protected PurchasedItemFacade getFacade() {
         return purchasedItemFacade;
     }
 
@@ -84,7 +83,7 @@ public class PurchasedItemService extends AbstractProductRecordService<Purchased
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public Response find(@PathParam("id") Long id,
+    public Response find(@PathParam("id") String id,
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get PurchasedItem : {0}", id);
         return super.find(id, refresh);
@@ -112,8 +111,8 @@ public class PurchasedItemService extends AbstractProductRecordService<Purchased
                 throw new WebApplicationException(errmsg);
             }
 
-            PurchaseExpense pe = purchaseExpenseFacade.find(new ExpensePK(e.
-                    getPurchaseExpense().getId(), proEmail));
+            PurchaseExpense pe = purchaseExpenseFacade.find(
+                    new ExpensePK(e.getPurchaseExpense().getId(), proEmail));
 
             if (pe == null) {
                 String errmsg = "PurchaseExpense " + e.
@@ -151,7 +150,7 @@ public class PurchasedItemService extends AbstractProductRecordService<Purchased
 
     @Path("{id}")
     @DELETE
-    public Response delete(@PathParam("id") Long id) {
+    public Response delete(@PathParam("id") String id) {
         LOG.log(Level.INFO, "Deleting PurchasedItem {0}", id);
         return super.delete(id, e -> {
             e.getPurchaseExpense().getPurchasedItems().remove(e);

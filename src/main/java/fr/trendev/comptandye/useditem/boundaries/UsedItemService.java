@@ -7,7 +7,6 @@ package fr.trendev.comptandye.useditem.boundaries;
 
 import fr.trendev.comptandye.productrecord.boundaries.AbstractProductRecordService;
 import fr.trendev.comptandye.useditem.entities.UsedItem;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.useditem.controllers.UsedItemFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,7 +54,7 @@ public class UsedItemService extends AbstractProductRecordService<UsedItem> {
     }
 
     @Override
-    protected AbstractFacade<UsedItem, Long> getFacade() {
+    protected UsedItemFacade getFacade() {
         return usedItemFacade;
     }
 
@@ -77,7 +76,7 @@ public class UsedItemService extends AbstractProductRecordService<UsedItem> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public Response find(@PathParam("id") Long id,
+    public Response find(@PathParam("id") String id,
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get UsedItem : {0}", id);
         return super.find(id, refresh);
@@ -112,7 +111,7 @@ public class UsedItemService extends AbstractProductRecordService<UsedItem> {
 
     @Path("{id}")
     @DELETE
-    public Response delete(@PathParam("id") Long id) {
+    public Response delete(@PathParam("id") String id) {
         LOG.log(Level.INFO, "Deleting UsedItem {0}", id);
         return super.delete(id, e -> {
         });

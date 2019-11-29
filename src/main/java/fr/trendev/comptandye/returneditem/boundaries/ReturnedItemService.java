@@ -62,7 +62,7 @@ public class ReturnedItemService extends AbstractProductRecordService<ReturnedIt
     }
 
     @Override
-    protected AbstractFacade<ReturnedItem, Long> getFacade() {
+    protected ReturnedItemFacade getFacade() {
         return returnedItemFacade;
     }
 
@@ -84,7 +84,7 @@ public class ReturnedItemService extends AbstractProductRecordService<ReturnedIt
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public Response find(@PathParam("id") Long id,
+    public Response find(@PathParam("id") String id,
             @QueryParam("refresh") boolean refresh) {
         LOG.log(Level.INFO, "REST request to get ReturnedItem : {0}", id);
         return super.find(id, refresh);
@@ -162,7 +162,7 @@ public class ReturnedItemService extends AbstractProductRecordService<ReturnedIt
      */
     @Path("{id}")
     @DELETE
-    public Response delete(@PathParam("id") Long id) {
+    public Response delete(@PathParam("id") String id) {
         LOG.log(Level.INFO, "Deleting ReturnedItem {0}", id);
         return super.delete(id, e -> {
         });
