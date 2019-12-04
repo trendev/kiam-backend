@@ -6,16 +6,16 @@
 package fr.trendev.comptandye.individual.boundaries;
 
 import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
+import fr.trendev.comptandye.common.boundaries.AssociationManagementEnum;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
+import fr.trendev.comptandye.individual.controllers.IndividualFacade;
 import fr.trendev.comptandye.individual.entities.Individual;
 import fr.trendev.comptandye.individualbill.entities.IndividualBill;
-import fr.trendev.comptandye.professional.entities.Professional;
-import fr.trendev.comptandye.usergroup.entities.UserGroup;
-import fr.trendev.comptandye.security.controllers.PasswordManager;
-import fr.trendev.comptandye.individual.controllers.IndividualFacade;
 import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
+import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.comptandye.security.controllers.PasswordManager;
 import fr.trendev.comptandye.usergroup.controllers.UserGroupFacade;
-import fr.trendev.comptandye.common.boundaries.AssociationManagementEnum;
+import fr.trendev.comptandye.usergroup.entities.UserGroup;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
@@ -121,33 +121,34 @@ public class IndividualService extends AbstractCommonService<Individual, String>
         return super.post(entity,
                 e -> {
 
-            //Reset the id (if provided)
-            entity.getCustomerDetails().setId(null);
-            entity.getAddress().setId(null);
-            entity.getSocialNetworkAccounts().setId(null);
+                    //Reset the id (if provided)
+                    entity.getCustomerDetails().setId(UUIDGenerator.generateID());
+                    entity.getAddress().setId(UUIDGenerator.generateID());
+                    entity.getSocialNetworkAccounts().setId(UUIDGenerator.generateID());
 
-            e.setUuid(UUIDGenerator.generate("IND-", true));
+                    e.setUuid(UUIDGenerator.generate("IND-", true));
 
-            //hashes the provided password
-            String hwpd = passwordManager.hashPassword(e.
-                    getPassword());
-            e.setPassword(hwpd);
+                    //hashes the provided password
+                    String hwpd = passwordManager.hashPassword(e.
+                            getPassword());
+                    e.setPassword(hwpd);
 
-            //adds the new individual to the group and the group to the new individual
-            UserGroup indGroup = userGroupFacade.find("Individual");
-            indGroup.getUserAccounts().add(e);
-            e.getUserGroups().add(indGroup);
-            e.setBlocked(false);
-        });
+                    //adds the new individual to the group and the group to the new individual
+                    UserGroup indGroup = userGroupFacade.find("Individual");
+                    indGroup.getUserAccounts().add(e);
+                    e.getUserGroups().add(indGroup);
+                    e.setBlocked(false);
+                });
     }
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    //Should only be performed by an Administrator
     public Response put(Individual entity) {
         LOG.log(Level.INFO, "Updating Individual {0}", entity.getEmail());
-        return super.put(entity, entity.getEmail(), e ->
-        {
+        return super.put(entity, entity.getEmail(), e
+                -> {
             /**
              * hashes the provided password
              *
@@ -159,19 +160,14 @@ public class IndividualService extends AbstractCommonService<Individual, String>
             }
 
             e.setUsername(entity.getUsername());
-            /**
-             * TODO : Should only be performed by an Administrator
-             */
             e.setRegistrationDate(entity.getRegistrationDate());
 
-            /**
-             * Will automatically ignore the id of the provided object : avoid
-             * to hack another object swapping the current saved (or not object)
-             * by an existing one.
-             */
-            entity.getCustomerDetails().setId(null);
-            entity.getAddress().setId(null);
-            entity.getSocialNetworkAccounts().setId(null);
+            entity.getCustomerDetails().setId(
+                    e.getCustomerDetails().getId());
+            entity.getAddress().setId(
+                    e.getAddress().getId());
+            entity.getSocialNetworkAccounts().setId(
+                    e.getSocialNetworkAccounts().getId());
 
             e.setCustomerDetails(entity.getCustomerDetails());
             e.setAddress(entity.getAddress());
@@ -230,8 +226,8 @@ public class IndividualService extends AbstractCommonService<Individual, String>
                 email,
                 userGroupFacade,
                 name, UserGroup.class,
-                (e, a) ->
-                e.getUserGroups().add(a) & a.getUserAccounts().add(e));
+                (e, a)
+                -> e.getUserGroups().add(a) & a.getUserAccounts().add(e));
     }
 
     @Path("{email}/removeFromUserGroup/{name}")
@@ -253,8 +249,8 @@ public class IndividualService extends AbstractCommonService<Individual, String>
                 email,
                 userGroupFacade,
                 name, UserGroup.class,
-                (e, a) ->
-                e.getUserGroups().remove(a) & a.getUserAccounts().remove(e));
+                (e, a)
+                -> e.getUserGroups().remove(a) & a.getUserAccounts().remove(e));
     }
 
     @Path("{email}/professionals")
@@ -290,8 +286,8 @@ public class IndividualService extends AbstractCommonService<Individual, String>
                 indEmail,
                 professionalFacade,
                 proEmail, Professional.class,
-                (i, p) ->
-                i.getProfessionals().add(p) & p.getIndividuals().add(i));
+                (i, p)
+                -> i.getProfessionals().add(p) & p.getIndividuals().add(i));
     }
 
     @Path("{indEmail}/endBusinessRelationship/{proEmail}")
@@ -309,7 +305,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
                 indEmail,
                 professionalFacade,
                 proEmail, Professional.class,
-                (i, p) ->
-                i.getProfessionals().remove(p) & p.getIndividuals().remove(i));
+                (i, p)
+                -> i.getProfessionals().remove(p) & p.getIndividuals().remove(i));
     }
 }

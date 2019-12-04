@@ -148,10 +148,10 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
 
         return super.post(entity, e -> {
 
-            //Cleans the sub object id (if provided)
-            entity.getCustomerDetails().setId(null);
+            //Reset a new id (if provided)
+            entity.getCustomerDetails().setId(UUIDGenerator.generateID());
             entity.getAddress().setId(UUIDGenerator.generateID());
-            entity.getSocialNetworkAccounts().setId(null);
+            entity.getSocialNetworkAccounts().setId(UUIDGenerator.generateID());
 
             //Generates a new UUID
             e.setUuid(UUIDGenerator.generate("PRO-", true));
@@ -246,10 +246,12 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
 
             e.setUsername(entity.getUsername());
 
-            //Reset the id (if provided) and create new object
-            entity.getCustomerDetails().setId(null);
-            entity.getAddress().setId(null);
-            entity.getSocialNetworkAccounts().setId(null);
+            entity.getCustomerDetails().setId(
+                    e.getCustomerDetails().getId());
+            entity.getAddress().setId(
+                    e.getAddress().getId());
+            entity.getSocialNetworkAccounts().setId(
+                    e.getSocialNetworkAccounts().getId());
 
             e.setCustomerDetails(entity.getCustomerDetails());
             e.setAddress(entity.getAddress());
