@@ -6,13 +6,13 @@
 package fr.trendev.comptandye.expense.boundaries;
 
 import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.expense.entities.Expense;
-import fr.trendev.comptandye.expenseitem.entities.ExpenseItem;
-import fr.trendev.comptandye.expense.entities.ExpensePK;
-import fr.trendev.comptandye.payment.entities.Payment;
-import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
+import fr.trendev.comptandye.expense.entities.Expense;
+import fr.trendev.comptandye.expense.entities.ExpensePK;
+import fr.trendev.comptandye.expenseitem.entities.ExpenseItem;
+import fr.trendev.comptandye.payment.entities.Payment;
 import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
+import fr.trendev.comptandye.professional.entities.Professional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Date;
@@ -27,6 +27,7 @@ import javax.ws.rs.core.SecurityContext;
 /**
  *
  * @author jsie
+ * @param <T> subtype of Expense
  */
 public abstract class AbstractExpenseService<T extends Expense> extends AbstractCommonService<T, ExpensePK> {
 
@@ -54,11 +55,17 @@ public abstract class AbstractExpenseService<T extends Expense> extends Abstract
                 Professional.class,
                 professionalFacade, T::setProfessional,
                 Professional::getExpenses, e -> {
+
+                    // override the id (security reason)
                     e.setId(UUIDGenerator.generateID());
+
+                    // fresh new expense, default is not cancelled
                     e.setCancelled(false);
                     e.setCancellationDate(null);
+
                     e.setIssueDate(new Date());
 
+                    // check if businesses are provided
                     if (e.getBusinesses() == null || e.getBusinesses().isEmpty()) {
                         String errmsg = "Businesses in " + entity.getClass().
                                 getSimpleName() + " must be provided";
@@ -66,6 +73,7 @@ public abstract class AbstractExpenseService<T extends Expense> extends Abstract
                         throw new WebApplicationException(errmsg);
                     }
 
+                    // control the expense's amount
                     if (e.getAmount() <= 0) {
                         String errmsg = "Amount in " + entity.getClass().getSimpleName()
                         + " must be greater than 0";
@@ -73,6 +81,7 @@ public abstract class AbstractExpenseService<T extends Expense> extends Abstract
                         throw new WebApplicationException(errmsg);
                     }
 
+                    // check if payments are provided
                     if (e.getPayments() == null || e.getPayments().isEmpty()) {
                         String errmsg = "Payments in " + entity.getClass().
                                 getSimpleName() + " must be provided";
@@ -80,6 +89,17 @@ public abstract class AbstractExpenseService<T extends Expense> extends Abstract
                         throw new WebApplicationException(errmsg);
                     }
 
+                    // control the expense has been paid
+                    if (e.getPaymentDate() == null) {
+                        String errmsg = "Payment date in " + entity.getClass().
+                                getSimpleName() + " must be provided";
+                        LOG.log(Level.WARNING, errmsg);
+                        throw new WebApplicationException(errmsg);
+                    } else {
+                        // TODO : control that the payment date is not in future compared from now
+                    }
+
+                    // sum of the payments
                     int total = e.getPayments().stream()
                             .mapToInt(Payment::getAmount)
                             .sum();
@@ -89,8 +109,14 @@ public abstract class AbstractExpenseService<T extends Expense> extends Abstract
                         + " but the total amount computed is " + total;
                         LOG.log(Level.WARNING, errmsg);
                         throw new WebApplicationException(errmsg);
+                    } else { // override the payments ids (security reason)
+                        e.getPayments().forEach((p) -> {
+                            p.setId(UUIDGenerator.generateID());
+                        });
                     }
 
+                    // if the expense is vat inclusive, the user should provide expense details
+                    // if there are not expense items, the vat inclusive value is reset to false
                     if (e.isVatInclusive()
                     && (e.getExpenseItems() == null || e.getExpenseItems().isEmpty())) {
                         LOG.log(Level.INFO,
@@ -101,19 +127,22 @@ public abstract class AbstractExpenseService<T extends Expense> extends Abstract
                     }
 
                     /**
-                     * Checks accuracy of the provided amount and the total
-                     * computed amount from the ExpenseItems. Total computed
-                     * amount from the ExpenseItemsProvided amount should be
-                     * between
+                     * Check accuracy of the provided amount and the total
+                     * computed amount from the expense items (the expense
+                     * details). This algorithm is important helping the system
+                     * to control non accurate calculation from other systems.
+                     * The total computed amount should be between a lower and a
+                     * higher bound : e.getAmount() - n <= total_computed <=
+                     * e.getAmount() + n.
                      */
                     if (e.getExpenseItems() != null
                     && !e.getExpenseItems().isEmpty()) {
-                        e.setVatInclusive(true);
+                        e.setVatInclusive(true); //override vat inclusive value anyway
                         // computes how many items are found in this Expense 
                         int n = e.getExpenseItems().stream()
                                 .mapToInt(ExpenseItem::getQty)
                                 .sum();
-                        LOG.log(Level.INFO, "Checking ExpenseItems... n = {0}",
+                        LOG.log(Level.INFO, "Checking number of expense items... n = {0}",
                                 n);
 
                         total = e.getExpenseItems().stream()
@@ -126,7 +155,7 @@ public abstract class AbstractExpenseService<T extends Expense> extends Abstract
                                 )
                                 .sum();
 
-                        LOG.log(Level.INFO, "Computed Total of ExpenseItems = {0}",
+                        LOG.log(Level.INFO, "Computed Total of expense items = {0}",
                                 total);
 
                         if ((total > e.getAmount() + n) || (total < e.getAmount() - n)) {
@@ -137,13 +166,14 @@ public abstract class AbstractExpenseService<T extends Expense> extends Abstract
                             throw new WebApplicationException(errmsg);
                         }
 
-                        // Security : reset provided IDs
-                        for (ExpenseItem ei : e.getExpenseItems()) {
+                        // override the expense items ids (security reason)
+                        e.getExpenseItems().forEach((ei) -> {
                             ei.setId(UUIDGenerator.generateID());
-                        }
+                        });
                     }
 
-                });
+                }
+        );
     }
 
     /**
