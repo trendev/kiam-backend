@@ -41,6 +41,12 @@ public class BillFacade extends AbstractFacade<Bill, BillPK> {
         return sb.toString();
     }
 
+    /**
+     * Find the last not cancelled bill and return its delivery date
+     *
+     * @param professional the owner of the bills
+     * @return the delivery date of the latest valid bill
+     */
     public List<Date> findLastValidBillsRefDate(Professional professional) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Date> cq = cb.createQuery(Date.class);

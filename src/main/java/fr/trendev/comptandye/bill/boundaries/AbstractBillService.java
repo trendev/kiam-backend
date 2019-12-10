@@ -532,7 +532,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                                             prettyPrintPK(pk));
                         }// do nothing if the bill is already cancelled
 
-                        return Response.ok().build();
+                        return Response.ok(bill).build();
                     })
                     .orElse(Response.status(Response.Status.NOT_FOUND).entity(
                             Json.createObjectBuilder().add("error",
@@ -573,10 +573,9 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                         null);
                 break;
             case 1:
-                LOG.log(Level.INFO,
-                        "DeliveryDate limit of Professionnal "
-                        + professional.getEmail() + " reset to " + dates.
-                        get(0));
+                LOG.log(Level.INFO, "DeliveryDate limit of Professionnal {0} reset to {1}",
+                        new Object[]{professional.getEmail(),
+                            dates.get(0)});
                 professional.setBillsRefDate(
                         dates.get(0));
                 break;
