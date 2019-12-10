@@ -14,7 +14,7 @@ import fr.trendev.comptandye.client.entities.Client;
 import fr.trendev.comptandye.clientbill.entities.ClientBill;
 import fr.trendev.comptandye.collectivegroup.entities.CollectiveGroup;
 import fr.trendev.comptandye.collectivegroupbill.entities.CollectiveGroupBill;
-import fr.trendev.comptandye.useraccount.entities.Customer;
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.customerdetails.entities.CustomerDetails;
 import fr.trendev.comptandye.expense.entities.Expense;
 import fr.trendev.comptandye.expenseitem.entities.ExpenseItem;
@@ -23,6 +23,7 @@ import fr.trendev.comptandye.individualbill.entities.IndividualBill;
 import fr.trendev.comptandye.notification.entities.Notification;
 import fr.trendev.comptandye.offering.entities.Offering;
 import fr.trendev.comptandye.offering.entities.OfferingPK;
+import fr.trendev.comptandye.pack.controllers.PackFacade;
 import fr.trendev.comptandye.pack.entities.Pack;
 import fr.trendev.comptandye.payment.entities.Payment;
 import fr.trendev.comptandye.paymentmode.entities.PaymentMode;
@@ -30,31 +31,30 @@ import fr.trendev.comptandye.product.entities.Product;
 import fr.trendev.comptandye.productrecord.entities.ProductRecord;
 import fr.trendev.comptandye.productreference.entities.ProductReference;
 import fr.trendev.comptandye.professional.entities.Professional;
-import fr.trendev.comptandye.purchaseexpense.entities.PurchaseExpense;
 import fr.trendev.comptandye.purchaseditem.entities.PurchasedItem;
 import fr.trendev.comptandye.purchasedoffering.entities.PurchasedOffering;
+import fr.trendev.comptandye.purchaseexpense.entities.PurchaseExpense;
 import fr.trendev.comptandye.returneditem.entities.ReturnedItem;
+import fr.trendev.comptandye.sale.controllers.SaleFacade;
 import fr.trendev.comptandye.sale.entities.Sale;
+import fr.trendev.comptandye.service.controllers.ServiceFacade;
 import fr.trendev.comptandye.service.entities.Service;
 import fr.trendev.comptandye.socialnetworkaccounts.entities.SocialNetworkAccounts;
 import fr.trendev.comptandye.solditem.entities.SoldItem;
 import fr.trendev.comptandye.thresholdalert.entities.ThresholdAlert;
 import fr.trendev.comptandye.useditem.entities.UsedItem;
+import fr.trendev.comptandye.useraccount.entities.Customer;
 import fr.trendev.comptandye.useraccount.entities.UserAccount;
 import fr.trendev.comptandye.usergroup.entities.UserGroup;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.pack.controllers.PackFacade;
-import fr.trendev.comptandye.sale.controllers.SaleFacade;
-import fr.trendev.comptandye.service.controllers.ServiceFacade;
 import fr.trendev.comptandye.utils.Visitor;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 /**
  *
  * @author jsie
  */
-@Singleton
+@Stateless
 public class ProvideOfferingFacadeVisitor implements
         Visitor<AbstractFacade<? extends Offering, OfferingPK>> {
 
