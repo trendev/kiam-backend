@@ -42,7 +42,6 @@ public class BillFacade extends AbstractFacade<Bill, BillPK> {
     }
 
     public List<Date> findLastValidBillsRefDate(Professional professional) {
-        EntityManager em = this.getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Date> cq = cb.createQuery(Date.class);
         Root<Bill> root = cq.from(Bill.class);
