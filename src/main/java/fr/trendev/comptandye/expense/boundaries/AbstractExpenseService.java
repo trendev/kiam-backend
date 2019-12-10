@@ -95,8 +95,13 @@ public abstract class AbstractExpenseService<T extends Expense> extends Abstract
                                 getSimpleName() + " must be provided";
                         LOG.log(Level.WARNING, errmsg);
                         throw new WebApplicationException(errmsg);
-                    } else {
-                        // TODO : control that the payment date is not in future compared from now
+                    } 
+                    
+                    if(e.getPaymentDate().after(new Date())){
+                        String errmsg = "Payment date in " + entity.getClass().
+                                getSimpleName() + " must not be in the future";
+                        LOG.log(Level.WARNING, errmsg);
+                        throw new WebApplicationException(errmsg);
                     }
 
                     // sum of the payments
