@@ -5,26 +5,26 @@
  */
 package fr.trendev.comptandye.bill.boundaries;
 
-import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
+import fr.trendev.comptandye.bill.controllers.BillFacade;
+import fr.trendev.comptandye.bill.controllers.BillTypeVisitor;
 import fr.trendev.comptandye.bill.entities.Bill;
 import fr.trendev.comptandye.bill.entities.BillPK;
+import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
+import fr.trendev.comptandye.exceptions.ExceptionHelper;
+import fr.trendev.comptandye.exceptions.InvalidDeliveryDateException;
+import fr.trendev.comptandye.offering.controllers.ProvideOfferingFacadeVisitor;
+import fr.trendev.comptandye.offering.entities.DiscoverSalesVisitor;
 import fr.trendev.comptandye.offering.entities.OfferingPK;
 import fr.trendev.comptandye.payment.entities.Payment;
+import fr.trendev.comptandye.product.controllers.ProductFacade;
 import fr.trendev.comptandye.product.entities.Product;
 import fr.trendev.comptandye.product.entities.ProductPK;
+import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
 import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.purchasedoffering.entities.PurchasedOffering;
 import fr.trendev.comptandye.sale.entities.Sale;
 import fr.trendev.comptandye.solditem.entities.SoldItem;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.bill.controllers.BillFacade;
-import fr.trendev.comptandye.product.controllers.ProductFacade;
-import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
-import fr.trendev.comptandye.exceptions.ExceptionHelper;
-import fr.trendev.comptandye.exceptions.InvalidDeliveryDateException;
-import fr.trendev.comptandye.bill.controllers.BillTypeVisitor;
-import fr.trendev.comptandye.offering.entities.DiscoverSalesVisitor;
-import fr.trendev.comptandye.offering.controllers.ProvideOfferingFacadeVisitor;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
@@ -53,12 +53,13 @@ import javax.ws.rs.core.SecurityContext;
 
 /**
  * Create or update a Bill is more specific than the other object and requires
- * additional operations. This class is used to perform those operations/checks.
+ * additional operations.This class is used to perform those operations/checks.
  *
  * @author jsie
+ * @param <T> subtype of Bill
  */
 public abstract class AbstractBillService<T extends Bill> extends AbstractCommonService<T, BillPK> {
-
+    
     @Inject
     ProfessionalFacade professionalFacade;
 
@@ -76,13 +77,13 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
      */
     @Inject
     BillTypeVisitor billTypeVisitor;
-
+    
     @Inject
     private DiscoverSalesVisitor discoverSalesVisitor;
-
+    
     @Inject
     private ProductFacade productFacade;
-
+    
     @Inject
     private BillFacade billFacade;
 
@@ -91,11 +92,11 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
     private final Logger LOG = Logger.getLogger(
             AbstractBillService.class.
                     getName());
-
+    
     public AbstractBillService(Class<T> entityClass) {
         super(entityClass);
     }
-
+    
     @Override
     protected Logger getLogger() {
         return LOG;
@@ -134,68 +135,74 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
     public Response post(Consumer<T> prepareAction,
             SecurityContext sec, T entity,
             String professional) {
-
+        
         String proEmail = this.getProEmail(sec, professional);
-
+        
         return super.<Professional, String>post(entity, proEmail,
                 AbstractFacade::prettyPrintPK,
                 Professional.class,
                 professionalFacade,
                 T::setProfessional,
                 Professional::getBills, e -> {
+                    
+                    if (e.getDeliveryDate() == null) {
+                        throw new WebApplicationException(
+                                "A delivery date must be provided !");
+                    }
+                    
+                    if (e.getProfessional().getBillsRefDate() == null) {
+                        //fix the bill reference date of the professional with the delivery date of the first bill
+                        e.getProfessional().setBillsRefDate(e.getDeliveryDate());
+                    } else {
+                        //filter bills with a delivery date earlier to the ref
+                        //prevent the user to create backdated bills
+                        if (e.getDeliveryDate().before(e.getProfessional().
+                                getBillsRefDate())) {
+                            throw new InvalidDeliveryDateException(
+                                    String.valueOf(
+                                            e.getProfessional().getBillsRefDate().
+                                                    getTime()),
+                                    Response.Status.CONFLICT);
+                        } else {
+                            //set the ref with the current bill
+                            e.getProfessional().setBillsRefDate(e.getDeliveryDate());
+                        }
+                    }
 
-            if (e.getDeliveryDate() == null) {
-                throw new WebApplicationException(
-                        "A delivery date must be provided !");
-            }
+                    //increment the bill count, will be used in concurrency context
+                    e.getProfessional().setBillsCount(e.getProfessional().
+                            getBillsCount() + 1);
+                    
+                    setBillReference(e, billTypeVisitor);
 
-            if (e.getProfessional().getBillsRefDate() == null) {
-                //fix the bill reference date with the delivery date of the first bill
-                e.getProfessional().setBillsRefDate(e.getDeliveryDate());
-            } else {
-                //filter bills with a delivery date earlier to the ref
-                if (e.getDeliveryDate().before(e.getProfessional().
-                        getBillsRefDate())) {
-                    throw new InvalidDeliveryDateException(
-                            String.valueOf(
-                                    e.getProfessional().getBillsRefDate().
-                                            getTime()),
-                            Response.Status.CONFLICT);
-                } else {
-                    //set the ref with the current bill
-                    e.getProfessional().setBillsRefDate(e.getDeliveryDate());
-                }
-            }
+                    //a new bill can not be cancelled yet
+                    e.setCancelled(false);
+                    e.setCancellationDate(null);
 
-            //increment the bill count, will be used in concurrency context
-            e.getProfessional().setBillsCount(e.getProfessional().
-                    getBillsCount() + 1);
+                    // check if the professional has a VAT code before submitting a bill with VAT rates
+                    if (e.isVatInclusive() && e.getProfessional().getVatcode() == null) {
+                        throw new WebApplicationException(
+                                "Impossible to apply VAT on Bill without a VAT Code !");
+                    }
 
-            setBillReference(e, billTypeVisitor);
+                    // control the payments (if provided)
+                    this.checkPayment(e);
 
-            //a new bill can not be cancelled yet
-            e.setCancelled(false);
-
-            // check if the professional has a VAT code before submitting a bill with VAT rates
-            if (e.isVatInclusive() && e.getProfessional().getVatcode() == null) {
-                throw new WebApplicationException(
-                        "Impossible to apply VAT on Bill without a VAT Code !");
-            }
-
-            this.checkPayment(e);
-
-            if (e.getPurchasedOfferings() == null || e.getPurchasedOfferings().
+                    // override the payments ids (security reason)
+                    e.getPayments().forEach(p -> p.setId(UUIDGenerator.generateID()));
+                    
+                    if (e.getPurchasedOfferings() == null || e.getPurchasedOfferings().
                     isEmpty()) {
-                throw new WebApplicationException(
-                        "PurchasedOffering(s) must be provided !");
-            }
+                        throw new WebApplicationException(
+                                "PurchasedOffering(s) must be provided !");
+                    }
 
-            // Rebuild a purchased offering list from the provided one
-            List<PurchasedOffering> purchasedOfferings = e.
-                    getPurchasedOfferings().
-                    stream()
-                    // control the Offering for each PurchasedOffering
-                    .map(_po -> Optional.ofNullable(_po.getOffering().accept( // get the offering Facade
+                    // Rebuild a purchased offering list from the provided one
+                    List<PurchasedOffering> purchasedOfferings = e.
+                            getPurchasedOfferings().
+                            stream()
+                            // control the Offering for each PurchasedOffering
+                            .map(_po -> Optional.ofNullable(_po.getOffering().accept( // get the offering Facade
                             provideOfferingFacadeVisitor).find(new OfferingPK(
                                     _po.getOffering().getId(),
                                     e.getProfessional().getEmail())))
@@ -204,18 +211,22 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                                 PurchasedOffering po = new PurchasedOffering(
                                         _po.getQty(), o);
 
+                                // set the purchased offering id (security reason)
+                                po.setId(UUIDGenerator.generateID());
+
                                 // update the VAT rate if bill is VAT inclusive
                                 if (e.isVatInclusive()) {
                                     po.setVatRate(Optional.ofNullable(_po.
                                             getVatRate()).map(Function.
                                                     identity())
-                                            .orElseThrow(() ->
-                                                    new WebApplicationException(
-                                                            "VAT Rate missing for Offering "
-                                                            + o.getName()))
+                                            .orElseThrow(()
+                                                    -> new WebApplicationException(
+                                                    "VAT Rate missing for Offering "
+                                                    + o.getName()))
                                     );
                                 }
-
+                                
+                                // update the stock if the bill includes sales
                                 this.updateProduct(
                                         o.accept(discoverSalesVisitor),
                                         po.getQty(), e);
@@ -224,17 +235,17 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                                 o.getPurchasedOfferings().add(po);
                                 return po;
                             })
-                            .orElseThrow(() ->
-                                    new WebApplicationException(
-                                            _po.getOffering().getClass().
-                                                    getSimpleName()
-                                            + " " + _po.getOffering().getId()
-                                            + " does not exist !"))
-                    ).collect(Collectors.toList());
+                            .orElseThrow(()
+                                    -> new WebApplicationException(
+                                    _po.getOffering().getClass().
+                                            getSimpleName()
+                                    + " " + _po.getOffering().getId()
+                                    + " does not exist !"))
+                            ).collect(Collectors.toList());
 
-            //compute the total amount from the offerings prices and quantities
-            int total = purchasedOfferings.stream()
-                    .mapToInt(po -> !e.isVatInclusive()
+                    //compute the total amount from the offerings prices and quantities
+                    int total = purchasedOfferings.stream()
+                            .mapToInt(po -> !e.isVatInclusive()
                             // without a VAT rate
                             ? po.getQty() * po.getOffering().getPrice()
                             // with a VAT rate
@@ -244,25 +255,25 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                                     new BigDecimal(100))).divide(new BigDecimal(
                                     100)).setScale(0,
                             RoundingMode.HALF_UP).intValue()
-                    )
-                    .sum();
-
-            if (e.getAmount() != (total - e.getDiscount())) {
-                String errmsg = "Amount is " + e.getAmount()
+                            )
+                            .sum();
+                    
+                    if (e.getAmount() != (total - e.getDiscount())) {
+                        String errmsg = "Amount is " + e.getAmount()
                         + " but the total amount computed (based on the purchased offerings prices and the discount) is "
                         + "(" + total + "-" + e.getDiscount() + ") = "
                         + (total - e.getDiscount());
-                LOG.log(Level.WARNING, errmsg);
-                throw new WebApplicationException(errmsg);
-            }
+                        LOG.log(Level.WARNING, errmsg);
+                        throw new WebApplicationException(errmsg);
+                    }
+                    
+                    e.setPurchasedOfferings(purchasedOfferings);
 
-            e.setPurchasedOfferings(purchasedOfferings);
-
-            //fix the issue date
-            e.setIssueDate(new Date());
-
-            prepareAction.accept(e);
-        });
+                    //fix the issue date
+                    e.setIssueDate(new Date());
+                    
+                    prepareAction.accept(e);
+                });
     }
 
     /**
@@ -287,7 +298,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                     getPaymentDate() + " cannot be before Delivery Date "
                     + bill.getDeliveryDate());
         }
-
+        
         if (!bill.getPayments().isEmpty()) {
             if (bill.getPaymentDate() != null) {
                 //Total amount should be equal to the sum of the amount's payment
@@ -311,13 +322,13 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
             if (bill.getPaymentDate() != null) {
                 if (bill.getAmount() <= 0) {
                     LOG.log(Level.INFO,
-                            "{2} {0} delivered on {1} has no Amount but might be closed: Free or Credit. Will check total and discount integrity later.",
+                            "{2} {0} delivered on {1} has no payments and might be closed: Free or Credit. Will check total and discount integrity later...",
                             new Object[]{bill.getReference(), bill.
                                 getDeliveryDate(), bill.getClass().
                                         getSimpleName()});
                 } else {
                     throw new WebApplicationException(
-                            "A payment date is provided but there is no payment yet and Amount is not 0 !");
+                            "A payment date is provided but there is no payment yet and Amount is positive !");
                 }
             } else {
                 LOG.log(Level.INFO,
@@ -348,11 +359,11 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
     public Response put(
             SecurityContext sec, T entity,
             String professional) {
-
+        
         BillPK pk = new BillPK(entity.getReference(), entity.getDeliveryDate(),
                 this.getProEmail(sec,
                         professional));
-
+        
         LOG.log(Level.INFO, "Updating {1} {0}", new Object[]{getFacade().
             prettyPrintPK(pk), entity.getClass().getSimpleName()});
         return super.put(entity, pk, e -> {
@@ -386,9 +397,9 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
             String reference,
             long deliverydate,
             String professional) {
-
+        
         BillPK pk = new BillPK(reference, new Date(deliverydate), professional);
-
+        
         LOG.log(Level.INFO, "Deleting {1} {0}",
                 new Object[]{getFacade().prettyPrintPK(pk),
                     entityClass.getSimpleName()});
@@ -410,12 +421,10 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
     }
 
     /**
-     * Sets the the Bill's reference.
+     * Sets the the Bill's reference.[PRO-UUID]-[Bill Ref
+     * Number]-[CX|CG|IX][deliveryDate: yyyyMMdd]
      *
-     * [PRO-UUID]-[Bill Ref Number]-[CX|CG|IX][deliveryDate: yyyyMMdd]
      *
-     * @param <T> the Bill's type ClientBill or CollectiveGroupBill or
-     * IndividualBill
      * @param e the Bill to create
      * @param visitor a {@link BillTypeVisitor} visitor which will provide the
      * prefix from the Bill's type.
@@ -445,7 +454,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                 throw new IllegalStateException("Product is NULL in Sale "
                         + s.getName());
             }
-
+            
             ProductPK pk = new ProductPK(
                     s.getProfessional().getEmail(),
                     s.getProduct().getProductReference().getBarcode());
@@ -473,13 +482,14 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                  * CascadeType.ALL relationship between Product and
                  * ProductRecord.
                  */
-                SoldItem soldItem = new SoldItem();
-                soldItem.setQty(reqQty);
-                soldItem.setProduct(product);
-                product.getProductRecords().add(soldItem);
-                soldItem.setBill(bill);
+                SoldItem si = new SoldItem();
+                si.setId(UUIDGenerator.generateID());
+                si.setQty(reqQty);
+                si.setProduct(product);
+                product.getProductRecords().add(si);
+                si.setBill(bill);
             }
-
+            
         });
     }
 
@@ -499,11 +509,11 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
             @PathParam("reference") String reference,
             @PathParam("deliverydate") long deliverydate,
             @QueryParam("professional") String professional) {
-
+        
         String proEmail = this.getProEmail(sec, professional);
         BillPK pk = new BillPK(reference, new Date(deliverydate),
                 proEmail);
-
+        
         LOG.log(Level.INFO, "REST request to cancel Bill : {0}",
                 getFacade().
                         prettyPrintPK(
@@ -514,9 +524,9 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                         if (!bill.isCancelled()) {
                             bill.setCancelled(true);
                             bill.setCancellationDate(new Date());
-
+                            
                             resetBillsRefDate(bill.getProfessional());
-
+                            
                             getLogger().log(Level.INFO, "Bill "
                                     + " {0} cancelled", getFacade().
                                             prettyPrintPK(pk));
@@ -534,7 +544,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         } catch (EJBTransactionRolledbackException | RollbackException ex) {
             throw ex;
         } catch (Exception ex) {
-
+            
             String errmsg = ExceptionHelper.handleException(ex,
                     "Exception occurs cancelling Bill "
                     + getFacade().prettyPrintPK(pk));
@@ -553,7 +563,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         List<Date> dates = billFacade.
                 findLastValidBillsRefDate(
                         professional);
-
+        
         switch (dates.size()) {
             case 0:
                 LOG.log(Level.INFO,
