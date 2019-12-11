@@ -5,17 +5,17 @@
  */
 package fr.trendev.comptandye.category.boundaries;
 
-import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
+import fr.trendev.comptandye.category.controllers.CategoryFacade;
 import fr.trendev.comptandye.category.entities.Category;
 import fr.trendev.comptandye.category.entities.CategoryPK;
+import fr.trendev.comptandye.client.controllers.ClientFacade;
 import fr.trendev.comptandye.client.entities.Client;
 import fr.trendev.comptandye.client.entities.ClientPK;
-import fr.trendev.comptandye.professional.entities.Professional;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.category.controllers.CategoryFacade;
-import fr.trendev.comptandye.client.controllers.ClientFacade;
-import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
+import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
 import fr.trendev.comptandye.common.boundaries.AssociationManagementEnum;
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
+import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
+import fr.trendev.comptandye.professional.entities.Professional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
@@ -164,19 +164,19 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
             @PathParam("clientid") String clientid,
             @QueryParam("professional") String professional) {
 
-        CategoryPK categoryPK = new CategoryPK(categoryid, this.getProEmail(sec,
-                professional));
+        String proEmail = this.getProEmail(sec, professional);
 
-        ClientPK clientPK = new ClientPK(clientid, this.getProEmail(sec,
-                professional));
+        CategoryPK categoryPK = new CategoryPK(categoryid, proEmail);
+
+        ClientPK clientPK = new ClientPK(clientid, proEmail);
 
         return super.<Client, ClientPK>manageAssociation(
                 AssociationManagementEnum.INSERT,
                 categoryPK,
                 clientFacade,
                 clientPK, Client.class,
-                (cat, cl) -> cat.getClients().add(cl) & cl.getCategories().
-                add(cat));
+                (cat, cl)
+                -> cat.getClients().add(cl) & cl.getCategories().add(cat));
     }
 
     @Path("{categoryid}/removeClient/{clientid}")
@@ -187,19 +187,19 @@ public class CategoryService extends AbstractCommonService<Category, CategoryPK>
             @PathParam("clientid") String clientid,
             @QueryParam("professional") String professional) {
 
-        CategoryPK categoryPK = new CategoryPK(categoryid, this.getProEmail(sec,
-                professional));
+        String proEmail = this.getProEmail(sec, professional);
 
-        ClientPK clientPK = new ClientPK(clientid, this.getProEmail(sec,
-                professional));
+        CategoryPK categoryPK = new CategoryPK(categoryid, proEmail);
+
+        ClientPK clientPK = new ClientPK(clientid, proEmail);
 
         return super.<Client, ClientPK>manageAssociation(
                 AssociationManagementEnum.REMOVE,
                 categoryPK,
                 clientFacade,
                 clientPK, Client.class,
-                (cat, cl) -> cat.getClients().remove(cl) & cl.getCategories().
-                remove(cat));
+                (cat, cl)
+                -> cat.getClients().remove(cl) & cl.getCategories().remove(cat));
     }
 
     @Path("{id}/clients")
