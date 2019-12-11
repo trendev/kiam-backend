@@ -114,9 +114,9 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
     public Response post(@Context SecurityContext sec, Client entity,
             @QueryParam("professional") String professional) {
 
-        String email = this.getProEmail(sec, professional);
+        String proEmail = this.getProEmail(sec, professional);
 
-        return super.<Professional, String>post(entity, email,
+        return super.<Professional, String>post(entity, proEmail,
                 AbstractFacade::prettyPrintPK,
                 Professional.class,
                 professionalFacade,
@@ -137,7 +137,7 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
                             .map(ct -> Optional.ofNullable(
                             categoryFacade.find(
                                     new CategoryPK(ct.getId(),
-                                            email)))
+                                            proEmail)))
                             .map(Function.identity())
                             .orElseThrow(()
                                     -> new WebApplicationException(
