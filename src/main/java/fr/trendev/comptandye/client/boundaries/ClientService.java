@@ -5,19 +5,17 @@
  */
 package fr.trendev.comptandye.client.boundaries;
 
-import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
+import fr.trendev.comptandye.category.controllers.CategoryFacade;
 import fr.trendev.comptandye.category.entities.Category;
 import fr.trendev.comptandye.category.entities.CategoryPK;
-import fr.trendev.comptandye.client.entities.Client;
-import fr.trendev.comptandye.clientbill.entities.ClientBill;
-import fr.trendev.comptandye.client.entities.ClientPK;
-import fr.trendev.comptandye.professional.entities.Professional;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.category.controllers.CategoryFacade;
-import fr.trendev.comptandye.clientbill.controllers.ClientBillFacade;
 import fr.trendev.comptandye.client.controllers.ClientFacade;
-import fr.trendev.comptandye.collectivegroup.controllers.CollectiveGroupFacade;
+import fr.trendev.comptandye.client.entities.Client;
+import fr.trendev.comptandye.client.entities.ClientPK;
+import fr.trendev.comptandye.clientbill.entities.ClientBill;
+import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
+import fr.trendev.comptandye.professional.entities.Professional;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -58,12 +56,6 @@ public class ClientService extends AbstractCommonService<Client, ClientPK> {
 
     @Inject
     ProfessionalFacade professionalFacade;
-
-    @Inject
-    ClientBillFacade clientBillFacade;
-
-    @Inject
-    CollectiveGroupFacade collectiveGroupFacade;
 
     @Inject
     CategoryFacade categoryFacade;
