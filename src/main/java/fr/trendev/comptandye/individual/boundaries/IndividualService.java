@@ -162,6 +162,7 @@ public class IndividualService extends AbstractCommonService<Individual, String>
             e.setUsername(entity.getUsername());
             e.setRegistrationDate(entity.getRegistrationDate());
 
+            // override CustomerDetails, Address and SocialNetworkAccounts id (security reason)
             entity.getCustomerDetails().setId(
                     e.getCustomerDetails().getId());
             entity.getAddress().setId(
