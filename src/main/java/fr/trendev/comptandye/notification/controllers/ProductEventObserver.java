@@ -6,9 +6,9 @@
 package fr.trendev.comptandye.notification.controllers;
 
 import fr.trendev.comptandye.notification.entities.NotificationLevelEnum;
+import fr.trendev.comptandye.product.controllers.ProductEntityListener;
 import fr.trendev.comptandye.product.entities.EmptyThreshold;
 import fr.trendev.comptandye.product.entities.Product;
-import fr.trendev.comptandye.product.controllers.ProductEntityListener;
 import fr.trendev.comptandye.product.entities.SevereThreshold;
 import fr.trendev.comptandye.product.entities.WarningThreshold;
 import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
@@ -16,6 +16,7 @@ import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.thresholdalert.controllers.ThresholdAlertFacade;
 import fr.trendev.comptandye.thresholdalert.entities.ThresholdAlert;
 import fr.trendev.comptandye.thresholdalert.entities.ThresholdAlertQualifierEnum;
+import fr.trendev.comptandye.utils.UUIDGenerator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -36,6 +37,9 @@ public class ProductEventObserver {
     @Inject
     private ProfessionalFacade professionalFacade;
 
+    @Inject
+    private UUIDGenerator UUIDGenerator;
+
     private final Logger LOG = Logger.getLogger(ProductEntityListener.class.
             getName());
 
@@ -43,21 +47,11 @@ public class ProductEventObserver {
             @Observes(during = TransactionPhase.AFTER_SUCCESS) @WarningThreshold Product p) {
 
         try {
-            // reloads the Professional from the cache
-            Professional professional = professionalFacade.find(
-                    p.getProfessional().getEmail());
-
-            // persists the notification
-            thresholdAlertFacade.create(new ThresholdAlert(
+            this.createThresholdAlert(
+                    p,
                     NotificationLevelEnum.WARNING,
-                    professional,
-                    p.getProductReference().getBarcode(),
-                    p.getProductReference().getDescription(),
-                    p.getProductReference().getBrand(),
                     p.getThresholdWarning(),
-                    p.getAvailableQty(),
-                    ThresholdAlertQualifierEnum.WARNING
-            ));
+                    ThresholdAlertQualifierEnum.WARNING);
 
             LOG.log(Level.INFO,
                     "Product [{0}] for Professional Account [{1}]: availableQty has reached the WARNING threshold (qty = {2} / warning = {3})",
@@ -66,11 +60,8 @@ public class ProductEventObserver {
                         p.getAvailableQty(), p.getThresholdWarning()});
 
         } catch (Exception ex) {
-            LOG.log(Level.SEVERE,
-                    "Error emitting a WARNING notification after updating Product ["
-                    + p.getProductReference().getBarcode()
-                    + "] for for Professional Account [" + p.
-                            getProfessional().getEmail() + "]");
+            LOG.log(Level.SEVERE, "Error emitting a WARNING notification after updating Product [{0}] for for Professional Account [{1}]",
+                    new Object[]{p.getProductReference().getBarcode(), p.getProfessional().getEmail()});
         }
 
     }
@@ -79,21 +70,11 @@ public class ProductEventObserver {
             @Observes(during = TransactionPhase.AFTER_SUCCESS) @SevereThreshold Product p) {
 
         try {
-            // reloads the Professional from the cache
-            Professional professional = professionalFacade.find(
-                    p.getProfessional().getEmail());
-
-            // persists the notification
-            thresholdAlertFacade.create(new ThresholdAlert(
+            this.createThresholdAlert(
+                    p,
                     NotificationLevelEnum.SEVERE,
-                    professional,
-                    p.getProductReference().getBarcode(),
-                    p.getProductReference().getDescription(),
-                    p.getProductReference().getBrand(),
                     p.getThresholdSevere(),
-                    p.getAvailableQty(),
-                    ThresholdAlertQualifierEnum.SEVERE
-            ));
+                    ThresholdAlertQualifierEnum.SEVERE);
 
             LOG.log(Level.INFO,
                     "Product [{0}] for Professional Account [{1}]: availableQty has reached the SEVERE threshold (qty = {2} / severe = {3})",
@@ -102,11 +83,8 @@ public class ProductEventObserver {
                         p.getAvailableQty(), p.getThresholdSevere()});
 
         } catch (Exception ex) {
-            LOG.log(Level.SEVERE,
-                    "Error emitting a SEVERE notification after updating Product ["
-                    + p.getProductReference().getBarcode()
-                    + "] for for Professional Account [" + p.
-                            getProfessional().getEmail() + "]");
+            LOG.log(Level.SEVERE, "Error emitting a SEVERE notification after updating Product [{0}] for for Professional Account [{1}]",
+                    new Object[]{p.getProductReference().getBarcode(), p.getProfessional().getEmail()});
         }
 
     }
@@ -115,23 +93,14 @@ public class ProductEventObserver {
             @Observes(during = TransactionPhase.AFTER_SUCCESS) @EmptyThreshold Product p) {
 
         try {
-            // reloads the Professional from the cache
-            Professional professional = professionalFacade.find(
-                    p.getProfessional().getEmail());
-
-            // persists the notification
-            thresholdAlertFacade.create(new ThresholdAlert(
+            this.createThresholdAlert(
+                    p,
                     NotificationLevelEnum.SEVERE,
-                    professional,
-                    p.getProductReference().getBarcode(),
-                    p.getProductReference().getDescription(),
-                    p.getProductReference().getBrand(),
                     0,
-                    p.getAvailableQty(),
-                    ThresholdAlertQualifierEnum.EMPTY
-            ));
+                    ThresholdAlertQualifierEnum.EMPTY);
 
             String status = p.getAvailableQty() == 0 ? "is now EMPTY" : "MUST BE FILLED";
+
             LOG.log(Level.INFO,
                     "Product [{0}] for Professional Account [{1}]: the set {2}",
                     new Object[]{p.getProductReference().getBarcode(),
@@ -140,12 +109,31 @@ public class ProductEventObserver {
                     });
 
         } catch (Exception ex) {
-            LOG.log(Level.SEVERE,
-                    "Error emitting a SEVERE notification after updating Product ["
-                    + p.getProductReference().getBarcode()
-                    + "] for for Professional Account [" + p.
-                            getProfessional().getEmail() + "]");
+            LOG.log(Level.SEVERE, "Error emitting a SEVERE notification after updating Product [{0}] for for Professional Account [{1}]",
+                    new Object[]{p.getProductReference().getBarcode(), p.getProfessional().getEmail()});
         }
+    }
 
+    private void createThresholdAlert(Product p,
+            NotificationLevelEnum level,
+            int threshold,
+            ThresholdAlertQualifierEnum qualifier) throws Exception {
+
+        Professional professional = professionalFacade.find(
+                p.getProfessional().getEmail());
+
+        ThresholdAlert alert = new ThresholdAlert(
+                level,
+                professional,
+                p.getProductReference().getBarcode(),
+                p.getProductReference().getDescription(),
+                p.getProductReference().getBrand(),
+                threshold,
+                p.getAvailableQty(),
+                qualifier);
+
+        alert.setId(UUIDGenerator.generateID());
+
+        thresholdAlertFacade.create(alert);
     }
 }
