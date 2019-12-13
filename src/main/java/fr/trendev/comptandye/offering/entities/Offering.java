@@ -12,8 +12,10 @@ import fr.trendev.comptandye.purchasedoffering.entities.PurchasedOffering;
 import fr.trendev.comptandye.sale.entities.Sale;
 import fr.trendev.comptandye.service.entities.Service;
 import fr.trendev.comptandye.utils.Visitor;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -176,6 +178,12 @@ public abstract class Offering {
 
     public <T> T accept(Visitor<T> v) {
         return v.visit(this);
+    }
+
+    public Set<Offering> getAllParentPacks() {
+        Set<Offering> parents = new HashSet<>(this.parentPacks);
+        this.parentPacks.forEach(p -> parents.addAll(p.getAllParentPacks()));
+        return parents;
     }
 
 }
