@@ -17,6 +17,7 @@ import fr.trendev.comptandye.sale.controllers.SaleFacade;
 import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
 import fr.trendev.comptandye.service.controllers.ServiceFacade;
 import fr.trendev.comptandye.service.entities.Service;
+import fr.trendev.comptandye.utils.UUIDGenerator;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -52,59 +53,62 @@ import javax.ws.rs.core.SecurityContext;
 @Path("OfferingsModel")
 @RolesAllowed({"Administrator", "Professional"})
 public class OfferingsModelService {
-
+    
     @Inject
     ObjectMapper om;
-
+    
     @Inject
     PackFacade packFacade;
-
+    
     @Inject
     ProfessionalFacade professionalFacade;
-
+    
     @Inject
     ServiceFacade serviceFacade;
-
+    
     @Inject
     SaleFacade saleFacade;
-
+    
     @Inject
     AuthenticationHelper authenticationHelper;
-
+    
+    @Inject
+    private UUIDGenerator UUIDGenerator;
+    
     private final Logger LOG = Logger.getLogger(OfferingsModelService.class.
             getName());
-
+    
     @Path("build")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response build(@Context SecurityContext sec,
             @QueryParam("professional") String professional) {
-
+        
         String email = authenticationHelper.
                 getProEmail(sec, professional);
         LOG.log(Level.INFO,
                 "Generating pre-build Offerings for the professional [{0}]",
                 email);
-
+        
         return Optional.ofNullable(professionalFacade.find(email))
                 .map(pro -> {
                     try {
-
+                        
                         List<Offering> offeringsModel = new LinkedList<>();
-
+                        
                         for (Business b : pro.getBusinesses()) {
                             String business = b.getDesignation().toLowerCase();
-
+                            
                             Map<String, Offering> services = this.
                                     importServices(pro, business);
-
+                            
                             List<Offering> packs = this.importPacks(pro,
                                     business,
                                     services);
-
+                            
                             offeringsModel.addAll(services.values());
                             offeringsModel.addAll(packs);
-
+                            
                         }
 
                         //avoid to return pro.getOffering(): can be outdated offering!
@@ -136,18 +140,19 @@ public class OfferingsModelService {
      */
     private Map<String, Offering> importServices(Professional pro,
             String business) throws IOException {
-
+        
         ClassLoader classloader = Thread.currentThread().
                 getContextClassLoader();
         String path = "json/services_" + business + ".json";
-
+        
         try (InputStream is = classloader.getResourceAsStream(path)) {
-
+            
             Map<String, Offering> map = new TreeMap<>();
-
+            
             LOG.log(Level.INFO, "Reading in {0}", path);
             Arrays.asList(om.readValue(is, Service[].class)).stream()
                     .map(s -> {
+                        s.setId(UUIDGenerator.generateID());
                         s.setProfessional(pro);
                         pro.getOfferings().add(s);
                         return s;
@@ -157,14 +162,14 @@ public class OfferingsModelService {
                         //map the managed entity
                         map.put(s.getName(), s);
                     });
-
+            
             return map;
         } catch (IOException ex) {
             LOG.log(Level.SEVERE,
                     "Exception occurs parsing services from file : {0}", path);
             throw new IOException(ex);
         }
-
+        
     }
 
     /**
@@ -178,50 +183,51 @@ public class OfferingsModelService {
             String business,
             Map<String, Offering> services)
             throws IOException {
-
+        
         ClassLoader classloader = Thread.currentThread().
                 getContextClassLoader();
-
+        
         String path = "json/packs_" + business + ".json";
-
+        
         try (InputStream is = classloader.getResourceAsStream(path)) {
             LOG.log(Level.INFO, "Reading in {0}", path);
             List<Offering> packs = Arrays.asList(om.readValue(is, Pack[].class))
                     .stream()
                     .map(p -> {
+                        p.setId(UUIDGenerator.generateID());
                         List<Offering> offerings = p.getOfferings().stream()
                                 //use the managed entity instead of the provided offering
                                 .map(o -> Optional.ofNullable(
-                                        services.get(o.getName()))
-                                        .map(_o -> {
-                                            //update the link between the offering and the pack
-                                            _o.getParentPacks().add(p);
-                                            return _o;
-                                        })
-                                        //occurs if json file contains errors
-                                        .orElseThrow(() ->
-                                                new WebApplicationException(
-                                                        "Service " + o.getName()
-                                                        + " not found !"))
+                                services.get(o.getName()))
+                                .map(_o -> {
+                                    //update the link between the offering and the pack
+                                    _o.getParentPacks().add(p);
+                                    return _o;
+                                })
+                                //occurs if json file contains errors
+                                .orElseThrow(()
+                                        -> new WebApplicationException(
+                                        "Service " + o.getName()
+                                        + " not found !"))
                                 )
                                 .collect(Collectors.toList());
-
+                        
                         p.setOfferings(offerings);
-
+                        
                         p.setProfessional(pro);
                         pro.getOfferings().add(p);
                         packFacade.create(p);
                         return p;
                     })
                     .collect(Collectors.toList());
-
+            
             return packs;
         } catch (IOException ex) {
             LOG.log(Level.SEVERE,
                     "Exception occurs parsing packs from file : {0}", path);
             throw new IOException(ex);
         }
-
+        
     }
-
+    
 }
