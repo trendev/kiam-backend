@@ -148,6 +148,17 @@ public class OfferingTest {
         assertFalse(_p2.contains(s4));
         assertFalse(_p2.contains(s5));
         assertFalse(_p2.contains(s1));
+
+        Set<Offering> _p1 = p1.getAllParentPacks();
+        assertNotNull(_p1);
+        assertTrue(_p1.isEmpty());
+
+        Set<Offering> _p4 = p4.getAllParentPacks();
+        assertNotNull(_p4);
+        assertTrue(_p4.isEmpty());
+        
+        Set<Offering> _s3 = s3.getAllParentPacks();
+        assertNotNull(_s3);
     }
 
     public class OfferingImpl extends Offering {
