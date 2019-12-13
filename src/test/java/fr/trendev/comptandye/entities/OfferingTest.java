@@ -145,6 +145,9 @@ public class OfferingTest {
         assertTrue(_p2.stream().anyMatch(p -> p.getId().equals("p4")));
         assertFalse(_p2.contains(p2));
         assertFalse(_p2.contains(p3));
+        assertFalse(_p2.contains(s4));
+        assertFalse(_p2.contains(s5));
+        assertFalse(_p2.contains(s1));
     }
 
     public class OfferingImpl extends Offering {
