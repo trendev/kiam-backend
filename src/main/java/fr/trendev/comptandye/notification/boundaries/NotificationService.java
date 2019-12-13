@@ -6,12 +6,12 @@
 package fr.trendev.comptandye.notification.boundaries;
 
 import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
+import fr.trendev.comptandye.exceptions.ExceptionHelper;
+import fr.trendev.comptandye.notification.controllers.NotificationFacade;
 import fr.trendev.comptandye.notification.entities.Notification;
 import fr.trendev.comptandye.notification.entities.NotificationPK;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.notification.controllers.NotificationFacade;
 import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
-import fr.trendev.comptandye.exceptions.ExceptionHelper;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -197,8 +197,9 @@ public class NotificationService extends AbstractCommonService<Notification, Not
         try {
             return Optional.ofNullable(notificationFacade.find(pk))
                     .map(result -> {
-                        result.getProfessional().getNotifications().remove(
-                                result);
+                        result.getProfessional().getNotifications()
+                                .remove(result);
+                        // orphan notification will be deleted
                         return Response.ok().build();
                     })
                     .orElse(Response.status(Response.Status.NOT_FOUND).entity(
