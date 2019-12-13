@@ -308,7 +308,7 @@ public class PackService extends AbstractOfferingService<Pack> {
         }
 
         //prevent to include a parent pack (cyclic references)
-        if (pack.getAllParentPacks().contains(offering)) {
+        if (pack.getAboveParentPacks().contains(offering)) {
             throw new BadRequestException("Pack " + offering.getId()
                     + " cannot be added to Pack " + pack.getId()
                     + " because Pack " + offering.getId()

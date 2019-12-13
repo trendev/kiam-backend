@@ -180,9 +180,9 @@ public abstract class Offering {
         return v.visit(this);
     }
 
-    public Set<Offering> getAllParentPacks() {
+    public Set<Offering> getAboveParentPacks() {
         Set<Offering> parents = new HashSet<>(this.parentPacks);
-        this.parentPacks.forEach(p -> parents.addAll(p.getAllParentPacks()));
+        this.parentPacks.forEach(p -> parents.addAll(p.getAboveParentPacks()));
         return parents;
     }
 

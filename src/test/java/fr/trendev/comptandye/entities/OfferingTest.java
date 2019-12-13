@@ -122,7 +122,7 @@ public class OfferingTest {
         p4.getOfferings().add(p2);
         p2.getParentPacks().add(p4);
 
-        Set<Offering> _p3 = p3.getAllParentPacks();
+        Set<Offering> _p3 = p3.getAboveParentPacks();
         assertNotNull(_p3);
         assertFalse(_p3.isEmpty());
         assertTrue(_p3.contains(p1));
@@ -136,7 +136,7 @@ public class OfferingTest {
         assertFalse(_p3.contains(s2));
         assertFalse(_p3.contains(s1));
 
-        Set<Offering> _p2 = p2.getAllParentPacks();
+        Set<Offering> _p2 = p2.getAboveParentPacks();
         assertNotNull(_p2);
         assertFalse(_p2.isEmpty());
         assertTrue(_p2.contains(p1));
@@ -149,16 +149,23 @@ public class OfferingTest {
         assertFalse(_p2.contains(s5));
         assertFalse(_p2.contains(s1));
 
-        Set<Offering> _p1 = p1.getAllParentPacks();
+        Set<Offering> _p1 = p1.getAboveParentPacks();
         assertNotNull(_p1);
         assertTrue(_p1.isEmpty());
 
-        Set<Offering> _p4 = p4.getAllParentPacks();
+        Set<Offering> _p4 = p4.getAboveParentPacks();
         assertNotNull(_p4);
         assertTrue(_p4.isEmpty());
         
-        Set<Offering> _s3 = s3.getAllParentPacks();
+        Set<Offering> _s3 = s3.getAboveParentPacks();
         assertNotNull(_s3);
+        assertFalse(_s3.isEmpty());
+        assertTrue(_s3.contains(p1));
+        assertTrue(_s3.stream().anyMatch(p -> p.getId().equals("p1")));
+        assertTrue(_s3.contains(p2));
+        assertTrue(_s3.stream().anyMatch(p -> p.getId().equals("p2")));
+        assertTrue(_s3.contains(p4));
+        assertTrue(_s3.stream().anyMatch(p -> p.getId().equals("p4")));
     }
 
     public class OfferingImpl extends Offering {
