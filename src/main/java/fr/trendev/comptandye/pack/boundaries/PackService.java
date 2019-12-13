@@ -5,16 +5,16 @@
  */
 package fr.trendev.comptandye.pack.boundaries;
 
-import fr.trendev.comptandye.offering.boundaries.AbstractOfferingService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.trendev.comptandye.common.boundaries.AssociationManagementEnum;
+import fr.trendev.comptandye.common.controllers.AbstractFacade;
+import fr.trendev.comptandye.offering.boundaries.AbstractOfferingService;
 import fr.trendev.comptandye.offering.entities.Offering;
 import fr.trendev.comptandye.offering.entities.OfferingPK;
 import fr.trendev.comptandye.pack.entities.Pack;
 import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.sale.entities.Sale;
 import fr.trendev.comptandye.service.entities.Service;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.common.boundaries.AssociationManagementEnum;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -116,21 +116,22 @@ public class PackService extends AbstractOfferingService<Pack> {
                 Professional.class,
                 professionalFacade, Pack::setProfessional,
                 Professional::getOfferings, e -> {
-            e.setId(UUIDGenerator.generateID());
+                    e.setId(UUIDGenerator.generateID());
 
-            if (!e.getOfferings().isEmpty()) {
-                //checks provided offerings are owned by the professional
-                List<Offering> offerings = e.getOfferings().stream()
-                        .map(o -> {
-                            Offering _o = checkOfferingIntegrity(o, email);
-                            _o.getParentPacks().add(e);
-                            return _o;
-                        })
-                        .collect(Collectors.toList());
+                    // control if the provided offerings are owned by the same professional or not (integrity)
+                    // the offerings must exist and cannot be persisted creating the pack
+                    if (!e.getOfferings().isEmpty()) {
+                        List<Offering> offerings = e.getOfferings().stream()
+                                .map(o -> {
+                                    Offering _o = checkOfferingIntegrity(o, email);
+                                    _o.getParentPacks().add(e);
+                                    return _o;
+                                })
+                                .collect(Collectors.toList());
 
-                e.setOfferings(offerings);
-            }
-        });
+                        e.setOfferings(offerings);
+                    }
+                });
 
     }
 
@@ -163,19 +164,20 @@ public class PackService extends AbstractOfferingService<Pack> {
                 e.setOfferings(new LinkedList<>());
             }
 
+            // control if the provided offerings are owned by the same professional or not (integrity)
+            // the offerings must exist and cannot be persisted creating the pack
             if (!entity.getOfferings().isEmpty()) {
-                //checks provided offerings are owned by the professional
                 List<Offering> offerings = entity.getOfferings().stream()
                         .map(o -> {
                             Offering _o = checkOfferingIntegrity(o, email);
-                            this.controlPackCyclicDependencies(e, _o);
+                            this.controlPackCyclicReferences(e, _o);
                             _o.getParentPacks().add(e);
                             return _o;
                         })
                         .collect(Collectors.toList());
 
                 e.setOfferings(offerings);
-            }//let the offerings empty
+            }// no matter if the entity's offering is empty, the pack's offering won't be updated (erased)
 
         });
     }
@@ -228,8 +230,8 @@ public class PackService extends AbstractOfferingService<Pack> {
                 packPK,
                 serviceFacade,
                 offeringPK, Service.class,
-                (p, o) ->
-                p.getOfferings().add(o) && o.getParentPacks().add(p));
+                (p, o)
+                -> p.getOfferings().add(o) && o.getParentPacks().add(p));
     }
 
     @Path("{packid}/removeService/offering/{offeringid}")
@@ -251,8 +253,8 @@ public class PackService extends AbstractOfferingService<Pack> {
                 packPK,
                 serviceFacade,
                 offeringPK, Service.class,
-                (p, o) ->
-                p.getOfferings().remove(o) && o.getParentPacks().remove(p));
+                (p, o)
+                -> p.getOfferings().remove(o) && o.getParentPacks().remove(p));
     }
 
     @Path("{packid}/addPack/offering/{offeringid}")
@@ -275,25 +277,42 @@ public class PackService extends AbstractOfferingService<Pack> {
                 packFacade,
                 offeringPK, Pack.class,
                 (p, o) -> {
-            this.controlPackCyclicDependencies(p, o);
-            return p.getOfferings().add(o) && o.getParentPacks().add(p);
-        }
+                    this.controlPackCyclicReferences(p, o);
+                    return p.getOfferings().add(o) && o.getParentPacks().add(p);
+                }
         );
     }
 
-    private void controlPackCyclicDependencies(Pack container, Offering offering) {
+    private void controlPackCyclicReferences(Pack pack, Offering offering) {
+
+        if (pack.getId() == null) {
+            String msg = "Controlling cyclic dependencies of Pack ["
+                    + pack.getName()
+                    + "] : pack id is missing";
+            LOG.log(Level.WARNING, msg);
+            throw new IllegalStateException(msg);
+        }
+
+        if (offering.getId() == null) {
+            String msg = "Controlling cyclic dependencies of Pack ["
+                    + pack.getName() + "] : offering id is missing in Offering ["
+                    + offering.getName() + "]";
+            LOG.log(Level.WARNING, msg);
+            throw new IllegalStateException(msg);
+        }
+
         //avoid to add a pack in itself (infinite loop)
-        if (container.getId() == offering.getId()) {
-            throw new BadRequestException("Pack " + container.getId()
+        if (pack.getId().equals(offering.getId())) {
+            throw new BadRequestException("Pack " + pack.getId()
                     + " cannot be addded in itself");
         }
 
-        //avoid to add a pack in another if it is a parent of the other
-        if (container.getParentPacks().contains(offering)) {
+        //prevent to include a parent pack (cyclic references)
+        if (pack.getAllParentPacks().contains(offering)) {
             throw new BadRequestException("Pack " + offering.getId()
-                    + " cannot be added to Pack " + container.getId()
+                    + " cannot be added to Pack " + pack.getId()
                     + " because Pack " + offering.getId()
-                    + " already contains Pack " + container.getId() + " !!!");
+                    + " already contains Pack " + pack.getId() + " !!!");
         }
     }
 
@@ -316,8 +335,8 @@ public class PackService extends AbstractOfferingService<Pack> {
                 packPK,
                 packFacade,
                 offeringPK, Pack.class,
-                (p, o) ->
-                p.getOfferings().remove(o) && o.getParentPacks().remove(p));
+                (p, o)
+                -> p.getOfferings().remove(o) && o.getParentPacks().remove(p));
     }
 
     @Path("{packid}/addSale/offering/{offeringid}")
@@ -339,8 +358,8 @@ public class PackService extends AbstractOfferingService<Pack> {
                 packPK,
                 saleFacade,
                 offeringPK, Sale.class,
-                (p, o) ->
-                p.getOfferings().add(o) && o.getParentPacks().add(p));
+                (p, o)
+                -> p.getOfferings().add(o) && o.getParentPacks().add(p));
     }
 
     @Path("{packid}/removeSale/offering/{offeringid}")
@@ -362,8 +381,8 @@ public class PackService extends AbstractOfferingService<Pack> {
                 packPK,
                 saleFacade,
                 offeringPK, Sale.class,
-                (p, o) ->
-                p.getOfferings().remove(o) && o.getParentPacks().remove(p));
+                (p, o)
+                -> p.getOfferings().remove(o) && o.getParentPacks().remove(p));
     }
 
     @Path("{id}/purchasedOfferings")
