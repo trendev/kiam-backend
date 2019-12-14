@@ -13,9 +13,6 @@ import javax.persistence.Id;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Business {
 
-    /**
-     * the business designation (name)
-     */
     @Id
     private String designation;
 

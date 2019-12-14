@@ -14,15 +14,9 @@ import javax.persistence.Embeddable;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class OfferingExtents {
 
-    /**
-     * Extent of the Services
-     */
     @Basic
     private int services;
 
-    /**
-     * Extent of the Sales
-     */
     @Basic
     private int sales;
 

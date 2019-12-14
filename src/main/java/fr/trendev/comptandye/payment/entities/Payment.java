@@ -21,9 +21,6 @@ public class Payment {
     @NotNull(message = "Payment ID cannot be null")
     private String id;
 
-    /**
-     * Amount in cents (1/100 of the currency)
-     */
     @Basic
     private int amount;
 

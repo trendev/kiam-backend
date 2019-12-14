@@ -18,9 +18,6 @@ import javax.persistence.Id;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class VatRates {
 
-    /**
-     * the country's id (ex: France -> FR)
-     */
     @Id
     private String countryId;
 

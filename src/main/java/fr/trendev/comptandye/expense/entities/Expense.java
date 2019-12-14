@@ -18,7 +18,6 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -36,7 +35,6 @@ import javax.validation.constraints.Past;
  */
 @Entity
 @IdClass(ExpensePK.class)
-@DiscriminatorColumn(length = 31)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @SuppressWarnings("unchecked")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "cltype", visible = true)
@@ -58,15 +56,9 @@ public abstract class Expense {
     @NotNull(message = "description field in Expense must not be null")
     private String description;
 
-    /**
-     * Amount in cents (1/100 of the currency)
-     */
     @Basic
     private int amount;
 
-    /**
-     * Default value is Euros (EUR)
-     */
     @Basic
     @NotNull(message = "currency field in Expense must not be null")
     private String currency = "EUR";
@@ -78,9 +70,6 @@ public abstract class Expense {
     @Past(message = "paymentDate field in Expense must not be a futur date")
     private Date paymentDate;
 
-    /**
-     * used for audit and sort the bills
-     */
     @Basic
     @Column(columnDefinition = "DATETIME(3)")
     @Temporal(TemporalType.TIMESTAMP)
@@ -91,9 +80,6 @@ public abstract class Expense {
     @NotNull(message = "provider field in Expense must not be null")
     private String provider;
 
-    /**
-     * mark if an expense is cancelled or not
-     */
     @Basic
     private boolean cancelled = false;
 
@@ -102,9 +88,6 @@ public abstract class Expense {
     @Temporal(TemporalType.TIMESTAMP)
     private Date cancellationDate;
 
-    /**
-     * mark if the expense is vat inclusive or not
-     */
     @Basic
     private boolean vatInclusive = false;
 
@@ -117,9 +100,6 @@ public abstract class Expense {
     @JsonIgnore
     private Professional professional;
 
-    /**
-     * Should be ignored during a PUT
-     */
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
     @NotNull(message = "payments field in Expense must not be null")
     private List<Payment> payments = new LinkedList<>();

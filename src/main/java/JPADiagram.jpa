@@ -923,12 +923,19 @@
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonTypeInfo(use = JsonTypeInfo.Id.NAME,         include = JsonTypeInfo.As.EXISTING_PROPERTY,         property = &quot;cltype&quot;,         visible = true)"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({   @JsonSubTypes.Type(value = Service.class, name = OfferingType.SERVICE),    @JsonSubTypes.Type(value = Pack.class, name = OfferingType.PACK),   @JsonSubTypes.Type(value = Sale.class, name = OfferingType.SALE) })"/>
         <jpa:snp loc="IMPORT" e="true">java.util.LinkedList</jpa:snp>
-        <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
-            return v.visit(this);
-            }</jpa:snp>
         <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
         <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.service.entities.Service</jpa:snp>
         <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.sale.entities.Sale</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">java.util.HashSet</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">java.util.Set</jpa:snp>
+        <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
+            return v.visit(this);
+            }</jpa:snp>
+        <jpa:snp e="true">public Set&lt;Offering&gt; getAboveParentPacks() {
+        Set&lt;Offering&gt; parents = new HashSet&lt;&gt;(this.parentPacks);
+        this.parentPacks.forEach(p -&gt; parents.addAll(p.getAboveParentPacks()));
+        return parents;
+    }</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" am="PROTECTED" name="cltype" id="_1505476643021217">

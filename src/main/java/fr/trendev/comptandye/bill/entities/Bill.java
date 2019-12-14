@@ -18,7 +18,6 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -35,7 +34,6 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @IdClass(BillPK.class)
-@DiscriminatorColumn(length = 31)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "cltype", visible = true)
 @JsonSubTypes({
@@ -44,10 +42,6 @@ import javax.validation.constraints.NotNull;
     @JsonSubTypes.Type(value = CollectiveGroupBill.class, name = BillType.COLLECTIVEGROUP)})
 public abstract class Bill {
 
-    /**
-     * Will be automatically generated based on the deliveryDate, the
-     * Professional email and a timestamp.
-     */
     @Id
     private String reference;
 
@@ -60,21 +54,12 @@ public abstract class Bill {
     @NotNull(message = "cltype field in Bill cannot be null")
     protected String cltype;
 
-    /**
-     * Amount in cents (1/100 of the currency)
-     */
     @Basic
     private int amount;
 
-    /**
-     * Default value is Euros (EUR)
-     */
     @Basic
     private String currency = "EUR";
 
-    /**
-     * the discount amount
-     */
     @Basic
     private int discount;
 
@@ -83,23 +68,14 @@ public abstract class Bill {
     @Temporal(TemporalType.TIMESTAMP)
     private Date paymentDate;
 
-    /**
-     * used for audit and sort the bills
-     */
     @Basic
     @Column(columnDefinition = "DATETIME(3)")
     @Temporal(TemporalType.TIMESTAMP)
     private Date issueDate = new Date();
 
-    /**
-     * mark if the bill is vat inclusive or not
-     */
     @Basic
     private boolean vatInclusive = false;
 
-    /**
-     * mark if a bill is cancelled or not
-     */
     @Basic
     private boolean cancelled = false;
 
@@ -117,9 +93,6 @@ public abstract class Bill {
     @JsonIgnore
     private Professional professional;
 
-    /**
-     * Should be ignored during a PUT
-     */
     @OneToMany(orphanRemoval = true, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Payment> payments = new LinkedList<>();
 

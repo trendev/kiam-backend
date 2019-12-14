@@ -13,7 +13,6 @@ import fr.trendev.comptandye.utils.Visitor;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -25,7 +24,6 @@ import javax.validation.constraints.NotNull;
  * @author jsie
  */
 @Entity
-@DiscriminatorColumn(length = 31)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "cltype", visible = true)
 @JsonSubTypes({
@@ -52,9 +50,6 @@ public abstract class ProductRecord {
     @Basic
     private int qty;
 
-    /**
-     * mark if a product record is cancelled or not
-     */
     @Basic
     private boolean cancelled = false;
 

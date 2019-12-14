@@ -26,15 +26,9 @@ public class OfferingSnapshot {
     @Basic
     private String shortname;
 
-    /**
-     * Price in cents (1/100 of the currency)
-     */
     @Basic
     private int price;
 
-    /**
-     * Duration (in minutes)
-     */
     @Basic
     private int duration;
 

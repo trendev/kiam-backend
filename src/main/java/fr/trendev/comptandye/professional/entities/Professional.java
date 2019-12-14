@@ -48,9 +48,6 @@ public class Professional extends Customer {
     @Basic
     private String companyID;
 
-    /**
-     * Value Added Tax code
-     */
     @Basic
     private String vatcode;
 
@@ -58,17 +55,9 @@ public class Professional extends Customer {
     @Temporal(TemporalType.DATE)
     private Date creationDate;
 
-    /**
-     * Must be only updated when a Bill is persisted. Should be unique and lock
-     * during concurent access and preserve Bill Number integrity.
-     */
     @Basic
     private long billsCount = 0;
 
-    /**
-     * The reference date on the Bill timeline. Must be only updated when a Bill
-     * is persisted.
-     */
     @Basic
     @Column(columnDefinition = "DATETIME(3)")
     @Temporal(TemporalType.TIMESTAMP)
@@ -80,15 +69,9 @@ public class Professional extends Customer {
     @Basic
     private String stripeSubscriptionId;
 
-    /**
-     * Terms of Service
-     */
     @Basic
     private boolean tos;
 
-    /**
-     * When the Stripe Subscription has been rescinded
-     */
     @Basic
     @Column(columnDefinition = "DATETIME(3)")
     @Temporal(TemporalType.TIMESTAMP)

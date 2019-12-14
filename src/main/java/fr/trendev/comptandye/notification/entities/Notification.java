@@ -9,7 +9,6 @@ import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.thresholdalert.entities.ThresholdAlert;
 import fr.trendev.comptandye.utils.Visitor;
 import javax.persistence.Basic;
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -23,7 +22,6 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @IdClass(NotificationPK.class)
-@DiscriminatorColumn(length = 31)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "cltype", visible = true)
 @JsonSubTypes({

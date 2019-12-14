@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -33,7 +32,6 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @IdClass(OfferingPK.class)
-@DiscriminatorColumn(length = 31)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "cltype", visible = true)
 @JsonSubTypes({
@@ -57,15 +55,9 @@ public abstract class Offering {
     @Basic
     private String shortname;
 
-    /**
-     * reference price, based on Euro cents
-     */
     @Basic
     private int price;
 
-    /**
-     * Duration (in minutes)
-     */
     @Basic
     private int duration;
 

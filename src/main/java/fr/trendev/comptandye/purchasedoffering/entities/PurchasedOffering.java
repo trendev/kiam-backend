@@ -23,9 +23,6 @@ public class PurchasedOffering {
     @NotNull(message = "PurchasedOffering ID cannot be null")
     private String id;
 
-    /**
-     * Quantity
-     */
     @Basic
     private int qty = 1;
 

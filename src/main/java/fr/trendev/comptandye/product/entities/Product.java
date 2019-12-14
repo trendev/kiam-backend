@@ -31,9 +31,6 @@ import javax.validation.constraints.Min;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Product {
 
-    /**
-     * Quantity of available items
-     */
     @Basic
     private int availableQty;
 
