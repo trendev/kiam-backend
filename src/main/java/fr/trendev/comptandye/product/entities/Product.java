@@ -23,6 +23,9 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.Min;
 
 /**
+ * Product use is observed by ProductEntityListener. Available quantity is
+ * observed after each Product update.
+ *
  * @author jsie
  */
 @Entity

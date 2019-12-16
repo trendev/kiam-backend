@@ -1958,6 +1958,7 @@
     <jpa:entity compositePrimaryKeyType="D" compositePrimaryKeyClass="ProductPK" abs="false" class="Product" v="true" pkg="product.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524841860187">
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">java.util.LinkedList</jpa:snp>
+        <jpa:des>Product use is observed by ProductEntityListener. Available quantity is observed after each Product update.</jpa:des>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="int" v="true" xvt="" name="availableQty" id="_1524842384764168">
