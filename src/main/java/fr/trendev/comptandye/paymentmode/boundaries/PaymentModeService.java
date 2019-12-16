@@ -38,7 +38,6 @@ public class PaymentModeService extends AbstractCommonService<PaymentMode, Strin
 
     @Inject
     PaymentModeFacade paymentModeFacade;
-
     private final Logger LOG = Logger.getLogger(PaymentModeService.class.
             getName());
 
@@ -89,7 +88,6 @@ public class PaymentModeService extends AbstractCommonService<PaymentMode, Strin
     public Response post(PaymentMode entity) {
         LOG.log(Level.INFO, "Creating PaymentMode {0}", super.stringify(
                 entity));
-
         return super.post(entity, e -> {
         });
     }
@@ -101,5 +99,4 @@ public class PaymentModeService extends AbstractCommonService<PaymentMode, Strin
         return super.delete(name, e -> {
         });
     }
-
 }
