@@ -107,7 +107,7 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
             e.setId(UUIDGenerator.generateID());
 
             if (e.getOffering() == null) {
-                throw new WebApplicationException("No Offering provided !");
+                throw new WebApplicationException("No Offering provided during PurchasedOffering creation");
             }
 
             e.setOffering(Optional.ofNullable(e.getOffering().accept(visitor).
@@ -118,9 +118,9 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
                         return o;
                     })
                     .orElseThrow(() -> new WebApplicationException(
-                            "Create PurchasedOffering : Offering "
-                            + e.getOffering().getId()
-                            + " not found and cannot be linked !")));
+                    "Create PurchasedOffering : Offering "
+                    + e.getOffering().getId()
+                    + " not found and cannot be linked !")));
 
         });
     }
@@ -140,31 +140,33 @@ public class PurchasedOfferingService extends AbstractCommonService<PurchasedOff
         return super.put(entity, entity.getId(),
                 e -> {
 
-            if (e.getOffering() == null) {
-                throw new WebApplicationException("No Offering provided !");
-            }
+                    if (e.getOffering() == null) {
+                        throw new WebApplicationException("No Offering provided !");
+                    }
 
-            e.setQty(entity.getQty());
-            e.setVatRate(entity.getVatRate());
+                    e.setQty(entity.getQty());
+                    e.setVatRate(entity.getVatRate());
 
-            e.setOffering(Optional.ofNullable(e.getOffering().accept(visitor).
-                    find(new OfferingPK(e.getOffering().getId(), professional)))
-                    .map(o -> {
-                        o.getPurchasedOfferings().add(e);
-                        e.setOfferingSnapshot(new OfferingSnapshot(o));
-                        return o;
-                    })
-                    .orElseThrow(() -> new WebApplicationException(
-                            "Update PurchasedOffering : Offering "
-                            + e.getOffering().getId()
-                            + " not found and cannot be linked !")));
-        });
+                    e.setOffering(
+                            Optional.ofNullable(
+                                    e.getOffering().accept(visitor).find(
+                                            new OfferingPK(e.getOffering().getId(), professional)))
+                                    .map(o -> {
+                                        o.getPurchasedOfferings().add(e);
+                                        e.setOfferingSnapshot(new OfferingSnapshot(o));
+                                        return o;
+                                    })
+                                    .orElseThrow(() -> new WebApplicationException(
+                                    "Update PurchasedOffering : Offering "
+                                    + e.getOffering().getId()
+                                    + " not found and cannot be linked !")));
+                });
     }
 
     /**
      * Deletes a free PurchasedOffering (not yet associated with a bill). If a
-     * PurchasedOffering is associated with a Bill, delete the Bill first (this
-     * operation is only allowed for Administrator)
+     * PurchasedOffering is associated with a Bill, delete the Bill first. This
+     * operation is only allowed for Administrator.
      *
      * @param id the Entity's id
      * @return HTTP OK if no error occurs

@@ -47,9 +47,6 @@ public class PurchasedOffering {
         this.offering = offering;
         this.offeringSnapshot = new OfferingSnapshot(offering);
         this.offeringExtents = new OfferingExtents(offering);
-
-        /* Offering/PurchasedOffering links are set/destroyed in the rest api services */
-        // this.offering.getPurchasedOfferings().add(this); */
     }
 
     public String getId() {
