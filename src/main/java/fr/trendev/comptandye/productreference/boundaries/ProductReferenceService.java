@@ -94,8 +94,8 @@ public class ProductReferenceService extends AbstractCommonService<ProductRefere
         LOG.log(Level.INFO, "REST request to search ProductReference : {0}",
                 barcode);
         try {
-            List<ProductReference> result = productReferenceFacade
-                    .findFromBarcode(barcode);
+            List<ProductReference> result
+                    = productReferenceFacade.findFromBarcode(barcode);
             return Response.status(Response.Status.OK).
                     entity(result).build();
 
@@ -107,31 +107,46 @@ public class ProductReferenceService extends AbstractCommonService<ProductRefere
         }
     }
 
+    /**
+     * Only Administrators are allowed to create product references using this
+     * service. Other users can create a Product providing a new product
+     * reference.
+     *
+     * @param payload the product reference to create
+     * @return HTTP response
+     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response post(ProductReference entity) {
+    public Response post(ProductReference payload) {
         LOG.log(Level.INFO, "Creating ProductReference {0}", super.stringify(
-                entity));
-        return super.post(entity, e -> {
+                payload));
+        return super.post(payload, e -> {
         });
     }
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response put(ProductReference entity) {
-        LOG.
-                log(Level.INFO, "Updating ProductReference {0}", entity.
-                        getBarcode());
-        return super.put(entity, entity.getBarcode(),
+    public Response put(ProductReference payload) {
+        LOG.log(Level.INFO, "Updating ProductReference {0}", payload.
+                getBarcode());
+
+        return super.put(payload, payload.getBarcode(),
                 e -> {
-            e.setDescription(entity.getDescription());
-            e.setBrand(entity.getBrand());
-            e.setBusiness(entity.getBusiness());
-        });
+                    e.setDescription(payload.getDescription());
+                    e.setBrand(payload.getBrand());
+                    e.setBusiness(payload.getBusiness());
+                });
     }
 
+    /**
+     * Warning : a product reference cannot be deleted if it is linked with a
+     * Product...
+     *
+     * @param barcode the product reference barcode
+     * @return HTTP response
+     */
     @Path("{barcode}")
     @DELETE
     public Response delete(@PathParam("barcode") String barcode) {
