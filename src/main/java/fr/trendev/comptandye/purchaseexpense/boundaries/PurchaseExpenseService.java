@@ -98,20 +98,20 @@ public class PurchaseExpenseService extends AbstractExpenseService<PurchaseExpen
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public Response post(@Context SecurityContext sec, PurchaseExpense entity,
+    public Response post(@Context SecurityContext sec, PurchaseExpense payload,
             @QueryParam("professional") String professional) {
-        return super.post(sec, entity, professional);
+        return super.post(sec, payload, professional);
     }
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response put(@Context SecurityContext sec, PurchaseExpense entity,
+    public Response put(@Context SecurityContext sec, PurchaseExpense payload,
             @QueryParam("professional") String professional) {
 
         return super.put(e -> {
             // cancels purchasedItems if the PurchaseExpense is cancelled
-            if (entity.isCancelled() && !e.isCancelled()) {
+            if (payload.isCancelled() && !e.isCancelled()) {
 
                 e.getPurchasedItems()
                         .stream()
@@ -133,7 +133,7 @@ public class PurchaseExpenseService extends AbstractExpenseService<PurchaseExpen
                                                         getProEmail(sec,
                                                                 professional))));
             }
-        }, sec, entity, professional);
+        }, sec, payload, professional);
     }
 
     /**
