@@ -2129,7 +2129,7 @@
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
-        <jpa:des>Recored added when an item is purchased(bought by the professional) must be linked to an Expense (Purchase)</jpa:des>
+        <jpa:des>Record added when an item is purchased (bought by the professional). Must be associated with an Expense (Purchase).</jpa:des>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1524836293670" connected-attribute-id="_15249248621531436" v="true" xvt="" name="purchaseExpense" id="_15249248621511435">

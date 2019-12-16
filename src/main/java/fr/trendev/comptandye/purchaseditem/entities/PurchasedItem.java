@@ -10,8 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 /**
- * Recored added when an item is purchased(bought by the professional) must be
- * linked to an Expense (Purchase)
+ * Record added when an item is purchased (bought by the professional). Must be
+ * associated with an Expense (Purchase).
  *
  * @author jsie
  */
