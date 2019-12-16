@@ -61,7 +61,6 @@ public abstract class AbstractProductRecordService<T extends ProductRecord>
             //links the product and the current product record
             Product product = productFinder.findProduct(e,
                     professional,
-                    productFacade,
                     ProductRecord.class,
                     ProductRecord::getProduct);
 

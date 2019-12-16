@@ -11,7 +11,6 @@ import fr.trendev.comptandye.product.entities.Product;
 import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.sale.entities.Sale;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.product.controllers.ProductFacade;
 import fr.trendev.comptandye.product.controllers.ProductFinder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,9 +42,6 @@ import javax.ws.rs.core.SecurityContext;
 @Path("Sale")
 @RolesAllowed({"Administrator", "Professional"})
 public class SaleService extends AbstractOfferingService<Sale> {
-
-    @Inject
-    private ProductFacade productFacade;
 
     @Inject
     private ProductFinder<Sale> productFinder;
@@ -114,18 +110,17 @@ public class SaleService extends AbstractOfferingService<Sale> {
                 Professional.class,
                 professionalFacade, Sale::setProfessional,
                 Professional::getOfferings, e -> {
-            e.setId(UUIDGenerator.generateID());
+                    e.setId(UUIDGenerator.generateID());
 
-            // search and link the Product with the current Sale
-            // a existing product must be provided
-            Product product = productFinder.findProduct(e,
-                    email,
-                    productFacade,
-                    Sale.class,
-                    Sale::getProduct);
-            e.setProduct(product);
-            product.getSales().add(e);
-        });
+                    // search and link the Product with the current Sale
+                    // a existing product must be provided
+                    Product product = productFinder.findProduct(e,
+                            email,
+                            Sale.class,
+                            Sale::getProduct);
+                    e.setProduct(product);
+                    product.getSales().add(e);
+                });
 
     }
 
