@@ -23,6 +23,7 @@ import javax.ws.rs.core.Response;
 /**
  *
  * @author jsie
+ * @param <T> subtype of ProductRecord
  */
 public abstract class AbstractProductRecordService<T extends ProductRecord>
         extends AbstractCommonService<T, String> {
@@ -43,13 +44,13 @@ public abstract class AbstractProductRecordService<T extends ProductRecord>
     @Override
     protected abstract AbstractFacade<T, String> getFacade();
 
-    public Response post(T entity,
+    public Response post(T payload,
             String professional,
             Consumer<T> createActions) {
-        return super.post(entity, e -> {
+        return super.post(payload, e -> {
             //inits the product record
             e.setId(UUIDGenerator.generateID());
-            e.setRecordDate(new Date());
+            e.setRecordDate(new Date());// timestamp the record
             e.setCancelled(false);
             e.setCancellationDate(null);
 
@@ -65,7 +66,7 @@ public abstract class AbstractProductRecordService<T extends ProductRecord>
                     ProductRecord::getProduct);
 
             if (product == null) {
-                throw new WebApplicationException("Product " + entity.
+                throw new WebApplicationException("Product " + payload.
                         getProduct().getProductReference().getBarcode()
                         + " not found for user " + professional + " !");
             }
@@ -82,11 +83,19 @@ public abstract class AbstractProductRecordService<T extends ProductRecord>
         });
     }
 
-    public Response put(T entity,
+    /**
+     * This method can be only used to cancel a product record. Other fields
+     * won't be updated.
+     *
+     * @param payload the product record modifications
+     * @param professional the owner of the product record
+     * @return a HTTP Response
+     */
+    public Response put(T payload,
             String professional) {
-        return super.put(entity, entity.getId(),
+        return super.put(payload, payload.getId(),
                 e -> {
-                    if (entity.isCancelled() && !e.isCancelled()) {
+                    if (payload.isCancelled() && !e.isCancelled()) {
 
                         //should come from the cache
                         Product product = productFacade.find(
@@ -111,6 +120,7 @@ public abstract class AbstractProductRecordService<T extends ProductRecord>
                 });
     }
 
+    @Override
     public Response delete(String id, Consumer<T> deleteActions) {
         return super.delete(id, e -> {
 
