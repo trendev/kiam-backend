@@ -90,47 +90,48 @@ public class ServiceService extends AbstractOfferingService<Service> {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response post(@Context SecurityContext sec, Service entity,
+    public Response post(@Context SecurityContext sec, Service payload,
             @QueryParam("professional") String professional) {
 
         String email = this.getProEmail(sec, professional);
 
-        if (entity.getBusinesses() == null || entity.getBusinesses().isEmpty()) {
+        if (payload.getBusinesses() == null || payload.getBusinesses().isEmpty()) {
             throw new WebApplicationException("No Business provided !");
         }
 
-        return super.<Professional, String>post(entity, email,
+        return super.<Professional, String>post(payload, email,
                 AbstractFacade::prettyPrintPK,
                 Professional.class,
                 professionalFacade, Service::setProfessional,
                 Professional::getOfferings, e -> {
-            e.setId(UUIDGenerator.generateID());
-        });
+                    e.setId(UUIDGenerator.generateID());
+                });
 
     }
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response put(@Context SecurityContext sec, Service entity,
+    public Response put(@Context SecurityContext sec, Service payload,
             @QueryParam("professional") String professional) {
 
-        if (entity.getBusinesses() == null || entity.getBusinesses().isEmpty()) {
+        if (payload.getBusinesses() == null || payload.getBusinesses().isEmpty()) {
             throw new WebApplicationException("No Business provided !");
         }
 
-        OfferingPK pk = new OfferingPK(entity.getId(), this.getProEmail(sec,
+        OfferingPK pk = new OfferingPK(payload.getId(), this.getProEmail(sec,
                 professional));
 
         LOG.log(Level.INFO, "Updating Service {0}", serviceFacade.
                 prettyPrintPK(pk));
-        return super.put(entity, pk, e -> {
-            e.setName(entity.getName());
-            e.setShortname(entity.getShortname());
-            e.setPrice(entity.getPrice());
-            e.setDuration(entity.getDuration());
-            e.setBusinesses(entity.getBusinesses());
-        });
+        return super.put(payload, pk,
+                e -> {
+                    e.setName(payload.getName());
+                    e.setShortname(payload.getShortname());
+                    e.setPrice(payload.getPrice());
+                    e.setDuration(payload.getDuration());
+                    e.setBusinesses(payload.getBusinesses());
+                });
     }
 
     /**
