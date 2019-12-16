@@ -133,32 +133,31 @@ public class ProductService extends AbstractCommonService<Product, ProductPK> {
                 professionalFacade, Product::setProfessional,
                 Professional::getStock, e -> {
 
-            //ignores the provided available quantity
-            if (iaq) {
-                e.setAvailableQty(0);
-            }
+                    //ignores the provided available quantity
+                    if (iaq) {
+                        e.setAvailableQty(0);
+                    }
 
-            if (entity.getThresholdWarning() < 0) {
-                throw new WebApplicationException(
-                        "Warning Threshold must not be less than 0");
-            }
+                    if (entity.getThresholdWarning() < 0) {
+                        throw new WebApplicationException(
+                                "Warning Threshold must not be less than 0");
+                    }
 
-            if (entity.getThresholdSevere() < 0) {
-                throw new WebApplicationException(
-                        "Severe Threshold must not be less than 0");
-            }
+                    if (entity.getThresholdSevere() < 0) {
+                        throw new WebApplicationException(
+                                "Severe Threshold must not be less than 0");
+                    }
 
-            if (entity.getThresholdSevere() > entity.getThresholdWarning()) {
-                throw new WebApplicationException(
-                        "Warning Threshold must not be less than Severe Threshold");
-            }
+                    if (entity.getThresholdSevere() > entity.getThresholdWarning()) {
+                        throw new WebApplicationException(
+                                "Warning Threshold must not be less than Severe Threshold");
+                    }
 
-            // avoid to PERSIST an existing ProductReference and use it instead
-            Optional.ofNullable(productReferenceFacade
-                    .find(entity.getProductReference().getBarcode()))
-                    .ifPresent(pr -> e.setProductReference(pr));
-            // or else let JPA persisting the provided ProductReference
-        });
+                    // prevent persisting an existing ProductReference
+                    Optional.ofNullable(productReferenceFacade.find(entity.getProductReference().getBarcode()))
+                            .ifPresent(pr -> e.setProductReference(pr));
+                    // or else let JPA persisting the provided ProductReference
+                });
 
     }
 
@@ -211,28 +210,28 @@ public class ProductService extends AbstractCommonService<Product, ProductPK> {
                 prettyPrintPK(pk));
         return super.delete(pk,
                 e -> {
-            e.getProfessional().getStock().remove(e);
+                    e.getProfessional().getStock().remove(e);
 
-            if (e.getSales() != null && !e.getSales().isEmpty()) {
-                throw new WebApplicationException(
-                        "Product cannot be deleted because Sales are linked with this Product");
-            }
+                    if (e.getSales() != null && !e.getSales().isEmpty()) {
+                        throw new WebApplicationException(
+                                "Product cannot be deleted because Sales are linked with this Product");
+                    }
 
-            if (e.getProductRecords() != null && !e.getProductRecords().
+                    if (e.getProductRecords() != null && !e.getProductRecords().
                     isEmpty()) {
-                throw new WebApplicationException(
-                        "Product cannot be deleted because it has some ProductRecords");
-            }
-        });
+                        throw new WebApplicationException(
+                                "Product cannot be deleted because it has some ProductRecords");
+                    }
+                });
     }
 
     /**
      * Get the Sales linked to this Product.
      *
+     * @param ar the asynchronous response
      * @param sec the security context
      * @param barcode the code of the Product
      * @param professional the professional, owner of the Product
-     * @return the sales list if OK or a HttpError
      */
     @Path("{barcode}/sales")
     @GET
