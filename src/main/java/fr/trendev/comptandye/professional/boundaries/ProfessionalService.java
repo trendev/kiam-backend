@@ -143,7 +143,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response create(Professional entity) {
+    public Response post(Professional entity) {
         LOG.log(Level.INFO, "Creating Professional {0}", entity.getEmail());
 
         return super.post(entity, e -> {
@@ -178,7 +178,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
             e.setBillsCount(0);
             e.setBillsRefDate(null);
 
-            this.checkVatCode(e);
+            this.controlVATCode(e);
 
             /**
              * Resets subscription fields
@@ -191,12 +191,12 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     }
 
     /**
-     * Check if a VAT Code is provided. If a VAT Code is provided, the specific
-     * VAT Rates will be linked with the Professional
+     * Control if a VAT Code is provided. If a VAT Code is provided, the
+     * specific VAT Rates will be linked with the Professional
      *
      * @param pro the professional
      */
-    private void checkVatCode(Professional pro) {
+    private void controlVATCode(Professional pro) {
 
         String vatcode = pro.getVatcode();
         if (vatcode != null) {
@@ -206,7 +206,8 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 if (vr != null) {
                     pro.setVatRates(vr);
                 } else {
-                    throw new Exception();
+                    throw new Exception("Cannot set VAT code for country id ["
+                            + countryId + "]");
                 }
             } catch (Exception ex) {
                 throw new WebApplicationException(
@@ -235,45 +236,49 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
 
         LOG.log(Level.INFO, "Updating Professional {0}", proEmail);
 
-        return super.put(entity, proEmail, e
-                -> {
-            // hashes the provided password
-            if (entity.getPassword() != null && !entity.getPassword().isEmpty()) {
-                String hpwd = passwordManager.hashPassword(
-                        entity.getPassword());
-                e.setPassword(hpwd);
-            }
+        return super.put(
+                entity,
+                proEmail,
+                e -> {
+                    // hashes the provided password
+                    if (entity.getPassword() != null
+                    && !entity.getPassword().isEmpty()) {
+                        String hpwd = passwordManager.hashPassword(
+                                entity.getPassword());
+                        e.setPassword(hpwd);
+                    }
 
-            e.setUsername(entity.getUsername());
+                    e.setUsername(entity.getUsername());
 
-            entity.getCustomerDetails().setId(
-                    e.getCustomerDetails().getId());
-            entity.getAddress().setId(
-                    e.getAddress().getId());
-            entity.getSocialNetworkAccounts().setId(
-                    e.getSocialNetworkAccounts().getId());
+                    // set id preventing id spoufing (security reason)
+                    entity.getCustomerDetails().setId(
+                            e.getCustomerDetails().getId());
+                    entity.getAddress().setId(
+                            e.getAddress().getId());
+                    entity.getSocialNetworkAccounts().setId(
+                            e.getSocialNetworkAccounts().getId());
 
-            e.setCustomerDetails(entity.getCustomerDetails());
-            e.setAddress(entity.getAddress());
-            e.setSocialNetworkAccounts(entity.getSocialNetworkAccounts());
+                    e.setCustomerDetails(entity.getCustomerDetails());
+                    e.setAddress(entity.getAddress());
+                    e.setSocialNetworkAccounts(entity.getSocialNetworkAccounts());
 
-            e.setWebsite(entity.getWebsite());
-            e.setCompanyID(entity.getCompanyID());
-            e.setCompanyName(entity.getCompanyName());
+                    e.setWebsite(entity.getWebsite());
+                    e.setCompanyID(entity.getCompanyID());
+                    e.setCompanyName(entity.getCompanyName());
 
-            /**
-             * Sets the VAT code if specified and links with the corresponding
-             * VAT rates. Sets to null otherwise. Provided VAT Rates are
-             * ignored.
-             */
-            e.setVatcode(entity.getVatcode());
-            this.checkVatCode(e);
+                    /**
+                     * Sets the VAT code if specified and links with the
+                     * corresponding VAT rates. Sets to null otherwise. Provided
+                     * VAT Rates are ignored.
+                     */
+                    e.setVatcode(entity.getVatcode());
+                    this.controlVATCode(e);
 
-            e.setCreationDate(entity.getCreationDate());
-            e.setBusinesses(entity.getBusinesses());
-            e.setPaymentModes(entity.getPaymentModes());
+                    e.setCreationDate(entity.getCreationDate());
+                    e.setBusinesses(entity.getBusinesses());
+                    e.setPaymentModes(entity.getPaymentModes());
 
-        });
+                });
     }
 
     @RolesAllowed({"Administrator"})
@@ -494,10 +499,17 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 -> p.getIndividuals().remove(i) & i.getProfessionals().remove(p));
     }
 
+    /**
+     * Resets the Stripe data of the Professional but does not delete the
+     * Stripe objects on their platform.
+     *
+     * @param email the owner
+     * @return HTTP Response
+     */
+    @RolesAllowed({"Administrator"})
     @Path("clear-subscription-info/{email}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed({"Administrator"})
     public Response clearSubscriptionInfo(@PathParam("email") String email) {
         LOG.log(Level.WARNING, "Clearing Stripe information of user {0}", email);
         try {
