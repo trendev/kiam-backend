@@ -13,7 +13,6 @@ import fr.trendev.comptandye.professional.entities.Professional;
 import fr.trendev.comptandye.sale.entities.Sale;
 import fr.trendev.comptandye.common.controllers.AbstractFacade;
 import fr.trendev.comptandye.product.controllers.ProductFacade;
-import fr.trendev.comptandye.productrecord.controllers.ProductRecordFacade;
 import fr.trendev.comptandye.productreference.controllers.ProductReferenceFacade;
 import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
 import fr.trendev.comptandye.sale.controllers.SaleFacade;
@@ -257,53 +256,4 @@ public class ProductService extends AbstractCommonService<Product, ProductPK> {
         super.provideRelation(ar, pk, Product::getProductRecords,
                 ProductRecord.class);
     }
-
-    /*@Path("{categoryid}/addClient/{clientid}")
-    @PUT
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response addClient(@Context SecurityContext sec,
-            @PathParam("categoryid") Long categoryid,
-            @PathParam("clientid") Long clientid,
-            @QueryParam("professional") String professional) {
-
-        CategoryPK categoryPK = new CategoryPK(categoryid, this.getProEmail(sec,
-                professional));
-
-        ClientPK clientPK = new ClientPK(clientid, this.getProEmail(sec,
-                professional));
-
-        return super.<Client, ClientPK>manageAssociation(
-                AssociationManagementEnum.INSERT,
-                categoryPK,
-                saleFacade,
-                clientPK, Client.class,
-                (cat, cl) -> cat.getClients().add(cl) & cl.getCategories().
-                add(cat));
-    }
-
-    @Path("{categoryid}/removeClient/{clientid}")
-    @PUT
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response removeClient(@Context SecurityContext sec,
-            @PathParam("categoryid") Long categoryid,
-            @PathParam("clientid") Long clientid,
-            @QueryParam("professional") String professional) {
-
-        CategoryPK categoryPK = new CategoryPK(categoryid, this.getProEmail(sec,
-                professional));
-
-        ClientPK clientPK = new ClientPK(clientid, this.getProEmail(sec,
-                professional));
-
-        return super.<Client, ClientPK>manageAssociation(
-                AssociationManagementEnum.REMOVE,
-                categoryPK,
-                saleFacade,
-                clientPK, Client.class,
-                (cat, cl) -> cat.getClients().remove(cl) & cl.getCategories().
-                remove(cat));
-    }
-
-    
-     */
 }
