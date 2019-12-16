@@ -230,27 +230,27 @@ public abstract class AbstractCommonService<E, P> {
      * initAction and will be generated when the entity will be persist on the
      * DB.
      *
-     * @param entity the entity to persist
+     * @param payload the entity to persist
      * @param initAction the operations used to prepare the persist (ex: add the
      * entity to a relation, set fields like passwords, uuid...)
      * @return the persisted entity
      */
-    protected Response post(E entity, Consumer<E> initAction) {
+    protected Response post(E payload, Consumer<E> initAction) {
 
-        String jsonString = this.stringify(entity);
+        String jsonString = this.stringify(payload);
 
         try {
-            initAction.accept(entity);
-            getFacade().create(entity);
+            initAction.accept(payload);
+            getFacade().create(payload);
 //            getFacade().flush();
 //            getFacade().refresh(entity);
-            P pk = getFacade().getIdentifier(entity);
+            P pk = getFacade().getIdentifier(payload);
             getLogger().log(Level.INFO, entityClass.getSimpleName()
                     + " {0} created", getFacade().prettyPrintPK(pk));
             return Response.created(new URI(entityClass.getSimpleName() + "/"
                     + getFacade().prettyPrintPK(pk))).
                     entity(
-                            entity).
+                            payload).
                     build();
         } catch (InvalidDeliveryDateException | RollbackException |
                 EJBTransactionRolledbackException ex) {
@@ -277,7 +277,7 @@ public abstract class AbstractCommonService<E, P> {
      *
      * @param <O> the owner's type, usually Professional
      * @param <K> the owner's primary key type, usually String
-     * @param entity the entity to persist
+     * @param payload the entity to persist
      * @param ownerPK the primary key of the owner
      * @param ownerPrettyPrintFunction the method used to pretty print the
      * primary key of the owner, should be located in an AbstractFacade.
@@ -291,21 +291,21 @@ public abstract class AbstractCommonService<E, P> {
      * provided to {@link AbstractCommonService#post}
      * @return the persisted entity
      */
-    protected <O, K> Response post(E entity, K ownerPK,
+    protected <O, K> Response post(E payload, K ownerPK,
             BiFunction<AbstractFacade<O, K>, K, String> ownerPrettyPrintFunction,
             Class<O> ownerClass, AbstractFacade<O, K> ownerFacade,
             BiConsumer<E, O> setFunction,
             Function<O, List<? super E>> getFunction,
             Consumer<E> initAction) {
-        String jsonString = this.stringify(entity);
+        String jsonString = this.stringify(payload);
         getLogger().log(Level.INFO, "Creating {0} {1}", new Object[]{
             entityClass.getSimpleName(), jsonString});
         try {
             return Optional.ofNullable(ownerFacade.find(ownerPK))
                     .map(o -> {
-                        setFunction.accept(entity, o);
-                        getFunction.apply(o).add(entity);
-                        return this.post(entity, initAction);
+                        setFunction.accept(payload, o);
+                        getFunction.apply(o).add(payload);
+                        return this.post(payload, initAction);
                     })
                     .orElse(Response.status(Response.Status.NOT_FOUND).entity(
                             Json.createObjectBuilder().add("error",
@@ -337,13 +337,13 @@ public abstract class AbstractCommonService<E, P> {
     /**
      * Prepares and Updates an Entity.
      *
-     * @param entity the entity to update
+     * @param payload the entity to update
      * @param pk the primary key of the entity
      * @param updateAction operations to perform before the update (additional
      * checks and so on)
      * @return the updated entity
      */
-    protected Response put(E entity, P pk, Consumer<E> updateAction) {
+    protected Response put(E payload, P pk, Consumer<E> updateAction) {
         try {
             return Optional.ofNullable(getFacade().find(pk))
                     .map(result -> {
