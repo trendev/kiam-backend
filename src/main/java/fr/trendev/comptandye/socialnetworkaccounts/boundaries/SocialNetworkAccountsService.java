@@ -86,11 +86,11 @@ public class SocialNetworkAccountsService extends AbstractCommonService<SocialNe
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response post(SocialNetworkAccounts entity) {
+    public Response post(SocialNetworkAccounts payload) {
         LOG.log(Level.INFO, "Creating SocialNetworkAccounts {0}", super.
-                stringify(entity));
+                stringify(payload));
 
-        return super.post(entity, e -> {
+        return super.post(payload, e -> {
             e.setId(UUIDGenerator.generateID());
         });
     }
@@ -98,16 +98,16 @@ public class SocialNetworkAccountsService extends AbstractCommonService<SocialNe
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response put(SocialNetworkAccounts entity) {
+    public Response put(SocialNetworkAccounts payload) {
         LOG.
-                log(Level.INFO, "Updating SocialNetworkAccounts {0}", entity.
+                log(Level.INFO, "Updating SocialNetworkAccounts {0}", payload.
                         getId());
-        return super.put(entity, entity.getId(),
+        return super.put(payload, payload.getId(),
                 e -> {
-                    e.setFacebook(entity.getFacebook());
-                    e.setTwitter(entity.getTwitter());
-                    e.setInstagram(entity.getInstagram());
-                    e.setPinterest(entity.getPinterest());
+                    e.setFacebook(payload.getFacebook());
+                    e.setTwitter(payload.getTwitter());
+                    e.setInstagram(payload.getInstagram());
+                    e.setPinterest(payload.getPinterest());
                 });
     }
 
