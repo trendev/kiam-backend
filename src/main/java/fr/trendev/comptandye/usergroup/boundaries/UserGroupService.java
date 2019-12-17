@@ -94,19 +94,19 @@ public class UserGroupService extends AbstractCommonService<UserGroup, String> {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response post(UserGroup entity) {
-        LOG.log(Level.INFO, "Creating UserGroup {0}", entity.getName());
-        return super.post(entity, e -> {
+    public Response post(UserGroup payload) {
+        LOG.log(Level.INFO, "Creating UserGroup {0}", payload.getName());
+        return super.post(payload, e -> {
         });
     }
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response put(UserGroup entity) {
-        LOG.log(Level.INFO, "Updating UserGroup {0}", entity.getName());
-        return super.put(entity, entity.getName(), e -> {
-            e.setDescription(entity.getDescription());
+    public Response put(UserGroup payload) {
+        LOG.log(Level.INFO, "Updating UserGroup {0}", payload.getName());
+        return super.put(payload, payload.getName(), e -> {
+            e.setDescription(payload.getDescription());
         });
     }
 
