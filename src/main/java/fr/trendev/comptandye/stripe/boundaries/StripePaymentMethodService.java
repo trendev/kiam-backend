@@ -52,6 +52,13 @@ public class StripePaymentMethodService {
     private static final Logger LOG = Logger.getLogger(
             StripePaymentMethodService.class.getName());
 
+    /**
+     * Get the Stripe payment methods of a Professional user
+     * @param sec the security context  
+     * @param email optional user's email
+     * @param t the payment type (card)
+     * @return a HTTP response
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPaymentMethods(@Context SecurityContext sec,
