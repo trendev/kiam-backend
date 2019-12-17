@@ -85,21 +85,21 @@ public class VatRatesService extends AbstractCommonService<VatRates, String> {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response post(VatRates entity) {
-        LOG.log(Level.INFO, "Creating VatRates {0}", super.stringify(entity));
-        return super.post(entity, e -> {
+    public Response post(VatRates payload) {
+        LOG.log(Level.INFO, "Creating VatRates {0}", super.stringify(payload));
+        return super.post(payload, e -> {
         });
     }
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response put(VatRates entity) {
-        LOG.log(Level.INFO, "Updating VatRates {0}", entity.getCountryId());
-        return super.put(entity, entity.getCountryId(),
+    public Response put(VatRates payload) {
+        LOG.log(Level.INFO, "Updating VatRates {0}", payload.getCountryId());
+        return super.put(payload, payload.getCountryId(),
                 e -> {
-            e.setCountry(entity.getCountry());
-            e.setRates(entity.getRates());
+            e.setCountry(payload.getCountry());
+            e.setRates(payload.getRates());
         });
     }
 
