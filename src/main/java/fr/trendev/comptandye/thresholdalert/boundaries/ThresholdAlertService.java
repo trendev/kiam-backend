@@ -63,12 +63,12 @@ public class ThresholdAlertService extends AbstractCommonService<ThresholdAlert,
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response post(@Context SecurityContext sec, ThresholdAlert entity,
+    public Response post(@Context SecurityContext sec, ThresholdAlert payload,
             @QueryParam("professional") String professional) {
         
         String email = this.getProEmail(sec, professional);
         
-        return super.<Professional, String>post(entity, email,
+        return super.<Professional, String>post(payload, email,
                 AbstractFacade::prettyPrintPK,
                 Professional.class,
                 professionalFacade,
@@ -82,25 +82,25 @@ public class ThresholdAlertService extends AbstractCommonService<ThresholdAlert,
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response put(@Context SecurityContext sec, ThresholdAlert entity,
+    public Response put(@Context SecurityContext sec, ThresholdAlert payload,
             @QueryParam("professional") String professional) {
         
-        NotificationPK pk = new NotificationPK(entity.getId(), this.
+        NotificationPK pk = new NotificationPK(payload.getId(), this.
                 getProEmail(sec,
                         professional));
         
         LOG.log(Level.INFO, "Updating ThresholdAlert {0}",
                 thresholdAlertFacade.
                         prettyPrintPK(pk));
-        return super.put(entity, pk, e -> {
-            e.setChecked(entity.isChecked());
-            e.setLevelRank(entity.getLevelRank());
-            e.setBarcode(entity.getBarcode());
-            e.setDescription(entity.getDescription());
-            e.setBrand(entity.getBrand());
-            e.setThreshold(entity.getThreshold());
-            e.setQty(entity.getQty());
-            e.setQualifier(entity.getQualifier());
+        return super.put(payload, pk, e -> {
+            e.setChecked(payload.isChecked());
+            e.setLevelRank(payload.getLevelRank());
+            e.setBarcode(payload.getBarcode());
+            e.setDescription(payload.getDescription());
+            e.setBrand(payload.getBrand());
+            e.setThreshold(payload.getThreshold());
+            e.setQty(payload.getQty());
+            e.setQualifier(payload.getQualifier());
         });
     }
 }
