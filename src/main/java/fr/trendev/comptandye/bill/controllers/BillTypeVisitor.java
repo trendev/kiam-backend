@@ -42,13 +42,13 @@ import fr.trendev.comptandye.useraccount.entities.Customer;
 import fr.trendev.comptandye.useraccount.entities.UserAccount;
 import fr.trendev.comptandye.usergroup.entities.UserGroup;
 import fr.trendev.comptandye.utils.Visitor;
-import javax.ejb.Stateless;
+import javax.inject.Singleton;
 
 /**
  *
  * @author jsie
  */
-@Stateless
+@Singleton
 public class BillTypeVisitor implements Visitor<String> {
 
     public static final String INDIVIDUAL_PREFIX = "IX";

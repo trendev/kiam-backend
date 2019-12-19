@@ -47,14 +47,14 @@ import fr.trendev.comptandye.useraccount.entities.Customer;
 import fr.trendev.comptandye.useraccount.entities.UserAccount;
 import fr.trendev.comptandye.usergroup.entities.UserGroup;
 import fr.trendev.comptandye.utils.Visitor;
-import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  *
  * @author jsie
  */
-@Stateless
+@Singleton
 public class ProvideOfferingFacadeVisitor implements
         Visitor<AbstractFacade<? extends Offering, OfferingPK>> {
 
