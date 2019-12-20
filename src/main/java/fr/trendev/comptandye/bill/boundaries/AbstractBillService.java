@@ -297,6 +297,10 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         }
 
         if (!bill.getPayments().isEmpty()) {
+
+            // override the payments ids (security reason)
+            bill.getPayments().forEach(p -> p.setId(UUIDGenerator.generateID()));
+
             if (bill.getPaymentDate() != null) {
                 //Total amount should be equal to the sum of the amount's payment
                 int total = bill.getPayments().stream()
@@ -310,8 +314,6 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                     throw new WebApplicationException(errmsg);
                 }
 
-                // override the payments ids (security reason)
-                bill.getPayments().forEach(p -> p.setId(UUIDGenerator.generateID()));
             } else {
                 LOG.log(Level.INFO,
                         "{2} {0} delivered on {1} has not been paid : payments recorded but no payment date provided yet !",
