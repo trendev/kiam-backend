@@ -35,11 +35,13 @@ public class ObjectMapperProducer {
     @Produces
     @ProfessionalBackup
     public ObjectMapper getProfessionalBackupObjectMapper() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.addMixIn(Professional.class, ProfessionalMixin.class);
-        objectMapper.addMixIn(Product.class, ProductMixin.class);
-        objectMapper.addMixIn(ProductRecord.class, ProductRecordMixin.class);
-        objectMapper.addMixIn(Sale.class, SaleMixin.class);
-        return objectMapper;
+        // TODO :  investigate on the serialization issue 
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        objectMapper.addMixIn(Professional.class, ProfessionalMixin.class);
+//        objectMapper.addMixIn(Product.class, ProductMixin.class);
+//        objectMapper.addMixIn(ProductRecord.class, ProductRecordMixin.class);
+//        objectMapper.addMixIn(Sale.class, SaleMixin.class);
+//        return objectMapper;
+        return this.om;
     }
 }
