@@ -2233,21 +2233,20 @@
 								"id": "0e7413d2-21a7-41f8-9646-afa2a5e1ab7f",
 								"exec": [
 									"var billdate = new Date();",
-									"billdate.setHours(0,0,0,0);",
+									"billdate.setHours(0, 0, 0, 0);",
 									"",
 									"pm.environment.set(\"billdate\", billdate.getTime());",
 									"",
 									"pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/Client?professional=vanessa.gay@gmail.com\",",
+									"    url: pm.environment.get('API_URL') + \"/Client?professional=vanessa.gay@gmail.com\",",
 									"    method: 'POST',",
-									"   header: {",
-									"        'Content-Type':'application/json',",
-									"        'Authorization': 'Bearer '+pm.environment.get('JWT')",
+									"    header: {",
+									"        'Content-Type': 'application/json',",
+									"        'Authorization': 'Bearer ' + pm.environment.get('JWT')",
 									"    },",
-									"    body:{",
+									"    body: {",
 									"        mode: 'raw',",
-									"        raw: JSON.stringify(",
-									"            {",
+									"        raw: JSON.stringify({",
 									"            \"email\": \"client@domain.com\",",
 									"            \"socialNetworkAccounts\": {",
 									"                \"twitter\": \"@client_facebook_account\"",
@@ -2268,123 +2267,111 @@
 									"                \"city\": \"Chanteloup-en-Brie\",",
 									"                \"country\": \"France\"",
 									"            }",
-									"})",
+									"        })",
 									"    }",
-									"}, function (err, response) {",
+									"}, function(err, response) {",
 									"    console.log(response.json());",
-									"   pm.environment.set(\"created_client_id\", response.json().id);",
+									"    pm.environment.set(\"created_client_id\", response.json().id);",
 									"});",
 									"",
 									"",
 									"pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/Service?professional=vanessa.gay@gmail.com\",",
+									"    url: pm.environment.get('API_URL') + \"/Service?professional=vanessa.gay@gmail.com\",",
 									"    method: 'POST',",
 									"    header: {",
-									"        'Content-Type':'application/json',",
-									"        'Authorization': 'Bearer '+pm.environment.get('JWT')",
+									"        'Content-Type': 'application/json',",
+									"        'Authorization': 'Bearer ' + pm.environment.get('JWT')",
 									"    },",
-									"    body:{",
+									"    body: {",
 									"        mode: 'raw',",
-									"        raw: JSON.stringify(",
-									"            {",
-									"                name:\"beauty service\",",
-									"              price:1500,",
-									"              duration:180,",
-									"              businesses: [",
-									"                {",
-									"                    designation: \"Esthétique\"",
-									"                }",
-									"                ],",
-									"                cltype:\"service\"",
-									"            })",
+									"        raw: JSON.stringify({",
+									"            name: \"beauty service\",",
+									"            price: 1500,",
+									"            duration: 180,",
+									"            businesses: [{",
+									"                designation: \"Esthétique\"",
+									"            }],",
+									"            cltype: \"service\"",
+									"        })",
 									"    }",
-									"}, function (err, response) {",
+									"}, function(err, response) {",
 									"    console.log(response.json());",
-									"   pm.environment.set(\"created_offering_id\", response.json().id);",
+									"    pm.environment.set(\"created_offering_id\", response.json().id);",
 									"});",
 									"",
 									"pm.environment.set(\"created_product-reference_barcode\", \"1234567899\");",
 									"",
 									"pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/Product?professional=vanessa.gay@gmail.com\",",
-									"    method: 'POST',",
-									"   header: {",
-									"        'Content-Type':'application/json',",
-									"        'Authorization': 'Bearer '+pm.environment.get('JWT')",
-									"    },",
-									"    body:{",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify(",
-									"                        {",
-									"        \"availableQty\": 13,",
-									"        \"thresholdWarning\": 2,",
-									"        \"thresholdSevere\": 1,",
-									"        \"comments\":[",
-									"        \t\"No restriction\",",
-									"        \t\"ok for me\"",
-									"        ],",
-									"        \"productReference\": {",
-									"\t\"barcode\": pm.environment.get('created_product-reference_barcode'),",
-									"\t\"description\": \"blond color stick\",",
-									"\t\"brand\": \"L'OREAL\",",
-									"\t\"business\":            ",
-									"\t\t{",
-									"\t\t\t\"designation\": \"Coiffure\"",
-									"    \t}",
-									"        }",
-									"        })",
-									"    }",
-									"}, function (err, response) {",
-									"    console.log(response.json());",
-									"    ",
-									"    pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/Sale?professional=vanessa.gay@gmail.com\",",
+									"    url: pm.environment.get('API_URL') + \"/Product?professional=vanessa.gay@gmail.com\",",
 									"    method: 'POST',",
 									"    header: {",
-									"        'Content-Type':'application/json',",
-									"        'Authorization': 'Bearer '+pm.environment.get('JWT')",
+									"        'Content-Type': 'application/json',",
+									"        'Authorization': 'Bearer ' + pm.environment.get('JWT')",
 									"    },",
-									"    body:{",
+									"    body: {",
 									"        mode: 'raw',",
-									"        raw: JSON.stringify(",
-									"            {",
-									"                name:\"beauty product\",",
-									"                qty:2,",
-									"              price:1000,",
-									"              businesses: [",
-									"                {",
-									"                    designation: \"Esthétique\"",
+									"        raw: JSON.stringify({",
+									"            \"availableQty\": 13,",
+									"            \"thresholdWarning\": 2,",
+									"            \"thresholdSevere\": 1,",
+									"            \"comments\": [",
+									"                \"No restriction\",",
+									"                \"ok for me\"",
+									"            ],",
+									"            \"productReference\": {",
+									"                \"barcode\": pm.environment.get('created_product-reference_barcode'),",
+									"                \"description\": \"blond color stick\",",
+									"                \"brand\": \"L'OREAL\",",
+									"                \"business\": {",
+									"                    \"designation\": \"Coiffure\"",
 									"                }",
-									"                ],",
-									"                cltype:\"sale\",",
-									"                product:{",
-									"        \"availableQty\": 13,",
-									"        \"thresholdWarning\": 2,",
-									"        \"thresholdSevere\": 1,",
-									"        \"comments\":[",
-									"        \t\"No restriction\",",
-									"        \t\"ok for me\"",
-									"        ],",
-									"        \"productReference\": {",
-									"\t\"barcode\": pm.environment.get('created_product-reference_barcode'),",
-									"\t\"description\": \"blond color stick\",",
-									"\t\"brand\": \"L'OREAL\",",
-									"\t\"business\":            ",
-									"\t\t{",
-									"\t\t\t\"designation\": \"Coiffure\"",
-									"    \t}",
-									"        }",
-									"        }",
-									"            })",
+									"            }",
+									"        })",
 									"    }",
-									"}, function (err, response) {",
+									"}, function(err, response) {",
 									"    console.log(response.json());",
-									"   pm.environment.set(\"created_sale_id\", response.json().id);",
-									"});",
-									"});",
 									"",
-									"",
-									""
+									"    pm.sendRequest({",
+									"        url: pm.environment.get('API_URL') + \"/Sale?professional=vanessa.gay@gmail.com\",",
+									"        method: 'POST',",
+									"        header: {",
+									"            'Content-Type': 'application/json',",
+									"            'Authorization': 'Bearer ' + pm.environment.get('JWT')",
+									"        },",
+									"        body: {",
+									"            mode: 'raw',",
+									"            raw: JSON.stringify({",
+									"                name: \"beauty product\",",
+									"                qty: 2,",
+									"                price: 1000,",
+									"                businesses: [{",
+									"                    designation: \"Esthétique\"",
+									"                }],",
+									"                cltype: \"sale\",",
+									"                product: {",
+									"                    \"availableQty\": 13,",
+									"                    \"thresholdWarning\": 2,",
+									"                    \"thresholdSevere\": 1,",
+									"                    \"comments\": [",
+									"                        \"No restriction\",",
+									"                        \"ok for me\"",
+									"                    ],",
+									"                    \"productReference\": {",
+									"                        \"barcode\": pm.environment.get('created_product-reference_barcode'),",
+									"                        \"description\": \"blond color stick\",",
+									"                        \"brand\": \"L'OREAL\",",
+									"                        \"business\": {",
+									"                            \"designation\": \"Coiffure\"",
+									"                        }",
+									"                    }",
+									"                }",
+									"            })",
+									"        }",
+									"    }, function(err, response) {",
+									"        console.log(response.json());",
+									"        pm.environment.set(\"created_sale_id\", response.json().id);",
+									"    });",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -2427,9 +2414,7 @@
 									"tests[\"purchasedOfferings[0].offering.name = beauty service\"] = jsonData.purchasedOfferings[0].offering.name === \"beauty service\";",
 									"tests[\"purchasedOfferings[0].offering.price = 1500\"] = jsonData.purchasedOfferings[0].offering.price === 1500;",
 									"tests[\"purchasedOfferings[0].offering.duration = 180\"] = jsonData.purchasedOfferings[0].offering.duration === 180;",
-									"tests[\"purchasedOfferings[0].offering.businesses[0].designation = Esthétique\"] = jsonData.purchasedOfferings[0].offering.businesses[0].designation === \"Esthétique\";",
-									"",
-									""
+									"tests[\"purchasedOfferings[0].offering.businesses[0].designation = Esthétique\"] = jsonData.purchasedOfferings[0].offering.businesses[0].designation === \"Esthétique\";"
 								],
 								"type": "text/javascript"
 							}
@@ -2441,10 +2426,6 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -2476,20 +2457,24 @@
 							"listen": "test",
 							"script": {
 								"id": "8ad38598-c124-45ab-8e02-4c674d7853a1",
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"There is one or more SoldItem\"] = jsonData.length >= 1;",
 									"",
-									"var lng = jsonData.length;",
+									"var solditems = jsonData;",
+									"solditems.sort(function(si1, si2) {",
+									"    return si2.recordDate - si1.recordDate; // reorder : most recent first...",
+									"});",
+									"",
 									"// the auto created sold item should be the last one...",
-									"var autoCreatedSoldItem = jsonData[lng-1];",
+									"var autoCreatedSoldItem = solditems[0];",
 									"",
 									"// save the id",
 									"pm.environment.set(\"auto_created_product_record_id\", autoCreatedSoldItem.id);"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -2583,7 +2568,6 @@
 							"listen": "test",
 							"script": {
 								"id": "d100ed7e-52bf-4c61-a95f-ff0b1fcfe9c9",
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
@@ -2627,7 +2611,8 @@
 									"tests[\"purchasedOfferings[0].offering.businesses[0].designation = Esthétique\"] = jsonData.purchasedOfferings[0].offering.businesses[0].designation === \"Esthétique\";",
 									"",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -2637,15 +2622,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"reference\": \"{{created_clientbill_reference}}\",\n    \"deliveryDate\": {{created_clientbill_deliveryDate}},\n    \"paymentDate\": {{created_clientbill_deliveryDate}},\n    \"cltype\": \"clientbill\",\n    \"amount\": 9000,\n    \"currency\": \"EUR\",\n    \"discount\": 1000,\n    \"comments\": [\n        \"Let the color applying\",\n        \"Hair used to be darker than expected\"\n    ],\n    \"payments\": [\n        {\n            \"amount\": 8000,\n            \"paymentMode\": {\n                \"name\": \"CB\"\n            }\n        },\n        {\n            \"amount\": 1000,\n            \"paymentMode\": {\n                \"name\": \"Espèces\"\n            }\n        }\n    ],\n    \"client\": {\n        \"id\": {{created_client_id}}\n    }\n}"
+							"raw": "{\n    \"reference\": \"{{created_clientbill_reference}}\",\n    \"deliveryDate\": {{created_clientbill_deliveryDate}},\n    \"paymentDate\": {{created_clientbill_deliveryDate}},\n    \"cltype\": \"clientbill\",\n    \"amount\": 9000,\n    \"currency\": \"EUR\",\n    \"discount\": 1000,\n    \"comments\": [\n        \"Let the color applying\",\n        \"Hair used to be darker than expected\"\n    ],\n    \"payments\": [\n        {\n            \"amount\": 8000,\n            \"paymentMode\": {\n                \"name\": \"CB\"\n            }\n        },\n        {\n            \"amount\": 1000,\n            \"paymentMode\": {\n                \"name\": \"Espèces\"\n            }\n        }\n    ],\n    \"client\": {\n        \"id\": \"{{created_client_id}}\"\n    }\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/ClientBill?professional=vanessa.gay@gmail.com",
@@ -2672,7 +2653,6 @@
 							"listen": "test",
 							"script": {
 								"id": "76dbb7de-1fb6-414d-a9da-3cc3cfdded6d",
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
@@ -2720,7 +2700,8 @@
 									"tests[\"purchasedOfferings[0].offering.businesses[0].designation = Esthétique\"] = jsonData.purchasedOfferings[0].offering.businesses[0].designation === \"Esthétique\";",
 									"",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -2730,15 +2711,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"reference\": \"{{created_clientbill_reference}}\",\n    \"deliveryDate\": {{created_clientbill_deliveryDate}},\n    \"paymentDate\": {{created_clientbill_deliveryDate}},\n    \"cltype\": \"clientbill\",\n    \"amount\": 9000,\n    \"currency\": \"EUR\",\n    \"discount\": 1000,\n    \"cancelled\": true,\n    \"comments\": [\n        \"Let the color applying\",\n        \"Hair used to be darker than expected\"\n    ],\n    \"payments\": [\n        {\n            \"amount\": 8000,\n            \"paymentMode\": {\n                \"name\": \"CB\"\n            }\n        },\n        {\n            \"amount\": 1000,\n            \"paymentMode\": {\n                \"name\": \"Espèces\"\n            }\n        }\n    ],\n    \"client\": {\n        \"id\": {{created_client_id}}\n    }\n}"
+							"raw": "{\n    \"reference\": \"{{created_clientbill_reference}}\",\n    \"deliveryDate\": {{created_clientbill_deliveryDate}},\n    \"paymentDate\": {{created_clientbill_deliveryDate}},\n    \"cltype\": \"clientbill\",\n    \"amount\": 9000,\n    \"currency\": \"EUR\",\n    \"discount\": 1000,\n    \"cancelled\": true,\n    \"comments\": [\n        \"Let the color applying\",\n        \"Hair used to be darker than expected\"\n    ],\n    \"payments\": [\n        {\n            \"amount\": 8000,\n            \"paymentMode\": {\n                \"name\": \"CB\"\n            }\n        },\n        {\n            \"amount\": 1000,\n            \"paymentMode\": {\n                \"name\": \"Espèces\"\n            }\n        }\n    ],\n    \"client\": {\n        \"id\": \"{{created_client_id}}\"\n    }\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/ClientBill?professional=vanessa.gay@gmail.com",
@@ -2766,27 +2743,31 @@
 							"listen": "test",
 							"script": {
 								"id": "b54dcf58-9257-4c68-83b0-57367552cb52",
-								"type": "text/javascript",
 								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"pm.test(\"status code is 200\", function() {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.ok;",
+									"});",
 									"",
-									"/*",
-									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"reference is \"+pm.environment.get(\"created_clientbill_reference\")] = jsonData.reference == pm.environment.get(\"created_clientbill_reference\");",
-									"tests[\"deliveryDate is \"+pm.environment.get(\"created_clientbill_deliveryDate\")] = jsonData.deliveryDate == pm.environment.get(\"created_clientbill_deliveryDate\");",
-									"*/"
-								]
+									"pm.test(\"response has a json body\", function() {",
+									"    pm.response.to.have.jsonBody();",
+									"});",
+									"",
+									"var body = pm.response.json();",
+									"",
+									"pm.test(\"Bill is cancelled\", function() {",
+									"    pm.expect(body.cancelled).to.be.true;",
+									"    pm.expect(body.cancellationDate).to.not.be.undefined;",
+									"});"
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "PUT",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -2820,26 +2801,25 @@
 							"listen": "test",
 							"script": {
 								"id": "d6cb1191-4c4b-4bd2-a86c-a353870c9660",
-								"type": "text/javascript",
 								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"pm.test(\"status code is 200\", function() {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.ok;",
+									"});",
 									"",
 									"",
 									"",
 									"",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -2865,79 +2845,74 @@
 							"listen": "test",
 							"script": {
 								"id": "321d08a0-e9dd-451b-a078-1b7133cc3744",
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/Service/\"+pm.environment.get('created_offering_id')+\"?professional=vanessa.gay@gmail.com\",",
+									"    url: pm.environment.get('API_URL') + \"/Service/\" + pm.environment.get('created_offering_id') + \"?professional=vanessa.gay@gmail.com\",",
 									"    header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"        'Content-Type': 'application/json',",
+									"        'Authorization': 'Bearer ' + pm.environment.get('JWT')",
 									"    },",
 									"    method: 'DELETE'",
-									"}, function (err, res) {",
+									"}, function(err, res) {",
 									"    pm.expect(res).to.have.property('code', 200);",
 									"    pm.expect(res).to.have.property('status', 'OK');",
 									"});",
 									"",
 									"pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/Sale/\"+pm.environment.get('created_sale_id')+\"?professional=vanessa.gay@gmail.com\",",
+									"    url: pm.environment.get('API_URL') + \"/Sale/\" + pm.environment.get('created_sale_id') + \"?professional=vanessa.gay@gmail.com\",",
 									"    header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"        'Content-Type': 'application/json',",
+									"        'Authorization': 'Bearer ' + pm.environment.get('JWT')",
 									"    },",
 									"    method: 'DELETE'",
-									"}, function (err, res) {",
+									"}, function(err, res) {",
 									"    pm.expect(res).to.have.property('code', 200);",
 									"    pm.expect(res).to.have.property('status', 'OK');",
 									"    pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/Product/\"+pm.environment.get('created_product-reference_barcode')+\"?professional=vanessa.gay@gmail.com\",",
-									"    header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
-									"    },",
-									"    method: 'DELETE'",
-									"}, function (err, res) {",
-									"    pm.expect(res).to.have.property('code', 200);",
-									"    pm.expect(res).to.have.property('status', 'OK');",
-									"    pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/ProductReference/\"+pm.environment.get('created_product-reference_barcode'),",
-									"    header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
-									"    },",
-									"    method: 'DELETE'",
-									"}, function (err, res) {",
-									"    pm.expect(res).to.have.property('code', 200);",
-									"    pm.expect(res).to.have.property('status', 'OK');",
-									"});",
-									"});",
+									"        url: pm.environment.get('API_URL') + \"/Product/\" + pm.environment.get('created_product-reference_barcode') + \"?professional=vanessa.gay@gmail.com\",",
+									"        header: {",
+									"            'Content-Type': 'application/json',",
+									"            'Authorization': 'Bearer ' + pm.environment.get('JWT')",
+									"        },",
+									"        method: 'DELETE'",
+									"    }, function(err, res) {",
+									"        pm.expect(res).to.have.property('code', 200);",
+									"        pm.expect(res).to.have.property('status', 'OK');",
+									"        pm.sendRequest({",
+									"            url: pm.environment.get('API_URL') + \"/ProductReference/\" + pm.environment.get('created_product-reference_barcode'),",
+									"            header: {",
+									"                'Content-Type': 'application/json',",
+									"                'Authorization': 'Bearer ' + pm.environment.get('JWT')",
+									"            },",
+									"            method: 'DELETE'",
+									"        }, function(err, res) {",
+									"            pm.expect(res).to.have.property('code', 200);",
+									"            pm.expect(res).to.have.property('status', 'OK');",
+									"        });",
+									"    });",
 									"});",
 									"",
 									"pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/Client/\"+pm.environment.get('created_client_id')+\"?professional=vanessa.gay@gmail.com\",",
+									"    url: pm.environment.get('API_URL') + \"/Client/\" + pm.environment.get('created_client_id') + \"?professional=vanessa.gay@gmail.com\",",
 									"    header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"        'Content-Type': 'application/json',",
+									"        'Authorization': 'Bearer ' + pm.environment.get('JWT')",
 									"    },",
 									"    method: 'DELETE'",
-									"}, function (err, res) {",
+									"}, function(err, res) {",
 									"    pm.expect(res).to.have.property('code', 200);",
 									"    pm.expect(res).to.have.property('status', 'OK');",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
