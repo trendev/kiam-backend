@@ -1767,13 +1767,24 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "970a9da6-3f29-400a-b232-b26289a78978",
 								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"pm.test(\"status code is 200\", function() {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.ok;",
+									"});",
 									"",
-									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"Client table is not empty\"] = jsonData.length >= 1;"
-								]
+									"pm.test(\"response has a json body\", function() {",
+									"    pm.response.to.have.jsonBody();",
+									"});",
+									"",
+									"pm.test(\"Client table is not empty\", function() {",
+									"    var body = pm.response.json();",
+									"    pm.expect(body.length).to.be.above(1);",
+									"});"
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -1830,7 +1841,6 @@
 							"listen": "test",
 							"script": {
 								"id": "d01e323c-a309-4f2c-914b-47bc22bc3795",
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
 									"",
@@ -1851,17 +1861,18 @@
 									"tests[\"customerDetails.sex is \\\"M\\\"\"] = jsonData.customerDetails.sex === \"M\";",
 									"tests[\"customerDetails.comments.length is 2\"] = jsonData.customerDetails.comments.length === 2;",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "prerequest",
 							"script": {
 								"id": "39e711d7-c2eb-4f2f-9ab9-b4c5d7eeeaa9",
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -1871,10 +1882,6 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -1958,7 +1965,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "96ca38a0-2b87-4893-84e7-58056116b4dc",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
@@ -1981,7 +1988,8 @@
 									"tests[\"customerDetails.sex is \\\"M\\\"\"] = jsonData.customerDetails.sex === \"M\";",
 									"tests[\"customerDetails.comments.length is 2\"] = jsonData.customerDetails.comments.length === 2;",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -1991,15 +1999,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"id\":{{created_client_id}},\n  \"email\":\"client_email02@domain.com\",\n  \"address\":{\n    \"street\":\"Allée de Fontenelle\",\n    \"optional\":\"Château de Fontenelle\",\n    \"postalCode\":\"77600\",\n    \"city\":\"Chanteloup-en-Brie\"\n  },\n  \"socialNetworkAccounts\":{\n    \"twitter\":\"@client_facebook_account\",\n    \"facebook\":\"https://facebook.com/client_account\"\n  },\n  \"customerDetails\":{\n    \"firstName\":\"Paul\",\n    \"lastName\":\"Newman\",\n    \"sex\":\"M\",\n    \"comments\":[\n      \"old american actor\",\n      \"old shool boy\"\n    ]\n  }\n}"
+							"raw": "{\n  \"id\":\"{{created_client_id}}\",\n  \"email\":\"client_email02@domain.com\",\n  \"address\":{\n    \"street\":\"Allée de Fontenelle\",\n    \"optional\":\"Château de Fontenelle\",\n    \"postalCode\":\"77600\",\n    \"city\":\"Chanteloup-en-Brie\"\n  },\n  \"socialNetworkAccounts\":{\n    \"twitter\":\"@client_facebook_account\",\n    \"facebook\":\"https://facebook.com/client_account\"\n  },\n  \"customerDetails\":{\n    \"firstName\":\"Paul\",\n    \"lastName\":\"Newman\",\n    \"sex\":\"M\",\n    \"comments\":[\n      \"old american actor\",\n      \"old shool boy\"\n    ]\n  }\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Client?professional=vanessa.gay@gmail.com",
