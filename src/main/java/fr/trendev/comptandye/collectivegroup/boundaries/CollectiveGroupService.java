@@ -141,7 +141,8 @@ public class CollectiveGroupService extends AbstractCommonService<CollectiveGrou
              * Address should not be null and its ID has been set during the
              * creation (POST)
              */
-            entity.getAddress().setId(e.getAddress().getId()); //override the provided ID
+            // set a new id for security reason
+            entity.getAddress().setId(UUIDGenerator.generateID());
             e.setAddress(entity.getAddress());
 
             e.setGroupName(entity.getGroupName());
