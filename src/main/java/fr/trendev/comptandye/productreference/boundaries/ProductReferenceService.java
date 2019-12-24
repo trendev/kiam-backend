@@ -150,7 +150,7 @@ public class ProductReferenceService extends AbstractCommonService<ProductRefere
     @Path("{barcode}")
     @DELETE
     public Response delete(@PathParam("barcode") String barcode) {
-        LOG.log(Level.INFO, "Deleting Address {0}", barcode);
+        LOG.log(Level.INFO, "Deleting ProductReference {0}", barcode);
         return super.delete(barcode, e -> {
         });
     }
