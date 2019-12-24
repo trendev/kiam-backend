@@ -8715,7 +8715,6 @@
 							"listen": "test",
 							"script": {
 								"id": "2a862912-f1fa-42bf-a85f-82a8e9da4688",
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
 									"",
@@ -8746,7 +8745,8 @@
 									"tests[\"invoiceRef is \\\"FR123456XXLOREAL\\\"\"] = jsonData.invoiceRef === \"FR123456XXLOREAL\";",
 									"",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -8756,10 +8756,6 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -8791,7 +8787,6 @@
 							"listen": "test",
 							"script": {
 								"id": "b28845c3-65f0-49f0-a8f9-a5bde46fc7cc",
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
@@ -8821,7 +8816,8 @@
 									"",
 									"tests[\"invoiceRef is \\\"FR123456XXLOREAL\\\"\"] = jsonData.invoiceRef === \"FR123456XXLOREAL\";",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -8831,15 +8827,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"id\":{{created_expense_id}},\n  \"cltype\": \"purchase\",\n  \"description\":\"Purple Color sticks\",\n  \"amount\":1000,\n  \"paymentDate\":1505707896023,\n  \"categories\": [\n            \"Provider\",\n            \"Color Broker in Paris\"\n  ],\n  \"provider\": \"Bleu Libellule\",\n  \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n        ]\n}"
+							"raw": "{\n  \"id\":\"{{created_expense_id}}\",\n  \"cltype\": \"purchase\",\n  \"description\":\"Purple Color sticks\",\n  \"amount\":1000,\n  \"paymentDate\":1505707896023,\n  \"categories\": [\n            \"Provider\",\n            \"Color Broker in Paris\"\n  ],\n  \"provider\": \"Bleu Libellule\",\n  \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n        ]\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/PurchaseExpense?professional=vanessa.gay@gmail.com",
@@ -8866,7 +8858,6 @@
 							"listen": "test",
 							"script": {
 								"id": "09290e0e-7de4-441e-b7cd-b5f80d41bf1b",
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
@@ -8896,7 +8887,8 @@
 									"",
 									"tests[\"invoiceRef is \\\"FR123456XXLOREAL\\\"\"] = jsonData.invoiceRef === \"FR123456XXLOREAL\";",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -8906,15 +8898,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"id\":{{created_expense_id}},\n  \"cltype\": \"purchase\",\n  \"description\":\"Purple Color sticks\",\n  \"amount\":1000,\n  \"paymentDate\":1505707896023,\n  \"categories\": [\n            \"Provider\",\n            \"Color Broker in Paris\"\n  ],\n  \"provider\": \"Bleu Libellule\",\n  \"cancelled\":true,\n  \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n        ]\n}"
+							"raw": "{\n  \"id\":\"{{created_expense_id}}\",\n  \"cltype\": \"purchase\",\n  \"description\":\"Purple Color sticks\",\n  \"amount\":1000,\n  \"paymentDate\":1505707896023,\n  \"categories\": [\n            \"Provider\",\n            \"Color Broker in Paris\"\n  ],\n  \"provider\": \"Bleu Libellule\",\n  \"cancelled\":true,\n  \"businesses\": [\n            {\n                \"designation\": \"Coiffure\"\n            }\n        ]\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/PurchaseExpense?professional=vanessa.gay@gmail.com",
@@ -9037,21 +9025,17 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "396e95a2-9231-4ea1-a467-6d7154b822d2",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -9150,7 +9134,6 @@
 							"listen": "test",
 							"script": {
 								"id": "b687e730-a03c-4490-aa98-6e70c7681f29",
-								"type": "text/javascript",
 								"exec": [
 									"",
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
@@ -9172,113 +9155,102 @@
 									"tests[\"city is \\\"Quincy-Voisins\\\"\"] = jsonData.city === \"Quincy-Voisins\";",
 									"tests[\"country is \\\"France\\\"\"] = jsonData.country === \"France\";*/",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "prerequest",
 							"script": {
 								"id": "f5b1b44c-9c85-4a29-8955-e7855cb31f46",
-								"type": "text/javascript",
 								"exec": [
 									"pm.environment.set(\"created_product-reference_barcode\", \"1234567899\");",
 									"",
 									"pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/Product?professional=vanessa.gay@gmail.com\",",
+									"    url: pm.environment.get('API_URL') + \"/Product?professional=vanessa.gay@gmail.com\",",
 									"    method: 'POST',",
-									"   header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"    header: {",
+									"        'Content-Type': 'application/json',",
+									"        'Authorization': 'Bearer ' + pm.environment.get('JWT')",
 									"    },",
-									"    body:{",
+									"    body: {",
 									"        mode: 'raw',",
-									"        raw: JSON.stringify(",
-									"                        {",
-									"        \"availableQty\": 3,",
-									"        \"thresholdWarning\": 3,",
-									"        \"thresholdSevere\": 1,",
-									"        \"comments\":[",
-									"        \t\"No restriction\",",
-									"        \t\"ok for me\"",
-									"        ],",
-									"        \"productReference\": {",
-									"\t\"barcode\": pm.environment.get('created_product-reference_barcode'),",
-									"\t\"description\": \"blond color stick\",",
-									"\t\"brand\": \"L'OREAL\",",
-									"\t\"business\":            ",
-									"\t\t{",
-									"\t\t\t\"designation\": \"Coiffure\"",
-									"    \t}",
-									"        }",
+									"        raw: JSON.stringify({",
+									"            \"availableQty\": 3,",
+									"            \"thresholdWarning\": 3,",
+									"            \"thresholdSevere\": 1,",
+									"            \"comments\": [",
+									"                \"No restriction\",",
+									"                \"ok for me\"",
+									"            ],",
+									"            \"productReference\": {",
+									"                \"barcode\": pm.environment.get('created_product-reference_barcode'),",
+									"                \"description\": \"blond color stick\",",
+									"                \"brand\": \"L'OREAL\",",
+									"                \"business\": {",
+									"                    \"designation\": \"Coiffure\"",
+									"                }",
+									"            }",
 									"        })",
 									"    }",
-									"}, function (err, response) {",
+									"}, function(err, response) {",
 									"    console.log(response.json());",
 									"});",
 									"",
 									"pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/PurchaseExpense?professional=vanessa.gay@gmail.com\",",
+									"    url: pm.environment.get('API_URL') + \"/PurchaseExpense?professional=vanessa.gay@gmail.com\",",
 									"    method: 'POST',",
-									"   header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"    header: {",
+									"        'Content-Type': 'application/json',",
+									"        'Authorization': 'Bearer ' + pm.environment.get('JWT')",
 									"    },",
-									"    body:{",
+									"    body: {",
 									"        mode: 'raw',",
-									"        raw: JSON.stringify(",
-									"                        {",
-									"  \"cltype\": \"purchase\",",
-									"  \"description\":\"Purple Color\",",
-									"  \"amount\":4050,",
-									"  \"paymentDate\":1505707896023,",
-									"  \"provider\":\"L'OREAL\",",
-									"  \"vatInclusive\": false,",
-									"  \"categories\": [",
-									"            \"Color\",",
-									"            \"Perfect Color from Paris\"",
-									"    ],",
-									"    \"payments\": [",
-									"            {",
-									"        \"amount\": 4000,",
+									"        raw: JSON.stringify({",
+									"            \"cltype\": \"purchase\",",
+									"            \"description\": \"Purple Color\",",
+									"            \"amount\": 4050,",
+									"            \"paymentDate\": 1505707896023,",
+									"            \"provider\": \"L'OREAL\",",
+									"            \"vatInclusive\": false,",
+									"            \"categories\": [",
+									"                \"Color\",",
+									"                \"Perfect Color from Paris\"",
+									"            ],",
+									"            \"payments\": [{",
+									"                \"amount\": 4000,",
 									"                \"paymentMode\": {",
 									"                    \"name\": \"CB\"",
 									"                }",
-									"            },",
-									"            {",
+									"            }, {",
 									"                \"amount\": 50,",
 									"                \"paymentMode\": {",
 									"                    \"name\": \"Espèces\"",
 									"                }",
-									"            }",
-									"        ],",
-									"    \"businesses\": [",
-									"            {",
+									"            }],",
+									"            \"businesses\": [{",
 									"                \"designation\": \"Coiffure\"",
-									"            }",
-									"    ],",
-									"    \"expenseItems\":[",
-									"      {",
-									"      \"description\":\"Purple #1\",",
-									"      \"amount\":1000,",
-									"      \"qty\":2,",
-									"      \"vatRate\":20",
-									"      },",
-									"      {",
-									"      \"description\":\"Purple #2\",",
-									"      \"amount\":500,",
-									"      \"qty\":3,",
-									"      \"vatRate\":10",
-									"      }",
-									"    ],",
-									"    \"invoiceRef\":\"FR123456XXLOREAL\"",
-									"})",
+									"            }],",
+									"            \"expenseItems\": [{",
+									"                \"description\": \"Purple #1\",",
+									"                \"amount\": 1000,",
+									"                \"qty\": 2,",
+									"                \"vatRate\": 20",
+									"            }, {",
+									"                \"description\": \"Purple #2\",",
+									"                \"amount\": 500,",
+									"                \"qty\": 3,",
+									"                \"vatRate\": 10",
+									"            }],",
+									"            \"invoiceRef\": \"FR123456XXLOREAL\"",
+									"        })",
 									"    }",
-									"}, function (err, response) {",
+									"}, function(err, response) {",
 									"    console.log(response.json());",
 									"    pm.environment.set(\"created_expense_id\", response.json().id);",
-									"});",
-									""
-								]
+									"});"
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -9288,15 +9260,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n        \"cltype\": \"purchased\",\n        \"qty\": 2,\n        \"product\": {\n            \"productReference\": {\n                \"barcode\": {{created_product-reference_barcode}}\n            }\n        },\n        \"purchaseExpense\": {\n            \"id\": {{created_expense_id}},\n            \"cltype\": \"purchase\"\n        }\n    }"
+							"raw": "{\n        \"cltype\": \"purchased\",\n        \"qty\": 2,\n        \"product\": {\n            \"productReference\": {\n                \"barcode\": \"{{created_product-reference_barcode}}\"\n            }\n        },\n        \"purchaseExpense\": {\n            \"id\": \"{{created_expense_id}}\",\n            \"cltype\": \"purchase\"\n        }\n    }"
 						},
 						"url": {
 							"raw": "{{API_URL}}/PurchasedItem?professional=vanessa.gay@gmail.com",
@@ -9365,7 +9333,6 @@
 							"listen": "test",
 							"script": {
 								"id": "db5f2375-439f-44e5-be95-1b0b5e079f96",
-								"type": "text/javascript",
 								"exec": [
 									"",
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -9380,7 +9347,8 @@
 									"tests[\"product.productReference.barcode is \"+pm.environment.get(\"created_product-reference_barcode\")] = jsonData.product.productReference.barcode === pm.environment.get(\"created_product-reference_barcode\");",
 									"tests[\"purchaseExpense.id is \"+pm.environment.get(\"created_expense_id\")] = jsonData.purchaseExpense.id === pm.environment.get(\"created_expense_id\");",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -9390,15 +9358,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n        \"id\": {{created_product-record_id}},\n        \"cltype\": \"purchased\",\n        \"qty\": 100,\n        \"cancelled\": true,\n        \"product\": {\n            \"productReference\": {\n                \"barcode\": \"1234567891\"\n            }\n        },\n        \"purchaseExpense\": {\n            \"id\": 9,\n            \"cltype\": \"purchase\"\n        }\n    }"
+							"raw": "{\n        \"id\": \"{{created_product-record_id}}\",\n        \"cltype\": \"purchased\",\n        \"qty\": 100,\n        \"cancelled\": true,\n        \"product\": {\n            \"productReference\": {\n                \"barcode\": \"1234567891\"\n            }\n        },\n        \"purchaseExpense\": {\n            \"id\": 9,\n            \"cltype\": \"purchase\"\n        }\n    }"
 						},
 						"url": {
 							"raw": "{{API_URL}}/PurchasedItem?professional=vanessa.gay@gmail.com",
@@ -9426,58 +9390,51 @@
 							"listen": "test",
 							"script": {
 								"id": "6d035ec1-f475-4a77-99ab-31a0769300e8",
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/Product/\"+pm.environment.get('created_product-reference_barcode')+\"?professional=vanessa.gay@gmail.com\",",
+									"    url: pm.environment.get('API_URL') + \"/Product/\" + pm.environment.get('created_product-reference_barcode') + \"?professional=vanessa.gay@gmail.com\",",
 									"    header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"        'Content-Type': 'application/json',",
+									"        'Authorization': 'Bearer ' + pm.environment.get('JWT')",
 									"    },",
 									"    method: 'DELETE'",
-									"}, function (err, res) {",
+									"}, function(err, res) {",
 									"    pm.expect(res).to.have.property('code', 200);",
 									"    pm.expect(res).to.have.property('status', 'OK');",
 									"    pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/ProductReference/\"+pm.environment.get('created_product-reference_barcode'),",
-									"    header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
-									"    },",
-									"    method: 'DELETE'",
-									"}, function (err, res) {",
-									"    pm.expect(res).to.have.property('code', 200);",
-									"    pm.expect(res).to.have.property('status', 'OK');",
-									"});",
+									"        url: pm.environment.get('API_URL') + \"/ProductReference/\" + pm.environment.get('created_product-reference_barcode'),",
+									"        header: {",
+									"            'Content-Type': 'application/json',",
+									"            'Authorization': 'Bearer ' + pm.environment.get('JWT')",
+									"        },",
+									"        method: 'DELETE'",
+									"    }, function(err, res) {",
+									"        pm.expect(res).to.have.property('code', 200);",
+									"        pm.expect(res).to.have.property('status', 'OK');",
+									"    });",
 									"});",
 									"",
 									"pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/PurchaseExpense/\"+pm.environment.get('created_expense_id')+\"?professional=vanessa.gay@gmail.com\",",
+									"    url: pm.environment.get('API_URL') + \"/PurchaseExpense/\" + pm.environment.get('created_expense_id') + \"?professional=vanessa.gay@gmail.com\",",
 									"    header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"        'Content-Type': 'application/json',",
+									"        'Authorization': 'Bearer ' + pm.environment.get('JWT')",
 									"    },",
 									"    method: 'DELETE'",
-									"}, function (err, res) {",
+									"}, function(err, res) {",
 									"    pm.expect(res).to.have.property('code', 200);",
 									"    pm.expect(res).to.have.property('status', 'OK');",
-									"});",
-									"",
-									""
-								]
+									"});"
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
