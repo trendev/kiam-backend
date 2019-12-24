@@ -3747,18 +3747,19 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"type": "text/javascript",
+								"id": "7ef3fc4e-50a4-40e0-bca7-a59d8e2df802",
 								"exec": [
 									"/*birthdate should be send as UTC format only (avoid javascript GMT+2 and JAVA GMT+1 conversion errors for dates before 1970)*/",
 									"pm.environment.set(\"birthdate\", Date.UTC(1960,7,7));",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "2d2416eb-d0bf-4f18-8e5b-acdf88b3892d",
 								"exec": [
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
 									"",
@@ -3775,7 +3776,8 @@
 									"tests[\"picturePath is \\\"C:/Documents and Settings/whateverUwant.png\\\"\"] = jsonData.picturePath === \"C:/Documents and Settings/whateverUwant.png\";",
 									"tests[\"comments contains 4 elements\"] = jsonData.comments.length === 4;",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -3785,10 +3787,6 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -3854,7 +3852,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "d8dc9b79-13d2-4986-8a1e-b2e327861763",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
@@ -3868,7 +3866,8 @@
 									"tests[\"sex is \\\"M\\\"\"] = jsonData.sex === \"M\";",
 									"tests[\"picturePath is undefined\"] = jsonData.picturePath === undefined;",
 									"tests[\"comments contains 4 elements\"] = jsonData.comments.length === 5;"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -3878,15 +3877,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n        \"id\":{{created_customer_details_id}},\n        \"firstName\": \"John\",\n        \"lastName\": \"Doe\",\n        \"phone\": \"0102030405\",\n        \"birthdate\": 1467986000,\n        \"sex\": \"M\",\n        \"comments\": [\n            \"Cool\",\n            \"Surfing boy\",\n            \"Able to ollie pop\",\n            \"I guess the guy is buddhist\",\n            \"But he has no name LOL\"\n        ]\n}"
+							"raw": "{\n        \"id\":\"{{created_customer_details_id}}\",\n        \"firstName\": \"John\",\n        \"lastName\": \"Doe\",\n        \"phone\": \"0102030405\",\n        \"birthdate\": 1467986000,\n        \"sex\": \"M\",\n        \"comments\": [\n            \"Cool\",\n            \"Surfing boy\",\n            \"Able to ollie pop\",\n            \"I guess the guy is buddhist\",\n            \"But he has no name LOL\"\n        ]\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/CustomerDetails",
@@ -3906,25 +3901,22 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "ff7708d5-c4a7-4ed1-a048-7f4a62e5b797",
 								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;",
-									"",
-									"",
-									"",
-									""
-								]
+									"pm.test(\"status code is 200\", function() {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.success;",
+									"    pm.response.to.be.ok;",
+									"});"
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
