@@ -7014,7 +7014,6 @@
 							"listen": "test",
 							"script": {
 								"id": "98c79e1d-a745-4599-a01d-6b0db2ba797d",
-								"type": "text/javascript",
 								"exec": [
 									"pm.test('Response is 201 Created',function(){",
 									"    pm.response.to.have.status(201);",
@@ -7049,14 +7048,14 @@
 									"    pm.expect(jsonData.comments).to.have.lengthOf(2);",
 									"})",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "prerequest",
 							"script": {
 								"id": "8166e928-0c45-4c64-bf2b-2bea50336e67",
-								"type": "text/javascript",
 								"exec": [
 									"pm.environment.set(\"created_product-reference_barcode\", \"1234567899\");",
 									"",
@@ -7065,7 +7064,7 @@
 									"    method: 'POST',",
 									"   header: {",
 									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"        'Authorization': 'Bearer ' + pm.environment.get('JWT')",
 									"    },",
 									"    body:{",
 									"        mode: 'raw',",
@@ -7083,7 +7082,8 @@
 									"}, function (err, response) {",
 									"    console.log(response.json());",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -7093,15 +7093,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n        \"availableQty\": 3,\n        \"thresholdWarning\": 2,\n        \"thresholdSevere\": 1,\n        \"comments\":[\n        \t\"No restriction\",\n        \t\"ok for me\"\n        ],\n        \"productReference\": {\n\t\"barcode\": {{created_product-reference_barcode}},\n\t\"description\": \"blond color stick\",\n\t\"brand\": \"L'OREAL\",\n\t\"business\":            \n\t\t{\n\t\t\t\"designation\": \"Coiffure\"\n    \t}\n}\n    }"
+							"raw": "{\n        \"availableQty\": 3,\n        \"thresholdWarning\": 2,\n        \"thresholdSevere\": 1,\n        \"comments\":[\n        \t\"No restriction\",\n        \t\"ok for me\"\n        ],\n        \"productReference\": {\n\t\"barcode\": \"{{created_product-reference_barcode}}\",\n\t\"description\": \"blond color stick\",\n\t\"brand\": \"L'OREAL\",\n\t\"business\":            \n\t\t{\n\t\t\t\"designation\": \"Coiffure\"\n    \t}\n}\n    }"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Product?professional=vanessa.gay@gmail.com",
@@ -7194,7 +7190,6 @@
 							"listen": "test",
 							"script": {
 								"id": "c3d68d0f-8001-4fb8-8104-1592438a9382",
-								"type": "text/javascript",
 								"exec": [
 									"pm.test('Response is 200 OK',function(){",
 									"    pm.response.to.be.ok;",
@@ -7228,7 +7223,8 @@
 									"    pm.expect(jsonData.comments).to.have.lengthOf(1);",
 									"    pm.expect(jsonData.comments[0]).to.equal('Just one comment');",
 									"})"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -7238,15 +7234,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n        \"availableQty\": 3,\n        \"thresholdWarning\": 3,\n        \"thresholdSevere\": 2,\n        \"comments\":[\n        \t\"Just one comment\"\n        ],\n        \"productReference\": {\n\t\t\t\"barcode\": {{created_product-reference_barcode}}\n\t\t}\n    }"
+							"raw": "{\n        \"availableQty\": 3,\n        \"thresholdWarning\": 3,\n        \"thresholdSevere\": 2,\n        \"comments\":[\n        \t\"Just one comment\"\n        ],\n        \"productReference\": {\n\t\t\t\"barcode\": \"{{created_product-reference_barcode}}\"\n\t\t}\n    }"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Product?professional=vanessa.gay@gmail.com",
@@ -7345,33 +7337,28 @@
 							"listen": "test",
 							"script": {
 								"id": "52799f14-c770-413d-9d89-9a768e64963a",
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/ProductReference/\"+pm.environment.get('created_product-reference_barcode'),",
+									"    url: pm.environment.get('API_URL') + \"/ProductReference/\" + pm.environment.get('created_product-reference_barcode'),",
 									"    header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"        'Content-Type': 'application/json',",
+									"        'Authorization': 'Bearer ' + pm.environment.get('JWT')",
 									"    },",
 									"    method: 'DELETE'",
-									"}, function (err, res) {",
+									"}, function(err, res) {",
 									"    pm.expect(res).to.have.property('code', 200);",
 									"    pm.expect(res).to.have.property('status', 'OK');",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -13977,7 +13964,7 @@
 			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "Data / DO NOT USE",
+			"name": "Data / TO CONTROL",
 			"item": [
 				{
 					"name": "export json",
