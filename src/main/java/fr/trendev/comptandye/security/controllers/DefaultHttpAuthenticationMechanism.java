@@ -164,7 +164,9 @@ public class DefaultHttpAuthenticationMechanism implements
                 // JWT is valid and signature is verified
                 .map(clmset -> {
                     try {
-                        if (this.jwtManager.canBeRefreshed(clmset)) {
+                        if (this.jwtManager.canBeRefreshed(clmset) 
+                                // prevent refreshing a JWT token and block LOGOUT
+                                && !req.getPathInfo().endsWith("logout")) {
                             try {
                                 String jwt = this.jwtManager.
                                         refreshToken(clmset);
