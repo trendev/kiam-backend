@@ -6832,13 +6832,14 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "2e9fd6bf-b467-4627-9a77-92419915df22",
 								"exec": [
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"name is defined\"] = jsonData.name !== undefined;",
 									"pm.environment.set(\"created_paymentmode_name\", jsonData.name);"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -6848,10 +6849,6 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -6908,25 +6905,21 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "e0c0780d-500e-4c5f-b4bf-21fa2047944d",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"",
 									"",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
