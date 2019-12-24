@@ -4391,7 +4391,6 @@
 							"listen": "test",
 							"script": {
 								"id": "25633915-ad72-4282-91db-76d759ec046c",
-								"type": "text/javascript",
 								"exec": [
 									"",
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
@@ -4405,7 +4404,8 @@
 									"tests[\"qty is 2\"] = jsonData.qty === 2;",
 									"tests[\"vatRate is 10\"] = jsonData.vatRate === 10;",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -4415,10 +4415,6 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -4484,7 +4480,6 @@
 							"listen": "test",
 							"script": {
 								"id": "e2e9c1d4-f72d-464e-b3ca-652c22ea62db",
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
@@ -4495,7 +4490,8 @@
 									"tests[\"qty is 3\"] = jsonData.qty === 3;",
 									"tests[\"vatRate is 10\"] = jsonData.vatRate === 10;",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -4505,15 +4501,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\":{{created_expense-item_id}},\n    \"description\": \"An expense item\",\n    \"amount\": 1500,\n    \"qty\": 3,\n    \"vatRate\": 10\n}"
+							"raw": "{\n    \"id\":\"{{created_expense-item_id}}\",\n    \"description\": \"An expense item\",\n    \"amount\": 1500,\n    \"qty\": 3,\n    \"vatRate\": 10\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/ExpenseItem",
@@ -4534,25 +4526,21 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "be05e740-a4dd-4163-905d-8a24dc768ec7",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"",
 									"",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
