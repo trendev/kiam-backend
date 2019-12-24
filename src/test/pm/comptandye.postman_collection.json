@@ -4634,17 +4634,18 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"type": "text/javascript",
+								"id": "9b024584-520a-4f54-b577-3afa943acc52",
 								"exec": [
 									"/*birthdate should be send as UTC format only (avoid javascript GMT+2 and JAVA GMT+1 conversion errors for dates before 1970)*/",
 									"pm.environment.set(\"birthdate\", Date.UTC(1962,11,25));"
-								]
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "296ebb85-f6d7-43bf-ad94-7fe095a6344b",
 								"exec": [
 									"",
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
@@ -4652,7 +4653,11 @@
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"email is \\\"individual@gmail.com\\\"\"] = jsonData.email === \"individual@gmail.com\";",
 									"tests[\"cltype is Individual\"] = jsonData.cltype === \"Individual\";",
-									"tests[\"password is \\\"PASSWORD\\\"\"] = jsonData.password === \"C+ZK6J3dJOIlQ03pXVAXETObru4Y8Am6m0NpryfTDWA=\";",
+									"",
+									"pm.test(\"password is defined\", function(){",
+									"    pm.expect(jsonData.password).to.not.be.undefined;",
+									"});",
+									"",
 									"tests[\"username is \\\"individual_test\\\"\"] = jsonData.username === \"individual_test\";",
 									"tests[\"uuid is defined\"] = jsonData.uuid !== undefined;",
 									"tests[\"registrationDate is defined\"] = jsonData.registrationDate !== undefined;",
@@ -4685,7 +4690,8 @@
 									"tests[\"twitter is \\\"@individualtwitter\\\"\"] = jsonData.socialNetworkAccounts.twitter === \"@individualtwitter\";",
 									"tests[\"pinterest is \\\"https://www.pinterest.com/javaEEroxxx/\\\"\"] = jsonData.socialNetworkAccounts.pinterest === \"https://www.pinterest.com/javaEEroxxx/\";",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -4695,10 +4701,6 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -4723,14 +4725,16 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "9344f12d-9622-440e-bae7-abe2f0bcdc85",
 								"exec": [
 									"",
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"email is \\\"individual@gmail.com\\\"\"] = jsonData.email === \"individual@gmail.com\"",
-									"tests[\"password is \\\"PASSWORD\\\"\"] = jsonData.password === \"C+ZK6J3dJOIlQ03pXVAXETObru4Y8Am6m0NpryfTDWA=\";",
+									"pm.test(\"password is defined\", function(){",
+									"    pm.expect(jsonData.password).to.not.be.undefined;",
+									"});",
 									"tests[\"username is \\\"individual_test\\\"\"] = jsonData.username === \"individual_test\";",
 									"tests[\"uuid is defined\"] = jsonData.uuid !== undefined;",
 									"tests[\"registrationDate is defined\"] = jsonData.registrationDate !== undefined;",
@@ -4763,7 +4767,8 @@
 									"tests[\"twitter is \\\"@individualtwitter\\\"\"] = jsonData.socialNetworkAccounts.twitter === \"@individualtwitter\";",
 									"tests[\"pinterest is \\\"https://www.pinterest.com/javaEEroxxx/\\\"\"] = jsonData.socialNetworkAccounts.pinterest === \"https://www.pinterest.com/javaEEroxxx/\";",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -4789,14 +4794,16 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "d229039c-1767-4790-b07c-18a2500aa722",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"email is \\\"individual@gmail.com\\\"\"] = jsonData.email === \"individual@gmail.com\";",
 									"tests[\"cltype is Individual\"] = jsonData.cltype === \"Individual\";",
-									"tests[\"password is \\\"ANOTHER_PASSWORD\\\"\"] = jsonData.password === \"eVgyxb4vqO/zASQ7SkHckVGO7km4zUXxgevZwRdXzlM=\";",
+									"pm.test(\"password is defined\", function(){",
+									"    pm.expect(jsonData.password).to.not.be.undefined;",
+									"});",
 									"tests[\"username is \\\"ind_test\\\"\"] = jsonData.username === \"ind_test\";",
 									"tests[\"uuid is defined\"] = jsonData.uuid !== undefined;",
 									"tests[\"registrationDate is defined\"] = jsonData.registrationDate !== undefined;",
@@ -4829,7 +4836,8 @@
 									"tests[\"twitter is \\\"@hankfuckinmoody\\\"\"] = jsonData.socialNetworkAccounts.twitter === \"@hankfuckinmoody\";",
 									"tests[\"pinterest is \\\"https://www.pinterest.com/californication123/\\\"\"] = jsonData.socialNetworkAccounts.pinterest === \"https://www.pinterest.com/californication123/\";",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -4839,15 +4847,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"individual@gmail.com\",\n  \"cltype\":\"Individual\",\n    \"password\": \"ANOTHER_PASSWORD\",\n    \"username\": \"ind_test\",\n    \"registrationDate\": 1504361329000,\n    \"customerDetails\": {\n        \"id\": {{created_customer_details_id}},\n        \"firstName\": \"Hank\",\n        \"lastName\": \"Moody\",\n        \"nickname\": \"Hanky\",\n        \"phone\": \"0102030405\",\n        \"birthdate\": -296697600000,\n        \"sex\": \"M\",\n        \"comments\": [\n            \"Fun\",\n            \"Book Author\",\n            \"Smokes and drinks a lot\",\n            \"Also Weed and Sex addicted\",\n            \"Driving a Porsche 911\"\n        ]\n    },\n    \"address\": {\n        \"id\": {{created_address_id}},\n        \"street\": \"26 Brooks Avenue\",\n        \"postalCode\": \"90291\",\n        \"city\": \"Venice, Ca\",\n        \"country\": \"USA\"\n    },\n    \"socialNetworkAccounts\": {\n        \"id\": {{created_socialnetworkaccounts_id}},\n        \"facebook\": \"https://www.facebook.com/hankmoody\",\n        \"twitter\": \"@hankfuckinmoody\",\n        \"pinterest\": \"https://www.pinterest.com/californication123/\"\n    }\n}"
+							"raw": "{\n    \"email\": \"individual@gmail.com\",\n    \"cltype\": \"Individual\",\n    \"password\": \"ANOTHER_PASSWORD\",\n    \"username\": \"ind_test\",\n    \"registrationDate\": 1504361329000,\n    \"customerDetails\": {\n        \"id\": \"{{created_customer_details_id}}\",\n        \"firstName\": \"Hank\",\n        \"lastName\": \"Moody\",\n        \"nickname\": \"Hanky\",\n        \"phone\": \"0102030405\",\n        \"birthdate\": -296697600000,\n        \"sex\": \"M\",\n        \"comments\": [\n            \"Fun\",\n            \"Book Author\",\n            \"Smokes and drinks a lot\",\n            \"Also Weed and Sex addicted\",\n            \"Driving a Porsche 911\"\n        ]\n    },\n    \"address\": {\n        \"id\": \"{{created_address_id}}\",\n        \"street\": \"26 Brooks Avenue\",\n        \"postalCode\": \"90291\",\n        \"city\": \"Venice, Ca\",\n        \"country\": \"USA\"\n    },\n    \"socialNetworkAccounts\": {\n        \"id\": \"{{created_socialnetworkaccounts_id}}\",\n        \"facebook\": \"https://www.facebook.com/hankmoody\",\n        \"twitter\": \"@hankfuckinmoody\",\n        \"pinterest\": \"https://www.pinterest.com/californication123/\"\n    }\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Individual",
@@ -4932,25 +4936,21 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "d32e37b8-1a1c-42de-bfc0-3b8aa7422cdf",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"name should be Professional\"] = jsonData.name === \"Professional\";",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "PUT",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -4976,24 +4976,20 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "4ef9d1fd-f99a-4ed7-82c8-3c15a5664856",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"name should be Professional\"] = jsonData.name === \"Professional\";"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "PUT",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -5019,25 +5015,21 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "9ccfe345-c00d-4f4a-bd44-39206d63d894",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"email should be vanessa.gay@gmail.com\"] = jsonData.email === \"vanessa.gay@gmail.com\";",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "PUT",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -5093,25 +5085,21 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "c6469768-e99f-4c3a-a845-af16a34b67af",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"email should be vanessa.gay@gmail.com\"] = jsonData.email === \"vanessa.gay@gmail.com\";",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "PUT",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -5137,22 +5125,18 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "f1ac129f-4f6e-4913-9c38-45f149c41c55",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -5247,99 +5231,93 @@
 							"listen": "prerequest",
 							"script": {
 								"id": "053e4dc9-f91d-4580-a3c4-c937eb62b01f",
-								"type": "text/javascript",
 								"exec": [
 									"var billdate = new Date();",
-									"billdate.setHours(0,0,0,0);",
+									"billdate.setHours(0, 0, 0, 0);",
 									"",
 									"pm.environment.set(\"billdate\", billdate.getTime());",
 									"",
 									"/*birthdate should be send as UTC format only (avoid javascript GMT+2 and JAVA GMT+1 conversion errors for dates before 1970)*/",
-									"pm.environment.set(\"birthdate\", Date.UTC(1962,11,25));",
+									"pm.environment.set(\"birthdate\", Date.UTC(1962, 11, 25));",
 									"",
 									"pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/Individual\",",
+									"    url: pm.environment.get('API_URL') + \"/Individual\",",
 									"    method: 'POST',",
 									"    header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"        'Content-Type': 'application/json',",
+									"        'Authorization': 'Bearer ' + pm.environment.get('JWT')",
 									"    },",
-									"    body:{",
+									"    body: {",
 									"        mode: 'raw',",
-									"        raw: JSON.stringify(",
-									"            {",
-									"              \"email\":\"individual@gmail.com\",",
-									"              \"cltype\":\"Individual\",",
-									"              \"password\":\"PASSWORD\",",
-									"              \"username\":\"individual_test\",",
-									"              \"customerDetails\": {",
-									"                        \"firstName\": \"prenom\",",
-									"                        \"lastName\": \"nom\",",
-									"                        \"nickname\": \"surnom\",",
-									"                        \"phone\": \"0102030405\",",
-									"                        \"birthdate\": pm.environment.get(\"birthdate\"),",
-									"                        \"sex\": \"F\",",
-									"                        \"comments\": [",
-									"                            \"Cool\",",
-									"                            \"Good looking\",",
-									"                            \"Open minded\",",
-									"                            \"Likes art and music\",",
-									"                            \"Nice hair\"",
-									"                        ]",
-									"                    },",
-									"                    \"address\": {",
-									"                      \"street\": \"10 route de la ferme du pavillon\",",
-									"                        \"postalCode\": \"77600\",",
-									"                        \"city\": \"Chanteloup-en-Brie\"",
-									"                    },",
-									"                    \"socialNetworkAccounts\": {",
-									"                      \"facebook\": \"https://www.facebook.com/individual\",",
-									"                        \"twitter\": \"@individualtwitter\",",
-									"                        \"pinterest\": \"https://www.pinterest.com/javaEEroxxx/\"",
-									"                    }",
-									"            })",
+									"        raw: JSON.stringify({",
+									"            \"email\": \"individual@gmail.com\",",
+									"            \"cltype\": \"Individual\",",
+									"            \"password\": \"PASSWORD\",",
+									"            \"username\": \"individual_test\",",
+									"            \"customerDetails\": {",
+									"                \"firstName\": \"prenom\",",
+									"                \"lastName\": \"nom\",",
+									"                \"nickname\": \"surnom\",",
+									"                \"phone\": \"0102030405\",",
+									"                \"birthdate\": pm.environment.get(\"birthdate\"),",
+									"                \"sex\": \"F\",",
+									"                \"comments\": [",
+									"                    \"Cool\",",
+									"                    \"Good looking\",",
+									"                    \"Open minded\",",
+									"                    \"Likes art and music\",",
+									"                    \"Nice hair\"",
+									"                ]",
+									"            },",
+									"            \"address\": {",
+									"                \"street\": \"10 route de la ferme du pavillon\",",
+									"                \"postalCode\": \"77600\",",
+									"                \"city\": \"Chanteloup-en-Brie\"",
+									"            },",
+									"            \"socialNetworkAccounts\": {",
+									"                \"facebook\": \"https://www.facebook.com/individual\",",
+									"                \"twitter\": \"@individualtwitter\",",
+									"                \"pinterest\": \"https://www.pinterest.com/javaEEroxxx/\"",
+									"            }",
+									"        })",
 									"    }",
-									"}, function (err, response) {",
+									"}, function(err, response) {",
 									"    console.log(response.json());",
-									"   pm.environment.set(\"created_individual_email\", response.json().email);",
+									"    pm.environment.set(\"created_individual_email\", response.json().email);",
 									"});",
 									"",
 									"",
 									"pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/Service?professional=vanessa.gay@gmail.com\",",
+									"    url: pm.environment.get('API_URL') + \"/Service?professional=vanessa.gay@gmail.com\",",
 									"    method: 'POST',",
 									"    header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"        'Content-Type': 'application/json',",
+									"        'Authorization': 'Bearer ' + pm.environment.get('JWT')",
 									"    },",
-									"    body:{",
+									"    body: {",
 									"        mode: 'raw',",
-									"        raw: JSON.stringify(",
-									"            {",
-									"                name:\"beauty service\",",
-									"              price:1500,",
-									"              duration:180,",
-									"              businesses: [",
-									"                {",
-									"                    designation: \"Esthétique\"",
-									"                }",
-									"                ],",
-									"                cltype:\"service\"",
-									"            })",
+									"        raw: JSON.stringify({",
+									"            name: \"beauty service\",",
+									"            price: 1500,",
+									"            duration: 180,",
+									"            businesses: [{",
+									"                designation: \"Esthétique\"",
+									"            }],",
+									"            cltype: \"service\"",
+									"        })",
 									"    }",
-									"}, function (err, response) {",
+									"}, function(err, response) {",
 									"    console.log(response.json());",
-									"   pm.environment.set(\"created_offering_id\", response.json().id);",
-									"});",
-									""
-								]
+									"    pm.environment.set(\"created_offering_id\", response.json().id);",
+									"});"
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
 								"id": "a4c1da50-5757-475a-bea5-5164eed77def",
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
 									"",
@@ -5356,8 +5334,11 @@
 									"tests[\"currency is EUR\"] = jsonData.currency === \"EUR\";",
 									"tests[\"discount is 1000\"] = jsonData.discount === 1000;",
 									"",
-									"tests[\"email is \"+pm.environment.get(\"created_individual_email\")] = jsonData.individual.email === pm.environment.get(\"created_individual_email\");",
-									"tests[\"password is \\\"PASSWORD\\\"\"] = jsonData.individual.password === \"C+ZK6J3dJOIlQ03pXVAXETObru4Y8Am6m0NpryfTDWA=\";",
+									"tests[\"email is \" + pm.environment.get(\"created_individual_email\")] = jsonData.individual.email === pm.environment.get(\"created_individual_email\");",
+									"pm.test(\"password is defined\", function() {",
+									"    pm.expect(jsonData.individual.password).to.not.be.undefined;",
+									"",
+									"});",
 									"tests[\"username is \\\"individual_test\\\"\"] = jsonData.individual.username === \"individual_test\";",
 									"tests[\"uuid is defined\"] = jsonData.individual.uuid !== undefined;",
 									"tests[\"registrationDate is defined\"] = jsonData.individual.registrationDate !== undefined;",
@@ -5370,7 +5351,7 @@
 									"tests[\"lastName is \\\"nom\\\"\"] = jsonData.individual.customerDetails.lastName === \"nom\";",
 									"tests[\"nickname is \\\"surnom\\\"\"] = jsonData.individual.customerDetails.nickname === \"surnom\";",
 									"tests[\"phone is \\\"0102030405\\\"\"] = jsonData.individual.customerDetails.phone === \"0102030405\";",
-									"tests[\"birthdate is \"+new Date(jsonData.individual.customerDetails.birthdate).toISOString().split(\"T\")[0]] = jsonData.individual.customerDetails.birthdate === Date.UTC(1962,11,25);",
+									"tests[\"birthdate is \" + new Date(jsonData.individual.customerDetails.birthdate).toISOString().split(\"T\")[0]] = jsonData.individual.customerDetails.birthdate === Date.UTC(1962, 11, 25);",
 									"tests[\"sex is \\\"F\\\"\"] = jsonData.individual.customerDetails.sex === \"F\";",
 									"tests[\"comments.length is 5\"] = jsonData.individual.customerDetails.comments.length === 5;",
 									"",
@@ -5397,9 +5378,9 @@
 									"tests[\"purchasedOfferings[0].offering.name = beauty service\"] = jsonData.purchasedOfferings[0].offering.name === \"beauty service\";",
 									"tests[\"purchasedOfferings[0].offering.price = 1500\"] = jsonData.purchasedOfferings[0].offering.price === 1500;",
 									"tests[\"purchasedOfferings[0].offering.duration = 180\"] = jsonData.purchasedOfferings[0].offering.duration === 180;",
-									"tests[\"purchasedOfferings[0].offering.businesses[0].designation = Esthétique\"] = jsonData.purchasedOfferings[0].offering.businesses[0].designation === \"Esthétique\";",
-									""
-								]
+									"tests[\"purchasedOfferings[0].offering.businesses[0].designation = Esthétique\"] = jsonData.purchasedOfferings[0].offering.businesses[0].designation === \"Esthétique\";"
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -5409,15 +5390,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"cltype\":\"individualbill\",\n    \"deliveryDate\":{{billdate}},\n  \"amount\":5000,\n  \"discount\":1000,\n  \"comments\":[\n    \"The first one created by a rest api request\"\n  ],\n  \"payments\":[\n    {\n      \"amount\":4000,\n      \"paymentMode\": {\n                    \"name\": \"CB\"\n            }\n    },\n    {\n      \"amount\":1000,\n      \"paymentMode\": {\n                    \"name\": \"Espèces\" \n            }\n    }\n  ],\n  \"purchasedOfferings\":[\n    {\n      \"qty\":4,\n      \"offering\": {\n        \"id\": {{created_offering_id}},\n        \"cltype\": \"service\",\n        \"name\": \"beauty service\",\n        \"price\": 1500,\n        \"duration\": 180,\n        \"businesses\": [\n            {\n                \"designation\": \"Esthétique\"\n            }\n        ]\n    }\n    }\n  ],\n  \"individual\":{\n    \"email\":\"{{created_individual_email}}\",\n    \"cltype\":\"Individual\"\n  }\n}"
+							"raw": "{\n  \"cltype\":\"individualbill\",\n    \"deliveryDate\":{{billdate}},\n  \"amount\":5000,\n  \"discount\":1000,\n  \"comments\":[\n    \"The first one created by a rest api request\"\n  ],\n  \"payments\":[\n    {\n      \"amount\":4000,\n      \"paymentMode\": {\n                    \"name\": \"CB\"\n            }\n    },\n    {\n      \"amount\":1000,\n      \"paymentMode\": {\n                    \"name\": \"Espèces\" \n            }\n    }\n  ],\n  \"purchasedOfferings\":[\n    {\n      \"qty\":4,\n      \"offering\": {\n        \"id\": \"{{created_offering_id}}\",\n        \"cltype\": \"service\",\n        \"name\": \"beauty service\",\n        \"price\": 1500,\n        \"duration\": 180,\n        \"businesses\": [\n            {\n                \"designation\": \"Esthétique\"\n            }\n        ]\n    }\n    }\n  ],\n  \"individual\":{\n    \"email\":\"{{created_individual_email}}\",\n    \"cltype\":\"Individual\"\n  }\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/IndividualBill?professional=vanessa.gay@gmail.com",
@@ -5443,7 +5420,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "e8dddf15-0bf7-460a-8761-649a2025523a",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
@@ -5458,7 +5435,9 @@
 									"tests[\"discount is 1000\"] = jsonData.discount === 1000;",
 									"",
 									"tests[\"email is \"+pm.environment.get(\"created_individual_email\")] = jsonData.individual.email === pm.environment.get(\"created_individual_email\");",
-									"tests[\"password is \\\"PASSWORD\\\"\"] = jsonData.individual.password === \"C+ZK6J3dJOIlQ03pXVAXETObru4Y8Am6m0NpryfTDWA=\";",
+									"pm.test(\"password is defined\", function(){",
+									"    pm.expect(jsonData.individual.password).to.not.be.undefined;",
+									"});",
 									"tests[\"username is \\\"individual_test\\\"\"] = jsonData.individual.username === \"individual_test\";",
 									"tests[\"uuid is defined\"] = jsonData.individual.uuid !== undefined;",
 									"tests[\"registrationDate is defined\"] = jsonData.individual.registrationDate !== undefined;",
@@ -5500,7 +5479,8 @@
 									"tests[\"purchasedOfferings[0].offering.duration = 180\"] = jsonData.purchasedOfferings[0].offering.duration === 180;",
 									"tests[\"purchasedOfferings[0].offering.businesses[0].designation = Esthétique\"] = jsonData.purchasedOfferings[0].offering.businesses[0].designation === \"Esthétique\";",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -5533,25 +5513,28 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "6794e05a-c5d7-4160-aab2-d3de664b2561",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
 									"",
-									"tests[\"reference is \"+pm.environment.get(\"created_individualbill_reference\")] = jsonData.reference == pm.environment.get(\"created_individualbill_reference\");",
-									"tests[\"deliveryDate is \"+pm.environment.get(\"created_individualbill_deliveryDate\")] = jsonData.deliveryDate == pm.environment.get(\"created_individualbill_deliveryDate\");",
+									"tests[\"reference is \" + pm.environment.get(\"created_individualbill_reference\")] = jsonData.reference == pm.environment.get(\"created_individualbill_reference\");",
+									"tests[\"deliveryDate is \" + pm.environment.get(\"created_individualbill_deliveryDate\")] = jsonData.deliveryDate == pm.environment.get(\"created_individualbill_deliveryDate\");",
 									"",
 									"tests[\"cltype is individualbill\"] = jsonData.cltype === \"individualbill\";",
 									"tests[\"amount is 5000\"] = jsonData.amount === 5000;",
 									"tests[\"currency is EUR\"] = jsonData.currency === \"EUR\";",
 									"tests[\"discount is 1000\"] = jsonData.discount === 1000;",
-									"tests[\"paymentDate is \"+new Date(jsonData.paymentDate)] = jsonData.paymentDate !== undefined;",
+									"tests[\"paymentDate is \" + new Date(jsonData.paymentDate)] = jsonData.paymentDate !== undefined;",
 									"tests[\"comments.length is 2\"] = jsonData.comments.length === 2;",
 									"tests[\"payments.length is 2\"] = jsonData.payments.length === 2;",
 									"",
-									"tests[\"email is \"+pm.environment.get(\"created_individual_email\")] = jsonData.individual.email === pm.environment.get(\"created_individual_email\");",
-									"tests[\"password is \\\"PASSWORD\\\"\"] = jsonData.individual.password === \"C+ZK6J3dJOIlQ03pXVAXETObru4Y8Am6m0NpryfTDWA=\";",
+									"tests[\"email is \" + pm.environment.get(\"created_individual_email\")] = jsonData.individual.email === pm.environment.get(\"created_individual_email\");",
+									"pm.test(\"password is defined\", function() {",
+									"    pm.expect(jsonData.individual.password).to.not.be.undefined;",
+									"",
+									"});",
 									"tests[\"username is \\\"individual_test\\\"\"] = jsonData.individual.username === \"individual_test\";",
 									"tests[\"uuid is defined\"] = jsonData.individual.uuid !== undefined;",
 									"tests[\"registrationDate is defined\"] = jsonData.individual.registrationDate !== undefined;",
@@ -5564,7 +5547,7 @@
 									"tests[\"lastName is \\\"nom\\\"\"] = jsonData.individual.customerDetails.lastName === \"nom\";",
 									"tests[\"nickname is \\\"surnom\\\"\"] = jsonData.individual.customerDetails.nickname === \"surnom\";",
 									"tests[\"phone is \\\"0102030405\\\"\"] = jsonData.individual.customerDetails.phone === \"0102030405\";",
-									"tests[\"birthdate is \"+new Date(jsonData.individual.customerDetails.birthdate).toISOString().split(\"T\")[0]] = jsonData.individual.customerDetails.birthdate === Date.UTC(1962,11,25);",
+									"tests[\"birthdate is \" + new Date(jsonData.individual.customerDetails.birthdate).toISOString().split(\"T\")[0]] = jsonData.individual.customerDetails.birthdate === Date.UTC(1962, 11, 25);",
 									"tests[\"sex is \\\"F\\\"\"] = jsonData.individual.customerDetails.sex === \"F\";",
 									"tests[\"comments.length is 5\"] = jsonData.individual.customerDetails.comments.length === 5;",
 									"",
@@ -5591,9 +5574,9 @@
 									"tests[\"purchasedOfferings[0].offering.name = beauty service\"] = jsonData.purchasedOfferings[0].offering.name === \"beauty service\";",
 									"tests[\"purchasedOfferings[0].offering.price = 1500\"] = jsonData.purchasedOfferings[0].offering.price === 1500;",
 									"tests[\"purchasedOfferings[0].offering.duration = 180\"] = jsonData.purchasedOfferings[0].offering.duration === 180;",
-									"tests[\"purchasedOfferings[0].offering.businesses[0].designation = Esthétique\"] = jsonData.purchasedOfferings[0].offering.businesses[0].designation === \"Esthétique\";",
-									""
-								]
+									"tests[\"purchasedOfferings[0].offering.businesses[0].designation = Esthétique\"] = jsonData.purchasedOfferings[0].offering.businesses[0].designation === \"Esthétique\";"
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -5603,15 +5586,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"reference\": \"{{created_individualbill_reference}}\",\n    \"deliveryDate\": {{created_individualbill_deliveryDate}},\n    \"paymentDate\":{{created_individualbill_deliveryDate}},\n    \"cltype\": \"individualbill\",\n    \"amount\": 5000,\n    \"currency\": \"EUR\",\n    \"discount\": 1000,\n    \"comments\": [\n        \"Let the color applying\",\n        \"Hair used to be darker than expected\"\n    ],\n    \"payments\": [\n        {\n            \"amount\": 4000,\n            \"paymentMode\": {\n                \"name\": \"CB\"\n            }\n        },\n        {\n            \"amount\": 1000,\n            \"paymentMode\": {\n                \"name\": \"Espèces\"\n            }\n        }\n    ],\n    \"purchasedOfferings\": [\n        {\n            \"qty\": 4,\n            \"offering\": {\n                \"id\": {{created_offering_id}},\n                \"cltype\": \"service\",\n                \"name\": \"beauty service\",\n                \"price\": 1500,\n                \"duration\": 180,\n                \"businesses\": [\n                    {\n                        \"designation\": \"Esthétique\"\n                    }\n                ]\n            }\n        }\n    ],\n  \"individual\":{\n    \"email\":\"{{created_individual_email}}\",\n    \"cltype\":\"Individual\"\n  }\n}"
+							"raw": "{\n    \"reference\": \"{{created_individualbill_reference}}\",\n    \"deliveryDate\": {{created_individualbill_deliveryDate}},\n    \"paymentDate\":{{created_individualbill_deliveryDate}},\n    \"cltype\": \"individualbill\",\n    \"amount\": 5000,\n    \"currency\": \"EUR\",\n    \"discount\": 1000,\n    \"comments\": [\n        \"Let the color applying\",\n        \"Hair used to be darker than expected\"\n    ],\n    \"payments\": [\n        {\n            \"amount\": 4000,\n            \"paymentMode\": {\n                \"name\": \"CB\"\n            }\n        },\n        {\n            \"amount\": 1000,\n            \"paymentMode\": {\n                \"name\": \"Espèces\"\n            }\n        }\n    ],\n    \"purchasedOfferings\": [\n        {\n            \"qty\": 4,\n            \"offering\": {\n                \"id\": \"{{created_offering_id}}\",\n                \"cltype\": \"service\",\n                \"name\": \"beauty service\",\n                \"price\": 1500,\n                \"duration\": 180,\n                \"businesses\": [\n                    {\n                        \"designation\": \"Esthétique\"\n                    }\n                ]\n            }\n        }\n    ],\n  \"individual\":{\n    \"email\":\"{{created_individual_email}}\",\n    \"cltype\":\"Individual\"\n  }\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/IndividualBill?professional=vanessa.gay@gmail.com",
@@ -5638,45 +5617,40 @@
 							"listen": "test",
 							"script": {
 								"id": "8a3135f5-ec7f-4750-ac4e-0b2c16fcde5d",
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/Service/\"+pm.environment.get('created_offering_id')+\"?professional=vanessa.gay@gmail.com\",",
+									"    url: pm.environment.get('API_URL') + \"/Service/\" + pm.environment.get('created_offering_id') + \"?professional=vanessa.gay@gmail.com\",",
 									"    header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"        'Content-Type': 'application/json',",
+									"        'Authorization': 'Bearer ' + pm.environment.get('JWT')",
 									"    },",
 									"    method: 'DELETE'",
-									"}, function (err, res) {",
+									"}, function(err, res) {",
 									"    pm.expect(res).to.have.property('code', 200);",
 									"    pm.expect(res).to.have.property('status', 'OK');",
 									"});",
 									"",
 									"pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/Individual/\"+pm.environment.get('created_individual_email'),",
+									"    url: pm.environment.get('API_URL') + \"/Individual/\" + pm.environment.get('created_individual_email'),",
 									"    header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"        'Content-Type': 'application/json',",
+									"        'Authorization': 'Bearer ' + pm.environment.get('JWT')",
 									"    },",
 									"    method: 'DELETE'",
-									"}, function (err, res) {",
+									"}, function(err, res) {",
 									"    pm.expect(res).to.have.property('code', 200);",
 									"    pm.expect(res).to.have.property('status', 'OK');",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
