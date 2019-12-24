@@ -9529,42 +9529,39 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"type": "text/javascript",
+								"id": "87599906-985d-4711-8419-463bf5da7dd8",
 								"exec": [
 									"pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/Service?professional=vanessa.gay@gmail.com\",",
+									"    url: pm.environment.get('API_URL') + \"/Service?professional=vanessa.gay@gmail.com\",",
 									"    method: 'POST',",
 									"    header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"        'Content-Type': 'application/json',",
+									"        'Authorization': 'Bearer ' + pm.environment.get('JWT')",
 									"    },",
-									"    body:{",
+									"    body: {",
 									"        mode: 'raw',",
-									"        raw: JSON.stringify(",
-									"            {",
-									"                name:\"beauty service\",",
-									"              price:10000,",
-									"              duration:180,",
-									"              businesses: [",
-									"                {",
-									"                    designation: \"Esthétique\"",
-									"                }",
-									"                ],",
-									"                cltype:\"service\"",
-									"            })",
+									"        raw: JSON.stringify({",
+									"            name: \"beauty service\",",
+									"            price: 10000,",
+									"            duration: 180,",
+									"            businesses: [{",
+									"                designation: \"Esthétique\"",
+									"            }],",
+									"            cltype: \"service\"",
+									"        })",
 									"    }",
-									"}, function (err, response) {",
+									"}, function(err, response) {",
 									"    console.log(response.json());",
-									"   pm.environment.set(\"created_offering_id\", response.json().id);",
-									"});",
-									""
-								]
+									"    pm.environment.set(\"created_offering_id\", response.json().id);",
+									"});"
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "3b436341-c635-434e-990a-7afc54807952",
 								"exec": [
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
 									"",
@@ -9584,7 +9581,8 @@
 									"",
 									"",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -9594,15 +9592,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"qty\":2,\n  \"offering\":{\n    \"id\":{{created_offering_id}},\n      \"name\":\"beauty service\",\n      \"price\":10000,\n      \"duration\":180,\n      \"businesses\": [\n         {\n             \"designation\": \"Esthétique\"\n         }\n       ],\n      \"cltype\":\"service\"\n  }\n}"
+							"raw": "{\n  \"qty\":2,\n  \"offering\":{\n    \"id\":\"{{created_offering_id}}\",\n      \"name\":\"beauty service\",\n      \"price\":10000,\n      \"duration\":180,\n      \"businesses\": [\n         {\n             \"designation\": \"Esthétique\"\n         }\n       ],\n      \"cltype\":\"service\"\n  }\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/PurchasedOffering?professional=vanessa.gay@gmail.com",
@@ -9673,7 +9667,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "4ef56679-a584-455e-b57a-34ad2ec12d03",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
@@ -9689,7 +9683,8 @@
 									"tests[\"offering.price = 10000\"] = jsonData.offering.price === 10000;",
 									"tests[\"offering.duration = 180\"] = jsonData.offering.duration === 180;",
 									"tests[\"offering.businesses[0].designation = Esthétique\"] = jsonData.offering.businesses[0].designation === \"Esthétique\";"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -9699,15 +9694,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"id\":{{created_purchasedoffering_id}},\n  \"qty\":20,\n  \"offering\":{\n    \"id\":{{created_offering_id}},\n      \"name\":\"beauty service\",\n      \"price\":10000,\n      \"duration\":180,\n      \"businesses\": [\n         {\n             \"designation\": \"Esthétique\"\n         }\n       ],\n      \"cltype\":\"service\"\n  }\n}"
+							"raw": "{\n  \"id\":\"{{created_purchasedoffering_id}}\",\n  \"qty\":20,\n  \"offering\":{\n    \"id\":\"{{created_offering_id}}\",\n      \"name\":\"beauty service\",\n      \"price\":10000,\n      \"duration\":180,\n      \"businesses\": [\n         {\n             \"designation\": \"Esthétique\"\n         }\n       ],\n      \"cltype\":\"service\"\n  }\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/PurchasedOffering?professional=vanessa.gay@gmail.com",
@@ -9733,37 +9724,29 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "9a35d30f-d9b0-46d0-8f22-ec32917639d4",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/Service/\"+pm.environment.get('created_offering_id')+\"?professional=vanessa.gay@gmail.com\",",
+									"    url: pm.environment.get('API_URL') + \"/Service/\" + pm.environment.get('created_offering_id') + \"?professional=vanessa.gay@gmail.com\",",
 									"    header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"        'Content-Type': 'application/json',",
+									"        'Authorization': 'Bearer ' + pm.environment.get('JWT')",
 									"    },",
 									"    method: 'DELETE'",
-									"}, function (err, res) {",
+									"}, function(err, res) {",
 									"    pm.expect(res).to.have.property('code', 200);",
 									"    pm.expect(res).to.have.property('status', 'OK');",
-									"});",
-									"",
-									"",
-									"",
-									""
-								]
+									"});"
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
