@@ -7764,18 +7764,17 @@
 							"listen": "prerequest",
 							"script": {
 								"id": "677fdf28-b505-4889-bcca-077c8d990cef",
-								"type": "text/javascript",
 								"exec": [
 									"/*birthdate should be send as UTC format only (avoid javascript GMT+2 and JAVA GMT+1 conversion errors for dates before 1970)*/",
 									"pm.environment.set(\"birthdate\", Date.UTC(1960,7,7));"
-								]
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
 								"id": "35cf4342-b703-4dcd-b3b7-59bd19539311",
-								"type": "text/javascript",
 								"exec": [
 									"",
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
@@ -7783,7 +7782,9 @@
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"email is \\\"pro@domain.com\\\"\"] = jsonData.email === \"pro@domain.com\"",
 									"tests[\"cltype is Professional\"] = jsonData.cltype === \"Professional\";",
-									"tests[\"password is \\\"PASSWORD\\\"\"] = jsonData.password === \"C+ZK6J3dJOIlQ03pXVAXETObru4Y8Am6m0NpryfTDWA=\";",
+									"pm.test(\"password is defined\", function(){",
+									"    pm.expect(jsonData.password).to.not.be.undefined;",
+									"});",
 									"tests[\"username is \\\"pro_test\\\"\"] = jsonData.username === \"pro_test\";",
 									"tests[\"uuid is defined\"] = jsonData.uuid !== undefined;",
 									"tests[\"registrationDate is defined\"] = jsonData.registrationDate !== undefined;",
@@ -7816,7 +7817,8 @@
 									"tests[\"twitter is \\\"@hankfuckinmoody\\\"\"] = jsonData.socialNetworkAccounts.twitter === \"@hankfuckinmoody\";",
 									"tests[\"pinterest is \\\"https://www.pinterest.com/californication123/\\\"\"] = jsonData.socialNetworkAccounts.pinterest === \"https://www.pinterest.com/californication123/\";",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -7826,10 +7828,6 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -7855,20 +7853,20 @@
 							"listen": "prerequest",
 							"script": {
 								"id": "4968be68-53fd-4d0c-b240-22a7d9f33f20",
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
 								"id": "8e276a8c-fbb0-4085-96e4-c2045c57c0b8",
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 201\"] = responseCode.code === 201;"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -7878,10 +7876,6 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -7950,14 +7944,15 @@
 							"listen": "test",
 							"script": {
 								"id": "ca6a35f7-6816-4c86-b1f8-742c35f5344c",
-								"type": "text/javascript",
 								"exec": [
 									"",
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"email is \\\"pro@domain.com\\\"\"] = jsonData.email === \"pro@domain.com\"",
-									"tests[\"password is \\\"PASSWORD\\\"\"] = jsonData.password === \"C+ZK6J3dJOIlQ03pXVAXETObru4Y8Am6m0NpryfTDWA=\";",
+									"pm.test(\"password is defined\", function(){",
+									"    pm.expect(jsonData.password).to.not.be.undefined;",
+									"});",
 									"tests[\"username is \\\"pro_test\\\"\"] = jsonData.username === \"pro_test\";",
 									"tests[\"uuid is defined\"] = jsonData.uuid !== undefined;",
 									"tests[\"registrationDate is defined\"] = jsonData.registrationDate !== undefined;",
@@ -7986,7 +7981,8 @@
 									"tests[\"twitter is \\\"@hankfuckinmoody\\\"\"] = jsonData.socialNetworkAccounts.twitter === \"@hankfuckinmoody\";",
 									"tests[\"pinterest is \\\"https://www.pinterest.com/californication123/\\\"\"] = jsonData.socialNetworkAccounts.pinterest === \"https://www.pinterest.com/californication123/\";",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -8012,14 +8008,16 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "141b18ec-3403-4408-9e1f-5dab705be82e",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"email is \\\"pro@domain.com\\\"\"] = jsonData.email === \"pro@domain.com\";",
 									"tests[\"cltype is Professional\"] = jsonData.cltype === \"Professional\";",
-									"tests[\"password is \\\"ANOTHER_PASSWORD\\\"\"] = jsonData.password === \"eVgyxb4vqO/zASQ7SkHckVGO7km4zUXxgevZwRdXzlM=\";",
+									"pm.test(\"password is defined\", function(){",
+									"    pm.expect(jsonData.password).to.not.be.undefined;",
+									"});",
 									"tests[\"username is \\\"pro_test\\\"\"] = jsonData.username === \"pro_test\";",
 									"tests[\"uuid is defined\"] = jsonData.uuid !== undefined;",
 									"tests[\"registrationDate is defined\"] = jsonData.registrationDate !== undefined;",
@@ -8053,7 +8051,8 @@
 									"tests[\"twitter is \\\"@hankfuckinmoody\\\"\"] = jsonData.socialNetworkAccounts.twitter === \"@hankfuckinmoody\";",
 									"tests[\"pinterest is \\\"https://www.pinterest.com/californication123/\\\"\"] = jsonData.socialNetworkAccounts.pinterest === \"https://www.pinterest.com/californication123/\";",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -8063,15 +8062,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"pro@domain.com\",\n    \"cltype\":\"Professional\",\n    \"password\": \"ANOTHER_PASSWORD\",\n    \"username\": \"pro_test\",\n    \"uuid\": \"PRO_d7d1b42c88b8450c96236d0a0f5b8294\",\n    \"registrationDate\": 1504361329000,\n    \"vatcode\": \"FR91552118465\",\n    \"companyName\": \"Boss Company\",\n    \"customerDetails\": {\n        \"id\": {{created_customer_details_id}},\n        \"firstName\": \"Hank\",\n        \"lastName\": \"Moody\",\n        \"nickname\": \"Hanky\",\n        \"phone\": \"0102030405\",\n        \"birthdate\": -296697600000,\n        \"sex\": \"M\",\n        \"comments\": [\n            \"Fun\",\n            \"Book Author\",\n            \"Smokes and drinks a lot\",\n            \"Also Weed and Sex addicted\",\n            \"Driving a Porsche 911\"\n        ]\n    },\n    \"address\": {\n        \"id\": {{created_address_id}},\n        \"street\": \"26 Brooks Avenue\",\n        \"postalCode\": \"90291\",\n        \"city\": \"Venice, Ca\",\n        \"country\": \"USA\"\n    },\n    \"socialNetworkAccounts\": {\n        \"id\": {{created_socialnetworkaccounts_id}},\n        \"facebook\": \"https://www.facebook.com/hankmoody\",\n        \"twitter\": \"@hankfuckinmoody\",\n        \"pinterest\": \"https://www.pinterest.com/californication123/\"\n    },\n    \"businesses\":[\n      {\n          \"designation\": \"Coiffure\"\n      },\n      {\n          \"designation\": \"Esthétique\"\n      }\n  ],\n  \"paymentModes\":[\n      {\n          \"name\": \"CB\"\n      },\n      {\n          \"name\": \"Chèque\"\n      },\n      {\n          \"name\": \"Espèces\"\n      },\n      {\n        \"name\": \"Virement\"\n      }  \n  ]\n}"
+							"raw": "{\n    \"email\": \"pro@domain.com\",\n    \"cltype\":\"Professional\",\n    \"password\": \"ANOTHER_PASSWORD\",\n    \"username\": \"pro_test\",\n    \"uuid\": \"PRO_d7d1b42c88b8450c96236d0a0f5b8294\",\n    \"registrationDate\": 1504361329000,\n    \"vatcode\": \"FR91552118465\",\n    \"companyName\": \"Boss Company\",\n    \"customerDetails\": {\n        \"id\": \"{{created_customer_details_id}}\",\n        \"firstName\": \"Hank\",\n        \"lastName\": \"Moody\",\n        \"nickname\": \"Hanky\",\n        \"phone\": \"0102030405\",\n        \"birthdate\": -296697600000,\n        \"sex\": \"M\",\n        \"comments\": [\n            \"Fun\",\n            \"Book Author\",\n            \"Smokes and drinks a lot\",\n            \"Also Weed and Sex addicted\",\n            \"Driving a Porsche 911\"\n        ]\n    },\n    \"address\": {\n        \"id\": \"{{created_address_id}}\",\n        \"street\": \"26 Brooks Avenue\",\n        \"postalCode\": \"90291\",\n        \"city\": \"Venice, Ca\",\n        \"country\": \"USA\"\n    },\n    \"socialNetworkAccounts\": {\n        \"id\": \"{{created_socialnetworkaccounts_id}}\",\n        \"facebook\": \"https://www.facebook.com/hankmoody\",\n        \"twitter\": \"@hankfuckinmoody\",\n        \"pinterest\": \"https://www.pinterest.com/californication123/\"\n    },\n    \"businesses\":[\n      {\n          \"designation\": \"Coiffure\"\n      },\n      {\n          \"designation\": \"Esthétique\"\n      }\n  ],\n  \"paymentModes\":[\n      {\n          \"name\": \"CB\"\n      },\n      {\n          \"name\": \"Chèque\"\n      },\n      {\n          \"name\": \"Espèces\"\n      },\n      {\n        \"name\": \"Virement\"\n      }  \n  ]\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Professional",
@@ -8138,22 +8133,18 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "0f166736-dc0b-4388-b8ea-ebf88c263f8e",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -8212,25 +8203,21 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "0e77c454-bfc5-4a51-b5df-c827de0934de",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"name should be Individual\"] = jsonData.name === \"Individual\";",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "PUT",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -8256,24 +8243,20 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "2d2170e1-878e-4c8f-af6d-f6d291ff1ec5",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"name should be Individual\"] = jsonData.name === \"Individual\";"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "PUT",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -8576,80 +8559,32 @@
 					"response": []
 				},
 				{
-					"name": "buildBusinessRelationship",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;",
-									"",
-									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"email should be skonx2006@hotmail.com\"] = jsonData.email === \"skonx2006@hotmail.com\";",
-									""
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{API_URL}}/Professional/vanessa.gay@gmail.com/buildBusinessRelationship/skonx2006@hotmail.com",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"Professional",
-								"vanessa.gay@gmail.com",
-								"buildBusinessRelationship",
-								"skonx2006@hotmail.com"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "endBusinessRelationship",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "c4a188d8-024e-4bf5-99a3-9c4e36602e49",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
-									"tests[\"email should be skonx2006@hotmail.com\"] = jsonData.email === \"skonx2006@hotmail.com\";",
+									"tests[\"email should be sylvie.gay@gmail.com\"] = jsonData.email === \"sylvie.gay@gmail.com\";",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "PUT",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{API_URL}}/Professional/vanessa.gay@gmail.com/endBusinessRelationship/skonx2006@hotmail.com",
+							"raw": "{{API_URL}}/Professional/vanessa.gay@gmail.com/endBusinessRelationship/sylvie.gay@gmail.com",
 							"host": [
 								"{{API_URL}}"
 							],
@@ -8657,7 +8592,47 @@
 								"Professional",
 								"vanessa.gay@gmail.com",
 								"endBusinessRelationship",
-								"skonx2006@hotmail.com"
+								"sylvie.gay@gmail.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buildBusinessRelationship",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9837cf66-08a2-488a-a444-9abcead1b912",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"email should be sylvie.gay@gmail.com\"] = jsonData.email === \"sylvie.gay@gmail.com\";",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/Professional/vanessa.gay@gmail.com/buildBusinessRelationship/sylvie.gay@gmail.com",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Professional",
+								"vanessa.gay@gmail.com",
+								"buildBusinessRelationship",
+								"sylvie.gay@gmail.com"
 							]
 						}
 					},
