@@ -3326,7 +3326,6 @@
 							"listen": "prerequest",
 							"script": {
 								"id": "0129c2ff-a9ea-447e-9154-b59db656976e",
-								"type": "text/javascript",
 								"exec": [
 									"var billdate = new Date();",
 									"billdate.setHours(0,0,0,0);",
@@ -3338,7 +3337,7 @@
 									"    method: 'POST',",
 									"   header: {",
 									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"        'Authorization': 'Bearer ' + pm.environment.get('JWT')",
 									"    },",
 									"    body:{",
 									"        mode: 'raw',",
@@ -3365,7 +3364,7 @@
 									"    method: 'POST',",
 									"    header: {",
 									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"        'Authorization': 'Bearer ' + pm.environment.get('JWT')",
 									"    },",
 									"    body:{",
 									"        mode: 'raw',",
@@ -3387,14 +3386,14 @@
 									"   pm.environment.set(\"created_offering_id\", response.json().id);",
 									"});",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
 								"id": "9cf1bc26-42ce-4bfa-8411-193ad3b1648a",
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
 									"",
@@ -3430,7 +3429,8 @@
 									"tests[\"purchasedOfferings[0].offering.businesses[0].designation = Esthétique\"] = jsonData.purchasedOfferings[0].offering.businesses[0].designation === \"Esthétique\";",
 									"",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -3440,15 +3440,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"cltype\":\"collectivegroupbill\",\n  \"deliveryDate\":{{billdate}},\n  \"amount\":5000,\n  \"discount\":1000,\n  \"comments\":[\n    \"The first one created by a rest api request\"\n  ],\n  \"payments\":[\n    {\n      \"amount\":4000,\n      \"paymentMode\": {\n                    \"name\": \"CB\"\n            }\n    },\n    {\n      \"amount\":1000,\n      \"paymentMode\": {\n                    \"name\": \"Espèces\" \n            }\n    }\n  ],\n  \"purchasedOfferings\":[\n    {\n      \"qty\":4,\n      \"offering\": {\n        \"id\": {{created_offering_id}},\n        \"cltype\": \"service\",\n        \"name\": \"beauty service\",\n        \"price\": 1500,\n        \"duration\": 180,\n        \"businesses\": [\n            {\n                \"designation\": \"Esthétique\"\n            }\n        ]\n    }\n    }\n  ],\n  \"collectiveGroup\":{\n    \"id\":{{created_collectivegroup_id}}\n  }\n}"
+							"raw": "{\n  \"cltype\":\"collectivegroupbill\",\n  \"deliveryDate\":{{billdate}},\n  \"amount\":5000,\n  \"discount\":1000,\n  \"comments\":[\n    \"The first one created by a rest api request\"\n  ],\n  \"payments\":[\n    {\n      \"amount\":4000,\n      \"paymentMode\": {\n                    \"name\": \"CB\"\n            }\n    },\n    {\n      \"amount\":1000,\n      \"paymentMode\": {\n                    \"name\": \"Espèces\" \n            }\n    }\n  ],\n  \"purchasedOfferings\":[\n    {\n      \"qty\":4,\n      \"offering\": {\n        \"id\": \"{{created_offering_id}}\",\n        \"cltype\": \"service\",\n        \"name\": \"beauty service\",\n        \"price\": 1500,\n        \"duration\": 180,\n        \"businesses\": [\n            {\n                \"designation\": \"Esthétique\"\n            }\n        ]\n    }\n    }\n  ],\n  \"collectiveGroup\":{\n    \"id\":\"{{created_collectivegroup_id}}\"\n  }\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/CollectiveGroupBill?professional=vanessa.gay@gmail.com",
@@ -3538,7 +3534,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "a7ee542c-cbaf-4bcd-ae5b-aba0954e872d",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
@@ -3578,7 +3574,8 @@
 									"",
 									"",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -3588,15 +3585,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"reference\": \"{{created_collectivegroupbill_reference}}\",\n    \"deliveryDate\": {{created_collectivegroupbill_deliveryDate}},\n    \"paymentDate\": {{created_collectivegroupbill_deliveryDate}},\n    \"cltype\": \"collectivegroupbill\",\n    \"amount\": 5000,\n    \"currency\": \"EUR\",\n    \"discount\": 1000,\n    \"comments\": [\n        \"Let the color applying\",\n        \"Hair used to be darker than expected\"\n    ],\n    \"payments\": [\n        {\n            \"amount\": 4000,\n            \"paymentMode\": {\n                \"name\": \"CB\"\n            }\n        },\n        {\n            \"amount\": 1000,\n            \"paymentMode\": {\n                \"name\": \"Espèces\"\n            }\n        }\n    ],\n    \"purchasedOfferings\": [\n        {\n            \"qty\": 4,\n            \"offering\": {\n                \"id\": {{created_offering_id}},\n                \"cltype\": \"service\",\n                \"name\": \"beauty service\",\n                \"price\": 1500,\n                \"duration\": 180,\n                \"businesses\": [\n                    {\n                        \"designation\": \"Esthétique\"\n                    }\n                ]\n            }\n        }\n    ],\n    \"collectiveGroup\":{\n      \"id\":{{created_collectivegroup_id}}\n    }\n}"
+							"raw": "{\n    \"reference\": \"{{created_collectivegroupbill_reference}}\",\n    \"deliveryDate\": {{created_collectivegroupbill_deliveryDate}},\n    \"paymentDate\": {{created_collectivegroupbill_deliveryDate}},\n    \"cltype\": \"collectivegroupbill\",\n    \"amount\": 5000,\n    \"currency\": \"EUR\",\n    \"discount\": 1000,\n    \"comments\": [\n        \"Let the color applying\",\n        \"Hair used to be darker than expected\"\n    ],\n    \"payments\": [\n        {\n            \"amount\": 4000,\n            \"paymentMode\": {\n                \"name\": \"CB\"\n            }\n        },\n        {\n            \"amount\": 1000,\n            \"paymentMode\": {\n                \"name\": \"Espèces\"\n            }\n        }\n    ],\n    \"purchasedOfferings\": [\n        {\n            \"qty\": 4,\n            \"offering\": {\n                \"id\": \"{{created_offering_id}}\",\n                \"cltype\": \"service\",\n                \"name\": \"beauty service\",\n                \"price\": 1500,\n                \"duration\": 180,\n                \"businesses\": [\n                    {\n                        \"designation\": \"Esthétique\"\n                    }\n                ]\n            }\n        }\n    ],\n    \"collectiveGroup\":{\n      \"id\":\"{{created_collectivegroup_id}}\"\n    }\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/CollectiveGroupBill?professional=vanessa.gay@gmail.com",
@@ -3622,7 +3615,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "2e48ed01-d54e-4d07-9d6e-ff7300d2f2f0",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
@@ -3630,7 +3623,7 @@
 									"    url:pm.environment.get('API_URL')+\"/Service/\"+pm.environment.get('created_offering_id')+\"?professional=vanessa.gay@gmail.com\",",
 									"    header: {",
 									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"        'Authorization': 'Bearer ' + pm.environment.get('JWT')",
 									"    },",
 									"    method: 'DELETE'",
 									"}, function (err, res) {",
@@ -3642,25 +3635,21 @@
 									"    url:pm.environment.get('API_URL')+\"/CollectiveGroup/\"+pm.environment.get('created_collectivegroup_id')+\"?professional=vanessa.gay@gmail.com\",",
 									"    header: {",
 									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"        'Authorization': 'Bearer ' + pm.environment.get('JWT')",
 									"    },",
 									"    method: 'DELETE'",
 									"}, function (err, res) {",
 									"    pm.expect(res).to.have.property('code', 200);",
 									"    pm.expect(res).to.have.property('status', 'OK');",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -14289,7 +14278,7 @@
 				"exec": [
 					"// intercept JWT",
 					"if(pm.response.headers.has(\"JWT\")){",
-					"    console.log(\"JWT read from header : \"+pm.response.headers.get(\"JWT\"));",
+					"    console.log(\"JWT REFRESHED : \"+pm.response.headers.get(\"JWT\"));",
 					"    pm.environment.set(\"JWT\", pm.response.headers.get(\"JWT\"));",
 					"}"
 				]
