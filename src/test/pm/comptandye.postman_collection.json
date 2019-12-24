@@ -10589,7 +10589,6 @@
 							"listen": "test",
 							"script": {
 								"id": "480d531d-0fa1-4367-8255-4f04d9f2ad02",
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
 									"",
@@ -10601,51 +10600,50 @@
 									"tests[\"cltype is sale\"] = jsonData.cltype === \"sale\";",
 									"",
 									"tests[\"product.productReference.barcode is \"+pm.environment.get('created_product-reference_barcode')] = jsonData.product.productReference.barcode === pm.environment.get('created_product-reference_barcode');"
-								]
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "prerequest",
 							"script": {
 								"id": "c2ff48c4-8233-4b31-acea-8d346eec9069",
-								"type": "text/javascript",
 								"exec": [
 									"pm.environment.set(\"created_product-reference_barcode\", \"1234567899\");",
 									"",
 									"pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/Product?professional=vanessa.gay@gmail.com\",",
+									"    url: pm.environment.get('API_URL') + \"/Product?professional=vanessa.gay@gmail.com\",",
 									"    method: 'POST',",
-									"   header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"    header: {",
+									"        'Content-Type': 'application/json',",
+									"        'Authorization': 'Bearer ' + pm.environment.get('JWT')",
 									"    },",
-									"    body:{",
+									"    body: {",
 									"        mode: 'raw',",
-									"        raw: JSON.stringify(",
-									"                        {",
-									"        \"availableQty\": 3,",
-									"        \"thresholdWarning\": 2,",
-									"        \"thresholdSevere\": 1,",
-									"        \"comments\":[",
-									"        \t\"No restriction\",",
-									"        \t\"ok for me\"",
-									"        ],",
-									"        \"productReference\": {",
-									"\t\"barcode\": pm.environment.get('created_product-reference_barcode'),",
-									"\t\"description\": \"blond color stick\",",
-									"\t\"brand\": \"L'OREAL\",",
-									"\t\"business\":            ",
-									"\t\t{",
-									"\t\t\t\"designation\": \"Coiffure\"",
-									"    \t}",
-									"        }",
+									"        raw: JSON.stringify({",
+									"            \"availableQty\": 3,",
+									"            \"thresholdWarning\": 2,",
+									"            \"thresholdSevere\": 1,",
+									"            \"comments\": [",
+									"                \"No restriction\",",
+									"                \"ok for me\"",
+									"            ],",
+									"            \"productReference\": {",
+									"                \"barcode\": pm.environment.get('created_product-reference_barcode'),",
+									"                \"description\": \"blond color stick\",",
+									"                \"brand\": \"L'OREAL\",",
+									"                \"business\": {",
+									"                    \"designation\": \"Coiffure\"",
+									"                }",
+									"            }",
 									"        })",
 									"    }",
-									"}, function (err, response) {",
+									"}, function(err, response) {",
 									"    console.log(response.json());",
-									"    ",
+									"",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -10655,15 +10653,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"cltype\":\"sale\",\n  \"name\":\"product sale\",\n  \"price\":10000,\n  \"qty\":2,\n  \"businesses\": [\n        {\n                \"designation\": \"Coiffure\"\n        }],\n  \"product\": {\n        \"availableQty\": 3,\n        \"thresholdWarning\": 2,\n        \"thresholdSevere\": 1,\n        \"comments\":[\n        \t\"No restriction\",\n        \t\"ok for me\"\n        ],\n        \"productReference\": {\n\t\"barcode\": {{created_product-reference_barcode}},\n\t\"description\": \"blond color stick\",\n\t\"brand\": \"L'OREAL\",\n\t\"business\":            \n\t\t{\n\t\t\t\"designation\": \"Coiffure\"\n    \t}\n        }\n        }\n  \n}"
+							"raw": "{\n  \"cltype\":\"sale\",\n  \"name\":\"product sale\",\n  \"price\":10000,\n  \"qty\":2,\n  \"businesses\": [\n        {\n                \"designation\": \"Coiffure\"\n        }],\n  \"product\": {\n        \"availableQty\": 3,\n        \"thresholdWarning\": 2,\n        \"thresholdSevere\": 1,\n        \"comments\":[\n        \t\"No restriction\",\n        \t\"ok for me\"\n        ],\n        \"productReference\": {\n\t\"barcode\": \"{{created_product-reference_barcode}}\",\n\t\"description\": \"blond color stick\",\n\t\"brand\": \"L'OREAL\",\n\t\"business\":            \n\t\t{\n\t\t\t\"designation\": \"Coiffure\"\n    \t}\n        }\n        }\n  \n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Sale?professional=vanessa.gay@gmail.com",
@@ -10810,7 +10804,6 @@
 							"listen": "test",
 							"script": {
 								"id": "791efc62-3c74-4212-b0ab-c67dc6bb9255",
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
@@ -10821,7 +10814,8 @@
 									"tests[\"price is 100000\"] = jsonData.price === 100000;",
 									"tests[\"first business designation is \\\"Esthétique\\\"\"] = jsonData.businesses[0].designation === \"Esthétique\";",
 									"tests[\"cltype is sale\"] = jsonData.cltype === \"sale\";"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -10831,15 +10825,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"cltype\": \"sale\",\n  \"id\":{{created_offering_id}},\n  \"name\":\"new product\",\n  \"price\":100000,\n  \"businesses\": [\n            {\n                \"designation\": \"Esthétique\"\n            }\n    ]\n}"
+							"raw": "{\n  \"cltype\": \"sale\",\n  \"id\":\"{{created_offering_id}}\",\n  \"name\":\"new product\",\n  \"price\":100000,\n  \"businesses\": [\n            {\n                \"designation\": \"Esthétique\"\n            }\n    ]\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Sale?professional=vanessa.gay@gmail.com",
@@ -10866,44 +10856,39 @@
 							"listen": "test",
 							"script": {
 								"id": "aa2bf515-01de-4eae-9421-c70e9cd7a432",
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/Product/\"+pm.environment.get('created_product-reference_barcode')+\"?professional=vanessa.gay@gmail.com\",",
+									"    url: pm.environment.get('API_URL') + \"/Product/\" + pm.environment.get('created_product-reference_barcode') + \"?professional=vanessa.gay@gmail.com\",",
 									"    header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
+									"        'Content-Type': 'application/json',",
+									"        'Authorization': 'Bearer ' + pm.environment.get('JWT')",
 									"    },",
 									"    method: 'DELETE'",
-									"}, function (err, res) {",
+									"}, function(err, res) {",
 									"    pm.expect(res).to.have.property('code', 200);",
 									"    pm.expect(res).to.have.property('status', 'OK');",
 									"    pm.sendRequest({",
-									"    url:pm.environment.get('API_URL')+\"/ProductReference/\"+pm.environment.get('created_product-reference_barcode'),",
-									"    header: {",
-									"        'Content-Type':'application/json',",
-									"        'X-XSRF-TOKEN':pm.environment.get('XSRF-TOKEN')",
-									"    },",
-									"    method: 'DELETE'",
-									"}, function (err, res) {",
-									"    pm.expect(res).to.have.property('code', 200);",
-									"    pm.expect(res).to.have.property('status', 'OK');",
-									"});",
+									"        url: pm.environment.get('API_URL') + \"/ProductReference/\" + pm.environment.get('created_product-reference_barcode'),",
+									"        header: {",
+									"            'Content-Type': 'application/json',",
+									"            'Authorization': 'Bearer ' + pm.environment.get('JWT')",
+									"        },",
+									"        method: 'DELETE'",
+									"    }, function(err, res) {",
+									"        pm.expect(res).to.have.property('code', 200);",
+									"        pm.expect(res).to.have.property('status', 'OK');",
+									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
