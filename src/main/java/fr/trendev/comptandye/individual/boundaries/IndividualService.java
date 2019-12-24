@@ -163,12 +163,9 @@ public class IndividualService extends AbstractCommonService<Individual, String>
             e.setRegistrationDate(entity.getRegistrationDate());
 
             // override CustomerDetails, Address and SocialNetworkAccounts id (security reason)
-            entity.getCustomerDetails().setId(
-                    e.getCustomerDetails().getId());
-            entity.getAddress().setId(
-                    e.getAddress().getId());
-            entity.getSocialNetworkAccounts().setId(
-                    e.getSocialNetworkAccounts().getId());
+            entity.getCustomerDetails().setId(UUIDGenerator.generateID());
+            entity.getAddress().setId(UUIDGenerator.generateID());
+            entity.getSocialNetworkAccounts().setId(UUIDGenerator.generateID());
 
             e.setCustomerDetails(entity.getCustomerDetails());
             e.setAddress(entity.getAddress());

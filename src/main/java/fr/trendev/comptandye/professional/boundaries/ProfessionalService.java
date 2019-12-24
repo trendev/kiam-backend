@@ -251,12 +251,9 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                     e.setUsername(entity.getUsername());
 
                     // set id preventing id spoufing (security reason)
-                    entity.getCustomerDetails().setId(
-                            e.getCustomerDetails().getId());
-                    entity.getAddress().setId(
-                            e.getAddress().getId());
-                    entity.getSocialNetworkAccounts().setId(
-                            e.getSocialNetworkAccounts().getId());
+                    entity.getCustomerDetails().setId(UUIDGenerator.generateID());
+                    entity.getAddress().setId(UUIDGenerator.generateID());
+                    entity.getSocialNetworkAccounts().setId(UUIDGenerator.generateID());
 
                     e.setCustomerDetails(entity.getCustomerDetails());
                     e.setAddress(entity.getAddress());
@@ -500,8 +497,8 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     }
 
     /**
-     * Resets the Stripe data of the Professional but does not delete the
-     * Stripe objects on their platform.
+     * Resets the Stripe data of the Professional but does not delete the Stripe
+     * objects on their platform.
      *
      * @param email the owner
      * @return HTTP Response
