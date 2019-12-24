@@ -6602,7 +6602,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "a8a2ac28-03b1-4f30-87fa-0a8851725068",
 								"exec": [
 									"",
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
@@ -6615,7 +6615,8 @@
 									"tests[\"paymentMode.name is \\\"CB\\\"\"] = jsonData.paymentMode.name === \"CB\";",
 									"",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -6625,10 +6626,6 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -6687,7 +6684,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "da582bf5-567c-4e58-9b97-290be0b91080",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
@@ -6695,7 +6692,8 @@
 									"tests[\"id is \"+pm.environment.get(\"created_payment_id\")] = jsonData.id == pm.environment.get(\"created_payment_id\");",
 									"tests[\"amount is 200\"] = jsonData.amount === 200;",
 									"tests[\"paymentMode.name is \\\"Chèque\\\"\"] = jsonData.paymentMode.name === \"Chèque\";"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -6705,15 +6703,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"id\":{{created_payment_id}},\n  \"amount\":200,\n  \"paymentMode\":\n  {\n    \"name\":\"Chèque\"\n  }\n}"
+							"raw": "{\n  \"id\":\"{{created_payment_id}}\",\n  \"amount\":200,\n  \"paymentMode\":\n  {\n    \"name\":\"Chèque\"\n  }\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Payment",
@@ -6733,25 +6727,21 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "b4e03250-ec67-4a06-8273-71c2b011ea8e",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"",
 									"",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
