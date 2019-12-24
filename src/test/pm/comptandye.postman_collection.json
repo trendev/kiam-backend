@@ -569,14 +569,15 @@
 							"listen": "test",
 							"script": {
 								"id": "197fef53-1593-4589-901a-fbb7aafb49a9",
-								"type": "text/javascript",
 								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;",
-									"",
-									"",
-									"",
-									""
-								]
+									"pm.test(\"status code is 200\", function() {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.success;",
+									"    pm.response.to.be.ok;",
+									"});"
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -3011,7 +3012,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "03ece36f-1105-4ced-80d9-ab06f9c2cba7",
 								"exec": [
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
 									"",
@@ -3027,7 +3028,8 @@
 									"tests[\"address.optional is \\\"Château de Fontenelle\\\"\"] = jsonData.address.optional === \"Château de Fontenelle\";",
 									"tests[\"address.postalCode is \\\"77600\\\"\"] = jsonData.address.postalCode === \"77600\";",
 									"tests[\"address.city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.address.city === \"Chanteloup-en-Brie\";"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -3037,10 +3039,6 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -3119,7 +3117,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "cb83584e-ad77-49a2-b4aa-763cbbb1ca6e",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
@@ -3135,7 +3133,8 @@
 									"tests[\"address.optional is \\\"Château de Fontenelle\\\"\"] = jsonData.address.optional === \"Château de Fontenelle\";",
 									"tests[\"address.postalCode is \\\"77600\\\"\"] = jsonData.address.postalCode === \"77600\";",
 									"tests[\"address.city is \\\"Chanteloup-en-Brie\\\"\"] = jsonData.address.city === \"Chanteloup-en-Brie\";"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -3145,15 +3144,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": {{created_collectivegroup_id}},\n    \"groupName\": \"E.H.P.A.D. LE CHATEAU DE FONTENELLE\",\n    \"phone\": \"0132547698\",\n    \"address\": {\n        \"street\": \"Allée Fontenelle\",\n        \"optional\": \"Château de Fontenelle\",\n        \"postalCode\": \"77600\",\n        \"city\": \"Chanteloup-en-Brie\",\n        \"country\": \"France\"\n    }\n}"
+							"raw": "{\n    \"id\": \"{{created_collectivegroup_id}}\",\n    \"groupName\": \"E.H.P.A.D. LE CHATEAU DE FONTENELLE\",\n    \"phone\": \"0132547698\",\n    \"address\": {\n        \"street\": \"Allée Fontenelle\",\n        \"optional\": \"Château de Fontenelle\",\n        \"postalCode\": \"77600\",\n        \"city\": \"Chanteloup-en-Brie\",\n        \"country\": \"France\"\n    }\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/CollectiveGroup?professional=vanessa.gay@gmail.com",
@@ -3215,21 +3210,22 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "a2183544-aa38-4676-a194-84927c656dc3",
 								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;"
-								]
+									"pm.test(\"status code is 200\", function() {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.success;",
+									"    pm.response.to.be.ok;",
+									"});"
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
