@@ -7459,7 +7459,6 @@
 							"listen": "test",
 							"script": {
 								"id": "e1df6e47-d2bf-41b4-b1a7-6f0825707b7d",
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
 									"",
@@ -7470,7 +7469,8 @@
 									"tests[\"description is \\\"blond color stick\\\"\"] = jsonData.description === \"blond color stick\";",
 									"tests[\"brand is \\\"L'OREAL\\\"\"] = jsonData.brand === \"L'OREAL\";",
 									"tests[\"business.designation is \\\"Coiffure\\\"\"] = jsonData.business.designation === \"Coiffure\";"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -7480,10 +7480,6 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -7609,7 +7605,6 @@
 							"listen": "test",
 							"script": {
 								"id": "cc98c581-5234-4ffd-b025-a4fc2ab04973",
-								"type": "text/javascript",
 								"exec": [
 									"",
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -7622,7 +7617,8 @@
 									"tests[\"description is \\\"black color stick\\\"\"] = jsonData.description === \"black color stick\";",
 									"tests[\"brand is \\\"WELLA\\\"\"] = jsonData.brand === \"WELLA\";",
 									"tests[\"business.designation is \\\"Coiffure\\\"\"] = jsonData.business.designation === \"Coiffure\";"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -7632,15 +7628,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"barcode\": {{created_product-reference_barcode}},\n\t\"description\": \"black color stick\",\n\t\"brand\": \"WELLA\",\n\t\"business\":            \n\t\t{\n\t\t\t\"designation\": \"Coiffure\"\n    \t}\n}"
+							"raw": "{\n\t\"barcode\": \"{{created_product-reference_barcode}}\",\n\t\"description\": \"black color stick\",\n\t\"brand\": \"WELLA\",\n\t\"business\":            \n\t\t{\n\t\t\t\"designation\": \"Coiffure\"\n    \t}\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/ProductReference",
@@ -7661,25 +7653,21 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "57e02d38-8781-4b6a-9b2d-bdfd2cfb3a5e",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"",
 									"",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
