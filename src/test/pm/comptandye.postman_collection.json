@@ -12647,7 +12647,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "50eb24d4-b106-49d0-a2a5-6bb5dc3d3b66",
 								"exec": [
 									"",
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
@@ -12656,7 +12656,8 @@
 									"tests[\"name is \\\"TEST_GRP01\\\"\"] = jsonData.name === \"TEST_GRP01\";",
 									"tests[\"description is \\\"This is a test group\\\"\"] = jsonData.description === \"This is a test group\";",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -12666,15 +12667,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"name\":\"TEST_GRP01\",\"description\":\"This is a test group\"}"
+							"raw": "{\n    \"name\": \"TEST_GRP01\",\n    \"description\": \"This is a test group\"\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/UserGroup",
@@ -12694,7 +12691,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "4f29e7b7-d45a-4784-a7ce-21643c04fcb8",
 								"exec": [
 									"",
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -12703,7 +12700,8 @@
 									"tests[\"name is \\\"TEST_GRP01\\\"\"] = jsonData.name === \"TEST_GRP01\";",
 									"tests[\"description is \\\"This is the test group TEST_GRP01\\\"\"] = jsonData.description === \"This is the test group TEST_GRP01\";",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -12713,15 +12711,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"name\":\"TEST_GRP01\",\"description\":\"This is the test group TEST_GRP01\"}"
+							"raw": "{\n    \"name\": \"TEST_GRP01\",\n    \"description\": \"This is the test group TEST_GRP01\"\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/UserGroup",
@@ -12741,22 +12735,17 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "2109079d-f7a5-41e9-8cf9-095ad7cfbb94",
 								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;",
-									""
-								]
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
