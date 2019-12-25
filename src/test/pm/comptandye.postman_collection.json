@@ -12922,7 +12922,6 @@
 							"listen": "test",
 							"script": {
 								"id": "b74d9854-ceec-431d-ba75-076cfabf2c10",
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
 									"",
@@ -12930,7 +12929,8 @@
 									"tests[\"countryId is \\\"XX\\\"\"] = jsonData.countryId === \"XX\";",
 									"tests[\"country is \\\"Wonderland\\\"\"] = jsonData.country === \"Wonderland\";",
 									"tests[\"rates.length >= 1\"] = jsonData.rates.length >= 1;"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -12940,10 +12940,6 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -12969,7 +12965,6 @@
 							"listen": "test",
 							"script": {
 								"id": "5a744923-ed0c-4e2e-95b3-074442146ac8",
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
@@ -12978,7 +12973,8 @@
 									"tests[\"country is \\\"NewCountry\\\"\"] = jsonData.country === \"NewCountry\";",
 									"tests[\"rates.length >= 1\"] = jsonData.rates.length >= 1;",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -12988,10 +12984,6 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -13016,22 +13008,18 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "083c1fab-1a8e-4ec6-acb0-9956380c6713",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
