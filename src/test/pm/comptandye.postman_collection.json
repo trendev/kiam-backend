@@ -13053,13 +13053,16 @@
 									"listen": "test",
 									"script": {
 										"id": "483426b7-7362-426e-8444-7756f6f32f41",
-										"type": "text/javascript",
 										"exec": [
 											"tests[\"Status code is 201\"] = responseCode.code === 201;",
 											"",
 											"var jsonData = JSON.parse(responseBody);",
 											"tests[\"id is defined\"] = jsonData.id !== undefined;",
 											"pm.environment.set(\"created_notification_id\", jsonData.id);",
+											"",
+											"pm.test(\"id is not the provided one \\\"fake-id\\\"\",function(){",
+											"    pm.expect(jsonData.id).to.not.be.equal(\"fake-id\");",
+											"});",
 											"",
 											"tests[\"cltype is \\\"threshold\\\"\"] = jsonData.cltype === \"threshold\";",
 											"tests[\"checked is false\"] = jsonData.checked === false;",
@@ -13072,7 +13075,8 @@
 											"tests[\"qualifier is \\\"WARNING\\\"\"] = jsonData.qualifier === \"WARNING\";",
 											"",
 											""
-										]
+										],
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -13082,15 +13086,11 @@
 									{
 										"key": "Content-Type",
 										"value": "application/json"
-									},
-									{
-										"key": "X-XSRF-TOKEN",
-										"value": "{{XSRF-TOKEN}}"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n        \"id\": 123456,\n        \"cltype\": \"threshold\",\n        \"checked\": false,\n        \"levelRank\": \"WARNING\",\n        \"barcode\": \"123456789\",\n        \"description\": \"a haircut product\",\n        \"brand\": \"WELLA\",\n        \"threshold\": 5,\n        \"qty\": 2,\n        \"qualifier\": \"WARNING\"\n    }"
+									"raw": "{\n        \"id\": \"fake-id\",\n        \"cltype\": \"threshold\",\n        \"checked\": false,\n        \"levelRank\": \"WARNING\",\n        \"barcode\": \"123456789\",\n        \"description\": \"a haircut product\",\n        \"brand\": \"WELLA\",\n        \"threshold\": 5,\n        \"qty\": 2,\n        \"qualifier\": \"WARNING\"\n    }"
 								},
 								"url": {
 									"raw": "{{API_URL}}/ThresholdAlert?professional=vanessa.gay@gmail.com",
@@ -13117,7 +13117,6 @@
 									"listen": "test",
 									"script": {
 										"id": "457106b3-5e9c-4903-9061-f00097ce366c",
-										"type": "text/javascript",
 										"exec": [
 											"tests[\"Status code is 200\"] = responseCode.code === 200;",
 											"",
@@ -13133,7 +13132,8 @@
 											"tests[\"threshold is 0\"] = jsonData.threshold === 0;",
 											"tests[\"qty is 0\"] = jsonData.qty === 0;",
 											"tests[\"qualifier is \\\"EMPTY\\\"\"] = jsonData.qualifier === \"EMPTY\";"
-										]
+										],
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -13143,15 +13143,11 @@
 									{
 										"key": "Content-Type",
 										"value": "application/json"
-									},
-									{
-										"key": "X-XSRF-TOKEN",
-										"value": "{{XSRF-TOKEN}}"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n        \"id\": {{created_notification_id}},\n        \"cltype\": \"threshold\",\n        \"checked\": false,\n        \"levelRank\": \"SEVERE\",\n        \"barcode\": \"123456789\",\n        \"description\": \"a haircut product\",\n        \"brand\": \"WELLA\",\n        \"threshold\": 0,\n        \"qty\": 0,\n        \"qualifier\": \"EMPTY\"\n    }"
+									"raw": "{\n        \"id\": \"{{created_notification_id}}\",\n        \"cltype\": \"threshold\",\n        \"checked\": false,\n        \"levelRank\": \"SEVERE\",\n        \"barcode\": \"123456789\",\n        \"description\": \"a haircut product\",\n        \"brand\": \"WELLA\",\n        \"threshold\": 0,\n        \"qty\": 0,\n        \"qualifier\": \"EMPTY\"\n    }"
 								},
 								"url": {
 									"raw": "{{API_URL}}/ThresholdAlert?professional=vanessa.gay@gmail.com",
@@ -13294,7 +13290,6 @@
 							"listen": "test",
 							"script": {
 								"id": "f3bf73b8-f3c3-445e-8c41-b2d2f86d4e7e",
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
@@ -13310,18 +13305,14 @@
 									"tests[\"threshold is 0\"] = jsonData.threshold === 0;",
 									"tests[\"qty is 0\"] = jsonData.qty === 0;",
 									"tests[\"qualifier is \\\"EMPTY\\\"\"] = jsonData.qualifier === \"EMPTY\";"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "PUT",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -13353,23 +13344,19 @@
 							"listen": "test",
 							"script": {
 								"id": "a4676892-8bac-4149-9146-8b79c84d2b25",
-								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
 									"tests[\"totalChecked >= 1\"] = jsonData.totalChecked >= 1;"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "PUT",
 						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							},
 							{
 								"key": "Content-Type",
 								"value": "text/plain"
@@ -13404,21 +13391,17 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "51359520-7238-477f-aa89-3ab8086d923a",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -13448,21 +13431,17 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "312be696-0925-489b-babe-668c742f70a4",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
