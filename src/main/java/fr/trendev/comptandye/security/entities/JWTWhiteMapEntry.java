@@ -1,6 +1,7 @@
 package fr.trendev.comptandye.security.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -16,7 +17,7 @@ public class JWTWhiteMapEntry implements Serializable,
 
     public JWTWhiteMapEntry(String email, Set<JWTRecord> records) {
         this.email = email;
-        this.records = records;
+        this.records = new HashSet<>(records);
     }
 
     public JWTWhiteMapEntry(Map.Entry<String, Set<JWTRecord>> entry) {
@@ -36,7 +37,7 @@ public class JWTWhiteMapEntry implements Serializable,
     }
 
     public void setRecords(Set<JWTRecord> records) {
-        this.records = records;
+        this.records = new HashSet<>(records);
     }
 
     @Override
