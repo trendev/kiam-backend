@@ -11315,7 +11315,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "efcf5db7-b7aa-45d8-8251-67536c6eb573",
 								"exec": [
 									"",
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
@@ -11330,7 +11330,8 @@
 									"tests[\"pinterest is undefined\"] = jsonData.pinterest === undefined;",
 									"",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -11340,10 +11341,6 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
@@ -11405,7 +11402,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "95795e88-95ee-41f1-b3a4-20c48e08b5c9",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
@@ -11417,7 +11414,8 @@
 									"tests[\"twitter is \\\"@comptandye\\\"\"] = jsonData.twitter === \"@comptandye\";",
 									"tests[\"instagram is undefined\"] = jsonData.instagram === undefined;",
 									"tests[\"pinterest is \\\"my_pinterest_account\\\"\"] = jsonData.pinterest === \"my_pinterest_account\";"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -11427,15 +11425,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
-							},
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"id\":{{created_socialnetworkaccounts_id}},\n  \"facebook\":\"http://www.facebook.com/comptandye\",\n  \"twitter\":\"@comptandye\",\n  \"pinterest\":\"my_pinterest_account\"\n}"
+							"raw": "{\n  \"id\":\"{{created_socialnetworkaccounts_id}}\",\n  \"facebook\":\"http://www.facebook.com/comptandye\",\n  \"twitter\":\"@comptandye\",\n  \"pinterest\":\"my_pinterest_account\"\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/SocialNetworkAccounts",
@@ -11455,25 +11449,21 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "782de7fd-aa1a-492d-aebd-e96ac0bb9e87",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"",
 									"",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "X-XSRF-TOKEN",
-								"value": "{{XSRF-TOKEN}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
