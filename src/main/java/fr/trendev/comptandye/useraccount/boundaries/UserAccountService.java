@@ -38,38 +38,38 @@ import javax.ws.rs.core.Response;
 @Path("user-account")
 @PermitAll
 public class UserAccountService extends AbstractCommonService<UserAccount, String> {
-
+    
     @Inject
     PasswordManager passwordManager;
-
+    
     @Inject
     EmailValidator emailValidator;
-
+    
     @Inject
     ProfessionalFacade professionalFacade;
-
+    
     @Inject
     UserAccountFacade userAccountFacade;
-
+    
     @Inject
     UserGroupFacade userGroupFacade;
-
+    
     private static final Logger LOG = Logger.getLogger(UserAccountService.class.getName());
-
+    
     public UserAccountService() {
         super(UserAccount.class);
     }
-
+    
     @Override
     protected Logger getLogger() {
         return LOG;
     }
-
+    
     @Override
     protected AbstractFacade<UserAccount, String> getFacade() {
         return userAccountFacade;
     }
-
+    
     @Path("create-professional")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -79,14 +79,16 @@ public class UserAccountService extends AbstractCommonService<UserAccount, Strin
 
             // collect data from the payload
             String email = payload.getString("email");
-
+            
             if (!emailValidator.valid(email) || email.length() > 100) {
                 throw new IllegalArgumentException("[" + email + "] is not a valid email");
             }
 
             // instantiate a new Professional entity
             Professional pro = new Professional();
-
+            pro.getAddress().setId(UUIDGenerator.generateID());
+            pro.getCustomerDetails().setId(UUIDGenerator.generateID());
+            pro.getSocialNetworkAccounts().setId(UUIDGenerator.generateID());
             pro.setEmail(email);
 
             // auto-generate and hash a password
@@ -123,5 +125,5 @@ public class UserAccountService extends AbstractCommonService<UserAccount, Strin
             throw new WebApplicationException("Error processing Professional creation", ex);
         }
     }
-
+    
 }
