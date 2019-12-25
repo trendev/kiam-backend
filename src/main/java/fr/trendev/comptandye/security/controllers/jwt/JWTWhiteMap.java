@@ -43,16 +43,22 @@ import javax.inject.Inject;
 public class JWTWhiteMap implements Serializable {
 
     /**
-     * MAP MUST HAVE ONE MAIN COPY
+     * MAPS MUST HAVE ONE MAIN COPY ONLY
      */
+        
+        // Map of the JWT records indexed by user's email address
     private static volatile Map<String, Set<JWTRecord>> WHITE_MAP =
             Collections.synchronizedSortedMap(new TreeMap<>());
 
     private static final Logger LOG = Logger.getLogger(JWTWhiteMap.class.
             getName());
 
+        // Set of the generated JWT, used to identify forged tokens
     private static volatile Set<String> LEGAL_TOKENS =
             Collections.synchronizedSet(new HashSet<>());
+        
+        // Map of the new tokens indexed by the UUID of the original tokens
+        private static volatile Map<String,String> REFRESHED_TOKENS = Collections.synchronizedSortedMap(new TreeMap<>());
 
     @Inject
     JWTWhiteMapDTO dto;
