@@ -170,7 +170,7 @@ public class DefaultHttpAuthenticationMechanism implements
                         JWTClaimsSet clmset = d.getClaimsSet();
                         if (this.jwtManager.canBeRefreshed(d.getClaimsSet())
                                 // prevent refreshing a JWT token and block LOGOUT
-                                && !req.getPathInfo().endsWith("logout")) {
+                                && !req.getPathInfo().endsWith("/logout")) {
                             try {
                                 String jwt = this.jwtManager.refreshToken(d);
                                 rsp.addHeader(JWT, jwt);

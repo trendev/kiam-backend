@@ -155,6 +155,10 @@ public class JWTWhiteMap implements Serializable {
         return LEGAL_TOKENS;
     }
 
+    public Map<String, String> getRefreshedTokensMap() {
+        return REFRESHED_TOKENS_MAP;
+    }
+
     /**
      * Returns the records
      *
@@ -198,6 +202,7 @@ public class JWTWhiteMap implements Serializable {
                                 JWTManager.trunkToken(r.getToken())
                             });
                     LEGAL_TOKENS.remove(r.getToken());
+                    REFRESHED_TOKENS_MAP.remove(r.getToken());
                     return true;
                 } else {
                     return false;
@@ -293,6 +298,8 @@ public class JWTWhiteMap implements Serializable {
                     .stream()
                     .map(JWTRecord::getToken)
                     .collect(Collectors.toList()));
+
+            records.get().forEach(r -> this.removeRefreshedToken(r.getToken()));
             this.dto.delete(email);
             this.aec.emitLogoutEvent(email); // emits a LOG-OUT event
         }
@@ -323,10 +330,11 @@ public class JWTWhiteMap implements Serializable {
                         "Token of user [{0}] ({1}) removed from JWT White Map : {2}",
                         new Object[]{
                             email,
-                            JWTManager.trunkToken(r.getToken()),
+                            JWTManager.trunkToken(token),
                             records.size()
                         });
-                LEGAL_TOKENS.remove(r.getToken());
+                LEGAL_TOKENS.remove(token);
+                REFRESHED_TOKENS_MAP.remove(token);
             }
         });
 

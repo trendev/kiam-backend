@@ -26,9 +26,12 @@ import java.time.temporal.ChronoUnit;
 import static java.time.temporal.ChronoUnit.MILLIS;
 import java.time.temporal.TemporalUnit;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -44,7 +47,7 @@ import javax.inject.Inject;
 @ApplicationScoped
 public class JWTManager {
 
-    public final static int SHORT_TERM_VALIDITY = 5;
+    public final static int SHORT_TERM_VALIDITY = 20;
     public final static TemporalUnit SHORT_TERM_VALIDITY_UNIT = ChronoUnit.MINUTES;
     public final static int LONG_TERM_VALIDITY = 60;
     public final static TemporalUnit LONG_TERM_VALIDITY_UNIT = ChronoUnit.DAYS;
@@ -102,11 +105,15 @@ public class JWTManager {
     }
 
     public Set<String> getLegalTokens() {
-        return this.jwtWhiteMap.getLegalTokens();
+        return new HashSet<>(this.jwtWhiteMap.getLegalTokens());
     }
 
     public JWTRevokedSet getJWTRevokedSet() {
         return jwtRevokedSet;
+    }
+
+    public Map<String, String> getRefreshedTokensMap() {
+        return new TreeMap<>(this.jwtWhiteMap.getRefreshedTokensMap());
     }
 
     private String generateToken(
