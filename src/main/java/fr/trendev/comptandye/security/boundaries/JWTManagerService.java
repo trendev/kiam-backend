@@ -55,5 +55,13 @@ public class JWTManagerService {
         return Response.ok(this.jwtManager.getLegalTokens())
                 .build();
     }
+    
+    @GET
+    @Path("refreshed-tokens")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getRefreshedTokens() throws JsonProcessingException {
+        return Response.ok(this.jwtManager.getRefreshedTokensMap())
+                .build();
+    }
 
 }
