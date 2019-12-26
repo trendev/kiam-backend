@@ -327,6 +327,24 @@
 					"response": []
 				},
 				{
+					"name": "refreshed-tokens",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/JWTManager/refreshed-tokens",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"JWTManager",
+								"refreshed-tokens"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "revokedset",
 					"request": {
 						"method": "GET",
@@ -13710,7 +13728,7 @@
 						{
 							"name": "getPaymentMethods",
 							"request": {
-								"method": "GET",
+								"method": "OPTIONS",
 								"header": [],
 								"url": {
 									"raw": "{{API_URL}}/stripe-payment-method?email=demo@comptandye.fr",
