@@ -15,6 +15,7 @@ import com.nimbusds.jose.crypto.RSASSASigner;
 import com.nimbusds.jose.crypto.RSASSAVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import fr.trendev.comptandye.security.entities.DecodedJWT;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import fr.trendev.comptandye.security.entities.JWTWhiteMapEntry;
 import java.security.PrivateKey;
@@ -43,7 +44,7 @@ import javax.inject.Inject;
 @ApplicationScoped
 public class JWTManager {
 
-    public final static int SHORT_TERM_VALIDITY = 20;
+    public final static int SHORT_TERM_VALIDITY = 5;
     public final static TemporalUnit SHORT_TERM_VALIDITY_UNIT = ChronoUnit.MINUTES;
     public final static int LONG_TERM_VALIDITY = 60;
     public final static TemporalUnit LONG_TERM_VALIDITY_UNIT = ChronoUnit.DAYS;
@@ -149,28 +150,49 @@ public class JWTManager {
     }
 
     /**
-     * TODO : control if the provided JWT has already been refreshed and prevent
-     * creating more JWT during multiple concurrent requests (or race condition)
+     * Refreshes a token and controls if the provided token has already been
+     * refreshed, preventing to create more JWT during multiple concurrent
+     * requests (or race condition).
      *
+     * @throws java.text.ParseException if the JWT cannot be parsed
+     * @throws com.nimbusds.jose.JOSEException
      */
-    public String refreshToken(final JWTClaimsSet cs) throws ParseException,
-            JOSEException {
+    synchronized public String refreshToken(final DecodedJWT d) throws JOSEException, ParseException {
 
-        final String caller = cs.getSubject();
+        Optional<String> refreshedToken
+                = jwtWhiteMap.getRefreshedToken(d.getJwt());
 
-        Instant now = Instant.now();
+        if (refreshedToken.isPresent()) {
+            String newJWT = refreshedToken.get();
+            LOG.log(Level.INFO, "JWT {0} has already been refreshed: providing the refreshed JWT {1}",
+                    new Object[]{trunkToken(d.getJwt()), trunkToken(newJWT)});
+            return newJWT;
+        } else {
+            final JWTClaimsSet cs = d.getClaimsSet();
+            final String caller = cs.getSubject();
+            Instant now = Instant.now();
 
-        return this.generateToken(caller,
-                now,
-                now.plus(
-                        cs.getExpirationTime().getTime()
-                        - cs.getIssueTime().getTime(),
-                        MILLIS),
-                this.createClaimsSetBuilder(
-                        caller,
-                        cs.getStringListClaim("groups"),
-                        cs.getIntegerClaim("refresh") + 1),
-                "JWT refreshed for user %1$s :\n%2$s");
+            String jwt = this.generateToken(caller,
+                    now,
+                    now.plus(
+                            cs.getExpirationTime().getTime()
+                            - cs.getIssueTime().getTime(),
+                            MILLIS),
+                    this.createClaimsSetBuilder(
+                            caller,
+                            cs.getStringListClaim("groups"),
+                            cs.getIntegerClaim("refresh") + 1),
+                    "JWT refreshed for user %1$s :\n%2$s");
+
+            // the new one is added in the refreshed token Map
+            jwtWhiteMap.addRefreshedToken(d.getJwt(), jwt);
+
+            LOG.log(Level.INFO, "JWT \"{0}\" HAS BEEN REFRESHED",
+                    trunkToken(d.getJwt()));
+
+            return jwt;
+        }
+
     }
 
     private JWTClaimsSet.Builder createClaimsSetBuilder(final String caller,
@@ -206,7 +228,7 @@ public class JWTManager {
         return signedJWT.serialize();
     }
 
-    public Optional<JWTClaimsSet> extractClaimsSet(String token) {
+    public Optional<DecodedJWT> extractClaimsSet(String token) {
         try {
             if (token != null && !token.isEmpty()) {
                 SignedJWT parsedJWT = SignedJWT.parse(token);
@@ -214,7 +236,10 @@ public class JWTManager {
                 boolean verified = parsedJWT.verify(this.verifier);
 
                 if (verified) {
-                    return Optional.of(parsedJWT.getJWTClaimsSet());
+                    return Optional.of(new DecodedJWT(
+                            token,
+                            parsedJWT.getJWTClaimsSet()
+                    ));
                 } else {
                     LOG.log(Level.WARNING, "** INVALID JWT SIGNATURE **");
                 }
@@ -239,9 +264,9 @@ public class JWTManager {
      * @param token the token to control and convert in claims set
      * @return true if the token is extracted, verified and legal
      */
-    public Optional<JWTClaimsSet> extractLegalClaimsSet(String token) {
+    public Optional<DecodedJWT> extractLegalClaimsSet(String token) {
         return this.extractClaimsSet(token).filter(
-                clmset -> !this.hasExpired(clmset) && !this.isForgery(token));
+                d -> !this.hasExpired(d.getClaimsSet()) && !this.isForgery(token));
     }
 
     public boolean hasExpired(final JWTClaimsSet claims) {

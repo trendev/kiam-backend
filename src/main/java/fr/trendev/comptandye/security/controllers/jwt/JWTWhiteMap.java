@@ -315,7 +315,7 @@ public class JWTWhiteMap implements Serializable {
             Set<JWTRecord> records) {
         Optional<JWTRecord> record = records.stream()
                 .filter(r -> r.getToken().equals(token))
-                .findFirst();//should be unique
+                .findFirst();//should be unique because the structure is a Set
 
         record.ifPresent(r -> {
             if (records.remove(r)) {
@@ -370,7 +370,7 @@ public class JWTWhiteMap implements Serializable {
      * Performance = o(n + log r)
      *
      * @param token
-     * @return
+     * @return an Optional
      */
     public Optional<JWTRecord> remove(String token) {
         for (Map.Entry<String, Set<JWTRecord>> e : WHITE_MAP.entrySet()) {
@@ -410,4 +410,15 @@ public class JWTWhiteMap implements Serializable {
         return !result;
     }
 
+    public Optional<String> getRefreshedToken(String oldJWT) {
+        return Optional.ofNullable(REFRESHED_TOKENS_MAP.get(oldJWT));
+    }
+
+    public void addRefreshedToken(String oldJWT, String newJWT) {
+        REFRESHED_TOKENS_MAP.put(oldJWT, newJWT);
+    }
+
+    private void removeRefreshedToken(String oldJWT) {
+        REFRESHED_TOKENS_MAP.remove(oldJWT);
+    }
 }
