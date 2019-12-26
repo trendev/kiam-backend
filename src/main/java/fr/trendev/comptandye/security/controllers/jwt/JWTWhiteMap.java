@@ -45,20 +45,20 @@ public class JWTWhiteMap implements Serializable {
     /**
      * MAPS MUST HAVE ONE MAIN COPY ONLY
      */
-        
-        // Map of the JWT records indexed by user's email address
-    private static volatile Map<String, Set<JWTRecord>> WHITE_MAP =
-            Collections.synchronizedSortedMap(new TreeMap<>());
+    // Map of the JWT records indexed by user's email address
+    private static volatile Map<String, Set<JWTRecord>> WHITE_MAP
+            = Collections.synchronizedSortedMap(new TreeMap<>());
 
     private static final Logger LOG = Logger.getLogger(JWTWhiteMap.class.
             getName());
 
-        // Set of the generated JWT, used to identify forged tokens
-    private static volatile Set<String> LEGAL_TOKENS =
-            Collections.synchronizedSet(new HashSet<>());
-        
-        // Map of the new tokens indexed by the UUID of the original tokens
-        private static volatile Map<String,String> REFRESHED_TOKENS = Collections.synchronizedSortedMap(new TreeMap<>());
+    // Set of the generated JWT, used to identify forged tokens
+    private static volatile Set<String> LEGAL_TOKENS
+            = Collections.synchronizedSet(new HashSet<>());
+
+    // Map of the new tokens indexed by the UUID of the original tokens
+    private static volatile Map<String, String> REFRESHED_TOKENS_MAP
+            = Collections.synchronizedSortedMap(new TreeMap<>());
 
     @Inject
     JWTWhiteMapDTO dto;
@@ -282,8 +282,8 @@ public class JWTWhiteMap implements Serializable {
      * empty Optional otherwise
      */
     public Optional<Set<JWTRecord>> removeAll(String email) {
-        Optional<Set<JWTRecord>> records =
-                Optional.ofNullable(WHITE_MAP.remove(email));
+        Optional<Set<JWTRecord>> records
+                = Optional.ofNullable(WHITE_MAP.remove(email));
 
         if (records.isPresent()) {
             LOG.log(Level.INFO,

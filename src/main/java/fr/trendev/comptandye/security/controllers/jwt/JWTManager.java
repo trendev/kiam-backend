@@ -95,9 +95,9 @@ public class JWTManager {
                 .collect(Collector.of(TreeSet::new,
                         TreeSet::add,
                         (l, r) -> {
-                    l.addAll(r);
-                    return l;
-                }));
+                            l.addAll(r);
+                            return l;
+                        }));
     }
 
     public Set<String> getLegalTokens() {
@@ -148,6 +148,11 @@ public class JWTManager {
                 "JWT created for user %1$s :\n%2$s");
     }
 
+    /**
+     * TODO : control if the provided JWT has already been refreshed and prevent
+     * creating more JWT during multiple concurrent requests (or race condition)
+     *
+     */
     public String refreshToken(final JWTClaimsSet cs) throws ParseException,
             JOSEException {
 
