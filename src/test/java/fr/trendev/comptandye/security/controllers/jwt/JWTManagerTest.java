@@ -22,6 +22,7 @@ import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_TE
 import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_TERM_VALIDITY_UNIT;
 import fr.trendev.comptandye.security.controllers.jwt.dto.mock.MockJWTRevokedSetDTO;
 import fr.trendev.comptandye.security.controllers.jwt.dto.mock.MockJWTWhiteMapDTO;
+import fr.trendev.comptandye.security.entities.DecodedJWT;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.text.ParseException;
 import java.time.Instant;
@@ -218,7 +219,7 @@ public class JWTManagerTest {
         String token = this.jwtManager.createToken(this.caller,
                 groups,
                 false);
-        JWTClaimsSet claimsSet = this.jwtManager.extractClaimsSet(token).get();
+        JWTClaimsSet claimsSet = this.jwtManager.extractClaimsSet(token).get().getClaimsSet();
 
         Assertions.assertFalse(this.jwtManager.hasExpired(claimsSet));
 
@@ -346,8 +347,8 @@ public class JWTManagerTest {
         Assertions.assertTrue(jwtManager.getJWTWhiteMap().add(email1, record3)
                 .isPresent());// empty set at first
 
-        Optional<Set<JWTRecord>> records =
-                this.jwtManager.getJWTWhiteMap().getRecords(email1);
+        Optional<Set<JWTRecord>> records
+                = this.jwtManager.getJWTWhiteMap().getRecords(email1);
 
         Assertions.assertTrue(records.isPresent());
         Assertions.assertEquals(records.get().size(), 3);
@@ -368,58 +369,60 @@ public class JWTManagerTest {
                     groups,
                     false);
 
-            this.jwtManager.extractClaimsSet(token).ifPresent(cs_ -> {
+            this.jwtManager.extractClaimsSet(token)
+                    .ifPresent(d_ -> {
 
-                JWTClaimsSet cs = cs_;
+                        DecodedJWT d = d_;
 
-                try {
-                    for (int i = 0; i < 10; i++) {
-                        String newToken = this.jwtManager.refreshToken(cs);
-                        Assertions.assertNotNull(newToken);
-                        Assertions.assertFalse(newToken.isEmpty());
+                        try {
+                            for (int i = 0; i < 10; i++) {
+                                String newToken = this.jwtManager.refreshToken(d);
+                                JWTClaimsSet cs = d.getClaimsSet();
+                                Assertions.assertNotNull(newToken);
+                                Assertions.assertFalse(newToken.isEmpty());
 
-                        Assertions.assertTrue(this.jwtManager.extractClaimsSet(
-                                newToken).isPresent());
+                                Assertions.assertTrue(this.jwtManager.extractClaimsSet(
+                                        newToken).isPresent());
 
-                        JWTClaimsSet ncs = this.jwtManager.extractClaimsSet(
-                                newToken).get();
+                                JWTClaimsSet ncs = this.jwtManager.extractClaimsSet(
+                                        newToken).get().getClaimsSet();
 
-                        Assertions.assertEquals(ncs.getIntegerClaim("refresh").
-                                doubleValue(),
-                                i + 1, "refresh = " + ncs.getIntegerClaim(
-                                        "refresh").
-                                        doubleValue() + " / i+1 =" + (i + 1)
-                                + " / i = " + i);
+                                Assertions.assertEquals(ncs.getIntegerClaim("refresh").
+                                        doubleValue(),
+                                        i + 1, "refresh = " + ncs.getIntegerClaim(
+                                                "refresh").
+                                                doubleValue() + " / i+1 =" + (i + 1)
+                                        + " / i = " + i);
 
-                        Assertions.assertNotEquals(cs.getJWTID(),
-                                ncs.getJWTID());
+                                Assertions.assertNotEquals(cs.getJWTID(),
+                                        ncs.getJWTID());
 
-                        Assertions.assertEquals(cs.getSubject(), ncs.
-                                getSubject());
-                        Assertions.assertEquals(cs.getStringClaim("upn"), ncs.
-                                getStringClaim("upn"));
-                        Assertions.assertFalse(Collections
-                                .disjoint(
-                                        cs.getStringListClaim("groups"),
-                                        ncs.getStringListClaim("groups")));
-                        Assertions.assertEquals(
-                                cs.getExpirationTime().getTime()
-                                - cs.getIssueTime().getTime(),
-                                ncs.getExpirationTime().getTime()
-                                - ncs.getIssueTime().getTime());
+                                Assertions.assertEquals(cs.getSubject(), ncs.
+                                        getSubject());
+                                Assertions.assertEquals(cs.getStringClaim("upn"), ncs.
+                                        getStringClaim("upn"));
+                                Assertions.assertFalse(Collections
+                                        .disjoint(
+                                                cs.getStringListClaim("groups"),
+                                                ncs.getStringListClaim("groups")));
+                                Assertions.assertEquals(
+                                        cs.getExpirationTime().getTime()
+                                        - cs.getIssueTime().getTime(),
+                                        ncs.getExpirationTime().getTime()
+                                        - ncs.getIssueTime().getTime());
 
-                        cs = ncs;
-                    }
+                                d = new DecodedJWT(newToken, ncs);
+                            }
 
-                } catch (ParseException ex) {
-                    Logger.getLogger(JWTManagerTest.class.getName()).
-                            log(Level.SEVERE, null, ex);
-                } catch (JOSEException ex) {
-                    Logger.getLogger(JWTManagerTest.class.getName()).
-                            log(Level.SEVERE, null, ex);
-                }
+                        } catch (ParseException ex) {
+                            Logger.getLogger(JWTManagerTest.class.getName()).
+                                    log(Level.SEVERE, null, ex);
+                        } catch (JOSEException ex) {
+                            Logger.getLogger(JWTManagerTest.class.getName()).
+                                    log(Level.SEVERE, null, ex);
+                        }
 
-            });
+                    });
 
         } catch (JOSEException ex) {
             Logger.getLogger(JWTManagerTest.class.getName()).

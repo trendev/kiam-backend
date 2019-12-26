@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.security.controllers;
 
+import com.nimbusds.jwt.JWTClaimsSet;
 import fr.trendev.comptandye.security.controllers.jwt.JWTManager;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -161,15 +162,17 @@ public class DefaultHttpAuthenticationMechanism implements
         return this.authHelper.getJWTFromRequestHeader(req)
                 .filter(jwt -> !this.jwtManager.isRevoked(jwt))
                 .flatMap(jwt -> this.jwtManager.extractLegalClaimsSet(jwt))
-                // JWT is valid and signature is verified
-                .map(clmset -> {
+                // JWT is valid
+                // signature is verified
+                // JWT is decoded 
+                .map(d -> {
                     try {
-                        if (this.jwtManager.canBeRefreshed(clmset) 
+                        JWTClaimsSet clmset = d.getClaimsSet();
+                        if (this.jwtManager.canBeRefreshed(d.getClaimsSet())
                                 // prevent refreshing a JWT token and block LOGOUT
                                 && !req.getPathInfo().endsWith("logout")) {
                             try {
-                                String jwt = this.jwtManager.
-                                        refreshToken(clmset);
+                                String jwt = this.jwtManager.refreshToken(d);
                                 rsp.addHeader(JWT, jwt);
                             } catch (Exception ex) {
                                 LOG.log(Level.SEVERE,
