@@ -341,7 +341,7 @@ public class JWTManager {
         Optional<JWTRecord> record = this.jwtWhiteMap.remove(email, token);
         record.ifPresent(r -> {
             if (this.jwtRevokedSet.add(r)) {
-                LOG.log(Level.WARNING,
+                LOG.log(Level.INFO,
                         "Token ({0}) has been REVOKED and added in JWT RevokedSet",
                         trunkToken(token));
             }
@@ -353,7 +353,7 @@ public class JWTManager {
         Optional<Set<JWTRecord>> records = this.jwtWhiteMap.removeAll(email);
         records.ifPresent(rs -> {
             if (this.jwtRevokedSet.addAll(rs)) {
-                LOG.log(Level.WARNING,
+                LOG.log(Level.INFO,
                         "All Tokens of user [{0}] have been REVOKED and added in JWT RevokedSet",
                         email);
             }

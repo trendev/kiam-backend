@@ -559,7 +559,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "645bc4dc-f012-4321-b8d8-b52b3df66a6b",
 								"exec": [
 									"",
 									"tests[\"Status code is 201\"] = responseCode.code === 201;",
@@ -575,7 +575,8 @@
 									"tests[\"country is \\\"France\\\"\"] = jsonData.country === \"France\";",
 									"",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -593,7 +594,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"street\":\"47 Rue René Benoist\",\"optional\":\"TRENDev SASU\",\"postalCode\":\"77860\",\"city\":\"Quincy-Voisins\"}"
+							"raw": "{\n    \"street\": \"47 Rue René Benoist\",\n    \"optional\": \"TRENDev SASU\",\n    \"postalCode\": \"77860\",\n    \"city\": \"Quincy-Voisins\"\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Address",
@@ -12648,6 +12649,45 @@
 			"item": [
 				{
 					"name": "create-professional",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f52b8e21-2377-43f2-b5ce-7c118da600dd",
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: pm.environment.get('API_URL') + \"/Professional/\" + pm.environment.get(\"email_pro_new_account\"),",
+									"    method: 'DELETE',",
+									"    header: {",
+									"        'Authorization': 'Bearer ' + pm.environment.get('JWT')",
+									"    }",
+									"}, function(err, response) {",
+									"    // console.log(response.json());",
+									"    // pm.environment.set(\"created_client_id\", response.json().id);",
+									"});",
+									"",
+									"pm.sendRequest(\"https://postman-echo.com/get\", function(err, response) {",
+									"    console.log(response.json());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e28d6b2e-ef31-42b5-93cb-a023c18e112a",
+								"exec": [
+									"pm.environment.set(\"email_pro_new_account\", \"skonx2006@hotmail.com\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -12660,7 +12700,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"skonx2006@hotmail.com\"\n}"
+							"raw": "{\n    \"email\": \"{{email_pro_new_account}}\"\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/user-account/create-professional",
