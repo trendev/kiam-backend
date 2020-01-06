@@ -16,7 +16,7 @@
         <version.eclipselink>2.7.4</version.eclipselink>
         <version.junit>5.4.2</version.junit>
         <version.stripe>10.11.0</version.stripe>
-        <version.nimbus-jose-jwt>7.2.1</version.nimbus-jose-jwt>
+        <version.nimbus-jose-jwt>8.4</version.nimbus-jose-jwt>
         <version.javaee-api>8.0</version.javaee-api>
         <version.payara-api>5.193.1</version.payara-api>
         <version.microprofile>2.2</version.microprofile>
