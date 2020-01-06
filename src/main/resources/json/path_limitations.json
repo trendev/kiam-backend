@@ -1,5 +1,5 @@
 {
-    "default": 20,
+    "default": 100,
     "limitations": [
         {
             "path": "Authentication/login",
@@ -17,7 +17,6 @@
             "path": "user-account/create-professional",
             "limit": 2
         }
-        
+
     ]
 }
-
