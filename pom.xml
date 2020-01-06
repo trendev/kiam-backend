@@ -12,15 +12,14 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.jackson>2.9.8</version.jackson>
-        <version.eclipselink>2.7.4</version.eclipselink>
-        <version.junit>5.4.2</version.junit>
-        <version.stripe>10.11.0</version.stripe>
-        <version.nimbus-jose-jwt>8.4</version.nimbus-jose-jwt>
-        <version.javaee-api>8.0</version.javaee-api>
-        <version.payara-api>5.193.1</version.payara-api>
-        <version.microprofile>2.2</version.microprofile>
-        <version.mysql-connector-java>5.1.48</version.mysql-connector-java>
+        <eclipselink.version>2.7.4</eclipselink.version>
+        <junit.version>5.5.2</junit.version>
+        <stripe.version>10.11.0</stripe.version>
+        <nimbus-jose-jwt.version>8.4</nimbus-jose-jwt.version>
+        <javaee-api.version>8.0.1</javaee-api.version>
+        <payara-api.version>5.194</payara-api.version>
+        <microprofile.version>3.2</microprofile.version>
+        <mysql-connector-java.version>5.1.48</mysql-connector-java.version>
     </properties>
     
     <profiles>
@@ -54,19 +53,19 @@
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
-            <version>${version.javaee-api}</version>
+            <version>${javaee-api.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>fish.payara.api</groupId>
             <artifactId>payara-api</artifactId>
-            <version>${version.payara-api}</version>
+            <version>${payara-api.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.eclipse.microprofile</groupId>
             <artifactId>microprofile</artifactId>
-            <version>${version.microprofile}</version>
+            <version>${microprofile.version}</version>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
@@ -85,24 +84,24 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>${version.mysql-connector-java}</version>
+            <version>${mysql-connector-java.version}</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>${version.junit}</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
-            <version>${version.junit}</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.weld.se</groupId>
             <artifactId>weld-se-core</artifactId>
-            <version>3.0.6.Final</version>
+            <version>3.1.3.Final</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -114,13 +113,13 @@
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>eclipselink</artifactId>
-            <version>${version.eclipselink}</version>
+            <version>${eclipselink.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
-            <version>${version.eclipselink}</version>
+            <version>${eclipselink.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -132,12 +131,12 @@
         <dependency>
             <groupId>com.stripe</groupId>
             <artifactId>stripe-java</artifactId>
-            <version>${version.stripe}</version>
+            <version>${stripe.version}</version>
         </dependency>
         <dependency>
             <groupId>com.nimbusds</groupId>
             <artifactId>nimbus-jose-jwt</artifactId>
-            <version>${version.nimbus-jose-jwt}</version>
+            <version>${nimbus-jose-jwt.version}</version>
         </dependency>
     </dependencies>
 
