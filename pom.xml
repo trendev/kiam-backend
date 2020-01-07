@@ -16,7 +16,7 @@
         <junit.version>5.5.2</junit.version>
         <stripe.version>10.11.0</stripe.version>
         <nimbus-jose-jwt.version>8.4</nimbus-jose-jwt.version>
-        <javaee-api.version>8.0.1</javaee-api.version>
+        <jakartaee-api.version>8.0.0</jakartaee-api.version>
         <payara-api.version>5.194</payara-api.version>
         <microprofile.version>3.2</microprofile.version>
         <mysql-connector-java.version>5.1.48</mysql-connector-java.version>
@@ -51,11 +51,11 @@
 
     <dependencies>
         <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>${javaee-api.version}</version>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>${jakartaee-api.version}</version>
             <scope>provided</scope>
-        </dependency>
+        </dependency> 
         <dependency>
             <groupId>fish.payara.api</groupId>
             <artifactId>payara-api</artifactId>
