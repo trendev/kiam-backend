@@ -22,8 +22,7 @@ import javax.ws.rs.core.SecurityContext;
 public class AuthenticationHelper {
 
     /**
-     * Controls if the context is secured (HTTPS) and if the user of the
-     * security context is in a support group
+     * Controls if the user of the security context is in a supported group
      *
      * @param sec the security context
      * @return the user's email (principal's name) or null if context is not
@@ -31,7 +30,7 @@ public class AuthenticationHelper {
      */
     public Optional<String> getUserEmailFromSecurityContext(
             SecurityContext sec) {
-        if (sec != null && sec.isSecure()
+        if (sec != null
                 && (sec.isUserInRole(UserAccountType.PROFESSIONAL)
                 || sec.isUserInRole(UserAccountType.INDIVIDUAL)
                 || sec.isUserInRole(UserAccountType.ADMINISTRATOR))) {
@@ -54,13 +53,11 @@ public class AuthenticationHelper {
             String type) {
 
         if (sec != null
-                && sec.isSecure()
                 && sec.isUserInRole(UserAccountType.ADMINISTRATOR)) {
             return Optional.ofNullable(email);
         }
 
         if ((sec != null
-                && sec.isSecure()
                 && sec.isUserInRole(type))) {
             return Optional.ofNullable(sec.getUserPrincipal().getName());
         }
@@ -81,9 +78,9 @@ public class AuthenticationHelper {
         return this.
                 getUserEmail(sec, professional, UserAccountType.PROFESSIONAL)
                 .map(Function.identity())
-                .orElseThrow(() ->
-                        new BadRequestException(
-                                "Impossible to find the professional's email from the SecurityContext or from the Query Parameters"));
+                .orElseThrow(()
+                        -> new BadRequestException(
+                        "Impossible to find the professional's email from the SecurityContext or from the Query Parameters"));
     }
 
     public Optional<String> getJWTFromRequestHeader(
