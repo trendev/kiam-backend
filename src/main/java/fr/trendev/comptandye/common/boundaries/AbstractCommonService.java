@@ -577,7 +577,7 @@ public abstract class AbstractCommonService<E, P> {
      */
     protected String getIndEmail(SecurityContext sec, String individual) {
         return Optional.ofNullable(
-                sec.isSecure() && sec.isUserInRole(UserAccountType.INDIVIDUAL)
+                sec.isUserInRole(UserAccountType.INDIVIDUAL)
                 ? sec.getUserPrincipal().getName() : individual)
                 .map(Function.identity())
                 .orElseThrow(() -> new BadRequestException(
