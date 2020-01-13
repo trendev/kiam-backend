@@ -45,8 +45,11 @@ $AS_ADMIN --user $ADMIN_USER --passwordfile=${PASSWORD_FILE} stop-domain
 # Disable dynamic reloading of applications
 RUN echo 'set configs.config.server-config.admin-service.das-config.dynamic-reload-enabled=false' >> $POSTBOOT_COMMANDS
 
+# Enable monitoring
+RUN echo 'set-monitoring-console-configuration --enabled true' >> $POSTBOOT_COMMANDS
+
 # Configure the HTTP listeners
-RUN echo 'set configs.config.server-config.network-config.network-listeners.network-listener.http-listener-1.jk-enabled=true' >> $POSTBOOT_COMMANDS
+# RUN echo 'set configs.config.server-config.network-config.network-listeners.network-listener.http-listener-1.jk-enabled=true' >> $POSTBOOT_COMMANDS
 RUN echo 'set configs.config.server-config.network-config.network-listeners.network-listener.http-listener-2.enabled=false' >> $POSTBOOT_COMMANDS
 RUN echo 'set configs.config.server-config.network-config.protocols.protocol.http-listener-1.http.max-connections=500' >> $POSTBOOT_COMMANDS
 RUN echo 'set configs.config.server-config.network-config.protocols.protocol.http-listener-1.http.timeout-seconds=60' >> $POSTBOOT_COMMANDS
