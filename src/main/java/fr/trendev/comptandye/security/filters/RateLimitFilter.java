@@ -6,6 +6,7 @@
 package fr.trendev.comptandye.security.filters;
 
 import fr.trendev.comptandye.security.controllers.ratelimit.RateLimitController;
+import fr.trendev.comptandye.utils.HttpRequestHelper;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -47,8 +48,10 @@ public class RateLimitFilter implements ContainerRequestFilter {
 
     @Override
     public void filter(ContainerRequestContext cr) {
+        
+        String remoteAddr = HttpRequestHelper.getRealRemoteAddressIP(req);
 
-        Optional<Map<String, List<Date>>> result = arc.control(req.getRemoteAddr(),
+        Optional<Map<String, List<Date>>> result = arc.control(remoteAddr,
                 cr.getUriInfo().getPath());
 
         if (result.isPresent()) {
@@ -59,7 +62,7 @@ public class RateLimitFilter implements ContainerRequestFilter {
 
             LOG.log(Level.WARNING, "{1} : RemoteAddr {0} | accessing PATH {3} >>> TOO_MANY_REQUESTS {2}/{2}",
                     new Object[]{
-                        req.getRemoteAddr(),
+                        remoteAddr,
                         className,
                         limit, path});
             cr.abortWith(this.buildTooManyRequestsResponse(path,
