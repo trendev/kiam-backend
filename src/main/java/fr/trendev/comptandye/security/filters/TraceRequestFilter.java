@@ -39,14 +39,17 @@ public class TraceRequestFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
 
         Principal user = req.getUserPrincipal();
+        
+       String host = req.getHeader("Host");
 
-        LOG.log(Level.INFO, "{4} : Request from [{1}] | {2} {0} | RemoteAddr = {3}",
+        LOG.log(Level.INFO, "{4} : Request from [{1}] | {2} {0} | RemoteAddr = {3} | Host = {5}",
                 new Object[]{
                     req.getRequestURL(),
                     (user != null) ? user.getName() : "an ANONYMOUS user",
                     req.getMethod().toUpperCase(),
                     req.getRemoteAddr(),
-                    className});
+                    className,
+                    host});
 
         chain.doFilter(request, response);
     }
