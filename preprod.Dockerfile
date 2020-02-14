@@ -32,7 +32,7 @@ ENV COMPTANDYE_DB_PASSWORD SfBuVPRw0S
 
 # Tune the production settings
 RUN $AS_ADMIN start-domain $DOMAIN && \
-$AS_ADMIN create-jvm-options --passwordfile=${PASSWORD_FILE} "-XX\:MaxRAMPercentage=25.0" && \
+$AS_ADMIN create-jvm-options --passwordfile=${PASSWORD_FILE} "-XX\:MaxRAMPercentage=20.0" && \
 $AS_ADMIN create-jvm-options --passwordfile=${PASSWORD_FILE} "-XX\:+UseContainerSupport" && \
 $AS_ADMIN create-jvm-options --passwordfile=${PASSWORD_FILE} -server:-Dfish.payara.classloading.delegate=false:-Duser.timezone=Europe/Paris && \
 echo 'AS_ADMIN_PASSWORD='${ADMIN_PASSWORD}'\nAS_ADMIN_NEWPASSWORD='${NEW_ADMIN_PASSWORD}'\n' > /tmp/tmpfile && \
