@@ -26,9 +26,6 @@ ENV NEW_ADMIN_PASSWORD qsec0fr
 
 # DB config
 ENV COMPTANDYE_DB_HOST db-mysql-preprod
-ENV COMPTANDYE_DB_NAME comptandye_master
-ENV COMPTANDYE_DB_USER admin_comptandye_20170328
-ENV COMPTANDYE_DB_PASSWORD SfBuVPRw0S
 
 # Tune the production settings
 RUN $AS_ADMIN start-domain $DOMAIN && \
