@@ -24,9 +24,6 @@ ENV ADMIN_USER admin
 ENV ADMIN_PASSWORD admin
 ENV NEW_ADMIN_PASSWORD qsec0fr
 
-# DB config
-ENV COMPTANDYE_DB_HOST db-mysql-preprod
-
 # Tune the production settings
 RUN $AS_ADMIN start-domain $DOMAIN && \
 $AS_ADMIN create-jvm-options --passwordfile=${PASSWORD_FILE} "-XX\:MaxRAMPercentage=20.0" && \
