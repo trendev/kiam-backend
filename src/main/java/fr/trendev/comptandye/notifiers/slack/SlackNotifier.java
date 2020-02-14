@@ -54,8 +54,8 @@ public class SlackNotifier {
     ObjectMapper om;
 
     @Inject
-    @ConfigProperty(name = "env")
-    private String env;
+    @ConfigProperty(name = "MY_POD_NAMESPACE", defaultValue = "dev") // should be ENV var
+    private String namespace;
 
     public SlackNotifier() {
         this.SLACK_URL = "https://slack.com/api/chat.postMessage";
@@ -69,7 +69,7 @@ public class SlackNotifier {
 
     @PostConstruct
     public void init() {
-        LOG.log(Level.INFO, "SlackServiceObserver initialized for Environment [{0}]", this.env);
+        LOG.log(Level.INFO, "SlackServiceObserver initialized for Environment [{0}]", this.namespace);
     }
 
     /**
@@ -174,7 +174,7 @@ public class SlackNotifier {
     private JsonObject buildPostMessage(JsonObject object, final String channel) {
         return Json.createObjectBuilder()
                 .add("channel", channel)
-                .add("text", "Environment : *" + env + "*")
+                .add("text", "Environment : *" + namespace + "*")
                 .add("attachments", Json.createArrayBuilder()
                         .add(object))
                 .build();

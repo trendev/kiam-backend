@@ -24,12 +24,6 @@ ENV ADMIN_USER admin
 ENV ADMIN_PASSWORD admin
 ENV NEW_ADMIN_PASSWORD qMgy7nmeG2kW
 
-# DB config
-ENV COMPTANDYE_DB_HOST db-mysql
-ENV COMPTANDYE_DB_NAME comptandye_master
-ENV COMPTANDYE_DB_USER admin_comptandye_20170328
-ENV COMPTANDYE_DB_PASSWORD SfBuVPRw0S
-
 # Tune the production settings
 RUN $AS_ADMIN start-domain $DOMAIN && \
 $AS_ADMIN create-jvm-options --passwordfile=${PASSWORD_FILE} "-XX\:MaxRAMPercentage=10.0" && \
