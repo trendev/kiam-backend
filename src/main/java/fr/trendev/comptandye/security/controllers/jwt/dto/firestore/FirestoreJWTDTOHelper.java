@@ -29,7 +29,7 @@ public class FirestoreJWTDTOHelper {
     static URI loadUri() {
 
         Config config = ConfigProvider.getConfig();
-        String prop = "firestore.proxy.url";
+        String prop = "FIRESTORE_PROXY_URL"; // set from ENV var
         String url = config.getValue(prop, String.class);
 
         try {
