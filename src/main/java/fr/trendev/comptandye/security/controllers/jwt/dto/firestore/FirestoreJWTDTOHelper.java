@@ -30,7 +30,8 @@ public class FirestoreJWTDTOHelper {
 
         Config config = ConfigProvider.getConfig();
         String prop = "FIRESTORE_PROXY_URL"; // set from ENV var
-        String url = config.getValue(prop, String.class);
+        String url = config.getOptionalValue(prop, String.class)
+                .orElse("http://localhost:9000");
 
         try {
             URI uri = new URI(url);
@@ -38,7 +39,7 @@ public class FirestoreJWTDTOHelper {
             return uri;
         } catch (URISyntaxException ex) {
             throw new IllegalStateException(
-                    "Firestore proxy URL provided in config properties is not valid", ex);
+                    "Firestore proxy URL provided in config properties is not valid or cannot be reached", ex);
         }
     }
 
