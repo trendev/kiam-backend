@@ -45,19 +45,39 @@ public class StripeConfiguration {
     void init() {
 
         LOG.log(Level.INFO, "stripe.default.tax.rate.id = [{0}]",
-                this.defaultTaxRateID);
+                this.getDefaultTaxRateID());
 
         // sets the stripe api key
-        Stripe.apiKey = this.key;
+        Stripe.apiKey = this.getKey();
 
         LOG.log(Level.INFO, "Stripe {0} key is set ({1})",
-                new Object[]{this.type,
-                    this.key});
+                new Object[]{this.getType(),
+                    this.getKey()});
 
     }
 
     public String getDefaultTaxRateID() {
+        if (this.defaultTaxRateID == null
+                || this.defaultTaxRateID.isEmpty()) {
+            throw new IllegalStateException("Stripe's DefaultTaxRateID cannot be null or empty");
+        }
         return this.defaultTaxRateID;
+    }
+
+    private String getKey() {
+        if (this.key == null
+                || this.key.isEmpty()) {
+            throw new IllegalStateException("Stripe's Key cannot be null or empty");
+        }
+        return this.key;
+    }
+
+    private String getType() {
+        if (this.type == null
+                || this.type.isEmpty()) {
+            throw new IllegalStateException("Stripe's Type cannot be null or empty (should be TEST or LIVE)");
+        }
+        return this.type;
     }
 
 }
