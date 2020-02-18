@@ -22,11 +22,11 @@ ENV AS_ADMIN $PAYARA_DIR/bin/asadmin
 ENV DOMAIN production
 ENV ADMIN_USER admin
 ENV ADMIN_PASSWORD admin
-ENV NEW_ADMIN_PASSWORD qMgy7nmeG2kW
+ENV NEW_ADMIN_PASSWORD 1V0dCY3V3eV6
 
 # Tune the production settings
 RUN $AS_ADMIN start-domain $DOMAIN && \
-$AS_ADMIN create-jvm-options --passwordfile=${PASSWORD_FILE} "-XX\:MaxRAMPercentage=10.0" && \
+$AS_ADMIN create-jvm-options --passwordfile=${PASSWORD_FILE} "-XX\:MaxRAMPercentage=20.0" && \
 $AS_ADMIN create-jvm-options --passwordfile=${PASSWORD_FILE} "-XX\:+UseContainerSupport" && \
 $AS_ADMIN create-jvm-options --passwordfile=${PASSWORD_FILE} -server:-Dfish.payara.classloading.delegate=false:-Duser.timezone=Europe/Paris && \
 echo 'AS_ADMIN_PASSWORD='${ADMIN_PASSWORD}'\nAS_ADMIN_NEWPASSWORD='${NEW_ADMIN_PASSWORD}'\n' > /tmp/tmpfile && \
