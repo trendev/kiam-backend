@@ -25,14 +25,19 @@ import javax.ejb.Startup;
         databaseName = "${ENV=COMPTANDYE_DB_NAME}", // defined as system env
         serverName = "${ENV=COMPTANDYE_DB_HOST}", // defined as system env
         portNumber = 3306,
-        minPoolSize = 20,
-        maxPoolSize = 200,
+        minPoolSize = 200,
+        maxPoolSize = 1000,
         maxIdleTime = 300,
-        initialPoolSize = 20,
+        initialPoolSize = 100,
         properties = {
             "useSSL=false",
-            "zeroDateTimeBehavior=convertToNull"
-        }        
+            "zeroDateTimeBehavior=convertToNull",
+            "fish.payara.is-connection-validation-required=true",
+            "fish.payara.connection-validation-method=custom-validation",
+            "fish.payara.validation-classname=org.glassfish.api.jdbc.validation.MySQLConnectionValidation",
+            "fish.payara.fail-all-connections=true",
+            "fish.payara.slow-query-threshold-in-seconds=30"
+        }
 )
 public class DBConfig {
 
