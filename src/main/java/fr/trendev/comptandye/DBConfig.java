@@ -25,10 +25,10 @@ import javax.ejb.Startup;
         databaseName = "${ENV=COMPTANDYE_DB_NAME}", // defined as system env
         serverName = "${ENV=COMPTANDYE_DB_HOST}", // defined as system env
         portNumber = 3306,
-        minPoolSize = 200,
-        maxPoolSize = 1000,
+        minPoolSize = 20,
+        maxPoolSize = 500,
         maxIdleTime = 300,
-        initialPoolSize = 100,
+        initialPoolSize = 20,
         properties = {
             "useSSL=false",
             "zeroDateTimeBehavior=convertToNull",
