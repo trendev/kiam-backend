@@ -26,15 +26,15 @@ public class StripeConfiguration {
             getName());
 
     @Inject
-    @ConfigProperty(name = "stripe.default.tax.rate.id")
+    @ConfigProperty(name = "STRIPE_DEFAULT_TAX_RATE_ID")
     private String defaultTaxRateID;
 
     @Inject
-    @ConfigProperty(name = "stripe.key")
+    @ConfigProperty(name = "STRIPE_KEY")
     private String key;
 
     @Inject
-    @ConfigProperty(name = "stripe.type")
+    @ConfigProperty(name = "STRIPE_TYPE")
     private String type;
 
     /**
@@ -44,13 +44,13 @@ public class StripeConfiguration {
     @PostConstruct
     void init() {
 
-        LOG.log(Level.INFO, "stripe.default.tax.rate.id = [{0}]",
-                this.getDefaultTaxRateID());
+        LOG.log(Level.INFO, "STRIPE_DEFAULT_TAX_RATE_ID : {0}\nSTRIPE_KEY : {1}\nSTRIPE_TYPE : {2}",
+                new Object[]{this.getDefaultTaxRateID(), this.getKey(), this.getType()});
 
         // sets the stripe api key
         Stripe.apiKey = this.getKey();
 
-        LOG.log(Level.INFO, "Stripe {0} key is set ({1})",
+        LOG.log(Level.INFO, "Stripe {0} key is set : {1}",
                 new Object[]{this.getType(),
                     this.getKey()});
 
