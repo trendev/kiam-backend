@@ -90,6 +90,8 @@ public class UserAccountService extends AbstractCommonService<UserAccount, Strin
             pro.getCustomerDetails().setId(UUIDGenerator.generateID());
             pro.getSocialNetworkAccounts().setId(UUIDGenerator.generateID());
             pro.setEmail(email);
+            //Generates a new UUID
+            pro.setUuid(UUIDGenerator.generate("PRO-", true));
 
             // auto-generate and hash a password
             String pwd = passwordManager.autoGenerate();
