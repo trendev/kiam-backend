@@ -44,7 +44,7 @@ RUN echo 'set-monitoring-console-configuration --enabled true' >> $POSTBOOT_COMM
 
 # Configure the HTTP listeners
 # RUN echo 'set configs.config.server-config.network-config.network-listeners.network-listener.http-listener-1.jk-enabled=true' >> $POSTBOOT_COMMANDS
-RUN echo 'set configs.config.server-config.network-config.network-listeners.network-listener.http-listener-2.enabled=false' >> $POSTBOOT_COMMANDS
+# RUN echo 'set configs.config.server-config.network-config.network-listeners.network-listener.http-listener-2.enabled=false' >> $POSTBOOT_COMMANDS
 RUN echo 'set configs.config.server-config.network-config.protocols.protocol.http-listener-1.http.max-connections=500' >> $POSTBOOT_COMMANDS
 RUN echo 'set configs.config.server-config.network-config.protocols.protocol.http-listener-1.http.timeout-seconds=60' >> $POSTBOOT_COMMANDS
 RUN echo 'set configs.config.server-config.network-config.protocols.protocol.http-listener-1.http.file-cache.enabled=true' >> $POSTBOOT_COMMANDS
