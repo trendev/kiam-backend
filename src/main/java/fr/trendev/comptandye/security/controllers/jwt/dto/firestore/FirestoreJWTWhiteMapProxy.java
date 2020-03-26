@@ -7,6 +7,7 @@ package fr.trendev.comptandye.security.controllers.jwt.dto.firestore;
 
 import fr.trendev.comptandye.security.entities.JWTWhiteMapEntry;
 import java.io.Serializable;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.concurrent.CompletionStage;
 import javax.ws.rs.Consumes;
@@ -18,6 +19,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import org.eclipse.microprofile.faulttolerance.Retry;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 /**
@@ -31,22 +33,20 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 public interface FirestoreJWTWhiteMapProxy extends Serializable {
 
     @GET
-    CompletionStage<List<JWTWhiteMapEntry>> getAll() throws
-            FirestoreProxyException;
+    @Retry(maxRetries = 10)
+    CompletionStage<List<JWTWhiteMapEntry>> getAll();
 
     @POST
-    CompletionStage<JWTWhiteMapEntry> create(JWTWhiteMapEntry jwtWhiteMapEntry)
-            throws
-            FirestoreProxyException;
+    @Retry(maxRetries = 10)
+    CompletionStage<JWTWhiteMapEntry> create(JWTWhiteMapEntry jwtWhiteMapEntry);
 
     @PUT
-    CompletionStage<JWTWhiteMapEntry> update(JWTWhiteMapEntry jwtWhiteMapEntry)
-            throws
-            FirestoreProxyException;
+    @Retry(maxRetries = 10)
+    CompletionStage<JWTWhiteMapEntry> update(JWTWhiteMapEntry jwtWhiteMapEntry);
 
     @DELETE
     @Path("{email}")
-    CompletionStage<String> delete(@PathParam("email") String email) throws
-            FirestoreProxyException;
+    @Retry(maxRetries = 10)
+    CompletionStage<String> delete(@PathParam("email") String email);
 
 }

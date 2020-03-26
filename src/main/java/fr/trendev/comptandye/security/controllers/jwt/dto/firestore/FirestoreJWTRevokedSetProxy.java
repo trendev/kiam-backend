@@ -7,6 +7,7 @@ package fr.trendev.comptandye.security.controllers.jwt.dto.firestore;
 
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.io.Serializable;
+import java.time.temporal.ChronoUnit;
 import java.util.Set;
 import java.util.concurrent.CompletionStage;
 import javax.ws.rs.Consumes;
@@ -17,6 +18,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import org.eclipse.microprofile.faulttolerance.Retry;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 /**
@@ -30,20 +32,21 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 public interface FirestoreJWTRevokedSetProxy extends Serializable {
 
     @GET
-    CompletionStage<Set<JWTRecord>> getAll() throws FirestoreProxyException;
+    @Retry(maxRetries = 10)
+    CompletionStage<Set<JWTRecord>> getAll();
 
     @POST
-    CompletionStage<JWTRecord> create(JWTRecord record) throws
-            FirestoreProxyException;
+    @Retry(maxRetries = 10)
+    CompletionStage<JWTRecord> create(JWTRecord record);
 
     @POST
     @Path("bulk-creation")
-    CompletionStage<Set<JWTRecord>> bulkCreation(Set<JWTRecord> records) throws
-            FirestoreProxyException;
+    @Retry(maxRetries = 10)
+    CompletionStage<Set<JWTRecord>> bulkCreation(Set<JWTRecord> records);
 
     @DELETE
     @Path("{token}")
-    CompletionStage<String> delete(@PathParam("token") String token) throws
-            FirestoreProxyException;
+    @Retry(maxRetries = 10)
+    CompletionStage<String> delete(@PathParam("token") String token);
 
 }

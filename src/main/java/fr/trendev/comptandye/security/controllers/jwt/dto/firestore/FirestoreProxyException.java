@@ -9,7 +9,7 @@ package fr.trendev.comptandye.security.controllers.jwt.dto.firestore;
  *
  * @author jsie
  */
-public class FirestoreProxyException extends Exception {
+public class FirestoreProxyException extends RuntimeException {
 
     /**
      * Creates a new instance of <code>FirestoreProxyException</code> without
