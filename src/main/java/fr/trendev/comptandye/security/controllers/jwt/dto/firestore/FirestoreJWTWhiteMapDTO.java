@@ -27,7 +27,7 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
 
     private URI apiUri;
 
-    private transient FirestoreJWTWhiteMapProxyService proxy;
+    private transient FirestoreJWTWhiteMapProxy proxy;
 
     public FirestoreJWTWhiteMapDTO() {
     }
@@ -40,10 +40,10 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
                 FirestoreJWTWhiteMapDTO.class.getSimpleName());
     }
 
-    private FirestoreJWTWhiteMapProxyService getProxy() {
+    private FirestoreJWTWhiteMapProxy getProxy() {
         if (this.proxy == null) {
             this.proxy = FirestoreJWTDTOHelper.buildProxy(apiUri,
-                    FirestoreJWTWhiteMapProxyService.class);
+                    FirestoreJWTWhiteMapProxy.class);
         }
         return this.proxy;
     }
@@ -98,7 +98,7 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
                 + jwtWhiteMapEntry.getEmail()
                 + " has been created in Firestore",
                 "Exception occurs creating a JWTWhiteMapEntry in Firestore",
-                FirestoreJWTWhiteMapProxyService::create,
+                FirestoreJWTWhiteMapProxy::create,
                 jwtWhiteMapEntry);
     }
 
@@ -109,7 +109,7 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
                 + jwtWhiteMapEntry.getEmail()
                 + " has been updated in Firestore",
                 "Exception occurs updating a JWTWhiteMapEntry in Firestore",
-                FirestoreJWTWhiteMapProxyService::update,
+                FirestoreJWTWhiteMapProxy::update,
                 jwtWhiteMapEntry);
     }
 
@@ -120,7 +120,7 @@ public class FirestoreJWTWhiteMapDTO implements JWTWhiteMapDTO {
                 + email
                 + " has been deleted in Firestore",
                 "Exception occurs deleting a JWTWhiteMapEntry in Firestore",
-                FirestoreJWTWhiteMapProxyService::delete,
+                FirestoreJWTWhiteMapProxy::delete,
                 email);
     }
 

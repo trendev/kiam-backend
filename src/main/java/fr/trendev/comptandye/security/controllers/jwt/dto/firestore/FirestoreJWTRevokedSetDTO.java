@@ -27,7 +27,7 @@ public class FirestoreJWTRevokedSetDTO implements JWTRevokedSetDTO {
 
     private URI apiUri;
 
-    private transient FirestoreJWTRevokedSetProxyService proxy;
+    private transient FirestoreJWTRevokedSetProxy proxy;
 
     public FirestoreJWTRevokedSetDTO() {
     }
@@ -40,10 +40,10 @@ public class FirestoreJWTRevokedSetDTO implements JWTRevokedSetDTO {
                 FirestoreJWTRevokedSetDTO.class.getSimpleName());
     }
 
-    private FirestoreJWTRevokedSetProxyService getProxy() {
+    private FirestoreJWTRevokedSetProxy getProxy() {
         if (this.proxy == null) {
             this.proxy = FirestoreJWTDTOHelper.buildProxy(apiUri,
-                    FirestoreJWTRevokedSetProxyService.class);
+                    FirestoreJWTRevokedSetProxy.class);
         }
         return this.proxy;
     }
@@ -96,7 +96,7 @@ public class FirestoreJWTRevokedSetDTO implements JWTRevokedSetDTO {
                 + record.getToken()
                 + " has been created in Firestore",
                 "Exception occurs creating a Revoked JWT entry in Firestore",
-                FirestoreJWTRevokedSetProxyService::create,
+                FirestoreJWTRevokedSetProxy::create,
                 record);
     }
 
@@ -107,7 +107,7 @@ public class FirestoreJWTRevokedSetDTO implements JWTRevokedSetDTO {
                 + token
                 + " has been deleted in Firestore",
                 "Exception occurs deleting a Revoked JWT entry in Firestore",
-                FirestoreJWTRevokedSetProxyService::delete,
+                FirestoreJWTRevokedSetProxy::delete,
                 token);
     }
 
