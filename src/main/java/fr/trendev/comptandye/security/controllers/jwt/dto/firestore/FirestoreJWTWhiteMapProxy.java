@@ -7,7 +7,6 @@ package fr.trendev.comptandye.security.controllers.jwt.dto.firestore;
 
 import fr.trendev.comptandye.security.entities.JWTWhiteMapEntry;
 import java.io.Serializable;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.concurrent.CompletionStage;
 import javax.ws.rs.Consumes;
