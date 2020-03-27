@@ -53,62 +53,62 @@ import javax.ws.rs.core.SecurityContext;
 @Path("OfferingsModel")
 @RolesAllowed({"Administrator", "Professional"})
 public class OfferingsModelService {
-    
+
     @Inject
     ObjectMapper om;
-    
+
     @Inject
     PackFacade packFacade;
-    
+
     @Inject
     ProfessionalFacade professionalFacade;
-    
+
     @Inject
     ServiceFacade serviceFacade;
-    
+
     @Inject
     SaleFacade saleFacade;
-    
+
     @Inject
     AuthenticationHelper authenticationHelper;
-    
+
     @Inject
     private UUIDGenerator UUIDGenerator;
-    
+
     private final Logger LOG = Logger.getLogger(OfferingsModelService.class.
             getName());
-    
+
     @Path("build")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response build(@Context SecurityContext sec,
             @QueryParam("professional") String professional) {
-        
+
         String email = authenticationHelper.
                 getProEmail(sec, professional);
         LOG.log(Level.INFO,
                 "Generating pre-build Offerings for the professional [{0}]",
                 email);
-        
+
         return Optional.ofNullable(professionalFacade.find(email))
                 .map(pro -> {
                     try {
-                        
+
                         List<Offering> offeringsModel = new LinkedList<>();
-                        
+
                         for (Business b : pro.getBusinesses()) {
                             String business = b.getDesignation().toLowerCase();
-                            
+
                             Map<String, Offering> services = this.
                                     importServices(pro, business);
-                            
+
                             List<Offering> packs = this.importPacks(pro,
                                     business,
                                     services);
-                            
+
                             offeringsModel.addAll(services.values());
                             offeringsModel.addAll(packs);
-                            
+
                         }
 
                         //avoid to return pro.getOffering(): can be outdated offering!
@@ -139,16 +139,22 @@ public class OfferingsModelService {
      * @throws IOException if an error occurs reading/parsing the file
      */
     private Map<String, Offering> importServices(Professional pro,
-            String business) throws IOException {
-        
+            String business) throws Exception {
+
         ClassLoader classloader = Thread.currentThread().
                 getContextClassLoader();
         String path = "json/services_" + business + ".json";
-        
+
         try (InputStream is = classloader.getResourceAsStream(path)) {
-            
+
+            if (is == null) {
+                throw new IllegalArgumentException(
+                        "Auto Creation of Offerings Model is NOT YET SUPPORTED for business : "
+                        + business);
+            }
+
             Map<String, Offering> map = new TreeMap<>();
-            
+
             LOG.log(Level.INFO, "Reading in {0}", path);
             Arrays.asList(om.readValue(is, Service[].class)).stream()
                     .map(s -> {
@@ -162,14 +168,14 @@ public class OfferingsModelService {
                         //map the managed entity
                         map.put(s.getName(), s);
                     });
-            
+
             return map;
-        } catch (IOException ex) {
+        } catch (IOException | IllegalArgumentException ex) {
             LOG.log(Level.SEVERE,
                     "Exception occurs parsing services from file : {0}", path);
-            throw new IOException(ex);
+            throw new Exception(ex);
         }
-        
+
     }
 
     /**
@@ -183,12 +189,12 @@ public class OfferingsModelService {
             String business,
             Map<String, Offering> services)
             throws IOException {
-        
+
         ClassLoader classloader = Thread.currentThread().
                 getContextClassLoader();
-        
+
         String path = "json/packs_" + business + ".json";
-        
+
         try (InputStream is = classloader.getResourceAsStream(path)) {
             LOG.log(Level.INFO, "Reading in {0}", path);
             List<Offering> packs = Arrays.asList(om.readValue(is, Pack[].class))
@@ -211,23 +217,23 @@ public class OfferingsModelService {
                                         + " not found !"))
                                 )
                                 .collect(Collectors.toList());
-                        
+
                         p.setOfferings(offerings);
-                        
+
                         p.setProfessional(pro);
                         pro.getOfferings().add(p);
                         packFacade.create(p);
                         return p;
                     })
                     .collect(Collectors.toList());
-            
+
             return packs;
         } catch (IOException ex) {
             LOG.log(Level.SEVERE,
                     "Exception occurs parsing packs from file : {0}", path);
             throw new IOException(ex);
         }
-        
+
     }
-    
+
 }
