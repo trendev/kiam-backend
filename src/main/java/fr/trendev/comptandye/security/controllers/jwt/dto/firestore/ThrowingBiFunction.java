@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.security.controllers.jwt.dto.firestore;
 
+import fr.trendev.comptandye.security.controllers.jwt.dto.firestore.exceptions.FirestoreProxyException;
 import java.util.function.BiFunction;
 
 /**

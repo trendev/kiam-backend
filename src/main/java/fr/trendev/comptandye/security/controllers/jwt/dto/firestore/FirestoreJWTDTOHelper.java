@@ -5,6 +5,7 @@
  */
 package fr.trendev.comptandye.security.controllers.jwt.dto.firestore;
 
+import fr.trendev.comptandye.security.controllers.jwt.dto.firestore.exceptions.FirestoreProxyExceptionMapper;
 import fr.trendev.comptandye.security.controllers.AuthenticationEventController;
 import fr.trendev.comptandye.security.controllers.SlackAuthenticationEventController;
 import java.net.URI;
