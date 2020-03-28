@@ -5,7 +5,6 @@
  */
 package fr.trendev.comptandye.security.controllers.jwt.dto.firestore;
 
-import fr.trendev.comptandye.security.controllers.jwt.dto.firestore.exceptions.FirestoreProxyException;
 import fr.trendev.comptandye.security.entities.JWTRecord;
 import java.io.Serializable;
 import java.net.ConnectException;
@@ -42,11 +41,10 @@ public interface FirestoreJWTRevokedSetProxy extends Serializable {
             jitter = 50,
             abortOn = {ConnectException.class},
             retryOn = {
-                WebApplicationException.class,
-                FirestoreProxyException.class
+                WebApplicationException.class
             }
     )
-    CompletionStage<Set<JWTRecord>> getAll() throws FirestoreProxyException;
+    CompletionStage<Set<JWTRecord>> getAll();
 
     @POST
     @Retry(
@@ -56,11 +54,10 @@ public interface FirestoreJWTRevokedSetProxy extends Serializable {
             jitter = 50,
             abortOn = {ConnectException.class},
             retryOn = {
-                WebApplicationException.class,
-                FirestoreProxyException.class
+                WebApplicationException.class
             }
     )
-    CompletionStage<JWTRecord> create(JWTRecord record) throws FirestoreProxyException;
+    CompletionStage<JWTRecord> create(JWTRecord record);
 
     @POST
     @Path("bulk-creation")
@@ -71,11 +68,10 @@ public interface FirestoreJWTRevokedSetProxy extends Serializable {
             jitter = 50,
             abortOn = {ConnectException.class},
             retryOn = {
-                WebApplicationException.class,
-                FirestoreProxyException.class
+                WebApplicationException.class
             }
     )
-    CompletionStage<Set<JWTRecord>> bulkCreation(Set<JWTRecord> records) throws FirestoreProxyException;
+    CompletionStage<Set<JWTRecord>> bulkCreation(Set<JWTRecord> records);
 
     @DELETE
     @Path("{token}")
@@ -86,10 +82,9 @@ public interface FirestoreJWTRevokedSetProxy extends Serializable {
             jitter = 50,
             abortOn = {ConnectException.class},
             retryOn = {
-                WebApplicationException.class,
-                FirestoreProxyException.class
+                WebApplicationException.class
             }
     )
-    CompletionStage<String> delete(@PathParam("token") String token) throws FirestoreProxyException;
+    CompletionStage<String> delete(@PathParam("token") String token);
 
 }

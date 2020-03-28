@@ -5,7 +5,6 @@
  */
 package fr.trendev.comptandye.security.controllers.jwt.dto.firestore;
 
-import fr.trendev.comptandye.security.controllers.jwt.dto.firestore.exceptions.FirestoreProxyException;
 import fr.trendev.comptandye.security.entities.JWTWhiteMapEntry;
 import java.io.Serializable;
 import java.net.ConnectException;
@@ -43,11 +42,10 @@ public interface FirestoreJWTWhiteMapProxy extends Serializable {
             jitter = 50,
             abortOn = {ConnectException.class},
             retryOn = {
-                WebApplicationException.class,
-                FirestoreProxyException.class
+                WebApplicationException.class
             }
     )
-    CompletionStage<List<JWTWhiteMapEntry>> getAll() throws FirestoreProxyException;
+    CompletionStage<List<JWTWhiteMapEntry>> getAll();
 
     @POST
     @Retry(
@@ -57,11 +55,10 @@ public interface FirestoreJWTWhiteMapProxy extends Serializable {
             jitter = 50,
             abortOn = {ConnectException.class},
             retryOn = {
-                WebApplicationException.class,
-                FirestoreProxyException.class
+                WebApplicationException.class
             }
     )
-    CompletionStage<JWTWhiteMapEntry> create(JWTWhiteMapEntry jwtWhiteMapEntry) throws FirestoreProxyException;
+    CompletionStage<JWTWhiteMapEntry> create(JWTWhiteMapEntry jwtWhiteMapEntry);
 
     @PUT
     @Retry(
@@ -71,11 +68,10 @@ public interface FirestoreJWTWhiteMapProxy extends Serializable {
             jitter = 50,
             abortOn = {ConnectException.class},
             retryOn = {
-                WebApplicationException.class,
-                FirestoreProxyException.class
+                WebApplicationException.class
             }
     )
-    CompletionStage<JWTWhiteMapEntry> update(JWTWhiteMapEntry jwtWhiteMapEntry) throws FirestoreProxyException;
+    CompletionStage<JWTWhiteMapEntry> update(JWTWhiteMapEntry jwtWhiteMapEntry);
 
     @DELETE
     @Path("{email}")
@@ -86,10 +82,9 @@ public interface FirestoreJWTWhiteMapProxy extends Serializable {
             jitter = 50,
             abortOn = {ConnectException.class},
             retryOn = {
-                WebApplicationException.class,
-                FirestoreProxyException.class
+                WebApplicationException.class
             }
     )
-    CompletionStage<String> delete(@PathParam("email") String email) throws FirestoreProxyException;
+    CompletionStage<String> delete(@PathParam("email") String email);
 
 }
