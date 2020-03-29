@@ -42,14 +42,19 @@ public class TraceRequestFilter implements Filter {
 
         String realIP = req.getHeader("X-Real-IP");
 
-        LOG.log(Level.INFO, "{4} : Request from [{1}] | {2} {0} | RemoteAddr = {3} | X-Real-IP = {5}",
-                new Object[]{
-                    req.getRequestURL(),
-                    (user != null) ? user.getName() : "an ANONYMOUS user",
-                    req.getMethod().toUpperCase(),
-                    req.getRemoteAddr(),
-                    className,
-                    realIP});
+        String uri = req.getRequestURI();
+
+        if (!"/health/live".equals(uri) && !"/health/ready".equals(uri)) { // prevent healthcheck logs
+            LOG.log(Level.INFO, "{4} : Request from [{1}] | {2} {0} | RemoteAddr = {3} | X-Real-IP = {5}",
+                    new Object[]{
+                        req.getRequestURL(),
+                        (user != null) ? user.getName() : "an ANONYMOUS user",
+                        req.getMethod().toUpperCase(),
+                        req.getRemoteAddr(),
+                        className,
+                        realIP});
+
+        }
 
         chain.doFilter(request, response);
     }
