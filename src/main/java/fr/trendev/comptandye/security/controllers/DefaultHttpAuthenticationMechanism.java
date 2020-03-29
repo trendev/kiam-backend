@@ -65,14 +65,18 @@ public class DefaultHttpAuthenticationMechanism implements
     public AuthenticationStatus validateRequest(HttpServletRequest req,
             HttpServletResponse rsp, HttpMessageContext hmc) throws
             AuthenticationException {
+        
+         String uri = req.getRequestURI();
 
-        LOG.log(Level.INFO, "{3} - {2} : {0} {1}",
-                new Object[]{
-                    req.getMethod(),
-                    req.getRequestURL(),
-                    hmc.isProtected() ? "PROTECTED" : "UNPROTECTED",
-                    hmc.isAuthenticationRequest() ? "AUTHENTICATION" : "NORMAL"
-                });
+        if (!"/health/live".equals(uri) && !"/health/ready".equals(uri)) { // prevent healthcheck logs
+            LOG.log(Level.INFO, "{3} - {2} : {0} {1}",
+                    new Object[]{
+                        req.getMethod(),
+                        req.getRequestURL(),
+                        hmc.isProtected() ? "PROTECTED" : "UNPROTECTED",
+                        hmc.isAuthenticationRequest() ? "AUTHENTICATION" : "NORMAL"
+                    });
+        }
 
         /**
          * control the authorization token first : prevent to login
