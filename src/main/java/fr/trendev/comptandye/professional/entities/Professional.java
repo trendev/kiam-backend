@@ -31,7 +31,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
-import javax.validation.constraints.Size;
 
 /**
  * @author jsie
@@ -48,10 +47,6 @@ public class Professional extends Customer {
 
     @Basic
     private String companyID;
-
-    @Basic
-    @Size(min = 1, max = 100, message = "jobrole length must be between 1 and 100")
-    private String jobrole;
 
     @Basic
     private String vatcode;
@@ -163,14 +158,6 @@ public class Professional extends Customer {
 
     public void setCompanyID(String companyID) {
         this.companyID = companyID;
-    }
-
-    public String getJobrole() {
-        return jobrole;
-    }
-
-    public void setJobrole(String jobrole) {
-        this.jobrole = jobrole;
     }
 
     public String getVatcode() {

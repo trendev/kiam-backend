@@ -103,6 +103,7 @@ public class CustomerDetailsService extends AbstractCommonService<CustomerDetail
                 e -> {
                     e.setFirstName(entity.getFirstName());
                     e.setLastName(entity.getLastName());
+                    e.setJobrole(entity.getJobrole());
                     e.setNickname(entity.getNickname());
                     e.setPhone(entity.getPhone());
                     e.setBirthdate(entity.getBirthdate());

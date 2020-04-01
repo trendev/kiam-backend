@@ -36,6 +36,7 @@ public class CustomerDetailsTest {
         assert instance.getPicturePath() == null;
         assert instance.getComments() != null;
         assert instance.getComments().isEmpty();
+        assert instance.getJobrole() == null;
 
         String firstName = "John";
         String lastName = "Doe";
@@ -54,6 +55,7 @@ public class CustomerDetailsTest {
         instance = new CustomerDetails(firstName, lastName, nickname, phone,
                 birthdate, sex, picturePath);
         instance.setComments(comments);
+        instance.setJobrole("jobrole");
 
         assert instance.getId() == null;
         assert firstName.equals(instance.getFirstName());
@@ -66,6 +68,7 @@ public class CustomerDetailsTest {
         assert instance.getComments() != null;
         assert instance.getComments().isEmpty() == false;
         assert instance.getComments().containsAll(comments);
+        assert "jobrole".equals(instance.getJobrole());
     }
 
 }

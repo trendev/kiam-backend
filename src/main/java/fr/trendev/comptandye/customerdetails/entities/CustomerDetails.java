@@ -36,6 +36,9 @@ public class CustomerDetails {
     private String lastName;
 
     @Basic
+    private String jobrole;
+
+    @Basic
     private String nickname;
 
     @Basic
@@ -91,6 +94,14 @@ public class CustomerDetails {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getJobrole() {
+        return jobrole;
+    }
+
+    public void setJobrole(String jobrole) {
+        this.jobrole = jobrole;
     }
 
     public String getNickname() {
