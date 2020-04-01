@@ -4289,6 +4289,7 @@
 									"",
 									"tests[\"firstName is \\\"John\\\"\"] = jsonData.firstName === \"John\";",
 									"tests[\"lastName is \\\"Doe\\\"\"] = jsonData.lastName === \"Doe\";",
+									"tests[\"jobrole is \\\"dancer\\\"\"] = jsonData.jobrole === \"dancer\";",
 									"tests[\"nickname is \\\"X\\\"\"] = jsonData.nickname === \"X\";",
 									"tests[\"phone is \\\"0102030405\\\"\"] = jsonData.phone === \"0102030405\";",
 									"tests[\"birthdate is \"+new Date(jsonData.birthdate).toISOString().split(\"T\")[0]] = jsonData.birthdate === Date.UTC(1960,7,7);",
@@ -4311,7 +4312,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": " {\n        \"firstName\": \"John\",\n        \"lastName\": \"Doe\",\n        \"nickname\": \"X\",\n        \"phone\": \"0102030405\",\n        \"birthdate\": {{birthdate}},\n        \"sex\": \"M\",\n        \"picturePath\": \"C:/Documents and Settings/whateverUwant.png\",\n        \"comments\": [\n            \"Cool\",\n            \"Surfing boy\",\n            \"Able to ollie pop\",\n            \"I guess the guy is buddhist\"\n        ]\n    }"
+							"raw": " {\n        \"firstName\": \"John\",\n        \"lastName\": \"Doe\",\n        \"nickname\": \"X\",\n        \"jobrole\": \"dancer\",\n        \"phone\": \"0102030405\",\n        \"birthdate\": {{birthdate}},\n        \"sex\": \"M\",\n        \"picturePath\": \"C:/Documents and Settings/whateverUwant.png\",\n        \"comments\": [\n            \"Cool\",\n            \"Surfing boy\",\n            \"Able to ollie pop\",\n            \"I guess the guy is buddhist\"\n        ]\n    }"
 						},
 						"url": {
 							"raw": "{{API_URL}}/CustomerDetails",
@@ -7931,7 +7932,7 @@
 									"tests[\"registrationDate is defined\"] = jsonData.registrationDate !== undefined;",
 									"tests[\"userGroups should be undefined\"] = jsonData.userGroups === undefined;",
 									"",
-									"tests[\"jobrole is \\\"Coiffeur\\\"\"] = jsonData.jobrole === \"Coiffeur\"",
+									"tests[\"customerDetails.jobrole is \\\"Coiffeur\\\"\"] = jsonData.customerDetails.jobrole === \"Coiffeur\"",
 									"",
 									"tests[\"customerDetails should be defined\"] = jsonData.customerDetails !== undefined;",
 									"tests[\"customerDetails.id is defined\"] = jsonData.customerDetails.id !== undefined;",
@@ -7975,7 +7976,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"pro@domain.com\",\n    \"cltype\": \"Professional\",\n    \"password\": \"PASSWORD\",\n    \"username\": \"pro_test\",\n    \"customerDetails\": {\n        \"firstName\": \"Hank\",\n        \"lastName\": \"Moody\",\n        \"nickname\": \"Author\",\n        \"phone\": \"0132039405\",\n        \"birthdate\": {{birthdate}},\n        \"sex\": \"M\",\n        \"comments\": [\n            \"Fun\",\n            \"Book Author\",\n            \"Smokes and drinks a lot\",\n            \"Driving a Porsche 911\"\n        ]\n    },\n    \"address\": {\n        \"street\": \"79 Avenue de la jonchère\",\n        \"optional\": \"Appart A113\",\n        \"postalCode\": \"77600\",\n        \"city\": \"Chanteloup-en-Brie\"\n    },\n    \"socialNetworkAccounts\": {\n        \"facebook\": \"https://www.facebook.com/hankmoody\",\n        \"twitter\": \"@hankfuckinmoody\",\n        \"pinterest\": \"https://www.pinterest.com/californication123/\"\n    },\n    \"companyName\": \"Californation\",\n    \"companyID\": \"55211846503644\",\n    \"jobrole\": \"Coiffeur\",\n    \"vatcode\": \"FR91552118465\",\n    \"creationDate\": 1483225200000,\n    \"businesses\": [\n        {\n            \"designation\": \"Coiffure\"\n        }\n    ],\n    \"paymentModes\": [\n        {\n            \"name\": \"Espèces\"\n        }\n    ]\n}"
+							"raw": "{\n    \"email\": \"pro@domain.com\",\n    \"cltype\": \"Professional\",\n    \"password\": \"PASSWORD\",\n    \"username\": \"pro_test\",\n    \"customerDetails\": {\n        \"firstName\": \"Hank\",\n        \"lastName\": \"Moody\",\n        \"nickname\": \"Author\",\n        \"jobrole\": \"Coiffeur\",\n        \"phone\": \"0132039405\",\n        \"birthdate\": {{birthdate}},\n        \"sex\": \"M\",\n        \"comments\": [\n            \"Fun\",\n            \"Book Author\",\n            \"Smokes and drinks a lot\",\n            \"Driving a Porsche 911\"\n        ]\n    },\n    \"address\": {\n        \"street\": \"79 Avenue de la jonchère\",\n        \"optional\": \"Appart A113\",\n        \"postalCode\": \"77600\",\n        \"city\": \"Chanteloup-en-Brie\"\n    },\n    \"socialNetworkAccounts\": {\n        \"facebook\": \"https://www.facebook.com/hankmoody\",\n        \"twitter\": \"@hankfuckinmoody\",\n        \"pinterest\": \"https://www.pinterest.com/californication123/\"\n    },\n    \"companyName\": \"Californation\",\n    \"companyID\": \"55211846503644\",\n    \"vatcode\": \"FR91552118465\",\n    \"creationDate\": 1483225200000,\n    \"businesses\": [\n        {\n            \"designation\": \"Coiffure\"\n        }\n    ],\n    \"paymentModes\": [\n        {\n            \"name\": \"Espèces\"\n        }\n    ]\n}"
 						},
 						"url": {
 							"raw": "{{API_URL}}/Professional",
