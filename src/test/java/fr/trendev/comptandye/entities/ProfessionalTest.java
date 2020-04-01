@@ -68,6 +68,7 @@ public class ProfessionalTest {
         assert instance.getStripeSubscriptionId() == null;
         assert instance.isTos() == false;
         assert instance.getRegistrationDate() != null;
+        assert instance.getJobrole() == null;
 
     }
 
