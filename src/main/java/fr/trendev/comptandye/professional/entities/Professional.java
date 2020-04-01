@@ -77,6 +77,9 @@ public class Professional extends Customer {
     @Temporal(TemporalType.TIMESTAMP)
     private Date rescissionDate;
 
+    @Basic
+    private String jobrole;
+
     @ManyToOne
     private VatRates vatRates;
 
@@ -222,6 +225,14 @@ public class Professional extends Customer {
 
     public void setRescissionDate(Date rescissionDate) {
         this.rescissionDate = rescissionDate;
+    }
+
+    public String getJobrole() {
+        return jobrole;
+    }
+
+    public void setJobrole(String jobrole) {
+        this.jobrole = jobrole;
     }
 
     public VatRates getVatRates() {
