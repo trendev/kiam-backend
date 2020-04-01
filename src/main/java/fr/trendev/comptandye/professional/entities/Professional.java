@@ -31,6 +31,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
+import javax.validation.constraints.Size;
 
 /**
  * @author jsie
@@ -47,6 +48,10 @@ public class Professional extends Customer {
 
     @Basic
     private String companyID;
+
+    @Basic
+    @Size(min = 1, max = 100, message = "jobrole length must be between 1 and 100")
+    private String jobrole;
 
     @Basic
     private String vatcode;
@@ -76,9 +81,6 @@ public class Professional extends Customer {
     @Column(columnDefinition = "DATETIME(3)")
     @Temporal(TemporalType.TIMESTAMP)
     private Date rescissionDate;
-
-    @Basic
-    private String jobrole;
 
     @ManyToOne
     private VatRates vatRates;
@@ -163,6 +165,14 @@ public class Professional extends Customer {
         this.companyID = companyID;
     }
 
+    public String getJobrole() {
+        return jobrole;
+    }
+
+    public void setJobrole(String jobrole) {
+        this.jobrole = jobrole;
+    }
+
     public String getVatcode() {
         return vatcode;
     }
@@ -225,14 +235,6 @@ public class Professional extends Customer {
 
     public void setRescissionDate(Date rescissionDate) {
         this.rescissionDate = rescissionDate;
-    }
-
-    public String getJobrole() {
-        return jobrole;
-    }
-
-    public void setJobrole(String jobrole) {
-        this.jobrole = jobrole;
     }
 
     public VatRates getVatRates() {
