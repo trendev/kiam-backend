@@ -1,4 +1,4 @@
-# kiam-backend [![CircleCI](https://circleci.com/gh/trendev/comptandye-backend.svg?style=svg&circle-token=d43206b685c13578091239ad4c93d81bca3ae4df)](https://circleci.com/gh/trendev/comptandye-backend)
+# kiam-backend [![CircleCI](https://circleci.com/gh/trendev/kiam-backend.svg?style=svg&circle-token=d43206b685c13578091239ad4c93d81bca3ae4df)](https://circleci.com/gh/trendev/kiam-backend)
 Source of the Backend code
 
 ## Build the WAR for Production
