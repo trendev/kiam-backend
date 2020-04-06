@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.category.boundaries;
+package fr.trendev.kiam.category.boundaries;
 
-import fr.trendev.comptandye.category.controllers.CategoryFacade;
-import fr.trendev.comptandye.category.entities.Category;
-import fr.trendev.comptandye.category.entities.CategoryPK;
-import fr.trendev.comptandye.client.controllers.ClientFacade;
-import fr.trendev.comptandye.client.entities.Client;
-import fr.trendev.comptandye.client.entities.ClientPK;
-import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.common.boundaries.AssociationManagementEnum;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
-import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.kiam.category.controllers.CategoryFacade;
+import fr.trendev.kiam.category.entities.Category;
+import fr.trendev.kiam.category.entities.CategoryPK;
+import fr.trendev.kiam.client.controllers.ClientFacade;
+import fr.trendev.kiam.client.entities.Client;
+import fr.trendev.kiam.client.entities.ClientPK;
+import fr.trendev.kiam.common.boundaries.AbstractCommonService;
+import fr.trendev.kiam.common.boundaries.AssociationManagementEnum;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.professional.controllers.ProfessionalFacade;
+import fr.trendev.kiam.professional.entities.Professional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

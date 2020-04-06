@@ -1,7 +1,7 @@
-package fr.trendev.comptandye.useditem.controllers;
+package fr.trendev.kiam.useditem.controllers;
 
-import fr.trendev.comptandye.productrecord.controllers.ProductRecordFacade;
-import fr.trendev.comptandye.useditem.entities.UsedItem;
+import fr.trendev.kiam.productrecord.controllers.ProductRecordFacade;
+import fr.trendev.kiam.useditem.entities.UsedItem;
 import javax.ejb.Stateless;
 import javax.inject.Named;
 

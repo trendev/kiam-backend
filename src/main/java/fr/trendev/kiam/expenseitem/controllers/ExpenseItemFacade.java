@@ -1,7 +1,7 @@
-package fr.trendev.comptandye.expenseitem.controllers;
+package fr.trendev.kiam.expenseitem.controllers;
 
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.expenseitem.entities.ExpenseItem;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.expenseitem.entities.ExpenseItem;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;

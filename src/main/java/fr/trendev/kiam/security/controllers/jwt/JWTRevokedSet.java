@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.security.controllers.jwt;
+package fr.trendev.kiam.security.controllers.jwt;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fish.payara.cluster.Clustered;
 import fish.payara.cluster.DistributedLockType;
-import fr.trendev.comptandye.security.controllers.jwt.dto.JWTRevokedSetDTO;
-import fr.trendev.comptandye.security.entities.JWTRecord;
+import fr.trendev.kiam.security.controllers.jwt.dto.JWTRevokedSetDTO;
+import fr.trendev.kiam.security.entities.JWTRecord;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Collections;

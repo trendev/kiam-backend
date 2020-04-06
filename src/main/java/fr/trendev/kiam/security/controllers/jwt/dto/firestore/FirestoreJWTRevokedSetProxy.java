@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.security.controllers.jwt.dto.firestore;
+package fr.trendev.kiam.security.controllers.jwt.dto.firestore;
 
-import fr.trendev.comptandye.security.entities.JWTRecord;
+import fr.trendev.kiam.security.entities.JWTRecord;
 import java.io.Serializable;
 import java.net.ConnectException;
 import java.time.temporal.ChronoUnit;

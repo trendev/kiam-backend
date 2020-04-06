@@ -1,4 +1,4 @@
-package fr.trendev.comptandye.useraccount.entities;
+package fr.trendev.kiam.useraccount.entities;
 
 /**
  *

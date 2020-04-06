@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye;
+package fr.trendev.kiam;
 
-import fr.trendev.comptandye.business.entities.Business;
-import fr.trendev.comptandye.security.controllers.jwt.JWTManager;
+import fr.trendev.kiam.business.entities.Business;
+import fr.trendev.kiam.security.controllers.jwt.JWTManager;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;

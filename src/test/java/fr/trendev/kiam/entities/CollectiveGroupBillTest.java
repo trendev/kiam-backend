@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.entities;
+package fr.trendev.kiam.entities;
 
-import fr.trendev.comptandye.bill.entities.BillType;
-import fr.trendev.comptandye.collectivegroupbill.entities.CollectiveGroupBill;
+import fr.trendev.kiam.bill.entities.BillType;
+import fr.trendev.kiam.collectivegroupbill.entities.CollectiveGroupBill;
 import org.junit.Test;
 
 /**

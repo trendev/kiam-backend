@@ -1,7 +1,7 @@
-package fr.trendev.comptandye.usergroup.controllers;
+package fr.trendev.kiam.usergroup.controllers;
 
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.usergroup.entities.UserGroup;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.usergroup.entities.UserGroup;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;

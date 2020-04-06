@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.security.controllers.qualifiers;
+package fr.trendev.kiam.security.controllers.qualifiers;
 
 import javax.enterprise.util.AnnotationLiteral;
 

@@ -1,7 +1,7 @@
-package fr.trendev.comptandye.customerdetails.controllers;
+package fr.trendev.kiam.customerdetails.controllers;
 
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.customerdetails.entities.CustomerDetails;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.customerdetails.entities.CustomerDetails;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;

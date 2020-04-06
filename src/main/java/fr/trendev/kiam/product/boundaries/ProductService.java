@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.product.boundaries;
+package fr.trendev.kiam.product.boundaries;
 
-import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.product.entities.Product;
-import fr.trendev.comptandye.product.entities.ProductPK;
-import fr.trendev.comptandye.productrecord.entities.ProductRecord;
-import fr.trendev.comptandye.professional.entities.Professional;
-import fr.trendev.comptandye.sale.entities.Sale;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.product.controllers.ProductFacade;
-import fr.trendev.comptandye.productreference.controllers.ProductReferenceFacade;
-import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
-import fr.trendev.comptandye.sale.controllers.SaleFacade;
+import fr.trendev.kiam.common.boundaries.AbstractCommonService;
+import fr.trendev.kiam.product.entities.Product;
+import fr.trendev.kiam.product.entities.ProductPK;
+import fr.trendev.kiam.productrecord.entities.ProductRecord;
+import fr.trendev.kiam.professional.entities.Professional;
+import fr.trendev.kiam.sale.entities.Sale;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.product.controllers.ProductFacade;
+import fr.trendev.kiam.productreference.controllers.ProductReferenceFacade;
+import fr.trendev.kiam.professional.controllers.ProfessionalFacade;
+import fr.trendev.kiam.sale.controllers.SaleFacade;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;

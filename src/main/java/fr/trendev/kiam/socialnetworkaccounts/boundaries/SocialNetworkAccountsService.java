@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.socialnetworkaccounts.boundaries;
+package fr.trendev.kiam.socialnetworkaccounts.boundaries;
 
-import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.socialnetworkaccounts.entities.SocialNetworkAccounts;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.socialnetworkaccounts.controllers.SocialNetworkAccountsFacade;
+import fr.trendev.kiam.common.boundaries.AbstractCommonService;
+import fr.trendev.kiam.socialnetworkaccounts.entities.SocialNetworkAccounts;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.socialnetworkaccounts.controllers.SocialNetworkAccountsFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

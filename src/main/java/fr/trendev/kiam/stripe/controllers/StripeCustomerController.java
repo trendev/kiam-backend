@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.stripe.controllers;
+package fr.trendev.kiam.stripe.controllers;
 
 import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
 import com.stripe.model.Invoice;
 import com.stripe.model.InvoiceCollection;
 import com.stripe.model.PaymentMethod;
-import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.kiam.professional.entities.Professional;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -41,7 +41,7 @@ public class StripeCustomerController {
         params.put("payment_method", paymentMethod);
 
         Map<String, Object> invoicesSettings = new HashMap<>();
-        invoicesSettings.put("footer", "comptandye"); // add TRENDev SASU legals
+        invoicesSettings.put("footer", "kiam"); // add TRENDev SASU legals
         invoicesSettings.put("default_payment_method", paymentMethod);
         params.put("invoice_settings", invoicesSettings);
 

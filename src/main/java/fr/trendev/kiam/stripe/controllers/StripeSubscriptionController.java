@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.stripe.controllers;
+package fr.trendev.kiam.stripe.controllers;
 
 import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
 import com.stripe.model.Subscription;
-import fr.trendev.comptandye.professional.entities.Professional;
-import fr.trendev.comptandye.stripe.StripeConfiguration;
+import fr.trendev.kiam.professional.entities.Professional;
+import fr.trendev.kiam.stripe.StripeConfiguration;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;

@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.security.controllers.jwt.dto.mock;
+package fr.trendev.kiam.security.controllers.jwt.dto.mock;
 
-import fr.trendev.comptandye.security.controllers.jwt.dto.JWTWhiteMapDTO;
-import fr.trendev.comptandye.security.entities.JWTRecord;
-import fr.trendev.comptandye.security.entities.JWTWhiteMapEntry;
+import fr.trendev.kiam.security.controllers.jwt.dto.JWTWhiteMapDTO;
+import fr.trendev.kiam.security.entities.JWTRecord;
+import fr.trendev.kiam.security.entities.JWTWhiteMapEntry;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Date;
@@ -18,8 +18,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_TERM_VALIDITY;
-import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_TERM_VALIDITY_UNIT;
+import static fr.trendev.kiam.security.controllers.jwt.JWTManager.SHORT_TERM_VALIDITY;
+import static fr.trendev.kiam.security.controllers.jwt.JWTManager.SHORT_TERM_VALIDITY_UNIT;
 
 /**
  *

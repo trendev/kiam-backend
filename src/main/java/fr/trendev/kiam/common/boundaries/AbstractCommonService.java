@@ -3,17 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.common.boundaries;
+package fr.trendev.kiam.common.boundaries;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.exceptions.ExceptionHandler;
-import fr.trendev.comptandye.exceptions.ExceptionHelper;
-import fr.trendev.comptandye.exceptions.InvalidDeliveryDateException;
-import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
-import fr.trendev.comptandye.utils.UUIDGenerator;
-import fr.trendev.comptandye.useraccount.entities.UserAccountType;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.exceptions.ExceptionHandler;
+import fr.trendev.kiam.exceptions.ExceptionHelper;
+import fr.trendev.kiam.exceptions.InvalidDeliveryDateException;
+import fr.trendev.kiam.security.controllers.AuthenticationHelper;
+import fr.trendev.kiam.utils.UUIDGenerator;
+import fr.trendev.kiam.useraccount.entities.UserAccountType;
 import java.net.URI;
 import java.util.Collection;
 import java.util.List;

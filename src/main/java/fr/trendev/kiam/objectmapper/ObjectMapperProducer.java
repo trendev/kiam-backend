@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.objectmapper;
+package fr.trendev.kiam.objectmapper;
 
-import fr.trendev.comptandye.objectmapper.backupcfg.ProfessionalBackup;
+import fr.trendev.kiam.objectmapper.backupcfg.ProfessionalBackup;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.trendev.comptandye.product.entities.Product;
-import fr.trendev.comptandye.productrecord.entities.ProductRecord;
-import fr.trendev.comptandye.professional.entities.Professional;
-import fr.trendev.comptandye.sale.entities.Sale;
-import fr.trendev.comptandye.objectmapper.backupcfg.mixins.ProductMixin;
-import fr.trendev.comptandye.objectmapper.backupcfg.mixins.ProductRecordMixin;
-import fr.trendev.comptandye.objectmapper.backupcfg.mixins.ProfessionalMixin;
-import fr.trendev.comptandye.objectmapper.backupcfg.mixins.SaleMixin;
+import fr.trendev.kiam.product.entities.Product;
+import fr.trendev.kiam.productrecord.entities.ProductRecord;
+import fr.trendev.kiam.professional.entities.Professional;
+import fr.trendev.kiam.sale.entities.Sale;
+import fr.trendev.kiam.objectmapper.backupcfg.mixins.ProductMixin;
+import fr.trendev.kiam.objectmapper.backupcfg.mixins.ProductRecordMixin;
+import fr.trendev.kiam.objectmapper.backupcfg.mixins.ProfessionalMixin;
+import fr.trendev.kiam.objectmapper.backupcfg.mixins.SaleMixin;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 

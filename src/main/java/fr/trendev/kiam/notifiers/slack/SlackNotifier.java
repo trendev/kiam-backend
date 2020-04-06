@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.notifiers.slack;
+package fr.trendev.kiam.notifiers.slack;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.trendev.comptandye.security.controllers.qualifiers.FirestoreIssue;
-import fr.trendev.comptandye.security.controllers.qualifiers.JWTForgeryDetected;
-import fr.trendev.comptandye.security.controllers.qualifiers.LoginDetected;
-import fr.trendev.comptandye.security.controllers.qualifiers.LogoutDetected;
-import fr.trendev.comptandye.security.controllers.qualifiers.NewDemoAccountPassword;
-import fr.trendev.comptandye.useraccount.entities.NewProfessionalCreated;
+import fr.trendev.kiam.security.controllers.qualifiers.FirestoreIssue;
+import fr.trendev.kiam.security.controllers.qualifiers.JWTForgeryDetected;
+import fr.trendev.kiam.security.controllers.qualifiers.LoginDetected;
+import fr.trendev.kiam.security.controllers.qualifiers.LogoutDetected;
+import fr.trendev.kiam.security.controllers.qualifiers.NewDemoAccountPassword;
+import fr.trendev.kiam.useraccount.entities.NewProfessionalCreated;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;

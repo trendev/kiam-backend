@@ -1,10 +1,10 @@
-package fr.trendev.comptandye.notification.controllers;
+package fr.trendev.kiam.notification.controllers;
 
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.notification.entities.Notification;
-import fr.trendev.comptandye.notification.entities.NotificationPK;
-import fr.trendev.comptandye.notification.entities.Notification_;
-import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.notification.entities.Notification;
+import fr.trendev.kiam.notification.entities.NotificationPK;
+import fr.trendev.kiam.notification.entities.Notification_;
+import fr.trendev.kiam.professional.entities.Professional;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;

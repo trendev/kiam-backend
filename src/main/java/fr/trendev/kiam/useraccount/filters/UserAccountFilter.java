@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.useraccount.filters;
+package fr.trendev.kiam.useraccount.filters;
 
-import fr.trendev.comptandye.useraccount.entities.NewProfessionalCreated;
+import fr.trendev.kiam.useraccount.entities.NewProfessionalCreated;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

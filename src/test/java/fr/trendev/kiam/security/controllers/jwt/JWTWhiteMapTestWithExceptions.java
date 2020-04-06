@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.security.controllers.jwt;
+package fr.trendev.kiam.security.controllers.jwt;
 
-import fr.trendev.comptandye.security.controllers.MockAuthenticationEventController;
-import fr.trendev.comptandye.security.controllers.jwt.dto.mock.MockErrorsJWTWhiteMapDTO;
+import fr.trendev.kiam.security.controllers.jwt.JWTWhiteMap;
+import fr.trendev.kiam.security.controllers.MockAuthenticationEventController;
+import fr.trendev.kiam.security.controllers.jwt.dto.mock.MockErrorsJWTWhiteMapDTO;
 import java.util.logging.Logger;
 import javax.inject.Inject;
 import org.jboss.weld.junit4.WeldInitiator;

@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.security.controllers.jwt.dto;
+package fr.trendev.kiam.security.controllers.jwt.dto;
 
-import fr.trendev.comptandye.security.controllers.jwt.dto.dynamodb.DynamodbDTO;
-import fr.trendev.comptandye.security.controllers.jwt.dto.firestore.FirestoreDTO;
-import fr.trendev.comptandye.security.controllers.jwt.dto.firestore.FirestoreJWTWhiteMapDTO;
+import fr.trendev.kiam.security.controllers.jwt.dto.dynamodb.DynamodbDTO;
+import fr.trendev.kiam.security.controllers.jwt.dto.firestore.FirestoreDTO;
+import fr.trendev.kiam.security.controllers.jwt.dto.firestore.FirestoreJWTWhiteMapDTO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PreDestroy;

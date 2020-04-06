@@ -1,8 +1,8 @@
-package fr.trendev.comptandye.individualbill.controllers;
+package fr.trendev.kiam.individualbill.controllers;
 
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.bill.entities.BillPK;
-import fr.trendev.comptandye.individualbill.entities.IndividualBill;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.bill.entities.BillPK;
+import fr.trendev.kiam.individualbill.entities.IndividualBill;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;

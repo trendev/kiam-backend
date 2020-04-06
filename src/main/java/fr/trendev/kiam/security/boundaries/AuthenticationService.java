@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.security.boundaries;
+package fr.trendev.kiam.security.boundaries;
 
-import fr.trendev.comptandye.exceptions.ExceptionHandler;
-import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
-import fr.trendev.comptandye.security.controllers.PasswordManager;
-import fr.trendev.comptandye.security.controllers.jwt.JWTManager;
-import fr.trendev.comptandye.security.entities.NewPassword;
-import fr.trendev.comptandye.useraccount.controllers.UserAccountFacade;
+import fr.trendev.kiam.exceptions.ExceptionHandler;
+import fr.trendev.kiam.security.controllers.AuthenticationHelper;
+import fr.trendev.kiam.security.controllers.PasswordManager;
+import fr.trendev.kiam.security.controllers.jwt.JWTManager;
+import fr.trendev.kiam.security.entities.NewPassword;
+import fr.trendev.kiam.useraccount.controllers.UserAccountFacade;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;

@@ -1,7 +1,7 @@
-package fr.trendev.comptandye.productrecord.controllers;
+package fr.trendev.kiam.productrecord.controllers;
 
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.productrecord.entities.ProductRecord;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.productrecord.entities.ProductRecord;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 

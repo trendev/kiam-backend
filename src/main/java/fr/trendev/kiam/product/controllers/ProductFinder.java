@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.product.controllers;
+package fr.trendev.kiam.product.controllers;
 
-import fr.trendev.comptandye.product.entities.Product;
-import fr.trendev.comptandye.product.entities.ProductPK;
+import fr.trendev.kiam.product.entities.Product;
+import fr.trendev.kiam.product.entities.ProductPK;
 import java.util.Optional;
 import java.util.function.Function;
 import javax.ejb.Stateless;

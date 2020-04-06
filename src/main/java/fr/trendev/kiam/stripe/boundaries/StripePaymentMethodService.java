@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.stripe.boundaries;
+package fr.trendev.kiam.stripe.boundaries;
 
 import com.stripe.model.Customer;
 import com.stripe.model.PaymentMethod;
-import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
-import fr.trendev.comptandye.professional.entities.Professional;
-import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
-import fr.trendev.comptandye.stripe.controllers.StripeCustomerController;
+import fr.trendev.kiam.professional.controllers.ProfessionalFacade;
+import fr.trendev.kiam.professional.entities.Professional;
+import fr.trendev.kiam.security.controllers.AuthenticationHelper;
+import fr.trendev.kiam.stripe.controllers.StripeCustomerController;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;

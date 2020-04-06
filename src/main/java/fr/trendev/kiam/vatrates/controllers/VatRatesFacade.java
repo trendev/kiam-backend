@@ -1,7 +1,7 @@
-package fr.trendev.comptandye.vatrates.controllers;
+package fr.trendev.kiam.vatrates.controllers;
 
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.vatrates.entities.VatRates;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.vatrates.entities.VatRates;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;

@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.security.controllers.jwt.dto.firestore;
+package fr.trendev.kiam.security.controllers.jwt.dto.firestore;
 
-import fr.trendev.comptandye.security.controllers.jwt.dto.firestore.exceptions.FirestoreProxyExceptionMapper;
-import fr.trendev.comptandye.security.controllers.AuthenticationEventController;
-import fr.trendev.comptandye.security.controllers.SlackAuthenticationEventController;
+import fr.trendev.kiam.security.controllers.jwt.dto.firestore.exceptions.FirestoreProxyExceptionMapper;
+import fr.trendev.kiam.security.controllers.AuthenticationEventController;
+import fr.trendev.kiam.security.controllers.SlackAuthenticationEventController;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.concurrent.CompletionStage;

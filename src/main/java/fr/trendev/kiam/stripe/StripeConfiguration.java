@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.stripe;
+package fr.trendev.kiam.stripe;
 
 import com.stripe.Stripe;
 import java.util.logging.Level;

@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.sale.boundaries;
+package fr.trendev.kiam.sale.boundaries;
 
-import fr.trendev.comptandye.offering.boundaries.AbstractOfferingService;
-import fr.trendev.comptandye.offering.entities.OfferingPK;
-import fr.trendev.comptandye.product.entities.Product;
-import fr.trendev.comptandye.professional.entities.Professional;
-import fr.trendev.comptandye.sale.entities.Sale;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.product.controllers.ProductFinder;
+import fr.trendev.kiam.offering.boundaries.AbstractOfferingService;
+import fr.trendev.kiam.offering.entities.OfferingPK;
+import fr.trendev.kiam.product.entities.Product;
+import fr.trendev.kiam.professional.entities.Professional;
+import fr.trendev.kiam.sale.entities.Sale;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.product.controllers.ProductFinder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

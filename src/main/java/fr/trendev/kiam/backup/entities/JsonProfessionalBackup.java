@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.backup.entities;
+package fr.trendev.kiam.backup.entities;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.kiam.professional.entities.Professional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.WebApplicationException;

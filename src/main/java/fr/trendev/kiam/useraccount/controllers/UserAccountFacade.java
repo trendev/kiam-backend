@@ -1,8 +1,8 @@
-package fr.trendev.comptandye.useraccount.controllers;
+package fr.trendev.kiam.useraccount.controllers;
 
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.useraccount.entities.UserAccount;
-import fr.trendev.comptandye.useraccount.entities.UserAccount_;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.useraccount.entities.UserAccount;
+import fr.trendev.kiam.useraccount.entities.UserAccount_;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.logging.Level;

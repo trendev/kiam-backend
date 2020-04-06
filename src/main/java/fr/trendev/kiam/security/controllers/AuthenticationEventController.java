@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.security.controllers;
+package fr.trendev.kiam.security.controllers;
 
 import java.io.Serializable;
 

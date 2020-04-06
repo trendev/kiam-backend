@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.backup.entities;
+package fr.trendev.kiam.backup.entities;
 
+import fr.trendev.kiam.backup.entities.HashingMechanism;
 import javax.inject.Inject;
 import org.jboss.weld.junit4.WeldInitiator;
 import org.junit.Rule;

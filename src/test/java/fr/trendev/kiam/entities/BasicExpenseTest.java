@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.entities;
+package fr.trendev.kiam.entities;
 
-import fr.trendev.comptandye.basicexpense.entities.BasicExpense;
-import fr.trendev.comptandye.business.entities.Business;
-import fr.trendev.comptandye.expense.entities.ExpenseType;
-import fr.trendev.comptandye.payment.entities.Payment;
-import fr.trendev.comptandye.paymentmode.entities.PaymentMode;
-import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.kiam.basicexpense.entities.BasicExpense;
+import fr.trendev.kiam.business.entities.Business;
+import fr.trendev.kiam.expense.entities.ExpenseType;
+import fr.trendev.kiam.payment.entities.Payment;
+import fr.trendev.kiam.paymentmode.entities.PaymentMode;
+import fr.trendev.kiam.professional.entities.Professional;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.stream.Collectors;

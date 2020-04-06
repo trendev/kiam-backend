@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.security.controllers;
+package fr.trendev.kiam.security.controllers;
 
-import fr.trendev.comptandye.useraccount.entities.UserAccountType;
+import fr.trendev.kiam.useraccount.entities.UserAccountType;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;

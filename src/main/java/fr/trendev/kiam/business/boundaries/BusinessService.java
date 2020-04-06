@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.business.boundaries;
+package fr.trendev.kiam.business.boundaries;
 
-import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.business.entities.Business;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.business.controllers.BusinessFacade;
+import fr.trendev.kiam.common.boundaries.AbstractCommonService;
+import fr.trendev.kiam.business.entities.Business;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.business.controllers.BusinessFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

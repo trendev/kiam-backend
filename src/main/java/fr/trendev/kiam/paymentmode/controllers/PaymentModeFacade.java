@@ -1,7 +1,7 @@
-package fr.trendev.comptandye.paymentmode.controllers;
+package fr.trendev.kiam.paymentmode.controllers;
 
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.paymentmode.entities.PaymentMode;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.paymentmode.entities.PaymentMode;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;

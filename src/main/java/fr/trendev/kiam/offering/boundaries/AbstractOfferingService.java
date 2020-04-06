@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.offering.boundaries;
+package fr.trendev.kiam.offering.boundaries;
 
-import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.offering.entities.Offering;
-import fr.trendev.comptandye.offering.entities.OfferingPK;
-import fr.trendev.comptandye.pack.controllers.PackFacade;
-import fr.trendev.comptandye.pack.entities.Pack;
-import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
-import fr.trendev.comptandye.purchasedoffering.entities.PurchasedOffering;
-import fr.trendev.comptandye.sale.controllers.SaleFacade;
-import fr.trendev.comptandye.service.controllers.ServiceFacade;
-import fr.trendev.comptandye.offering.controllers.OfferingIntegrityVisitor;
+import fr.trendev.kiam.common.boundaries.AbstractCommonService;
+import fr.trendev.kiam.offering.entities.Offering;
+import fr.trendev.kiam.offering.entities.OfferingPK;
+import fr.trendev.kiam.pack.controllers.PackFacade;
+import fr.trendev.kiam.pack.entities.Pack;
+import fr.trendev.kiam.professional.controllers.ProfessionalFacade;
+import fr.trendev.kiam.purchasedoffering.entities.PurchasedOffering;
+import fr.trendev.kiam.sale.controllers.SaleFacade;
+import fr.trendev.kiam.service.controllers.ServiceFacade;
+import fr.trendev.kiam.offering.controllers.OfferingIntegrityVisitor;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 import javax.inject.Inject;

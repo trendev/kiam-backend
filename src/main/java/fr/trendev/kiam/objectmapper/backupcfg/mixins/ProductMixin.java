@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.objectmapper.backupcfg.mixins;
+package fr.trendev.kiam.objectmapper.backupcfg.mixins;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import fr.trendev.comptandye.productrecord.entities.ProductRecord;
-import fr.trendev.comptandye.sale.entities.Sale;
+import fr.trendev.kiam.productrecord.entities.ProductRecord;
+import fr.trendev.kiam.sale.entities.Sale;
 import java.util.List;
 
 /**

@@ -3,28 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.bill.boundaries;
+package fr.trendev.kiam.bill.boundaries;
 
-import fr.trendev.comptandye.bill.controllers.BillFacade;
-import fr.trendev.comptandye.bill.controllers.BillTypeVisitor;
-import fr.trendev.comptandye.bill.entities.Bill;
-import fr.trendev.comptandye.bill.entities.BillPK;
-import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.exceptions.ExceptionHelper;
-import fr.trendev.comptandye.exceptions.InvalidDeliveryDateException;
-import fr.trendev.comptandye.offering.controllers.ProvideOfferingFacadeVisitor;
-import fr.trendev.comptandye.offering.entities.DiscoverSalesVisitor;
-import fr.trendev.comptandye.offering.entities.OfferingPK;
-import fr.trendev.comptandye.payment.entities.Payment;
-import fr.trendev.comptandye.product.controllers.ProductFacade;
-import fr.trendev.comptandye.product.entities.Product;
-import fr.trendev.comptandye.product.entities.ProductPK;
-import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
-import fr.trendev.comptandye.professional.entities.Professional;
-import fr.trendev.comptandye.purchasedoffering.entities.PurchasedOffering;
-import fr.trendev.comptandye.sale.entities.Sale;
-import fr.trendev.comptandye.solditem.entities.SoldItem;
+import fr.trendev.kiam.bill.controllers.BillFacade;
+import fr.trendev.kiam.bill.controllers.BillTypeVisitor;
+import fr.trendev.kiam.bill.entities.Bill;
+import fr.trendev.kiam.bill.entities.BillPK;
+import fr.trendev.kiam.common.boundaries.AbstractCommonService;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.exceptions.ExceptionHelper;
+import fr.trendev.kiam.exceptions.InvalidDeliveryDateException;
+import fr.trendev.kiam.offering.controllers.ProvideOfferingFacadeVisitor;
+import fr.trendev.kiam.offering.entities.DiscoverSalesVisitor;
+import fr.trendev.kiam.offering.entities.OfferingPK;
+import fr.trendev.kiam.payment.entities.Payment;
+import fr.trendev.kiam.product.controllers.ProductFacade;
+import fr.trendev.kiam.product.entities.Product;
+import fr.trendev.kiam.product.entities.ProductPK;
+import fr.trendev.kiam.professional.controllers.ProfessionalFacade;
+import fr.trendev.kiam.professional.entities.Professional;
+import fr.trendev.kiam.purchasedoffering.entities.PurchasedOffering;
+import fr.trendev.kiam.sale.entities.Sale;
+import fr.trendev.kiam.solditem.entities.SoldItem;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
@@ -105,9 +105,7 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
     /**
      * Prepares and persists a Bill.
      *
-     * Before calling
-     * {@link AbstractCommonService#post(java.lang.Object, java.lang.Object, java.util.function.BiFunction, java.lang.Class, fr.trendev.comptandye.sessions.AbstractFacade, java.util.function.BiConsumer, java.util.function.Function, java.util.function.Consumer)},
-     * this method will:
+     * Before calling this method will:
      * <ul>
      * <li>check if a deliveryDate is provided (mandatory), </li>
      * <li>set the Bill's reference </li>
@@ -126,11 +124,6 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
      * @param professional the professional's email, owner of the Bill (can be
      * null if Principal of Security Context is used).
      * @return the json serialized persisted Bill
-     * @see AbstractCommonService#post(java.lang.Object, java.lang.Object,
-     * java.util.function.BiFunction, java.lang.Class,
-     * fr.trendev.comptandye.sessions.AbstractFacade,
-     * java.util.function.BiConsumer, java.util.function.Function,
-     * java.util.function.Consumer)
      */
     public Response post(Consumer<T> prepareAction,
             SecurityContext sec, T entity,

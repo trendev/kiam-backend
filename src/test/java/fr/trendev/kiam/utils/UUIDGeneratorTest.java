@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils;
+package fr.trendev.kiam.utils;
 
+import fr.trendev.kiam.utils.UUIDGenerator;
 import java.util.Arrays;
 import org.junit.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;

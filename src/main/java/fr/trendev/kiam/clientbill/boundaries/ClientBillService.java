@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.clientbill.boundaries;
+package fr.trendev.kiam.clientbill.boundaries;
 
-import fr.trendev.comptandye.bill.boundaries.AbstractBillService;
-import fr.trendev.comptandye.bill.entities.BillPK;
-import fr.trendev.comptandye.clientbill.entities.ClientBill;
-import fr.trendev.comptandye.client.entities.ClientPK;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.clientbill.controllers.ClientBillFacade;
-import fr.trendev.comptandye.client.controllers.ClientFacade;
+import fr.trendev.kiam.bill.boundaries.AbstractBillService;
+import fr.trendev.kiam.bill.entities.BillPK;
+import fr.trendev.kiam.clientbill.entities.ClientBill;
+import fr.trendev.kiam.client.entities.ClientPK;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.clientbill.controllers.ClientBillFacade;
+import fr.trendev.kiam.client.controllers.ClientFacade;
 import java.util.Date;
 import java.util.Optional;
 import java.util.function.Function;

@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.entities;
+package fr.trendev.kiam.entities;
 
-import fr.trendev.comptandye.offering.entities.OfferingType;
-import fr.trendev.comptandye.pack.entities.Pack;
-import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.kiam.offering.entities.OfferingType;
+import fr.trendev.kiam.pack.entities.Pack;
+import fr.trendev.kiam.professional.entities.Professional;
 import org.junit.Test;
 
 /**

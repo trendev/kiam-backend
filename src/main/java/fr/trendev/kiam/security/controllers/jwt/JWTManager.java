@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.security.controllers.jwt;
+package fr.trendev.kiam.security.controllers.jwt;
 
 import com.nimbusds.jose.JOSEException;
 import static com.nimbusds.jose.JOSEObjectType.JWT;
@@ -15,9 +15,9 @@ import com.nimbusds.jose.crypto.RSASSASigner;
 import com.nimbusds.jose.crypto.RSASSAVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
-import fr.trendev.comptandye.security.entities.DecodedJWT;
-import fr.trendev.comptandye.security.entities.JWTRecord;
-import fr.trendev.comptandye.security.entities.JWTWhiteMapEntry;
+import fr.trendev.kiam.security.entities.DecodedJWT;
+import fr.trendev.kiam.security.entities.JWTRecord;
+import fr.trendev.kiam.security.entities.JWTWhiteMapEntry;
 import java.security.PrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.text.ParseException;
@@ -53,7 +53,7 @@ public class JWTManager {
     public final static TemporalUnit LONG_TERM_VALIDITY_UNIT = ChronoUnit.DAYS;
     public final static int PERIOD = 10;
 
-    public final static String ISS = "https://www.comptandye.fr";
+    public final static String ISS = "https://www.kiam.fr";
 
     private static final Logger LOG = Logger.getLogger(
             JWTManager.class.getName());

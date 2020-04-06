@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.usergroup.boundaries;
+package fr.trendev.kiam.usergroup.boundaries;
 
-import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.useraccount.entities.UserAccount;
-import fr.trendev.comptandye.usergroup.entities.UserGroup;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.usergroup.controllers.UserGroupFacade;
+import fr.trendev.kiam.common.boundaries.AbstractCommonService;
+import fr.trendev.kiam.useraccount.entities.UserAccount;
+import fr.trendev.kiam.usergroup.entities.UserGroup;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.usergroup.controllers.UserGroupFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

@@ -1,7 +1,7 @@
-package fr.trendev.comptandye.returneditem.controllers;
+package fr.trendev.kiam.returneditem.controllers;
 
-import fr.trendev.comptandye.productrecord.controllers.ProductRecordFacade;
-import fr.trendev.comptandye.returneditem.entities.ReturnedItem;
+import fr.trendev.kiam.productrecord.controllers.ProductRecordFacade;
+import fr.trendev.kiam.returneditem.entities.ReturnedItem;
 import javax.ejb.Stateless;
 import javax.inject.Named;
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.useraccount.controllers;
+package fr.trendev.kiam.useraccount.controllers;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -1,10 +1,10 @@
-package fr.trendev.comptandye.bill.controllers;
+package fr.trendev.kiam.bill.controllers;
 
-import fr.trendev.comptandye.bill.entities.Bill;
-import fr.trendev.comptandye.bill.entities.BillPK;
-import fr.trendev.comptandye.bill.entities.Bill_;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.kiam.bill.entities.Bill;
+import fr.trendev.kiam.bill.entities.BillPK;
+import fr.trendev.kiam.bill.entities.Bill_;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.professional.entities.Professional;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;

@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.purchasedoffering.boundaries;
+package fr.trendev.kiam.purchasedoffering.boundaries;
 
-import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.offering.entities.OfferingPK;
-import fr.trendev.comptandye.purchasedoffering.entities.OfferingSnapshot;
-import fr.trendev.comptandye.purchasedoffering.entities.PurchasedOffering;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.purchasedoffering.controllers.PurchasedOfferingFacade;
-import fr.trendev.comptandye.offering.controllers.ProvideOfferingFacadeVisitor;
+import fr.trendev.kiam.common.boundaries.AbstractCommonService;
+import fr.trendev.kiam.offering.entities.OfferingPK;
+import fr.trendev.kiam.purchasedoffering.entities.OfferingSnapshot;
+import fr.trendev.kiam.purchasedoffering.entities.PurchasedOffering;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.purchasedoffering.controllers.PurchasedOfferingFacade;
+import fr.trendev.kiam.offering.controllers.ProvideOfferingFacadeVisitor;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;

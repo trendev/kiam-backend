@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.expense.boundaries;
+package fr.trendev.kiam.expense.boundaries;
 
-import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.expense.entities.Expense;
-import fr.trendev.comptandye.expense.entities.ExpensePK;
-import fr.trendev.comptandye.expenseitem.entities.ExpenseItem;
-import fr.trendev.comptandye.payment.entities.Payment;
-import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
-import fr.trendev.comptandye.professional.entities.Professional;
+import fr.trendev.kiam.common.boundaries.AbstractCommonService;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.expense.entities.Expense;
+import fr.trendev.kiam.expense.entities.ExpensePK;
+import fr.trendev.kiam.expenseitem.entities.ExpenseItem;
+import fr.trendev.kiam.payment.entities.Payment;
+import fr.trendev.kiam.professional.controllers.ProfessionalFacade;
+import fr.trendev.kiam.professional.entities.Professional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Date;

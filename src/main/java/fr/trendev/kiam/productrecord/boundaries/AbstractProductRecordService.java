@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.productrecord.boundaries;
+package fr.trendev.kiam.productrecord.boundaries;
 
-import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.product.entities.Product;
-import fr.trendev.comptandye.product.entities.ProductPK;
-import fr.trendev.comptandye.productrecord.entities.ProductRecord;
-import fr.trendev.comptandye.product.controllers.ProductFacade;
-import fr.trendev.comptandye.product.controllers.ProductFinder;
-import fr.trendev.comptandye.productrecord.entities.VariationOfProductRecordQtyVisitor;
+import fr.trendev.kiam.common.boundaries.AbstractCommonService;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.product.entities.Product;
+import fr.trendev.kiam.product.entities.ProductPK;
+import fr.trendev.kiam.productrecord.entities.ProductRecord;
+import fr.trendev.kiam.product.controllers.ProductFacade;
+import fr.trendev.kiam.product.controllers.ProductFinder;
+import fr.trendev.kiam.productrecord.entities.VariationOfProductRecordQtyVisitor;
 import java.util.Date;
 import java.util.function.Consumer;
 import java.util.logging.Level;

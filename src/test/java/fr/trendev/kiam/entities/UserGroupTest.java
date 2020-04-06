@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.entities;
+package fr.trendev.kiam.entities;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.trendev.comptandye.administrator.entities.Administrator;
-import fr.trendev.comptandye.usergroup.entities.UserGroup;
+import fr.trendev.kiam.administrator.entities.Administrator;
+import fr.trendev.kiam.usergroup.entities.UserGroup;
 import java.io.IOException;
 import java.util.ArrayList;
 import org.junit.Test;

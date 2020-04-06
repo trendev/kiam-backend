@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.thresholdalert.boundaries;
+package fr.trendev.kiam.thresholdalert.boundaries;
 
-import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.notification.entities.NotificationPK;
-import fr.trendev.comptandye.professional.entities.Professional;
-import fr.trendev.comptandye.thresholdalert.entities.ThresholdAlert;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
-import fr.trendev.comptandye.thresholdalert.controllers.ThresholdAlertFacade;
+import fr.trendev.kiam.common.boundaries.AbstractCommonService;
+import fr.trendev.kiam.notification.entities.NotificationPK;
+import fr.trendev.kiam.professional.entities.Professional;
+import fr.trendev.kiam.thresholdalert.entities.ThresholdAlert;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.professional.controllers.ProfessionalFacade;
+import fr.trendev.kiam.thresholdalert.controllers.ThresholdAlertFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

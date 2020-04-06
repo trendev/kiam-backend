@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.notifiers.email;
+package fr.trendev.kiam.notifiers.email;
 
-import fr.trendev.comptandye.useraccount.entities.NewProfessionalCreated;
+import fr.trendev.kiam.useraccount.entities.NewProfessionalCreated;
 import java.io.UnsupportedEncodingException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,7 +29,7 @@ import javax.mail.internet.MimeMessage;
  * @author jsie
  */
 @MailSessionDefinition( // Jakarta Mail
-        name = "java:app/comptandye/google-gsuite",
+        name = "java:app/kiam/google-gsuite",
         description = "JavaMail session based on Google Suite @comptandye.fr",
         from = "support@comptandye.fr",
         host = "smtp.gmail.com",
@@ -51,7 +51,7 @@ import javax.mail.internet.MimeMessage;
 @Startup
 public class EmailNotifier {
     
-    @Resource(name = "java:app/comptandye/google-gsuite")
+    @Resource(name = "java:app/kiam/google-gsuite")
     Session mailSession;
     
     private static final Logger LOG = Logger.getLogger(EmailNotifier.class.getName());
@@ -81,7 +81,7 @@ public class EmailNotifier {
             message.setContent("<!DOCTYPE html>\n"
                     + "<html>\n"
                     + "<body>\n"
-                    + "<h2>Merci pour ton inscription et bienvenue sur comptandye !!!</h2>\n"
+                    + "<h2>Merci pour ton inscription et bienvenue sur kiam !!!</h2>\n"
                     + "<div>\n"
                     + "<h3>Voici les identifiants que nous avons automatiquement créés pour toi \uD83D\uDE48</h3>\n"
                     + "<table style=\"width:100%;\">\n"
@@ -95,7 +95,7 @@ public class EmailNotifier {
                     + "  </tr>\n"
                     + "</table>"
                     + "</div>\n"
-                    + "<p>Tu peux d'ores et déjà les utiliser sur <a href=\"https://www.comptandye.fr\">l'appli</a> \uD83D\uDE80</p>\n"
+                    + "<p>Tu peux d'ores et déjà les utiliser sur <a href=\"https://www.kiam.fr\">l'appli</a> \uD83D\uDE80</p>\n"
                     + "<p>Si tu rencontres des difficultés, n'hésite surtout pas à <a href=\"mailto:support@comptandye.fr\">nous contacter</a> \uD83D\uDE09</p>"
                     + "</body>\n"
                     + "\n"

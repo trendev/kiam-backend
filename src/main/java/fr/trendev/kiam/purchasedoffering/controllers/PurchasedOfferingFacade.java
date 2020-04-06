@@ -1,7 +1,7 @@
-package fr.trendev.comptandye.purchasedoffering.controllers;
+package fr.trendev.kiam.purchasedoffering.controllers;
 
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.purchasedoffering.entities.PurchasedOffering;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.purchasedoffering.entities.PurchasedOffering;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;

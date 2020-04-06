@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.administrator.boundaries;
+package fr.trendev.kiam.administrator.boundaries;
 
-import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.administrator.entities.Administrator;
-import fr.trendev.comptandye.usergroup.entities.UserGroup;
-import fr.trendev.comptandye.security.controllers.PasswordManager;
-import fr.trendev.comptandye.administrator.controllers.AdministratorFacade;
-import fr.trendev.comptandye.usergroup.controllers.UserGroupFacade;
-import fr.trendev.comptandye.common.boundaries.AssociationManagementEnum;
+import fr.trendev.kiam.common.boundaries.AbstractCommonService;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.administrator.entities.Administrator;
+import fr.trendev.kiam.usergroup.entities.UserGroup;
+import fr.trendev.kiam.security.controllers.PasswordManager;
+import fr.trendev.kiam.administrator.controllers.AdministratorFacade;
+import fr.trendev.kiam.usergroup.controllers.UserGroupFacade;
+import fr.trendev.kiam.common.boundaries.AssociationManagementEnum;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

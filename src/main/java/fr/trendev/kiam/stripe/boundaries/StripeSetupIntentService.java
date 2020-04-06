@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.stripe.boundaries;
+package fr.trendev.kiam.stripe.boundaries;
 
 import com.stripe.exception.StripeException;
 import com.stripe.model.SetupIntent;

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.entities;
+package fr.trendev.kiam.entities;
 
-import fr.trendev.comptandye.product.entities.Product;
+import fr.trendev.kiam.product.entities.Product;
 import org.junit.Test;
 
 /**

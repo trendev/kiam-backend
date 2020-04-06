@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.useraccount.boundaries;
+package fr.trendev.kiam.useraccount.boundaries;
 
-import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
-import fr.trendev.comptandye.professional.entities.Professional;
-import fr.trendev.comptandye.security.controllers.PasswordManager;
-import fr.trendev.comptandye.useraccount.controllers.EmailValidator;
-import fr.trendev.comptandye.useraccount.controllers.UserAccountFacade;
-import fr.trendev.comptandye.useraccount.entities.UserAccount;
-import fr.trendev.comptandye.usergroup.controllers.UserGroupFacade;
-import fr.trendev.comptandye.usergroup.entities.UserGroup;
+import fr.trendev.kiam.common.boundaries.AbstractCommonService;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.professional.controllers.ProfessionalFacade;
+import fr.trendev.kiam.professional.entities.Professional;
+import fr.trendev.kiam.security.controllers.PasswordManager;
+import fr.trendev.kiam.useraccount.controllers.EmailValidator;
+import fr.trendev.kiam.useraccount.controllers.UserAccountFacade;
+import fr.trendev.kiam.useraccount.entities.UserAccount;
+import fr.trendev.kiam.usergroup.controllers.UserGroupFacade;
+import fr.trendev.kiam.usergroup.entities.UserGroup;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.PermitAll;

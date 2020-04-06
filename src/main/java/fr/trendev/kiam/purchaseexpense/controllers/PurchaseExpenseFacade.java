@@ -1,8 +1,8 @@
-package fr.trendev.comptandye.purchaseexpense.controllers;
+package fr.trendev.kiam.purchaseexpense.controllers;
 
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.expense.entities.ExpensePK;
-import fr.trendev.comptandye.purchaseexpense.entities.PurchaseExpense;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.expense.entities.ExpensePK;
+import fr.trendev.kiam.purchaseexpense.entities.PurchaseExpense;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;

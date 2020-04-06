@@ -1,8 +1,8 @@
-package fr.trendev.comptandye.collectivegroup.controllers;
+package fr.trendev.kiam.collectivegroup.controllers;
 
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.collectivegroup.entities.CollectiveGroup;
-import fr.trendev.comptandye.collectivegroup.entities.CollectiveGroupPK;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.collectivegroup.entities.CollectiveGroup;
+import fr.trendev.kiam.collectivegroup.entities.CollectiveGroupPK;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
