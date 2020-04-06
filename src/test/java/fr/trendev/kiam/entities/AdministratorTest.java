@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.entities;
+package fr.trendev.kiam.entities;
 
-import fr.trendev.comptandye.administrator.entities.Administrator;
-import fr.trendev.comptandye.useraccount.entities.UserAccountType;
+import fr.trendev.kiam.administrator.entities.Administrator;
+import fr.trendev.kiam.useraccount.entities.UserAccountType;
 import org.junit.Test;
 
 /**

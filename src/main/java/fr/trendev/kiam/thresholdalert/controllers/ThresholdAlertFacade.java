@@ -1,8 +1,8 @@
-package fr.trendev.comptandye.thresholdalert.controllers;
+package fr.trendev.kiam.thresholdalert.controllers;
 
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.notification.entities.NotificationPK;
-import fr.trendev.comptandye.thresholdalert.entities.ThresholdAlert;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.notification.entities.NotificationPK;
+import fr.trendev.kiam.thresholdalert.entities.ThresholdAlert;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;

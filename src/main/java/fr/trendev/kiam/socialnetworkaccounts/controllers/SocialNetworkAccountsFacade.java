@@ -1,7 +1,7 @@
-package fr.trendev.comptandye.socialnetworkaccounts.controllers;
+package fr.trendev.kiam.socialnetworkaccounts.controllers;
 
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.socialnetworkaccounts.entities.SocialNetworkAccounts;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.socialnetworkaccounts.entities.SocialNetworkAccounts;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;

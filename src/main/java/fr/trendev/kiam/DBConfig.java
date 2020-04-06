@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye;
+package fr.trendev.kiam;
 
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -18,12 +18,12 @@ import javax.ejb.Startup;
  */
 @Singleton
 @Startup
-@DataSourceDefinition(name = "java:global/comptandye/MySQLDataSource",
+@DataSourceDefinition(name = "java:global/kiam/MySQLDataSource",
         className = "com.mysql.jdbc.jdbc2.optional.MysqlXADataSource",
-        user = "${ENV=COMPTANDYE_DB_USER}", // defined as system env
-        password = "${ENV=COMPTANDYE_DB_PASSWORD}", // defined as system env
-        databaseName = "${ENV=COMPTANDYE_DB_NAME}", // defined as system env
-        serverName = "${ENV=COMPTANDYE_DB_HOST}", // defined as system env
+        user = "${ENV=KIAM_DB_USER}", // defined as system env
+        password = "${ENV=KIAM_DB_PASSWORD}", // defined as system env
+        databaseName = "${ENV=KIAM_DB_NAME}", // defined as system env
+        serverName = "${ENV=KIAM_DB_HOST}", // defined as system env
         portNumber = 3306,
         minPoolSize = 20,
         maxPoolSize = 500,

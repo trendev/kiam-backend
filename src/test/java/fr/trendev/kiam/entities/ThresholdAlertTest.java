@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.entities;
+package fr.trendev.kiam.entities;
 
-import fr.trendev.comptandye.notification.entities.NotificationLevelEnum;
-import fr.trendev.comptandye.notification.entities.NotificationType;
-import fr.trendev.comptandye.professional.entities.Professional;
-import fr.trendev.comptandye.thresholdalert.entities.ThresholdAlert;
-import fr.trendev.comptandye.thresholdalert.entities.ThresholdAlertQualifierEnum;
+import fr.trendev.kiam.notification.entities.NotificationLevelEnum;
+import fr.trendev.kiam.notification.entities.NotificationType;
+import fr.trendev.kiam.professional.entities.Professional;
+import fr.trendev.kiam.thresholdalert.entities.ThresholdAlert;
+import fr.trendev.kiam.thresholdalert.entities.ThresholdAlertQualifierEnum;
 import org.junit.Test;
 
 /**

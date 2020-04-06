@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.security.controllers.jwt.dto.firestore;
+package fr.trendev.kiam.security.controllers.jwt.dto.firestore;
 
-import fr.trendev.comptandye.security.controllers.jwt.dto.firestore.exceptions.FirestoreProxyExceptionMapper;
-import fr.trendev.comptandye.security.controllers.jwt.dto.firestore.exceptions.FirestoreProxyException;
+import fr.trendev.kiam.security.controllers.jwt.dto.firestore.exceptions.FirestoreProxyExceptionMapper;
+import fr.trendev.kiam.security.controllers.jwt.dto.firestore.exceptions.FirestoreProxyException;
 import javax.ws.rs.core.Response;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;

@@ -1,4 +1,4 @@
-package fr.trendev.comptandye.expense.entities;
+package fr.trendev.kiam.expense.entities;
 
 import java.io.Serializable;
 import java.util.Objects;

@@ -1,7 +1,7 @@
-package fr.trendev.comptandye.address.controllers;
+package fr.trendev.kiam.address.controllers;
 
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.address.entities.Address;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.address.entities.Address;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;

@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.notification.controllers;
+package fr.trendev.kiam.notification.controllers;
 
-import fr.trendev.comptandye.notification.entities.NotificationLevelEnum;
-import fr.trendev.comptandye.product.controllers.ProductEntityListener;
-import fr.trendev.comptandye.product.entities.EmptyThreshold;
-import fr.trendev.comptandye.product.entities.Product;
-import fr.trendev.comptandye.product.entities.SevereThreshold;
-import fr.trendev.comptandye.product.entities.WarningThreshold;
-import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
-import fr.trendev.comptandye.professional.entities.Professional;
-import fr.trendev.comptandye.thresholdalert.controllers.ThresholdAlertFacade;
-import fr.trendev.comptandye.thresholdalert.entities.ThresholdAlert;
-import fr.trendev.comptandye.thresholdalert.entities.ThresholdAlertQualifierEnum;
-import fr.trendev.comptandye.utils.UUIDGenerator;
+import fr.trendev.kiam.notification.entities.NotificationLevelEnum;
+import fr.trendev.kiam.product.controllers.ProductEntityListener;
+import fr.trendev.kiam.product.entities.EmptyThreshold;
+import fr.trendev.kiam.product.entities.Product;
+import fr.trendev.kiam.product.entities.SevereThreshold;
+import fr.trendev.kiam.product.entities.WarningThreshold;
+import fr.trendev.kiam.professional.controllers.ProfessionalFacade;
+import fr.trendev.kiam.professional.entities.Professional;
+import fr.trendev.kiam.thresholdalert.controllers.ThresholdAlertFacade;
+import fr.trendev.kiam.thresholdalert.entities.ThresholdAlert;
+import fr.trendev.kiam.thresholdalert.entities.ThresholdAlertQualifierEnum;
+import fr.trendev.kiam.utils.UUIDGenerator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;

@@ -1,52 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-    <persistence-unit name="DEFAULT_PU" transaction-type="JTA">
-        <jta-data-source>java:global/comptandye/MySQLDataSource</jta-data-source>
-        <class>fr.trendev.comptandye.address.entities.Address</class>
-        <class>fr.trendev.comptandye.administrator.entities.Administrator</class>
-        <class>fr.trendev.comptandye.bill.entities.Bill</class>
-        <class>fr.trendev.comptandye.business.entities.Business</class>
-        <class>fr.trendev.comptandye.category.entities.Category</class>
-        <class>fr.trendev.comptandye.client.entities.Client</class>
-        <class>fr.trendev.comptandye.clientbill.entities.ClientBill</class>
-        <class>fr.trendev.comptandye.collectivegroup.entities.CollectiveGroup</class>
-        <class>fr.trendev.comptandye.collectivegroupbill.entities.CollectiveGroupBill</class>
-        <class>fr.trendev.comptandye.customerdetails.entities.CustomerDetails</class>
-        <class>fr.trendev.comptandye.expense.entities.Expense</class>
-        <class>fr.trendev.comptandye.expenseitem.entities.ExpenseItem</class>
-        <class>fr.trendev.comptandye.individual.entities.Individual</class>
-        <class>fr.trendev.comptandye.notification.entities.Notification</class>
-        <class>fr.trendev.comptandye.individualbill.entities.IndividualBill</class>
-        <class>fr.trendev.comptandye.purchasedoffering.entities.PurchasedOffering</class>
-        <class>fr.trendev.comptandye.offering.entities.Offering</class>
-        <class>fr.trendev.comptandye.pack.entities.Pack</class>
-        <class>fr.trendev.comptandye.payment.entities.Payment</class>
-        <class>fr.trendev.comptandye.paymentmode.entities.PaymentMode</class>
-        <class>fr.trendev.comptandye.product.entities.Product</class>
-        <class>fr.trendev.comptandye.productrecord.entities.ProductRecord</class>
-        <class>fr.trendev.comptandye.productreference.entities.ProductReference</class>
-        <class>fr.trendev.comptandye.professional.entities.Professional</class>
-        <class>fr.trendev.comptandye.purchaseexpense.entities.PurchaseExpense</class>
-        <class>fr.trendev.comptandye.purchaseditem.entities.PurchasedItem</class>
-        <class>fr.trendev.comptandye.vatrates.entities.VatRates</class>
-        <class>fr.trendev.comptandye.usergroup.entities.UserGroup</class>
-        <class>fr.trendev.comptandye.useraccount.entities.UserAccount</class>
-        <class>fr.trendev.comptandye.useditem.entities.UsedItem</class>
-        <class>fr.trendev.comptandye.thresholdalert.entities.ThresholdAlert</class>
-        <class>fr.trendev.comptandye.solditem.entities.SoldItem</class>
-        <class>fr.trendev.comptandye.returneditem.entities.ReturnedItem</class>
-        <class>fr.trendev.comptandye.sale.entities.Sale</class>
-        <class>fr.trendev.comptandye.service.entities.Service</class>
-        <class>fr.trendev.comptandye.socialnetworkaccounts.entities.SocialNetworkAccounts</class>
-        <class>fr.trendev.comptandye.useraccount.entities.Customer</class>
-        <class>fr.trendev.comptandye.basicexpense.entities.BasicExpense</class>
-        <properties>
-            <!-- Enable SQL Logging-->
-            <!--            <property name="eclipselink.logging.level" value="FINER"/>
+  <persistence-unit name="DEFAULT_PU" transaction-type="JTA">
+    <jta-data-source>java:global/kiam/MySQLDataSource</jta-data-source>
+    <class>fr.trendev.kiam.paymentmode.entities.PaymentMode</class>
+    <class>fr.trendev.kiam.useraccount.entities.Customer</class>
+    <class>fr.trendev.kiam.useraccount.entities.UserAccount</class>
+    <class>fr.trendev.kiam.notification.entities.Notification</class>
+    <class>fr.trendev.kiam.solditem.entities.SoldItem</class>
+    <class>fr.trendev.kiam.sale.entities.Sale</class>
+    <class>fr.trendev.kiam.individual.entities.Individual</class>
+    <class>fr.trendev.kiam.payment.entities.Payment</class>
+    <class>fr.trendev.kiam.business.entities.Business</class>
+    <class>fr.trendev.kiam.expenseitem.entities.ExpenseItem</class>
+    <class>fr.trendev.kiam.vatrates.entities.VatRates</class>
+    <class>fr.trendev.kiam.purchaseexpense.entities.PurchaseExpense</class>
+    <class>fr.trendev.kiam.usergroup.entities.UserGroup</class>
+    <class>fr.trendev.kiam.returneditem.entities.ReturnedItem</class>
+    <class>fr.trendev.kiam.productreference.entities.ProductReference</class>
+    <class>fr.trendev.kiam.customerdetails.entities.CustomerDetails</class>
+    <class>fr.trendev.kiam.category.entities.Category</class>
+    <class>fr.trendev.kiam.individualbill.entities.IndividualBill</class>
+    <class>fr.trendev.kiam.purchasedoffering.entities.PurchasedOffering</class>
+    <class>fr.trendev.kiam.basicexpense.entities.BasicExpense</class>
+    <class>fr.trendev.kiam.collectivegroupbill.entities.CollectiveGroupBill</class>
+    <class>fr.trendev.kiam.bill.entities.Bill</class>
+    <class>fr.trendev.kiam.purchaseditem.entities.PurchasedItem</class>
+    <class>fr.trendev.kiam.productrecord.entities.ProductRecord</class>
+    <class>fr.trendev.kiam.socialnetworkaccounts.entities.SocialNetworkAccounts</class>
+    <class>fr.trendev.kiam.clientbill.entities.ClientBill</class>
+    <class>fr.trendev.kiam.address.entities.Address</class>
+    <class>fr.trendev.kiam.expense.entities.Expense</class>
+    <class>fr.trendev.kiam.administrator.entities.Administrator</class>
+    <class>fr.trendev.kiam.pack.entities.Pack</class>
+    <class>fr.trendev.kiam.collectivegroup.entities.CollectiveGroup</class>
+    <class>fr.trendev.kiam.client.entities.Client</class>
+    <class>fr.trendev.kiam.useditem.entities.UsedItem</class>
+    <class>fr.trendev.kiam.product.entities.Product</class>
+    <class>fr.trendev.kiam.offering.entities.Offering</class>
+    <class>fr.trendev.kiam.service.entities.Service</class>
+    <class>fr.trendev.kiam.professional.entities.Professional</class>
+    <class>fr.trendev.kiam.thresholdalert.entities.ThresholdAlert</class>
+    <properties>
+      <!-- Enable SQL Logging-->
+      <!--            <property name="eclipselink.logging.level" value="FINER"/>
             <property name="eclipselink.logging.parameters" value="true"/>-->
-            <!--Drop and create a new tables-->
-            <!-- <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/> <property name="javax.persistence.schema-generation.drop-source" value="script"/> <property
-            name="javax.persistence.schema-generation.drop-script-source" value="META-INF/sql/comptandye_master-delete.sql"/>-->
-        </properties>
-    </persistence-unit>
+      <!--Drop and create a new tables-->
+      <!-- <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/> <property name="javax.persistence.schema-generation.drop-source" value="script"/> <property
+            name="javax.persistence.schema-generation.drop-script-source" value="META-INF/sql/kiam_master-delete.sql"/>-->
+    </properties>
+  </persistence-unit>
 </persistence>

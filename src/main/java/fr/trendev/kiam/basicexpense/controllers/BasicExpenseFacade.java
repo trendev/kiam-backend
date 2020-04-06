@@ -1,8 +1,8 @@
-package fr.trendev.comptandye.basicexpense.controllers;
+package fr.trendev.kiam.basicexpense.controllers;
 
-import fr.trendev.comptandye.basicexpense.entities.BasicExpense;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.expense.entities.ExpensePK;
+import fr.trendev.kiam.basicexpense.entities.BasicExpense;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.expense.entities.ExpensePK;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;

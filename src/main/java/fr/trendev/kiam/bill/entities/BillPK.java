@@ -1,4 +1,4 @@
-package fr.trendev.comptandye.bill.entities;
+package fr.trendev.kiam.bill.entities;
 
 import java.io.Serializable;
 import java.util.Date;

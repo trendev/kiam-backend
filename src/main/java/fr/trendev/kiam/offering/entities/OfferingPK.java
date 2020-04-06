@@ -1,4 +1,4 @@
-package fr.trendev.comptandye.offering.entities;
+package fr.trendev.kiam.offering.entities;
 
 import java.io.Serializable;
 import java.util.Objects;

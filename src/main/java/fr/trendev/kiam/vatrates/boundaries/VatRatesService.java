@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.vatrates.boundaries;
+package fr.trendev.kiam.vatrates.boundaries;
 
-import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.vatrates.entities.VatRates;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.vatrates.controllers.VatRatesFacade;
+import fr.trendev.kiam.common.boundaries.AbstractCommonService;
+import fr.trendev.kiam.vatrates.entities.VatRates;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.vatrates.controllers.VatRatesFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

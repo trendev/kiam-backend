@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.solditem.boundaries;
+package fr.trendev.kiam.solditem.boundaries;
 
-import fr.trendev.comptandye.productrecord.boundaries.AbstractProductRecordService;
-import fr.trendev.comptandye.bill.entities.Bill;
-import fr.trendev.comptandye.bill.entities.BillPK;
-import fr.trendev.comptandye.solditem.entities.SoldItem;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.solditem.controllers.SoldItemFacade;
-import fr.trendev.comptandye.bill.controllers.ProvideBillFacadeVisitor;
+import fr.trendev.kiam.productrecord.boundaries.AbstractProductRecordService;
+import fr.trendev.kiam.bill.entities.Bill;
+import fr.trendev.kiam.bill.entities.BillPK;
+import fr.trendev.kiam.solditem.entities.SoldItem;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.solditem.controllers.SoldItemFacade;
+import fr.trendev.kiam.bill.controllers.ProvideBillFacadeVisitor;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

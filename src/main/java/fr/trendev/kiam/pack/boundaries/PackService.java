@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.pack.boundaries;
+package fr.trendev.kiam.pack.boundaries;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.trendev.comptandye.common.boundaries.AssociationManagementEnum;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.offering.boundaries.AbstractOfferingService;
-import fr.trendev.comptandye.offering.entities.Offering;
-import fr.trendev.comptandye.offering.entities.OfferingPK;
-import fr.trendev.comptandye.pack.entities.Pack;
-import fr.trendev.comptandye.professional.entities.Professional;
-import fr.trendev.comptandye.sale.entities.Sale;
-import fr.trendev.comptandye.service.entities.Service;
+import fr.trendev.kiam.common.boundaries.AssociationManagementEnum;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.offering.boundaries.AbstractOfferingService;
+import fr.trendev.kiam.offering.entities.Offering;
+import fr.trendev.kiam.offering.entities.OfferingPK;
+import fr.trendev.kiam.pack.entities.Pack;
+import fr.trendev.kiam.professional.entities.Professional;
+import fr.trendev.kiam.sale.entities.Sale;
+import fr.trendev.kiam.service.entities.Service;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;

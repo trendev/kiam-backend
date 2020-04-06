@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<jpa:entity-mappings ptype="MONOLITH" ppkg="fr.trendev" epkg="comptandye" v="3.6" rws="_14901008082912" Pws="_14901008082912" cws="_14901008082912" thm="PMacColorScheme" dbthm="PLightColorScheme" persistenceUnitName="DEFAULT_PU" sm="false" xs="false" id="_14901008082901" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<jpa:entity-mappings ptype="MONOLITH" ppkg="fr.trendev" epkg="kiam" v="3.6" rws="_14901008082912" Pws="_14901008082912" cws="_14901008082912" thm="PMacColorScheme" dbthm="PLightColorScheme" persistenceUnitName="DEFAULT_PU" sm="false" xs="false" id="_14901008082901" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <jpa:entity lbl-ref="_14901008440196" compositePrimaryKeyClass="UserAccountPK" abs="true" class="UserAccount" v="true" pkg="useraccount.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1490100823157">
         <jpa:con am="PUBLIC" e="true">
             <jpa:a>_14901149376313047</jpa:a>
@@ -20,10 +20,10 @@
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.administrator.entities.Administrator</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.individual.entities.Individual</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.professional.entities.Professional</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.administrator.entities.Administrator</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.individual.entities.Individual</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.professional.entities.Professional</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor</jpa:snp>
         <jpa:des>An UserAccount can be an Administrator, a Professional or an Individual. This class is linked to the jdbc-realm authentication.</jpa:des>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -142,7 +142,7 @@
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor</jpa:snp>
         <jpa:des>User groups should be linked to User Accounts type but it's still possible to create many usergroup. This class is linked to jdbc-realm authentication.</jpa:des>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -205,7 +205,7 @@
                 this.socialNetworkAccounts = new SocialNetworkAccounts();</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor</jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
@@ -261,9 +261,9 @@
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor
         </jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.useraccount.entities.UserAccountType</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.useraccount.entities.UserAccountType</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="website" id="_1490104021917395">
@@ -480,9 +480,9 @@
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor
         </jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.useraccount.entities.UserAccountType</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.useraccount.entities.UserAccountType</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1490180671085" connected-attribute-id="_150652336702164" v="true" xvt="" name="individualBills" dv="new LinkedList&lt;&gt;()" id="_150652336703465">
@@ -529,7 +529,7 @@
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="email" id="_1490283378549192">
@@ -616,7 +616,7 @@
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">java.util.ArrayList</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -724,7 +724,7 @@
             <jpa:a>_149010176456971</jpa:a>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -787,7 +787,7 @@
         </jpa:con>
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -847,14 +847,14 @@
             <jpa:post>this.cltype = OfferingType.SERVICE;</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor
         </jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.offering.entities.OfferingType</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.professional.entities.Professional
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.offering.entities.OfferingType</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.professional.entities.Professional
         </jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes/>
@@ -892,11 +892,11 @@
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor
         </jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.offering.entities.OfferingType
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.offering.entities.OfferingType
         </jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.professional.entities.Professional</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.professional.entities.Professional</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1490172966686" connected-attribute-id="_1513010994296215" v="true" xvt="" name="offerings" dv="new LinkedList&lt;&gt;()" id="_1513010994290214">
@@ -930,9 +930,9 @@
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonTypeInfo(use = JsonTypeInfo.Id.NAME,         include = JsonTypeInfo.As.EXISTING_PROPERTY,         property = &quot;cltype&quot;,         visible = true)"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({   @JsonSubTypes.Type(value = Service.class, name = OfferingType.SERVICE),    @JsonSubTypes.Type(value = Pack.class, name = OfferingType.PACK),   @JsonSubTypes.Type(value = Sale.class, name = OfferingType.SALE) })"/>
         <jpa:snp loc="IMPORT" e="true">java.util.LinkedList</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.service.entities.Service</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.sale.entities.Sale</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.service.entities.Service</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.sale.entities.Sale</jpa:snp>
         <jpa:snp loc="IMPORT" e="true">java.util.HashSet</jpa:snp>
         <jpa:snp loc="IMPORT" e="true">java.util.Set</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
@@ -1041,10 +1041,10 @@ public Set&lt;Offering&gt; getAboveParentPacks() {
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonTypeInfo(use = JsonTypeInfo.Id.NAME,         include = JsonTypeInfo.As.EXISTING_PROPERTY,         property = &quot;cltype&quot;,         visible = true) "/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({     @JsonSubTypes.Type(value = ClientBill.class,             name = BillType.CLIENT)     ,   @JsonSubTypes.Type(value = IndividualBill.class,             name = BillType.INDIVIDUAL)     ,  @JsonSubTypes.Type(value = CollectiveGroupBill.class,             name = BillType.COLLECTIVEGROUP)})"/>
         <jpa:snp loc="IMPORT" e="true">java.util.LinkedList</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.clientbill.entities.ClientBill</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.collectivegroupbill.entities.CollectiveGroupBill</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.individualbill.entities.IndividualBill</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.clientbill.entities.ClientBill</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.collectivegroupbill.entities.CollectiveGroupBill</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.individualbill.entities.IndividualBill</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -1193,9 +1193,9 @@ public Set&lt;Offering&gt; getAboveParentPacks() {
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor
         </jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.bill.entities.BillType</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.bill.entities.BillType</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490101520286" connected-attribute-id="_150652336703465" v="true" xvt="" name="individual" id="_150652336702164">
@@ -1216,9 +1216,9 @@ public Set&lt;Offering&gt; getAboveParentPacks() {
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor
         </jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.bill.entities.BillType</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.bill.entities.BillType</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1490101555530" connected-attribute-id="_1490181195213607" v="true" xvt="" name="client" id="_1490181195212606">
@@ -1236,7 +1236,7 @@ public Set&lt;Offering&gt; getAboveParentPacks() {
         </jpa:con>
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -1267,7 +1267,7 @@ public Set&lt;Offering&gt; getAboveParentPacks() {
             <jpa:post></jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -1322,7 +1322,7 @@ public Set&lt;Offering&gt; getAboveParentPacks() {
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor
         </jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -1390,12 +1390,12 @@ public Set&lt;Offering&gt; getAboveParentPacks() {
             <jpa:post>this.cltype = UserAccountType.ADMINISTRATOR;</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor</jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.useraccount.entities.UserAccountType</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.useraccount.entities.UserAccountType</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes/>
         <jpa:nq e="false" name="Administrator.findAll">
@@ -1416,7 +1416,7 @@ public Set&lt;Offering&gt; getAboveParentPacks() {
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="description" id="_1490704221835111">
@@ -1469,11 +1469,11 @@ public Set&lt;Offering&gt; getAboveParentPacks() {
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.basicexpense.entities.BasicExpense
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.basicexpense.entities.BasicExpense
         </jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.purchaseexpense.entities.PurchaseExpense
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.purchaseexpense.entities.PurchaseExpense
         </jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" am="PROTECTED" name="cltype" id="_152725396888897">
@@ -1641,7 +1641,7 @@ public Set&lt;Offering&gt; getAboveParentPacks() {
         </jpa:con>
         <jpa:con am="PUBLIC" e="true"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -1666,13 +1666,13 @@ public Set&lt;Offering&gt; getAboveParentPacks() {
             <jpa:post>this.cltype = BillType.COLLECTIVEGROUP;</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor
         </jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.bill.entities.BillType</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.bill.entities.BillType</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="recipient" id="_1519918697987139">
@@ -1703,7 +1703,7 @@ public Set&lt;Offering&gt; getAboveParentPacks() {
         <jpa:snp e="false">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
-        <jpa:snp loc="IMPORT" e="false">fr.trendev.comptandye.utils.Visitor</jpa:snp>
+        <jpa:snp loc="IMPORT" e="false">fr.trendev.kiam.utils.Visitor</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="int" v="true" xvt="" name="qty" dv="1" id="_15063452150691272">
@@ -1799,15 +1799,15 @@ public Set&lt;Offering&gt; getAboveParentPacks() {
             <jpa:post>this.cltype = OfferingType.SALE;</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor
         </jpa:snp>
         <jpa:snp e="true">@Override
             public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.offering.entities.OfferingType
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.offering.entities.OfferingType
         </jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.professional.entities.Professional</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.professional.entities.Professional</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="int" v="true" xvt="" name="qty" id="_152319956422378">
@@ -1892,7 +1892,7 @@ public Set&lt;Offering&gt; getAboveParentPacks() {
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:snp loc="IMPORT" e="true">java.util.LinkedList
         </jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.expense.entities.ExpenseType
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.expense.entities.ExpenseType
         </jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
@@ -2027,7 +2027,7 @@ public Set&lt;Offering&gt; getAboveParentPacks() {
             <jpa:query>Select p from Product p where p.thresholdSevere=:thresholdSevere</jpa:query>
         </jpa:nq>
         <jpa:el>
-            <jpa:ln e="true" n="fr.trendev.comptandye.product.controllers.ProductEntityListener"/>
+            <jpa:ln e="true" n="fr.trendev.kiam.product.controllers.ProductEntityListener"/>
         </jpa:el>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="ProductRecordPK" abs="true" class="ProductRecord" v="true" pkg="productrecord.entities" jbn="false" xre="false" m="false" rootElement="_14901008082901" id="_1524923958426">
@@ -2040,11 +2040,11 @@ public Set&lt;Offering&gt; getAboveParentPacks() {
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonTypeInfo(use = JsonTypeInfo.Id.NAME,         include = JsonTypeInfo.As.EXISTING_PROPERTY,         property = &quot;cltype&quot;,         visible = true)"/>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonSubTypes({     @JsonSubTypes.Type(value = PurchasedItem.class,             name = ProductRecordType.PURCHASED_ITEM)     ,   @JsonSubTypes.Type(value = UsedItem.class,             name = ProductRecordType.USED_ITEM)     ,  @JsonSubTypes.Type(value = ReturnedItem.class,             name = ProductRecordType.RETURNED_ITEM)     ,  @JsonSubTypes.Type(value = SoldItem.class,             name = ProductRecordType.SOLD_ITEM)}) "/>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.purchaseditem.entities.PurchasedItem</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.returneditem.entities.ReturnedItem</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.solditem.entities.SoldItem</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.useditem.entities.UsedItem</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.purchaseditem.entities.PurchasedItem</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.returneditem.entities.ReturnedItem</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.solditem.entities.SoldItem</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.useditem.entities.UsedItem</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -2127,8 +2127,8 @@ public Set&lt;Offering&gt; getAboveParentPacks() {
             <jpa:post>this.cltype = ProductRecordType.PURCHASED_ITEM;</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.productrecord.entities.ProductRecordType</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.productrecord.entities.ProductRecordType</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -2150,8 +2150,8 @@ public Set&lt;Offering&gt; getAboveParentPacks() {
             <jpa:post>this.cltype = ProductRecordType.USED_ITEM;</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.productrecord.entities.ProductRecordType</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.productrecord.entities.ProductRecordType</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -2168,8 +2168,8 @@ public Set&lt;Offering&gt; getAboveParentPacks() {
             <jpa:post>this.cltype = ProductRecordType.RETURNED_ITEM;</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.productrecord.entities.ProductRecordType</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.productrecord.entities.ProductRecordType</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -2194,8 +2194,8 @@ public Set&lt;Offering&gt; getAboveParentPacks() {
             <jpa:post>this.cltype = ProductRecordType.SOLD_ITEM;</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.productrecord.entities.ProductRecordType</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.productrecord.entities.ProductRecordType</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -2219,7 +2219,7 @@ public Set&lt;Offering&gt; getAboveParentPacks() {
             <jpa:post>this.cltype = ExpenseType.BASIC_EXPENSE;</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.expense.entities.ExpenseType</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.expense.entities.ExpenseType</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes/>
         <jpa:nq e="false" name="BasicExpense.findAll">
@@ -2239,9 +2239,9 @@ public Set&lt;Offering&gt; getAboveParentPacks() {
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor
         </jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.thresholdalert.entities.ThresholdAlert</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.thresholdalert.entities.ThresholdAlert</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" am="PROTECTED" name="cltype" id="_1528899379066102">
@@ -2255,7 +2255,7 @@ public Set&lt;Offering&gt; getAboveParentPacks() {
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:basic attribute-type="fr.trendev.comptandye.notification.entities.NotificationLevelEnum" v="true" xvt="" name="levelRank" id="_1528899988622110">
+            <jpa:basic attribute-type="fr.trendev.kiam.notification.entities.NotificationLevelEnum" v="true" xvt="" name="levelRank" id="_1528899988622110">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:enumerated>STRING</jpa:enumerated>
@@ -2303,10 +2303,10 @@ public Set&lt;Offering&gt; getAboveParentPacks() {
             <jpa:post>this.cltype = NotificationType.THRESHOLD_ALERT;</jpa:post>
         </jpa:con>
         <jpa:annotation e="true" n="@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_EMPTY)"/>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.notification.entities.NotificationType</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.utils.Visitor</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.notification.entities.NotificationLevelEnum</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.professional.entities.Professional</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.notification.entities.NotificationType</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.utils.Visitor</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.notification.entities.NotificationLevelEnum</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.professional.entities.Professional</jpa:snp>
         <jpa:snp e="true">public &lt;T&gt; T accept(Visitor&lt;T&gt; v){
             return v.visit(this);
             }</jpa:snp>
@@ -2344,7 +2344,7 @@ public Set&lt;Offering&gt; getAboveParentPacks() {
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:basic attribute-type="fr.trendev.comptandye.thresholdalert.entities.ThresholdAlertQualifierEnum" v="true" xvt="" name="qualifier" id="_15289082626011767">
+            <jpa:basic attribute-type="fr.trendev.kiam.thresholdalert.entities.ThresholdAlertQualifierEnum" v="true" xvt="" name="qualifier" id="_15289082626011767">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:enumerated>STRING</jpa:enumerated>
@@ -2385,7 +2385,7 @@ public Set&lt;Offering&gt; getAboveParentPacks() {
             this.duration = offering.getDuration();
             this.businesses = offering.getBusinesses();
             }</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.offering.entities.Offering</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.offering.entities.Offering</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="cltype" id="_1512853518502564">
@@ -2429,9 +2429,9 @@ public Set&lt;Offering&gt; getAboveParentPacks() {
             this.services = oe.services;
             this.sales = oe.sales;
             }</jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.offering.entities.Offering
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.offering.entities.Offering
         </jpa:snp>
-        <jpa:snp loc="IMPORT" e="true">fr.trendev.comptandye.offering.entities.OfferingExtentsVisitor</jpa:snp>
+        <jpa:snp loc="IMPORT" e="true">fr.trendev.kiam.offering.entities.OfferingExtentsVisitor</jpa:snp>
         <jpa:ath>jsie</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="int" v="true" xvt="" name="services" id="_152404700574475">

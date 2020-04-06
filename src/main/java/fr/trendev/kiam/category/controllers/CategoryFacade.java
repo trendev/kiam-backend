@@ -1,8 +1,8 @@
-package fr.trendev.comptandye.category.controllers;
+package fr.trendev.kiam.category.controllers;
 
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.category.entities.Category;
-import fr.trendev.comptandye.category.entities.CategoryPK;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.category.entities.Category;
+import fr.trendev.kiam.category.entities.CategoryPK;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;

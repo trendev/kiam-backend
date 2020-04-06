@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.security.controllers.jwt.dto;
+package fr.trendev.kiam.security.controllers.jwt.dto;
 
-import fr.trendev.comptandye.security.entities.JWTRecord;
+import fr.trendev.kiam.security.entities.JWTRecord;
 import java.io.Serializable;
 import java.util.Set;
 import java.util.concurrent.CompletionStage;

@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.security.controllers;
+package fr.trendev.kiam.security.controllers;
 
 import com.nimbusds.jwt.JWTClaimsSet;
-import fr.trendev.comptandye.security.controllers.jwt.JWTManager;
+import fr.trendev.kiam.security.controllers.jwt.JWTManager;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -38,7 +38,7 @@ import javax.servlet.http.HttpServletResponse;
     "Individual"
 })
 @DatabaseIdentityStoreDefinition(
-        dataSourceLookup = "java:global/comptandye/MySQLDataSource",
+        dataSourceLookup = "java:global/kiam/MySQLDataSource",
         callerQuery = "select PASSWORD from USER_ACCOUNT where EMAIL=? and BLOCKED is FALSE",
         groupsQuery = "select userGroups_NAME from USER_ACCOUNT_USER_GROUP where userAccounts_EMAIL = ?",
         priority = 1

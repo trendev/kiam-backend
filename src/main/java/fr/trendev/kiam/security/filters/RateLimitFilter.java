@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.security.filters;
+package fr.trendev.kiam.security.filters;
 
-import fr.trendev.comptandye.security.controllers.ratelimit.RateLimitController;
-import fr.trendev.comptandye.utils.HttpRequestHelper;
+import fr.trendev.kiam.security.controllers.ratelimit.RateLimitController;
+import fr.trendev.kiam.utils.HttpRequestHelper;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;

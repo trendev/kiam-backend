@@ -1,7 +1,7 @@
-package fr.trendev.comptandye.individual.controllers;
+package fr.trendev.kiam.individual.controllers;
 
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.individual.entities.Individual;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.individual.entities.Individual;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;

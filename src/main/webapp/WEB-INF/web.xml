@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
-    <display-name>comptandye</display-name>
+    <display-name>kiam</display-name>
     <filter>
         <description>Filters all http/https requests and check session validity</description>
         <filter-name>TraceRequestFilter</filter-name>
-        <filter-class>fr.trendev.comptandye.security.filters.TraceRequestFilter</filter-class>
+        <filter-class>fr.trendev.kiam.security.filters.TraceRequestFilter</filter-class>
         <async-supported>true</async-supported>
     </filter>
     <filter>
         <description>apply Cross Origin Resource Sharing on restapi requests/responses</description>
         <filter-name>CORS</filter-name>
-        <filter-class>fr.trendev.comptandye.security.filters.CORSFilter</filter-class>
+        <filter-class>fr.trendev.kiam.security.filters.CORSFilter</filter-class>
         <async-supported>true</async-supported>
     </filter>
     <filter-mapping>

@@ -1,4 +1,4 @@
-package fr.trendev.comptandye.utils;
+package fr.trendev.kiam.utils;
 
 import java.math.BigDecimal;
 import org.junit.Test;

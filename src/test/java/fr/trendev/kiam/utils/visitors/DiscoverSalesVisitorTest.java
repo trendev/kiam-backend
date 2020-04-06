@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.utils.visitors;
+package fr.trendev.kiam.utils.visitors;
 
-import fr.trendev.comptandye.offering.entities.DiscoverSalesVisitor;
-import fr.trendev.comptandye.pack.entities.Pack;
-import fr.trendev.comptandye.sale.entities.Sale;
-import fr.trendev.comptandye.service.entities.Service;
+import fr.trendev.kiam.offering.entities.DiscoverSalesVisitor;
+import fr.trendev.kiam.pack.entities.Pack;
+import fr.trendev.kiam.sale.entities.Sale;
+import fr.trendev.kiam.service.entities.Service;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Test;

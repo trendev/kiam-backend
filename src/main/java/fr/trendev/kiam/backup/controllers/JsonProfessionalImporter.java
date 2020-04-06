@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.backup.controllers;
+package fr.trendev.kiam.backup.controllers;
 
-import fr.trendev.comptandye.backup.entities.JsonProfessionalBackup;
+import fr.trendev.kiam.backup.entities.JsonProfessionalBackup;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import fr.trendev.comptandye.backup.entities.HashingMechanism;
+import fr.trendev.kiam.backup.entities.HashingMechanism;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
@@ -17,7 +17,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
-import fr.trendev.comptandye.objectmapper.backupcfg.ProfessionalBackup;
+import fr.trendev.kiam.objectmapper.backupcfg.ProfessionalBackup;
 
 /**
  *

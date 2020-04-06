@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.productreference.boundaries;
+package fr.trendev.kiam.productreference.boundaries;
 
-import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.productreference.entities.ProductReference;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.productreference.controllers.ProductReferenceFacade;
-import fr.trendev.comptandye.exceptions.ExceptionHelper;
+import fr.trendev.kiam.common.boundaries.AbstractCommonService;
+import fr.trendev.kiam.productreference.entities.ProductReference;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.productreference.controllers.ProductReferenceFacade;
+import fr.trendev.kiam.exceptions.ExceptionHelper;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;

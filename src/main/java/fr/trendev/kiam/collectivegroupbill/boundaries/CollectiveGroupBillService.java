@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.collectivegroupbill.boundaries;
+package fr.trendev.kiam.collectivegroupbill.boundaries;
 
-import fr.trendev.comptandye.bill.boundaries.AbstractBillService;
-import fr.trendev.comptandye.bill.entities.BillPK;
-import fr.trendev.comptandye.collectivegroupbill.entities.CollectiveGroupBill;
-import fr.trendev.comptandye.collectivegroup.entities.CollectiveGroupPK;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.collectivegroupbill.controllers.CollectiveGroupBillFacade;
-import fr.trendev.comptandye.collectivegroup.controllers.CollectiveGroupFacade;
+import fr.trendev.kiam.bill.boundaries.AbstractBillService;
+import fr.trendev.kiam.bill.entities.BillPK;
+import fr.trendev.kiam.collectivegroupbill.entities.CollectiveGroupBill;
+import fr.trendev.kiam.collectivegroup.entities.CollectiveGroupPK;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.collectivegroupbill.controllers.CollectiveGroupBillFacade;
+import fr.trendev.kiam.collectivegroup.controllers.CollectiveGroupFacade;
 import java.util.Date;
 import java.util.Optional;
 import java.util.function.Function;

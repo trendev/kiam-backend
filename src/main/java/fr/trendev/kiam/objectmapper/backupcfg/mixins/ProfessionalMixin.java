@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.objectmapper.backupcfg.mixins;
+package fr.trendev.kiam.objectmapper.backupcfg.mixins;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import fr.trendev.comptandye.bill.entities.Bill;
-import fr.trendev.comptandye.category.entities.Category;
-import fr.trendev.comptandye.client.entities.Client;
-import fr.trendev.comptandye.collectivegroup.entities.CollectiveGroup;
-import fr.trendev.comptandye.expense.entities.Expense;
-import fr.trendev.comptandye.individual.entities.Individual;
-import fr.trendev.comptandye.notification.entities.Notification;
-import fr.trendev.comptandye.offering.entities.Offering;
-import fr.trendev.comptandye.product.entities.Product;
-import fr.trendev.comptandye.usergroup.entities.UserGroup;
+import fr.trendev.kiam.bill.entities.Bill;
+import fr.trendev.kiam.category.entities.Category;
+import fr.trendev.kiam.client.entities.Client;
+import fr.trendev.kiam.collectivegroup.entities.CollectiveGroup;
+import fr.trendev.kiam.expense.entities.Expense;
+import fr.trendev.kiam.individual.entities.Individual;
+import fr.trendev.kiam.notification.entities.Notification;
+import fr.trendev.kiam.offering.entities.Offering;
+import fr.trendev.kiam.product.entities.Product;
+import fr.trendev.kiam.usergroup.entities.UserGroup;
 import java.util.List;
 
 public abstract class ProfessionalMixin {

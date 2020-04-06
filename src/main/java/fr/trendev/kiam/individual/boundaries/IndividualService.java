@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.individual.boundaries;
+package fr.trendev.kiam.individual.boundaries;
 
-import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.common.boundaries.AssociationManagementEnum;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.individual.controllers.IndividualFacade;
-import fr.trendev.comptandye.individual.entities.Individual;
-import fr.trendev.comptandye.individualbill.entities.IndividualBill;
-import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
-import fr.trendev.comptandye.professional.entities.Professional;
-import fr.trendev.comptandye.security.controllers.PasswordManager;
-import fr.trendev.comptandye.usergroup.controllers.UserGroupFacade;
-import fr.trendev.comptandye.usergroup.entities.UserGroup;
+import fr.trendev.kiam.common.boundaries.AbstractCommonService;
+import fr.trendev.kiam.common.boundaries.AssociationManagementEnum;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.individual.controllers.IndividualFacade;
+import fr.trendev.kiam.individual.entities.Individual;
+import fr.trendev.kiam.individualbill.entities.IndividualBill;
+import fr.trendev.kiam.professional.controllers.ProfessionalFacade;
+import fr.trendev.kiam.professional.entities.Professional;
+import fr.trendev.kiam.security.controllers.PasswordManager;
+import fr.trendev.kiam.usergroup.controllers.UserGroupFacade;
+import fr.trendev.kiam.usergroup.entities.UserGroup;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.product.controllers;
+package fr.trendev.kiam.product.controllers;
 
-import fr.trendev.comptandye.product.entities.EmptyThreshold;
-import fr.trendev.comptandye.product.entities.Product;
-import fr.trendev.comptandye.product.entities.SevereThreshold;
-import fr.trendev.comptandye.product.entities.WarningThreshold;
+import fr.trendev.kiam.product.entities.EmptyThreshold;
+import fr.trendev.kiam.product.entities.Product;
+import fr.trendev.kiam.product.entities.SevereThreshold;
+import fr.trendev.kiam.product.entities.WarningThreshold;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.persistence.PostUpdate;

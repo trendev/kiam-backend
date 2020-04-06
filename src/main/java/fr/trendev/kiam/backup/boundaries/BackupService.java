@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.backup.boundaries;
+package fr.trendev.kiam.backup.boundaries;
 
-import fr.trendev.comptandye.backup.controllers.JsonProfessionalExporter;
-import fr.trendev.comptandye.backup.controllers.JsonProfessionalImporter;
-import fr.trendev.comptandye.exceptions.ExceptionHandler;
-import fr.trendev.comptandye.security.controllers.AuthenticationHelper;
+import fr.trendev.kiam.backup.controllers.JsonProfessionalExporter;
+import fr.trendev.kiam.backup.controllers.JsonProfessionalImporter;
+import fr.trendev.kiam.exceptions.ExceptionHandler;
+import fr.trendev.kiam.security.controllers.AuthenticationHelper;
 import java.io.InputStream;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;

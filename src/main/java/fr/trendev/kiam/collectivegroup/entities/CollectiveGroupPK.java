@@ -1,4 +1,4 @@
-package fr.trendev.comptandye.collectivegroup.entities;
+package fr.trendev.kiam.collectivegroup.entities;
 
 import java.io.Serializable;
 import java.util.Objects;

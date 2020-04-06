@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.security.controllers.jwt;
+package fr.trendev.kiam.security.controllers.jwt;
 
+import fr.trendev.kiam.security.controllers.jwt.JWTWhiteMap;
+import fr.trendev.kiam.security.controllers.jwt.JWTManager;
+import fr.trendev.kiam.security.controllers.jwt.JWTRevokedSet;
 import com.nimbusds.jose.JOSEException;
 import static com.nimbusds.jose.JOSEObjectType.JWT;
 import static com.nimbusds.jose.JWSAlgorithm.RS256;
@@ -13,17 +16,17 @@ import com.nimbusds.jose.KeyLengthException;
 import com.nimbusds.jose.crypto.RSASSAVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
-import fr.trendev.comptandye.security.controllers.MockAuthenticationEventController;
-import fr.trendev.comptandye.security.controllers.RSAKeyProvider;
-import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.ISS;
-import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.LONG_TERM_VALIDITY;
-import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.LONG_TERM_VALIDITY_UNIT;
-import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_TERM_VALIDITY;
-import static fr.trendev.comptandye.security.controllers.jwt.JWTManager.SHORT_TERM_VALIDITY_UNIT;
-import fr.trendev.comptandye.security.controllers.jwt.dto.mock.MockJWTRevokedSetDTO;
-import fr.trendev.comptandye.security.controllers.jwt.dto.mock.MockJWTWhiteMapDTO;
-import fr.trendev.comptandye.security.entities.DecodedJWT;
-import fr.trendev.comptandye.security.entities.JWTRecord;
+import fr.trendev.kiam.security.controllers.MockAuthenticationEventController;
+import fr.trendev.kiam.security.controllers.RSAKeyProvider;
+import static fr.trendev.kiam.security.controllers.jwt.JWTManager.ISS;
+import static fr.trendev.kiam.security.controllers.jwt.JWTManager.LONG_TERM_VALIDITY;
+import static fr.trendev.kiam.security.controllers.jwt.JWTManager.LONG_TERM_VALIDITY_UNIT;
+import static fr.trendev.kiam.security.controllers.jwt.JWTManager.SHORT_TERM_VALIDITY;
+import static fr.trendev.kiam.security.controllers.jwt.JWTManager.SHORT_TERM_VALIDITY_UNIT;
+import fr.trendev.kiam.security.controllers.jwt.dto.mock.MockJWTRevokedSetDTO;
+import fr.trendev.kiam.security.controllers.jwt.dto.mock.MockJWTWhiteMapDTO;
+import fr.trendev.kiam.security.entities.DecodedJWT;
+import fr.trendev.kiam.security.entities.JWTRecord;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;

@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.paymentmode.boundaries;
+package fr.trendev.kiam.paymentmode.boundaries;
 
-import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.paymentmode.entities.PaymentMode;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.paymentmode.controllers.PaymentModeFacade;
+import fr.trendev.kiam.common.boundaries.AbstractCommonService;
+import fr.trendev.kiam.paymentmode.entities.PaymentMode;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.paymentmode.controllers.PaymentModeFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

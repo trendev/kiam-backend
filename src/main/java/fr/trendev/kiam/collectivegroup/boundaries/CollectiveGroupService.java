@@ -3,17 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.collectivegroup.boundaries;
+package fr.trendev.kiam.collectivegroup.boundaries;
 
-import fr.trendev.comptandye.common.boundaries.AbstractCommonService;
-import fr.trendev.comptandye.collectivegroup.entities.CollectiveGroup;
-import fr.trendev.comptandye.collectivegroupbill.entities.CollectiveGroupBill;
-import fr.trendev.comptandye.collectivegroup.entities.CollectiveGroupPK;
-import fr.trendev.comptandye.professional.entities.Professional;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.client.controllers.ClientFacade;
-import fr.trendev.comptandye.collectivegroup.controllers.CollectiveGroupFacade;
-import fr.trendev.comptandye.professional.controllers.ProfessionalFacade;
+import fr.trendev.kiam.common.boundaries.AbstractCommonService;
+import fr.trendev.kiam.collectivegroup.entities.CollectiveGroup;
+import fr.trendev.kiam.collectivegroupbill.entities.CollectiveGroupBill;
+import fr.trendev.kiam.collectivegroup.entities.CollectiveGroupPK;
+import fr.trendev.kiam.professional.entities.Professional;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.client.controllers.ClientFacade;
+import fr.trendev.kiam.collectivegroup.controllers.CollectiveGroupFacade;
+import fr.trendev.kiam.professional.controllers.ProfessionalFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

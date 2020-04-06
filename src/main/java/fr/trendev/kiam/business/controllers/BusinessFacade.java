@@ -1,7 +1,7 @@
-package fr.trendev.comptandye.business.controllers;
+package fr.trendev.kiam.business.controllers;
 
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.business.entities.Business;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.business.entities.Business;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;

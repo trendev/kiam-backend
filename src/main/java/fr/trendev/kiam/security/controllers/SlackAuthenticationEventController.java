@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.security.controllers;
+package fr.trendev.kiam.security.controllers;
 
-import fr.trendev.comptandye.security.controllers.qualifiers.FirestoreIssueLiteral;
-import fr.trendev.comptandye.security.controllers.qualifiers.JWTForgeryDetectedLiteral;
-import fr.trendev.comptandye.security.controllers.qualifiers.LoginDetectedLiteral;
-import fr.trendev.comptandye.security.controllers.qualifiers.LogoutDetectedLiteral;
+import fr.trendev.kiam.security.controllers.qualifiers.FirestoreIssueLiteral;
+import fr.trendev.kiam.security.controllers.qualifiers.JWTForgeryDetectedLiteral;
+import fr.trendev.kiam.security.controllers.qualifiers.LoginDetectedLiteral;
+import fr.trendev.kiam.security.controllers.qualifiers.LogoutDetectedLiteral;
 import java.util.concurrent.CompletableFuture;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.CDI;

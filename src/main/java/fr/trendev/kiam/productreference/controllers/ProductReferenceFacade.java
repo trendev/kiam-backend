@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.productreference.controllers;
+package fr.trendev.kiam.productreference.controllers;
 
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.productreference.entities.ProductReference;
-import fr.trendev.comptandye.productreference.entities.ProductReference_;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.productreference.entities.ProductReference;
+import fr.trendev.kiam.productreference.entities.ProductReference_;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;

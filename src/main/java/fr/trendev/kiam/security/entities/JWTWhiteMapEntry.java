@@ -1,4 +1,4 @@
-package fr.trendev.comptandye.security.entities;
+package fr.trendev.kiam.security.entities;
 
 import java.io.Serializable;
 import java.util.HashSet;

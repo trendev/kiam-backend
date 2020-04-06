@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.entities;
+package fr.trendev.kiam.entities;
 
-import fr.trendev.comptandye.expense.entities.ExpenseType;
-import fr.trendev.comptandye.purchaseexpense.entities.PurchaseExpense;
+import fr.trendev.kiam.expense.entities.ExpenseType;
+import fr.trendev.kiam.purchaseexpense.entities.PurchaseExpense;
 import org.junit.Test;
 
 /**

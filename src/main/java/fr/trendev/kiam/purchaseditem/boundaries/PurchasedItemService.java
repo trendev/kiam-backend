@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.purchaseditem.boundaries;
+package fr.trendev.kiam.purchaseditem.boundaries;
 
-import fr.trendev.comptandye.productrecord.boundaries.AbstractProductRecordService;
-import fr.trendev.comptandye.expense.entities.ExpensePK;
-import fr.trendev.comptandye.purchaseexpense.entities.PurchaseExpense;
-import fr.trendev.comptandye.purchaseditem.entities.PurchasedItem;
-import fr.trendev.comptandye.purchaseexpense.controllers.PurchaseExpenseFacade;
-import fr.trendev.comptandye.purchaseditem.controllers.PurchasedItemFacade;
+import fr.trendev.kiam.productrecord.boundaries.AbstractProductRecordService;
+import fr.trendev.kiam.expense.entities.ExpensePK;
+import fr.trendev.kiam.purchaseexpense.entities.PurchaseExpense;
+import fr.trendev.kiam.purchaseditem.entities.PurchasedItem;
+import fr.trendev.kiam.purchaseexpense.controllers.PurchaseExpenseFacade;
+import fr.trendev.kiam.purchaseditem.controllers.PurchasedItemFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

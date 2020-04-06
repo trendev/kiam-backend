@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.useraccount.controllers;
+package fr.trendev.kiam.useraccount.controllers;
 
+import fr.trendev.kiam.useraccount.controllers.EmailValidator;
 import java.util.Arrays;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;

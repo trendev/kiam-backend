@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.useditem.boundaries;
+package fr.trendev.kiam.useditem.boundaries;
 
-import fr.trendev.comptandye.productrecord.boundaries.AbstractProductRecordService;
-import fr.trendev.comptandye.useditem.entities.UsedItem;
-import fr.trendev.comptandye.useditem.controllers.UsedItemFacade;
+import fr.trendev.kiam.productrecord.boundaries.AbstractProductRecordService;
+import fr.trendev.kiam.useditem.entities.UsedItem;
+import fr.trendev.kiam.useditem.controllers.UsedItemFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.security.controllers.jwt.dto.mock;
+package fr.trendev.kiam.security.controllers.jwt.dto.mock;
 
-import fr.trendev.comptandye.security.entities.JWTWhiteMapEntry;
+import fr.trendev.kiam.security.entities.JWTWhiteMapEntry;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletionStage;

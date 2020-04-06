@@ -1,7 +1,7 @@
-package fr.trendev.comptandye.purchaseditem.controllers;
+package fr.trendev.kiam.purchaseditem.controllers;
 
-import fr.trendev.comptandye.productrecord.controllers.ProductRecordFacade;
-import fr.trendev.comptandye.purchaseditem.entities.PurchasedItem;
+import fr.trendev.kiam.productrecord.controllers.ProductRecordFacade;
+import fr.trendev.kiam.purchaseditem.entities.PurchasedItem;
 import javax.ejb.Stateless;
 import javax.inject.Named;
 

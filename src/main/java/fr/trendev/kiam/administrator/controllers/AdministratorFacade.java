@@ -1,7 +1,7 @@
-package fr.trendev.comptandye.administrator.controllers;
+package fr.trendev.kiam.administrator.controllers;
 
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.administrator.entities.Administrator;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.administrator.entities.Administrator;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;

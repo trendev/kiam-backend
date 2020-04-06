@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.trendev.comptandye.basicexpense.boundaries;
+package fr.trendev.kiam.basicexpense.boundaries;
 
-import fr.trendev.comptandye.basicexpense.controllers.BasicExpenseFacade;
-import fr.trendev.comptandye.basicexpense.entities.BasicExpense;
-import fr.trendev.comptandye.common.controllers.AbstractFacade;
-import fr.trendev.comptandye.expense.boundaries.AbstractExpenseService;
-import fr.trendev.comptandye.expense.entities.ExpensePK;
+import fr.trendev.kiam.basicexpense.controllers.BasicExpenseFacade;
+import fr.trendev.kiam.basicexpense.entities.BasicExpense;
+import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.expense.boundaries.AbstractExpenseService;
+import fr.trendev.kiam.expense.entities.ExpensePK;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
