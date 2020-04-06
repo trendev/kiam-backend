@@ -60,7 +60,7 @@ RUN echo 'set configs.config.server-config.ejb-container.steady-pool-size=50' >>
 
 # Configure Monitoring and Slack notifications
 RUN echo 'notification-slack-configure --enabled=true --dynamic=true --noisy=false --token1=T9E7DHW8Z --token2=B9PPNLS3F --token3=wuqRNOHgbvgIyAS2hxHq4fl8' >> $POSTBOOT_COMMANDS
-RUN echo 'set-healthcheck-service-configuration --service=cu --enabled=true --dynamic=true --time=10 --time-unit=SECONDS --threshold-critical=90 --threshold-warning=80 --threshold-good=70' >> $POSTBOOT_COMMANDS
+# RUN echo 'set-healthcheck-service-configuration --service=cu --enabled=true --dynamic=true --time=10 --time-unit=SECONDS --threshold-critical=90 --threshold-warning=80 --threshold-good=70' >> $POSTBOOT_COMMANDS
 RUN echo 'set-healthcheck-service-configuration --service=hmu --enabled=true --dynamic=true --time=10 --time-unit=SECONDS --threshold-critical=90 --threshold-warning=80 --threshold-good=70' >> $POSTBOOT_COMMANDS
 RUN echo 'set-healthcheck-service-configuration --service=mmu --enabled=true --dynamic=true --time=10 --time-unit=SECONDS --threshold-critical=90 --threshold-warning=80 --threshold-good=70' >> $POSTBOOT_COMMANDS
 RUN echo 'set-healthcheck-configuration --enabled=true --dynamic=true' >> $POSTBOOT_COMMANDS
