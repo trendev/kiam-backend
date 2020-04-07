@@ -30,16 +30,16 @@ import javax.mail.internet.MimeMessage;
  */
 @MailSessionDefinition( // Jakarta Mail
         name = "java:app/kiam/google-gsuite",
-        description = "JavaMail session based on Google Suite @comptandye.fr",
-        from = "support@comptandye.fr",
+        description = "JavaMail session based on Google Suite @kiam.fr",
+        from = "support@kiam.fr",
         host = "smtp.gmail.com",
         password = "kmpnfpoojsqtjibn",
-        user = "no-reply@comptandye.fr",
+        user = "no-reply@kiam.fr",
         transportProtocol = "smtp",
         storeProtocol = "imap",
         properties = {
             "mail.debug= false",
-            "mail.from=support@comptandye.fr",
+            "mail.from=support@kiam.fr",
             "mail-auth=true",
             "mail.smtp.auth=true",
             "mail.smtp.port=465",
@@ -71,9 +71,9 @@ public class EmailNotifier {
             MimeMessage message = new MimeMessage(mailSession);
             
             message.setSubject("\u2728 Inscription réussie\u2728");
-            message.setFrom(new InternetAddress("support@comptandye.fr", "comptandye"));
+            message.setFrom(new InternetAddress("support@kiam.fr", "kiam"));
             message.setReplyTo(new InternetAddress[]{
-                new InternetAddress("support@comptandye.fr", "comptandye")
+                new InternetAddress("support@kiam.fr", "kiam")
             });
             message.setRecipient(Message.RecipientType.TO,
                     new InternetAddress(email));
@@ -96,7 +96,7 @@ public class EmailNotifier {
                     + "</table>"
                     + "</div>\n"
                     + "<p>Tu peux d'ores et déjà les utiliser sur <a href=\"https://www.kiam.fr\">l'appli</a> \uD83D\uDE80</p>\n"
-                    + "<p>Si tu rencontres des difficultés, n'hésite surtout pas à <a href=\"mailto:support@comptandye.fr\">nous contacter</a> \uD83D\uDE09</p>"
+                    + "<p>Si tu rencontres des difficultés, n'hésite surtout pas à <a href=\"mailto:support@kiam.fr\">nous contacter</a> \uD83D\uDE09</p>"
                     + "</body>\n"
                     + "\n"
                     + "</html>",

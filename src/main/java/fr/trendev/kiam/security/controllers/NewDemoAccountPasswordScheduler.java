@@ -45,7 +45,7 @@ public class NewDemoAccountPasswordScheduler {
     private final String DEMO_ACCOUNT_EMAIL;
 
     public NewDemoAccountPasswordScheduler() {
-        this.DEMO_ACCOUNT_EMAIL = "demo@comptandye.fr";
+        this.DEMO_ACCOUNT_EMAIL = "demo@kiam.fr";
     }
 
     @PostConstruct
