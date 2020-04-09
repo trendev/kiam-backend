@@ -19,7 +19,7 @@ import javax.ejb.Startup;
 @Singleton
 @Startup
 @DataSourceDefinition(name = "java:global/kiam/MySQLDataSource",
-        className = "com.mysql.jdbc.jdbc2.optional.MysqlXADataSource",
+        className = "com.mysql.cj.jdbc.MysqlXADataSource",
         user = "${ENV=KIAM_DB_USER}", // defined as system env
         password = "${ENV=KIAM_DB_PASSWORD}", // defined as system env
         databaseName = "${ENV=KIAM_DB_NAME}", // defined as system env
@@ -31,12 +31,11 @@ import javax.ejb.Startup;
         initialPoolSize = 20,
         properties = {
             "useSSL=false",
-            "zeroDateTimeBehavior=convertToNull",
+            "zeroDateTimeBehavior=CONVERT_TO_NULL",
             "fish.payara.is-connection-validation-required=true",
             "fish.payara.connection-validation-method=custom-validation",
             "fish.payara.validation-classname=org.glassfish.api.jdbc.validation.MySQLConnectionValidation",
-            "fish.payara.fail-all-connections=true",
-            "fish.payara.slow-query-threshold-in-seconds=30"
+            "fish.payara.fail-all-connections=true"
         }
 )
 public class DBConfig {
