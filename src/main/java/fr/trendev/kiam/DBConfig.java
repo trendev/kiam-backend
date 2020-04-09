@@ -36,6 +36,9 @@ import javax.ejb.Startup;
             "fish.payara.connection-validation-method=custom-validation",
             "fish.payara.validation-classname=org.glassfish.api.jdbc.validation.MySQLConnectionValidation",
             "fish.payara.fail-all-connections=true"
+            // enable SQL Tracing
+//            "fish.payara.log-jdbc-calls=true",
+//            "fish.payara.slow-query-threshold-in-seconds=10"
         }
 )
 public class DBConfig {
