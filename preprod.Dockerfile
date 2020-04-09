@@ -14,7 +14,7 @@ RUN mvn install -Ppreprod
 #########################################
 # Configure the server and deploy the war
 #########################################
-FROM payara/server-full:5.194
+FROM payara/server-full:5.201
 
 LABEL maintainer="jsie@trendev.fr"
 

@@ -19,7 +19,7 @@
         <jakartaee-api.version>8.0.0</jakartaee-api.version>
         <payara-api.version>5.194</payara-api.version>
         <microprofile.version>3.2</microprofile.version>
-        <mysql-connector-java.version>5.1.48</mysql-connector-java.version>
+        <mysql-connector-java.version>8.0.19</mysql-connector-java.version>
     </properties>
     
     <profiles>
