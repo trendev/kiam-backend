@@ -26,7 +26,7 @@ ENV NEW_ADMIN_PASSWORD 1V0dCY3V3eV6
 
 # Tune the production settings
 RUN $AS_ADMIN start-domain $DOMAIN && \
-$AS_ADMIN create-jvm-options --passwordfile=${PASSWORD_FILE} "-XX\:MaxRAMPercentage=20.0" && \
+$AS_ADMIN create-jvm-options --passwordfile=${PASSWORD_FILE} "-XX\:MaxRAMPercentage=30.0" && \
 $AS_ADMIN create-jvm-options --passwordfile=${PASSWORD_FILE} "-XX\:+UseContainerSupport" && \
 $AS_ADMIN create-jvm-options --passwordfile=${PASSWORD_FILE} -server:-Dfish.payara.classloading.delegate=false:-Duser.timezone=Europe/Paris && \
 echo 'AS_ADMIN_PASSWORD='${ADMIN_PASSWORD}'\nAS_ADMIN_NEWPASSWORD='${NEW_ADMIN_PASSWORD}'\n' > /tmp/tmpfile && \
@@ -61,8 +61,8 @@ RUN echo 'set configs.config.server-config.ejb-container.steady-pool-size=50' >>
 # Configure Monitoring and Slack notifications
 RUN echo 'notification-slack-configure --enabled=true --dynamic=true --noisy=false --token1=T9E7DHW8Z --token2=B9PPNLS3F --token3=wuqRNOHgbvgIyAS2hxHq4fl8' >> $POSTBOOT_COMMANDS
 # RUN echo 'set-healthcheck-service-configuration --service=cu --enabled=true --dynamic=true --time=10 --time-unit=SECONDS --threshold-critical=90 --threshold-warning=80 --threshold-good=70' >> $POSTBOOT_COMMANDS
-RUN echo 'set-healthcheck-service-configuration --service=hmu --enabled=true --dynamic=true --time=10 --time-unit=SECONDS --threshold-critical=90 --threshold-warning=80 --threshold-good=70' >> $POSTBOOT_COMMANDS
-RUN echo 'set-healthcheck-service-configuration --service=mmu --enabled=true --dynamic=true --time=10 --time-unit=SECONDS --threshold-critical=90 --threshold-warning=80 --threshold-good=70' >> $POSTBOOT_COMMANDS
+RUN echo 'set-healthcheck-service-configuration --service=hmu --enabled=true --dynamic=true --time=10 --time-unit=SECONDS --threshold-critical=95 --threshold-warning=90 --threshold-good=80' >> $POSTBOOT_COMMANDS
+RUN echo 'set-healthcheck-service-configuration --service=mmu --enabled=true --dynamic=true --time=10 --time-unit=SECONDS --threshold-critical=95 --threshold-warning=90 --threshold-good=80' >> $POSTBOOT_COMMANDS
 RUN echo 'set-healthcheck-configuration --enabled=true --dynamic=true' >> $POSTBOOT_COMMANDS
 RUN echo 'get-healthcheck-configuration' >> $POSTBOOT_COMMANDS
 
