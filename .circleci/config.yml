@@ -1,33 +1,43 @@
 version: 2
 jobs:
   build_master:
+    environment:
+      IMAGE_NAME : trendev/kiam-backend
     machine:
       docker_layer_caching: true
     steps:
       - checkout
       - run:
           name: docker build
-          command: DOCKER_BUILDKIT=1 docker build -t $DOCKER_IMAGE --build-arg BUILDKIT_INLINE_CACHE=1 .
+          command: DOCKER_BUILDKIT=1 docker build -t $IMAGE_NAME --build-arg BUILDKIT_INLINE_CACHE=1 .
       - run:
-          name : docker login
+          name: docker tag
+          command: docker tag $IMAGE_NAME $IMAGE_NAME:${CIRCLE_SHA1:0:8}
+      - run:
+          name: docker login
           command: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run:
-          name: docker push
-          command: docker push $DOCKER_IMAGE:latest
+          name: docker push $IMAGE_NAME:latest
+          command: docker push $IMAGE_NAME:latest
+      - run:
+          name: docker push $IMAGE_NAME:${CIRCLE_SHA1:0:8}
+          command: docker push $IMAGE_NAME:${CIRCLE_SHA1:0:8}
   build: # generic job for other branches
+    environment:
+      IMAGE_NAME : trendev/kiam-backend
     machine:
       docker_layer_caching: true
     steps:
       - checkout
       - run:
           name: docker build
-          command: DOCKER_BUILDKIT=1 docker build -t $DOCKER_IMAGE:$CIRCLE_BRANCH -f $CIRCLE_BRANCH.Dockerfile --build-arg BUILDKIT_INLINE_CACHE=1 .
+          command: DOCKER_BUILDKIT=1 docker build -t $IMAGE_NAME:$CIRCLE_BRANCH -f $CIRCLE_BRANCH.Dockerfile --build-arg BUILDKIT_INLINE_CACHE=1 .
       - run:
           name : docker login
           command: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run:
           name: docker push
-          command: docker push $DOCKER_IMAGE:$CIRCLE_BRANCH
+          command: docker push $IMAGE_NAME:$CIRCLE_BRANCH
 workflows:
   version: 2
   commit:
