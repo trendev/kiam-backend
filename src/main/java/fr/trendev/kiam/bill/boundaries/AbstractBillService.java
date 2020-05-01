@@ -516,7 +516,9 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         try {
             return Optional.ofNullable(getFacade().find(pk))
                     .map(bill -> {
-                        if (!bill.isCancelled()) {
+                        // controls bills is already cancelled or paid (closed)
+                        if (!bill.isCancelled()
+                                && bill.getPaymentDate() == null) {
                             bill.setCancelled(true);
                             bill.setCancellationDate(new Date());
 
@@ -525,7 +527,12 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
                             getLogger().log(Level.INFO, "Bill "
                                     + " {0} cancelled", getFacade().
                                             prettyPrintPK(pk));
-                        }// do nothing if the bill is already cancelled
+                        } else {
+                            LOG.log(Level.WARNING, "Bill {0} cannot be cancelled : paid or already cancelled...",
+                                    getFacade().
+                                            prettyPrintPK(
+                                                    pk));
+                        }
 
                         return Response.ok(bill).build();
                     })
