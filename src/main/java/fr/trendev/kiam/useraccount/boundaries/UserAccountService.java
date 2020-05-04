@@ -89,7 +89,7 @@ public class UserAccountService extends AbstractCommonService<UserAccount, Strin
             pro.getAddress().setId(UUIDGenerator.generateID());
             pro.getCustomerDetails().setId(UUIDGenerator.generateID());
             pro.getSocialNetworkAccounts().setId(UUIDGenerator.generateID());
-            pro.setEmail(email);
+            pro.setEmail(email.trim());
             //Generates a new UUID
             pro.setUuid(UUIDGenerator.generate("PRO-", true));
 
