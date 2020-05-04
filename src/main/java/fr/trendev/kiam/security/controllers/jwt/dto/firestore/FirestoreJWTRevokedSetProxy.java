@@ -8,6 +8,7 @@ package fr.trendev.kiam.security.controllers.jwt.dto.firestore;
 import fr.trendev.kiam.security.entities.JWTRecord;
 import java.io.Serializable;
 import java.net.ConnectException;
+import java.net.SocketException;
 import java.time.temporal.ChronoUnit;
 import java.util.Set;
 import java.util.concurrent.CompletionStage;
@@ -17,6 +18,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.ProcessingException;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
@@ -41,7 +43,9 @@ public interface FirestoreJWTRevokedSetProxy extends Serializable {
             jitter = 50,
             abortOn = {ConnectException.class},
             retryOn = {
-                WebApplicationException.class
+                WebApplicationException.class,
+                SocketException.class,
+                ProcessingException.class
             }
     )
     CompletionStage<Set<JWTRecord>> getAll();
@@ -54,7 +58,9 @@ public interface FirestoreJWTRevokedSetProxy extends Serializable {
             jitter = 50,
             abortOn = {ConnectException.class},
             retryOn = {
-                WebApplicationException.class
+                WebApplicationException.class,
+                SocketException.class,
+                ProcessingException.class
             }
     )
     CompletionStage<JWTRecord> create(JWTRecord record);
@@ -68,7 +74,9 @@ public interface FirestoreJWTRevokedSetProxy extends Serializable {
             jitter = 50,
             abortOn = {ConnectException.class},
             retryOn = {
-                WebApplicationException.class
+                WebApplicationException.class,
+                SocketException.class,
+                ProcessingException.class
             }
     )
     CompletionStage<Set<JWTRecord>> bulkCreation(Set<JWTRecord> records);
@@ -82,7 +90,9 @@ public interface FirestoreJWTRevokedSetProxy extends Serializable {
             jitter = 50,
             abortOn = {ConnectException.class},
             retryOn = {
-                WebApplicationException.class
+                WebApplicationException.class,
+                SocketException.class,
+                ProcessingException.class
             }
     )
     CompletionStage<String> delete(@PathParam("token") String token);
