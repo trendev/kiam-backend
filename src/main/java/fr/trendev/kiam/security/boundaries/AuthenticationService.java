@@ -114,7 +114,7 @@ public class AuthenticationService {
             @Context SecurityContext sec,
             @QueryParam("username") String username,
             @QueryParam("password") String password) {
-        LOG.log(Level.INFO, "{0} is authenticating...", username);
+        LOG.log(Level.INFO, "{0} is authenticating...", username.trim());
         return this.profile(sec);
     }
 
@@ -152,7 +152,7 @@ public class AuthenticationService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response newPassword(@Context SecurityContext sec, NewPassword npwd) {
 
-        String password = this.readNewPassword(npwd);
+        String password = this.readNewPassword(npwd).trim();
 
         return authHelper.getUserEmailFromSecurityContext(sec)
                 .map(email

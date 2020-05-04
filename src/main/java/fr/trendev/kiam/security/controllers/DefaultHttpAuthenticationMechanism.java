@@ -98,8 +98,8 @@ public class DefaultHttpAuthenticationMechanism implements
                 // path should ends with login...
                 && req.getPathInfo().endsWith("login")) {
 
-            String username = req.getParameter("username");
-            String password = req.getParameter("password");
+            String username = req.getParameter("username").trim();
+            String password = req.getParameter("password").trim();
             boolean rmbme = Boolean.valueOf(req.getParameter("rmbme"));
 
             try {
