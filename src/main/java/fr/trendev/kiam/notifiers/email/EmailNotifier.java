@@ -96,7 +96,7 @@ public class EmailNotifier {
                     + "</table>"
                     + "</div>\n"
                     + "<p>Vous pouvez d'ores et déjà les utiliser sur <a href=\"https://kiam.fr/app/\">l'appli</a> \uD83D\uDE80</p>\n"
-                    + "<p>Afin de générer vos premières factures, vous devrez tout d'abord : </p>"
+                    + "<p><b>Afin de générer vos premières factures, vous devrez tout d'abord : </b></p>"
                     + "<ol>"
                     + "<li>"
                     + "vous connecter sur <a href=\"https://kiam.fr/app/\">l'appli</a>"
