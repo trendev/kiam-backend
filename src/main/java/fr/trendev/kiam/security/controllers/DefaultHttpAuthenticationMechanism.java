@@ -65,8 +65,8 @@ public class DefaultHttpAuthenticationMechanism implements
     public AuthenticationStatus validateRequest(HttpServletRequest req,
             HttpServletResponse rsp, HttpMessageContext hmc) throws
             AuthenticationException {
-        
-         String uri = req.getRequestURI();
+
+        String uri = req.getRequestURI();
 
         if (!"/health/live".equals(uri) && !"/health/ready".equals(uri)) { // prevent healthcheck logs
             LOG.log(Level.INFO, "{3} - {2} : {0} {1}",
@@ -115,9 +115,12 @@ public class DefaultHttpAuthenticationMechanism implements
                 if (result.getStatus()
                         != CredentialValidationResult.Status.VALID) {
                     LOG.log(Level.WARNING,
-                            "Authentication of {0} FAILED - Status : {1} CREDENTIAL",
-                            new Object[]{username, result.getStatus().
-                                        toString()});
+                            "Authentication of [{0}] / [{2}] FAILED - Status : {1} CREDENTIAL",
+                            new Object[]{
+                                username,
+                                result.getStatus().toString(),
+                                password
+                            });
                     return hmc.responseUnauthorized();
                 }
 
