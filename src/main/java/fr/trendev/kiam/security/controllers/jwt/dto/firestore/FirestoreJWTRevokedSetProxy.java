@@ -41,11 +41,11 @@ public interface FirestoreJWTRevokedSetProxy extends Serializable {
             delay = 200L,
             delayUnit = ChronoUnit.MILLIS,
             jitter = 50,
-            abortOn = {ConnectException.class},
             retryOn = {
                 WebApplicationException.class,
                 SocketException.class,
-                ProcessingException.class
+                ProcessingException.class,
+                ConnectException.class
             }
     )
     CompletionStage<Set<JWTRecord>> getAll();
@@ -56,11 +56,11 @@ public interface FirestoreJWTRevokedSetProxy extends Serializable {
             delay = 200L,
             delayUnit = ChronoUnit.MILLIS,
             jitter = 50,
-            abortOn = {ConnectException.class},
             retryOn = {
                 WebApplicationException.class,
                 SocketException.class,
-                ProcessingException.class
+                ProcessingException.class,
+                ConnectException.class
             }
     )
     CompletionStage<JWTRecord> create(JWTRecord record);
@@ -72,11 +72,11 @@ public interface FirestoreJWTRevokedSetProxy extends Serializable {
             delay = 200L,
             delayUnit = ChronoUnit.MILLIS,
             jitter = 50,
-            abortOn = {ConnectException.class},
             retryOn = {
                 WebApplicationException.class,
                 SocketException.class,
-                ProcessingException.class
+                ProcessingException.class,
+                ConnectException.class
             }
     )
     CompletionStage<Set<JWTRecord>> bulkCreation(Set<JWTRecord> records);
@@ -88,11 +88,11 @@ public interface FirestoreJWTRevokedSetProxy extends Serializable {
             delay = 200L,
             delayUnit = ChronoUnit.MILLIS,
             jitter = 50,
-            abortOn = {ConnectException.class},
             retryOn = {
                 WebApplicationException.class,
                 SocketException.class,
-                ProcessingException.class
+                ProcessingException.class,
+                ConnectException.class
             }
     )
     CompletionStage<String> delete(@PathParam("token") String token);

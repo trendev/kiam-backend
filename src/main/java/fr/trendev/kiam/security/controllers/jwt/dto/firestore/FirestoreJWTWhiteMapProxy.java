@@ -42,11 +42,11 @@ public interface FirestoreJWTWhiteMapProxy extends Serializable {
             delay = 200L,
             delayUnit = ChronoUnit.MILLIS,
             jitter = 50,
-            abortOn = {ConnectException.class},
             retryOn = {
                 WebApplicationException.class,
                 SocketException.class,
-                ProcessingException.class
+                ProcessingException.class,
+                ConnectException.class
             }
     )
     CompletionStage<List<JWTWhiteMapEntry>> getAll();
@@ -57,11 +57,11 @@ public interface FirestoreJWTWhiteMapProxy extends Serializable {
             delay = 200L,
             delayUnit = ChronoUnit.MILLIS,
             jitter = 50,
-            abortOn = {ConnectException.class},
             retryOn = {
                 WebApplicationException.class,
                 SocketException.class,
-                ProcessingException.class
+                ProcessingException.class,
+                ConnectException.class
             }
     )
     CompletionStage<JWTWhiteMapEntry> create(JWTWhiteMapEntry jwtWhiteMapEntry);
@@ -72,11 +72,11 @@ public interface FirestoreJWTWhiteMapProxy extends Serializable {
             delay = 200L,
             delayUnit = ChronoUnit.MILLIS,
             jitter = 50,
-            abortOn = {ConnectException.class},
             retryOn = {
                 WebApplicationException.class,
                 SocketException.class,
-                ProcessingException.class
+                ProcessingException.class,
+                ConnectException.class
             }
     )
     CompletionStage<JWTWhiteMapEntry> update(JWTWhiteMapEntry jwtWhiteMapEntry);
@@ -88,11 +88,11 @@ public interface FirestoreJWTWhiteMapProxy extends Serializable {
             delay = 200L,
             delayUnit = ChronoUnit.MILLIS,
             jitter = 50,
-            abortOn = {ConnectException.class},
             retryOn = {
                 WebApplicationException.class,
                 SocketException.class,
-                ProcessingException.class
+                ProcessingException.class,
+                ConnectException.class
             }
     )
     CompletionStage<String> delete(@PathParam("email") String email);
