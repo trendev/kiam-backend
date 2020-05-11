@@ -42,15 +42,6 @@ public class UserAccountFilter implements ContainerResponseFilter {
         if ("POST".equals(requestContext.getMethod())
                 && "user-account/create-professional".equals(requestContext.getUriInfo().getPath())) {
 
-            if (responseContext.getStatusInfo() == Response.Status.BAD_REQUEST) {
-                LOG.log(Level.WARNING, "{0} : overriding Response due to Professional creation failure", className);
-
-                responseContext.setEntity(
-                        Json.createObjectBuilder()
-                                .add("error", "BAD_REQUEST")
-                                .build());
-            }
-
             if (responseContext.getStatusInfo() == Response.Status.OK) {
                 JsonObject entity = (JsonObject) responseContext.getEntity();
 
@@ -61,6 +52,15 @@ public class UserAccountFilter implements ContainerResponseFilter {
                         Json.createObjectBuilder()
                                 .add("success", "Professional " + email + " created")
                                 .build());
+            } else {
+                if (responseContext.getStatusInfo() != Response.Status.CONFLICT) {
+                    LOG.log(Level.WARNING, "{0} : overriding Response due to Professional creation failure", className);
+
+                    responseContext.setEntity(
+                            Json.createObjectBuilder()
+                                    .add("error", "BAD_REQUEST")
+                                    .build());
+                }
             }
         }
     }

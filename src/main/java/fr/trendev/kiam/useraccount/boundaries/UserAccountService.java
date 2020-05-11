@@ -38,38 +38,38 @@ import javax.ws.rs.core.Response;
 @Path("user-account")
 @PermitAll
 public class UserAccountService extends AbstractCommonService<UserAccount, String> {
-    
+
     @Inject
     PasswordManager passwordManager;
-    
+
     @Inject
     EmailValidator emailValidator;
-    
+
     @Inject
     ProfessionalFacade professionalFacade;
-    
+
     @Inject
     UserAccountFacade userAccountFacade;
-    
+
     @Inject
     UserGroupFacade userGroupFacade;
-    
+
     private static final Logger LOG = Logger.getLogger(UserAccountService.class.getName());
-    
+
     public UserAccountService() {
         super(UserAccount.class);
     }
-    
+
     @Override
     protected Logger getLogger() {
         return LOG;
     }
-    
+
     @Override
     protected AbstractFacade<UserAccount, String> getFacade() {
         return userAccountFacade;
     }
-    
+
     @Path("create-professional")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -79,9 +79,21 @@ public class UserAccountService extends AbstractCommonService<UserAccount, Strin
 
             // collect data from the payload
             String email = payload.getString("email");
-            
+
             if (!emailValidator.valid(email) || email.length() > 100) {
                 throw new IllegalArgumentException("[" + email + "] is not a valid email");
+            }
+
+            // controls if email is already used
+            Professional existing = professionalFacade.find(email);
+            if (existing != null) {
+                LOG.log(Level.WARNING, "email [{0}] already present !", email);
+                return Response.status(Response.Status.CONFLICT)
+                        .entity(
+                                Json.createObjectBuilder()
+                                        .add("error", "CONFLICT")
+                                        .build())
+                        .build();
             }
 
             // instantiate a new Professional entity
@@ -127,5 +139,5 @@ public class UserAccountService extends AbstractCommonService<UserAccount, Strin
             throw new WebApplicationException("Error processing Professional creation", ex);
         }
     }
-    
+
 }
