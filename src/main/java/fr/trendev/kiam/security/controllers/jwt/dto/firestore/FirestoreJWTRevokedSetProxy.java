@@ -11,6 +11,7 @@ import java.net.ConnectException;
 import java.net.SocketException;
 import java.time.temporal.ChronoUnit;
 import java.util.Set;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.CompletionStage;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -45,7 +46,8 @@ public interface FirestoreJWTRevokedSetProxy extends Serializable {
                 WebApplicationException.class,
                 SocketException.class,
                 ProcessingException.class,
-                ConnectException.class
+                ConnectException.class,
+                CompletionException.class
             }
     )
     CompletionStage<Set<JWTRecord>> getAll();
@@ -60,7 +62,8 @@ public interface FirestoreJWTRevokedSetProxy extends Serializable {
                 WebApplicationException.class,
                 SocketException.class,
                 ProcessingException.class,
-                ConnectException.class
+                ConnectException.class,
+                CompletionException.class
             }
     )
     CompletionStage<JWTRecord> create(JWTRecord record);
@@ -76,7 +79,8 @@ public interface FirestoreJWTRevokedSetProxy extends Serializable {
                 WebApplicationException.class,
                 SocketException.class,
                 ProcessingException.class,
-                ConnectException.class
+                ConnectException.class,
+                CompletionException.class
             }
     )
     CompletionStage<Set<JWTRecord>> bulkCreation(Set<JWTRecord> records);
@@ -92,7 +96,8 @@ public interface FirestoreJWTRevokedSetProxy extends Serializable {
                 WebApplicationException.class,
                 SocketException.class,
                 ProcessingException.class,
-                ConnectException.class
+                ConnectException.class,
+                CompletionException.class
             }
     )
     CompletionStage<String> delete(@PathParam("token") String token);
