@@ -5,6 +5,7 @@
  */
 package fr.trendev.kiam.security.controllers.jwt.dto.firestore;
 
+import fr.trendev.kiam.security.controllers.jwt.dto.firestore.exceptions.FirestoreProxyException;
 import fr.trendev.kiam.security.entities.JWTWhiteMapEntry;
 import java.io.Serializable;
 import java.net.ConnectException;
@@ -44,6 +45,7 @@ public interface FirestoreJWTWhiteMapProxy extends Serializable {
             delayUnit = ChronoUnit.MILLIS,
             jitter = 50,
             retryOn = {
+                FirestoreProxyException.class,
                 WebApplicationException.class,
                 SocketException.class,
                 ProcessingException.class,
@@ -60,6 +62,7 @@ public interface FirestoreJWTWhiteMapProxy extends Serializable {
             delayUnit = ChronoUnit.MILLIS,
             jitter = 50,
             retryOn = {
+                FirestoreProxyException.class,
                 WebApplicationException.class,
                 SocketException.class,
                 ProcessingException.class,
@@ -76,6 +79,7 @@ public interface FirestoreJWTWhiteMapProxy extends Serializable {
             delayUnit = ChronoUnit.MILLIS,
             jitter = 50,
             retryOn = {
+                FirestoreProxyException.class,
                 WebApplicationException.class,
                 SocketException.class,
                 ProcessingException.class,
@@ -93,6 +97,7 @@ public interface FirestoreJWTWhiteMapProxy extends Serializable {
             delayUnit = ChronoUnit.MILLIS,
             jitter = 50,
             retryOn = {
+                FirestoreProxyException.class,
                 WebApplicationException.class,
                 SocketException.class,
                 ProcessingException.class,
