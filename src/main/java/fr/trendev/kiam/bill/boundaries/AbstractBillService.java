@@ -516,9 +516,8 @@ public abstract class AbstractBillService<T extends Bill> extends AbstractCommon
         try {
             return Optional.ofNullable(getFacade().find(pk))
                     .map(bill -> {
-                        // controls bills is already cancelled or paid (closed)
-                        if (!bill.isCancelled()
-                                && bill.getPaymentDate() == null) {
+                        // controls if bill is already cancelled
+                        if (!bill.isCancelled()) {
                             bill.setCancelled(true);
                             bill.setCancellationDate(new Date());
 
