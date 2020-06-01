@@ -95,6 +95,7 @@ public class EmailNotifier {
                     + "  </tr>\n"
                     + "</table>"
                     + "</div>\n"
+                    + "<p><b><i>Attention aux majuscules et aux miniscules dans le mot de passe...</i></b></p>"
                     + "<p>Vous pouvez d'ores et déjà les utiliser sur <a href=\"https://kiam.fr/app/\">l'appli</a> \uD83D\uDE80</p>\n"
                     + "<p><b>Afin de générer vos premières factures, vous devrez tout d'abord : </b></p>"
                     + "<ol>"
