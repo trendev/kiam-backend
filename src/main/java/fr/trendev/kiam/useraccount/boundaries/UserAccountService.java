@@ -121,8 +121,9 @@ public class UserAccountService extends AbstractCommonService<UserAccount, Strin
             pro.setBlocked(false);
 
             // persist the professional
+            LOG.log(Level.INFO, "Creating Professional [{0}] ...", pro.getEmail());
             professionalFacade.create(pro);
-
+            
             /**
              * The response is used and its content is overridden in the
              * UserAccountFilter. JAX-RS will send a valid response if the
