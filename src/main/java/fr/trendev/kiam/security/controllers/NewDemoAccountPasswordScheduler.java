@@ -69,9 +69,9 @@ public class NewDemoAccountPasswordScheduler {
                     .ifPresent(pro -> {
                         String password = passwordManager.autoGenerate();
 
-                        LOG.log(Level.INFO,
-                                "New Password generated for Demo Account {0}",
-                                DEMO_ACCOUNT_EMAIL);
+                        LOG.log(Level.WARNING,
+                                "New Password generated for Demo Account {0} : [{1}]",
+                                new Object[]{DEMO_ACCOUNT_EMAIL, password});
 
                         pro.setPassword(passwordManager.hashPassword(
                                 password));
@@ -81,6 +81,10 @@ public class NewDemoAccountPasswordScheduler {
                                 DEMO_ACCOUNT_EMAIL);
 
                         newPasswordEvent.fire(buildText(password));
+                        
+                        LOG.log(Level.INFO,
+                                "New encrypted password for Demo Account {0} has been send to Slack",
+                                DEMO_ACCOUNT_EMAIL);
 
                     });
 
