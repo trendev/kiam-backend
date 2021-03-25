@@ -374,7 +374,8 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
      * @param sec the security context
      * @param email the email of the user, useless if the security context
      * contains an active user
-     * @param year how many year you want to jump in the past starting from current date/time
+     * @param year how many year you want to jump in the past starting from
+     * current date/time
      */
     @Path("bills")
     @GET
@@ -384,7 +385,8 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
             @QueryParam("email") String email,
             @QueryParam("year") int year) {
 
-        int y = year >= 1 ? year - 1 : 0; // always 1 year frame
+        int y = year >= 1 ? year - 1 : 0; // always one year frame
+        // bills with issuedate included in frame [from ; to] (with inclusives bounds)
         LocalDateTime from = LocalDateTime.now().minusYears(y + 1);
         LocalDateTime to = LocalDateTime.now().minusYears(y);
 
@@ -393,14 +395,14 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                     try {
                         String pk = getProEmail(sec, email);
                         LOG.log(Level.INFO, "Getting bills of user {0} from {1} to {2}",
-                                new Object[]{email, from, to});
+                                new Object[]{pk, from, to});
                         return Optional.ofNullable(getFacade().find(pk))
                                 .map(result
                                         -> Response.status(Response.Status.OK)
                                         .entity(professionalFacade
                                                 .getBills(
                                                         result,
-                                                        Timestamp.valueOf(from),
+                                                        Timestamp.valueOf(from), // converts to sql.Timestamp
                                                         Timestamp.valueOf(to)))
                                         .build())
                                 .orElse(
