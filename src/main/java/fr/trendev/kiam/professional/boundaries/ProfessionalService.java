@@ -27,7 +27,6 @@ import fr.trendev.kiam.vatrates.controllers.VatRatesFacade;
 import fr.trendev.kiam.vatrates.entities.VatRates;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
@@ -375,6 +374,7 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
      * @param sec the security context
      * @param email the email of the user, useless if the security context
      * contains an active user
+     * @param year how many year you want to jump in the past starting from current date/time
      */
     @Path("bills")
     @GET
@@ -383,21 +383,25 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
             @Context SecurityContext sec,
             @QueryParam("email") String email,
             @QueryParam("year") int year) {
-        
+
         int y = year >= 1 ? year - 1 : 0; // always 1 year frame
-        Date from = Timestamp.valueOf(LocalDateTime.now().minusYears(y + 1));
-        Date to = Timestamp.valueOf(LocalDateTime.now().minusYears(y));
-        
+        LocalDateTime from = LocalDateTime.now().minusYears(y + 1);
+        LocalDateTime to = LocalDateTime.now().minusYears(y);
+
         CompletableFuture
                 .supplyAsync(() -> {
                     try {
                         String pk = getProEmail(sec, email);
                         LOG.log(Level.INFO, "Getting bills of user {0} from {1} to {2}",
-                                new Object[]{email,from, to});
+                                new Object[]{email, from, to});
                         return Optional.ofNullable(getFacade().find(pk))
                                 .map(result
                                         -> Response.status(Response.Status.OK)
-                                        .entity(professionalFacade.getBills(result, from,to))
+                                        .entity(professionalFacade
+                                                .getBills(
+                                                        result,
+                                                        Timestamp.valueOf(from),
+                                                        Timestamp.valueOf(to)))
                                         .build())
                                 .orElse(
                                         Response.status(Response.Status.NOT_FOUND)
