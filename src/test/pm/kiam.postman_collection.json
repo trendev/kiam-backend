@@ -8299,7 +8299,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{API_URL}}/Professional/bills?email=vanessa.gay@gmail.com",
+							"raw": "{{API_URL}}/Professional/bills?email=vanessa.gay@gmail.com&year=2",
 							"host": [
 								"{{API_URL}}"
 							],
@@ -8311,6 +8311,10 @@
 								{
 									"key": "email",
 									"value": "vanessa.gay@gmail.com"
+								},
+								{
+									"key": "year",
+									"value": "2"
 								}
 							]
 						}
