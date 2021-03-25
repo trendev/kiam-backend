@@ -5,13 +5,13 @@
  */
 package fr.trendev.kiam.professional.boundaries;
 
-import fr.trendev.kiam.bill.entities.Bill;
 import fr.trendev.kiam.category.entities.Category;
 import fr.trendev.kiam.client.entities.Client;
 import fr.trendev.kiam.collectivegroup.entities.CollectiveGroup;
 import fr.trendev.kiam.common.boundaries.AbstractCommonService;
 import fr.trendev.kiam.common.boundaries.AssociationManagementEnum;
 import fr.trendev.kiam.common.controllers.AbstractFacade;
+import fr.trendev.kiam.exceptions.ExceptionHelper;
 import fr.trendev.kiam.expense.entities.Expense;
 import fr.trendev.kiam.individual.controllers.IndividualFacade;
 import fr.trendev.kiam.individual.entities.Individual;
@@ -25,11 +25,14 @@ import fr.trendev.kiam.usergroup.controllers.UserGroupFacade;
 import fr.trendev.kiam.usergroup.entities.UserGroup;
 import fr.trendev.kiam.vatrates.controllers.VatRatesFacade;
 import fr.trendev.kiam.vatrates.entities.VatRates;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.json.Json;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -362,15 +365,50 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
                 -> e.getUserGroups().remove(a) & a.getUserAccounts().remove(e));
     }
 
+    /**
+     * Get the user's most recent bills
+     *
+     * @param ar the asynchronous response
+     * @param sec the security context
+     * @param email the email of the user, useless if the security context
+     * contains an active user
+     */
     @Path("bills")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public void getBills(@Suspended final AsyncResponse ar,
             @Context SecurityContext sec,
             @QueryParam("email") String email) {
-        this.provideRelation(ar, this.getProEmail(sec, email),
-                Professional::getBills,
-                Bill.class);
+        LOG.log(Level.INFO, "Getting recent bills of user {0}", email);
+        CompletableFuture
+                .supplyAsync(() -> {
+                    try {
+                        String pk = getProEmail(sec, email);
+                        return Optional.ofNullable(getFacade().find(pk))
+                                .map(result
+                                        -> Response.status(Response.Status.OK)
+                                        .entity(professionalFacade.getRecentBills(result))
+                                        .build())
+                                .orElse(
+                                        Response.status(Response.Status.NOT_FOUND)
+                                                .entity(
+                                                        Json.createObjectBuilder().add("error",
+                                                                "Professional "
+                                                                + getFacade().prettyPrintPK(pk)
+                                                                + " not found").
+                                                                build()).
+                                                build());
+                    } catch (Exception ex) {
+                        String errmsg = ExceptionHelper.handleException(ex,
+                                "Exception occurs providing recent bills of user "
+                                + getFacade().prettyPrintPK(getProEmail(sec, email)));
+                        getLogger().log(Level.WARNING, errmsg, ex);
+                        throw new WebApplicationException(errmsg, ex);
+                    }
+                }, getManagedExecutorService())
+                .thenApply(result -> ar.resume(result))
+                .exceptionally(e -> ar.resume(exceptionHandler.handle(e)));
+
     }
 
     @Path("clients")
