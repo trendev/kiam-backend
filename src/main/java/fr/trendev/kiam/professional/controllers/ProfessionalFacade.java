@@ -42,6 +42,7 @@ public class ProfessionalFacade extends AbstractFacade<Professional, String> {
                 .where(
 //                        cb.isFalse(root.get(Bill_.cancelled)),
                         cb.equal(root.get(Bill_.professional), professional));
+        cq.orderBy(cb.desc(root.get(Bill_.issueDate)));
         return em.createQuery(cq).getResultList();
     }
 
