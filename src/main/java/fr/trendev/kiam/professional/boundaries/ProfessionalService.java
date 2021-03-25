@@ -25,6 +25,9 @@ import fr.trendev.kiam.usergroup.controllers.UserGroupFacade;
 import fr.trendev.kiam.usergroup.entities.UserGroup;
 import fr.trendev.kiam.vatrates.controllers.VatRatesFacade;
 import fr.trendev.kiam.vatrates.entities.VatRates;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
@@ -378,16 +381,23 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
     @Produces(MediaType.APPLICATION_JSON)
     public void getBills(@Suspended final AsyncResponse ar,
             @Context SecurityContext sec,
-            @QueryParam("email") String email) {
-        LOG.log(Level.INFO, "Getting recent bills of user {0}", email);
+            @QueryParam("email") String email,
+            @QueryParam("year") int year) {
+        
+        int y = year >= 1 ? year - 1 : 0; // always 1 year frame
+        Date from = Timestamp.valueOf(LocalDateTime.now().minusYears(y + 1));
+        Date to = Timestamp.valueOf(LocalDateTime.now().minusYears(y));
+        
         CompletableFuture
                 .supplyAsync(() -> {
                     try {
                         String pk = getProEmail(sec, email);
+                        LOG.log(Level.INFO, "Getting bills of user {0} from {1} to {2}",
+                                new Object[]{email,from, to});
                         return Optional.ofNullable(getFacade().find(pk))
                                 .map(result
                                         -> Response.status(Response.Status.OK)
-                                        .entity(professionalFacade.getRecentBills(result))
+                                        .entity(professionalFacade.getBills(result, from,to))
                                         .build())
                                 .orElse(
                                         Response.status(Response.Status.NOT_FOUND)
