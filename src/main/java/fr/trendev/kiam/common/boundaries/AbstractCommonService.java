@@ -79,6 +79,10 @@ public abstract class AbstractCommonService<E, P> {
      */
     protected abstract AbstractFacade<E, P> getFacade();
 
+    protected ManagedExecutorService getManagedExecutorService() {
+        return managedExecutorService;
+    }
+
     /**
      * Finds and provides all elements
      *
