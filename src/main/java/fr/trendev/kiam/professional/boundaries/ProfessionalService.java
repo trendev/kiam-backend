@@ -374,8 +374,8 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
      * @param sec the security context
      * @param email the email of the user, useless if the security context
      * contains an active user
-     * @param year how many year you want to jump in the past starting from
-     * current date/time
+     * @param year how many years you want to jump in the past starting from
+     * current date/time, time frame is 2 years
      */
     @Path("bills")
     @GET
@@ -385,9 +385,9 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
             @QueryParam("email") String email,
             @QueryParam("year") int year) {
 
-        int y = year >= 1 ? year - 1 : 0; // always one year frame
+        int y = year >= 2 ? year - 2 : 0; // always two years frame
         // bills with issuedate included in frame [from ; to] (with inclusives bounds)
-        LocalDateTime from = LocalDateTime.now().minusYears(y + 1);
+        LocalDateTime from = LocalDateTime.now().minusYears(y + 2);
         LocalDateTime to = LocalDateTime.now().minusYears(y);
 
         CompletableFuture
