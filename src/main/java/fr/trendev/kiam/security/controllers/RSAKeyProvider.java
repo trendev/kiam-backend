@@ -83,6 +83,9 @@ public class RSAKeyProvider {
         }
     }
 
+    // TODO : inject ssh keys as ENV
+    // https://kubernetes.io/docs/concepts/configuration/secret/#use-case-pod-with-ssh-keys
+    // https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-kubectl/#create-a-secret
     private final String readKey(String resourceName) throws IOException {
         byte[] byteBuffer = new byte[16384];
         int length = currentThread().getContextClassLoader()
@@ -90,8 +93,8 @@ public class RSAKeyProvider {
                 .openStream()
                 .read(byteBuffer);
 
-        return new String(byteBuffer, 0, length).replaceAll(
-                "-----BEGIN (.*)-----", "")
+        return new String(byteBuffer, 0, length)
+                .replaceAll("-----BEGIN (.*)-----", "")
                 .replaceAll("-----END (.*)----", "")
                 .replaceAll("\r\n", "")
                 .replaceAll("\n", "")

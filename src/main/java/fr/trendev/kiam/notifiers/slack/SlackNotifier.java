@@ -45,7 +45,11 @@ public class SlackNotifier {
     private final String FIRESTORE_CHANNEL;
     private final String LOGINS_CHANNEL;
     private final String NEW_PROFESSIONAL_CHANNEL;
-    private final String TOKEN;
+
+    //@Inject
+    //@ConfigProperty(name = "SLACK_KIAM_TOKEN")
+    // TODO : set in K8S secrets+ENV "xoxb-320251608305-2456812526903-zKxrNwqCJmCdvXC9Gqdbz6Ag"
+    private final String TOKEN = "xoxb-320251608305-2456812526903-zKxrNwqCJmCdvXC9Gqdbz6Ag";;
 
     private final Client client;
     private static final Logger LOG = Logger.getLogger(SlackNotifier.class.getName());
@@ -63,7 +67,6 @@ public class SlackNotifier {
         this.LOGINS_CHANNEL = "GC0K0E00P"; // slack channel : "logins"
         this.FIRESTORE_CHANNEL = "GF6D78C6A"; // slack channel : "firestore"
         this.NEW_PROFESSIONAL_CHANNEL = "GMFLQ53PF"; // slack channel : "new-password"
-        this.TOKEN = "xoxa-320251608305-395708530182-394370785636-d227cf997e97f4d4b650e4ed31d48434";
         this.client = ClientBuilder.newClient();
     }
 

@@ -39,7 +39,7 @@ public class InMemoryIdentityStoreDEV implements IdentityStore {
 
         accounts.put(email,
                 new HashSet<>(Arrays.asList("Administrator")));
-        passwords.put(email, "Qsec0fr@3");
+        passwords.put(email, "BimBamB00M");
     }
 
     @Override
