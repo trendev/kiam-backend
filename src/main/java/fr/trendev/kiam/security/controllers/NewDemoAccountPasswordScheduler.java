@@ -58,7 +58,7 @@ public class NewDemoAccountPasswordScheduler {
      * on Slack channel
      */
     @Schedules({
-        @Schedule(dayOfWeek = "Mon", hour = "8", minute = "30"/*, second = "0"*/,
+        @Schedule(dayOfWeek = "Sat", hour = "8", minute = "30"/*, second = "0"*/,
                 persistent = false)
     //       ,
 //        @Schedule(second = "*/20", minute = "*", hour = "*", persistent = false)
