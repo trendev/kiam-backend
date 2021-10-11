@@ -36,6 +36,8 @@ $AS_ADMIN --user $ADMIN_USER  --passwordfile=/tmp/tmpfile change-admin-password 
 $AS_ADMIN --user $ADMIN_USER --passwordfile=${PASSWORD_FILE} enable-secure-admin && \
 $AS_ADMIN --user $ADMIN_USER --passwordfile=${PASSWORD_FILE} stop-domain
 
+RUN rm -rf /tmp/tmpfile
+
 # Disable dynamic reloading of applications
 RUN echo 'set configs.config.server-config.admin-service.das-config.dynamic-reload-enabled=false' >> $POSTBOOT_COMMANDS
 

@@ -23,9 +23,6 @@ ENV DOMAIN production
 ENV ADMIN_USER admin
 ENV ADMIN_PASSWORD admin
 ARG NEW_ADMIN_PASSWORD
-ARG SLACK_TOKEN1
-ARG SLACK_TOKEN2
-ARG SLACK_TOKEN3
 
 # Tune the production settings
 RUN $AS_ADMIN start-domain $DOMAIN && \
@@ -38,6 +35,8 @@ $AS_ADMIN --user $ADMIN_USER  --passwordfile=/tmp/tmpfile disable-secure-admin &
 $AS_ADMIN --user $ADMIN_USER  --passwordfile=/tmp/tmpfile change-admin-password && \
 $AS_ADMIN --user $ADMIN_USER --passwordfile=${PASSWORD_FILE} enable-secure-admin && \
 $AS_ADMIN --user $ADMIN_USER --passwordfile=${PASSWORD_FILE} stop-domain
+
+RUN rm -rf /tmp/tmpfile
 
 # Disable dynamic reloading of applications
 RUN echo 'set configs.config.server-config.admin-service.das-config.dynamic-reload-enabled=false' >> $POSTBOOT_COMMANDS
