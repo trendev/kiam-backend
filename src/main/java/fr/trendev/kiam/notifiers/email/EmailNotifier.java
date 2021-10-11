@@ -33,7 +33,7 @@ import javax.mail.internet.MimeMessage;
         description = "JavaMail session based on Google Suite @kiam.fr",
         from = "support@kiam.fr",
         host = "smtp.gmail.com",
-        password = "${ENV=GOOGLE_KIAM_PASSWORD}",
+        password = "${ENV=GMAIL_KIAM_PASSWORD}",
         user = "no-reply@kiam.fr",
         transportProtocol = "smtp",
         storeProtocol = "imap",
