@@ -9,7 +9,7 @@ jobs:
       - checkout
       - run:
           name: docker build
-          command: DOCKER_BUILDKIT=1 docker build --build-arg NEW_ADMIN_PASSWORD=$PAYARA_ADMIN_PASSWORD_KIAM -t $IMAGE_NAME --build-arg BUILDKIT_INLINE_CACHE=1 .
+          command: DOCKER_BUILDKIT=1 docker build --build-arg SLACK_TOKEN1=$SLACK_TOKEN1 --build-arg SLACK_TOKEN2=$SLACK_TOKEN2 --build-arg SLACK_TOKEN3=$SLACK_TOKEN3 --build-arg NEW_ADMIN_PASSWORD=$PAYARA_ADMIN_PASSWORD_KIAM -t $IMAGE_NAME --build-arg BUILDKIT_INLINE_CACHE=1 .
       - run:
           name: docker tag
           command: docker tag $IMAGE_NAME $IMAGE_NAME:${CIRCLE_SHA1:0:8}
@@ -31,7 +31,7 @@ jobs:
       - checkout
       - run:
           name: docker build
-          command: DOCKER_BUILDKIT=1 docker build --build-arg NEW_ADMIN_PASSWORD=$PAYARA_ADMIN_PASSWORD_KIAM -t $IMAGE_NAME:$CIRCLE_BRANCH -f $CIRCLE_BRANCH.Dockerfile --build-arg BUILDKIT_INLINE_CACHE=1 .
+          command: DOCKER_BUILDKIT=1 docker build --build-arg SLACK_TOKEN1=$SLACK_TOKEN1 --build-arg SLACK_TOKEN2=$SLACK_TOKEN2 --build-arg SLACK_TOKEN3=$SLACK_TOKEN3 --build-arg NEW_ADMIN_PASSWORD=$PAYARA_ADMIN_PASSWORD_KIAM -t $IMAGE_NAME:$CIRCLE_BRANCH -f $CIRCLE_BRANCH.Dockerfile --build-arg BUILDKIT_INLINE_CACHE=1 .
       - run:
           name : docker login
           command: docker login -u $DOCKER_USER -p $DOCKER_PASS

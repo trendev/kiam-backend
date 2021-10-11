@@ -23,6 +23,9 @@ ENV DOMAIN production
 ENV ADMIN_USER admin
 ENV ADMIN_PASSWORD admin
 ARG NEW_ADMIN_PASSWORD
+ARG SLACK_TOKEN1
+ARG SLACK_TOKEN2
+ARG SLACK_TOKEN3
 
 # Tune the production settings
 RUN $AS_ADMIN start-domain $DOMAIN && \
@@ -59,7 +62,7 @@ RUN echo 'set configs.config.server-config.ejb-container.max-pool-size=500' >> $
 RUN echo 'set configs.config.server-config.ejb-container.steady-pool-size=50' >> $POSTBOOT_COMMANDS
 
 # Configure Monitoring and Slack notifications
-RUN echo 'notification-slack-configure --enabled=true --dynamic=true --noisy=false --token1=T9E7DHW8Z --token2=B9PPNLS3F --token3=wuqRNOHgbvgIyAS2hxHq4fl8' >> $POSTBOOT_COMMANDS
+RUN echo 'notification-slack-configure --enabled=true --dynamic=true --noisy=false --token1='$SLACK_TOKEN1' --token2='$SLACK_TOKEN2' --token3='$SLACK_TOKEN3 >> $POSTBOOT_COMMANDS
 # RUN echo 'set-healthcheck-service-configuration --service=cu --enabled=true --dynamic=true --time=10 --time-unit=SECONDS --threshold-critical=90 --threshold-warning=80 --threshold-good=70' >> $POSTBOOT_COMMANDS
 RUN echo 'set-healthcheck-service-configuration --service=hmu --enabled=true --dynamic=true --time=10 --time-unit=SECONDS --threshold-critical=95 --threshold-warning=90 --threshold-good=80' >> $POSTBOOT_COMMANDS
 RUN echo 'set-healthcheck-service-configuration --service=mmu --enabled=true --dynamic=true --time=10 --time-unit=SECONDS --threshold-critical=95 --threshold-warning=90 --threshold-good=80' >> $POSTBOOT_COMMANDS
