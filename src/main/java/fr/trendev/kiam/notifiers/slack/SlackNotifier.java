@@ -46,10 +46,9 @@ public class SlackNotifier {
     private final String LOGINS_CHANNEL;
     private final String NEW_PROFESSIONAL_CHANNEL;
 
-    //@Inject
-    //@ConfigProperty(name = "SLACK_KIAM_TOKEN")
-    // TODO : set in K8S secrets+ENV "xoxb-320251608305-2456812526903-zKxrNwqCJmCdvXC9Gqdbz6Ag"
-    private final String TOKEN = "xoxb-320251608305-2456812526903-zKxrNwqCJmCdvXC9Gqdbz6Ag";;
+    @Inject
+    @ConfigProperty(name = "SLACK_KIAM_TOKEN")
+    private String token;
 
     private final Client client;
     private static final Logger LOG = Logger.getLogger(SlackNotifier.class.getName());
@@ -73,6 +72,7 @@ public class SlackNotifier {
     @PostConstruct
     public void init() {
         LOG.log(Level.INFO, "SlackServiceObserver initialized for Environment [{0}]", this.namespace);
+        LOG.log(Level.INFO, "SLACK_KIAM_TOKEN = {0}",token);
     }
 
     /**
@@ -164,7 +164,7 @@ public class SlackNotifier {
     public Response postMessage(JsonObject object) {
         return client.target(SLACK_URL)
                 .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Bearer " + TOKEN)
+                .header("Authorization", "Bearer " + token)
                 .post(Entity.entity(object, MediaType.APPLICATION_JSON));
     }
 
