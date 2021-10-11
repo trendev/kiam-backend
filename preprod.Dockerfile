@@ -22,7 +22,7 @@ ENV AS_ADMIN $PAYARA_DIR/bin/asadmin
 ENV DOMAIN production
 ENV ADMIN_USER admin
 ENV ADMIN_PASSWORD admin
-ENV NEW_ADMIN_PASSWORD 1V0dCY3V3eV6
+ARG NEW_ADMIN_PASSWORD
 
 # Tune the production settings
 RUN $AS_ADMIN start-domain $DOMAIN && \
