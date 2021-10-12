@@ -23,6 +23,8 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
+import org.eclipse.microprofile.config.Config;
+import org.eclipse.microprofile.config.ConfigProvider;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 /**
@@ -38,14 +40,17 @@ public class RSAKeyProvider {
     private static final Logger LOG = Logger.getLogger(RSAKeyProvider.class.
             getName());
 
-    @Inject
-    @ConfigProperty(name = "RSA_KEY_PATH")
     private String path;
 
     @PostConstruct
     public void init() {
+        Config config = ConfigProvider.getConfig();
+        this.path = config.getOptionalValue("RSA_KEY_PATH", String.class)
+                .orElse(null);
+        
         this.privateKey = this.readPrivateKey("privateKey.pem");
         this.publicKey = this.readPublicKey("publicKey.pem");
+        
         if (isNullOrEmptyString(path)) {
             LOG.log(Level.WARNING, "Default RSA keys loaded: should be used for test purpose only !!!");
         } else {
