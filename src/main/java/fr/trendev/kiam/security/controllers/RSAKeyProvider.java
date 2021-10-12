@@ -5,7 +5,9 @@
  */
 package fr.trendev.kiam.security.controllers;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import static java.lang.Thread.currentThread;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -20,6 +22,8 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 /**
  *
@@ -34,11 +38,19 @@ public class RSAKeyProvider {
     private static final Logger LOG = Logger.getLogger(RSAKeyProvider.class.
             getName());
 
+    @Inject
+    @ConfigProperty(name = "RSA_KEY_PATH")
+    private String path;
+
     @PostConstruct
     public void init() {
         this.privateKey = this.readPrivateKey("privateKey.pem");
         this.publicKey = this.readPublicKey("publicKey.pem");
-        LOG.log(Level.INFO, "## RSA KEYS LOADED ##");
+        if (isNullOrEmptyString(path)) {
+            LOG.log(Level.WARNING, "Default RSA keys loaded: should be used for test purpose only !!!");
+        } else {
+            LOG.log(Level.INFO, "## RSA KEYS LOADED ##");
+        }
     }
 
     @Produces
@@ -51,6 +63,10 @@ public class RSAKeyProvider {
         return this.publicKey;
     }
 
+    private final boolean isNullOrEmptyString(String value) {
+        return value == null || value.trim().isEmpty();
+    }
+
     private PrivateKey readPrivateKey(String resourceName) {
         try {
             String key = this.readKey(resourceName);
@@ -58,8 +74,8 @@ public class RSAKeyProvider {
                     .generatePrivate(new PKCS8EncodedKeySpec(
                             Base64.getDecoder().
                                     decode(key)));
-        } catch (IOException | NoSuchAlgorithmException |
-                InvalidKeySpecException ex) {
+        } catch (IOException | NoSuchAlgorithmException
+                | InvalidKeySpecException ex) {
             LOG.log(Level.SEVERE,
                     "Exception reading the private key in KeyProvider", ex);
             throw new RuntimeException(
@@ -75,8 +91,8 @@ public class RSAKeyProvider {
                             Base64.getDecoder().
                                     decode(key)));
             return pubKey;
-        } catch (IOException | NoSuchAlgorithmException |
-                InvalidKeySpecException ex) {
+        } catch (IOException | NoSuchAlgorithmException
+                | InvalidKeySpecException ex) {
             LOG.log(Level.SEVERE,
                     "Exception reading the public key in KeyProvider", ex);
             throw new RuntimeException(
@@ -85,11 +101,18 @@ public class RSAKeyProvider {
     }
 
     private final String readKey(String resourceName) throws IOException {
+        InputStream is;
         byte[] byteBuffer = new byte[16384];
-        int length = currentThread().getContextClassLoader()
-                .getResource("rsa/"+resourceName)
-                .openStream()
-                .read(byteBuffer);
+
+        if (isNullOrEmptyString(path)) {
+            is = currentThread().getContextClassLoader()
+                    .getResource(resourceName)
+                    .openStream();
+        } else {
+            is = new FileInputStream(path + "/" + resourceName);
+        }
+
+        int length = is.read(byteBuffer);
 
         return new String(byteBuffer, 0, length)
                 .replaceAll("-----BEGIN (.*)-----", "")
@@ -98,4 +121,5 @@ public class RSAKeyProvider {
                 .replaceAll("\n", "")
                 .trim();
     }
+
 }
