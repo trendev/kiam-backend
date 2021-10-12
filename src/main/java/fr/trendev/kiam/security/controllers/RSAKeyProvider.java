@@ -38,6 +38,7 @@ public class RSAKeyProvider {
     public void init() {
         this.privateKey = this.readPrivateKey("privateKey.pem");
         this.publicKey = this.readPublicKey("publicKey.pem");
+        LOG.log(Level.INFO, "## RSA KEYS LOADED ##");
     }
 
     @Produces
