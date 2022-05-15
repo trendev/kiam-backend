@@ -385,9 +385,9 @@ public class ProfessionalService extends AbstractCommonService<Professional, Str
             @QueryParam("email") String email,
             @QueryParam("year") int year) {
 
-        int y = year >= 2 ? year - 2 : 0; // always two years frame
+        int y = year >= 5 ? year - 5 : 0; // always 5 years frame
         // bills with issuedate included in frame [from ; to] (with inclusives bounds)
-        LocalDateTime from = LocalDateTime.now().minusYears(y + 2);
+        LocalDateTime from = LocalDateTime.now().minusYears(y + 5);
         LocalDateTime to = LocalDateTime.now().minusYears(y);
 
         CompletableFuture
